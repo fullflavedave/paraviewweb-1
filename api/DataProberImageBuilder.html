@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title></title>
+  <meta name="description" content="">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="assets_/css/shCore.css">
+  <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
+  <link rel="stylesheet" href="assets_/css/main.css">
+</head>
+
+<body data-root-path="">
+
+<header class="site-header">
+</header>
+
+<div id="wrapper">
+   <div id="content">
+<ul id="topnav">
+    <li><a href="index.html">Index</a></li>
+    <li><a href="#toc">TOC</a></li>
+</ul>
+<h1 id="dataprober">DataProber</h1>
+
+<p>This is a builder which creates an ImageBuilder that lets you process probe
+datasets. The implementation relies on a single off-screen canvas to generate the
+resulting image of a image stack.</p>
+
+<pre class="brush:js">
+var DataProberImageBuilder = require('paraviewweb/src/Rendering/Image/DataProberImageBuilder'),
+    instance = new DataProberImageBuilder(qdm, lutManager);
+</pre>
+
+<h2 id="tableofcontentsahreftocnametocclassdeeplinka">Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
+
+<ul>
+<li><a href="#constructor">constructor()</a></li>
+
+<li><a href="#update">update()</a></li>
+
+<li><a href="#setPushMethodAsBuffer">setPushMethodAsBuffer()</a></li>
+
+<li><a href="#setPushMethodAsImage">setPushMethodAsImage()</a></li>
+
+<li><a href="#setProbe">setProbe()</a></li>
+
+<li><a href="#getProbe">getProbe()</a></li>
+
+<li><a href="#setField">setField()</a></li>
+
+<li><a href="#getField">getField()</a></li>
+
+<li><a href="#getFields">getFields()</a></li>
+
+<li><a href="#getLookupTable">getLookupTable()</a></li>
+
+<li><a href="#getLookupTableManager">getLookupTableManager()</a></li>
+
+<li><a href="#render">render()</a></li>
+
+<li><a href="#onImageReady">onImageReady()</a></li>
+
+<li><a href="#TopicImageReady">TopicImageReady()</a></li>
+
+<li><a href="#destroy">destroy()</a></li>
+
+<li><a href="#getRenderMethod">getRenderMethod()</a></li>
+
+<li><a href="#getRenderMethods">getRenderMethods()</a></li>
+
+<li><a href="#* renderXY">* renderXY()</a></li>
+
+<li><a href="#* renderZY">* renderZY()</a></li>
+
+<li><a href="#* renderXZ">* renderXZ()</a></li>
+
+<li><a href="#* pushToFront">* pushToFront()</a></li>
+
+<li><a href="#* pushToFrontAsImage">* pushToFrontAsImage()</a></li>
+
+<li><a href="#* pushToFrontAsBuffer">* pushToFrontAsBuffer()</a></li>
+
+<li><a href="#* applyLookupTable">* applyLookupTable()</a></li>
+
+<li><a href="#* getYOffset">* getYOffset()</a></li>
+
+<li><a href="#* getImage">* getImage()</a></li>
+
+<li><a href="#isCrossHairEnabled">isCrossHairEnabled()</a></li>
+
+<li><a href="#setCrossHairEnabled">setCrossHairEnabled()</a></li>
+
+<li><a href="#onImageReady">onImageReady()</a></li>
+
+<li><a href="#onProbeLineReady">onProbeLineReady()</a></li>
+
+<li><a href="#onProbeChange">onProbeChange()</a></li>
+
+<li><a href="#onRenderMethodChange">onRenderMethodChange()</a></li>
+
+<li><a href="#onCrosshairVisibilityChange">onCrosshairVisibilityChange()</a></li>
+
+<li><a href="#getListeners - inherited">getListeners - inherited</a></li>
+
+<li><a href="#getControlWidgets - inherited">getControlWidgets - inherited</a></li>
+
+<li><a href="#getControlModels - inherited">getControlModels - inherited</a></li>
+</ul>
+
+<h2 id="constructorquerydatamodellookuptablemanagerahrefconstructoridconstructorclassdeeplinka">constructor(queryDataModel, lookupTableManager) <a href="#constructor" id="constructor" class="deep-link">#</a></h2>
+
+<p>Create an instance of a DataProber using the associated
+<strong>queryDataModel</strong> that should be used to fetch the data and the associated set
+of LookupTable managed by the <strong>lookupTableManager</strong> instance.</p>
+
+<p>Under the hood this will create an off-screen canvas for the image generation.
+Then, depending if the method setPushMethodAsImage() has been called,
+the 'image-ready' notification will not contain the same object.
+By default we use the setPushMethodAsBuffer() configuration.</p>
+
+<p>Below are the two event structures</p>
+
+<pre class="brush:js">
+// setPushMethodAsBuffer()
+var eventAsBuffer = {
+    canvas: DOMElement,
+    imageData: ImageDataFromCanvas,
+    area: [0, 0, width, height],
+    outputSize: [width, height],
+    builder: this
+};
+
+// setPushMethodAsImage()
+var eventAsImage = {
+    url: 'data:image/png:ASDGFsdfgsdgf...'
+    builder: this
+};
+</pre>
+
+<h2 id="updateahrefupdateidupdateclassdeeplinka">update() <a href="#update" id="update" class="deep-link">#</a></h2>
+
+<p>Trigger the fetching of the data (composite.json + rgb.jpg).</p>
+
+<h2 id="setpushmethodasbufferahrefsetpushmethodasbufferidsetpushmethodasbufferclassdeeplinka">setPushMethodAsBuffer() <a href="#setPushMethodAsBuffer" id="setPushMethodAsBuffer" class="deep-link">#</a></h2>
+
+<p>Change the method to share the image to the outside world.
+After the method gets called, the notification event will look as follows:</p>
+
+<pre class="brush:js">
+{
+    canvas: DOMElement,
+    imageData: ImageDataFromCanvas,
+    area: [0, 0, width, height],
+    outputSize: [width, height],
+    builder: this
+}
+</pre>
+
+<h2 id="setpushmethodasimageahrefsetpushmethodasimageidsetpushmethodasimageclassdeeplinka">setPushMethodAsImage() <a href="#setPushMethodAsImage" id="setPushMethodAsImage" class="deep-link">#</a></h2>
+
+<p>Change the method to share the image to the outside world.
+After the method gets called, the notification event will look as follows:</p>
+
+<pre class="brush:js">
+{
+    url: 'data:image/png:ASDGFsdfgsdgf...',
+    builder: this
+}
+</pre>
+
+<h2 id="setprobexyzahrefsetprobeidsetprobeclassdeeplinka">setProbe(x, y, z) <a href="#setProbe" id="setProbe" class="deep-link">#</a></h2>
+
+<p>Update the current probe location. [x,y,z] must be integers and be within the
+extent of the dataset.</p>
+
+<h2 id="getprobexyzahrefgetprobeidgetprobeclassdeeplinka">getProbe() : [x, y, z] <a href="#getProbe" id="getProbe" class="deep-link">#</a></h2>
+
+<p>Return the current probe location within the dataset.</p>
+
+<h2 id="setfieldfieldnameahrefsetfieldidsetfieldclassdeeplinka">setField(fieldName) <a href="#setField" id="setField" class="deep-link">#</a></h2>
+
+<p>Set which field should be rendered.</p>
+
+<h2 id="getfieldfieldnameahrefgetfieldidgetfieldclassdeeplinka">getField() : fieldName <a href="#getField" id="getField" class="deep-link">#</a></h2>
+
+<p>Return the name of the field that is currently used.</p>
+
+<h2 id="getfieldsahrefgetfieldsidgetfieldsclassdeeplinka">getFields() : [ ... ] <a href="#getFields" id="getFields" class="deep-link">#</a></h2>
+
+<p>Return the set of possible fields that can be set.</p>
+
+<h2 id="getlookuptablelookuptableahrefgetlookuptableidgetlookuptableclassdeeplinka">getLookupTable() : LookupTable <a href="#getLookupTable" id="getLookupTable" class="deep-link">#</a></h2>
+
+<p>Return the LookupTable associated to the current <strong>field</strong>.</p>
+
+<h2 id="getlookuptablemanagerlookuptablemanagerahrefgetlookuptablemanageridgetlookuptablemanagerclassdeeplinka">getLookupTableManager() : LookupTableManager <a href="#getLookupTableManager" id="getLookupTableManager" class="deep-link">#</a></h2>
+
+<p>Return the LookupTableManager instance that was provided at the creation of
+this instance.</p>
+
+<h2 id="renderahrefrenderidrenderclassdeeplinka">render() <a href="#render" id="render" class="deep-link">#</a></h2>
+
+<p>Process the current set of loaded data and render it into the background canvas.
+Once done, an event is triggered to let the application know that the image is
+ready to be rendered/display somewhere.</p>
+
+<p>Under the hood, one of the following methods [renderXY, renderZY, renderXZ] will be called.</p>
+
+<h2 id="onimagereadycallbacksubscriptionahrefonimagereadyidonimagereadyclassdeeplinka">onImageReady(callback) : subscription <a href="#onImageReady" id="onImageReady" class="deep-link">#</a></h2>
+
+<p>This allows the registration of a <strong>callback(data, envelope)</strong> function when the
+actual generated image is ready.</p>
+
+<h2 id="topicimagereadyimagereadyahreftopicimagereadyidtopicimagereadyclassdeeplinka">TopicImageReady() : 'image-ready' <a href="#TopicImageReady" id="TopicImageReady" class="deep-link">#</a></h2>
+
+<p>Return the topic used for the notification of the image.</p>
+
+<h2 id="destroyahrefdestroyiddestroyclassdeeplinka">destroy() <a href="#destroy" id="destroy" class="deep-link">#</a></h2>
+
+<p>Free the internal resources of the current instance.</p>
+
+<h2 id="getrendermethodahrefgetrendermethodidgetrendermethodclassdeeplinka">getRenderMethod() <a href="#getRenderMethod" id="getRenderMethod" class="deep-link">#</a></h2>
+
+<p>Returns the current render method.</p>
+
+<h2 id="getrendermethodsahrefgetrendermethodsidgetrendermethodsclassdeeplinka">getRenderMethods() <a href="#getRenderMethods" id="getRenderMethods" class="deep-link">#</a></h2>
+
+<p>Returns the available render methods: <code>['XY', 'ZY', 'XZ']</code>.</p>
+
+<h2 id="renderxyahrefrenderxyidrenderxyclassdeeplinka">* renderXY() <a href="#* renderXY" id="* renderXY" class="deep-link">#</a></h2>
+
+<p>Concrete render method that gets called by the generic <strong>render()</strong> one.</p>
+
+<h2 id="renderzyahrefrenderzyidrenderzyclassdeeplinka">* renderZY() <a href="#* renderZY" id="* renderZY" class="deep-link">#</a></h2>
+
+<p>Concrete render method that gets called by the generic <strong>render()</strong> one.</p>
+
+<h2 id="renderxzahrefrenderxzidrenderxzclassdeeplinka">* renderXZ() <a href="#* renderXZ" id="* renderXZ" class="deep-link">#</a></h2>
+
+<p>Concrete render method that gets called by the generic <strong>render()</strong> one.</p>
+
+<h2 id="pushtofrontwidthheightahrefpushtofrontidpushtofrontclassdeeplinka">* pushToFront(width, height) <a href="#* pushToFront" id="* pushToFront" class="deep-link">#</a></h2>
+
+<p>Triggers a event notification that says the image is ready. This will call the proper
+method to either send the ImageData or an ImageURL.</p>
+
+<h2 id="pushtofrontasimagewidthheightahrefpushtofrontasimageidpushtofrontasimageclassdeeplinka">* pushToFrontAsImage(width, height) <a href="#* pushToFrontAsImage" id="* pushToFrontAsImage" class="deep-link">#</a></h2>
+
+<p>Called as <strong>pushToFront</strong> when <strong>setPushMethodAsImage()</strong> is used.</p>
+
+<h2 id="pushtofrontasbufferwidthheightahrefpushtofrontasbufferidpushtofrontasbufferclassdeeplinka">* pushToFrontAsBuffer(width, height) <a href="#* pushToFrontAsBuffer" id="* pushToFrontAsBuffer" class="deep-link">#</a></h2>
+
+<p>Called as <strong>pushToFront</strong> when setPushMethodAsBuffer()__ is used.</p>
+
+<h2 id="applylookuptablewidthheightahrefapplylookuptableidapplylookuptableclassdeeplinka">* applyLookupTable(width, height) <a href="#* applyLookupTable" id="* applyLookupTable" class="deep-link">#</a></h2>
+
+<p>Internal method used to convert RGB encoded scalar values into the appropriate
+color based on the current LookupTable setting.</p>
+
+<h2 id="getyoffsetsliceintegerahrefgetyoffsetidgetyoffsetclassdeeplinka">* getYOffset(slice) : Integer <a href="#* getYOffset" id="* getYOffset" class="deep-link">#</a></h2>
+
+<p>Internal method used to return the offset index of the image that should be used
+within the current image sprite.</p>
+
+<h2 id="getimageslicecallbackahrefgetimageidgetimageclassdeeplinka">* getImage(slice, callback) <a href="#* getImage" id="* getImage" class="deep-link">#</a></h2>
+
+<p>Internal method used to call the callback method on the image when that one is
+ready.</p>
+
+<h2 id="iscrosshairenabledahrefiscrosshairenabledidiscrosshairenabledclassdeeplinka">isCrossHairEnabled() <a href="#isCrossHairEnabled" id="isCrossHairEnabled" class="deep-link">#</a></h2>
+
+<p>Returns true if the probe crosshair is visible.</p>
+
+<h2 id="setcrosshairenabledusecrosshairahrefsetcrosshairenabledidsetcrosshairenabledclassdeeplinka">setCrossHairEnabled(useCrossHair) <a href="#setCrossHairEnabled" id="setCrossHairEnabled" class="deep-link">#</a></h2>
+
+<p>Enables or disables the probe crosshair depending on the truthy value of useCrossHair.</p>
+
+<h2 id="onimagereadycallbackahrefonimagereadyidonimagereadyclassdeeplinka">onImageReady(callback) <a href="#onImageReady" id="onImageReady" class="deep-link">#</a></h2>
+
+<p>Calls <em>callback</em> when the image is ready.</p>
+
+<h2 id="onprobelinereadycallbackahrefonprobelinereadyidonprobelinereadyclassdeeplinka">onProbeLineReady(callback) <a href="#onProbeLineReady" id="onProbeLineReady" class="deep-link">#</a></h2>
+
+<p>Calls <em>callback</em> when the probe line is drawn.</p>
+
+<h2 id="onprobechangecallbackahrefonprobechangeidonprobechangeclassdeeplinka">onProbeChange(callback) <a href="#onProbeChange" id="onProbeChange" class="deep-link">#</a></h2>
+
+<p>Calls <em>callback</em> when the probe coordinates change.</p>
+
+<h2 id="onrendermethodchangecallbackahrefonrendermethodchangeidonrendermethodchangeclassdeeplinka">onRenderMethodChange(callback) <a href="#onRenderMethodChange" id="onRenderMethodChange" class="deep-link">#</a></h2>
+
+<p>Calls <em>callback</em> when the render method changes.</p>
+
+<h2 id="oncrosshairvisibilitychangecallbackahrefoncrosshairvisibilitychangeidoncrosshairvisibilitychangeclassdeeplinka">onCrosshairVisibilityChange(callback) <a href="#onCrosshairVisibilityChange" id="onCrosshairVisibilityChange" class="deep-link">#</a></h2>
+
+<p>Calls <em>callback</em> when the crosshair changes visibility.</p>
+
+<h2 id="getlistenersinheritedahrefgetlistenersinheritedidgetlistenersinheritedclassdeeplinka">getListeners - inherited <a href="#getListeners - inherited" id="getListeners - inherited" class="deep-link">#</a></h2>
+
+<p>Returns a list of MouseHandler listeners.</p>
+
+<h2 id="getcontrolwidgetsinheritedahrefgetcontrolwidgetsinheritedidgetcontrolwidgetsinheritedclassdeeplinka">getControlWidgets - inherited <a href="#getControlWidgets - inherited" id="getControlWidgets - inherited" class="deep-link">#</a></h2>
+
+<p>Returns a list of Widgets needed to drive the ImageBuilder.</p>
+
+<h2 id="getcontrolmodelsinheritedahrefgetcontrolmodelsinheritedidgetcontrolmodelsinheritedclassdeeplinka">getControlModels - inherited <a href="#getControlModels - inherited" id="getControlModels - inherited" class="deep-link">#</a></h2>
+
+<p>Returns a list of Model that can drive the ImageBuilder.</p>
+        </div>
+        <script src="assets_/js/lib/jquery.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
+        <script src="assets_/js/main.js"></script>
+    </body>
+</html>

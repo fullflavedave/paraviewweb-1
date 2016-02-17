@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title></title>
+  <meta name="description" content="">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="assets_/css/shCore.css">
+  <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
+  <link rel="stylesheet" href="assets_/css/main.css">
+</head>
+
+<body data-root-path="">
+
+<header class="site-header">
+</header>
+
+<div id="wrapper">
+   <div id="content">
+<ul id="topnav">
+    <li><a href="index.html">Index</a></li>
+    <li><a href="#toc">TOC</a></li>
+</ul>
+<h1 id="pipelinestate">PipelineState</h1>
+
+<p>PipelineState represents a pipeline model which is used inside
+Widgets and ImageBuilders to keep track of the configuration that should be
+used to render an image for a given pipeline configuration.</p>
+
+<p>The class is imported using the following:</p>
+
+<pre class="brush:js">
+var PipelineState = require('paraviewweb/src/Common/State/PipelineState'),
+    instance = new PipelineState(json);
+</pre>
+
+<h2 id="tableofcontentsahreftocnametocclassdeeplinka">Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
+
+<ul>
+<li><a href="#constructor">constructor()</a></li>
+
+<li><a href="#onChange">onChange()</a></li>
+
+<li><a href="#TopicChange">TopicChange()</a></li>
+
+<li><a href="#triggerChange">triggerChange()</a></li>
+
+<li><a href="#isLayerActive">isLayerActive()</a></li>
+
+<li><a href="#setLayerActive">setLayerActive()</a></li>
+
+<li><a href="#toggleLayerActive">toggleLayerActive()</a></li>
+
+<li><a href="#isLayerVisible">isLayerVisible()</a></li>
+
+<li><a href="#setLayerVisible">setLayerVisible()</a></li>
+
+<li><a href="#toggleLayerVisible">toggleLayerVisible()</a></li>
+
+<li><a href="#isLayerInEditMode">isLayerInEditMode()</a></li>
+
+<li><a href="#toggleEditMode">toggleEditMode()</a></li>
+
+<li><a href="#getColor">getColor()</a></li>
+
+<li><a href="#getColorToLabel">getColorToLabel()</a></li>
+
+<li><a href="#isActiveColor">isActiveColor()</a></li>
+
+<li><a href="#setActiveColor">setActiveColor()</a></li>
+
+<li><a href="#getPipelineQuery">getPipelineQuery()</a></li>
+
+<li><a href="#getPipelineDescription">getPipelineDescription()</a></li>
+</ul>
+
+<h2 id="constructorjsonahrefconstructoridconstructorclassdeeplinka">constructor(json) <a href="#constructor" id="constructor" class="deep-link">#</a></h2>
+
+<p>Creates an instance of a pipeline model which keeps track of the
+state of the pipeline.
+The provided JSON object should have the following type of structure:</p>
+
+<pre class="brush:js">
+{
+    "CompositePipeline": {
+        "layers": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"],
+        "dimensions": [ 500, 500 ],
+        "fields": {
+            "A": "salinity",
+            "B": "temperature",
+            "C": "bottomDepth"
+        },
+        "layer_fields": {
+            "A": [ "C" ],
+            "B": [ "B", "A" ],
+            "C": [ "B", "A" ],
+            "D": [ "B", "A" ],
+            "E": [ "B", "A" ],
+            "F": [ "B", "A" ],
+            "G": [ "B", "A" ],
+            "H": [ "B", "A" ],
+            "I": [ "B", "A" ],
+            "J": [ "B", "A" ],
+            "K": [ "B", "A" ]
+        },
+        "offset": {
+            "AC": 1,  "BA": 3,  "BB": 2,  "CA": 5,  "CB": 4,  "DA": 7,  "DB": 6,
+            "EA": 9,  "EB": 8,  "FA": 11, "FB": 10, "GA": 13, "GB": 12, "HA": 15,
+            "HB": 14, "IA": 17, "IB": 16, "JA": 19, "JB": 18, "KA": 21, "KB": 20
+        "pipeline": [
+            {
+                "ids": [ "A" ],
+                "name": "Earth core",
+                "type": "layer"
+            },
+            {
+                "children": [
+                    {
+                        "ids": [ "B" ],
+                        "name": "t=5.0",
+                        "type": "layer"
+                    },
+                    {
+                        "ids": [ "C" ],
+                        "name": "t=10.0",
+                        "type": "layer"
+                    },
+                    {
+                        "ids": [ "D" ],
+                        "name": "t=15.0",
+                        "type": "layer"
+                    },
+                    {
+                        "ids": [ "E" ],
+                        "name": "t=20.0",
+                        "type": "layer"
+                    },
+                    {
+                        "ids": [ "F" ],
+                        "name": "t=25.0",
+                        "type": "layer"
+                    }
+                ],
+                "ids": [ "B", "C", "D", "E", "F" ],
+                "name": "Contour by temperature",
+                "type": "directory"
+            },
+            {
+                "children": [
+                    {
+                        "ids": [ "G" ],
+                        "name": "s=34.0",
+                        "type": "layer"
+                    },
+                    {
+                        "ids": [ "H" ],
+                        "name": "s=35.0",
+                        "type": "layer"
+                    },
+                    {
+                        "ids": [ "I" ],
+                        "name": "s=35.5",
+                        "type": "layer"
+                    },
+                    {
+                        "ids": [ "J" ],
+                        "name": "s=36.0",
+                        "type": "layer"
+                    },
+                    {
+                        "ids": [ "K" ],
+                        "name": "s=36.5",
+                        "type": "layer"
+                    }
+                ],
+                "ids": [ "G", "H", "I", "J", "K" ],
+                "name": "Contour by salinity",
+                "type": "directory"
+            }
+        ]
+    }
+}
+</pre>
+
+<h2 id="onchangecallbacksubscriptionahrefonchangeidonchangeclassdeeplinka">onChange(callback) : subscription <a href="#onChange" id="onChange" class="deep-link">#</a></h2>
+
+<p>Callback function will be called with the pipeline query as the first argument.
+As we rely on Monologue.js, you get a subscription object as a
+response which allows for easy unsubscription.</p>
+
+<h2 id="topicchangepipelinechangeahreftopicchangeidtopicchangeclassdeeplinka">TopicChange() : 'pipeline.change' <a href="#TopicChange" id="TopicChange" class="deep-link">#</a></h2>
+
+<p>Returns the name of the topic used for the pipeline change notification.</p>
+
+<h2 id="triggerchangeahreftriggerchangeidtriggerchangeclassdeeplinka">triggerChange() <a href="#triggerChange" id="triggerChange" class="deep-link">#</a></h2>
+
+<p>Triggers a change event. The event triggered is a string
+that represents the pipeline encoding.</p>
+
+<h2 id="islayeractivelayeridbooleanahrefislayeractiveidislayeractiveclassdeeplinka">isLayerActive(layerId) : Boolean <a href="#isLayerActive" id="isLayerActive" class="deep-link">#</a></h2>
+
+<p>Returns true if the given layer is set to active.
+By default, every layer is active.</p>
+
+<h2 id="setlayeractivelayeridactiveahrefsetlayeractiveidsetlayeractiveclassdeeplinka">setLayerActive(layerId, active) <a href="#setLayerActive" id="setLayerActive" class="deep-link">#</a></h2>
+
+<p>Updates the active state of a layer.
+If the internal state has changed, the model will trigger a change event.</p>
+
+<h2 id="togglelayeractivelayeridahreftogglelayeractiveidtogglelayeractiveclassdeeplinka">toggleLayerActive(layerId) <a href="#toggleLayerActive" id="toggleLayerActive" class="deep-link">#</a></h2>
+
+<p>Toggles the active state of the given layer and trigger a change event.</p>
+
+<h2 id="islayervisiblelayeridahrefislayervisibleidislayervisibleclassdeeplinka">isLayerVisible(layerId) <a href="#isLayerVisible" id="isLayerVisible" class="deep-link">#</a></h2>
+
+<p>Returns true if the given layer is set to visible. By default, every layer is visible.</p>
+
+<h2 id="setlayervisiblelayeridvisibleahrefsetlayervisibleidsetlayervisibleclassdeeplinka">setLayerVisible(layerId, visible) <a href="#setLayerVisible" id="setLayerVisible" class="deep-link">#</a></h2>
+
+<p>Updates the visible state of a layer.
+If the internal state has changed, the model will trigger a change event.</p>
+
+<h2 id="togglelayervisiblelayeridahreftogglelayervisibleidtogglelayervisibleclassdeeplinka">toggleLayerVisible(layerId) <a href="#toggleLayerVisible" id="toggleLayerVisible" class="deep-link">#</a></h2>
+
+<p>Toggles the visible state of the given layer and triggers a change event.</p>
+
+<h2 id="islayerineditmodelayeridahrefislayerineditmodeidislayerineditmodeclassdeeplinka">isLayerInEditMode(layerId) <a href="#isLayerInEditMode" id="isLayerInEditMode" class="deep-link">#</a></h2>
+
+<p>Returns true if the given layer is in edit mode. By default, none of the layers are in edit mode.</p>
+
+<h2 id="toggleeditmodelayeridahreftoggleeditmodeidtoggleeditmodeclassdeeplinka">toggleEditMode(layerId) <a href="#toggleEditMode" id="toggleEditMode" class="deep-link">#</a></h2>
+
+<p>Toggles the edit mode state of the given layer and triggers a change event.</p>
+
+<h2 id="getcolorlayeridarrayahrefgetcoloridgetcolorclassdeeplinka">getColor(layerId) : Array <a href="#getColor" id="getColor" class="deep-link">#</a></h2>
+
+<p>Returns the set of color codes that given layer can have.</p>
+
+<pre class="brush:js">
+getColor('E') => ['B', 'A']
+</pre>
+
+<h2 id="getcolortolabelcolorcodestringahrefgetcolortolabelidgetcolortolabelclassdeeplinka">getColorToLabel(colorCode) : String <a href="#getColorToLabel" id="getColorToLabel" class="deep-link">#</a></h2>
+
+<p>Returns the label associated to a given color code.</p>
+
+<pre class="brush:js">
+getColorToLabel('B') => 'temperature'
+</pre>
+
+<h2 id="isactivecolorlayeridcolorcodebooleanahrefisactivecoloridisactivecolorclassdeeplinka">isActiveColor(layerId, colorCode) : Boolean <a href="#isActiveColor" id="isActiveColor" class="deep-link">#</a></h2>
+
+<p>Returns true if the given layer is colored by the
+given color code, returns false otherwise.</p>
+
+<h2 id="setactivecolorlayeridcolorcodeahrefsetactivecoloridsetactivecolorclassdeeplinka">setActiveColor(layerId, colorCode) <a href="#setActiveColor" id="setActiveColor" class="deep-link">#</a></h2>
+
+<p>Updates which <strong>ColorBy</strong> field should be used for a given layer.</p>
+
+<h2 id="getpipelinequerystringahrefgetpipelinequeryidgetpipelinequeryclassdeeplinka">getPipelineQuery() : String <a href="#getPipelineQuery" id="getPipelineQuery" class="deep-link">#</a></h2>
+
+<p>Returns the current pipeline configuration as an encoded string.</p>
+
+<h2 id="getpipelinedescriptionahrefgetpipelinedescriptionidgetpipelinedescriptionclassdeeplinka">getPipelineDescription() <a href="#getPipelineDescription" id="getPipelineDescription" class="deep-link">#</a></h2>
+
+<p>Returns the pipeline tree defined inside the JSON object under the path <strong>JSON.CompositePipeline.pipeline</strong>.</p>
+        </div>
+        <script src="assets_/js/lib/jquery.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
+        <script src="assets_/js/main.js"></script>
+    </body>
+</html>

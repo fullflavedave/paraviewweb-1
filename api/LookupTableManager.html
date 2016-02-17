@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title></title>
+  <meta name="description" content="">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="assets_/css/shCore.css">
+  <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
+  <link rel="stylesheet" href="assets_/css/main.css">
+</head>
+
+<body data-root-path="">
+
+<header class="site-header">
+</header>
+
+<div id="wrapper">
+   <div id="content">
+<ul id="topnav">
+    <li><a href="index.html">Index</a></li>
+    <li><a href="#toc">TOC</a></li>
+</ul>
+<h1 id="lookuptablemanager">LookupTableManager</h1>
+
+<pre class="brush:js">
+var LookupTableManager = require('paraviewweb/src/Common/Core/LookupTableManager'),
+    instance = new LookupTableManager();
+</pre>
+
+<h2 id="tableofcontentsahreftocnametocclassdeeplinka">Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
+
+<ul>
+<li><a href="#constructor">constructor()</a></li>
+
+<li><a href="#addLookupTable">addLookupTable()</a></li>
+
+<li><a href="#removeLookupTable">removeLookupTable()</a></li>
+
+<li><a href="#getLookupTable">getLookupTable()</a></li>
+
+<li><a href="#addFields">addFields()</a></li>
+
+<li><a href="#onChange">onChange()</a></li>
+</ul>
+
+<h2 id="constructorahrefconstructoridconstructorclassdeeplinka">constructor() <a href="#constructor" id="constructor" class="deep-link">#</a></h2>
+
+<p>Create an instance of a LookupTableManager.</p>
+
+<h2 id="addlookuptablenamerangepresetlookuptableahrefaddlookuptableidaddlookuptableclassdeeplinka">addLookupTable(name, range, preset) : LookupTable <a href="#addLookupTable" id="addLookupTable" class="deep-link">#</a></h2>
+
+<p>Create a new LookupTable for a given name, scalar range and which preset should
+be used. If no preset name is provided, the 'spectralflip' preset will be used.</p>
+
+<p>The method will return the newly created LookupTable instance.</p>
+
+<h2 id="removelookuptablenameahrefremovelookuptableidremovelookuptableclassdeeplinka">removeLookupTable(name) <a href="#removeLookupTable" id="removeLookupTable" class="deep-link">#</a></h2>
+
+<p>Remove the LookupTable instance that was registered under the given name.</p>
+
+<h2 id="getlookuptablenameahrefgetlookuptableidgetlookuptableclassdeeplinka">getLookupTable(name) <a href="#getLookupTable" id="getLookupTable" class="deep-link">#</a></h2>
+
+<p>Return the LookupTable instance that was registered under the given name.</p>
+
+<h2 id="addfieldsfieldsmapahrefaddfieldsidaddfieldsclassdeeplinka">addFields(fieldsMap) <a href="#addFields" id="addFields" class="deep-link">#</a></h2>
+
+<p>This will create a LookupTable for each field defined within the map using
+the given scalar range.</p>
+
+<pre class="brush:js">
+// fieldsMap can look like that
+var fieldsMap = {
+    'pressure': [-2, 4],
+    'temperature': [20, 28],
+    'velocity': [0, 234]
+};
+</pre>
+
+<h2 id="onchangecallbacksubscriptionahrefonchangeidonchangeclassdeeplinka">onChange(callback) : subscription <a href="#onChange" id="onChange" class="deep-link">#</a></h2>
+
+<p>Helper method used to bind a listener to the change topic.
+This will return a subscription object.</p>
+
+<p>More information can be found on Monologue.js as we rely on it for our
+observer methods.</p>
+        </div>
+        <script src="assets_/js/lib/jquery.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
+        <script src="assets_/js/main.js"></script>
+    </body>
+</html>

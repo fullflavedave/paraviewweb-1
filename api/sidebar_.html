@@ -1,0 +1,837 @@
+<div class="hd">
+    <input id="search" type="search" placeholder="search" />
+    <label><input id="show-desc" type="checkbox" /> Show Description</label>
+</div>
+<div class="bd">
+    <div class="toc">
+            <h3 class="toc-mod-title"><a href="AbstractImageBuilder.html">AbstractImageBuilder</a></h3>
+            <div class="toc-list">
+                <a class="toc-item" href="AbstractImageBuilder.html#constructor">
+                    <h4>constructor({queryDataModel, pipelineModel, lookupTableManager, handleRecord&#x3D;false, dimensions&#x3D;[500,500] })</h4>
+                    <span class="desc">Keep track of any provided model and create the <strong>controlWidgets</strong> based on the set of valid ones.</span>
+                </a>
+                <a class="toc-item" href="AbstractImageBuilder.html#update">
+                    <h4>update()</h4>
+                    <span class="desc">Standard implementation of data fetching using the <strong>queryDataModel</strong> instance if any.</span>
+                </a>
+                <a class="toc-item" href="AbstractImageBuilder.html#onImageReady">
+                    <h4>onImageReady(callback) : subscription</h4>
+                    <span class="desc">Register callback for when the image builder finished its image rendering.</span>
+                </a>
+                <a class="toc-item" href="AbstractImageBuilder.html#imageReady">
+                    <h4>imageReady(readyImage)</h4>
+                    <span class="desc">Method that will trigger the ImageReady notification with the provided object.</span>
+                </a>
+                <a class="toc-item" href="AbstractImageBuilder.html#registerSubscription">
+                    <h4>registerSubscription(subscription)</h4>
+                    <span class="desc">Helper method used to automatically <strong>subscription.unsubscribe()</strong> any registered subscription when <strong>this.destroy()</strong> get called.</span>
+                </a>
+                <a class="toc-item" href="AbstractImageBuilder.html#registerObjectToFree">
+                    <h4>registerObjectToFree(obj)</h4>
+                    <span class="desc">Helper method used to automatically <strong>obj.destroy()</strong> any registered object when <strong>this.destroy()</strong> get called.</span>
+                </a>
+                <a class="toc-item" href="AbstractImageBuilder.html#getListeners">
+                    <h4>getListeners() : listeners</h4>
+                    <span class="desc">Return the <strong>QueryDataModel</strong> MouseListener if a <strong>queryDataModel</strong> instance was provided at the creation.</span>
+                </a>
+                <a class="toc-item" href="AbstractImageBuilder.html#getControlWidgets">
+                    <h4>getControlWidgets() : controlWidgets</h4>
+                    <span class="desc">Return the control widgets for [ QueryDataModel, PipelineModel, LookupTableManager ] for only those who were provided at the creation.</span>
+                </a>
+                <a class="toc-item" href="AbstractImageBuilder.html#getControlModels">
+                    <h4>getControlModels() : controlModels</h4>
+                    <span class="desc">Return the following set of objects.</span>
+                </a>
+                <a class="toc-item" href="AbstractImageBuilder.html#destroy">
+                    <h4>destroy()</h4>
+                    <span class="desc">Will free the registered resources. </span>
+                </a>
+            </div>
+            <h3 class="toc-mod-title"><a href="CanvasOffscreenBuffer.html">CanvasOffscreenBuffer</a></h3>
+            <div class="toc-list">
+                <a class="toc-item" href="CanvasOffscreenBuffer.html#constructor">
+                    <h4>constructor(width, height)</h4>
+                    <span class="desc">Create a canvas and add it to the DOM as a child of the <code>&lt;body/&gt;</code> element.</span>
+                </a>
+                <a class="toc-item" href="CanvasOffscreenBuffer.html#size">
+                    <h4>size([width, [height]]) : [ width, height ]</h4>
+                    <span class="desc">Return the actual canvas size if used without any argument.</span>
+                </a>
+                <a class="toc-item" href="CanvasOffscreenBuffer.html#get2DContext">
+                    <h4>get2DContext()</h4>
+                    <span class="desc">Returns the 2D context of the given canvas.</span>
+                </a>
+                <a class="toc-item" href="CanvasOffscreenBuffer.html#get3DContext">
+                    <h4>get3DContext()</h4>
+                    <span class="desc"><em>Experimental</em>, returns the 3D WebGL context of the given canvas.</span>
+                </a>
+                <a class="toc-item" href="CanvasOffscreenBuffer.html#toDataURL">
+                    <h4>toDataURL(type&#x3D;&#x27;image/png&#x27;, encoderOptions&#x3D;1)</h4>
+                    <span class="desc">Returns a data URI containing a representation of the image in the format specified by the type parameter (defaults to PNG). The returned image has a resolution of 96 dpi.</span>
+                </a>
+                <a class="toc-item" href="CanvasOffscreenBuffer.html#destroy">
+                    <h4>destroy()</h4>
+                    <span class="desc">Free the internal resources and remove the DOM element from the tree. </span>
+                </a>
+            </div>
+            <h3 class="toc-mod-title"><a href="CompositeImageBuilder.html">CompositeImageBuilder</a></h3>
+            <div class="toc-list">
+                <a class="toc-item" href="CompositeImageBuilder.html#constructor">
+                    <h4>constructor(queryDataModel, pipelineModel)</h4>
+                    <span class="desc">Create an instance of a CompositeImageBuilder using the associated <strong>queryDataModel</strong> that should be used to fetch the data.</span>
+                </a>
+                <a class="toc-item" href="CompositeImageBuilder.html#update">
+                    <h4>update() - inherited</h4>
+                    <span class="desc">Trigger the fetching of the data (composite.json + rgb.jpg).</span>
+                </a>
+                <a class="toc-item" href="CompositeImageBuilder.html#setPipelineQuery">
+                    <h4>setPipelineQuery(pipelineQuery)</h4>
+                    <span class="desc">Should be called each time the pipeline setting is changed.</span>
+                </a>
+                <a class="toc-item" href="CompositeImageBuilder.html#render">
+                    <h4>render()</h4>
+                    <span class="desc">Process the current set of loaded data and render it into the background canvas. Once done, an event gets triggered to let the application know that the image is
+ready to be rendered/displayed somewhere.</span>
+                </a>
+                <a class="toc-item" href="CompositeImageBuilder.html#onImageReady">
+                    <h4>onImageReady(callback) : subscription - inherited</h4>
+                    <span class="desc">Allows the registration of a <strong>callback(data, envelope)</strong> function when the actual generated image is ready.</span>
+                </a>
+                <a class="toc-item" href="CompositeImageBuilder.html#destroy">
+                    <h4>destroy()</h4>
+                    <span class="desc">Free the internal resources of the current instance.</span>
+                </a>
+                <a class="toc-item" href="CompositeImageBuilder.html#* updateCompositeMap">
+                    <h4>* updateCompositeMap(query, composite)</h4>
+                    <span class="desc">Internal function used to update the composite map for faster rendering.</span>
+                </a>
+                <a class="toc-item" href="CompositeImageBuilder.html#_updateOffsetMap">
+                    <h4>_updateOffsetMap(pipelineQuery)</h4>
+                    <span class="desc">Internal function used to update the offset map based on the Pipeline configuration. The <strong>pipelineQuery</strong> is a String that encode the pipeline configuration such as
+which layer is visible or not and which field should be rendered for a given layer.</span>
+                </a>
+                <a class="toc-item" href="CompositeImageBuilder.html#_pushToFront">
+                    <h4>_pushToFront(width, height)</h4>
+                    <span class="desc">Trigger the event notification that the image is ready. This will call the proper method to either send the ImageData or an ImageURL.</span>
+                </a>
+                <a class="toc-item" href="CompositeImageBuilder.html#_pushToFrontAsImage">
+                    <h4>_pushToFrontAsImage(width, height)</h4>
+                    <span class="desc">Called as <strong>pushToFront</strong> when <strong>setPushMethodAsImage()</strong> is used.</span>
+                </a>
+                <a class="toc-item" href="CompositeImageBuilder.html#_pushToFrontAsBuffer">
+                    <h4>_pushToFrontAsBuffer(width, height)</h4>
+                    <span class="desc">Called as <strong>pushToFront</strong> when <strong>setPushMethodAsBuffer()</strong> is used.</span>
+                </a>
+                <a class="toc-item" href="CompositeImageBuilder.html#getListeners - inherited">
+                    <h4>getListeners - inherited</h4>
+                    <span class="desc">Returns a list of MouseHandler listeners.</span>
+                </a>
+                <a class="toc-item" href="CompositeImageBuilder.html#getControlWidgets - inherited">
+                    <h4>getControlWidgets - inherited</h4>
+                    <span class="desc">Returns a list of Widgets needed to drive the ImageBuilder.</span>
+                </a>
+                <a class="toc-item" href="CompositeImageBuilder.html#getControlModels - inherited">
+                    <h4>getControlModels - inherited</h4>
+                    <span class="desc">Returns a list of Model that can drive the ImageBuilder. </span>
+                </a>
+            </div>
+            <h3 class="toc-mod-title"><a href="DataManager.html">DataManager</a></h3>
+            <div class="toc-list">
+                <a class="toc-item" href="DataManager.html#fetchURL">
+                    <h4>fetchURL(url, type[, mimeType, topicForNotification])</h4>
+                    <span class="desc">Fetches a data object from a static URL. The set of possible data type are: [ 'json', 'text', 'blob', 'array' ]</span>
+                </a>
+                <a class="toc-item" href="DataManager.html#fetch">
+                    <h4>fetch(key, options)</h4>
+                    <span class="desc">Downloads a resource based on a previously registered pattern with specific key-value pair replacement.</span>
+                </a>
+                <a class="toc-item" href="DataManager.html#get">
+                    <h4>get(url[, freeCache])</h4>
+                    <span class="desc">Returns the downloaded data object if available or an <strong>undefined</strong> object if unavailable.</span>
+                </a>
+                <a class="toc-item" href="DataManager.html#free">
+                    <h4>free(url)</h4>
+                    <span class="desc">Removes the entry from the cache based on the <strong>requestedURL</strong> of a cache entry.</span>
+                </a>
+                <a class="toc-item" href="DataManager.html#registerURL">
+                    <h4>registerURL(key, urlPattern, type, mimeType)</h4>
+                    <span class="desc">Registers a pattern based URL to ease data fetching from it.</span>
+                </a>
+                <a class="toc-item" href="DataManager.html#unregisterURL">
+                    <h4>unregisterURL(key)</h4>
+                    <span class="desc">Removes the pattern from the registry.</span>
+                </a>
+                <a class="toc-item" href="DataManager.html#clear">
+                    <h4>clear()</h4>
+                    <span class="desc">Empties the content of the cache.</span>
+                </a>
+                <a class="toc-item" href="DataManager.html#on">
+                    <h4>on(event, listener)</h4>
+                    <span class="desc">Attaches a listener to a <strong>url</strong> or a pattern key.</span>
+                </a>
+                <a class="toc-item" href="DataManager.html#getCacheSize">
+                    <h4>getCacheSize()</h4>
+                    <span class="desc">Return the maximum size that the cache can contain before the gc() take any action.</span>
+                </a>
+                <a class="toc-item" href="DataManager.html#setCacheSize">
+                    <h4>setCacheSize( maxSizeInBytes )</h4>
+                    <span class="desc">Update the maximum cache size to adjust when the garbage collector should empty it.</span>
+                </a>
+                <a class="toc-item" href="DataManager.html#getMemoryUsage">
+                    <h4>getMemoryUsage()</h4>
+                    <span class="desc">Return the current memory usage of the cache data in Bytes. </span>
+                </a>
+            </div>
+            <h3 class="toc-mod-title"><a href="DataProberImageBuilder.html">DataProberImageBuilder</a></h3>
+            <div class="toc-list">
+                <a class="toc-item" href="DataProberImageBuilder.html#constructor">
+                    <h4>constructor(queryDataModel, lookupTableManager)</h4>
+                    <span class="desc">Create an instance of a DataProber using the associated <strong>queryDataModel</strong> that should be used to fetch the data and the associated set
+of LookupTable managed by the <strong>lookupTableManager</strong> instance.</span>
+                </a>
+                <a class="toc-item" href="DataProberImageBuilder.html#update">
+                    <h4>update()</h4>
+                    <span class="desc">Trigger the fetching of the data (composite.json + rgb.jpg).</span>
+                </a>
+                <a class="toc-item" href="DataProberImageBuilder.html#setPushMethodAsBuffer">
+                    <h4>setPushMethodAsBuffer()</h4>
+                    <span class="desc">Change the method to share the image to the outside world. After the method gets called, the notification event will look as follows:</span>
+                </a>
+                <a class="toc-item" href="DataProberImageBuilder.html#setPushMethodAsImage">
+                    <h4>setPushMethodAsImage()</h4>
+                    <span class="desc">Change the method to share the image to the outside world. After the method gets called, the notification event will look as follows:</span>
+                </a>
+                <a class="toc-item" href="DataProberImageBuilder.html#setProbe">
+                    <h4>setProbe(x, y, z)</h4>
+                    <span class="desc">Update the current probe location. [x,y,z] must be integers and be within the extent of the dataset.</span>
+                </a>
+                <a class="toc-item" href="DataProberImageBuilder.html#getProbe">
+                    <h4>getProbe() : [x, y, z]</h4>
+                    <span class="desc">Return the current probe location within the dataset.</span>
+                </a>
+                <a class="toc-item" href="DataProberImageBuilder.html#setField">
+                    <h4>setField(fieldName)</h4>
+                    <span class="desc">Set which field should be rendered.</span>
+                </a>
+                <a class="toc-item" href="DataProberImageBuilder.html#getField">
+                    <h4>getField() : fieldName</h4>
+                    <span class="desc">Return the name of the field that is currently used.</span>
+                </a>
+                <a class="toc-item" href="DataProberImageBuilder.html#getFields">
+                    <h4>getFields() : [ ... ]</h4>
+                    <span class="desc">Return the set of possible fields that can be set.</span>
+                </a>
+                <a class="toc-item" href="DataProberImageBuilder.html#getLookupTable">
+                    <h4>getLookupTable() : LookupTable</h4>
+                    <span class="desc">Return the LookupTable associated to the current <strong>field</strong>.</span>
+                </a>
+                <a class="toc-item" href="DataProberImageBuilder.html#getLookupTableManager">
+                    <h4>getLookupTableManager() : LookupTableManager</h4>
+                    <span class="desc">Return the LookupTableManager instance that was provided at the creation of this instance.</span>
+                </a>
+                <a class="toc-item" href="DataProberImageBuilder.html#render">
+                    <h4>render()</h4>
+                    <span class="desc">Process the current set of loaded data and render it into the background canvas. Once done, an event is triggered to let the application know that the image is
+ready to be rendered/display somewhere.</span>
+                </a>
+                <a class="toc-item" href="DataProberImageBuilder.html#onImageReady">
+                    <h4>onImageReady(callback) : subscription</h4>
+                    <span class="desc">This allows the registration of a <strong>callback(data, envelope)</strong> function when the actual generated image is ready.</span>
+                </a>
+                <a class="toc-item" href="DataProberImageBuilder.html#TopicImageReady">
+                    <h4>TopicImageReady() : &#x27;image-ready&#x27;</h4>
+                    <span class="desc">Return the topic used for the notification of the image.</span>
+                </a>
+                <a class="toc-item" href="DataProberImageBuilder.html#destroy">
+                    <h4>destroy()</h4>
+                    <span class="desc">Free the internal resources of the current instance.</span>
+                </a>
+                <a class="toc-item" href="DataProberImageBuilder.html#getRenderMethod">
+                    <h4>getRenderMethod()</h4>
+                    <span class="desc">Returns the current render method.</span>
+                </a>
+                <a class="toc-item" href="DataProberImageBuilder.html#getRenderMethods">
+                    <h4>getRenderMethods()</h4>
+                    <span class="desc">Returns the available render methods: <code>['XY', 'ZY', 'XZ']</code>.</span>
+                </a>
+                <a class="toc-item" href="DataProberImageBuilder.html#* renderXY">
+                    <h4>* renderXY()</h4>
+                    <span class="desc">Concrete render method that gets called by the generic <strong>render()</strong> one.</span>
+                </a>
+                <a class="toc-item" href="DataProberImageBuilder.html#* renderZY">
+                    <h4>* renderZY()</h4>
+                    <span class="desc">Concrete render method that gets called by the generic <strong>render()</strong> one.</span>
+                </a>
+                <a class="toc-item" href="DataProberImageBuilder.html#* renderXZ">
+                    <h4>* renderXZ()</h4>
+                    <span class="desc">Concrete render method that gets called by the generic <strong>render()</strong> one.</span>
+                </a>
+                <a class="toc-item" href="DataProberImageBuilder.html#* pushToFront">
+                    <h4>* pushToFront(width, height)</h4>
+                    <span class="desc">Triggers a event notification that says the image is ready. This will call the proper method to either send the ImageData or an ImageURL.</span>
+                </a>
+                <a class="toc-item" href="DataProberImageBuilder.html#* pushToFrontAsImage">
+                    <h4>* pushToFrontAsImage(width, height)</h4>
+                    <span class="desc">Called as <strong>pushToFront</strong> when <strong>setPushMethodAsImage()</strong> is used.</span>
+                </a>
+                <a class="toc-item" href="DataProberImageBuilder.html#* pushToFrontAsBuffer">
+                    <h4>* pushToFrontAsBuffer(width, height)</h4>
+                    <span class="desc">Called as <strong>pushToFront</strong> when setPushMethodAsBuffer()__ is used.</span>
+                </a>
+                <a class="toc-item" href="DataProberImageBuilder.html#* applyLookupTable">
+                    <h4>* applyLookupTable(width, height)</h4>
+                    <span class="desc">Internal method used to convert RGB encoded scalar values into the appropriate color based on the current LookupTable setting.</span>
+                </a>
+                <a class="toc-item" href="DataProberImageBuilder.html#* getYOffset">
+                    <h4>* getYOffset(slice) : Integer</h4>
+                    <span class="desc">Internal method used to return the offset index of the image that should be used within the current image sprite.</span>
+                </a>
+                <a class="toc-item" href="DataProberImageBuilder.html#* getImage">
+                    <h4>* getImage(slice, callback)</h4>
+                    <span class="desc">Internal method used to call the callback method on the image when that one is ready.</span>
+                </a>
+                <a class="toc-item" href="DataProberImageBuilder.html#isCrossHairEnabled">
+                    <h4>isCrossHairEnabled()</h4>
+                    <span class="desc">Returns true if the probe crosshair is visible.</span>
+                </a>
+                <a class="toc-item" href="DataProberImageBuilder.html#setCrossHairEnabled">
+                    <h4>setCrossHairEnabled(useCrossHair)</h4>
+                    <span class="desc">Enables or disables the probe crosshair depending on the truthy value of useCrossHair.</span>
+                </a>
+                <a class="toc-item" href="DataProberImageBuilder.html#onImageReady">
+                    <h4>onImageReady(callback)</h4>
+                    <span class="desc">Calls <em>callback</em> when the image is ready.</span>
+                </a>
+                <a class="toc-item" href="DataProberImageBuilder.html#onProbeLineReady">
+                    <h4>onProbeLineReady(callback)</h4>
+                    <span class="desc">Calls <em>callback</em> when the probe line is drawn.</span>
+                </a>
+                <a class="toc-item" href="DataProberImageBuilder.html#onProbeChange">
+                    <h4>onProbeChange(callback)</h4>
+                    <span class="desc">Calls <em>callback</em> when the probe coordinates change.</span>
+                </a>
+                <a class="toc-item" href="DataProberImageBuilder.html#onRenderMethodChange">
+                    <h4>onRenderMethodChange(callback)</h4>
+                    <span class="desc">Calls <em>callback</em> when the render method changes.</span>
+                </a>
+                <a class="toc-item" href="DataProberImageBuilder.html#onCrosshairVisibilityChange">
+                    <h4>onCrosshairVisibilityChange(callback)</h4>
+                    <span class="desc">Calls <em>callback</em> when the crosshair changes visibility.</span>
+                </a>
+                <a class="toc-item" href="DataProberImageBuilder.html#getListeners - inherited">
+                    <h4>getListeners - inherited</h4>
+                    <span class="desc">Returns a list of MouseHandler listeners.</span>
+                </a>
+                <a class="toc-item" href="DataProberImageBuilder.html#getControlWidgets - inherited">
+                    <h4>getControlWidgets - inherited</h4>
+                    <span class="desc">Returns a list of Widgets needed to drive the ImageBuilder.</span>
+                </a>
+                <a class="toc-item" href="DataProberImageBuilder.html#getControlModels - inherited">
+                    <h4>getControlModels - inherited</h4>
+                    <span class="desc">Returns a list of Model that can drive the ImageBuilder. </span>
+                </a>
+            </div>
+            <h3 class="toc-mod-title"><a href="DepthCompositeImageBuilder.html">DepthCompositeImageBuilder</a></h3>
+            <div class="toc-list">
+                <a class="toc-item" href="DepthCompositeImageBuilder.html#constructor">
+                    <h4>constructor(queryDataModel, pipelineModel, lookupTableManager)</h4>
+                    <span class="desc">Create an instance of a DepthCompositeImageBuilder using the associated <strong>queryDataModel</strong> that should be used to fetch the data.</span>
+                </a>
+                <a class="toc-item" href="DepthCompositeImageBuilder.html#update">
+                    <h4>update() - inherited</h4>
+                    <span class="desc">Trigger the fetching of the data.</span>
+                </a>
+                <a class="toc-item" href="DepthCompositeImageBuilder.html#setPipelineQuery">
+                    <h4>setPipelineQuery(pipelineQuery)</h4>
+                    <span class="desc">Should be called each time the pipeline setting is changed.</span>
+                </a>
+                <a class="toc-item" href="DepthCompositeImageBuilder.html#render">
+                    <h4>render()</h4>
+                    <span class="desc">Process the current set of loaded data and render it into the background canvas. Once done, an event gets triggered to let the application know that the image is
+ready to be rendered/displayed somewhere.</span>
+                </a>
+                <a class="toc-item" href="DepthCompositeImageBuilder.html#onImageReady">
+                    <h4>onImageReady(callback) : subscription - inherited</h4>
+                    <span class="desc">Allows the registration of a <strong>callback(data, envelope)</strong> function when the actual generated image is ready.</span>
+                </a>
+                <a class="toc-item" href="DepthCompositeImageBuilder.html#destroy">
+                    <h4>destroy() - inherited</h4>
+                    <span class="desc">Free the internal resources of the current instance.</span>
+                </a>
+                <a class="toc-item" href="DepthCompositeImageBuilder.html#getListeners">
+                    <h4>getListeners() - inherited</h4>
+                    <span class="desc">Returns a list of MouseHandler listeners.</span>
+                </a>
+                <a class="toc-item" href="DepthCompositeImageBuilder.html#getControlWidgets">
+                    <h4>getControlWidgets() : controlWidgets</h4>
+                    <span class="desc">Returns a list of Widgets needed to drive the ImageBuilder.</span>
+                </a>
+                <a class="toc-item" href="DepthCompositeImageBuilder.html#getControlModels">
+                    <h4>getControlModels() : controlModels</h4>
+                    <span class="desc">Returns a list of Model that can drive the ImageBuilder.</span>
+                </a>
+            </div>
+            <h3 class="toc-mod-title"><a href="LineChartPainter.html">LineChartPainter</a></h3>
+            <div class="toc-list">
+                <a class="toc-item" href="LineChartPainter.html#updateData">
+                    <h4>updateData(data)</h4>
+                    <span class="desc">Update the data to render and emit a PainterReady event. The data format should be as follow:</span>
+                </a>
+                <a class="toc-item" href="LineChartPainter.html#setTitle">
+                    <h4>setTitle(title)</h4>
+                    <span class="desc">Update the title that should be rendered within the Line Chart.</span>
+                </a>
+                <a class="toc-item" href="LineChartPainter.html#setMarkerLocation">
+                    <h4>setMarkerLocation(xRatio)</h4>
+                    <span class="desc">Set a line marker for the line chart. The value provided should be a fraction of the range along X. Its value should be within the following range [0.0, 1.0].</span>
+                </a>
+                <a class="toc-item" href="LineChartPainter.html#enableMarker">
+                    <h4>enableMarker(show)</h4>
+                    <span class="desc">Choose to show or hide the marker.</span>
+                </a>
+                <a class="toc-item" href="LineChartPainter.html#isReady">
+                    <h4>isReady() : Boolean</h4>
+                    <span class="desc">Method that can be used to see if the Painter is ready for painting the data.</span>
+                </a>
+                <a class="toc-item" href="LineChartPainter.html#paint">
+                    <h4>paint(ctx, location)</h4>
+                    <span class="desc">Method called by the renderer to let the painter fill the given location of the canvas context.</span>
+                </a>
+                <a class="toc-item" href="LineChartPainter.html#onPainterReady">
+                    <h4>onPainterReady(callback)</h4>
+                    <span class="desc">Method used to register the callback function that should be called when the painter is ready to be used.</span>
+                </a>
+                <a class="toc-item" href="LineChartPainter.html#getControlWidgets">
+                    <h4>getControlWidgets() : Array[String...]</h4>
+                    <span class="desc">Return the list of widgets that should be used to control this painter. (None for this painter)</span>
+                </a>
+            </div>
+            <h3 class="toc-mod-title"><a href="LookupTable.html">LookupTable</a></h3>
+            <div class="toc-list">
+                <a class="toc-item" href="LookupTable.html#constructor">
+                    <h4>constructor(name)</h4>
+                    <span class="desc">Create an instance of a LookupTable while giving it a name. Usually we use the field name that we want to use
+that LookupTable for.</span>
+                </a>
+                <a class="toc-item" href="LookupTable.html#getName">
+                    <h4>getName() : String</h4>
+                    <span class="desc">Return the name of the given LookupTable.</span>
+                </a>
+                <a class="toc-item" href="LookupTable.html#getPresets">
+                    <h4>getPresets() : [ String... ]</h4>
+                    <span class="desc">Return the names of the available presets.</span>
+                </a>
+                <a class="toc-item" href="LookupTable.html#setPreset">
+                    <h4>setPreset(name)</h4>
+                    <span class="desc">Use a preset to configure the current instance. This will reset all the control points and use the one defined inside the preset.</span>
+                </a>
+                <a class="toc-item" href="LookupTable.html#getScalarRange">
+                    <h4>getScalarRange() : [min, max]</h4>
+                    <span class="desc">Return the scalar range the LookupTable is using.</span>
+                </a>
+                <a class="toc-item" href="LookupTable.html#setScalarRange">
+                    <h4>setScalarRange(min, max)</h4>
+                    <span class="desc">Update the scalar range that LookupTable is using.</span>
+                </a>
+                <a class="toc-item" href="LookupTable.html#build">
+                    <h4>build(trigger)</h4>
+                    <span class="desc">This generate a precomputed table for the lookuptable.</span>
+                </a>
+                <a class="toc-item" href="LookupTable.html#setNumberOfColors">
+                    <h4>setNumberOfColors( numberOfColors )</h4>
+                    <span class="desc">Set the number of colors to be used for the concrete scalar to color mapping.</span>
+                </a>
+                <a class="toc-item" href="LookupTable.html#getNumberOfControlPoints">
+                    <h4>getNumberOfControlPoints() : Number</h4>
+                    <span class="desc">Return the number of control points used to define the color map.</span>
+                </a>
+                <a class="toc-item" href="LookupTable.html#removeControlPoint">
+                    <h4>removeControlPoint(idx) : Boolean</h4>
+                    <span class="desc">Removes the provided control point index and returns true if the index is valid and the point was removed, the method will otherwise return false.</span>
+                </a>
+                <a class="toc-item" href="LookupTable.html#getControlPoint">
+                    <h4>getControlPoint(idx) : {x, r, g, b}</h4>
+                    <span class="desc">Return the control point defined at the provided index.</span>
+                </a>
+                <a class="toc-item" href="LookupTable.html#updateControlPoint">
+                    <h4>updateControlPoint(idx, xrgb) : Number</h4>
+                    <span class="desc">Update the control point defined in the given index by replacing it with the provided object. The control points will be reset and the table rebuilt.</span>
+                </a>
+                <a class="toc-item" href="LookupTable.html#addControlPoint">
+                    <h4>addControlPoint(xrgb) : Number</h4>
+                    <span class="desc">Add a new control point and return its corresponding index while rebuilding the full index map.</span>
+                </a>
+                <a class="toc-item" href="LookupTable.html#drawToCanvas">
+                    <h4>drawToCanvas(canvas)</h4>
+                    <span class="desc">Draw the index map into the canvas using a height of 1 pixel and a width corresponding to the number of colors defined.</span>
+                </a>
+                <a class="toc-item" href="LookupTable.html#getColor">
+                    <h4>getColor(scalar) : [r, g, b]</h4>
+                    <span class="desc">Return the color that should be used for a given scalar value. If the value is outside the scalar range, then the last color defined for that edge will be used.</span>
+                </a>
+                <a class="toc-item" href="LookupTable.html#onChange">
+                    <h4>onChange(callback) : subscription</h4>
+                    <span class="desc">Helper method used to attach a listener to the topic that is used when the LookupTable change. We rely on Monologue.js for our observer pattern.</span>
+                </a>
+                <a class="toc-item" href="LookupTable.html#destroy">
+                    <h4>destroy()</h4>
+                    <span class="desc">Remove any listener attached to this LookupTable instance.</span>
+                </a>
+            </div>
+            <h3 class="toc-mod-title"><a href="LookupTableManager.html">LookupTableManager</a></h3>
+            <div class="toc-list">
+                <a class="toc-item" href="LookupTableManager.html#constructor">
+                    <h4>constructor()</h4>
+                    <span class="desc">Create an instance of a LookupTableManager.</span>
+                </a>
+                <a class="toc-item" href="LookupTableManager.html#addLookupTable">
+                    <h4>addLookupTable(name, range, preset) : LookupTable</h4>
+                    <span class="desc">Create a new LookupTable for a given name, scalar range and which preset should be used. If no preset name is provided, the 'spectralflip' preset will be used.</span>
+                </a>
+                <a class="toc-item" href="LookupTableManager.html#removeLookupTable">
+                    <h4>removeLookupTable(name)</h4>
+                    <span class="desc">Remove the LookupTable instance that was registered under the given name.</span>
+                </a>
+                <a class="toc-item" href="LookupTableManager.html#getLookupTable">
+                    <h4>getLookupTable(name)</h4>
+                    <span class="desc">Return the LookupTable instance that was registered under the given name.</span>
+                </a>
+                <a class="toc-item" href="LookupTableManager.html#addFields">
+                    <h4>addFields(fieldsMap)</h4>
+                    <span class="desc">This will create a LookupTable for each field defined within the map using the given scalar range.</span>
+                </a>
+                <a class="toc-item" href="LookupTableManager.html#onChange">
+                    <h4>onChange(callback) : subscription</h4>
+                    <span class="desc">Helper method used to bind a listener to the change topic. This will return a subscription object.</span>
+                </a>
+            </div>
+            <h3 class="toc-mod-title"><a href="PingPong.html">PingPong</a></h3>
+            <div class="toc-list">
+                <a class="toc-item" href="PingPong.html#constructor">
+                    <h4>constructor(glContext, [fbo1, fbo2], [texture1, texture2])</h4>
+                    <span class="desc">This will bind the framebuffers with the textures.</span>
+                </a>
+                <a class="toc-item" href="PingPong.html#swap">
+                    <h4>swap()</h4>
+                    <span class="desc">Swap active texture and framebuffer.</span>
+                </a>
+                <a class="toc-item" href="PingPong.html#clearFbo">
+                    <h4>clearFbo()</h4>
+                    <span class="desc">Clear framebuffers content.</span>
+                </a>
+                <a class="toc-item" href="PingPong.html#getFramebuffer">
+                    <h4>getFramebuffer() : framebuffer</h4>
+                    <span class="desc">Return the current active framebuffer.</span>
+                </a>
+                <a class="toc-item" href="PingPong.html#getRenderingTexture">
+                    <h4>getRenderingTexture() : texture</h4>
+                    <span class="desc">Return the current active texture. </span>
+                </a>
+            </div>
+            <h3 class="toc-mod-title"><a href="PipelineState.html">PipelineState</a></h3>
+            <div class="toc-list">
+                <a class="toc-item" href="PipelineState.html#constructor">
+                    <h4>constructor(json)</h4>
+                    <span class="desc">Creates an instance of a pipeline model which keeps track of the state of the pipeline.
+The provided JSON object should have the following type of structure:</span>
+                </a>
+                <a class="toc-item" href="PipelineState.html#onChange">
+                    <h4>onChange(callback) : subscription</h4>
+                    <span class="desc">Callback function will be called with the pipeline query as the first argument. As we rely on Monologue.js, you get a subscription object as a
+response which allows for easy unsubscription.</span>
+                </a>
+                <a class="toc-item" href="PipelineState.html#TopicChange">
+                    <h4>TopicChange() : &#x27;pipeline.change&#x27;</h4>
+                    <span class="desc">Returns the name of the topic used for the pipeline change notification.</span>
+                </a>
+                <a class="toc-item" href="PipelineState.html#triggerChange">
+                    <h4>triggerChange()</h4>
+                    <span class="desc">Triggers a change event. The event triggered is a string that represents the pipeline encoding.</span>
+                </a>
+                <a class="toc-item" href="PipelineState.html#isLayerActive">
+                    <h4>isLayerActive(layerId) : Boolean</h4>
+                    <span class="desc">Returns true if the given layer is set to active. By default, every layer is active.</span>
+                </a>
+                <a class="toc-item" href="PipelineState.html#setLayerActive">
+                    <h4>setLayerActive(layerId, active)</h4>
+                    <span class="desc">Updates the active state of a layer. If the internal state has changed, the model will trigger a change event.</span>
+                </a>
+                <a class="toc-item" href="PipelineState.html#toggleLayerActive">
+                    <h4>toggleLayerActive(layerId)</h4>
+                    <span class="desc">Toggles the active state of the given layer and trigger a change event.</span>
+                </a>
+                <a class="toc-item" href="PipelineState.html#isLayerVisible">
+                    <h4>isLayerVisible(layerId)</h4>
+                    <span class="desc">Returns true if the given layer is set to visible. By default, every layer is visible.</span>
+                </a>
+                <a class="toc-item" href="PipelineState.html#setLayerVisible">
+                    <h4>setLayerVisible(layerId, visible)</h4>
+                    <span class="desc">Updates the visible state of a layer. If the internal state has changed, the model will trigger a change event.</span>
+                </a>
+                <a class="toc-item" href="PipelineState.html#toggleLayerVisible">
+                    <h4>toggleLayerVisible(layerId)</h4>
+                    <span class="desc">Toggles the visible state of the given layer and triggers a change event.</span>
+                </a>
+                <a class="toc-item" href="PipelineState.html#isLayerInEditMode">
+                    <h4>isLayerInEditMode(layerId)</h4>
+                    <span class="desc">Returns true if the given layer is in edit mode. By default, none of the layers are in edit mode.</span>
+                </a>
+                <a class="toc-item" href="PipelineState.html#toggleEditMode">
+                    <h4>toggleEditMode(layerId)</h4>
+                    <span class="desc">Toggles the edit mode state of the given layer and triggers a change event.</span>
+                </a>
+                <a class="toc-item" href="PipelineState.html#getColor">
+                    <h4>getColor(layerId) : Array</h4>
+                    <span class="desc">Returns the set of color codes that given layer can have.</span>
+                </a>
+                <a class="toc-item" href="PipelineState.html#getColorToLabel">
+                    <h4>getColorToLabel(colorCode) : String</h4>
+                    <span class="desc">Returns the label associated to a given color code.</span>
+                </a>
+                <a class="toc-item" href="PipelineState.html#isActiveColor">
+                    <h4>isActiveColor(layerId, colorCode) : Boolean</h4>
+                    <span class="desc">Returns true if the given layer is colored by the given color code, returns false otherwise.</span>
+                </a>
+                <a class="toc-item" href="PipelineState.html#setActiveColor">
+                    <h4>setActiveColor(layerId, colorCode)</h4>
+                    <span class="desc">Updates which <strong>ColorBy</strong> field should be used for a given layer.</span>
+                </a>
+                <a class="toc-item" href="PipelineState.html#getPipelineQuery">
+                    <h4>getPipelineQuery() : String</h4>
+                    <span class="desc">Returns the current pipeline configuration as an encoded string.</span>
+                </a>
+                <a class="toc-item" href="PipelineState.html#getPipelineDescription">
+                    <h4>getPipelineDescription()</h4>
+                    <span class="desc">Returns the pipeline tree defined inside the JSON object under the path <strong>JSON.CompositePipeline.pipeline</strong>. </span>
+                </a>
+            </div>
+            <h3 class="toc-mod-title"><a href="PixelOperatorImageBuilder.html">PixelOperatorImageBuilder</a></h3>
+            <div class="toc-list">
+                <a class="toc-item" href="PixelOperatorImageBuilder.html#constructor">
+                    <h4>constructor(operation&#x3D;&#x27;a-b&#x27;, dependency&#x3D;[&#x27;a&#x27;,&#x27;b&#x27;])</h4>
+                    <span class="desc">Create an instance of a PixelOperatorImageBuilder using the pixel operation that we want to achieve on a set of image data.</span>
+                </a>
+                <a class="toc-item" href="PixelOperatorImageBuilder.html#setOperation">
+                    <h4>setOperation(String)</h4>
+                    <span class="desc">Update the operation that you would like to perform on each pixel.</span>
+                </a>
+                <a class="toc-item" href="PixelOperatorImageBuilder.html#getOperation">
+                    <h4>getOperation() : String</h4>
+                    <span class="desc">Return the operation that was previously set.</span>
+                </a>
+                <a class="toc-item" href="PixelOperatorImageBuilder.html#setDependencies">
+                    <h4>setDependencies(Array[String])</h4>
+                    <span class="desc">List the data names that you expect in order to perform your pixel operation. This will prevent invalid execution if all the data was not fully provided.</span>
+                </a>
+                <a class="toc-item" href="PixelOperatorImageBuilder.html#updateOperationFunction">
+                    <h4>updateOperationFunction()</h4>
+                    <span class="desc">Internal method used to compile the Operation provided as a String.</span>
+                </a>
+                <a class="toc-item" href="PixelOperatorImageBuilder.html#updateData">
+                    <h4>updateData(name, imageReadyEvent)</h4>
+                    <span class="desc">Method that should be called when new data become available for a given ImageBuilder.</span>
+                </a>
+                <a class="toc-item" href="PixelOperatorImageBuilder.html#processData">
+                    <h4>processData()</h4>
+                    <span class="desc">Internal method used to trigger the computation of the Pixel Operation.</span>
+                </a>
+                <a class="toc-item" href="PixelOperatorImageBuilder.html#onImageReady">
+                    <h4>onImageReady(callback) : subscription</h4>
+                    <span class="desc">Allows the registration of a <strong>callback(data, envelope)</strong> function when the actual generated image is ready.</span>
+                </a>
+                <a class="toc-item" href="PixelOperatorImageBuilder.html#destroy">
+                    <h4>destroy()</h4>
+                    <span class="desc">Free the internal resources of the current instance.</span>
+                </a>
+                <a class="toc-item" href="PixelOperatorImageBuilder.html#getListeners">
+                    <h4>getListeners() - inherited</h4>
+                    <span class="desc">Returns a list of MouseHandler listeners.</span>
+                </a>
+                <a class="toc-item" href="PixelOperatorImageBuilder.html#getControlWidgets">
+                    <h4>getControlWidgets() - inherited</h4>
+                    <span class="desc">Returns a list of Widgets needed to drive the ImageBuilder.</span>
+                </a>
+                <a class="toc-item" href="PixelOperatorImageBuilder.html#getControlModels">
+                    <h4>getControlModels() - inherited</h4>
+                    <span class="desc">Returns a list of Model that can drive the ImageBuilder. </span>
+                </a>
+            </div>
+            <h3 class="toc-mod-title"><a href="QueryDataModel.html">QueryDataModel</a></h3>
+            <div class="toc-list">
+                <a class="toc-item" href="QueryDataModel.html#constructor">
+                    <h4>constructor(jsonObject, basepath)</h4>
+                    <span class="desc">The jsonObject content has been previously described but the basepath is used to fetch the related resource relative to that basepath.</span>
+                </a>
+                <a class="toc-item" href="QueryDataModel.html#getQuery">
+                    <h4>getQuery() : { argA: valueA, argB: valueB }</h4>
+                    <span class="desc">Returns a simple map where the keys are the <em>arguments</em> attribute names and the values are the actual value for the given attribute.</span>
+                </a>
+                <a class="toc-item" href="QueryDataModel.html#fetchData">
+                    <h4>fetchData(category)</h4>
+                    <span class="desc">Triggers the download of the data associated with the current <em>query</em>.</span>
+                </a>
+                <a class="toc-item" href="QueryDataModel.html#lazyFetchData">
+                    <h4>lazyFetchData(category)</h4>
+                    <span class="desc">Similar to <strong>fetchData(category)</strong> except that it won't make a network request until the previous one is fully done. Moreover any <strong>lazyFetchData()</strong> call made
+during that pending period will be ignored and only the latest one will be triggered.</span>
+                </a>
+                <a class="toc-item" href="QueryDataModel.html#{_action_}">
+                    <h4>{_action_}(attributeName) : changeDetected</h4>
+                    <span class="desc">Several actions can be performed on a given attribute to change the query. Sometimes an action won't result in any change as we may have reached the end
+of the range of a non-looping attribute. Hence we provide feedback to the user
+to let them know if their method call affected the underline query or not.</span>
+                </a>
+                <a class="toc-item" href="QueryDataModel.html#setValue">
+                    <h4>setValue(attributeName, value) : changeDetected</h4>
+                    <span class="desc">Assigns a new value to the attribute, but the value must be part of the values list.</span>
+                </a>
+                <a class="toc-item" href="QueryDataModel.html#setIndex">
+                    <h4>setIndex(attributeName, index) : changeDetected</h4>
+                    <span class="desc">Assigns a new value to the attribute base on the value that is at provided index inside the values list.</span>
+                </a>
+                <a class="toc-item" href="QueryDataModel.html#getValue">
+                    <h4>getValue(attributeName) : value</h4>
+                    <span class="desc">Returns the current value inside the values list.</span>
+                </a>
+                <a class="toc-item" href="QueryDataModel.html#getValues">
+                    <h4>getValues(attributeName) : values</h4>
+                    <span class="desc">Returns the full list of possible values.</span>
+                </a>
+                <a class="toc-item" href="QueryDataModel.html#getIndex">
+                    <h4>getIndex(attributeName) : index</h4>
+                    <span class="desc">Returns the current value index inside the values list.</span>
+                </a>
+                <a class="toc-item" href="QueryDataModel.html#getSize">
+                    <h4>getSize(attributeName) : index</h4>
+                    <span class="desc">Returns the number of values inside the values list or <em>null</em> if the attribute was not found.</span>
+                </a>
+                <a class="toc-item" href="QueryDataModel.html#getUiType">
+                    <h4>getUiType(attributeName) : String</h4>
+                    <span class="desc">Returns the type of the UI that should be created. It can either be <em>slider</em> or <em>list</em>.</span>
+                </a>
+                <a class="toc-item" href="QueryDataModel.html#label">
+                    <h4>label(attributeName) : String</h4>
+                    <span class="desc">Returns the label that should be used for the given attribute.</span>
+                </a>
+                <a class="toc-item" href="QueryDataModel.html#setAnimationFlag">
+                    <h4>setAnimationFlag(attributeName, flagState)</h4>
+                    <span class="desc">Tags or untags a given attribute to be part of the animation process.</span>
+                </a>
+                <a class="toc-item" href="QueryDataModel.html#getAnimationFlag">
+                    <h4>getAnimationFlag(attributeName)</h4>
+                    <span class="desc">Returns the current state of the animation flag for a given attribute.</span>
+                </a>
+                <a class="toc-item" href="QueryDataModel.html#toggleAnimationFlag">
+                    <h4>toggleAnimationFlag(attributeName) : currentState</h4>
+                    <span class="desc">Toggles the animation flag state and return its actual value.</span>
+                </a>
+                <a class="toc-item" href="QueryDataModel.html#hasAnimationFlag">
+                    <h4>hasAnimationFlag() : Boolean</h4>
+                    <span class="desc">Returns true if at least one argument has been toggled for animation.</span>
+                </a>
+                <a class="toc-item" href="QueryDataModel.html#isAnimating">
+                    <h4>isAnimating() : Boolean</h4>
+                    <span class="desc">Returns true if an animation is currently playing.</span>
+                </a>
+                <a class="toc-item" href="QueryDataModel.html#animate">
+                    <h4>animate( start[, deltaT&#x3D;500] )</h4>
+                    <span class="desc">Start or stop an animation where a deltaT can be provided in milliseconds. For example:</span>
+                </a>
+                <a class="toc-item" href="QueryDataModel.html#getDataMetaData">
+                    <h4>getDataMetaData(dataName) : { data metadata }</h4>
+                    <span class="desc">Helper function used to retrieved any metadata that could be associated to a data entry.</span>
+                </a>
+                <a class="toc-item" href="QueryDataModel.html#onDataChange">
+                    <h4>onDataChange( listener ) : subscriptionObject</h4>
+                    <span class="desc">Add a data listener to be aware when the expected set of data will be ready. The <em>data</em> object that is provided to the listener will contains all the
+cachedDataObject from dataManager instance that is part of the category that was
+used to register the listener, using their name from the original JSON data model.</span>
+                </a>
+                <a class="toc-item" href="QueryDataModel.html#onStateChange">
+                    <h4>onStateChange(listener)</h4>
+                    <span class="desc">Shortcut for <strong>this.on('state.change.*', listener)</strong>.</span>
+                </a>
+                <a class="toc-item" href="QueryDataModel.html#getMouseListener">
+                    <h4>getMouseListener() : { drag: callback, zoom: callback }</h4>
+                    <span class="desc">This method will create a callback map that can be used to be attach to a <strong>MouseHandler</strong> instance.</span>
+                </a>
+                <a class="toc-item" href="QueryDataModel.html#clone">
+                    <h4>clone() : new instance</h4>
+                    <span class="desc">This method will create a new instance of QueryDataModel using the same core but totally disconnected event or query wise.</span>
+                </a>
+                <a class="toc-item" href="QueryDataModel.html#getCacheSize">
+                    <h4>getCacheSize()</h4>
+                    <span class="desc">Return the maximum size that the cache can contain before the gc() take any action.</span>
+                </a>
+                <a class="toc-item" href="QueryDataModel.html#setCacheSize">
+                    <h4>setCacheSize( maxSizeInBytes )</h4>
+                    <span class="desc">Update the maximum cache size to adjust when the garbage collector should empty it.</span>
+                </a>
+                <a class="toc-item" href="QueryDataModel.html#getMemoryUsage">
+                    <h4>getMemoryUsage()</h4>
+                    <span class="desc">Return the current memory usage of the cache data in Bytes.</span>
+                </a>
+                <a class="toc-item" href="QueryDataModel.html#link">
+                    <h4>link(queryDataModel, args&#x3D;null, fetch&#x3D;false) : Subscription</h4>
+                    <span class="desc">Link any attribute change from the given queryDataModel to your local instance. Optionally, you can provide a list of arguments that you want to synchronize as
+well as any change could also trigger a fetchData() call on your instance.
+The returned object let you unsubscribe of the change update.</span>
+                </a>
+            </div>
+            <h3 class="toc-mod-title"><a href="QueryDataModelImageBuilder.html">QueryDataModelImageBuilder</a></h3>
+            <div class="toc-list">
+                <a class="toc-item" href="QueryDataModelImageBuilder.html#constructor">
+                    <h4>constructor(queryDataModel)</h4>
+                    <span class="desc">Under the hood this will forward any image data.</span>
+                </a>
+                <a class="toc-item" href="QueryDataModelImageBuilder.html#update">
+                    <h4>update() - inherited</h4>
+                    <span class="desc">Trigger the fetching of the data.</span>
+                </a>
+                <a class="toc-item" href="QueryDataModelImageBuilder.html#render">
+                    <h4>render()</h4>
+                    <span class="desc">Trigger a notification if the loaded data is available and decoded.</span>
+                </a>
+                <a class="toc-item" href="QueryDataModelImageBuilder.html#onImageReady">
+                    <h4>onImageReady(callback) : subscription - inherited</h4>
+                    <span class="desc">Allows the registration of a <strong>callback(data, envelope)</strong> function when the actual generated image is ready.</span>
+                </a>
+                <a class="toc-item" href="QueryDataModelImageBuilder.html#getListeners">
+                    <h4>getListeners() - inherited</h4>
+                    <span class="desc">Returns a list of MouseHandler listeners.</span>
+                </a>
+                <a class="toc-item" href="QueryDataModelImageBuilder.html#getControlWidgets">
+                    <h4>getControlWidgets() - inherited</h4>
+                    <span class="desc">Returns a list of Widgets needed to drive the ImageBuilder.</span>
+                </a>
+                <a class="toc-item" href="QueryDataModelImageBuilder.html#getControlModels">
+                    <h4>getControlModels() - inherited</h4>
+                    <span class="desc">Returns a list of Model that can drive the ImageBuilder.</span>
+                </a>
+                <a class="toc-item" href="QueryDataModelImageBuilder.html#destroy">
+                    <h4>destroy() - inherited</h4>
+                    <span class="desc">Free the internal resources of the current instance. </span>
+                </a>
+            </div>
+            <h3 class="toc-mod-title"><a href="WebGl.html">WebGl</a></h3>
+            <div class="toc-list">
+                <a class="toc-item" href="WebGl.html#showGlInfo">
+                    <h4>showGlInfo(gl)</h4>
+                    <span class="desc">Print GL information regarding the WebGL context provided.</span>
+                </a>
+                <a class="toc-item" href="WebGl.html#createGLResources">
+                    <h4>createGLResources(gl, glConfig) : glResources</h4>
+                    <span class="desc">Create and configure all Gl resources described in the configuration using the provided GL context.</span>
+                </a>
+                <a class="toc-item" href="WebGl.html#applyProgramDataMapping">
+                    <h4>applyProgramDataMapping(gl, programName, mappingName, glConfig, glResources)</h4>
+                    <span class="desc">The mapping between buffers and programs is done at creation time but if other mapping need to be done after the resource creation, this can be performed using
+that function.</span>
+                </a>
+                <a class="toc-item" href="WebGl.html#TransformShader">
+                    <h4>TransformShader(shaderString, variableDict, config)</h4>
+                    <span class="desc">This function can transform shader programs before they are compiled into a WebGL program in one of several ways.</span>
+                </a>
+            </div>
+    </div>
+</div>

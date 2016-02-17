@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title></title>
+  <meta name="description" content="">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="assets_/css/shCore.css">
+  <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
+  <link rel="stylesheet" href="assets_/css/main.css">
+</head>
+
+<body data-root-path="">
+
+<header class="site-header">
+</header>
+
+<div id="wrapper">
+   <div id="content">
+<ul id="topnav">
+    <li><a href="index.html">Index</a></li>
+    <li><a href="#toc">TOC</a></li>
+</ul>
+<h1 id="datamanager">Data Manager</h1>
+
+<p>This module allows users to fetch data (JSON, Text, ArrayBuffer, blob) and
+cache the result for future use. Additional pattern based URL requests can
+be achieved. Images can also be retrieved as a blob and can be display using
+a generated browser url.</p>
+
+<p>A new instance is created with:</p>
+
+<pre class="brush:javascript">
+var DataManager = require('paraviewweb/src/IO/Core/DataManager'),
+    instance = new DataManager(cacheSize = 1 000 000 000); // 1 GB by default
+</pre>
+
+<p>All listening is managed using <a href="https://www.npmjs.com/package/monologue.js">monolog.js</a>
+and might not be fully described here, consult their full documentation
+<a href="https://www.npmjs.com/package/monologue.js">here</a>.</p>
+
+<h2 id="tableofcontentsahreftocnametocclassdeeplinka">Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
+
+<ul>
+<li><a href="#fetchURL">fetchURL()</a></li>
+
+<li><a href="#fetch">fetch()</a></li>
+
+<li><a href="#get">get()</a></li>
+
+<li><a href="#free">free()</a></li>
+
+<li><a href="#registerURL">registerURL()</a></li>
+
+<li><a href="#unregisterURL">unregisterURL()</a></li>
+
+<li><a href="#clear">clear()</a></li>
+
+<li><a href="#on">on()</a></li>
+
+<li><a href="#getCacheSize">getCacheSize()</a></li>
+
+<li><a href="#setCacheSize">setCacheSize()</a></li>
+
+<li><a href="#getMemoryUsage">getMemoryUsage()</a></li>
+</ul>
+
+<h2 id="fetchurlurltypemimetypetopicfornotificationahreffetchurlidfetchurlclassdeeplinka">fetchURL(url, type[, mimeType, topicForNotification]) <a href="#fetchURL" id="fetchURL" class="deep-link">#</a></h2>
+
+<p>Fetches a data object from a static URL. The set of possible
+data type are: [ 'json', 'text', 'blob', 'array' ]</p>
+
+<p>For the <strong>blob</strong> type, an extra argument is required which is the mimetype of
+the blob.</p>
+
+<pre class="brush:javascript">
+var url = '/data/myJsonFile.json';
+dataManager.on(url, function(data, envelope) {
+    console.log("Got " + data.data.type + " object from " + data.requestedURL + " - last access time: " + data.ts);
+    console.log(data.data);
+});
+
+dataManager.fetchURL(url, 'json');
+</pre>
+
+<p>Then you can optionally provide a topic name that you want your request to be notified on.</p>
+
+<h2 id="fetchkeyoptionsahreffetchidfetchclassdeeplinka">fetch(key, options) <a href="#fetch" id="fetch" class="deep-link">#</a></h2>
+
+<p>Downloads a resource based on a previously registered pattern
+with specific key-value pair replacement.</p>
+
+<p>Here is a full example using that method:</p>
+
+<pre class="brush:js">
+function onJsonData(data, envelope) {
+
+    var jsonObj = data.data;
+
+    // Print additional cache meta data
+    console.log(" - Last read time: " + data.ts);
+    console.log(" - Data Type: " + data.type);
+    console.log(" - Requested URL: " + data.requestedURL);
+
+    // Access data from JSON object
+    console.log(" - str: " + jsonObj.str);
+    console.log(" - array: " + jsonObj.array);
+    console.log(" - nestedObject.a: " + jsonObj.nestedObject.a);
+}
+
+dataManager.registerURL('jsonDataModel', '/data/{name}.json', 'json');
+var subscription = dataManager.on('jsonDataModel', onJsonData);
+dataManager.fetch('jsonDataModel', { name: 'info'});
+
+// Then to stop listening: subscription.unsubscribe();
+</pre>
+
+<h2 id="geturlfreecacheahrefgetidgetclassdeeplinka">get(url[, freeCache]) <a href="#get" id="get" class="deep-link">#</a></h2>
+
+<p>Returns the downloaded data object if available or an <strong>undefined</strong>
+object if unavailable.</p>
+
+<p>The <em>freeCache</em> argument is optional and should be <em>true</em> if you want to remove
+the given resource from the cache.</p>
+
+<p>The standard returned object will look like the following:</p>
+
+<pre class="brush:js">
+{
+    ts: 23423452, // Last access time in milliseconds.
+    data: "str" | { json: 'data'} | Blob() | Uint8Array(), // Raw data depending of the fetch data type.
+    type: 'text' | 'json' | 'blob' | 'arraybuffer',
+    url: ...internal browser url to point to the data..., // This can be use to render images
+    requestedURL: '/origin/requested/url'
+}
+</pre>
+
+<h2 id="freeurlahreffreeidfreeclassdeeplinka">free(url) <a href="#free" id="free" class="deep-link">#</a></h2>
+
+<p>Removes the entry from the cache based on the <strong>requestedURL</strong> of a cache entry.</p>
+
+<h2 id="registerurlkeyurlpatterntypemimetypeahrefregisterurlidregisterurlclassdeeplinka">registerURL(key, urlPattern, type, mimeType) <a href="#registerURL" id="registerURL" class="deep-link">#</a></h2>
+
+<p>Registers a pattern based URL to ease data fetching from it.</p>
+
+<pre class="brush:js">
+var pattern = '/data/{ds}/image_{idx}.png';
+var key = 'image_ds'
+dataManager.registerURL(key, pattern, 'blob', 'image/png');
+
+dataManager.on(key, function(data, envelope) {
+    console.log(
+        "Got " + data.type + " object from " + data.requestedURL
+        + " - last access time: " + data.ts
+        + " - usable url: " + data.url);
+});
+
+dataManager.fetch(key, { idx: 0, ds: 'temperature' });
+dataManager.fetch(key, { idx: 1, ds: 'temperature' });
+dataManager.fetch(key, { idx: 2, ds: 'temperature' });
+dataManager.fetch(key, { idx: 0, ds: 'pressure' });
+dataManager.fetch(key, { idx: 1, ds: 'pressure' });
+dataManager.fetch(key, { idx: 2, ds: 'pressure' });
+</pre>
+
+<h2 id="unregisterurlkeyahrefunregisterurlidunregisterurlclassdeeplinka">unregisterURL(key) <a href="#unregisterURL" id="unregisterURL" class="deep-link">#</a></h2>
+
+<p>Removes the pattern from the registry.</p>
+
+<h2 id="clearahrefclearidclearclassdeeplinka">clear() <a href="#clear" id="clear" class="deep-link">#</a></h2>
+
+<p>Empties the content of the cache.</p>
+
+<h2 id="oneventlistenerahrefonidonclassdeeplinka">on(event, listener) <a href="#on" id="on" class="deep-link">#</a></h2>
+
+<p>Attaches a listener to a <strong>url</strong> or a pattern key.</p>
+
+<p>Here is a list of possible listener functions:</p>
+
+<pre class="brush:js">
+function onJsonData(data, envelope) {
+    var jsonObj = data.data;
+
+    // Print additional cache meta data
+    console.log(" - Last read time: " + data.ts);
+    console.log(" - Data Type: " + data.type);
+    console.log(" - Requested URL: " + data.requestedURL);
+
+    // Access data from JSON object
+    console.log(" - str: " + jsonObj.str);
+    console.log(" - array: " + jsonObj.array);
+    console.log(" - nestedObject.a: " + jsonObj.nestedObject.a);
+}
+
+function onTxtData(data, envelope) {
+    // Print additional cache meta data
+    console.log(" - Last read time: " + data.ts);
+    console.log(" - Data Type: " + data.type);
+    console.log(" - Requested URL: " + data.requestedURL);
+
+    // Replace content inside your DOM
+    var strHTML = data.data;
+    $('.help').html(strHTML);
+}
+
+function onBlobData(data, envelope) {
+    var blob = data.data;
+
+    // Print additional cache meta data
+    console.log(" - Last read time: " + data.ts);
+    console.log(" - Data Type: " + data.type);
+    console.log(" - Requested URL: " + data.requestedURL);
+
+    // The URL let you provide a link to the blob
+    console.log(" - Usable URL: " + data.url);
+}
+
+function onArrayData(data, envelope) {
+    // Print additional cache meta data
+    console.log(" - Last read time: " + data.ts);
+    console.log(" - Data Type: " + data.type);
+    console.log(" - Requested URL: " + data.requestedURL);
+
+    // Replace content inside your DOM
+    var Uint8ArrayObj = data.data;
+    // [...]
+}
+
+function onImage(data, envelope) {
+    var blob = data.data;
+
+    // Print additional cache meta data
+    console.log(" - Last read time: " + data.ts);
+    console.log(" - Data Type: " + data.type);
+    console.log(" - Requested URL: " + data.requestedURL);
+
+    // The URL let you provide a link to the blob
+    console.log(" - Usable URL: " + data.url);
+
+    // Update the image in the DOM
+    $('.image-to-refresh').attr('src', data.url);
+}
+</pre>
+
+<h2 id="getcachesizeahrefgetcachesizeidgetcachesizeclassdeeplinka">getCacheSize() <a href="#getCacheSize" id="getCacheSize" class="deep-link">#</a></h2>
+
+<p>Return the maximum size that the cache can contain before the gc() take any action.</p>
+
+<h2 id="setcachesizemaxsizeinbytesahrefsetcachesizeidsetcachesizeclassdeeplinka">setCacheSize( maxSizeInBytes ) <a href="#setCacheSize" id="setCacheSize" class="deep-link">#</a></h2>
+
+<p>Update the maximum cache size to adjust when the garbage collector should empty it.</p>
+
+<h2 id="getmemoryusageahrefgetmemoryusageidgetmemoryusageclassdeeplinka">getMemoryUsage() <a href="#getMemoryUsage" id="getMemoryUsage" class="deep-link">#</a></h2>
+
+<p>Return the current memory usage of the cache data in Bytes.</p>
+        </div>
+        <script src="assets_/js/lib/jquery.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
+        <script src="assets_/js/main.js"></script>
+    </body>
+</html>

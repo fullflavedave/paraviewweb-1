@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title></title>
+  <meta name="description" content="">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="assets_/css/shCore.css">
+  <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
+  <link rel="stylesheet" href="assets_/css/main.css">
+</head>
+
+<body data-root-path="">
+
+<header class="site-header">
+</header>
+
+<div id="wrapper">
+   <div id="content">
+<ul id="topnav">
+    <li><a href="index.html">Index</a></li>
+    <li><a href="#toc">TOC</a></li>
+</ul>
+<h1 id="querydatamodel">QueryDataModel</h1>
+
+<p>This class definition lets you create a Data Model from a specific JSON object which
+describes a n-dimensional system. The created model allows you to query
+and navigate through the data via an API, UI control, and/or mouse interaction.</p>
+
+<p>That model will handle all the data management and delegate the data processing
+or rendering to your application.</p>
+
+<p>This documentation will focus on its API and its usage.</p>
+
+<p><strong>JSON Structure</strong></p>
+
+<p>The core of that <em>Query Data Model</em> is the JSON structure that it loads
+and works with. The following JSON structure illustrate what this module is expecting:</p>
+
+<pre class="brush:js">
+{
+    id          : 'unique_identifier_like_a_sha',
+    type        : [ 'tonic-query-data-model',
+                    'extended-model-name-1',
+                    'extended-model-name-2' ],
+    arguments   : {
+        't' : {
+            label   : 'Time',
+            default : 3,
+            ui      : 'slider',
+            values  : [ '00', '05', '10', '15', '20' ],
+            loop    : 'reverse',
+            bind    : {
+                mouse : { zoom : { modifier: 0, coordinate: 1, step: 0 } }
+            }
+        },
+        'field' : {
+            label   : 'Field',
+            default : 1,
+            ui      : 'list',
+            values  : [ 'Pressure', 'Temperature', 'Velocity' ]
+        },
+        'alpha' : {
+            label   : 'Angle',
+            ui      : 'slider',
+            values  : [ '0', '90', '180', '270' ],
+            loop    : 'modulo',
+            bind    : {
+                mouse : { drag : { modifier: 0, coordinate: 0, step: 10 } }
+            }
+        }
+    },
+    arguments_order: [ 'field', 'alpha', 't' ],
+    data: [
+        {
+            name    : 'image',
+            type    : 'blob',
+            mimeType: 'image/jpg',
+            pattern : '{field}/{t}_{alpha}.jpg'
+        },{
+            name    : 'description',
+            type    : 'text',
+            pattern : '{field}/{t}.txt'
+        },{
+            name    : 'statistic',
+            type    : 'json',
+            pattern : '{field}/{t}_{alpha}.json',
+            category: ['option-b']
+        }
+    ],
+    metadata: { /* Can contain what you want */ }
+}
+</pre>
+
+<h3 id="id"><strong>id</strong></h3>
+
+<p>A string that can be used to uniquely identify the given model. If none is provided,
+the <em>QueryDataModel</em> will automatically generate one.</p>
+
+<h3 id="type"><strong>type</strong></h3>
+
+<p>Describe the composition of the given model. As we describe a <em>Query Data Model</em>
+it must contain <em>'tonic-query-data-model'</em> but can be augmented with any
+additional data which could also then be used to drive the querying/processing/rendering.</p>
+
+<p>What is described here is what we expect as a <em>'tonic-query-data-model'</em> type.
+Additional data structures can be added but they should not interfere or redefine
+the existing core structure.</p>
+
+<h3 id="arguments"><strong>arguments</strong></h3>
+
+<p>List of <em>arguments</em> that can be used to describe the query.
+Each argument must have at least a list of <strong>values</strong>.</p>
+
+<p>The rest of the options will then be derived from their default.
+Here is the list of defaults that will be picked if they are not provided.</p>
+
+<pre class="brush:js">
+{
+    arguments: {
+        argId: {
+            label   : 'argId',      // The actual name of the argument
+            default : 0,            // The first item in the values list
+            ui      : 'list',       // The UI will use a drop down
+            loop    : undefined,    // No looping on this parameter
+            bind    : undefined     // No binding will occur on mouse/key/?
+        }
+    }
+}
+</pre>
+
+<p>Here is the possible set of values for each argument and what they are:</p>
+
+<ul>
+<li><strong>label</strong>   : Human readable name for UI.</li>
+
+<li><strong>default</strong> : Index within the values for initial value. (default: <strong>0</strong>)</li>
+
+<li><strong>ui</strong>      : Type of UI component to use. Can either be [ undefined, 'slider', '<strong>list</strong>'].</li>
+
+<li><strong>loop</strong>    : Specify a periodic/looping behavior. Can either be [ <strong>undefined</strong>, 'modulo', 'reverse']</li>
+
+<li><strong>bind</strong>    : Specify how to bind interactions to attribute.</li>
+</ul>
+
+<h3 id="arguments_order"><strong>arguments_order</strong></h3>
+
+<p>Order of the arguments that should be used to build the user interface.
+This is an array of strings with the name of all the attributes you want to see
+inside the user interface.</p>
+
+<h3 id="data"><strong>data</strong></h3>
+
+<p>List of data to be fetched. Each element in the list must have a <strong>name</strong>, <strong>type</strong> and a <strong>pattern</strong>.
+Then if the type is <em>'blob'</em>, a <strong>mimeType</strong> must be specified.</p>
+
+<p><em>pattern</em> must be defined is using the {} to surround the name of the
+parameter that can compose the query.</p>
+
+<p>Optionally, data can be grouped by categories to simplify the way they're fetched. This allows you to exclusively fetch the data you are currently interested in.
+If no category is provided, that means the full data list is mandatory.</p>
+
+<h3 id="metadata"><strong>metadata</strong></h3>
+
+<p>User data that can easily be accessed via the API.</p>
+
+<h2 id="tableofcontentsahreftocnametocclassdeeplinka">Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
+
+<ul>
+<li><a href="#constructor">constructor()</a></li>
+
+<li><a href="#getQuery">getQuery()</a></li>
+
+<li><a href="#fetchData">fetchData()</a></li>
+
+<li><a href="#lazyFetchData">lazyFetchData()</a></li>
+
+<li><a href="#{_action_}">{<em>action</em>}()</a></li>
+
+<li><a href="#setValue">setValue()</a></li>
+
+<li><a href="#setIndex">setIndex()</a></li>
+
+<li><a href="#getValue">getValue()</a></li>
+
+<li><a href="#getValues">getValues()</a></li>
+
+<li><a href="#getIndex">getIndex()</a></li>
+
+<li><a href="#getSize">getSize()</a></li>
+
+<li><a href="#getUiType">getUiType()</a></li>
+
+<li><a href="#label">label()</a></li>
+
+<li><a href="#setAnimationFlag">setAnimationFlag()</a></li>
+
+<li><a href="#getAnimationFlag">getAnimationFlag()</a></li>
+
+<li><a href="#toggleAnimationFlag">toggleAnimationFlag()</a></li>
+
+<li><a href="#hasAnimationFlag">hasAnimationFlag()</a></li>
+
+<li><a href="#isAnimating">isAnimating()</a></li>
+
+<li><a href="#animate">animate()</a></li>
+
+<li><a href="#getDataMetaData">getDataMetaData()</a></li>
+
+<li><a href="#onDataChange">onDataChange()</a></li>
+
+<li><a href="#onStateChange">onStateChange()</a></li>
+
+<li><a href="#getMouseListener">getMouseListener()</a></li>
+
+<li><a href="#clone">clone()</a></li>
+
+<li><a href="#getCacheSize">getCacheSize()</a></li>
+
+<li><a href="#setCacheSize">setCacheSize()</a></li>
+
+<li><a href="#getMemoryUsage">getMemoryUsage()</a></li>
+
+<li><a href="#link">link()</a></li>
+</ul>
+
+<h2 id="constructorjsonobjectbasepathahrefconstructoridconstructorclassdeeplinka">constructor(jsonObject, basepath) <a href="#constructor" id="constructor" class="deep-link">#</a></h2>
+
+<p>The jsonObject content has been previously described but the basepath is used to
+fetch the related resource relative to that basepath.</p>
+
+<h2 id="getqueryargavalueaargbvaluebahrefgetqueryidgetqueryclassdeeplinka">getQuery() : { argA: valueA, argB: valueB } <a href="#getQuery" id="getQuery" class="deep-link">#</a></h2>
+
+<p>Returns a simple map where the keys are the <em>arguments</em> attribute names and the
+values are the actual value for the given attribute.</p>
+
+<h2 id="fetchdatacategoryahreffetchdataidfetchdataclassdeeplinka">fetchData(category) <a href="#fetchData" id="fetchData" class="deep-link">#</a></h2>
+
+<p>Triggers the download of the data associated with the current <em>query</em>.</p>
+
+<p>If no category is provided, then only the data with no category will be downloaded
+while if a category is provided all the data that belong to that category will be
+downloaded.</p>
+
+<p>In order to be aware when that set of data is available for processing you can
+attach a listener by calling the following method.</p>
+
+<pre class="brush:javascript">
+// For the default category
+instance.onDataChange( (data, envelope) => {} );
+
+// For custom category
+instance.on( categoryName, (data, envelope) => {});
+
+// Data layout will look like that
+var data = {
+    dataName1: dataContentFromDataManager,
+    dataName2: dataContentFromDataManager
+}
+</pre>
+
+<h2 id="lazyfetchdatacategoryahreflazyfetchdataidlazyfetchdataclassdeeplinka">lazyFetchData(category) <a href="#lazyFetchData" id="lazyFetchData" class="deep-link">#</a></h2>
+
+<p>Similar to <strong>fetchData(category)</strong> except that it won't make a network request
+until the previous one is fully done. Moreover any <strong>lazyFetchData()</strong> call made
+during that pending period will be ignored and only the latest one will be triggered.</p>
+
+<p>Very useful when interacting with a slider and/or mouse interaction for changing
+the underlying query.</p>
+
+<h2 id="_action_attributenamechangedetectedahref_action_id_action_classdeeplinka">{<em>action</em>}(attributeName) : changeDetected <a href="#{_action_}" id="{_action_}" class="deep-link">#</a></h2>
+
+<p>Several actions can be performed on a given attribute to change the query.
+Sometimes an action won't result in any change as we may have reached the end
+of the range of a non-looping attribute. Hence we provide feedback to the user
+to let them know if their method call affected the underline query or not.</p>
+
+<p>Here is the list of possible actions:</p>
+
+<ul>
+<li><strong>first</strong>     : Move to the <em>first</em> value of the values list.</li>
+
+<li><strong>previous</strong>  : Move to the <em>previous</em> value in the values list.</li>
+
+<li><strong>next</strong>      : Move to the <em>next</em> value in the values list.</li>
+
+<li><strong>last</strong>      : Move to the <em>last</em> value in the values list.</li>
+</ul>
+
+<p>This will trigger the following events:</p>
+
+<ul>
+<li><strong>state.change.first</strong></li>
+
+<li><strong>state.change.previous</strong></li>
+
+<li><strong>state.change.next</strong></li>
+
+<li><strong>state.change.last</strong></li>
+</ul>
+
+<p>Those events could be capture by adding a listener using the <strong>onStateChange</strong> method.</p>
+
+<h2 id="setvalueattributenamevaluechangedetectedahrefsetvalueidsetvalueclassdeeplinka">setValue(attributeName, value) : changeDetected <a href="#setValue" id="setValue" class="deep-link">#</a></h2>
+
+<p>Assigns a new value to the attribute, but the value must be part of the values list.</p>
+
+<p>This will trigger the following event:</p>
+
+<ul>
+<li><strong>state.change.value</strong></li>
+</ul>
+
+<p>That event can be capture by adding a listener using the <strong>onStateChange</strong> method.</p>
+
+<h2 id="setindexattributenameindexchangedetectedahrefsetindexidsetindexclassdeeplinka">setIndex(attributeName, index) : changeDetected <a href="#setIndex" id="setIndex" class="deep-link">#</a></h2>
+
+<p>Assigns a new value to the attribute base on the value that is at provided index
+inside the values list.</p>
+
+<p>This will trigger the following event:</p>
+
+<ul>
+<li><strong>state.change.idx</strong></li>
+</ul>
+
+<p>That event can be capture by adding a listener using the <strong>onStateChange</strong> method.</p>
+
+<h2 id="getvalueattributenamevalueahrefgetvalueidgetvalueclassdeeplinka">getValue(attributeName) : value <a href="#getValue" id="getValue" class="deep-link">#</a></h2>
+
+<p>Returns the current value inside the values list.</p>
+
+<h2 id="getvaluesattributenamevaluesahrefgetvaluesidgetvaluesclassdeeplinka">getValues(attributeName) : values <a href="#getValues" id="getValues" class="deep-link">#</a></h2>
+
+<p>Returns the full list of possible values.</p>
+
+<h2 id="getindexattributenameindexahrefgetindexidgetindexclassdeeplinka">getIndex(attributeName) : index <a href="#getIndex" id="getIndex" class="deep-link">#</a></h2>
+
+<p>Returns the current value index inside the values list.</p>
+
+<h2 id="getsizeattributenameindexahrefgetsizeidgetsizeclassdeeplinka">getSize(attributeName) : index <a href="#getSize" id="getSize" class="deep-link">#</a></h2>
+
+<p>Returns the number of values inside the values list or <em>null</em> if the attribute
+was not found.</p>
+
+<h2 id="getuitypeattributenamestringahrefgetuitypeidgetuitypeclassdeeplinka">getUiType(attributeName) : String <a href="#getUiType" id="getUiType" class="deep-link">#</a></h2>
+
+<p>Returns the type of the UI that should be created. It can either be <em>slider</em> or <em>list</em>.</p>
+
+<h2 id="labelattributenamestringahreflabelidlabelclassdeeplinka">label(attributeName) : String <a href="#label" id="label" class="deep-link">#</a></h2>
+
+<p>Returns the label that should be used for the given attribute.</p>
+
+<h2 id="setanimationflagattributenameflagstateahrefsetanimationflagidsetanimationflagclassdeeplinka">setAnimationFlag(attributeName, flagState) <a href="#setAnimationFlag" id="setAnimationFlag" class="deep-link">#</a></h2>
+
+<p>Tags or untags a given attribute to be part of the animation process.</p>
+
+<p>This will trigger the following event:</p>
+
+<ul>
+<li><strong>state.change.animation</strong></li>
+</ul>
+
+<p>That event can be capture by adding a listener using the <strong>onStateChange</strong> method.</p>
+
+<h2 id="getanimationflagattributenameahrefgetanimationflagidgetanimationflagclassdeeplinka">getAnimationFlag(attributeName) <a href="#getAnimationFlag" id="getAnimationFlag" class="deep-link">#</a></h2>
+
+<p>Returns the current state of the animation flag for a given attribute.</p>
+
+<h2 id="toggleanimationflagattributenamecurrentstateahreftoggleanimationflagidtoggleanimationflagclassdeeplinka">toggleAnimationFlag(attributeName) : currentState <a href="#toggleAnimationFlag" id="toggleAnimationFlag" class="deep-link">#</a></h2>
+
+<p>Toggles the animation flag state and return its actual value.</p>
+
+<p>This will trigger the following event:</p>
+
+<ul>
+<li><strong>state.change.animation</strong></li>
+</ul>
+
+<p>That event can be capture by adding a listener using the <strong>onStateChange</strong> method.</p>
+
+<h2 id="hasanimationflagbooleanahrefhasanimationflagidhasanimationflagclassdeeplinka">hasAnimationFlag() : Boolean <a href="#hasAnimationFlag" id="hasAnimationFlag" class="deep-link">#</a></h2>
+
+<p>Returns true if at least one argument has been toggled for animation.</p>
+
+<h2 id="isanimatingbooleanahrefisanimatingidisanimatingclassdeeplinka">isAnimating() : Boolean <a href="#isAnimating" id="isAnimating" class="deep-link">#</a></h2>
+
+<p>Returns true if an animation is currently playing.</p>
+
+<h2 id="animatestartdeltat500ahrefanimateidanimateclassdeeplinka">animate( start[, deltaT=500] ) <a href="#animate" id="animate" class="deep-link">#</a></h2>
+
+<p>Start or stop an animation where a deltaT can be provided in milliseconds. For example:</p>
+
+<pre class="brush:js">
+// Will start the animation with a wait time of 750ms
+// before going to the next data query.
+animate(true, 750);
+</pre>
+
+<p>To stop a running animation.</p>
+
+<pre class="brush:js">
+animate(false);
+</pre>
+
+<p>On an animation stop, the following event will be triggered:</p>
+
+<ul>
+<li><strong>state.change.play</strong></li>
+</ul>
+
+<p>That event can be capture by adding a listener using the <strong>onStateChange</strong> method.</p>
+
+<h2 id="getdatametadatadatanamedatametadataahrefgetdatametadataidgetdatametadataclassdeeplinka">getDataMetaData(dataName) : { data metadata } <a href="#getDataMetaData" id="getDataMetaData" class="deep-link">#</a></h2>
+
+<p>Helper function used to retrieved any metadata that could be associated to a data
+entry.</p>
+
+<h2 id="ondatachangelistenersubscriptionobjectahrefondatachangeidondatachangeclassdeeplinka">onDataChange( listener ) : subscriptionObject <a href="#onDataChange" id="onDataChange" class="deep-link">#</a></h2>
+
+<p>Add a data listener to be aware when the expected set of data will be ready.
+The <em>data</em> object that is provided to the listener will contains all the
+cachedDataObject from dataManager instance that is part of the category that was
+used to register the listener, using their name from the original JSON data model.</p>
+
+<pre class="brush:js">
+function listener(data, envelope) {
+    // Where data is
+    // {
+    //    data-name: {data-manager}cacheObject
+    // }
+}
+</pre>
+
+<p>More information on <strong>subscriptionObject</strong> and listeners can be found on
+<a href="https://github.com/postaljs/monologue.js">monologue.js</a>.</p>
+
+<p>For instance, to listen for a specific category, you should use the following method:</p>
+
+<pre class="brush:javascript">
+instance.on(categoryName, listener);
+</pre>
+
+<p>In fact, the <strong>onDataChange</strong> is calling the <strong>this.on('<em>', listener)</strong> as the '</em>' is
+the default category name.</p>
+
+<h2 id="onstatechangelistenerahrefonstatechangeidonstatechangeclassdeeplinka">onStateChange(listener) <a href="#onStateChange" id="onStateChange" class="deep-link">#</a></h2>
+
+<p>Shortcut for <strong>this.on('state.change.*', listener)</strong>.</p>
+
+<p>And the content of such event will be as follow.</p>
+
+<pre class="brush:js">
+var event = {
+    value: "0.1",
+    idx: 0,
+    name: "Time",
+    instance: queryDataModelInstance
+};
+</pre>
+
+<h2 id="getmouselistenerdragcallbackzoomcallbackahrefgetmouselisteneridgetmouselistenerclassdeeplinka">getMouseListener() : { drag: callback, zoom: callback } <a href="#getMouseListener" id="getMouseListener" class="deep-link">#</a></h2>
+
+<p>This method will create a callback map that can be used to be attach to a <strong>MouseHandler</strong> instance.</p>
+
+<p>If no mouse binding was defined in the original model, then the method will return null.</p>
+
+<h2 id="clonenewinstanceahrefcloneidcloneclassdeeplinka">clone() : new instance <a href="#clone" id="clone" class="deep-link">#</a></h2>
+
+<p>This method will create a new instance of QueryDataModel using the same core
+but totally disconnected event or query wise.</p>
+
+<h2 id="getcachesizeahrefgetcachesizeidgetcachesizeclassdeeplinka">getCacheSize() <a href="#getCacheSize" id="getCacheSize" class="deep-link">#</a></h2>
+
+<p>Return the maximum size that the cache can contain before the gc() take any action.</p>
+
+<h2 id="setcachesizemaxsizeinbytesahrefsetcachesizeidsetcachesizeclassdeeplinka">setCacheSize( maxSizeInBytes ) <a href="#setCacheSize" id="setCacheSize" class="deep-link">#</a></h2>
+
+<p>Update the maximum cache size to adjust when the garbage collector should empty it.</p>
+
+<h2 id="getmemoryusageahrefgetmemoryusageidgetmemoryusageclassdeeplinka">getMemoryUsage() <a href="#getMemoryUsage" id="getMemoryUsage" class="deep-link">#</a></h2>
+
+<p>Return the current memory usage of the cache data in Bytes.</p>
+
+<h2 id="linkquerydatamodelargsnullfetchfalsesubscriptionahreflinkidlinkclassdeeplinka">link(queryDataModel, args=null, fetch=false) : Subscription <a href="#link" id="link" class="deep-link">#</a></h2>
+
+<p>Link any attribute change from the given queryDataModel to your local instance.
+Optionally, you can provide a list of arguments that you want to synchronize as
+well as any change could also trigger a fetchData() call on your instance.
+The returned object let you unsubscribe of the change update.</p>
+        </div>
+        <script src="assets_/js/lib/jquery.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
+        <script src="assets_/js/main.js"></script>
+    </body>
+</html>

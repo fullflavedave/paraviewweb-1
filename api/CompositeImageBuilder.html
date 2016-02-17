@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title></title>
+  <meta name="description" content="">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="assets_/css/shCore.css">
+  <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
+  <link rel="stylesheet" href="assets_/css/main.css">
+</head>
+
+<body data-root-path="">
+
+<header class="site-header">
+</header>
+
+<div id="wrapper">
+   <div id="content">
+<ul id="topnav">
+    <li><a href="index.html">Index</a></li>
+    <li><a href="#toc">TOC</a></li>
+</ul>
+<h1 id="compositeimagebuilder">CompositeImageBuilder</h1>
+
+<p>This is a builder which creates an ImageBuilder that lets you process composite
+datasets. The implementation relies on a single off-screen canvas to generate the
+resulting image of a composite structure (rgb.jpg + composite.json).</p>
+
+<pre class="brush:js">
+var CompositeImageBuilder = require('paraviewweb/src/Rendering/Image/CompositeImageBuilder'),
+    instance = new CompositeImageBuilder(qdm, pm);
+</pre>
+
+<h2 id="tableofcontentsahreftocnametocclassdeeplinka">Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
+
+<ul>
+<li><a href="#constructor">constructor()</a></li>
+
+<li><a href="#update">update()</a></li>
+
+<li><a href="#setPipelineQuery">setPipelineQuery()</a></li>
+
+<li><a href="#render">render()</a></li>
+
+<li><a href="#onImageReady">onImageReady()</a></li>
+
+<li><a href="#destroy">destroy()</a></li>
+
+<li><a href="#* updateCompositeMap">* updateCompositeMap()</a></li>
+
+<li><a href="#_updateOffsetMap">_updateOffsetMap()</a></li>
+
+<li><a href="#_pushToFront">_pushToFront()</a></li>
+
+<li><a href="#_pushToFrontAsImage">_pushToFrontAsImage()</a></li>
+
+<li><a href="#_pushToFrontAsBuffer">_pushToFrontAsBuffer()</a></li>
+
+<li><a href="#getListeners - inherited">getListeners - inherited</a></li>
+
+<li><a href="#getControlWidgets - inherited">getControlWidgets - inherited</a></li>
+
+<li><a href="#getControlModels - inherited">getControlModels - inherited</a></li>
+</ul>
+
+<h2 id="constructorquerydatamodelpipelinemodelahrefconstructoridconstructorclassdeeplinka">constructor(queryDataModel, pipelineModel) <a href="#constructor" id="constructor" class="deep-link">#</a></h2>
+
+<p>Create an instance of a CompositeImageBuilder using the associated
+<strong>queryDataModel</strong> that should be used to fetch the data.</p>
+
+<p>And the <strong>pipelineModel</strong> that should be used for controlling the ImageBuilder.</p>
+
+<p>Under the hood this will create an off-screen canvas for the image generation.
+Then, depending if the method setPushMethodAsImage() has been called,
+the 'image-ready' notification will not contain the same object.
+By default we use the setPushMethodAsBuffer() configuration.</p>
+
+<p>Below are the two event structures</p>
+
+<pre class="brush:js">
+// setPushMethodAsBuffer()
+var eventAsBuffer = {
+    canvas: DOMElement,
+    imageData: ImageDataFromCanvas,
+    area: [0, 0, width, height],
+    outputSize: [width, height],
+    builder: this
+};
+
+// setPushMethodAsImage()
+var eventAsImage = {
+    url: 'data:image/png:ASDGFsdfgsdgf...',
+    builder: this
+};
+</pre>
+
+<h2 id="updateinheritedahrefupdateidupdateclassdeeplinka">update() - inherited <a href="#update" id="update" class="deep-link">#</a></h2>
+
+<p>Trigger the fetching of the data (composite.json + rgb.jpg).</p>
+
+<h2 id="setpipelinequerypipelinequeryahrefsetpipelinequeryidsetpipelinequeryclassdeeplinka">setPipelineQuery(pipelineQuery) <a href="#setPipelineQuery" id="setPipelineQuery" class="deep-link">#</a></h2>
+
+<p>Should be called each time the pipeline setting is changed.</p>
+
+<p>The <strong>pipelineQuery</strong> is a string that encodes the pipeline configuration such as
+which layer is visible or not and which field should be rendered for a given layer.</p>
+
+<p>The <strong>pipelineQuery</strong> is structured as follows:</p>
+
+<pre class="brush:js">
+var pipelineQuery = "A_BBCAD_EA";
+
+// In that example we have the following setting
+var layerSettings = [
+    "A_", // Layer A is invisible
+    "BB", // Layer B is using field B
+    "CA", // Layer C is using field A
+    "D_", // Layer D is invisible
+    "EA"  // Layer E is using field A
+];
+</pre>
+
+<h2 id="renderahrefrenderidrenderclassdeeplinka">render() <a href="#render" id="render" class="deep-link">#</a></h2>
+
+<p>Process the current set of loaded data and render it into the background canvas.
+Once done, an event gets triggered to let the application know that the image is
+ready to be rendered/displayed somewhere.</p>
+
+<h2 id="onimagereadycallbacksubscriptioninheritedahrefonimagereadyidonimagereadyclassdeeplinka">onImageReady(callback) : subscription - inherited <a href="#onImageReady" id="onImageReady" class="deep-link">#</a></h2>
+
+<p>Allows the registration of a <strong>callback(data, envelope)</strong> function when the
+actual generated image is ready.</p>
+
+<h2 id="destroyahrefdestroyiddestroyclassdeeplinka">destroy() <a href="#destroy" id="destroy" class="deep-link">#</a></h2>
+
+<p>Free the internal resources of the current instance.</p>
+
+<h2 id="updatecompositemapquerycompositeahrefupdatecompositemapidupdatecompositemapclassdeeplinka">* updateCompositeMap(query, composite) <a href="#* updateCompositeMap" id="* updateCompositeMap" class="deep-link">#</a></h2>
+
+<p>Internal function used to update the composite map for faster rendering.</p>
+
+<h2 id="_updateoffsetmappipelinequeryahref_updateoffsetmapid_updateoffsetmapclassdeeplinka">_updateOffsetMap(pipelineQuery) <a href="#_updateOffsetMap" id="_updateOffsetMap" class="deep-link">#</a></h2>
+
+<p>Internal function used to update the offset map based on the Pipeline configuration.
+The <strong>pipelineQuery</strong> is a String that encode the pipeline configuration such as
+which layer is visible or not and which field should be rendered for a given layer.</p>
+
+<h2 id="_pushtofrontwidthheightahref_pushtofrontid_pushtofrontclassdeeplinka">_pushToFront(width, height) <a href="#_pushToFront" id="_pushToFront" class="deep-link">#</a></h2>
+
+<p>Trigger the event notification that the image is ready. This will call the proper
+method to either send the ImageData or an ImageURL.</p>
+
+<h2 id="_pushtofrontasimagewidthheightahref_pushtofrontasimageid_pushtofrontasimageclassdeeplinka">_pushToFrontAsImage(width, height) <a href="#_pushToFrontAsImage" id="_pushToFrontAsImage" class="deep-link">#</a></h2>
+
+<p>Called as <strong>pushToFront</strong> when <strong>setPushMethodAsImage()</strong> is used.</p>
+
+<h2 id="_pushtofrontasbufferwidthheightahref_pushtofrontasbufferid_pushtofrontasbufferclassdeeplinka">_pushToFrontAsBuffer(width, height) <a href="#_pushToFrontAsBuffer" id="_pushToFrontAsBuffer" class="deep-link">#</a></h2>
+
+<p>Called as <strong>pushToFront</strong> when <strong>setPushMethodAsBuffer()</strong> is used.</p>
+
+<h2 id="getlistenersinheritedahrefgetlistenersinheritedidgetlistenersinheritedclassdeeplinka">getListeners - inherited <a href="#getListeners - inherited" id="getListeners - inherited" class="deep-link">#</a></h2>
+
+<p>Returns a list of MouseHandler listeners.</p>
+
+<h2 id="getcontrolwidgetsinheritedahrefgetcontrolwidgetsinheritedidgetcontrolwidgetsinheritedclassdeeplinka">getControlWidgets - inherited <a href="#getControlWidgets - inherited" id="getControlWidgets - inherited" class="deep-link">#</a></h2>
+
+<p>Returns a list of Widgets needed to drive the ImageBuilder.</p>
+
+<h2 id="getcontrolmodelsinheritedahrefgetcontrolmodelsinheritedidgetcontrolmodelsinheritedclassdeeplinka">getControlModels - inherited <a href="#getControlModels - inherited" id="getControlModels - inherited" class="deep-link">#</a></h2>
+
+<p>Returns a list of Model that can drive the ImageBuilder.</p>
+        </div>
+        <script src="assets_/js/lib/jquery.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
+        <script src="assets_/js/main.js"></script>
+    </body>
+</html>

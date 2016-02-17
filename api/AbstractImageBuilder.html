@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title></title>
+  <meta name="description" content="">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="assets_/css/shCore.css">
+  <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
+  <link rel="stylesheet" href="assets_/css/main.css">
+</head>
+
+<body data-root-path="">
+
+<header class="site-header">
+</header>
+
+<div id="wrapper">
+   <div id="content">
+<ul id="topnav">
+    <li><a href="index.html">Index</a></li>
+    <li><a href="#toc">TOC</a></li>
+</ul>
+<h1 id="abstractimagebuilder">AbstractImageBuilder</h1>
+
+<p>This AbstractImageBuilder class provides all the basic methods that an ImageBuilder
+could need and almost all the methods an ImageBuilder must implement.</p>
+
+<h2 id="tableofcontentsahreftocnametocclassdeeplinka">Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
+
+<ul>
+<li><a href="#constructor">constructor()</a></li>
+
+<li><a href="#update">update()</a></li>
+
+<li><a href="#onImageReady">onImageReady()</a></li>
+
+<li><a href="#imageReady">imageReady()</a></li>
+
+<li><a href="#registerSubscription">registerSubscription()</a></li>
+
+<li><a href="#registerObjectToFree">registerObjectToFree()</a></li>
+
+<li><a href="#getListeners">getListeners()</a></li>
+
+<li><a href="#getControlWidgets">getControlWidgets()</a></li>
+
+<li><a href="#getControlModels">getControlModels()</a></li>
+
+<li><a href="#destroy">destroy()</a></li>
+</ul>
+
+<h2 id="constructorquerydatamodelpipelinemodellookuptablemanagerhandlerecordfalsedimensions500500ahrefconstructoridconstructorclassdeeplinka">constructor({queryDataModel, pipelineModel, lookupTableManager, handleRecord=false, dimensions=[500,500] }) <a href="#constructor" id="constructor" class="deep-link">#</a></h2>
+
+<p>Keep track of any provided model and create the <strong>controlWidgets</strong> based on the set of valid ones.</p>
+
+<h2 id="updateahrefupdateidupdateclassdeeplinka">update() <a href="#update" id="update" class="deep-link">#</a></h2>
+
+<p>Standard implementation of data fetching using the <strong>queryDataModel</strong> instance if any.</p>
+
+<pre class="brush:js">
+if(this.queryDataModel) {
+    this.queryDataModel.fetchData();
+}
+</pre>
+
+<h2 id="onimagereadycallbacksubscriptionahrefonimagereadyidonimagereadyclassdeeplinka">onImageReady(callback) : subscription <a href="#onImageReady" id="onImageReady" class="deep-link">#</a></h2>
+
+<p>Register callback for when the image builder finished its image rendering.</p>
+
+<h2 id="imagereadyreadyimageahrefimagereadyidimagereadyclassdeeplinka">imageReady(readyImage) <a href="#imageReady" id="imageReady" class="deep-link">#</a></h2>
+
+<p>Method that will trigger the ImageReady notification with the provided object.</p>
+
+<h2 id="registersubscriptionsubscriptionahrefregistersubscriptionidregistersubscriptionclassdeeplinka">registerSubscription(subscription) <a href="#registerSubscription" id="registerSubscription" class="deep-link">#</a></h2>
+
+<p>Helper method used to automatically <strong>subscription.unsubscribe()</strong> any registered subscription
+when <strong>this.destroy()</strong> get called.</p>
+
+<h2 id="registerobjecttofreeobjahrefregisterobjecttofreeidregisterobjecttofreeclassdeeplinka">registerObjectToFree(obj) <a href="#registerObjectToFree" id="registerObjectToFree" class="deep-link">#</a></h2>
+
+<p>Helper method used to automatically <strong>obj.destroy()</strong> any registered object
+when <strong>this.destroy()</strong> get called.</p>
+
+<h2 id="getlistenerslistenersahrefgetlistenersidgetlistenersclassdeeplinka">getListeners() : listeners <a href="#getListeners" id="getListeners" class="deep-link">#</a></h2>
+
+<p>Return the <strong>QueryDataModel</strong> MouseListener if a <strong>queryDataModel</strong> instance
+was provided at the creation.</p>
+
+<h2 id="getcontrolwidgetscontrolwidgetsahrefgetcontrolwidgetsidgetcontrolwidgetsclassdeeplinka">getControlWidgets() : controlWidgets <a href="#getControlWidgets" id="getControlWidgets" class="deep-link">#</a></h2>
+
+<p>Return the control widgets for [ QueryDataModel, PipelineModel, LookupTableManager ]
+for only those who were provided at the creation.</p>
+
+<h2 id="getcontrolmodelscontrolmodelsahrefgetcontrolmodelsidgetcontrolmodelsclassdeeplinka">getControlModels() : controlModels <a href="#getControlModels" id="getControlModels" class="deep-link">#</a></h2>
+
+<p>Return the following set of objects.</p>
+
+<pre class="brush:js">
+{
+    pipelineModel : this.pipelineModel,
+    queryDataModel: this.queryDataModel,
+    lookupTableManager: this.lookupTableManager,
+    dimensions: this.dimensions
+}
+</pre>
+
+<h2 id="destroyahrefdestroyiddestroyclassdeeplinka">destroy() <a href="#destroy" id="destroy" class="deep-link">#</a></h2>
+
+<p>Will free the registered resources.</p>
+        </div>
+        <script src="assets_/js/lib/jquery.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
+        <script src="assets_/js/main.js"></script>
+    </body>
+</html>

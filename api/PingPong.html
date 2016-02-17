@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title></title>
+  <meta name="description" content="">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="assets_/css/shCore.css">
+  <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
+  <link rel="stylesheet" href="assets_/css/main.css">
+</head>
+
+<body data-root-path="">
+
+<header class="site-header">
+</header>
+
+<div id="wrapper">
+   <div id="content">
+<ul id="topnav">
+    <li><a href="index.html">Index</a></li>
+    <li><a href="#toc">TOC</a></li>
+</ul>
+<h1 id="pingpong">PingPong</h1>
+
+<p>This is a class defined in the WebGl Util module.</p>
+
+<pre class="brush:js">
+var PingPong = require('paraviewweb/src/Common/Misc/PingPong'),
+    instance = new PingPong(gl, [fbo_1, fbo_2], [texture_1, texture_2]);
+</pre>
+
+<h2 id="tableofcontentsahreftocnametocclassdeeplinka">Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
+
+<ul>
+<li><a href="#constructor">constructor()</a></li>
+
+<li><a href="#swap">swap()</a></li>
+
+<li><a href="#clearFbo">clearFbo()</a></li>
+
+<li><a href="#getFramebuffer">getFramebuffer()</a></li>
+
+<li><a href="#getRenderingTexture">getRenderingTexture()</a></li>
+</ul>
+
+<h2 id="constructorglcontextfbo1fbo2texture1texture2ahrefconstructoridconstructorclassdeeplinka">constructor(glContext, [fbo1, fbo2], [texture1, texture2]) <a href="#constructor" id="constructor" class="deep-link">#</a></h2>
+
+<p>This will bind the framebuffers with the textures.</p>
+
+<h2 id="swapahrefswapidswapclassdeeplinka">swap() <a href="#swap" id="swap" class="deep-link">#</a></h2>
+
+<p>Swap active texture and framebuffer.</p>
+
+<h2 id="clearfboahrefclearfboidclearfboclassdeeplinka">clearFbo() <a href="#clearFbo" id="clearFbo" class="deep-link">#</a></h2>
+
+<p>Clear framebuffers content.</p>
+
+<h2 id="getframebufferframebufferahrefgetframebufferidgetframebufferclassdeeplinka">getFramebuffer() : framebuffer <a href="#getFramebuffer" id="getFramebuffer" class="deep-link">#</a></h2>
+
+<p>Return the current active framebuffer.</p>
+
+<h2 id="getrenderingtexturetextureahrefgetrenderingtextureidgetrenderingtextureclassdeeplinka">getRenderingTexture() : texture <a href="#getRenderingTexture" id="getRenderingTexture" class="deep-link">#</a></h2>
+
+<p>Return the current active texture.</p>
+        </div>
+        <script src="assets_/js/lib/jquery.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
+        <script src="assets_/js/main.js"></script>
+    </body>
+</html>

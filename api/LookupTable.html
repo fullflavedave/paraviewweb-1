@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title></title>
+  <meta name="description" content="">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="assets_/css/shCore.css">
+  <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
+  <link rel="stylesheet" href="assets_/css/main.css">
+</head>
+
+<body data-root-path="">
+
+<header class="site-header">
+</header>
+
+<div id="wrapper">
+   <div id="content">
+<ul id="topnav">
+    <li><a href="index.html">Index</a></li>
+    <li><a href="#toc">TOC</a></li>
+</ul>
+<h1 id="lookuptable">LookupTable</h1>
+
+<pre class="brush:js">
+var LookupTable = require('paraviewweb/src/Common/Core/LookupTable'),
+    instance = new LookupTable('Temperature');
+</pre>
+
+<h2 id="tableofcontentsahreftocnametocclassdeeplinka">Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
+
+<ul>
+<li><a href="#constructor">constructor()</a></li>
+
+<li><a href="#getName">getName()</a></li>
+
+<li><a href="#getPresets">getPresets()</a></li>
+
+<li><a href="#setPreset">setPreset()</a></li>
+
+<li><a href="#getScalarRange">getScalarRange()</a></li>
+
+<li><a href="#setScalarRange">setScalarRange()</a></li>
+
+<li><a href="#build">build()</a></li>
+
+<li><a href="#setNumberOfColors">setNumberOfColors()</a></li>
+
+<li><a href="#getNumberOfControlPoints">getNumberOfControlPoints()</a></li>
+
+<li><a href="#removeControlPoint">removeControlPoint()</a></li>
+
+<li><a href="#getControlPoint">getControlPoint()</a></li>
+
+<li><a href="#updateControlPoint">updateControlPoint()</a></li>
+
+<li><a href="#addControlPoint">addControlPoint()</a></li>
+
+<li><a href="#drawToCanvas">drawToCanvas()</a></li>
+
+<li><a href="#getColor">getColor()</a></li>
+
+<li><a href="#onChange">onChange()</a></li>
+
+<li><a href="#destroy">destroy()</a></li>
+</ul>
+
+<h2 id="constructornameahrefconstructoridconstructorclassdeeplinka">constructor(name) <a href="#constructor" id="constructor" class="deep-link">#</a></h2>
+
+<p>Create an instance of a LookupTable while giving it a name.
+Usually we use the field name that we want to use
+that LookupTable for.</p>
+
+<h2 id="getnamestringahrefgetnameidgetnameclassdeeplinka">getName() : String <a href="#getName" id="getName" class="deep-link">#</a></h2>
+
+<p>Return the name of the given LookupTable.</p>
+
+<h2 id="getpresetsstringahrefgetpresetsidgetpresetsclassdeeplinka">getPresets() : [ String... ] <a href="#getPresets" id="getPresets" class="deep-link">#</a></h2>
+
+<p>Return the names of the available presets.</p>
+
+<h2 id="setpresetnameahrefsetpresetidsetpresetclassdeeplinka">setPreset(name) <a href="#setPreset" id="setPreset" class="deep-link">#</a></h2>
+
+<p>Use a preset to configure the current instance. This will reset all the
+control points and use the one defined inside the preset.</p>
+
+<p>This will trigger the following change event:</p>
+
+<pre class="brush:js">
+{
+    change: 'preset',
+    lut: lutInstance
+}
+</pre>
+
+<h2 id="getscalarrangeminmaxahrefgetscalarrangeidgetscalarrangeclassdeeplinka">getScalarRange() : [min, max] <a href="#getScalarRange" id="getScalarRange" class="deep-link">#</a></h2>
+
+<p>Return the scalar range the LookupTable is using.</p>
+
+<h2 id="setscalarrangeminmaxahrefsetscalarrangeidsetscalarrangeclassdeeplinka">setScalarRange(min, max) <a href="#setScalarRange" id="setScalarRange" class="deep-link">#</a></h2>
+
+<p>Update the scalar range that LookupTable is using.</p>
+
+<h2 id="buildtriggerahrefbuildidbuildclassdeeplinka">build(trigger) <a href="#build" id="build" class="deep-link">#</a></h2>
+
+<p>This generate a precomputed table for the lookuptable.</p>
+
+<p>If <strong>trigger</strong> is true, this will trigger the following change event:</p>
+
+<pre class="brush:js">
+{
+    change: 'controlPoints',
+    lut: lutInstance
+}
+</pre>
+
+<h2 id="setnumberofcolorsnumberofcolorsahrefsetnumberofcolorsidsetnumberofcolorsclassdeeplinka">setNumberOfColors( numberOfColors ) <a href="#setNumberOfColors" id="setNumberOfColors" class="deep-link">#</a></h2>
+
+<p>Set the number of colors to be used for the concrete scalar to color mapping.</p>
+
+<p>This will trigger the following change event:</p>
+
+<pre class="brush:js">
+{
+    change: 'numberOfColors',
+    lut: lutInstance
+}
+</pre>
+
+<h2 id="getnumberofcontrolpointsnumberahrefgetnumberofcontrolpointsidgetnumberofcontrolpointsclassdeeplinka">getNumberOfControlPoints() : Number <a href="#getNumberOfControlPoints" id="getNumberOfControlPoints" class="deep-link">#</a></h2>
+
+<p>Return the number of control points used to define the color map.</p>
+
+<h2 id="removecontrolpointidxbooleanahrefremovecontrolpointidremovecontrolpointclassdeeplinka">removeControlPoint(idx) : Boolean <a href="#removeControlPoint" id="removeControlPoint" class="deep-link">#</a></h2>
+
+<p>Removes the provided control point index and returns true if the index is
+valid and the point was removed, the method will otherwise return false.</p>
+
+<h2 id="getcontrolpointidxxrgbahrefgetcontrolpointidgetcontrolpointclassdeeplinka">getControlPoint(idx) : {x, r, g, b} <a href="#getControlPoint" id="getControlPoint" class="deep-link">#</a></h2>
+
+<p>Return the control point defined at the provided index.</p>
+
+<h2 id="updatecontrolpointidxxrgbnumberahrefupdatecontrolpointidupdatecontrolpointclassdeeplinka">updateControlPoint(idx, xrgb) : Number <a href="#updateControlPoint" id="updateControlPoint" class="deep-link">#</a></h2>
+
+<p>Update the control point defined in the given index by replacing it with the
+provided object. The control points will be reset and the table rebuilt.</p>
+
+<p>The method will return the index of the updated control point which could be different if the x value is different.</p>
+
+<h2 id="addcontrolpointxrgbnumberahrefaddcontrolpointidaddcontrolpointclassdeeplinka">addControlPoint(xrgb) : Number <a href="#addControlPoint" id="addControlPoint" class="deep-link">#</a></h2>
+
+<p>Add a new control point and return its corresponding index while rebuilding
+the full index map.</p>
+
+<p>A control point should be composed of four fields x, r, g and b with a number between 0 and 1.</p>
+
+<pre class="brush:js">
+var xrgb = {
+    x: 0.5,
+    r: 1,
+    g: 0,
+    b: 0.1
+};
+</pre>
+
+<h2 id="drawtocanvascanvasahrefdrawtocanvasiddrawtocanvasclassdeeplinka">drawToCanvas(canvas) <a href="#drawToCanvas" id="drawToCanvas" class="deep-link">#</a></h2>
+
+<p>Draw the index map into the canvas using a height of 1 pixel and a width corresponding to the number of colors defined.</p>
+
+<h2 id="getcolorscalarrgbahrefgetcoloridgetcolorclassdeeplinka">getColor(scalar) : [r, g, b] <a href="#getColor" id="getColor" class="deep-link">#</a></h2>
+
+<p>Return the color that should be used for a given scalar value. If the value is outside the scalar range, then the last color defined for that edge will be used.</p>
+
+<h2 id="onchangecallbacksubscriptionahrefonchangeidonchangeclassdeeplinka">onChange(callback) : subscription <a href="#onChange" id="onChange" class="deep-link">#</a></h2>
+
+<p>Helper method used to attach a listener to the topic that is used when the LookupTable change. We rely on Monologue.js for our observer pattern.</p>
+
+<h2 id="destroyahrefdestroyiddestroyclassdeeplinka">destroy() <a href="#destroy" id="destroy" class="deep-link">#</a></h2>
+
+<p>Remove any listener attached to this LookupTable instance.</p>
+        </div>
+        <script src="assets_/js/lib/jquery.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
+        <script src="assets_/js/main.js"></script>
+    </body>
+</html>

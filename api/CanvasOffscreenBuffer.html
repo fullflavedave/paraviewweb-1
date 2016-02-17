@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title></title>
+  <meta name="description" content="">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="assets_/css/shCore.css">
+  <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
+  <link rel="stylesheet" href="assets_/css/main.css">
+</head>
+
+<body data-root-path="">
+
+<header class="site-header">
+</header>
+
+<div id="wrapper">
+   <div id="content">
+<ul id="topnav">
+    <li><a href="index.html">Index</a></li>
+    <li><a href="#toc">TOC</a></li>
+</ul>
+<h1 id="canvasoffscreenbuffer">CanvasOffscreenBuffer</h1>
+
+<p>This is a utility class used to create an off-screen
+canvas for image manipulation.</p>
+
+<pre class="brush:js">
+var CanvasOffscreenBuffer = require('paraviewweb/src/Common/Misc/CanvasOffscreenBuffer'),
+    instance = new CanvasOffscreenBuffer(100, 100);
+</pre>
+
+<h2 id="tableofcontentsahreftocnametocclassdeeplinka">Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
+
+<ul>
+<li><a href="#constructor">constructor()</a></li>
+
+<li><a href="#size">size()</a></li>
+
+<li><a href="#get2DContext">get2DContext()</a></li>
+
+<li><a href="#get3DContext">get3DContext()</a></li>
+
+<li><a href="#toDataURL">toDataURL()</a></li>
+
+<li><a href="#destroy">destroy()</a></li>
+</ul>
+
+<h2 id="constructorwidthheightahrefconstructoridconstructorclassdeeplinka">constructor(width, height) <a href="#constructor" id="constructor" class="deep-link">#</a></h2>
+
+<p>Create a canvas and add it to the DOM as a child of the
+<code>&lt;body/&gt;</code> element.</p>
+
+<h2 id="sizewidthheightwidthheightahrefsizeidsizeclassdeeplinka">size([width, [height]]) : [ width, height ] <a href="#size" id="size" class="deep-link">#</a></h2>
+
+<p>Return the actual canvas size if used without any argument.</p>
+
+<p>If the width and height arguments are provided, this will update the canvas
+<strong>width</strong> and <strong>height</strong> attributes.</p>
+
+<pre class="brush:js">
+// Get size
+var size = instance.size();
+
+// Update size
+instance.size(200,500);
+</pre>
+
+<h2 id="get2dcontextahrefget2dcontextidget2dcontextclassdeeplinka">get2DContext() <a href="#get2DContext" id="get2DContext" class="deep-link">#</a></h2>
+
+<p>Returns the 2D context of the given canvas.</p>
+
+<pre class="brush:js">
+var ctx = instance.get2DContext();
+
+ctx.fillRect(0,0,10,200);
+
+// ...
+</pre>
+
+<h2 id="get3dcontextahrefget3dcontextidget3dcontextclassdeeplinka">get3DContext() <a href="#get3DContext" id="get3DContext" class="deep-link">#</a></h2>
+
+<p><em>Experimental</em>, returns the 3D <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext">WebGL context</a> of the given canvas.</p>
+
+<h2 id="todataurltypeimagepngencoderoptions1ahreftodataurlidtodataurlclassdeeplinka">toDataURL(type='image/png', encoderOptions=1) <a href="#toDataURL" id="toDataURL" class="deep-link">#</a></h2>
+
+<p>Returns a data URI containing a representation of the image in the
+format specified by the type parameter (defaults to PNG). The returned image has a resolution of 96 dpi.</p>
+
+<ul>
+<li><strong>type</strong> : A string indicating the image format, the default is image/png.</li>
+
+<li><strong>encoderOptions</strong> : A number between 0 and 1 indicating image quality if the requested type is image/jpeg or image/webp.</li>
+</ul>
+
+<h2 id="destroyahrefdestroyiddestroyclassdeeplinka">destroy() <a href="#destroy" id="destroy" class="deep-link">#</a></h2>
+
+<p>Free the internal resources and remove the DOM element from the tree.</p>
+        </div>
+        <script src="assets_/js/lib/jquery.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
+        <script src="assets_/js/main.js"></script>
+    </body>
+</html>

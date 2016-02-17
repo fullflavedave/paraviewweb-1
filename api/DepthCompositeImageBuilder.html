@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title></title>
+  <meta name="description" content="">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="assets_/css/shCore.css">
+  <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
+  <link rel="stylesheet" href="assets_/css/main.css">
+</head>
+
+<body data-root-path="">
+
+<header class="site-header">
+</header>
+
+<div id="wrapper">
+   <div id="content">
+<ul id="topnav">
+    <li><a href="index.html">Index</a></li>
+    <li><a href="#toc">TOC</a></li>
+</ul>
+<h1 id="depthcompositeimagebuilder">DepthCompositeImageBuilder</h1>
+
+<p>Similar image builder as the CompositeImageBuilder except that it is using WebGL
+code based to do the compositing and support different data structures.</p>
+
+<pre class="brush:js">
+var DepthCompositeImageBuilder = require('paraviewweb/src/Rendering/Image/DepthCompositeImageBuilder'),
+    instance = new DepthCompositeImageBuilder(queryDataModel, pipelineModel, lookupTableManager);
+</pre>
+
+<h2 id="tableofcontentsahreftocnametocclassdeeplinka">Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
+
+<ul>
+<li><a href="#constructor">constructor()</a></li>
+
+<li><a href="#update">update()</a></li>
+
+<li><a href="#setPipelineQuery">setPipelineQuery()</a></li>
+
+<li><a href="#render">render()</a></li>
+
+<li><a href="#onImageReady">onImageReady()</a></li>
+
+<li><a href="#destroy">destroy()</a></li>
+
+<li><a href="#getListeners">getListeners()</a></li>
+
+<li><a href="#getControlWidgets">getControlWidgets()</a></li>
+
+<li><a href="#getControlModels">getControlModels()</a></li>
+</ul>
+
+<h2 id="constructorquerydatamodelpipelinemodellookuptablemanagerahrefconstructoridconstructorclassdeeplinka">constructor(queryDataModel, pipelineModel, lookupTableManager) <a href="#constructor" id="constructor" class="deep-link">#</a></h2>
+
+<p>Create an instance of a DepthCompositeImageBuilder using the associated
+<strong>queryDataModel</strong> that should be used to fetch the data.</p>
+
+<p>And the <strong>pipelineModel</strong> that should be used for controlling the ImageBuilder.</p>
+
+<p>Under the hood this will create an off-screen canvas for the image generation.</p>
+
+<h2 id="updateinheritedahrefupdateidupdateclassdeeplinka">update() - inherited <a href="#update" id="update" class="deep-link">#</a></h2>
+
+<p>Trigger the fetching of the data.</p>
+
+<h2 id="setpipelinequerypipelinequeryahrefsetpipelinequeryidsetpipelinequeryclassdeeplinka">setPipelineQuery(pipelineQuery) <a href="#setPipelineQuery" id="setPipelineQuery" class="deep-link">#</a></h2>
+
+<p>Should be called each time the pipeline setting is changed.</p>
+
+<p>The <strong>pipelineQuery</strong> is a string that encodes the pipeline configuration such as
+which layer is visible or not and which field should be rendered for a given layer.</p>
+
+<p>The <strong>pipelineQuery</strong> is structured as follows:</p>
+
+<pre class="brush:js">
+var pipelineQuery = "A_BBCAD_EA";
+
+// In that example we have the following setting
+var layerSettings = [
+    "A_", // Layer A is invisible
+    "BB", // Layer B is using field B
+    "CA", // Layer C is using field A
+    "D_", // Layer D is invisible
+    "EA"  // Layer E is using field A
+];
+</pre>
+
+<h2 id="renderahrefrenderidrenderclassdeeplinka">render() <a href="#render" id="render" class="deep-link">#</a></h2>
+
+<p>Process the current set of loaded data and render it into the background canvas.
+Once done, an event gets triggered to let the application know that the image is
+ready to be rendered/displayed somewhere.</p>
+
+<h2 id="onimagereadycallbacksubscriptioninheritedahrefonimagereadyidonimagereadyclassdeeplinka">onImageReady(callback) : subscription - inherited <a href="#onImageReady" id="onImageReady" class="deep-link">#</a></h2>
+
+<p>Allows the registration of a <strong>callback(data, envelope)</strong> function when the
+actual generated image is ready.</p>
+
+<h2 id="destroyinheritedahrefdestroyiddestroyclassdeeplinka">destroy() - inherited <a href="#destroy" id="destroy" class="deep-link">#</a></h2>
+
+<p>Free the internal resources of the current instance.</p>
+
+<h2 id="getlistenersinheritedahrefgetlistenersidgetlistenersclassdeeplinka">getListeners() - inherited <a href="#getListeners" id="getListeners" class="deep-link">#</a></h2>
+
+<p>Returns a list of MouseHandler listeners.</p>
+
+<h2 id="getcontrolwidgetscontrolwidgetsahrefgetcontrolwidgetsidgetcontrolwidgetsclassdeeplinka">getControlWidgets() : controlWidgets <a href="#getControlWidgets" id="getControlWidgets" class="deep-link">#</a></h2>
+
+<p>Returns a list of Widgets needed to drive the ImageBuilder.</p>
+
+<h2 id="getcontrolmodelscontrolmodelsahrefgetcontrolmodelsidgetcontrolmodelsclassdeeplinka">getControlModels() : controlModels <a href="#getControlModels" id="getControlModels" class="deep-link">#</a></h2>
+
+<p>Returns a list of Model that can drive the ImageBuilder.</p>
+        </div>
+        <script src="assets_/js/lib/jquery.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
+        <script src="assets_/js/main.js"></script>
+    </body>
+</html>
