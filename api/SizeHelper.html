@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title></title>
+  <meta name="description" content="">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="assets_/css/shCore.css">
+  <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
+  <link rel="stylesheet" href="assets_/css/main.css">
+</head>
+
+<body data-root-path="">
+
+<header class="site-header">
+</header>
+
+<div id="wrapper">
+   <div id="content">
+<ul id="topnav">
+    <li><a href="index.html">Index</a></li>
+    <li><a href="#toc">TOC</a></li>
+</ul>
+<h1 id="sizehelper">SizeHelper</h1>
+
+<p>This is a set of methods used to handle element size in DOM in an efficient manner.</p>
+
+<h2 id="tableofcontentsahreftocnametocclassdeeplinka">Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
+
+<ul>
+<li><a href="#getSize">getSize()</a></li>
+
+<li><a href="#isListening">isListening()</a></li>
+
+<li><a href="#onSizeChange">onSizeChange()</a></li>
+
+<li><a href="#startListening">startListening()</a></li>
+
+<li><a href="#stopListening">stopListening()</a></li>
+
+<li><a href="#triggerChange">triggerChange()</a></li>
+</ul>
+
+<h2 id="getsizedomelementobjectahrefgetsizeidgetsizeclassdeeplinka">getSize(domElement): object <a href="#getSize" id="getSize" class="deep-link">#</a></h2>
+
+<p>Compute all the size/offset information from the given DOM element or return
+a cached version if the window size did not changed since the last request.</p>
+
+<h2 id="islisteningahrefislisteningidislisteningclassdeeplinka">isListening() <a href="#isListening" id="isListening" class="deep-link">#</a></h2>
+
+<p>Return true only if the SizeHelper has started to listen on Window size change.</p>
+
+<h2 id="onsizechangeahrefonsizechangeidonsizechangeclassdeeplinka">onSizeChange() <a href="#onSizeChange" id="onSizeChange" class="deep-link">#</a></h2>
+
+<p>Register a callback to be aware when the size of the Window is changing with automatic debouncing.</p>
+
+<h2 id="startlisteningahrefstartlisteningidstartlisteningclassdeeplinka">startListening() <a href="#startListening" id="startListening" class="deep-link">#</a></h2>
+
+<p>Start listening on Window size change.</p>
+
+<h2 id="stoplisteningahrefstoplisteningidstoplisteningclassdeeplinka">stopListening() <a href="#stopListening" id="stopListening" class="deep-link">#</a></h2>
+
+<p>Stop listening on Window size change.</p>
+
+<h2 id="triggerchangeahreftriggerchangeidtriggerchangeclassdeeplinka">triggerChange() <a href="#triggerChange" id="triggerChange" class="deep-link">#</a></h2>
+
+<p>Trigger a fake window size change to invalidate cache and trigger any listener.</p>
+        </div>
+        <script src="assets_/js/lib/jquery.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
+        <script src="assets_/js/main.js"></script>
+    </body>
+</html>

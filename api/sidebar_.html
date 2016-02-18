@@ -135,6 +135,27 @@ which layer is visible or not and which field should be rendered for a given lay
                     <span class="desc">Returns a list of Model that can drive the ImageBuilder. </span>
                 </a>
             </div>
+            <h3 class="toc-mod-title"><a href="Convert.html">Convert</a></h3>
+            <div class="toc-list">
+                <a class="toc-item" href="Convert.html#integer">
+                    <h4>integer(val)</h4>
+                    <span class="desc">Return an integer from a string.</span>
+                </a>
+                <a class="toc-item" href="Convert.html#double">
+                    <h4>double(val)</h4>
+                    <span class="desc">Return a double from a string.</span>
+                </a>
+                <a class="toc-item" href="Convert.html#string">
+                    <h4>string(val)</h4>
+                    <span class="desc">Convert the object to a string.   
+
+<h2 id="booleanval">boolean(val)</h2></span>
+                </a>
+                <a class="toc-item" href="Convert.html#boolean">
+                    <h4>boolean(val)</h4>
+                    <span class="desc">Return a boolean (true, false, 1, 0...) </span>
+                </a>
+            </div>
             <h3 class="toc-mod-title"><a href="DataManager.html">DataManager</a></h3>
             <div class="toc-list">
                 <a class="toc-item" href="DataManager.html#fetchURL">
@@ -331,6 +352,15 @@ ready to be rendered/display somewhere.</span>
                     <span class="desc">Returns a list of Model that can drive the ImageBuilder. </span>
                 </a>
             </div>
+            <h3 class="toc-mod-title"><a href="Debounce.html">Debounce</a></h3>
+            <div class="toc-list">
+                <a class="toc-item" href="Debounce.html#debounce">
+                    <h4>debounce(func, wait, immediate)</h4>
+                    <span class="desc">Returns a function, that, as long as it continues to be invoked, will not be triggered. The function will be called after it stops being called for
+N milliseconds. If <code>immediate</code> is passed, trigger the function on the
+leading edge, instead of the trailing.</span>
+                </a>
+            </div>
             <h3 class="toc-mod-title"><a href="DepthCompositeImageBuilder.html">DepthCompositeImageBuilder</a></h3>
             <div class="toc-list">
                 <a class="toc-item" href="DepthCompositeImageBuilder.html#constructor">
@@ -369,6 +399,25 @@ ready to be rendered/displayed somewhere.</span>
                 <a class="toc-item" href="DepthCompositeImageBuilder.html#getControlModels">
                     <h4>getControlModels() : controlModels</h4>
                     <span class="desc">Returns a list of Model that can drive the ImageBuilder.</span>
+                </a>
+            </div>
+            <h3 class="toc-mod-title"><a href="ImageExporter.html">ImageExporter</a></h3>
+            <div class="toc-list">
+                <a class="toc-item" href="ImageExporter.html#constructor">
+                    <h4>constructor(format&#x3D;&#x27;image/jpeg&#x27;, padding&#x3D;3)</h4>
+                    <span class="desc">Padding if used to ensure the generated timestamp have a constant size.</span>
+                </a>
+                <a class="toc-item" href="ImageExporter.html#exportImage">
+                    <h4>exportImage(data) </h4>
+                    <span class="desc">A POST request will be issued on '/export' using the <strong>canvas</strong> and <strong>arguments</strong> available from the given data object.</span>
+                </a>
+                <a class="toc-item" href="ImageExporter.html#updateMetadata">
+                    <h4>updateMetadata(dataToSend)</h4>
+                    <span class="desc">A POST request will be issued on '/update' with the exported image and metadata.</span>
+                </a>
+                <a class="toc-item" href="ImageExporter.html#extractCanvasRegion">
+                    <h4>extractCanvasRegion(canvas, region, outputSize, format&#x3D;&#x27;image/png&#x27;)</h4>
+                    <span class="desc">Helper method that will return a base64 encoded string representing the sub-region of a given canvas as an image. </span>
                 </a>
             </div>
             <h3 class="toc-mod-title"><a href="LineChartPainter.html">LineChartPainter</a></h3>
@@ -503,6 +552,40 @@ that LookupTable for.</span>
                 <a class="toc-item" href="LookupTableManager.html#onChange">
                     <h4>onChange(callback) : subscription</h4>
                     <span class="desc">Helper method used to bind a listener to the change topic. This will return a subscription object.</span>
+                </a>
+            </div>
+            <h3 class="toc-mod-title"><a href="Loop.html">Loop</a></h3>
+            <div class="toc-list">
+                <a class="toc-item" href="Loop.html#loop">
+                    <h4>loop(reverseOrder, count, fn)</h4>
+                    <span class="desc">fn will be called with an index that go from 0 to (count-1) if reverseOrder is false, or from (count-1) to 0 if true.</span>
+                </a>
+            </div>
+            <h3 class="toc-mod-title"><a href="Observable.html">Observable</a></h3>
+            <div class="toc-list">
+                <a class="toc-item" href="Observable.html#constructor">
+                    <h4>constructor()</h4>
+                    <span class="desc">Create a new instance.</span>
+                </a>
+                <a class="toc-item" href="Observable.html#destroy">
+                    <h4>destroy()</h4>
+                    <span class="desc">Remove any listener.</span>
+                </a>
+                <a class="toc-item" href="Observable.html#on">
+                    <h4>on(topic, callback): subscription</h4>
+                    <span class="desc">From Monologue.</span>
+                </a>
+                <a class="toc-item" href="Observable.html#off">
+                    <h4>off(topic)</h4>
+                    <span class="desc">From Monologue.</span>
+                </a>
+                <a class="toc-item" href="Observable.html#off">
+                    <h4>off()</h4>
+                    <span class="desc">From Monologue.</span>
+                </a>
+                <a class="toc-item" href="Observable.html#emit">
+                    <h4>emit(topic, data)</h4>
+                    <span class="desc">From Monologue. </span>
                 </a>
             </div>
             <h3 class="toc-mod-title"><a href="PingPong.html">PingPong</a></h3>
@@ -811,6 +894,52 @@ The returned object let you unsubscribe of the change update.</span>
                 <a class="toc-item" href="QueryDataModelImageBuilder.html#destroy">
                     <h4>destroy() - inherited</h4>
                     <span class="desc">Free the internal resources of the current instance. </span>
+                </a>
+            </div>
+            <h3 class="toc-mod-title"><a href="SizeHelper.html">SizeHelper</a></h3>
+            <div class="toc-list">
+                <a class="toc-item" href="SizeHelper.html#getSize">
+                    <h4>getSize(domElement): object</h4>
+                    <span class="desc">Compute all the size/offset information from the given DOM element or return a cached version if the window size did not changed since the last request.</span>
+                </a>
+                <a class="toc-item" href="SizeHelper.html#isListening">
+                    <h4>isListening()</h4>
+                    <span class="desc">Return true only if the SizeHelper has started to listen on Window size change.</span>
+                </a>
+                <a class="toc-item" href="SizeHelper.html#onSizeChange">
+                    <h4>onSizeChange()</h4>
+                    <span class="desc">Register a callback to be aware when the size of the Window is changing with automatic debouncing.</span>
+                </a>
+                <a class="toc-item" href="SizeHelper.html#startListening">
+                    <h4>startListening()</h4>
+                    <span class="desc">Start listening on Window size change.</span>
+                </a>
+                <a class="toc-item" href="SizeHelper.html#stopListening">
+                    <h4>stopListening()</h4>
+                    <span class="desc">Stop listening on Window size change.</span>
+                </a>
+                <a class="toc-item" href="SizeHelper.html#triggerChange">
+                    <h4>triggerChange()</h4>
+                    <span class="desc">Trigger a fake window size change to invalidate cache and trigger any listener. </span>
+                </a>
+            </div>
+            <h3 class="toc-mod-title"><a href="Validate.html">Validate</a></h3>
+            <div class="toc-list">
+                <a class="toc-item" href="Validate.html#integer">
+                    <h4>integer(val), int(val)</h4>
+                    <span class="desc">Return true if val is a valid integer.</span>
+                </a>
+                <a class="toc-item" href="Validate.html#double">
+                    <h4>double(val), dbl(val)</h4>
+                    <span class="desc">Return true if val is a valid double.</span>
+                </a>
+                <a class="toc-item" href="Validate.html#string">
+                    <h4>string(val), str(val)</h4>
+                    <span class="desc">Return true if val is a valid string.</span>
+                </a>
+                <a class="toc-item" href="Validate.html#boolean">
+                    <h4>boolean(val), bool(val)</h4>
+                    <span class="desc">Return true if val is a valid boolean. </span>
                 </a>
             </div>
             <h3 class="toc-mod-title"><a href="WebGl.html">WebGl</a></h3>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title></title>
+  <meta name="description" content="">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="assets_/css/shCore.css">
+  <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
+  <link rel="stylesheet" href="assets_/css/main.css">
+</head>
+
+<body data-root-path="">
+
+<header class="site-header">
+</header>
+
+<div id="wrapper">
+   <div id="content">
+<ul id="topnav">
+    <li><a href="index.html">Index</a></li>
+    <li><a href="#toc">TOC</a></li>
+</ul>
+<h1 id="imageexporter">ImageExporter</h1>
+
+<p>Class used with an ArcticViewer server to update <strong>index.js</strong> metadata and thumbnails.</p>
+
+<h2 id="tableofcontentsahreftocnametocclassdeeplinka">Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
+
+<ul>
+<li><a href="#constructor">constructor()</a></li>
+
+<li><a href="#exportImage">exportImage()</a></li>
+
+<li><a href="#updateMetadata">updateMetadata()</a></li>
+
+<li><a href="#extractCanvasRegion">extractCanvasRegion()</a></li>
+</ul>
+
+<h2 id="constructorformatimagejpegpadding3ahrefconstructoridconstructorclassdeeplinka">constructor(format='image/jpeg', padding=3) <a href="#constructor" id="constructor" class="deep-link">#</a></h2>
+
+<p>Padding if used to ensure the generated timestamp have a constant size.</p>
+
+<h2 id="exportimagedataahrefexportimageidexportimageclassdeeplinka">exportImage(data)  <a href="#exportImage" id="exportImage" class="deep-link">#</a></h2>
+
+<p>A POST request will be issued on '/export' using the <strong>canvas</strong> and <strong>arguments</strong> available from the given data object.</p>
+
+<h2 id="updatemetadatadatatosendahrefupdatemetadataidupdatemetadataclassdeeplinka">updateMetadata(dataToSend) <a href="#updateMetadata" id="updateMetadata" class="deep-link">#</a></h2>
+
+<p>A POST request will be issued on '/update' with the exported image and metadata.</p>
+
+<h2 id="extractcanvasregioncanvasregionoutputsizeformatimagepngahrefextractcanvasregionidextractcanvasregionclassdeeplinka">extractCanvasRegion(canvas, region, outputSize, format='image/png') <a href="#extractCanvasRegion" id="extractCanvasRegion" class="deep-link">#</a></h2>
+
+<p>Helper method that will return a base64 encoded string representing the sub-region of a given canvas as an image.</p>
+        </div>
+        <script src="assets_/js/lib/jquery.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
+        <script src="assets_/js/main.js"></script>
+    </body>
+</html>
