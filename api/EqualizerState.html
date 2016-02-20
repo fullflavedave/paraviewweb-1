@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title></title>
+  <meta name="description" content="">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="assets_/css/shCore.css">
+  <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
+  <link rel="stylesheet" href="assets_/css/main.css">
+</head>
+
+<body data-root-path="">
+
+<header class="site-header">
+</header>
+
+<div id="wrapper">
+   <div id="content">
+<ul id="topnav">
+    <li><a href="index.html">Index</a></li>
+    <li><a href="#toc">TOC</a></li>
+</ul>
+<h1 id="equalizerstate">EqualizerState</h1>
+
+<p>EqualizerState represents a set of feature list where each feature can
+vary in intensity and a color/scalar can be associated with.
+This state is used within the React/Widgets/EqualizerWidget.</p>
+
+<p>The class can be imported with the following command:</p>
+
+<pre class="brush:js">
+import EqualizerState from 'paraviewweb/src/Common/State/EqualizerState';
+</pre>
+
+<h2 id="tableofcontentsahreftocnametocclassdeeplinka">Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
+
+<ul>
+<li><a href="#getOpacities">getOpacities()</a></li>
+
+<li><a href="#onChange">onChange()</a></li>
+
+<li><a href="#destroy">destroy()</a></li>
+</ul>
+
+<h2 id="constructorsize1colorscccccclookuptablenullscalars">constructor({size=1, colors=['#cccccc'], lookupTable=null, scalars=[]})</h2>
+
+<p>Create an instance of an equalizer state.</p>
+
+<p>The size is used to determine how many features should be used. </p>
+
+<p>The color array will be used by the widget to color each column. 
+If the array of colors is smaller than the size, then the widget will
+loop through them indefinitely. So that array can contain a single
+color without issue.</p>
+
+<p>In case a lookupTable is provided, scalars should be provided as well
+so the colors of each feature can be defined based on those scalars and
+lookuptable.</p>
+
+<h2 id="getopacities01ahrefgetopacitiesidgetopacitiesclassdeeplinka">getOpacities(): [0...1] <a href="#getOpacities" id="getOpacities" class="deep-link">#</a></h2>
+
+<p>Return an array of the size given at construction time with values between
+0 and 1.</p>
+
+<h2 id="getcolorsfff">getColors(): ['#fff']</h2>
+
+<p>Return the color table which can be smaller than the actual size of
+the equalizer. Unless a lookupTable with scalars are used.</p>
+
+<h2 id="onchangecallbacksubscriptionahrefonchangeidonchangeclassdeeplinka">onChange(callback):subscription <a href="#onChange" id="onChange" class="deep-link">#</a></h2>
+
+<p>Register a callback to any possible change of the model.
+The callback method profile is as follow.</p>
+
+<pre class="brush:js">
+function(equalizerStateInstance, envelope){}
+</pre>
+
+<h2 id="destroyahrefdestroyiddestroyclassdeeplinka">destroy() <a href="#destroy" id="destroy" class="deep-link">#</a></h2>
+
+<p>Free memory and detatch any listener.</p>
+        </div>
+        <script src="assets_/js/lib/jquery.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
+        <script src="assets_/js/main.js"></script>
+    </body>
+</html>

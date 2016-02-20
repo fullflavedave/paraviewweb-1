@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title></title>
+  <meta name="description" content="">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="assets_/css/shCore.css">
+  <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
+  <link rel="stylesheet" href="assets_/css/main.css">
+</head>
+
+<body data-root-path="">
+
+<header class="site-header">
+</header>
+
+<div id="wrapper">
+   <div id="content">
+<ul id="topnav">
+    <li><a href="index.html">Index</a></li>
+    <li><a href="#toc">TOC</a></li>
+</ul>
+<h1 id="coreendpoints">CoreEndpoints</h1>
+
+<p>A standard Girder instance provide the following set of endpoints.
+By adding the one listed here as extension inside a GirderClientBuilder,
+you will get the following set of methods:</p>
+
+<pre class="brush:js">
+// Usage example
+import CoreEndpoints from 'paraviewweb/src/IO/Girder/CoreEndpoints';
+import HpcCloudEndpoints from 'paraviewweb/src/IO/Girder/HpcCloudEndpoints';
+import { build } from 'paraviewweb/src/IO/Girder/GirderClientBuilder';
+
+const client = build(location, ...CoreEndpoints, ...HpcCloudEndpoints);
+</pre>
+
+<h2 id="tableofcontentsahreftocnametocclassdeeplinka">Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
+
+<ul>
+<li><a href="#assetstore">assetstore</a></li>
+
+<li><a href="#collection">collection</a></li>
+
+<li><a href="#file">file</a></li>
+
+<li><a href="#folder">folder</a></li>
+
+<li><a href="#group">group</a></li>
+
+<li><a href="#item">item</a></li>
+
+<li><a href="#resource">resource</a></li>
+
+<li><a href="#system">system</a></li>
+
+<li><a href="#user">user</a></li>
+</ul>
+
+<h2 id="assetstoreahrefassetstoreidassetstoreclassdeeplinka">assetstore <a href="#assetstore" id="assetstore" class="deep-link">#</a></h2>
+
+<h3 id="listassetstoresquery">listAssetStores(query={})</h3>
+
+<h3 id="createassetstoreassetstore">createAssetStore(assetstore)</h3>
+
+<h3 id="updateassetstoreassetstore">updateAssetStore(assetstore)</h3>
+
+<h3 id="deleteassetstoreid">deleteAssetStore(id)</h3>
+
+<h2 id="collectionahrefcollectionidcollectionclassdeeplinka">collection <a href="#collection" id="collection" class="deep-link">#</a></h2>
+
+<h3 id="listcollectionsquery">listCollections(query={})</h3>
+
+<h3 id="createcollectioncollection">createCollection(collection)</h3>
+
+<h3 id="deletecollectionid">deleteCollection(id)</h3>
+
+<h3 id="getcollectionid">getCollection(id)</h3>
+
+<h3 id="editcollectioncollection">editCollection(collection={})</h3>
+
+<h3 id="getcollectionaccessid">getCollectionAccess(id)</h3>
+
+<h3 id="editcollectionaccesscollection">editCollectionAccess(collection) {</h3>
+
+<h2 id="fileahreffileidfileclassdeeplinka">file <a href="#file" id="file" class="deep-link">#</a></h2>
+
+<h3 id="uploadfiletoitemparamsfile">uploadFileToItem(params, file)</h3>
+
+<h3 id="getuploadoffsetid">getUploadOffset(id)</h3>
+
+<h3 id="downloadfileid">downloadFile(id)</h3>
+
+<h3 id="updatefilecontentidsize">updateFileContent(id, size)</h3>
+
+<h3 id="deletefileid">deleteFile(id)</h3>
+
+<h3 id="editfilefile">editFile(file)</h3>
+
+<h3 id="newfilefile">newFile(file)</h3>
+
+<h2 id="folderahreffolderidfolderclassdeeplinka">folder <a href="#folder" id="folder" class="deep-link">#</a></h2>
+
+<h3 id="listfoldersquery">listFolders(query={})</h3>
+
+<h3 id="createfolderfolder">createFolder(folder)</h3>
+
+<h3 id="editfoldermetadataidmetadata">editFolderMetaData(id, metadata)</h3>
+
+<h3 id="deletefolderid">deleteFolder(id)</h3>
+
+<h3 id="getfolderid">getFolder(id)</h3>
+
+<h3 id="editfolderfolder">editFolder(folder)</h3>
+
+<h3 id="downloadfolderid">downloadFolder(id)</h3>
+
+<h3 id="getfolderaccessid">getFolderAccess(id)</h3>
+
+<h3 id="editfolderaccessfolder">editFolderAccess(folder)</h3>
+
+<h2 id="groupahrefgroupidgroupclassdeeplinka">group <a href="#group" id="group" class="deep-link">#</a></h2>
+
+<h3 id="updategroupmoderatorgroupiduseridonoff">updateGroupModerator(groupId, userId, onOff)</h3>
+
+<h3 id="updategroupadmingroupdiduseridonoff">updateGroupAdmin(groupdId, userId, onOff)</h3>
+
+<h3 id="creategroupgroup">createGroup(group)</h3>
+
+<h3 id="deletegroupid">deleteGroup(id)</h3>
+
+<h3 id="getgroupid">getGroup(id)</h3>
+
+<h3 id="editgroupgroup">editGroup(group={})</h3>
+
+<h3 id="listgroupinvitationsidquery">listGroupInvitations(id, query={})</h3>
+
+<h3 id="addgroupinvitationidoptions">addGroupInvitation(id, options={})</h3>
+
+<h3 id="listgroupmembersidquery">listGroupMembers(id, query={})</h3>
+
+<h3 id="removeuserfromgroupiduserid">removeUserFromGroup(id, userId)</h3>
+
+<h3 id="joingroupid">joinGroup(id)</h3>
+
+<h3 id="getgroupaccessid">getGroupAccess(id)</h3>
+
+<h2 id="itemahrefitemiditemclassdeeplinka">item <a href="#item" id="item" class="deep-link">#</a></h2>
+
+<h3 id="downloaditemid">downloadItem(id)</h3>
+
+<h3 id="updateitemmetadataidmetadata">updateItemMetadata(id, metadata={})</h3>
+
+<h3 id="listitemsquery">listItems(query={})</h3>
+
+<h3 id="createitemfolderidnamedescription">createItem(folderId, name, description='')</h3>
+
+<h3 id="listfilesidquery">listFiles(id, query)</h3>
+
+<h3 id="getitemrootpathid">getItemRootPath(id)</h3>
+
+<h3 id="getitemid">getItem(id)</h3>
+
+<h3 id="deleteitemid">deleteItem(id)</h3>
+
+<h3 id="edititemitem">editItem(item)</h3>
+
+<h3 id="copyitemiddestinationitem">copyItem(id, destinationItem)</h3>
+
+<h2 id="resourceahrefresourceidresourceclassdeeplinka">resource <a href="#resource" id="resource" class="deep-link">#</a></h2>
+
+<h3 id="downloadresourcesresourcelistwithmetadatafalse">downloadResources(resourceList, withMetadata=false)</h3>
+
+<h3 id="searchresourcesquerytypes">searchResources(query,types)</h3>
+
+<h3 id="deleteresourcesresourcelist">deleteResources(resourceList)</h3>
+
+<h2 id="systemahrefsystemidsystemclassdeeplinka">system <a href="#system" id="system" class="deep-link">#</a></h2>
+
+<h3 id="deletesettingkey">deleteSetting(key)</h3>
+
+<h3 id="getsettingssettings">getSettings(settings)</h3>
+
+<h3 id="setsettingskeyvaluemap">setSettings(keyValueMap)</h3>
+
+<h3 id="getserverversion">getServerVersion()</h3>
+
+<h3 id="listunfinisheduploadquery">listUnfinishedUpload(query={})</h3>
+
+<h3 id="removeunfinisheduploadquery">removeUnfinishedUpload(query={})</h3>
+
+<h3 id="listplugins">listPlugins()</h3>
+
+<h3 id="setactivepluginsplugins">setActivePlugins(plugins)</h3>
+
+<h2 id="userahrefuseriduserclassdeeplinka">user <a href="#user" id="user" class="deep-link">#</a></h2>
+
+<h3 id="listusersquery">listUsers(query)</h3>
+
+<h3 id="createuseruser">createUser(user)</h3>
+
+<h3 id="changepasswordoldnewpassword">changePassword(old, newPassword)</h3>
+
+<h3 id="resetpasswordemail">resetPassword(email)</h3>
+
+<h3 id="deleteuserid">deleteUser(id)</h3>
+
+<h3 id="getuserid">getUser(id)</h3>
+
+<h3 id="updateuseruser">updateUser(user)</h3>
+        </div>
+        <script src="assets_/js/lib/jquery.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
+        <script src="assets_/js/main.js"></script>
+    </body>
+</html>

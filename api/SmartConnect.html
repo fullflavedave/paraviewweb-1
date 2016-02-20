@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title></title>
+  <meta name="description" content="">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="assets_/css/shCore.css">
+  <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
+  <link rel="stylesheet" href="assets_/css/main.css">
+</head>
+
+<body data-root-path="">
+
+<header class="site-header">
+</header>
+
+<div id="wrapper">
+   <div id="content">
+<ul id="topnav">
+    <li><a href="index.html">Index</a></li>
+    <li><a href="#toc">TOC</a></li>
+</ul>
+<h1 id="smartconnect">SmartConnect</h1>
+
+<p>SmartConnect will try to launch a new remote process
+based on the configuration and if that fails or if
+a sessionURL is already provided in the configuration
+it will establish a direct WebSocket connection using
+Autobahn.</p>
+
+<h2 id="tableofcontentsahreftocnametocclassdeeplinka">Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
+
+<ul>
+<li><a href="#constructor">constructor()</a></li>
+
+<li><a href="#connect">connect()</a></li>
+
+<li><a href="#onConnectionReady">onConnectionReady()</a></li>
+
+<li><a href="#onConnectionClose">onConnectionClose()</a></li>
+
+<li><a href="#onConnectionError">onConnectionError()</a></li>
+
+<li><a href="#getSession">getSession()</a></li>
+
+<li><a href="#destroy">destroy()</a></li>
+</ul>
+
+<h2 id="constructorconfigahrefconstructoridconstructorclassdeeplinka">constructor(config)  <a href="#constructor" id="constructor" class="deep-link">#</a></h2>
+
+<p>Create an instance that will use the provided configuration to
+connect itself to a server either by requesting a new remote
+process or by trying to directly connecting to it as a fallback.</p>
+
+<h2 id="connectahrefconnectidconnectclassdeeplinka">connect()  <a href="#connect" id="connect" class="deep-link">#</a></h2>
+
+<p>Trigger the connection request.</p>
+
+<h2 id="onconnectionreadycallbacksubscriptionahrefonconnectionreadyidonconnectionreadyclassdeeplinka">onConnectionReady(callback) : subscription <a href="#onConnectionReady" id="onConnectionReady" class="deep-link">#</a></h2>
+
+<p>Register callback for when the connection became ready.</p>
+
+<h2 id="onconnectionclosecallbacksubscriptionahrefonconnectioncloseidonconnectioncloseclassdeeplinka">onConnectionClose(callback) : subscription <a href="#onConnectionClose" id="onConnectionClose" class="deep-link">#</a></h2>
+
+<p>Register callback for when the connection close.</p>
+
+<h2 id="onconnectionerrorcallbacksubscriptionahrefonconnectionerroridonconnectionerrorclassdeeplinka">onConnectionError(callback) : subscription <a href="#onConnectionError" id="onConnectionError" class="deep-link">#</a></h2>
+
+<p>Register callback for when the connection request failed.</p>
+
+<h2 id="getsessionsessionahrefgetsessionidgetsessionclassdeeplinka">getSession() : session <a href="#getSession" id="getSession" class="deep-link">#</a></h2>
+
+<p>Return the session associated with the connection.</p>
+
+<h2 id="destroyahrefdestroyiddestroyclassdeeplinka">destroy()  <a href="#destroy" id="destroy" class="deep-link">#</a></h2>
+
+<p>Free resources and remove any listener.</p>
+        </div>
+        <script src="assets_/js/lib/jquery.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
+        <script src="assets_/js/main.js"></script>
+    </body>
+</html>

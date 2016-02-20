@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title></title>
+  <meta name="description" content="">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="assets_/css/shCore.css">
+  <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
+  <link rel="stylesheet" href="assets_/css/main.css">
+</head>
+
+<body data-root-path="">
+
+<header class="site-header">
+</header>
+
+<div id="wrapper">
+   <div id="content">
+<ul id="topnav">
+    <li><a href="index.html">Index</a></li>
+    <li><a href="#toc">TOC</a></li>
+</ul>
+<h1 id="processlauncher">ProcessLauncher</h1>
+
+<p>The ProcessLauncher is used in ParaViewWeb to start a new remote 
+server instance to perform interactive 3D post-processing using either
+a VTK or a ParaView backend.</p>
+
+<pre class="brush:javascript">
+import ProcessLauncher from 'paraviewweb/src/IO/Core/ProcessLauncher';
+
+processLauncher = new ProcessLauncher('/paraview');
+</pre>
+
+<h2 id="tableofcontentsahreftocnametocclassdeeplinka">Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
+
+<ul>
+<li><a href="#constructor">constructor()</a></li>
+
+<li><a href="#start">start()</a></li>
+
+<li><a href="#fetchConnection">fetchConnection()</a></li>
+
+<li><a href="#stop">stop()</a></li>
+
+<li><a href="#listConnections">listConnections()</a></li>
+
+<li><a href="#onProcessReady">onProcessReady()</a></li>
+
+<li><a href="#onProcessStopped">onProcessStopped()</a></li>
+
+<li><a href="#onFetch">onFetch()</a></li>
+
+<li><a href="#onError">onError()</a></li>
+
+<li><a href="#destroy">destroy()</a></li>
+</ul>
+
+<h2 id="constructorendpointahrefconstructoridconstructorclassdeeplinka">constructor(endPoint)  <a href="#constructor" id="constructor" class="deep-link">#</a></h2>
+
+<p>Create a process launcher that will perform request to a remote
+server using the provided endpoint url.</p>
+
+<h2 id="startconfigahrefstartidstartclassdeeplinka">start(config)  <a href="#start" id="start" class="deep-link">#</a></h2>
+
+<p>Submit a request for a new remote process.</p>
+
+<p>The config object get posted via a POST request to the endpoint provided
+at creation time.</p>
+
+<p>The current ParaViewWeb server side <strong>Launcher</strong> expect at least
+the following object.</p>
+
+<pre class="brush:js">
+{
+    application: 'NameOfTheProcess',
+}
+</pre>
+
+<p>But additional key/value pair can be added depending on the needs of the targeted process.</p>
+
+<p>Once the remote process became ready a notification will be send.</p>
+
+<h2 id="fetchconnectionsessionidahreffetchconnectionidfetchconnectionclassdeeplinka">fetchConnection(sessionId) <a href="#fetchConnection" id="fetchConnection" class="deep-link">#</a></h2>
+
+<p>Trigger a request for getting the full connection information
+based on an existing sessionId.</p>
+
+<h2 id="stopconnectionahrefstopidstopclassdeeplinka">stop(connection)  <a href="#stop" id="stop" class="deep-link">#</a></h2>
+
+<p>Trigger a request to terminate a remote process using the connection
+object that was provided at start time.</p>
+
+<h2 id="listconnectionsahreflistconnectionsidlistconnectionsclassdeeplinka">listConnections() <a href="#listConnections" id="listConnections" class="deep-link">#</a></h2>
+
+<p>Return the list of already establised connections. (From that instance)</p>
+
+<h2 id="onprocessreadycallbacksubscriptionahrefonprocessreadyidonprocessreadyclassdeeplinka">onProcessReady(callback) : subscription <a href="#onProcessReady" id="onProcessReady" class="deep-link">#</a></h2>
+
+<p>Register a callback for when a remote process become available after a start() request.</p>
+
+<p>The callback function will then receive a json object describing how to connect to that remote process.</p>
+
+<pre class="brush:js">
+{
+    sessionURL: 'ws://myServer/proxy?sessionId=asdfwefasdfwerfqerfse',
+    maybe: 'something else too'
+}
+</pre>
+
+<h2 id="onprocessstoppedcallbacksubscriptionahrefonprocessstoppedidonprocessstoppedclassdeeplinka">onProcessStopped(callback) : subscription <a href="#onProcessStopped" id="onProcessStopped" class="deep-link">#</a></h2>
+
+<p>Register a callback for when a stop request is performed.</p>
+
+<h2 id="onfetchcallbacksubscriptionahrefonfetchidonfetchclassdeeplinka">onFetch(callback) : subscription <a href="#onFetch" id="onFetch" class="deep-link">#</a></h2>
+
+<p>Register a callback for when a fetchConnection request is performed.</p>
+
+<h2 id="onerrorcallbacksubscriptionahrefonerroridonerrorclassdeeplinka">onError(callback) : subscription <a href="#onError" id="onError" class="deep-link">#</a></h2>
+
+<p>Register a callback for when an error occured regardless of the request.</p>
+
+<h2 id="destroyahrefdestroyiddestroyclassdeeplinka">destroy() <a href="#destroy" id="destroy" class="deep-link">#</a></h2>
+
+<p>Free memory and detatch any listener.</p>
+        </div>
+        <script src="assets_/js/lib/jquery.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
+        <script src="assets_/js/main.js"></script>
+    </body>
+</html>

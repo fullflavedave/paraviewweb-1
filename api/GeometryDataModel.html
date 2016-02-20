@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title></title>
+  <meta name="description" content="">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="assets_/css/shCore.css">
+  <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
+  <link rel="stylesheet" href="assets_/css/main.css">
+</head>
+
+<body data-root-path="">
+
+<header class="site-header">
+</header>
+
+<div id="wrapper">
+   <div id="content">
+<ul id="topnav">
+    <li><a href="index.html">Index</a></li>
+    <li><a href="#toc">TOC</a></li>
+</ul>
+<h1 id="geometrydatamodel">GeometryDataModel</h1>
+
+<pre class="brush:javascript">
+import GeometryDataModel from 'paraviewweb/src/IO/Core/GeometryDataModel';
+
+geometryDataModel = new GeometryDataModel('/dataset');
+</pre>
+
+<h2 id="tableofcontentsahreftocnametocclassdeeplinka">Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
+
+<ul>
+<li><a href="#constructor">constructor()</a></li>
+
+<li><a href="#loadScene">loadScene()</a></li>
+
+<li><a href="#onGeometryReady">onGeometryReady()</a></li>
+
+<li><a href="#geometryReady">geometryReady()</a></li>
+
+<li><a href="#colorGeometryBy">colorGeometryBy()</a></li>
+</ul>
+
+<h2 id="constructorbasepathahrefconstructoridconstructorclassdeeplinka">constructor(basepath) <a href="#constructor" id="constructor" class="deep-link">#</a></h2>
+
+<p>Create a geometryDataModel instance ready for fetching remote files that
+will construct one or many 3D objects.</p>
+
+<h2 id="loadscenesceneahrefloadsceneidloadsceneclassdeeplinka">loadScene(scene) <a href="#loadScene" id="loadScene" class="deep-link">#</a></h2>
+
+<p>The scene object is a JSON structure that describe the setting of the 3D scene
+and which piece is needed for what (geometry, topology, fields, objects...).</p>
+
+<p>Here is an example of a scene composed of a single object:</p>
+
+<pre class="brush:js">
+[
+    {
+        "fields": {
+            "ACCL": "fields/ACCL_00ef44b0f987708feb631bb8a82c2a21.Float32Array", 
+            "VEL": "fields/VEL_d39000e259b144a63244325378d8496b.Float32Array", 
+            "DISPL": "fields/DISPL_a7e4b3b8c7e653562d3fce0b2af72ae7.Float32Array"
+        }, 
+        "points": "points/7caae253277ef21512ab83c4368d5a33.Float32Array", 
+        "name": "Can", 
+        "index": "index/94cd4b75ca2a6360686d2f73baa069c5.Uint32Array"
+    }
+]
+</pre>
+
+<h2 id="ongeometryreadycallbacksubscriptionahrefongeometryreadyidongeometryreadyclassdeeplinka">onGeometryReady(callback) : subscription <a href="#onGeometryReady" id="onGeometryReady" class="deep-link">#</a></h2>
+
+<p>Register callback for when a geometry object become ready. 
+(All its data is actually available)</p>
+
+<h2 id="geometryreadyobjahrefgeometryreadyidgeometryreadyclassdeeplinka">geometryReady(obj)  <a href="#geometryReady" id="geometryReady" class="deep-link">#</a></h2>
+
+<p>Trigger event with the given geometry.</p>
+
+<h2 id="colorgeometrybyobjectnamefieldnameahrefcolorgeometrybyidcolorgeometrybyclassdeeplinka">colorGeometryBy(objectName, fieldName) <a href="#colorGeometryBy" id="colorGeometryBy" class="deep-link">#</a></h2>
+
+<p>Update the colorBy field of an object. Once the corresponding
+color/field data became available (after download), then a
+<strong>geometryReady</strong> event get triggered.</p>
+        </div>
+        <script src="assets_/js/lib/jquery.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
+        <script src="assets_/js/main.js"></script>
+    </body>
+</html>

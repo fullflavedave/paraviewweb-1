@@ -47,6 +47,69 @@
                     <span class="desc">Will free the registered resources. </span>
                 </a>
             </div>
+            <h3 class="toc-mod-title"><a href="AutobahnConnection.html">AutobahnConnection</a></h3>
+            <div class="toc-list">
+                <a class="toc-item" href="AutobahnConnection.html#constructor">
+                    <h4>constructor(urls, secret&#x3D;&quot;vtkweb-secret&quot;)</h4>
+                    <span class="desc">Create an instance of Autobahn conenction. The urls can either be a single url (string) or a list of urls such as WebSocket and http
+for long-polling fallback.</span>
+                </a>
+                <a class="toc-item" href="AutobahnConnection.html#connect">
+                    <h4>connect() </h4>
+                    <span class="desc">Trigger the actual connection request with the server.</span>
+                </a>
+                <a class="toc-item" href="AutobahnConnection.html#onConnectionReady">
+                    <h4>onConnectionReady(callback) : subscription</h4>
+                    <span class="desc">Register callback for when the connection became ready.</span>
+                </a>
+                <a class="toc-item" href="AutobahnConnection.html#onConnectionClose">
+                    <h4>onConnectionClose(callback) : subscription</h4>
+                    <span class="desc">Register callback for when the connection close.</span>
+                </a>
+                <a class="toc-item" href="AutobahnConnection.html#getSession">
+                    <h4>getSession() : object</h4>
+                    <span class="desc">Return null if the connection is not yet established or the session for making RPC calls.</span>
+                </a>
+                <a class="toc-item" href="AutobahnConnection.html#destroy">
+                    <h4>destroy(timeout&#x3D;10)</h4>
+                    <span class="desc">Close the connection and ask the server to automaticaly shutdown after the given timeout while removing any listener.</span>
+                </a>
+            </div>
+            <h3 class="toc-mod-title"><a href="BinaryImageStream.html">BinaryImageStream</a></h3>
+            <div class="toc-list">
+                <a class="toc-item" href="BinaryImageStream.html#constructor">
+                    <h4>constructor(endpointURL, stillQuality&#x3D;100, interactiveQuality&#x3D;50, mimeType&#x3D;&#x27;image/jpeg&#x27;)</h4>
+                    <span class="desc">Create an instance of a binary image stream over WebSocket.</span>
+                </a>
+                <a class="toc-item" href="BinaryImageStream.html#enableView">
+                    <h4>enableView(enabled) </h4>
+                    <span class="desc">Toggle ON or OFF the streaming of a given view to the client.</span>
+                </a>
+                <a class="toc-item" href="BinaryImageStream.html#startInteractiveQuality">
+                    <h4>startInteractiveQuality()</h4>
+                    <span class="desc">Trigger a call on the server to update the image quality to interactive.</span>
+                </a>
+                <a class="toc-item" href="BinaryImageStream.html#stopInteractiveQuality">
+                    <h4>stopInteractiveQuality()</h4>
+                    <span class="desc">Trigger a call on the server to update the image quality to still.</span>
+                </a>
+                <a class="toc-item" href="BinaryImageStream.html#updateQuality">
+                    <h4>updateQuality(stillQuality&#x3D;100, interactiveQuality&#x3D;50) </h4>
+                    <span class="desc">Update compression setting regarding the still and interactive mode.</span>
+                </a>
+                <a class="toc-item" href="BinaryImageStream.html#connect">
+                    <h4>connect({view_id&#x3D;-1, size&#x3D;[500,500]})</h4>
+                    <span class="desc">Establish WebSocket connection with server.</span>
+                </a>
+                <a class="toc-item" href="BinaryImageStream.html#destroy">
+                    <h4>destroy() </h4>
+                    <span class="desc">Remove listener and free resources.</span>
+                </a>
+                <a class="toc-item" href="BinaryImageStream.html#onImageReady">
+                    <h4>onImageReady(callback) : subscription</h4>
+                    <span class="desc">Attach listener for when an image is received. </span>
+                </a>
+            </div>
             <h3 class="toc-mod-title"><a href="CanvasOffscreenBuffer.html">CanvasOffscreenBuffer</a></h3>
             <div class="toc-list">
                 <a class="toc-item" href="CanvasOffscreenBuffer.html#constructor">
@@ -154,6 +217,45 @@ which layer is visible or not and which field should be rendered for a given lay
                 <a class="toc-item" href="Convert.html#boolean">
                     <h4>boolean(val)</h4>
                     <span class="desc">Return a boolean (true, false, 1, 0...) </span>
+                </a>
+            </div>
+            <h3 class="toc-mod-title"><a href="CoreEndpoints.html">CoreEndpoints</a></h3>
+            <div class="toc-list">
+                <a class="toc-item" href="CoreEndpoints.html#assetstore">
+                    <h4>assetstore</h4>
+                    <span class="desc"></span>
+                </a>
+                <a class="toc-item" href="CoreEndpoints.html#collection">
+                    <h4>collection</h4>
+                    <span class="desc"></span>
+                </a>
+                <a class="toc-item" href="CoreEndpoints.html#file">
+                    <h4>file</h4>
+                    <span class="desc"></span>
+                </a>
+                <a class="toc-item" href="CoreEndpoints.html#folder">
+                    <h4>folder</h4>
+                    <span class="desc"></span>
+                </a>
+                <a class="toc-item" href="CoreEndpoints.html#group">
+                    <h4>group</h4>
+                    <span class="desc"></span>
+                </a>
+                <a class="toc-item" href="CoreEndpoints.html#item">
+                    <h4>item</h4>
+                    <span class="desc"></span>
+                </a>
+                <a class="toc-item" href="CoreEndpoints.html#resource">
+                    <h4>resource</h4>
+                    <span class="desc"></span>
+                </a>
+                <a class="toc-item" href="CoreEndpoints.html#system">
+                    <h4>system</h4>
+                    <span class="desc"></span>
+                </a>
+                <a class="toc-item" href="CoreEndpoints.html#user">
+                    <h4>user</h4>
+                    <span class="desc"></span>
                 </a>
             </div>
             <h3 class="toc-mod-title"><a href="DataManager.html">DataManager</a></h3>
@@ -401,6 +503,111 @@ ready to be rendered/displayed somewhere.</span>
                     <span class="desc">Returns a list of Model that can drive the ImageBuilder.</span>
                 </a>
             </div>
+            <h3 class="toc-mod-title"><a href="EqualizerState.html">EqualizerState</a></h3>
+            <div class="toc-list">
+                <a class="toc-item" href="EqualizerState.html#getOpacities">
+                    <h4>getOpacities(): [0...1]</h4>
+                    <span class="desc">Return an array of the size given at construction time with values between 0 and 1.</span>
+                </a>
+                <a class="toc-item" href="EqualizerState.html#onChange">
+                    <h4>onChange(callback):subscription</h4>
+                    <span class="desc">Register a callback to any possible change of the model. The callback method profile is as follow.</span>
+                </a>
+                <a class="toc-item" href="EqualizerState.html#destroy">
+                    <h4>destroy()</h4>
+                    <span class="desc">Free memory and detatch any listener. </span>
+                </a>
+            </div>
+            <h3 class="toc-mod-title"><a href="GeometryDataModel.html">GeometryDataModel</a></h3>
+            <div class="toc-list">
+                <a class="toc-item" href="GeometryDataModel.html#constructor">
+                    <h4>constructor(basepath)</h4>
+                    <span class="desc">Create a geometryDataModel instance ready for fetching remote files that will construct one or many 3D objects.</span>
+                </a>
+                <a class="toc-item" href="GeometryDataModel.html#loadScene">
+                    <h4>loadScene(scene)</h4>
+                    <span class="desc">The scene object is a JSON structure that describe the setting of the 3D scene and which piece is needed for what (geometry, topology, fields, objects...).</span>
+                </a>
+                <a class="toc-item" href="GeometryDataModel.html#onGeometryReady">
+                    <h4>onGeometryReady(callback) : subscription</h4>
+                    <span class="desc">Register callback for when a geometry object become ready.  (All its data is actually available)</span>
+                </a>
+                <a class="toc-item" href="GeometryDataModel.html#geometryReady">
+                    <h4>geometryReady(obj) </h4>
+                    <span class="desc">Trigger event with the given geometry.</span>
+                </a>
+                <a class="toc-item" href="GeometryDataModel.html#colorGeometryBy">
+                    <h4>colorGeometryBy(objectName, fieldName)</h4>
+                    <span class="desc">Update the colorBy field of an object. Once the corresponding color/field data became available (after download), then a
+<strong>geometryReady</strong> event get triggered.</span>
+                </a>
+            </div>
+            <h3 class="toc-mod-title"><a href="GirderClientBuilder.html">GirderClientBuilder</a></h3>
+            <div class="toc-list">
+                <a class="toc-item" href="GirderClientBuilder.html#login">
+                    <h4>login(username, password) : Promise</h4>
+                    <span class="desc">Authenticate yourself and return a Promise.</span>
+                </a>
+                <a class="toc-item" href="GirderClientBuilder.html#logout">
+                    <h4>logout() : Promise</h4>
+                    <span class="desc">Logout.</span>
+                </a>
+                <a class="toc-item" href="GirderClientBuilder.html#me">
+                    <h4>me() : Promise</h4>
+                    <span class="desc">Return a promise with your user information.</span>
+                </a>
+                <a class="toc-item" href="GirderClientBuilder.html#isLoggedIn">
+                    <h4>isLoggedIn() : Promise</h4>
+                    <span class="desc">To know is you are logged in or not.</span>
+                </a>
+                <a class="toc-item" href="GirderClientBuilder.html#getLoggedInUser">
+                    <h4>getLoggedInUser() : object</h4>
+                    <span class="desc">Return the user cached object (if logged in).</span>
+                </a>
+                <a class="toc-item" href="GirderClientBuilder.html#onAuthChange">
+                    <h4>onAuthChange(callback) : subscription</h4>
+                    <span class="desc">Register a callback for when the authentication change.</span>
+                </a>
+                <a class="toc-item" href="GirderClientBuilder.html#onBusy">
+                    <h4>onBusy(callback) : subscription</h4>
+                    <span class="desc">Register a callback to be aware when remote call are in progress or if the client is idle.</span>
+                </a>
+                <a class="toc-item" href="GirderClientBuilder.html#onProgress">
+                    <h4>onProgress(callback) : subscription</h4>
+                    <span class="desc">Register a callback to monitor file upload progress or any long running request.</span>
+                </a>
+                <a class="toc-item" href="GirderClientBuilder.html#onEvent">
+                    <h4>onEvent(callback) : subscription</h4>
+                    <span class="desc">Register a callback for any server event.</span>
+                </a>
+                <a class="toc-item" href="GirderClientBuilder.html#destroy">
+                    <h4>destroy() </h4>
+                    <span class="desc">Free memory and detatch any listener.</span>
+                </a>
+            </div>
+            <h3 class="toc-mod-title"><a href="HpcCloudEndpoints.html">HpcCloudEndpoints</a></h3>
+            <div class="toc-list">
+                <a class="toc-item" href="HpcCloudEndpoints.html#aws">
+                    <h4>aws</h4>
+                    <span class="desc"></span>
+                </a>
+                <a class="toc-item" href="HpcCloudEndpoints.html#clusters">
+                    <h4>clusters</h4>
+                    <span class="desc"></span>
+                </a>
+                <a class="toc-item" href="HpcCloudEndpoints.html#projects">
+                    <h4>projects</h4>
+                    <span class="desc"></span>
+                </a>
+                <a class="toc-item" href="HpcCloudEndpoints.html#simulations">
+                    <h4>simulations</h4>
+                    <span class="desc"></span>
+                </a>
+                <a class="toc-item" href="HpcCloudEndpoints.html#taskflows">
+                    <h4>taskflows</h4>
+                    <span class="desc"></span>
+                </a>
+            </div>
             <h3 class="toc-mod-title"><a href="ImageExporter.html">ImageExporter</a></h3>
             <div class="toc-list">
                 <a class="toc-item" href="ImageExporter.html#constructor">
@@ -588,6 +795,13 @@ that LookupTable for.</span>
                     <span class="desc">From Monologue. </span>
                 </a>
             </div>
+            <h3 class="toc-mod-title"><a href="ParaViewWebClient.html">ParaViewWebClient</a></h3>
+            <div class="toc-list">
+                <a class="toc-item" href="ParaViewWebClient.html#createClient">
+                    <h4>createClient(connection, protocols&#x3D;[], customProtocols&#x3D;{}) : client</h4>
+                    <span class="desc">The provided connection is the one we get from the AutobahnConnection callback while the protocols is the list of protocol names that we want to enable and the customProtocols would be custom addon that we want to use within our created client.</span>
+                </a>
+            </div>
             <h3 class="toc-mod-title"><a href="PingPong.html">PingPong</a></h3>
             <div class="toc-list">
                 <a class="toc-item" href="PingPong.html#constructor">
@@ -737,6 +951,49 @@ response which allows for easy unsubscription.</span>
                 <a class="toc-item" href="PixelOperatorImageBuilder.html#getControlModels">
                     <h4>getControlModels() - inherited</h4>
                     <span class="desc">Returns a list of Model that can drive the ImageBuilder. </span>
+                </a>
+            </div>
+            <h3 class="toc-mod-title"><a href="ProcessLauncher.html">ProcessLauncher</a></h3>
+            <div class="toc-list">
+                <a class="toc-item" href="ProcessLauncher.html#constructor">
+                    <h4>constructor(endPoint) </h4>
+                    <span class="desc">Create a process launcher that will perform request to a remote server using the provided endpoint url.</span>
+                </a>
+                <a class="toc-item" href="ProcessLauncher.html#start">
+                    <h4>start(config) </h4>
+                    <span class="desc">Submit a request for a new remote process.</span>
+                </a>
+                <a class="toc-item" href="ProcessLauncher.html#fetchConnection">
+                    <h4>fetchConnection(sessionId)</h4>
+                    <span class="desc">Trigger a request for getting the full connection information based on an existing sessionId.</span>
+                </a>
+                <a class="toc-item" href="ProcessLauncher.html#stop">
+                    <h4>stop(connection) </h4>
+                    <span class="desc">Trigger a request to terminate a remote process using the connection object that was provided at start time.</span>
+                </a>
+                <a class="toc-item" href="ProcessLauncher.html#listConnections">
+                    <h4>listConnections()</h4>
+                    <span class="desc">Return the list of already establised connections. (From that instance)</span>
+                </a>
+                <a class="toc-item" href="ProcessLauncher.html#onProcessReady">
+                    <h4>onProcessReady(callback) : subscription</h4>
+                    <span class="desc">Register a callback for when a remote process become available after a start() request.</span>
+                </a>
+                <a class="toc-item" href="ProcessLauncher.html#onProcessStopped">
+                    <h4>onProcessStopped(callback) : subscription</h4>
+                    <span class="desc">Register a callback for when a stop request is performed.</span>
+                </a>
+                <a class="toc-item" href="ProcessLauncher.html#onFetch">
+                    <h4>onFetch(callback) : subscription</h4>
+                    <span class="desc">Register a callback for when a fetchConnection request is performed.</span>
+                </a>
+                <a class="toc-item" href="ProcessLauncher.html#onError">
+                    <h4>onError(callback) : subscription</h4>
+                    <span class="desc">Register a callback for when an error occured regardless of the request.</span>
+                </a>
+                <a class="toc-item" href="ProcessLauncher.html#destroy">
+                    <h4>destroy()</h4>
+                    <span class="desc">Free memory and detatch any listener. </span>
                 </a>
             </div>
             <h3 class="toc-mod-title"><a href="QueryDataModel.html">QueryDataModel</a></h3>
@@ -921,6 +1178,67 @@ The returned object let you unsubscribe of the change update.</span>
                 <a class="toc-item" href="SizeHelper.html#triggerChange">
                     <h4>triggerChange()</h4>
                     <span class="desc">Trigger a fake window size change to invalidate cache and trigger any listener. </span>
+                </a>
+            </div>
+            <h3 class="toc-mod-title"><a href="SmartConnect.html">SmartConnect</a></h3>
+            <div class="toc-list">
+                <a class="toc-item" href="SmartConnect.html#constructor">
+                    <h4>constructor(config) </h4>
+                    <span class="desc">Create an instance that will use the provided configuration to connect itself to a server either by requesting a new remote
+process or by trying to directly connecting to it as a fallback.</span>
+                </a>
+                <a class="toc-item" href="SmartConnect.html#connect">
+                    <h4>connect() </h4>
+                    <span class="desc">Trigger the connection request.</span>
+                </a>
+                <a class="toc-item" href="SmartConnect.html#onConnectionReady">
+                    <h4>onConnectionReady(callback) : subscription</h4>
+                    <span class="desc">Register callback for when the connection became ready.</span>
+                </a>
+                <a class="toc-item" href="SmartConnect.html#onConnectionClose">
+                    <h4>onConnectionClose(callback) : subscription</h4>
+                    <span class="desc">Register callback for when the connection close.</span>
+                </a>
+                <a class="toc-item" href="SmartConnect.html#onConnectionError">
+                    <h4>onConnectionError(callback) : subscription</h4>
+                    <span class="desc">Register callback for when the connection request failed.</span>
+                </a>
+                <a class="toc-item" href="SmartConnect.html#getSession">
+                    <h4>getSession() : session</h4>
+                    <span class="desc">Return the session associated with the connection.</span>
+                </a>
+                <a class="toc-item" href="SmartConnect.html#destroy">
+                    <h4>destroy() </h4>
+                    <span class="desc">Free resources and remove any listener. </span>
+                </a>
+            </div>
+            <h3 class="toc-mod-title"><a href="ToggleState.html">ToggleState</a></h3>
+            <div class="toc-list">
+                <a class="toc-item" href="ToggleState.html#constructor">
+                    <h4>constructor(initialState &#x3D; true)</h4>
+                    <span class="desc">Return a ToggleState instance.</span>
+                </a>
+                <a class="toc-item" href="ToggleState.html#setState">
+                    <h4>setState(value)</h4>
+                    <span class="desc">Update insternal state and trigger notification if the given value is different than the current one.</span>
+                </a>
+                <a class="toc-item" href="ToggleState.html#getState">
+                    <h4>getState(): boolean</h4>
+                    <span class="desc">Return the current state.</span>
+                </a>
+                <a class="toc-item" href="ToggleState.html#toggleState">
+                    <h4>toggleState()</h4>
+                    <span class="desc">Toggle the current state which will trigger a notification. That method is generated via a closure which allow it to be used
+as a callback anywhere without any binding issue with 
+invalid <strong>this</strong>.</span>
+                </a>
+                <a class="toc-item" href="ToggleState.html#onChange">
+                    <h4>onChange(callback):subscription</h4>
+                    <span class="desc">Register a callback to any possible change of the model. The callback method profile is as follow.</span>
+                </a>
+                <a class="toc-item" href="ToggleState.html#destroy">
+                    <h4>destroy()</h4>
+                    <span class="desc">Free memory and detatch any listener. </span>
                 </a>
             </div>
             <h3 class="toc-mod-title"><a href="Validate.html">Validate</a></h3>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title></title>
+  <meta name="description" content="">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="assets_/css/shCore.css">
+  <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
+  <link rel="stylesheet" href="assets_/css/main.css">
+</head>
+
+<body data-root-path="">
+
+<header class="site-header">
+</header>
+
+<div id="wrapper">
+   <div id="content">
+<ul id="topnav">
+    <li><a href="index.html">Index</a></li>
+    <li><a href="#toc">TOC</a></li>
+</ul>
+<h1 id="hpccloudendpoints">HpcCloudEndpoints</h1>
+
+<p>A standard Girder instance provide the following set of endpoints.
+By adding the one listed here as extension inside a GirderClientBuilder,
+you will get the following set of methods:</p>
+
+<pre class="brush:js">
+// Usage example
+import CoreEndpoints from 'paraviewweb/src/IO/Girder/CoreEndpoints';
+import HpcCloudEndpoints from 'paraviewweb/src/IO/Girder/HpcCloudEndpoints';
+import { build } from 'paraviewweb/src/IO/Girder/GirderClientBuilder';
+
+const client = build(location, ...CoreEndpoints, ...HpcCloudEndpoints);
+</pre>
+
+<h2 id="tableofcontentsahreftocnametocclassdeeplinka">Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
+
+<ul>
+<li><a href="#aws">aws</a></li>
+
+<li><a href="#clusters">clusters</a></li>
+
+<li><a href="#projects">projects</a></li>
+
+<li><a href="#simulations">simulations</a></li>
+
+<li><a href="#taskflows">taskflows</a></li>
+</ul>
+
+<h2 id="awsahrefawsidawsclassdeeplinka">aws <a href="#aws" id="aws" class="deep-link">#</a></h2>
+
+<h2 id="clustersahrefclustersidclustersclassdeeplinka">clusters <a href="#clusters" id="clusters" class="deep-link">#</a></h2>
+
+<h2 id="projectsahrefprojectsidprojectsclassdeeplinka">projects <a href="#projects" id="projects" class="deep-link">#</a></h2>
+
+<h2 id="simulationsahrefsimulationsidsimulationsclassdeeplinka">simulations <a href="#simulations" id="simulations" class="deep-link">#</a></h2>
+
+<h2 id="taskflowsahreftaskflowsidtaskflowsclassdeeplinka">taskflows <a href="#taskflows" id="taskflows" class="deep-link">#</a></h2>
+        </div>
+        <script src="assets_/js/lib/jquery.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
+        <script src="assets_/js/main.js"></script>
+    </body>
+</html>

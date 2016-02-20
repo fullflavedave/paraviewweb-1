@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title></title>
+  <meta name="description" content="">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="assets_/css/shCore.css">
+  <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
+  <link rel="stylesheet" href="assets_/css/main.css">
+</head>
+
+<body data-root-path="">
+
+<header class="site-header">
+</header>
+
+<div id="wrapper">
+   <div id="content">
+<ul id="topnav">
+    <li><a href="index.html">Index</a></li>
+    <li><a href="#toc">TOC</a></li>
+</ul>
+<h1 id="girderclientbuilder">GirderClientBuilder</h1>
+
+<pre class="brush:js">
+import GirderClientBuilder from 'paraviewweb/src/IO/Girder/GirderClientBuilder';
+GirderClientBuilder.build(...)
+
+or
+
+import { build } from 'paraviewweb/src/IO/Girder/GirderClientBuilder';
+build(...)
+</pre>
+
+<p>The build function has the following profile:</p>
+
+<pre class="brush:js">
+build(config=location, ...extensions) : clientInstance
+</pre>
+
+<p>Which will create Girder client by extracting from the <strong>config</strong> object
+the following set of fields</p>
+
+<pre class="brush:js">
+const { protocol, hostname, port, basepath='/api/v1' } = config;
+</pre>
+
+<p>And the following set of methods will be available by default without any provided extensions. If any extension is provided, then additional methods will became available along the following ones.</p>
+
+<h2 id="tableofcontentsahreftocnametocclassdeeplinka">Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
+
+<ul>
+<li><a href="#login">login()</a></li>
+
+<li><a href="#logout">logout()</a></li>
+
+<li><a href="#me">me()</a></li>
+
+<li><a href="#isLoggedIn">isLoggedIn()</a></li>
+
+<li><a href="#getLoggedInUser">getLoggedInUser()</a></li>
+
+<li><a href="#onAuthChange">onAuthChange()</a></li>
+
+<li><a href="#onBusy">onBusy()</a></li>
+
+<li><a href="#onProgress">onProgress()</a></li>
+
+<li><a href="#onEvent">onEvent()</a></li>
+
+<li><a href="#destroy">destroy()</a></li>
+</ul>
+
+<h2 id="loginusernamepasswordpromiseahrefloginidloginclassdeeplinka">login(username, password) : Promise <a href="#login" id="login" class="deep-link">#</a></h2>
+
+<p>Authenticate yourself and return a Promise.</p>
+
+<h2 id="logoutpromiseahreflogoutidlogoutclassdeeplinka">logout() : Promise <a href="#logout" id="logout" class="deep-link">#</a></h2>
+
+<p>Logout.</p>
+
+<h2 id="mepromiseahrefmeidmeclassdeeplinka">me() : Promise <a href="#me" id="me" class="deep-link">#</a></h2>
+
+<p>Return a promise with your user information.</p>
+
+<h2 id="isloggedinpromiseahrefisloggedinidisloggedinclassdeeplinka">isLoggedIn() : Promise <a href="#isLoggedIn" id="isLoggedIn" class="deep-link">#</a></h2>
+
+<p>To know is you are logged in or not.</p>
+
+<h2 id="getloggedinuserobjectahrefgetloggedinuseridgetloggedinuserclassdeeplinka">getLoggedInUser() : object <a href="#getLoggedInUser" id="getLoggedInUser" class="deep-link">#</a></h2>
+
+<p>Return the user cached object (if logged in).</p>
+
+<h2 id="onauthchangecallbacksubscriptionahrefonauthchangeidonauthchangeclassdeeplinka">onAuthChange(callback) : subscription <a href="#onAuthChange" id="onAuthChange" class="deep-link">#</a></h2>
+
+<p>Register a callback for when the authentication change.</p>
+
+<h2 id="onbusycallbacksubscriptionahrefonbusyidonbusyclassdeeplinka">onBusy(callback) : subscription <a href="#onBusy" id="onBusy" class="deep-link">#</a></h2>
+
+<p>Register a callback to be aware when remote call are in progress
+or if the client is idle.</p>
+
+<h2 id="onprogresscallbacksubscriptionahrefonprogressidonprogressclassdeeplinka">onProgress(callback) : subscription <a href="#onProgress" id="onProgress" class="deep-link">#</a></h2>
+
+<p>Register a callback to monitor file upload progress or
+any long running request.</p>
+
+<h2 id="oneventcallbacksubscriptionahrefoneventidoneventclassdeeplinka">onEvent(callback) : subscription <a href="#onEvent" id="onEvent" class="deep-link">#</a></h2>
+
+<p>Register a callback for any server event.</p>
+
+<h2 id="destroyahrefdestroyiddestroyclassdeeplinka">destroy()  <a href="#destroy" id="destroy" class="deep-link">#</a></h2>
+
+<p>Free memory and detatch any listener.</p>
+        </div>
+        <script src="assets_/js/lib/jquery.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
+        <script src="assets_/js/main.js"></script>
+    </body>
+</html>

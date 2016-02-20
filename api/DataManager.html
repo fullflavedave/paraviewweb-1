@@ -36,8 +36,9 @@ a generated browser url.</p>
 <p>A new instance is created with:</p>
 
 <pre class="brush:javascript">
-var DataManager = require('paraviewweb/src/IO/Core/DataManager'),
-    instance = new DataManager(cacheSize = 1 000 000 000); // 1 GB by default
+import DataManager from 'paraviewweb/src/IO/Core/DataManager';
+
+dataManager = new DataManager(cacheSize = 1 000 000 000); // 1 GB by default
 </pre>
 
 <p>All listening is managed using <a href="https://www.npmjs.com/package/monologue.js">monolog.js</a>
