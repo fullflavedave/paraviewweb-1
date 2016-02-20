@@ -77,7 +77,7 @@
 
 	/* global __BASE_PATH__ */
 	var bodyElement = document.querySelector('.content'),
-	    queryDataModel = new _QueryDataModel2.default(_index2.default, ('paraviewweb') + '/data/earth/'),
+	    queryDataModel = new _QueryDataModel2.default(_index2.default, ('/paraviewweb') + '/data/earth/'),
 	    imageBuilder = new _QueryDataModelImageBuilder2.default(queryDataModel);
 
 	_reactDom2.default.render(_react2.default.createElement(_2.default, {

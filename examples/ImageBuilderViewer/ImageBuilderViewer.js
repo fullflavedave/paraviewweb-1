@@ -76,7 +76,7 @@
 	__webpack_require__(300);
 
 	/* global __BASE_PATH__ */
-	var queryDataModel = new _QueryDataModel2.default(_index2.default, ('paraviewweb') + '/data/earth/'),
+	var queryDataModel = new _QueryDataModel2.default(_index2.default, ('/paraviewweb') + '/data/earth/'),
 	    imageBuilder = new _QueryDataModelImageBuilder2.default(queryDataModel);
 
 	_reactDom2.default.render(_react2.default.createElement(_2.default, { queryDataModel: queryDataModel, imageBuilder: imageBuilder }), document.querySelector('.content'));

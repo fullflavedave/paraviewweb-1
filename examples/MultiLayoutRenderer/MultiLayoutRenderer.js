@@ -85,7 +85,7 @@
 
 	/* global __BASE_PATH__ */
 	var container = document.querySelector('.content'),
-	    dataModel = new _QueryDataModel2.default(_index2.default, ('paraviewweb') + '/data/probe/'),
+	    dataModel = new _QueryDataModel2.default(_index2.default, ('/paraviewweb') + '/data/probe/'),
 	    lutManager = new _LookupTableManager2.default(),
 	    imageBuilderA = new _DataProberImageBuilder2.default(dataModel, lutManager),
 	    imageBuilderB = new _DataProberImageBuilder2.default(dataModel, lutManager),

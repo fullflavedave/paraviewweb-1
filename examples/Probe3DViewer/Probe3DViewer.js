@@ -85,7 +85,7 @@
 	_index2.default.metadata.dimensions = [50, 50, 50];
 
 	/* global __BASE_PATH__ */
-	var dataModel = new _QueryDataModel2.default(_index2.default, ('paraviewweb') + '/data/probe/');
+	var dataModel = new _QueryDataModel2.default(_index2.default, ('/paraviewweb') + '/data/probe/');
 
 	_reactDom2.default.render(_react2.default.createElement(_2.default, {
 	    queryDataModel: dataModel,
