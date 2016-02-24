@@ -20070,7 +20070,7 @@
 	        var nodes = _state.nodes;
 
 
-	        if (event.target.nodeName !== 'circle' && !event.target.classList.contains('fa')) {
+	        if (event.target.nodeName !== 'circle' && !event.target.classList.contains(_GitTreeWidget2.default.iconText)) {
 	            var size = _SizeHelper2.default.getSize(_reactDom2.default.findDOMNode(this));
 	            var deltaY = this.props.deltaY;
 	            var originTop = size.clientRect.y || size.clientRect.top; // Firefox vs Chrome/Safari
