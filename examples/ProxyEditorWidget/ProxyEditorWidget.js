@@ -19849,7 +19849,7 @@
 	  },
 	  valueChange: function valueChange(change) {
 	    var changeSet = this.state.changeSet;
-	    changeSet[change.id] = change.value;
+	    changeSet[change.id] = change.size === 1 && Array.isArray(change.value) ? change.value[0] : change.value;
 	    this.setState({ changeSet: changeSet });
 	    if (this.props.onChange) {
 	      this.props.onChange(changeSet);
@@ -19858,8 +19858,12 @@
 	  render: function render() {
 	    var _this = this;
 
-	    var ctx = { advanced: this.props.advanced, filter: this.props.filter };
+	    var properties = {};
+	    var ctx = { advanced: this.props.advanced, filter: this.props.filter, properties: properties };
 	    var changeSetCount = Object.keys(this.state.changeSet).length;
+	    this.state.properties.forEach(function (p) {
+	      properties[p.data.id] = p.data.value;
+	    });
 
 	    return _react2.default.createElement(
 	      'div',
@@ -20742,18 +20746,23 @@
 
 	        if (_Validate2.default[this.props.type](newVal)) {
 	            var propVal = _Convert2.default[this.props.type](newVal);
-	            if (this.props.type === 'integer' || this.props.type === 'int' || this.props.type === 'double' || this.props.type === 'dbl') {
-	                propVal = this.clamp(propVal);
-	            }
+	            propVal = this.applyDomains(this.props.idx, propVal);
 	            this.props.onChange(this.props.idx, propVal);
 	        }
 	    },
-	    clamp: function clamp(val) {
-	        if (this.props.domain.hasOwnProperty('min')) {
-	            val = Math.max(this.props.domain.min, val);
+	    applyDomains: function applyDomains(idx, val) {
+	        if (!this.props.domain) {
+	            return val;
 	        }
-	        if (this.props.domain.hasOwnProperty('max')) {
-	            val = Math.min(this.props.domain.max, val);
+
+	        // Handle range
+	        if (this.props.domain.hasOwnProperty('range')) {
+	            var _props$domain$range$i = this.props.domain.range[idx];
+	            var min = _props$domain$range$i.min;
+	            var max = _props$domain$range$i.max;
+
+	            val = min !== undefined ? Math.max(min, val) : val;
+	            val = max !== undefined ? Math.min(max, val) : val;
 	        }
 	        return val;
 	    },
@@ -22828,6 +22837,10 @@
 	    return ui.size.toString();
 	  }
 
+	  if (ui.widget === 'list-1') {
+	    return '1';
+	  }
+
 	  if (ui.size === 6) {
 	    if (ui.name.toLowerCase().indexOf('bound')) {
 	      return '3x2';
@@ -22840,6 +22853,13 @@
 	  }
 	  console.log('Could not find layout for', ui);
 	  return 'NO_LAYOUT';
+	}
+
+	function extractType(ui) {
+	  if (ui.type === 'proxy') {
+	    return 'string';
+	  }
+	  return ui.type;
 	}
 
 	function extractDomain(ui) {
@@ -22857,11 +22877,18 @@
 
 	      if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
 	    }
+	    if (ui.type === 'proxy') {
+	      var domain = {};
+	      for (var key in ui.values) {
+	        domain[key] = key;
+	      }
+	      return domain;
+	    }
 	    return ui.values;
 	  }
 
 	  if (ui.range) {
-	    console.log('FIXME: build domain using range');
+	    return { range: ui.range };
 	  }
 
 	  return {};
@@ -22873,10 +22900,17 @@
 	    console.log('No propType for', ui);
 	  }
 
+	  var depList = ui.depends ? ui.depends.split(':') : null;
+	  var depStatus = depList ? Boolean(Number(depList.pop())) : true;
+	  var depValue = depList ? depList.pop() : null;
+	  var depId = depList ? depList.join(':') : null;
 	  var searchString = [ui.name, ui.doc].concat(property.value).join(' ').toLowerCase();
 
 	  return {
 	    show: function show(ctx) {
+	      if (depId && ctx.properties[depId] !== undefined) {
+	        return ctx.properties[depId][0] === depValue ? depStatus : !depStatus;
+	      }
 	      if (ctx.filter && ctx.filter.length) {
 	        var _ret2 = function () {
 	          var queries = ctx.filter.toLowerCase().split(' ');
@@ -22902,14 +22936,15 @@
 	      help: ui.doc,
 	      noEmpty: true,
 	      layout: extractLayout(ui),
-	      type: ui.type,
+	      type: extractType(ui),
 	      domain: extractDomain(ui),
 	      componentLabels: [],
 	      size: ui.size
 	    },
 	    data: {
 	      id: [property.id, property.name].join(':'),
-	      value: [].concat(property.value)
+	      value: [].concat(property.value),
+	      size: ui.size
 	    }
 	  };
 	}
