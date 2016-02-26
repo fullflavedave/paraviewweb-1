@@ -19835,6 +19835,7 @@
 	        rootId: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.string, _react2.default.PropTypes.number, _react2.default.PropTypes.instanceOf(null)]),
 	        //this could have some problematic effect
 	        stroke: _react2.default.PropTypes.number,
+	        style: _react2.default.PropTypes.object,
 	        textColor: _react2.default.PropTypes.array,
 	        textWeight: _react2.default.PropTypes.array,
 	        width: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.string, _react2.default.PropTypes.number])
@@ -19844,6 +19845,7 @@
 	        return {
 	            nodes: [],
 	            actives: [],
+	            style: {},
 
 	            enableDelete: false,
 	            deltaX: 20,
@@ -20146,7 +20148,7 @@
 	    render: function render() {
 	        return _react2.default.createElement(
 	            'svg',
-	            { width: this.props.width, height: this.props.deltaY * this.state.nodes.length + 'px', onClick: this.toggleActive },
+	            { style: this.props.style, width: this.props.width, height: this.props.deltaY * this.state.nodes.length + 'px', onClick: this.toggleActive },
 	            this.renderActives(),
 	            this.renderBranches(),
 	            this.renderForks(),
