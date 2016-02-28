@@ -58,32 +58,39 @@
 
 	var _2 = _interopRequireDefault(_);
 
-	var _sourceProxy = __webpack_require__(178);
+	var _style = __webpack_require__(163);
 
-	var _sourceProxy2 = _interopRequireDefault(_sourceProxy);
+	var _style2 = _interopRequireDefault(_style);
 
-	var _representationProxy = __webpack_require__(179);
+	var _paraview = __webpack_require__(167);
 
-	var _representationProxy2 = _interopRequireDefault(_representationProxy);
+	var _paraview2 = _interopRequireDefault(_paraview);
 
-	var _presets = __webpack_require__(180);
+	var _paraviewweb = __webpack_require__(168);
 
-	var _presets2 = _interopRequireDefault(_presets);
+	var _paraviewweb2 = _interopRequireDefault(_paraviewweb);
+
+	var _functionGaussian = __webpack_require__(169);
+
+	var _functionGaussian2 = _interopRequireDefault(_functionGaussian);
+
+	var _functionLinear = __webpack_require__(170);
+
+	var _functionLinear2 = _interopRequireDefault(_functionLinear);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var scalarBar = 'iVBORw0KGgoAAAANSUhEUgAAAgAAAAABCAIAAAAn2YEhAAAGDElEQVQ4EQEBBv75ATtMwAAAAAECAgAAAAECAQAAAAEBAgAAAAICAQAAAAECAgAAAAEBAQAAAAECAgAAAAECAQAAAAECAgAAAAIBAQAAAAECAgAAAAECAQAAAAECAQAAAAEBAgAAAAICAQAAAAECAQAAAAEBAgAAAAECAQAAAAICAQAAAAEBAQAAAAECAgAAAAECAQAAAAIBAQAAAAECAQAAAAECAQAAAAEBAgAAAAICAQAAAAECAQAAAAEBAQAAAAICAQAAAAEBAQAAAAECAQAAAAECAQAAAAIBAQAAAAECAQAAAAEBAQAAAAICAQAAAAEBAAAAAAECAQAAAAIBAQAAAAECAQAAAAEBAQAAAAICAAAAAAEBAQAAAAECAQAAAAIBAQAAAAECAAAAAAEBAQAAAAICAAAAAAEBAQAAAAICAQAAAAEBAAAAAAEBAQAAAAICAAAAAAEBAQAAAAEBAAAAAAICAQAAAAEBAAAAAAIBAAAAAAECAQAAAAEBAAAAAAIBAAAAAAECAQAAAAEBAAAAAAIBAAAAAAEBAAAAAAICAAAAAAEBAQAAAAEBAAAAAAIBAAAAAAEBAAAAAAIBAAAAAAEBAAAAAAECAAAAAAIBAAAAAAEBAAAAAAEBAAAAAAIBAAAAAAEBAAAAAAEB/wAAAAIBAAAAAAEBAAAAAAIBAAAAAAEBAAAAAAEB/wAAAAIBAAAAAAEAAAAAAAEB/wAAAAIBAAAAAAEBAAAAAAEB/wAAAAEBAAAAAAIA/wAAAAEBAAAAAAEB/wAAAAIBAAAAAAEA/wAAAAEBAAAAAAEB/wAAAAIA/wAAAAEBAAAAAAEB/wAAAAEA/wAAAAIBAAAAAAEA/wAAAAEB/wAAAAEA/wAAAAEBAAAAAAIA/wAAAAEB/wAAAAEA/wAAAAEB/wAAAAEA/wAAAAEB/wAAAAIA/wAAAAEA/wAAAAEB/wAAAAEA/wAAAAEA/wAAAAEA/wAAAAEB/wAAAAEA/wAAAAEA/wAAAAEA/wAAAAEA/wAAAAEA/gAAAAEB/wAAAAH//wAAAAEA/gAAAAH//wAAAAEA/wAAAAH//gAAAAEA/wAAAAH//gAAAAEA/wAAAAH//gAAAAH//wAAAAEA/wAAAAH//gAAAAH//wAAAAEA/gAAAAH//wAAAAD//gAAAAH//wAAAAEA/gAAAAD//wAAAAH//gAAAAH//wAAAAD//gAAAAH//gAAAAEA/wAAAAD//gAAAAH//wAAAAD//gAAAAH//wAAAAD//gAAAAH//wAAAAD//gAAAAD//gAAAAH//wAAAAD+/gAAAAD//wAAAAH//gAAAAD//wAAAAD//gAAAAD//gAAAAH//wAAAAD+/gAAAAD//wAAAAD//gAAAAD//wAAAAD+/gAAAAD//gAAAAD//wAAAAD+/gAAAAD//wAAAAD//gAAAAD+/wAAAAD//gAAAAD//gAAAAD+/wAAAAD//gAAAAD+/wAAAP///gAAAAD+/wAAAAD//gAAAAD+/gAAAP///wAAAAD+/gAAAAD//wAAAP/+/gAAAAD//wAAAAD+/gAAAP/+/wAAAAD//gAAAP/+/wAAAAD+/gAAAP///wAAAAD+/gAAAP/+/wAAAAD//gAAAP/+/wAAAP/+/gAAAAD//wAAAP/+/gAAAAD+/wAAAP/+/gAAAP/+/wAAAP///gAAAAD+/wAAAP/+/gAAAP/+/wAAAP/+/gAAAP/+/wAAAP/+/wAAAAD//gAAAP/+/wAAAP/+/gAAAP/+/wAAAP/+/wAAAP/+/gAAAP/+/wAAAP/+/wAAAP/+/gAAAP/+/wAAAP/+/wAAAP/+/gAAAP79/wAAAP/+/wAAAP/+/gAAAP/+/wAAAP/+/wAAAP/+/wAAAP79/gAAAP/+/wAAAP/+/wAAAP/+/wAAAP79/gAAAP/+/wAAAP/9/wAAAP7+/wAAAP/9/wAAAP/+/gAAAP79/wAAAP/9/wAAAP79/wAAAP/9/wAAAP/9/wAAAP79/gAAAP/8/wAAAP78/wAAAP/8/wAAAP77/wAAAP/6/wAAAP75/wAAAAH4Uu+CshkNAAAAAElFTkSuQmCC';
-
-	// Load CSS
-	__webpack_require__(181);
-
 	var container = document.querySelector('.content');
 
-	function onChange(event) {
-	    console.log(event);
-	}
-
-	_reactDom2.default.render(_react2.default.createElement(_2.default, { source: _sourceProxy2.default, representation: _representationProxy2.default, scalarBar: scalarBar, onChange: onChange, presets: _presets2.default }), container);
+	_reactDom2.default.render(_react2.default.createElement(
+	  'div',
+	  null,
+	  _react2.default.createElement(_2.default, { width: '30px', height: '30px' }),
+	  _react2.default.createElement(_2.default, { className: _style2.default.smallIcon, icon: _paraview2.default }),
+	  _react2.default.createElement(_2.default, { className: _style2.default.mediumIcon, icon: _paraviewweb2.default }),
+	  _react2.default.createElement(_2.default, { className: _style2.default.bigIcon, icon: _functionGaussian2.default }),
+	  _react2.default.createElement(_2.default, { className: _style2.default.redIcon, icon: _functionLinear2.default })
+	), container);
 
 	document.body.style.margin = '10px';
 
@@ -19698,228 +19705,47 @@
 	  value: true
 	});
 
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _AdvancedView = __webpack_require__(160);
+	var _kitware = __webpack_require__(160);
 
-	var _AdvancedView2 = _interopRequireDefault(_AdvancedView);
-
-	var _ColorByWidget = __webpack_require__(176);
-
-	var _ColorByWidget2 = _interopRequireDefault(_ColorByWidget);
+	var _kitware2 = _interopRequireDefault(_kitware);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var SEP = ':|:';
-
-	function doubleToHex(number) {
-	  var str = Math.floor(number * 255).toString(16);
-	  while (str.length < 2) {
-	    str = '0' + str;
-	  }
-	  return str;
-	}
-
 	exports.default = _react2.default.createClass({
 
-	  displayName: 'ColorByWidget',
+	  displayName: 'SvgIconWidget',
 
 	  propTypes: {
 	    className: _react2.default.PropTypes.string,
-	    max: _react2.default.PropTypes.number,
-	    min: _react2.default.PropTypes.number,
-	    onChange: _react2.default.PropTypes.func,
-	    presets: _react2.default.PropTypes.object,
-	    representation: _react2.default.PropTypes.object,
-	    scalarBar: _react2.default.PropTypes.string,
-	    source: _react2.default.PropTypes.object
+	    height: _react2.default.PropTypes.string,
+	    icon: _react2.default.PropTypes.string,
+	    width: _react2.default.PropTypes.string
 	  },
 
 	  getDefaultProps: function getDefaultProps() {
 	    return {
-	      min: 0,
-	      max: 1
+	      className: '',
+	      icon: _kitware2.default
 	    };
 	  },
-	  getInitialState: function getInitialState() {
-	    return {
-	      advancedView: false,
-	      colorValue: SEP,
-	      colorValues: [],
-	      representationValue: '',
-	      representationValues: [],
-	      scalarBarVisible: false,
-	      solidColor: '#fff'
-	    };
-	  },
-	  componentWillMount: function componentWillMount() {
-	    this.updateState(this.props);
-	  },
-	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	    this.updateState(nextProps);
-	  },
-	  updateState: function updateState(props) {
-	    if (!props.source || !props.representation) {
-	      return;
-	    }
 
-	    var extractRepProp = function extractRepProp(p) {
-	      return p.name === 'Representation';
-	    };
-	    var removeFieldArray = function removeFieldArray(a) {
-	      return a.location !== 'FIELDS';
-	    };
-	    var representationValues = props.representation.ui.filter(extractRepProp)[0].values;
-	    var representationValue = props.representation.properties.filter(extractRepProp)[0].value;
-	    var colorValues = [{ name: 'Solid color' }].concat(props.source.data.arrays.filter(removeFieldArray));
-	    var colorValue = props.representation.colorBy.array.filter(function (v, i) {
-	      return i < 2;
-	    }).join(SEP);
-	    var scalarBarVisible = !!props.representation.colorBy.scalarBar;
-	    var solidColor = '#' + props.representation.colorBy.color.map(doubleToHex).join('');
 
-	    var colorMode = colorValue.split(SEP)[1] ? 'array' : 'SOLID';
-
-	    this.setState({
-	      representationValues: representationValues,
-	      representationValue: representationValue,
-	      colorValues: colorValues,
-	      colorValue: colorValue,
-	      scalarBarVisible: scalarBarVisible,
-	      solidColor: solidColor,
-	      colorMode: colorMode
-	    });
-	  },
-	  toggleScalarBar: function toggleScalarBar() {
-	    var scalarBarVisible = !this.state.scalarBarVisible;
-
-	    if (this.state.colorMode === 'SOLID') {
-	      scalarBarVisible = false;
-	    }
-
-	    this.setState({ scalarBarVisible: scalarBarVisible });
-	    if (this.props.onChange) {
-	      this.props.onChange({
-	        type: 'scalarBar',
-	        source: this.props.source.id,
-	        representation: this.props.representation.id,
-	        visible: scalarBarVisible
-	      });
-	    }
-	  },
-	  toggleAdvancedView: function toggleAdvancedView() {
-	    var advancedView = !this.state.advancedView;
-	    this.setState({ advancedView: advancedView });
-	  },
-	  onRepresentationChange: function onRepresentationChange(event) {
-	    var representationValue = event.target.value;
-	    this.setState({ representationValue: representationValue });
-	    if (this.props.onChange) {
-	      this.props.onChange({
-	        type: 'propertyChange',
-	        changeSet: [{
-	          id: this.props.representation.id,
-	          name: 'Representation',
-	          value: representationValue
-	        }]
-	      });
-	    }
-	  },
-	  onColorChange: function onColorChange(event) {
-	    var scalarBarVisible = this.state.scalarBarVisible;
-	    var colorValue = event.target.value;
-
-	    var _colorValue$split = colorValue.split(SEP);
-
-	    var _colorValue$split2 = _slicedToArray(_colorValue$split, 2);
-
-	    var arrayLocation = _colorValue$split2[0];
-	    var arrayName = _colorValue$split2[1];
-
-	    var colorMode = arrayName ? 'array' : 'SOLID';
-	    var vectorMode = 'Magnitude';
-	    var vectorComponent = 0;
-	    var rescale = false;
-
-	    if (colorMode === 'SOLID') {
-	      scalarBarVisible = false;
-	    }
-
-	    this.setState({ colorValue: colorValue, scalarBarVisible: scalarBarVisible, colorMode: colorMode });
-	    if (this.props.onChange) {
-	      this.props.onChange({
-	        type: 'colorBy',
-	        representation: this.props.representation.id,
-	        arrayLocation: arrayLocation,
-	        arrayName: arrayName,
-	        colorMode: colorMode,
-	        vectorMode: vectorMode,
-	        vectorComponent: vectorComponent,
-	        rescale: rescale
-	      });
-	    }
-	  },
+	  /* eslint-disable react/no-danger */
 	  render: function render() {
-	    if (!this.props.source || !this.props.representation) {
-	      return null;
-	    }
-
-	    return _react2.default.createElement(
-	      'div',
-	      { className: [_ColorByWidget2.default.container, this.props.className].join(' ') },
-	      _react2.default.createElement(
-	        'div',
-	        { className: _ColorByWidget2.default.line },
-	        _react2.default.createElement('i', { className: _ColorByWidget2.default.representationIcon }),
-	        _react2.default.createElement(
-	          'select',
-	          { className: _ColorByWidget2.default.input,
-	            value: this.state.representationValue,
-	            onChange: this.onRepresentationChange },
-	          this.state.representationValues.map(function (v, idx) {
-	            return _react2.default.createElement(
-	              'option',
-	              { key: idx, value: v },
-	              v
-	            );
-	          })
-	        )
-	      ),
-	      _react2.default.createElement(
-	        'div',
-	        { className: _ColorByWidget2.default.line },
-	        _react2.default.createElement('i', { className: _ColorByWidget2.default.colorIcon }),
-	        _react2.default.createElement(
-	          'select',
-	          { className: _ColorByWidget2.default.input,
-	            value: this.state.colorValue,
-	            onChange: this.onColorChange },
-	          this.state.colorValues.map(function (c, idx) {
-	            return _react2.default.createElement(
-	              'option',
-	              { key: idx, value: c.location ? [c.location, c.name].join(SEP) : '' },
-	              c.location ? '(' + (c.location === 'POINTS' ? 'p' : 'c') + c.size + ') ' + c.name : c.name
-	            );
-	          })
-	        )
-	      ),
-	      _react2.default.createElement(
-	        'div',
-	        { className: _ColorByWidget2.default.line },
-	        _react2.default.createElement('i', { onClick: this.toggleAdvancedView,
-	          className: this.state.advancedView ? _ColorByWidget2.default.advanceIconOn : _ColorByWidget2.default.advanceIconOff }),
-	        this.props.scalarBar && this.state.colorValue && this.state.colorValue.split(SEP)[1].length ? _react2.default.createElement('img', { onClick: this.toggleScalarBar, className: _ColorByWidget2.default.scalarBar, src: 'data:image/png;base64,' + this.props.scalarBar }) : _react2.default.createElement('div', { className: _ColorByWidget2.default.scalarBar, style: { backgroundColor: this.state.solidColor } }),
-	        _react2.default.createElement('i', { onClick: this.toggleScalarBar,
-	          className: this.state.scalarBarVisible ? _ColorByWidget2.default.scalarBarIconOn : _ColorByWidget2.default.scalarBarIconOff })
-	      ),
-	      _react2.default.createElement(_AdvancedView2.default, _extends({ visible: this.state.advancedView }, this.props))
-	    );
+	    var style = {
+	      width: this.props.width,
+	      height: this.props.height
+	    };
+	    return _react2.default.createElement('svg', {
+	      style: style,
+	      className: this.props.className,
+	      dangerouslySetInnerHTML: {
+	        __html: '<use xlink:href="' + this.props.icon + '"></use>'
+	      } });
 	  }
 	});
 
@@ -19927,209 +19753,297 @@
 /* 160 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _PresetListWidget = __webpack_require__(161);
-
-	var _PresetListWidget2 = _interopRequireDefault(_PresetListWidget);
-
-	var _ScalarRangeWidget = __webpack_require__(166);
-
-	var _ScalarRangeWidget2 = _interopRequireDefault(_ScalarRangeWidget);
-
-	var _ColorByWidget = __webpack_require__(176);
-
-	var _ColorByWidget2 = _interopRequireDefault(_ColorByWidget);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = _react2.default.createClass({
-
-	  displayName: 'ColorByWidget',
-
-	  propTypes: {
-	    className: _react2.default.PropTypes.string,
-	    max: _react2.default.PropTypes.number,
-	    min: _react2.default.PropTypes.number,
-	    onChange: _react2.default.PropTypes.func,
-	    presets: _react2.default.PropTypes.object,
-	    representation: _react2.default.PropTypes.object,
-	    scalarBar: _react2.default.PropTypes.string,
-	    source: _react2.default.PropTypes.object,
-	    visible: _react2.default.PropTypes.bool
-	  },
-
-	  getInitialState: function getInitialState() {
-	    return {
-	      activeAdvanceView: '0'
-	    };
-	  },
-	  updatePreset: function updatePreset(name) {
-	    if (this.props.onChange) {
-	      this.props.onChange({
-	        type: 'updatePreset',
-	        representation: this.props.representation.id,
-	        preset: name
-	      });
-	    }
-	  },
-	  updateRange: function updateRange(options) {
-	    options.proxyId = this.props.source.id;
-	    if (this.props.onChange) {
-	      this.props.onChange({
-	        type: 'updateScalarRange',
-	        options: options
-	      });
-	    }
-	  },
-	  updateActiveView: function updateActiveView(event) {
-	    var activeAdvanceView = event.target.dataset.idx;
-	    this.setState({ activeAdvanceView: activeAdvanceView });
-	  },
-	  render: function render() {
-	    return _react2.default.createElement(
-	      'div',
-	      { className: this.props.visible ? _ColorByWidget2.default.advancedView : _ColorByWidget2.default.hidden },
-	      _react2.default.createElement(
-	        'div',
-	        { className: _ColorByWidget2.default.advancedViewControl },
-	        _react2.default.createElement('i', { 'data-idx': '0',
-	          onClick: this.updateActiveView,
-	          className: this.state.activeAdvanceView === '0' ? _ColorByWidget2.default.activePresetIcon : _ColorByWidget2.default.presetIcon }),
-	        _react2.default.createElement('i', { 'data-idx': '1',
-	          onClick: this.updateActiveView,
-	          className: this.state.activeAdvanceView === '1' ? _ColorByWidget2.default.activeRangeIcon : _ColorByWidget2.default.rangeIcon }),
-	        _react2.default.createElement('i', { 'data-idx': '2',
-	          onClick: this.updateActiveView,
-	          className: this.state.activeAdvanceView === '2' ? _ColorByWidget2.default.activeOpacityIcon : _ColorByWidget2.default.opacityIcon }),
-	        _react2.default.createElement('i', { 'data-idx': '3',
-	          onClick: this.updateActiveView,
-	          className: this.state.activeAdvanceView === '3' ? _ColorByWidget2.default.activeColorEditIcon : _ColorByWidget2.default.colorEditIcon })
-	      ),
-	      _react2.default.createElement(
-	        'div',
-	        { className: _ColorByWidget2.default.advancedViewContent },
-	        _react2.default.createElement(_PresetListWidget2.default, {
-	          visible: this.state.activeAdvanceView === '0',
-	          onChange: this.updatePreset,
-	          presets: this.props.presets }),
-	        _react2.default.createElement(_ScalarRangeWidget2.default, {
-	          visible: this.state.activeAdvanceView === '1',
-	          min: this.props.min,
-	          max: this.props.max,
-	          onApply: this.updateRange })
-	      )
-	    );
-	  }
-	});
+	;
+	var sprite = __webpack_require__(161);;
+	var image = "<symbol viewBox=\"0 0 256 256\" id=\"kitware\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"> <style type=\"text/css\"> .st0{display:none;} .st1{display:inline;} .st2{display:inline;fill:#FFFFFF;} </style> <g id=\"kitware_paraview\" class=\"st0\"> <g class=\"st1\"> <g> <polygon points=\"65.4,211.3 14.6,211.3 56.4,53.4 107.2,53.4 \t\t\t\"/> </g> <g> <polygon points=\"132.7,211.3 81.9,211.3 123.6,53.4 174.4,53.4 \t\t\t\"/> </g> <g> <polygon points=\"199.9,211.3 149.1,211.3 190.9,53.4 241.6,53.4 \t\t\t\"/> </g> </g> </g> <g id=\"kitware_paraviewweb\" class=\"st0\"> <g class=\"st1\"> <polygon points=\"60.2,211.3 35.7,211.3 49,40 106.1,40 \t\t\"/> </g> <g class=\"st1\"> <polygon points=\"159.9,211.3 135.4,211.3 181.4,40 238.5,40 \t\t\"/> </g> <g class=\"st1\"> <polygon points=\"118.8,88.6 69.5,211.3 126.6,211.3 140.9,88.6 \t\t\"/> </g> </g> <g id=\"kitware_kitware\"> <g> <g> <path d=\"M216.9,77c-6.2,0-12.3,0-18.5,0c-66.9,18.7-76.9,102.5-30,142.9c-54.2-36.8-44.4-130,29.5-149.8c-6.2,0-12.3,0-18.5,0\r\n\t\t\t\tc-66.9,18.7-76.9,102.5-30,142.9c-54.2-36.8-44.4-130,29.5-149.8c-6.2,0-12.3,0-18.5,0c-21,5.9-36.3,18.2-46.1,33.5\r\n\t\t\t\tc-0.7-28.8-5.2-58.2-13.9-87.7c-5.2,5-10.4,9.9-15.6,14.9c25.8,73.8,21.6,151.9-10.2,217.1c1.4,1.4,2.8,2.7,4.3,4.1\r\n\t\t\t\tc12.7-22.5,22-47.1,28-73c8.8,23.8,28.3,44.2,58.5,52.3c0.3,0,0.6,0,1,0c5.5,2.8,11.4,5.2,17.9,6.9c0.3,0,0.6,0,1,0\r\n\t\t\t\tc5.5,2.8,11.4,5.2,17.9,6.9c2.8,0,5.7,0,8.5,0C131.6,215.7,133.3,99.4,216.9,77z\"/> </g> <g> <path d=\"M57.1,50.6c-5.2,5-10.4,9.9-15.5,14.9c28,43.5,37,102.5,21.4,164c1.4,1.4,2.8,2.7,4.3,4.1\r\n\t\t\t\tC88.5,170.7,84.3,104.9,57.1,50.6z\"/> </g> <g> <path d=\"M78.8,29.8c-5.2,5-10.4,9.9-15.5,14.9c26.9,58.6,29.3,127.2,5.6,190.6c1.4,1.4,2.8,2.7,4.3,4.1\r\n\t\t\t\tC102.6,174.6,105,99.2,78.8,29.8z\"/> </g> </g> </g> <g id=\"kitware_cluster\" class=\"st0\"> <path class=\"st1\" d=\"M233.1,88.5c1.9,0,3.3-1.5,3.3-3.3V31.3c0-1.8-1.5-3.3-3.3-3.3h-53.8c-1.9,0-3.3,1.5-3.3,3.3v20.6h-16V31.3\r\n\t\tc0-1.8-1.5-3.3-3.3-3.3h-53.8c-1.9,0-3.3,1.5-3.3,3.3v20.6h-16V31.3c0-1.8-1.5-3.3-3.3-3.3H26.3c-1.9,0-3.3,1.5-3.3,3.3v53.8\r\n\t\tc0,1.8,1.5,3.3,3.3,3.3h20.3v13.6H26.3c-1.9,0-3.3,1.5-3.3,3.3v53.8c0,1.8,1.5,3.3,3.3,3.3h20.3v13.7H26.3c-1.9,0-3.3,1.5-3.3,3.3\r\n\t\tv53.8c0,1.9,1.5,3.3,3.3,3.3h53.8c1.9,0,3.3-1.5,3.3-3.3V214h16v19.5c0,1.9,1.5,3.3,3.3,3.3h53.8c1.9,0,3.3-1.5,3.3-3.3V214h16\r\n\t\tv19.5c0,1.9,1.5,3.3,3.3,3.3h53.8c1.9,0,3.3-1.5,3.3-3.3v-53.8c0-1.9-1.5-3.3-3.3-3.3h-18.9v-13.6h18.9c1.9,0,3.3-1.5,3.3-3.3\r\n\t\tv-53.8c0-1.8-1.5-3.3-3.3-3.3h-18.9V88.5H233.1z M182.6,34.6h47.1v47.1h-47.1V34.6z M106.1,34.6h47.2v47.1h-47.2V34.6z M29.6,34.6\r\n\t\th47.2v47.1H29.6V34.6z M60,88.5h20.1c1.9,0,3.3-1.5,3.3-3.3V65.3h16v19.8c0,1.8,1.5,3.3,3.3,3.3h20.9v13.7h-20.9\r\n\t\tc-1.9,0-3.3,1.5-3.3,3.3V125h-16v-19.5c0-1.8-1.5-3.3-3.3-3.3H60V88.5z M106.1,156v-47.2h47.2V156H106.1z M29.6,108.8h47.2V156\r\n\t\tH29.6V108.8z M76.7,230.1H29.6V183h47.2V230.1z M83.4,200.5v-20.9c0-1.9-1.5-3.3-3.3-3.3H60v-13.7h20.1c1.9,0,3.3-1.5,3.3-3.3\r\n\t\tv-20.9h16v20.9c0,1.8,1.5,3.3,3.3,3.3h20.9v13.6h-20.9c-1.9,0-3.3,1.5-3.3,3.3v20.9H83.4z M153.3,230.1h-47.2V183h47.2V230.1z\r\n\t\t M229.8,230.1h-47.1V183h47.1V230.1z M200.8,176.3h-21.5c-1.9,0-3.3,1.5-3.3,3.3v20.9h-16v-20.9c0-1.9-1.5-3.3-3.3-3.3h-19.5v-13.6\r\n\t\th19.5c1.9,0,3.3-1.5,3.3-3.3v-20.9h16v20.9c0,1.8,1.5,3.3,3.3,3.3h21.5V176.3z M229.8,156h-47.1v-47.2h47.1V156z M200.8,102.1\r\n\t\th-21.5c-1.9,0-3.3,1.5-3.3,3.3V125h-16v-19.5c0-1.8-1.5-3.3-3.3-3.3h-19.5V88.5h19.5c1.9,0,3.3-1.5,3.3-3.3V65.3h16v19.8\r\n\t\tc0,1.8,1.5,3.3,3.3,3.3h21.5V102.1z\"/> </g> <g id=\"kitware_axis-orientation\" class=\"st0\"> <path class=\"st1\" d=\"M232.9,239.4l-11.2-23.6c-0.5-1-1.4-1.7-2.6-1.9c-1.1-0.1-2.2,0.3-3,1.1l-2.6,2.9c0,0-80.6-70.1-81.1-70.7V139\r\n\t\th0V42.5h3.9c1.1,0,2.2-0.6,2.8-1.5c0.6-1,0.7-2.2,0.2-3.2l-10.8-23.9c-0.5-1.2-1.7-2-3.1-2c-1.2,0-2.5,0.8-3.1,2l-10.5,23.9\r\n\t\tc-0.5,1-0.4,2.2,0.3,3.2c0.6,0.9,1.7,1.5,2.8,1.5h3.9V139v8.3c0,0.2-81.1,70.7-81.1,70.7l-2.6-2.9c-0.7-0.9-1.9-1.2-3-1.1\r\n\t\tc-1.1,0.2-2.1,0.9-2.6,1.9l-11.2,23.6c-0.6,1.2-0.4,2.6,0.5,3.6c0.6,0.7,1.6,1.2,2.5,1.2c0.3,0,0.7,0,1-0.1l25.1-7.6\r\n\t\tc1.1-0.3,1.9-1.2,2.2-2.3c0.3-1.1,0.1-2.3-0.7-3.1l-2.6-2.9l79-68.8l79,68.8l-2.6,2.9c-0.7,0.9-1,2-0.7,3.1c0.3,1.1,1.2,2,2.2,2.3\r\n\t\tl25.1,7.6c0.3,0.1,0.6,0.1,1,0.1c1,0,1.9-0.4,2.5-1.2C233.3,242,233.5,240.6,232.9,239.4z\"/> </g> <g id=\"kitware_axis-center\" class=\"st0\"> <path class=\"st1\" d=\"M226.9,119h-86.1L206,64.4c1.4-1.2,1.6-3.3,0.4-4.7c-1.2-1.4-3.3-1.6-4.7-0.4l-67.2,56.2V26.3\r\n\t\tc0-3.7-3-6.7-6.7-6.7c-3.7,0-6.7,3-6.7,6.7V119H28.5c-3.7,0-6.7,3-6.7,6.7c0,3.7,3,6.7,6.7,6.7h85.8l-64.7,54.1\r\n\t\tc-1.4,1.2-1.6,3.3-0.4,4.7c0.7,0.8,1.6,1.2,2.6,1.2c0.8,0,1.5-0.3,2.1-0.8l67.2-56.2v89.2c0,3.7,3,6.7,6.7,6.7c3.7,0,6.7-3,6.7-6.7\r\n\t\tv-92.2h92.4c3.7,0,6.7-3,6.7-6.7C233.6,122,230.6,119,226.9,119z\"/> </g> <g id=\"kitware_function_x5F_gaussian\" class=\"st0\"> <rect x=\"118.9\" y=\"131.9\" transform=\"matrix(0.7071 0.7071 -0.7071 0.7071 137.8138 -49.4411)\" class=\"st2\" width=\"19.4\" height=\"19.4\"/> <path class=\"st1\" d=\"M128.6,158.7c-0.9,0-1.7-0.4-2.4-1L112.5,144c-1.3-1.3-1.3-3.4,0-4.7l13.8-13.8c0.6-0.6,1.5-1,2.4-1l0,0\r\n\t\tc0.9,0,1.7,0.4,2.4,1l13.8,13.8c1.3,1.3,1.3,3.4,0,4.7L131,157.8C130.3,158.4,129.5,158.7,128.6,158.7z M119.6,141.6l9,9l9-9l-9-9\r\n\t\tL119.6,141.6z\"/> <path class=\"st1\" d=\"M246.5,208.6c-20.9-1-35.7-6.1-46.4-14.1c0.1-1.5,0.1-3.1-0.1-4.7c-0.8-5.3-3.7-10-8-13.2\r\n\t\tc-2.8-2.1-6.1-3.2-9.5-3.6c-8.2-16.2-11.7-36.9-15.4-59.7c-3.5-21.5-9.7-36.5-18.3-44.8c0-0.8,0-1.7-0.1-2.5\r\n\t\tc-1.7-11-12.1-18.6-23.1-16.9c-9.8,1.5-16.8,9.9-17.1,19.4c-8.6,8.3-14.8,23.3-18.3,44.8c-3.7,22.8-7.2,43.4-15.4,59.6\r\n\t\tc-0.2,0-0.4,0-0.7,0c-10.5,1.6-17.7,11.1-16.9,21.5c-10.8,8-25.5,13.1-46.5,14.1c-3.7,0.2-6.5,3.3-6.4,7c0.2,3.6,3.1,6.4,6.7,6.4\r\n\t\tc0.1,0,0.2,0,0.3,0c22.7-1.1,39.2-6.5,51.6-14.9c3.7,3.7,8.8,6.1,14.3,6.1c1,0,2.1-0.1,3.1-0.2c11-1.7,18.6-12.1,16.9-23.1\r\n\t\tc-0.8-5.3-3.7-10-8-13.2c-0.3-0.2-0.6-0.3-0.9-0.5c8.1-17.7,11.6-38.9,15.1-60.6c2.8-17.1,6.9-26.9,10.6-32.6c3.7,4,9,6.4,14.6,6.4\r\n\t\tc1,0,2.1-0.1,3.1-0.2c4.6-0.7,8.6-3,11.5-6.2c3.7,5.7,7.8,15.5,10.6,32.6c3.5,21.7,7.1,42.9,15.1,60.6c-6.4,4.2-10.2,11.9-8.9,20\r\n\t\tc0.8,5.3,3.7,10,8,13.2c3.5,2.6,7.6,3.9,11.9,3.9c1,0,2.1-0.1,3.1-0.2c4.4-0.7,8.3-2.8,11.2-5.8c12.3,8.3,28.9,13.7,51.6,14.9\r\n\t\tc0.1,0,0.2,0,0.3,0c3.5,0,6.5-2.8,6.7-6.4C253,212,250.2,208.8,246.5,208.6z M90.6,190.9c1.1,7.4-3.9,14.3-11.3,15.4\r\n\t\tc-7.4,1.1-14.3-3.9-15.4-11.3c-1.1-7.4,3.9-14.3,11.3-15.4c0.7-0.1,1.4-0.2,2.1-0.2c2.8,0,5.6,0.9,7.9,2.6\r\n\t\tC88.1,184.2,90,187.4,90.6,190.9z M130.7,82.5c-7.3,1.1-14.3-3.9-15.4-11.3c-1.1-7.4,3.9-14.3,11.3-15.4c0.7-0.1,1.4-0.2,2.1-0.2\r\n\t\tc6.6,0,12.3,4.8,13.4,11.4C143.1,74.4,138,81.4,130.7,82.5z M182,206.4c-7.4,1.1-14.3-3.9-15.4-11.3c-1.1-7.4,3.9-14.3,11.3-15.4\r\n\t\tc0.7-0.1,1.4-0.2,2.1-0.2c2.8,0,5.6,0.9,7.9,2.6c2.9,2.1,4.8,5.3,5.4,8.8C194.5,198.3,189.4,205.2,182,206.4z\"/> </g> <g id=\"kitware_parallel-coordinates\" class=\"st0\"> <path class=\"st1\" d=\"M227.1,30.3c-3.7,0-6.7,3-6.7,6.7v46.1L134.5,51V37c0-3.7-3-6.7-6.7-6.7s-6.7,3-6.7,6.7v11.1L39,68.5V37\r\n\t\tc0-3.7-3-6.7-6.7-6.7c-3.7,0-6.7,3-6.7,6.7v191.2c0,3.7,3,6.7,6.7,6.7c3.7,0,6.7-3,6.7-6.7v-33l82,15.4v17.7c0,3.7,3,6.7,6.7,6.7\r\n\t\ts6.7-3,6.7-6.7V208l42.4-34.4l43.5,35.3v19.2c0,3.7,3,6.7,6.7,6.7c3.7,0,6.7-3,6.7-6.7V37C233.8,33.3,230.8,30.3,227.1,30.3z\r\n\t\t M220.4,90.3v39.5l-43.5,35.3l-42.4-34.4V58.1L220.4,90.3z M121.1,55v73.6l-82,20.5V75.4L121.1,55z M39,188.3V156l82-20.5v68.2\r\n\t\tL39,188.3z M134.5,199.4v-60.1l37.1,30.1L134.5,199.4z M182.2,169.4l38.2-31v62L182.2,169.4z\"/> </g> <g id=\"kitware_function-linear\" class=\"st0\"> <path class=\"st1\" d=\"M249.8,45.9C249.8,45.9,249.8,45.9,249.8,45.9c-1.7-11-12-18.6-23.1-16.9c-5.3,0.8-10,3.7-13.2,8.1\r\n\t\tc-1.2,1.7-2.1,3.5-2.7,5.5h-22.9c-3.1-9.1-12.3-15-22.2-13.5c-5.3,0.8-10,3.7-13.2,8.1c-3.2,4.4-4.5,9.7-3.7,15\r\n\t\tc0.8,5,3.3,9.3,7.2,12.4l-63.8,129c-1.9-0.3-3.9-0.4-6-0.1c-7.6,1.2-13.5,6.5-15.9,13.3H45c-3.1-9-12.3-14.8-22.2-13.3\r\n\t\tc-5.3,0.8-10,3.7-13.2,8.1c-3.2,4.4-4.5,9.7-3.7,15c0.8,5.3,3.7,10,8,13.2c3.5,2.6,7.6,3.9,11.9,3.9c1,0,2.1-0.1,3.2-0.2\r\n\t\tc7.6-1.2,13.4-6.5,15.9-13.2h25.3c2.8,8,10.5,13.5,19,13.5c1,0,2.1-0.1,3.1-0.2c5.3-0.8,10-3.7,13.2-8.1c3.2-4.4,4.5-9.7,3.7-15\r\n\t\tc-0.6-4.2-2.5-7.8-5.2-10.7l64.5-130.5c0,0,0.1,0,0.1,0c1,0,2.1-0.1,3.2-0.2c7.5-1.2,13.3-6.4,15.8-13h23.2c1.4,3.7,3.8,7,7.1,9.4\r\n\t\tc3.5,2.6,7.6,3.9,11.9,3.9c1,0,2.1-0.1,3.2-0.2C244,67.3,251.6,57,249.8,45.9z M28,226.9c-3.6,0.5-7.2-0.3-10.1-2.4\r\n\t\ts-4.8-5.3-5.4-8.9c-0.6-3.6,0.3-7.2,2.4-10.1c2.1-2.9,5.3-4.8,8.9-5.4c0.7-0.1,1.4-0.2,2.1-0.2c6.6,0,12.3,4.8,13.4,11.5\r\n\t\tC40.5,218.9,35.4,225.8,28,226.9z M100.2,221.6c-2.1,2.9-5.3,4.8-8.9,5.4C84,228.1,77,223,75.9,215.6c-1.1-7.4,3.9-14.3,11.3-15.5\r\n\t\tc0.7-0.1,1.4-0.2,2.1-0.2c6.6,0,12.3,4.8,13.4,11.5c0,0,0,0,0,0C103.2,215.1,102.3,218.6,100.2,221.6z M170.8,62.4\r\n\t\tc-3.6,0.5-7.2-0.3-10.1-2.4c-2.9-2.1-4.8-5.3-5.4-8.9c-0.6-3.6,0.3-7.2,2.4-10.1s5.3-4.8,8.9-5.4c0.7-0.1,1.4-0.2,2.1-0.2\r\n\t\tc6.6,0,12.3,4.8,13.4,11.5C183.3,54.4,178.2,61.3,170.8,62.4z M231.9,62.4c-3.6,0.5-7.2-0.3-10.1-2.4c-2.9-2.1-4.8-5.3-5.4-8.9\r\n\t\tc-0.6-3.6,0.3-7.2,2.4-10.1s5.3-4.8,8.9-5.4c0.7-0.1,1.4-0.2,2.1-0.2c6.6,0,12.3,4.8,13.4,11.5C244.4,54.3,239.3,61.3,231.9,62.4z\"/> </g> <g id=\"kitware_bounding-box\" class=\"st0\"> <path class=\"st1\" d=\"M236.6,161.9c0-0.3,0.2-0.5,0.2-0.8V36.8c0-0.3-0.1-0.6-0.2-1c-0.1-0.5-0.1-0.9-0.3-1.4\r\n\t\tc-0.2-0.5-0.5-0.8-0.7-1.3c-0.2-0.3-0.3-0.6-0.5-0.8c-0.1-0.1-0.1-0.1-0.2-0.1c-0.3-0.4-0.8-0.6-1.2-0.9c-0.3-0.2-0.6-0.5-0.9-0.6\r\n\t\tc-0.4-0.2-0.7-0.2-1.1-0.3c-0.5-0.1-0.9-0.3-1.4-0.3c-0.1,0-0.1,0-0.2,0h-121c-0.3,0-0.5,0.1-0.7,0.1c-0.4,0-0.9,0.1-1.3,0.3\r\n\t\tc-0.5,0.1-0.9,0.3-1.3,0.6c-0.2,0.1-0.4,0.2-0.7,0.3L26.5,88.4c-0.1,0.1-0.2,0.3-0.3,0.4c-0.4,0.3-0.7,0.6-0.9,1\r\n\t\tc-0.3,0.3-0.5,0.6-0.7,1c-0.2,0.4-0.3,0.8-0.4,1.2c-0.1,0.4-0.2,0.9-0.3,1.3c0,0.2-0.1,0.3-0.1,0.5v134.4c0,3.7,3,6.7,6.7,6.7\r\n\t\th134.4c0.9,0,1.8-0.2,2.6-0.5c0.8-0.3,1.6-0.9,2.2-1.5c0,0,0,0,0,0l65.2-67.1c0,0,0,0,0,0l0.1-0.1c0.2-0.2,0.2-0.4,0.4-0.6\r\n\t\tc0.4-0.5,0.8-1,1-1.6C236.5,163,236.6,162.5,236.6,161.9z M171.5,164.4h46l-46,47.3V164.4z M37.1,218.1V100.6h68.6v57.1v1.8\r\n\t\tL37.1,218.1z M162.3,87.1h-49.8V43.5h99.8L162.3,87.1z M105.7,47.5v39.6H51.1L105.7,47.5z M112.4,157.7v-57.1h45.6v57.1H112.4z\r\n\t\t M171.5,96.9l51.9-45.3v106.1h-51.9V96.9z M43.4,221.5l66.9-57.1h2.1h45.6v57.1H43.4z\"/> </g> <g id=\"kitware_ruler\" class=\"st0\"> <g class=\"st1\"> <path d=\"M171,246.5H88.6c-3.7,0-6.7-3-6.7-6.7V13.6c0-3.7,3-6.7,6.7-6.7H171c3.7,0,6.7,3,6.7,6.7v226.1\r\n\t\t\tC177.7,243.4,174.7,246.5,171,246.5z M95.3,233h68.9V20.3H95.3V233z\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"35.4\" width=\"24.3\" height=\"6.7\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"60.7\" width=\"38.5\" height=\"6.7\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"86\" width=\"24.3\" height=\"6.7\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"111.2\" width=\"24.3\" height=\"6.7\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"136.5\" width=\"38.5\" height=\"6.7\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"161.8\" width=\"24.3\" height=\"6.7\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"187\" width=\"24.3\" height=\"6.7\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"212.3\" width=\"38.5\" height=\"6.7\"/> </g> </g> </symbol>";
+	module.exports = sprite.add(image, "kitware");
 
 /***/ },
 /* 161 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	var Sprite = __webpack_require__(162);
+	var globalSprite = new Sprite();
 
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
+	if (document.body) {
+	  globalSprite.elem = globalSprite.render(document.body);
+	} else {
+	  document.addEventListener('DOMContentLoaded', function () {
+	    globalSprite.elem = globalSprite.render(document.body);
+	  }, false);
+	}
 
-	var _react = __webpack_require__(1);
+	module.exports = globalSprite;
 
-	var _react2 = _interopRequireDefault(_react);
-
-	var _PresetListWidget = __webpack_require__(162);
-
-	var _PresetListWidget2 = _interopRequireDefault(_PresetListWidget);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = _react2.default.createClass({
-
-	    displayName: 'PresetListWidget',
-
-	    propTypes: {
-	        activeName: _react2.default.PropTypes.string,
-	        height: _react2.default.PropTypes.string,
-	        onChange: _react2.default.PropTypes.func,
-	        presets: _react2.default.PropTypes.object,
-	        visible: _react2.default.PropTypes.bool
-	    },
-
-	    getDefaultProps: function getDefaultProps() {
-	        return {
-	            activeName: '',
-	            height: '1em',
-	            presets: {},
-	            visible: true
-	        };
-	    },
-	    getInitialState: function getInitialState() {
-	        return {
-	            activeName: this.props.activeName
-	        };
-	    },
-	    updateActive: function updateActive(event) {
-	        var activeName = event.target.dataset.name;
-	        this.setState({ activeName: activeName });
-	        if (this.props.onChange) {
-	            this.props.onChange(activeName);
-	        }
-	    },
-	    render: function render() {
-	        var _this = this;
-
-	        if (!this.props.presets || !this.props.visible) {
-	            return null;
-	        }
-
-	        var activeName = this.state.activeName,
-	            height = this.props.height,
-	            presets = this.props.presets,
-	            names = Object.keys(presets);
-
-	        return _react2.default.createElement(
-	            'div',
-	            { className: _PresetListWidget2.default.container },
-	            _react2.default.createElement('div', { className: _PresetListWidget2.default.bottomPadding }),
-	            names.map(function (name) {
-	                return _react2.default.createElement('img', { src: 'data:image/png;base64,' + presets[name],
-	                    key: name,
-	                    style: { height: height },
-	                    'data-name': name,
-	                    onClick: _this.updateActive,
-	                    className: name === activeName ? _PresetListWidget2.default.activeLine : _PresetListWidget2.default.line });
-	            }),
-	            _react2.default.createElement('div', { className: _PresetListWidget2.default.bottomPadding })
-	        );
-	    }
-	});
 
 /***/ },
 /* 162 */
+/***/ function(module, exports) {
+
+	/**
+	 * List of SVG attributes to fix url target in them
+	 * @type {string[]}
+	 */
+	var fixAttributes = [
+	  'clipPath',
+	  'colorProfile',
+	  'src',
+	  'cursor',
+	  'fill',
+	  'filter',
+	  'marker',
+	  'markerStart',
+	  'markerMid',
+	  'markerEnd',
+	  'mask',
+	  'stroke'
+	];
+
+	/**
+	 * Query to find'em
+	 * @type {string}
+	 */
+	var fixAttributesQuery = '[' + fixAttributes.join('],[') + ']';
+	/**
+	 * @type {RegExp}
+	 */
+	var URI_FUNC_REGEX = /^url\((.*)\)$/;
+
+	/**
+	 * Convert array-like to array
+	 * @param {Object} arrayLike
+	 * @returns {Array.<*>}
+	 */
+	function arrayFrom(arrayLike) {
+	  return Array.prototype.slice.call(arrayLike, 0);
+	}
+
+	/**
+	 * Handles forbidden symbols which cannot be directly used inside attributes with url(...) content.
+	 * Adds leading slash for the brackets
+	 * @param {string} url
+	 * @return {string} encoded url
+	 */
+	function encodeUrlForEmbedding(url) {
+	  return url.replace(/\(|\)/g, "\\$&");
+	}
+
+	/**
+	 * Replaces prefix in `url()` functions
+	 * @param {Element} svg
+	 * @param {string} currentUrlPrefix
+	 * @param {string} newUrlPrefix
+	 */
+	function baseUrlWorkAround(svg, currentUrlPrefix, newUrlPrefix) {
+	  var nodes = svg.querySelectorAll(fixAttributesQuery);
+
+	  if (!nodes) {
+	    return;
+	  }
+
+	  arrayFrom(nodes).forEach(function (node) {
+	    if (!node.attributes) {
+	      return;
+	    }
+
+	    arrayFrom(node.attributes).forEach(function (attribute) {
+	      if (fixAttributes.indexOf(attribute.localName) !== -1) {
+	        var match = URI_FUNC_REGEX.exec(node.getAttribute(attribute.localName));
+
+	        // Do not touch urls with unexpected prefix
+	        if (match && match[1].indexOf(currentUrlPrefix) === 0) {
+	          var referenceUrl = encodeUrlForEmbedding(newUrlPrefix + match[1].split(currentUrlPrefix)[1]);
+	          node.setAttribute(attribute.localName, 'url(' + referenceUrl + ')');
+	        }
+	      }
+	    });
+	  });
+	}
+
+	/**
+	 * Because of Firefox bug #353575 gradients and patterns don't work if they are within a symbol.
+	 * To workaround this we move the gradient definition outside the symbol element
+	 * @see https://bugzilla.mozilla.org/show_bug.cgi?id=353575
+	 * @param {Element} svg
+	 */
+	var FirefoxSymbolBugWorkaround = function (svg) {
+	  var defs = svg.querySelector('defs');
+
+	  var moveToDefsElems = svg.querySelectorAll('symbol linearGradient, symbol radialGradient, symbol pattern');
+	  for (var i = 0, len = moveToDefsElems.length; i < len; i++) {
+	    defs.appendChild(moveToDefsElems[i]);
+	  }
+	};
+
+	/**
+	 * @type {string}
+	 */
+	var DEFAULT_URI_PREFIX = '#';
+
+	/**
+	 * @type {string}
+	 */
+	var xLinkHref = 'xlink:href';
+	/**
+	 * @type {string}
+	 */
+	var xLinkNS = 'http://www.w3.org/1999/xlink';
+	/**
+	 * @type {string}
+	 */
+	var svgOpening = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="' + xLinkNS + '"';
+	/**
+	 * @type {string}
+	 */
+	var svgClosing = '</svg>';
+	/**
+	 * @type {string}
+	 */
+	var contentPlaceHolder = '{content}';
+
+	/**
+	 * Representation of SVG sprite
+	 * @constructor
+	 */
+	function Sprite() {
+	  var baseElement = document.getElementsByTagName('base')[0];
+	  var currentUrl = window.location.href.split('#')[0];
+	  var baseUrl = baseElement && baseElement.href;
+	  this.urlPrefix = baseUrl && baseUrl !== currentUrl ? currentUrl + DEFAULT_URI_PREFIX : DEFAULT_URI_PREFIX;
+
+	  this.content = [];
+	  this.isFirefox = /firefox\//i.test(navigator.userAgent);
+	  this.isIE = /(trident|edge)\//i.test(navigator.userAgent);
+
+	  if (!this.isIE && baseUrl) {
+	    window.addEventListener('spriteLoaderLocationUpdated', function (e) {
+	      var currentPrefix = this.urlPrefix;
+	      var newUrlPrefix = e.detail.newUrl.split(DEFAULT_URI_PREFIX)[0] + DEFAULT_URI_PREFIX;
+	      baseUrlWorkAround(this.svg, currentPrefix, newUrlPrefix);
+	      this.urlPrefix = newUrlPrefix;
+
+	      if (this.isFirefox) {
+	        var nodes = arrayFrom(document.querySelectorAll('use[*|href]'));
+	        nodes.forEach(function (node) {
+	          var href = node.getAttribute(xLinkHref);
+	          if (href && href.indexOf(currentPrefix) === 0) {
+	            node.setAttributeNS(xLinkNS, xLinkHref, newUrlPrefix + href.split(DEFAULT_URI_PREFIX)[1]);
+	          }
+	        });
+	      }
+	    }.bind(this));
+	  }
+	}
+
+	Sprite.styles = ['position:absolute', 'width:0', 'height:0', 'visibility:hidden'];
+
+	Sprite.spriteTemplate = svgOpening + ' style="'+ Sprite.styles.join(';') +'"><defs>' + contentPlaceHolder + '</defs>' + svgClosing;
+	Sprite.symbolTemplate = svgOpening + '>' + contentPlaceHolder + svgClosing;
+
+	/**
+	 * @type {Array<String>}
+	 */
+	Sprite.prototype.content = null;
+
+	/**
+	 * @param {String} content
+	 * @param {String} id
+	 */
+	Sprite.prototype.add = function (content, id) {
+	  if (this.svg) {
+	    this.appendSymbol(content);
+	  }
+
+	  this.content.push(content);
+
+	  return DEFAULT_URI_PREFIX + id;
+	};
+
+	/**
+	 *
+	 * @param content
+	 * @param template
+	 * @returns {Element}
+	 */
+	Sprite.prototype.wrapSVG = function (content, template) {
+	  var svgString = template.replace(contentPlaceHolder, content);
+
+	  var svg = new DOMParser().parseFromString(svgString, 'image/svg+xml').documentElement;
+
+	  if (!this.isIE && this.urlPrefix) {
+	    baseUrlWorkAround(svg, DEFAULT_URI_PREFIX, this.urlPrefix);
+	  }
+
+	  return svg;
+	};
+
+	Sprite.prototype.appendSymbol = function (content) {
+	  var symbol = this.wrapSVG(content, Sprite.symbolTemplate).childNodes[0];
+
+	  this.svg.querySelector('defs').appendChild(symbol);
+	  if (this.isFirefox) {
+	    FirefoxSymbolBugWorkaround(this.svg);
+	  }
+	};
+
+	/**
+	 * @returns {String}
+	 */
+	Sprite.prototype.toString = function () {
+	  var wrapper = document.createElement('div');
+	  wrapper.appendChild(this.render());
+	  return wrapper.innerHTML;
+	};
+
+	/**
+	 * @param {HTMLElement} [target]
+	 * @param {Boolean} [prepend=true]
+	 * @returns {HTMLElement} Rendered sprite node
+	 */
+	Sprite.prototype.render = function (target, prepend) {
+	  target = target || null;
+	  prepend = typeof prepend === 'boolean' ? prepend : true;
+
+	  var svg = this.wrapSVG(this.content.join(''), Sprite.spriteTemplate);
+
+	  if (this.isFirefox) {
+	    FirefoxSymbolBugWorkaround(svg);
+	  }
+
+	  if (target) {
+	    if (prepend && target.childNodes[0]) {
+	      target.insertBefore(svg, target.childNodes[0]);
+	    } else {
+	      target.appendChild(svg);
+	    }
+	  }
+
+	  this.svg = svg;
+
+	  return svg;
+	};
+
+	module.exports = Sprite;
+
+
+/***/ },
+/* 163 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(163);
+	var content = __webpack_require__(164);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(165)(content, {});
+	var update = __webpack_require__(166)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]_[local]_[hash:base64:5]!./../../node_modules/postcss-loader/index.js!./PresetListWidget.mcss", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]_[local]_[hash:base64:5]!./../../node_modules/postcss-loader/index.js!./PresetListWidget.mcss");
+			module.hot.accept("!!./../../../../../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]_[local]_[hash:base64:5]!./../../../../../node_modules/postcss-loader/index.js!./style.mcss", function() {
+				var newContent = require("!!./../../../../../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]_[local]_[hash:base64:5]!./../../../../../node_modules/postcss-loader/index.js!./style.mcss");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -20139,26 +20053,30 @@
 	}
 
 /***/ },
-/* 163 */
+/* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(164)();
+	exports = module.exports = __webpack_require__(165)();
 	// imports
 
 
 	// module
-	exports.push([module.id, ".PresetListWidget_container_2HB9X {\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-justify-content: flex-start;\n        -ms-flex-pack: start;\n            justify-content: flex-start;\n    -webkit-align-items: stretch;\n        -ms-flex-align: stretch;\n            align-items: stretch;\n    height: 100%;\n    overflow-y: scroll;\n    border: solid 1px black;\n    box-sizing: border-box;\n}\n\n.PresetListWidget_line_2bNKS {\n  border: 2px solid rgba(0,0,0,0);\n  border-color: none;\n  min-height: 1em;\n  margin-left: 3px;\n  margin-right: 3px;\n}\n\n.PresetListWidget_activeLine_PA6zG {\n  border-color: #000;\n}\n\n.PresetListWidget_bottomPadding_1hwad {\n  position: relative;\n  min-height: 3px;\n}\n", ""]);
+	exports.push([module.id, ".style_small_GvTpH {\n  width: 15px;\n  height: 15px;\n}\n\n.style_medium_3uY7H {\n  width: 25px;\n  height: 25px;\n}\n\n.style_big_36DF1 {\n  width: 35px;\n  height: 35px;\n}\n\n.style_icon_1aPYj {\n  cursor: pointer;\n}\n\n.style_smallIcon_3BrD0 {\n}\n\n.style_mediumIcon_3Vuxn {\n}\n\n.style_bigIcon_aZyzA {\n}\n\n\n.style_redIcon_Xgc_0 {\n  fill: red;\n}\n\n.style_redIcon_Xgc_0:hover {\n  fill: green;\n}\n", ""]);
 
 	// exports
 	exports.locals = {
-		"container": "PresetListWidget_container_2HB9X",
-		"line": "PresetListWidget_line_2bNKS",
-		"activeLine": "PresetListWidget_activeLine_PA6zG PresetListWidget_line_2bNKS",
-		"bottomPadding": "PresetListWidget_bottomPadding_1hwad"
+		"small": "style_small_GvTpH",
+		"medium": "style_medium_3uY7H",
+		"big": "style_big_36DF1",
+		"icon": "style_icon_1aPYj",
+		"smallIcon": "style_smallIcon_3BrD0 style_icon_1aPYj style_small_GvTpH",
+		"mediumIcon": "style_mediumIcon_3Vuxn style_icon_1aPYj style_medium_3uY7H",
+		"bigIcon": "style_bigIcon_aZyzA style_icon_1aPYj style_big_36DF1",
+		"redIcon": "style_redIcon_Xgc_0 style_medium_3uY7H style_icon_1aPYj"
 	};
 
 /***/ },
-/* 164 */
+/* 165 */
 /***/ function(module, exports) {
 
 	/*
@@ -20214,7 +20132,7 @@
 
 
 /***/ },
-/* 165 */
+/* 166 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -20468,3420 +20386,40 @@
 
 
 /***/ },
-/* 166 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _ScalarRangeWidget = __webpack_require__(167);
-
-	var _ScalarRangeWidget2 = _interopRequireDefault(_ScalarRangeWidget);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-	exports.default = _react2.default.createClass({
-
-	  displayName: 'ScalarRangeWidget',
-
-	  propTypes: {
-	    max: _react2.default.PropTypes.number,
-	    min: _react2.default.PropTypes.number,
-	    onApply: _react2.default.PropTypes.func,
-	    visible: _react2.default.PropTypes.bool
-	  },
-
-	  getInitialState: function getInitialState() {
-	    return {
-	      max: this.props.max || 1,
-	      min: this.props.min || 0
-	    };
-	  },
-	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	    var min = nextProps.min;
-	    var max = nextProps.max;
-
-	    if (this.state.min !== min || this.state.max !== max) {
-	      this.setState({ min: min, max: max });
-	    }
-	  },
-	  updateRange: function updateRange(event) {
-	    var name = event.target.name,
-	        value = event.target.value;
-
-	    if (!isNaN(parseFloat(value)) && isFinite(value)) {
-	      this.setState(_defineProperty({}, name, value));
-	    }
-	  },
-	  apply: function apply(event) {
-	    var _state = this.state;
-	    var min = _state.min;
-	    var max = _state.max;
-
-	    var type = event.target.dataset.type;
-
-	    min = Number(min);
-	    max = Number(max);
-
-	    if (this.props.onApply) {
-	      this.props.onApply({ type: type, min: min, max: max });
-	    }
-	  },
-	  render: function render() {
-	    if (!this.props.visible) {
-	      return null;
-	    }
-
-	    return _react2.default.createElement(
-	      'div',
-	      { className: _ScalarRangeWidget2.default.container },
-	      _react2.default.createElement('input', {
-	        className: _ScalarRangeWidget2.default.rangeInput,
-	        type: 'text',
-	        pattern: '-*[0-9]*.*[0-9]*',
-	        name: 'min',
-	        value: this.state.min,
-	        onChange: this.updateRange }),
-	      _react2.default.createElement('input', {
-	        className: _ScalarRangeWidget2.default.rangeInput,
-	        type: 'text',
-	        pattern: '-*[0-9]*.*[0-9]*',
-	        name: 'max',
-	        value: this.state.max,
-	        onChange: this.updateRange }),
-	      _react2.default.createElement(
-	        'div',
-	        { className: _ScalarRangeWidget2.default.actionLine },
-	        _react2.default.createElement('i', { onClick: this.apply, 'data-type': 'data', className: _ScalarRangeWidget2.default.dataRangeIcon }),
-	        _react2.default.createElement('i', { onClick: this.apply, 'data-type': 'time', className: _ScalarRangeWidget2.default.timeRangeIcon }),
-	        _react2.default.createElement('i', { onClick: this.apply, 'data-type': 'custom', className: _ScalarRangeWidget2.default.customRangeIcon })
-	      )
-	    );
-	  }
-	});
-
-/***/ },
 /* 167 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(168);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(165)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]_[local]_[hash:base64:5]!./../../node_modules/postcss-loader/index.js!./ScalarRangeWidget.mcss", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]_[local]_[hash:base64:5]!./../../node_modules/postcss-loader/index.js!./ScalarRangeWidget.mcss");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
+	;
+	var sprite = __webpack_require__(161);;
+	var image = "<symbol viewBox=\"0 0 256 256\" id=\"paraview\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"> <style type=\"text/css\"> .st0{display:none;} .st1{display:inline;} .st2{display:inline;fill:#FFFFFF;} </style> <g id=\"paraview_paraview\"> <g> <g> <polygon points=\"65.4,211.3 14.6,211.3 56.4,53.4 107.2,53.4 \t\t\t\"/> </g> <g> <polygon points=\"132.7,211.3 81.9,211.3 123.6,53.4 174.4,53.4 \t\t\t\"/> </g> <g> <polygon points=\"199.9,211.3 149.1,211.3 190.9,53.4 241.6,53.4 \t\t\t\"/> </g> </g> </g> <g id=\"paraview_paraviewweb\" class=\"st0\"> <g class=\"st1\"> <polygon points=\"60.2,211.3 35.7,211.3 49,40 106.1,40 \t\t\"/> </g> <g class=\"st1\"> <polygon points=\"159.9,211.3 135.4,211.3 181.4,40 238.5,40 \t\t\"/> </g> <g class=\"st1\"> <polygon points=\"118.8,88.6 69.5,211.3 126.6,211.3 140.9,88.6 \t\t\"/> </g> </g> <g id=\"paraview_kitware\" class=\"st0\"> <g class=\"st1\"> <g> <path d=\"M216.9,77c-6.2,0-12.3,0-18.5,0c-66.9,18.7-76.9,102.5-30,142.9c-54.2-36.8-44.4-130,29.5-149.8c-6.2,0-12.3,0-18.5,0\r\n\t\t\t\tc-66.9,18.7-76.9,102.5-30,142.9c-54.2-36.8-44.4-130,29.5-149.8c-6.2,0-12.3,0-18.5,0c-21,5.9-36.3,18.2-46.1,33.5\r\n\t\t\t\tc-0.7-28.8-5.2-58.2-13.9-87.7c-5.2,5-10.4,9.9-15.6,14.9c25.8,73.8,21.6,151.9-10.2,217.1c1.4,1.4,2.8,2.7,4.3,4.1\r\n\t\t\t\tc12.7-22.5,22-47.1,28-73c8.8,23.8,28.3,44.2,58.5,52.3c0.3,0,0.6,0,1,0c5.5,2.8,11.4,5.2,17.9,6.9c0.3,0,0.6,0,1,0\r\n\t\t\t\tc5.5,2.8,11.4,5.2,17.9,6.9c2.8,0,5.7,0,8.5,0C131.6,215.7,133.3,99.4,216.9,77z\"/> </g> <g> <path d=\"M57.1,50.6c-5.2,5-10.4,9.9-15.5,14.9c28,43.5,37,102.5,21.4,164c1.4,1.4,2.8,2.7,4.3,4.1\r\n\t\t\t\tC88.5,170.7,84.3,104.9,57.1,50.6z\"/> </g> <g> <path d=\"M78.8,29.8c-5.2,5-10.4,9.9-15.5,14.9c26.9,58.6,29.3,127.2,5.6,190.6c1.4,1.4,2.8,2.7,4.3,4.1\r\n\t\t\t\tC102.6,174.6,105,99.2,78.8,29.8z\"/> </g> </g> </g> <g id=\"paraview_cluster\" class=\"st0\"> <path class=\"st1\" d=\"M233.1,88.5c1.9,0,3.3-1.5,3.3-3.3V31.3c0-1.8-1.5-3.3-3.3-3.3h-53.8c-1.9,0-3.3,1.5-3.3,3.3v20.6h-16V31.3\r\n\t\tc0-1.8-1.5-3.3-3.3-3.3h-53.8c-1.9,0-3.3,1.5-3.3,3.3v20.6h-16V31.3c0-1.8-1.5-3.3-3.3-3.3H26.3c-1.9,0-3.3,1.5-3.3,3.3v53.8\r\n\t\tc0,1.8,1.5,3.3,3.3,3.3h20.3v13.6H26.3c-1.9,0-3.3,1.5-3.3,3.3v53.8c0,1.8,1.5,3.3,3.3,3.3h20.3v13.7H26.3c-1.9,0-3.3,1.5-3.3,3.3\r\n\t\tv53.8c0,1.9,1.5,3.3,3.3,3.3h53.8c1.9,0,3.3-1.5,3.3-3.3V214h16v19.5c0,1.9,1.5,3.3,3.3,3.3h53.8c1.9,0,3.3-1.5,3.3-3.3V214h16\r\n\t\tv19.5c0,1.9,1.5,3.3,3.3,3.3h53.8c1.9,0,3.3-1.5,3.3-3.3v-53.8c0-1.9-1.5-3.3-3.3-3.3h-18.9v-13.6h18.9c1.9,0,3.3-1.5,3.3-3.3\r\n\t\tv-53.8c0-1.8-1.5-3.3-3.3-3.3h-18.9V88.5H233.1z M182.6,34.6h47.1v47.1h-47.1V34.6z M106.1,34.6h47.2v47.1h-47.2V34.6z M29.6,34.6\r\n\t\th47.2v47.1H29.6V34.6z M60,88.5h20.1c1.9,0,3.3-1.5,3.3-3.3V65.3h16v19.8c0,1.8,1.5,3.3,3.3,3.3h20.9v13.7h-20.9\r\n\t\tc-1.9,0-3.3,1.5-3.3,3.3V125h-16v-19.5c0-1.8-1.5-3.3-3.3-3.3H60V88.5z M106.1,156v-47.2h47.2V156H106.1z M29.6,108.8h47.2V156\r\n\t\tH29.6V108.8z M76.7,230.1H29.6V183h47.2V230.1z M83.4,200.5v-20.9c0-1.9-1.5-3.3-3.3-3.3H60v-13.7h20.1c1.9,0,3.3-1.5,3.3-3.3\r\n\t\tv-20.9h16v20.9c0,1.8,1.5,3.3,3.3,3.3h20.9v13.6h-20.9c-1.9,0-3.3,1.5-3.3,3.3v20.9H83.4z M153.3,230.1h-47.2V183h47.2V230.1z\r\n\t\t M229.8,230.1h-47.1V183h47.1V230.1z M200.8,176.3h-21.5c-1.9,0-3.3,1.5-3.3,3.3v20.9h-16v-20.9c0-1.9-1.5-3.3-3.3-3.3h-19.5v-13.6\r\n\t\th19.5c1.9,0,3.3-1.5,3.3-3.3v-20.9h16v20.9c0,1.8,1.5,3.3,3.3,3.3h21.5V176.3z M229.8,156h-47.1v-47.2h47.1V156z M200.8,102.1\r\n\t\th-21.5c-1.9,0-3.3,1.5-3.3,3.3V125h-16v-19.5c0-1.8-1.5-3.3-3.3-3.3h-19.5V88.5h19.5c1.9,0,3.3-1.5,3.3-3.3V65.3h16v19.8\r\n\t\tc0,1.8,1.5,3.3,3.3,3.3h21.5V102.1z\"/> </g> <g id=\"paraview_axis-orientation\" class=\"st0\"> <path class=\"st1\" d=\"M232.9,239.4l-11.2-23.6c-0.5-1-1.4-1.7-2.6-1.9c-1.1-0.1-2.2,0.3-3,1.1l-2.6,2.9c0,0-80.6-70.1-81.1-70.7V139\r\n\t\th0V42.5h3.9c1.1,0,2.2-0.6,2.8-1.5c0.6-1,0.7-2.2,0.2-3.2l-10.8-23.9c-0.5-1.2-1.7-2-3.1-2c-1.2,0-2.5,0.8-3.1,2l-10.5,23.9\r\n\t\tc-0.5,1-0.4,2.2,0.3,3.2c0.6,0.9,1.7,1.5,2.8,1.5h3.9V139v8.3c0,0.2-81.1,70.7-81.1,70.7l-2.6-2.9c-0.7-0.9-1.9-1.2-3-1.1\r\n\t\tc-1.1,0.2-2.1,0.9-2.6,1.9l-11.2,23.6c-0.6,1.2-0.4,2.6,0.5,3.6c0.6,0.7,1.6,1.2,2.5,1.2c0.3,0,0.7,0,1-0.1l25.1-7.6\r\n\t\tc1.1-0.3,1.9-1.2,2.2-2.3c0.3-1.1,0.1-2.3-0.7-3.1l-2.6-2.9l79-68.8l79,68.8l-2.6,2.9c-0.7,0.9-1,2-0.7,3.1c0.3,1.1,1.2,2,2.2,2.3\r\n\t\tl25.1,7.6c0.3,0.1,0.6,0.1,1,0.1c1,0,1.9-0.4,2.5-1.2C233.3,242,233.5,240.6,232.9,239.4z\"/> </g> <g id=\"paraview_axis-center\" class=\"st0\"> <path class=\"st1\" d=\"M226.9,119h-86.1L206,64.4c1.4-1.2,1.6-3.3,0.4-4.7c-1.2-1.4-3.3-1.6-4.7-0.4l-67.2,56.2V26.3\r\n\t\tc0-3.7-3-6.7-6.7-6.7c-3.7,0-6.7,3-6.7,6.7V119H28.5c-3.7,0-6.7,3-6.7,6.7c0,3.7,3,6.7,6.7,6.7h85.8l-64.7,54.1\r\n\t\tc-1.4,1.2-1.6,3.3-0.4,4.7c0.7,0.8,1.6,1.2,2.6,1.2c0.8,0,1.5-0.3,2.1-0.8l67.2-56.2v89.2c0,3.7,3,6.7,6.7,6.7c3.7,0,6.7-3,6.7-6.7\r\n\t\tv-92.2h92.4c3.7,0,6.7-3,6.7-6.7C233.6,122,230.6,119,226.9,119z\"/> </g> <g id=\"paraview_function_x5F_gaussian\" class=\"st0\"> <rect x=\"118.9\" y=\"131.9\" transform=\"matrix(0.7071 0.7071 -0.7071 0.7071 137.8138 -49.4411)\" class=\"st2\" width=\"19.4\" height=\"19.4\"/> <path class=\"st1\" d=\"M128.6,158.7c-0.9,0-1.7-0.4-2.4-1L112.5,144c-1.3-1.3-1.3-3.4,0-4.7l13.8-13.8c0.6-0.6,1.5-1,2.4-1l0,0\r\n\t\tc0.9,0,1.7,0.4,2.4,1l13.8,13.8c1.3,1.3,1.3,3.4,0,4.7L131,157.8C130.3,158.4,129.5,158.7,128.6,158.7z M119.6,141.6l9,9l9-9l-9-9\r\n\t\tL119.6,141.6z\"/> <path class=\"st1\" d=\"M246.5,208.6c-20.9-1-35.7-6.1-46.4-14.1c0.1-1.5,0.1-3.1-0.1-4.7c-0.8-5.3-3.7-10-8-13.2\r\n\t\tc-2.8-2.1-6.1-3.2-9.5-3.6c-8.2-16.2-11.7-36.9-15.4-59.7c-3.5-21.5-9.7-36.5-18.3-44.8c0-0.8,0-1.7-0.1-2.5\r\n\t\tc-1.7-11-12.1-18.6-23.1-16.9c-9.8,1.5-16.8,9.9-17.1,19.4c-8.6,8.3-14.8,23.3-18.3,44.8c-3.7,22.8-7.2,43.4-15.4,59.6\r\n\t\tc-0.2,0-0.4,0-0.7,0c-10.5,1.6-17.7,11.1-16.9,21.5c-10.8,8-25.5,13.1-46.5,14.1c-3.7,0.2-6.5,3.3-6.4,7c0.2,3.6,3.1,6.4,6.7,6.4\r\n\t\tc0.1,0,0.2,0,0.3,0c22.7-1.1,39.2-6.5,51.6-14.9c3.7,3.7,8.8,6.1,14.3,6.1c1,0,2.1-0.1,3.1-0.2c11-1.7,18.6-12.1,16.9-23.1\r\n\t\tc-0.8-5.3-3.7-10-8-13.2c-0.3-0.2-0.6-0.3-0.9-0.5c8.1-17.7,11.6-38.9,15.1-60.6c2.8-17.1,6.9-26.9,10.6-32.6c3.7,4,9,6.4,14.6,6.4\r\n\t\tc1,0,2.1-0.1,3.1-0.2c4.6-0.7,8.6-3,11.5-6.2c3.7,5.7,7.8,15.5,10.6,32.6c3.5,21.7,7.1,42.9,15.1,60.6c-6.4,4.2-10.2,11.9-8.9,20\r\n\t\tc0.8,5.3,3.7,10,8,13.2c3.5,2.6,7.6,3.9,11.9,3.9c1,0,2.1-0.1,3.1-0.2c4.4-0.7,8.3-2.8,11.2-5.8c12.3,8.3,28.9,13.7,51.6,14.9\r\n\t\tc0.1,0,0.2,0,0.3,0c3.5,0,6.5-2.8,6.7-6.4C253,212,250.2,208.8,246.5,208.6z M90.6,190.9c1.1,7.4-3.9,14.3-11.3,15.4\r\n\t\tc-7.4,1.1-14.3-3.9-15.4-11.3c-1.1-7.4,3.9-14.3,11.3-15.4c0.7-0.1,1.4-0.2,2.1-0.2c2.8,0,5.6,0.9,7.9,2.6\r\n\t\tC88.1,184.2,90,187.4,90.6,190.9z M130.7,82.5c-7.3,1.1-14.3-3.9-15.4-11.3c-1.1-7.4,3.9-14.3,11.3-15.4c0.7-0.1,1.4-0.2,2.1-0.2\r\n\t\tc6.6,0,12.3,4.8,13.4,11.4C143.1,74.4,138,81.4,130.7,82.5z M182,206.4c-7.4,1.1-14.3-3.9-15.4-11.3c-1.1-7.4,3.9-14.3,11.3-15.4\r\n\t\tc0.7-0.1,1.4-0.2,2.1-0.2c2.8,0,5.6,0.9,7.9,2.6c2.9,2.1,4.8,5.3,5.4,8.8C194.5,198.3,189.4,205.2,182,206.4z\"/> </g> <g id=\"paraview_parallel-coordinates\" class=\"st0\"> <path class=\"st1\" d=\"M227.1,30.3c-3.7,0-6.7,3-6.7,6.7v46.1L134.5,51V37c0-3.7-3-6.7-6.7-6.7s-6.7,3-6.7,6.7v11.1L39,68.5V37\r\n\t\tc0-3.7-3-6.7-6.7-6.7c-3.7,0-6.7,3-6.7,6.7v191.2c0,3.7,3,6.7,6.7,6.7c3.7,0,6.7-3,6.7-6.7v-33l82,15.4v17.7c0,3.7,3,6.7,6.7,6.7\r\n\t\ts6.7-3,6.7-6.7V208l42.4-34.4l43.5,35.3v19.2c0,3.7,3,6.7,6.7,6.7c3.7,0,6.7-3,6.7-6.7V37C233.8,33.3,230.8,30.3,227.1,30.3z\r\n\t\t M220.4,90.3v39.5l-43.5,35.3l-42.4-34.4V58.1L220.4,90.3z M121.1,55v73.6l-82,20.5V75.4L121.1,55z M39,188.3V156l82-20.5v68.2\r\n\t\tL39,188.3z M134.5,199.4v-60.1l37.1,30.1L134.5,199.4z M182.2,169.4l38.2-31v62L182.2,169.4z\"/> </g> <g id=\"paraview_function-linear\" class=\"st0\"> <path class=\"st1\" d=\"M249.8,45.9C249.8,45.9,249.8,45.9,249.8,45.9c-1.7-11-12-18.6-23.1-16.9c-5.3,0.8-10,3.7-13.2,8.1\r\n\t\tc-1.2,1.7-2.1,3.5-2.7,5.5h-22.9c-3.1-9.1-12.3-15-22.2-13.5c-5.3,0.8-10,3.7-13.2,8.1c-3.2,4.4-4.5,9.7-3.7,15\r\n\t\tc0.8,5,3.3,9.3,7.2,12.4l-63.8,129c-1.9-0.3-3.9-0.4-6-0.1c-7.6,1.2-13.5,6.5-15.9,13.3H45c-3.1-9-12.3-14.8-22.2-13.3\r\n\t\tc-5.3,0.8-10,3.7-13.2,8.1c-3.2,4.4-4.5,9.7-3.7,15c0.8,5.3,3.7,10,8,13.2c3.5,2.6,7.6,3.9,11.9,3.9c1,0,2.1-0.1,3.2-0.2\r\n\t\tc7.6-1.2,13.4-6.5,15.9-13.2h25.3c2.8,8,10.5,13.5,19,13.5c1,0,2.1-0.1,3.1-0.2c5.3-0.8,10-3.7,13.2-8.1c3.2-4.4,4.5-9.7,3.7-15\r\n\t\tc-0.6-4.2-2.5-7.8-5.2-10.7l64.5-130.5c0,0,0.1,0,0.1,0c1,0,2.1-0.1,3.2-0.2c7.5-1.2,13.3-6.4,15.8-13h23.2c1.4,3.7,3.8,7,7.1,9.4\r\n\t\tc3.5,2.6,7.6,3.9,11.9,3.9c1,0,2.1-0.1,3.2-0.2C244,67.3,251.6,57,249.8,45.9z M28,226.9c-3.6,0.5-7.2-0.3-10.1-2.4\r\n\t\ts-4.8-5.3-5.4-8.9c-0.6-3.6,0.3-7.2,2.4-10.1c2.1-2.9,5.3-4.8,8.9-5.4c0.7-0.1,1.4-0.2,2.1-0.2c6.6,0,12.3,4.8,13.4,11.5\r\n\t\tC40.5,218.9,35.4,225.8,28,226.9z M100.2,221.6c-2.1,2.9-5.3,4.8-8.9,5.4C84,228.1,77,223,75.9,215.6c-1.1-7.4,3.9-14.3,11.3-15.5\r\n\t\tc0.7-0.1,1.4-0.2,2.1-0.2c6.6,0,12.3,4.8,13.4,11.5c0,0,0,0,0,0C103.2,215.1,102.3,218.6,100.2,221.6z M170.8,62.4\r\n\t\tc-3.6,0.5-7.2-0.3-10.1-2.4c-2.9-2.1-4.8-5.3-5.4-8.9c-0.6-3.6,0.3-7.2,2.4-10.1s5.3-4.8,8.9-5.4c0.7-0.1,1.4-0.2,2.1-0.2\r\n\t\tc6.6,0,12.3,4.8,13.4,11.5C183.3,54.4,178.2,61.3,170.8,62.4z M231.9,62.4c-3.6,0.5-7.2-0.3-10.1-2.4c-2.9-2.1-4.8-5.3-5.4-8.9\r\n\t\tc-0.6-3.6,0.3-7.2,2.4-10.1s5.3-4.8,8.9-5.4c0.7-0.1,1.4-0.2,2.1-0.2c6.6,0,12.3,4.8,13.4,11.5C244.4,54.3,239.3,61.3,231.9,62.4z\"/> </g> <g id=\"paraview_bounding-box\" class=\"st0\"> <path class=\"st1\" d=\"M236.6,161.9c0-0.3,0.2-0.5,0.2-0.8V36.8c0-0.3-0.1-0.6-0.2-1c-0.1-0.5-0.1-0.9-0.3-1.4\r\n\t\tc-0.2-0.5-0.5-0.8-0.7-1.3c-0.2-0.3-0.3-0.6-0.5-0.8c-0.1-0.1-0.1-0.1-0.2-0.1c-0.3-0.4-0.8-0.6-1.2-0.9c-0.3-0.2-0.6-0.5-0.9-0.6\r\n\t\tc-0.4-0.2-0.7-0.2-1.1-0.3c-0.5-0.1-0.9-0.3-1.4-0.3c-0.1,0-0.1,0-0.2,0h-121c-0.3,0-0.5,0.1-0.7,0.1c-0.4,0-0.9,0.1-1.3,0.3\r\n\t\tc-0.5,0.1-0.9,0.3-1.3,0.6c-0.2,0.1-0.4,0.2-0.7,0.3L26.5,88.4c-0.1,0.1-0.2,0.3-0.3,0.4c-0.4,0.3-0.7,0.6-0.9,1\r\n\t\tc-0.3,0.3-0.5,0.6-0.7,1c-0.2,0.4-0.3,0.8-0.4,1.2c-0.1,0.4-0.2,0.9-0.3,1.3c0,0.2-0.1,0.3-0.1,0.5v134.4c0,3.7,3,6.7,6.7,6.7\r\n\t\th134.4c0.9,0,1.8-0.2,2.6-0.5c0.8-0.3,1.6-0.9,2.2-1.5c0,0,0,0,0,0l65.2-67.1c0,0,0,0,0,0l0.1-0.1c0.2-0.2,0.2-0.4,0.4-0.6\r\n\t\tc0.4-0.5,0.8-1,1-1.6C236.5,163,236.6,162.5,236.6,161.9z M171.5,164.4h46l-46,47.3V164.4z M37.1,218.1V100.6h68.6v57.1v1.8\r\n\t\tL37.1,218.1z M162.3,87.1h-49.8V43.5h99.8L162.3,87.1z M105.7,47.5v39.6H51.1L105.7,47.5z M112.4,157.7v-57.1h45.6v57.1H112.4z\r\n\t\t M171.5,96.9l51.9-45.3v106.1h-51.9V96.9z M43.4,221.5l66.9-57.1h2.1h45.6v57.1H43.4z\"/> </g> <g id=\"paraview_ruler\" class=\"st0\"> <g class=\"st1\"> <path d=\"M171,246.5H88.6c-3.7,0-6.7-3-6.7-6.7V13.6c0-3.7,3-6.7,6.7-6.7H171c3.7,0,6.7,3,6.7,6.7v226.1\r\n\t\t\tC177.7,243.4,174.7,246.5,171,246.5z M95.3,233h68.9V20.3H95.3V233z\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"35.4\" width=\"24.3\" height=\"6.7\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"60.7\" width=\"38.5\" height=\"6.7\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"86\" width=\"24.3\" height=\"6.7\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"111.2\" width=\"24.3\" height=\"6.7\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"136.5\" width=\"38.5\" height=\"6.7\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"161.8\" width=\"24.3\" height=\"6.7\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"187\" width=\"24.3\" height=\"6.7\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"212.3\" width=\"38.5\" height=\"6.7\"/> </g> </g> </symbol>";
+	module.exports = sprite.add(image, "paraview");
 
 /***/ },
 /* 168 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(164)();
-	// imports
-	exports.i(__webpack_require__(169), undefined);
-
-	// module
-	exports.push([module.id, ".ScalarRangeWidget_container_l7SVA {\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-justify-content: flex-start;\n      -ms-flex-pack: start;\n          justify-content: flex-start;\n  -webkit-align-items: stretch;\n      -ms-flex-align: stretch;\n          align-items: stretch;\n  box-sizing: border-box;\n}\n\n.ScalarRangeWidget_rangeInput__qz8c {\n  -webkit-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n  box-sizing: border-box;\n  width: 100%;\n  margin-bottom: 5px;\n}\n\n.ScalarRangeWidget_actionLine_2dbws {\n  -webkit-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-flex-direction: row-reverse;\n      -ms-flex-direction: row-reverse;\n          flex-direction: row-reverse;\n  -webkit-justify-content: space-around;\n      -ms-flex-pack: distribute;\n          justify-content: space-around;\n}\n\n.ScalarRangeWidget_iconButton_3QJxC {\n  -webkit-flex: none;\n      -ms-flex: none;\n          flex: none;\n  cursor: pointer;\n  text-align: center;\n  min-width: 2em;\n  min-height: 2em;\n  line-height: 2em;\n  border-radius: 5px;\n  background: #ccc;\n  border: solid 1px #aaa;\n}\n\n.ScalarRangeWidget_dataRangeIcon_1DHDc {\n}\n\n.ScalarRangeWidget_timeRangeIcon_38qMZ {\n}\n\n.ScalarRangeWidget_customRangeIcon_1awzU {\n}\n", ""]);
-
-	// exports
-	exports.locals = {
-		"container": "ScalarRangeWidget_container_l7SVA",
-		"rangeInput": "ScalarRangeWidget_rangeInput__qz8c",
-		"actionLine": "ScalarRangeWidget_actionLine_2dbws",
-		"iconButton": "ScalarRangeWidget_iconButton_3QJxC " + __webpack_require__(169).locals["fa"] + "",
-		"dataRangeIcon": "ScalarRangeWidget_dataRangeIcon_1DHDc ScalarRangeWidget_iconButton_3QJxC " + __webpack_require__(169).locals["fa"] + " " + __webpack_require__(169).locals["fa-database"] + "",
-		"timeRangeIcon": "ScalarRangeWidget_timeRangeIcon_38qMZ ScalarRangeWidget_iconButton_3QJxC " + __webpack_require__(169).locals["fa"] + " " + __webpack_require__(169).locals["fa-clock-o"] + "",
-		"customRangeIcon": "ScalarRangeWidget_customRangeIcon_1awzU ScalarRangeWidget_iconButton_3QJxC " + __webpack_require__(169).locals["fa"] + " " + __webpack_require__(169).locals["fa-user"] + ""
-	};
+	;
+	var sprite = __webpack_require__(161);;
+	var image = "<symbol viewBox=\"0 0 256 256\" id=\"paraviewweb\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"> <style type=\"text/css\"> .st0{display:none;} .st1{display:inline;} .st2{display:inline;fill:#FFFFFF;} </style> <g id=\"paraviewweb_paraview\" class=\"st0\"> <g class=\"st1\"> <g> <polygon points=\"65.4,211.3 14.6,211.3 56.4,53.4 107.2,53.4 \t\t\t\"/> </g> <g> <polygon points=\"132.7,211.3 81.9,211.3 123.6,53.4 174.4,53.4 \t\t\t\"/> </g> <g> <polygon points=\"199.9,211.3 149.1,211.3 190.9,53.4 241.6,53.4 \t\t\t\"/> </g> </g> </g> <g id=\"paraviewweb_paraviewweb\"> <g> <polygon points=\"60.2,211.3 35.7,211.3 49,40 106.1,40 \t\t\"/> </g> <g> <polygon points=\"159.9,211.3 135.4,211.3 181.4,40 238.5,40 \t\t\"/> </g> <g> <polygon points=\"118.8,88.6 69.5,211.3 126.6,211.3 140.9,88.6 \t\t\"/> </g> </g> <g id=\"paraviewweb_kitware\" class=\"st0\"> <g class=\"st1\"> <g> <path d=\"M216.9,77c-6.2,0-12.3,0-18.5,0c-66.9,18.7-76.9,102.5-30,142.9c-54.2-36.8-44.4-130,29.5-149.8c-6.2,0-12.3,0-18.5,0\r\n\t\t\t\tc-66.9,18.7-76.9,102.5-30,142.9c-54.2-36.8-44.4-130,29.5-149.8c-6.2,0-12.3,0-18.5,0c-21,5.9-36.3,18.2-46.1,33.5\r\n\t\t\t\tc-0.7-28.8-5.2-58.2-13.9-87.7c-5.2,5-10.4,9.9-15.6,14.9c25.8,73.8,21.6,151.9-10.2,217.1c1.4,1.4,2.8,2.7,4.3,4.1\r\n\t\t\t\tc12.7-22.5,22-47.1,28-73c8.8,23.8,28.3,44.2,58.5,52.3c0.3,0,0.6,0,1,0c5.5,2.8,11.4,5.2,17.9,6.9c0.3,0,0.6,0,1,0\r\n\t\t\t\tc5.5,2.8,11.4,5.2,17.9,6.9c2.8,0,5.7,0,8.5,0C131.6,215.7,133.3,99.4,216.9,77z\"/> </g> <g> <path d=\"M57.1,50.6c-5.2,5-10.4,9.9-15.5,14.9c28,43.5,37,102.5,21.4,164c1.4,1.4,2.8,2.7,4.3,4.1\r\n\t\t\t\tC88.5,170.7,84.3,104.9,57.1,50.6z\"/> </g> <g> <path d=\"M78.8,29.8c-5.2,5-10.4,9.9-15.5,14.9c26.9,58.6,29.3,127.2,5.6,190.6c1.4,1.4,2.8,2.7,4.3,4.1\r\n\t\t\t\tC102.6,174.6,105,99.2,78.8,29.8z\"/> </g> </g> </g> <g id=\"paraviewweb_cluster\" class=\"st0\"> <path class=\"st1\" d=\"M233.1,88.5c1.9,0,3.3-1.5,3.3-3.3V31.3c0-1.8-1.5-3.3-3.3-3.3h-53.8c-1.9,0-3.3,1.5-3.3,3.3v20.6h-16V31.3\r\n\t\tc0-1.8-1.5-3.3-3.3-3.3h-53.8c-1.9,0-3.3,1.5-3.3,3.3v20.6h-16V31.3c0-1.8-1.5-3.3-3.3-3.3H26.3c-1.9,0-3.3,1.5-3.3,3.3v53.8\r\n\t\tc0,1.8,1.5,3.3,3.3,3.3h20.3v13.6H26.3c-1.9,0-3.3,1.5-3.3,3.3v53.8c0,1.8,1.5,3.3,3.3,3.3h20.3v13.7H26.3c-1.9,0-3.3,1.5-3.3,3.3\r\n\t\tv53.8c0,1.9,1.5,3.3,3.3,3.3h53.8c1.9,0,3.3-1.5,3.3-3.3V214h16v19.5c0,1.9,1.5,3.3,3.3,3.3h53.8c1.9,0,3.3-1.5,3.3-3.3V214h16\r\n\t\tv19.5c0,1.9,1.5,3.3,3.3,3.3h53.8c1.9,0,3.3-1.5,3.3-3.3v-53.8c0-1.9-1.5-3.3-3.3-3.3h-18.9v-13.6h18.9c1.9,0,3.3-1.5,3.3-3.3\r\n\t\tv-53.8c0-1.8-1.5-3.3-3.3-3.3h-18.9V88.5H233.1z M182.6,34.6h47.1v47.1h-47.1V34.6z M106.1,34.6h47.2v47.1h-47.2V34.6z M29.6,34.6\r\n\t\th47.2v47.1H29.6V34.6z M60,88.5h20.1c1.9,0,3.3-1.5,3.3-3.3V65.3h16v19.8c0,1.8,1.5,3.3,3.3,3.3h20.9v13.7h-20.9\r\n\t\tc-1.9,0-3.3,1.5-3.3,3.3V125h-16v-19.5c0-1.8-1.5-3.3-3.3-3.3H60V88.5z M106.1,156v-47.2h47.2V156H106.1z M29.6,108.8h47.2V156\r\n\t\tH29.6V108.8z M76.7,230.1H29.6V183h47.2V230.1z M83.4,200.5v-20.9c0-1.9-1.5-3.3-3.3-3.3H60v-13.7h20.1c1.9,0,3.3-1.5,3.3-3.3\r\n\t\tv-20.9h16v20.9c0,1.8,1.5,3.3,3.3,3.3h20.9v13.6h-20.9c-1.9,0-3.3,1.5-3.3,3.3v20.9H83.4z M153.3,230.1h-47.2V183h47.2V230.1z\r\n\t\t M229.8,230.1h-47.1V183h47.1V230.1z M200.8,176.3h-21.5c-1.9,0-3.3,1.5-3.3,3.3v20.9h-16v-20.9c0-1.9-1.5-3.3-3.3-3.3h-19.5v-13.6\r\n\t\th19.5c1.9,0,3.3-1.5,3.3-3.3v-20.9h16v20.9c0,1.8,1.5,3.3,3.3,3.3h21.5V176.3z M229.8,156h-47.1v-47.2h47.1V156z M200.8,102.1\r\n\t\th-21.5c-1.9,0-3.3,1.5-3.3,3.3V125h-16v-19.5c0-1.8-1.5-3.3-3.3-3.3h-19.5V88.5h19.5c1.9,0,3.3-1.5,3.3-3.3V65.3h16v19.8\r\n\t\tc0,1.8,1.5,3.3,3.3,3.3h21.5V102.1z\"/> </g> <g id=\"paraviewweb_axis-orientation\" class=\"st0\"> <path class=\"st1\" d=\"M232.9,239.4l-11.2-23.6c-0.5-1-1.4-1.7-2.6-1.9c-1.1-0.1-2.2,0.3-3,1.1l-2.6,2.9c0,0-80.6-70.1-81.1-70.7V139\r\n\t\th0V42.5h3.9c1.1,0,2.2-0.6,2.8-1.5c0.6-1,0.7-2.2,0.2-3.2l-10.8-23.9c-0.5-1.2-1.7-2-3.1-2c-1.2,0-2.5,0.8-3.1,2l-10.5,23.9\r\n\t\tc-0.5,1-0.4,2.2,0.3,3.2c0.6,0.9,1.7,1.5,2.8,1.5h3.9V139v8.3c0,0.2-81.1,70.7-81.1,70.7l-2.6-2.9c-0.7-0.9-1.9-1.2-3-1.1\r\n\t\tc-1.1,0.2-2.1,0.9-2.6,1.9l-11.2,23.6c-0.6,1.2-0.4,2.6,0.5,3.6c0.6,0.7,1.6,1.2,2.5,1.2c0.3,0,0.7,0,1-0.1l25.1-7.6\r\n\t\tc1.1-0.3,1.9-1.2,2.2-2.3c0.3-1.1,0.1-2.3-0.7-3.1l-2.6-2.9l79-68.8l79,68.8l-2.6,2.9c-0.7,0.9-1,2-0.7,3.1c0.3,1.1,1.2,2,2.2,2.3\r\n\t\tl25.1,7.6c0.3,0.1,0.6,0.1,1,0.1c1,0,1.9-0.4,2.5-1.2C233.3,242,233.5,240.6,232.9,239.4z\"/> </g> <g id=\"paraviewweb_axis-center\" class=\"st0\"> <path class=\"st1\" d=\"M226.9,119h-86.1L206,64.4c1.4-1.2,1.6-3.3,0.4-4.7c-1.2-1.4-3.3-1.6-4.7-0.4l-67.2,56.2V26.3\r\n\t\tc0-3.7-3-6.7-6.7-6.7c-3.7,0-6.7,3-6.7,6.7V119H28.5c-3.7,0-6.7,3-6.7,6.7c0,3.7,3,6.7,6.7,6.7h85.8l-64.7,54.1\r\n\t\tc-1.4,1.2-1.6,3.3-0.4,4.7c0.7,0.8,1.6,1.2,2.6,1.2c0.8,0,1.5-0.3,2.1-0.8l67.2-56.2v89.2c0,3.7,3,6.7,6.7,6.7c3.7,0,6.7-3,6.7-6.7\r\n\t\tv-92.2h92.4c3.7,0,6.7-3,6.7-6.7C233.6,122,230.6,119,226.9,119z\"/> </g> <g id=\"paraviewweb_function_x5F_gaussian\" class=\"st0\"> <rect x=\"118.9\" y=\"131.9\" transform=\"matrix(0.7071 0.7071 -0.7071 0.7071 137.8138 -49.4411)\" class=\"st2\" width=\"19.4\" height=\"19.4\"/> <path class=\"st1\" d=\"M128.6,158.7c-0.9,0-1.7-0.4-2.4-1L112.5,144c-1.3-1.3-1.3-3.4,0-4.7l13.8-13.8c0.6-0.6,1.5-1,2.4-1l0,0\r\n\t\tc0.9,0,1.7,0.4,2.4,1l13.8,13.8c1.3,1.3,1.3,3.4,0,4.7L131,157.8C130.3,158.4,129.5,158.7,128.6,158.7z M119.6,141.6l9,9l9-9l-9-9\r\n\t\tL119.6,141.6z\"/> <path class=\"st1\" d=\"M246.5,208.6c-20.9-1-35.7-6.1-46.4-14.1c0.1-1.5,0.1-3.1-0.1-4.7c-0.8-5.3-3.7-10-8-13.2\r\n\t\tc-2.8-2.1-6.1-3.2-9.5-3.6c-8.2-16.2-11.7-36.9-15.4-59.7c-3.5-21.5-9.7-36.5-18.3-44.8c0-0.8,0-1.7-0.1-2.5\r\n\t\tc-1.7-11-12.1-18.6-23.1-16.9c-9.8,1.5-16.8,9.9-17.1,19.4c-8.6,8.3-14.8,23.3-18.3,44.8c-3.7,22.8-7.2,43.4-15.4,59.6\r\n\t\tc-0.2,0-0.4,0-0.7,0c-10.5,1.6-17.7,11.1-16.9,21.5c-10.8,8-25.5,13.1-46.5,14.1c-3.7,0.2-6.5,3.3-6.4,7c0.2,3.6,3.1,6.4,6.7,6.4\r\n\t\tc0.1,0,0.2,0,0.3,0c22.7-1.1,39.2-6.5,51.6-14.9c3.7,3.7,8.8,6.1,14.3,6.1c1,0,2.1-0.1,3.1-0.2c11-1.7,18.6-12.1,16.9-23.1\r\n\t\tc-0.8-5.3-3.7-10-8-13.2c-0.3-0.2-0.6-0.3-0.9-0.5c8.1-17.7,11.6-38.9,15.1-60.6c2.8-17.1,6.9-26.9,10.6-32.6c3.7,4,9,6.4,14.6,6.4\r\n\t\tc1,0,2.1-0.1,3.1-0.2c4.6-0.7,8.6-3,11.5-6.2c3.7,5.7,7.8,15.5,10.6,32.6c3.5,21.7,7.1,42.9,15.1,60.6c-6.4,4.2-10.2,11.9-8.9,20\r\n\t\tc0.8,5.3,3.7,10,8,13.2c3.5,2.6,7.6,3.9,11.9,3.9c1,0,2.1-0.1,3.1-0.2c4.4-0.7,8.3-2.8,11.2-5.8c12.3,8.3,28.9,13.7,51.6,14.9\r\n\t\tc0.1,0,0.2,0,0.3,0c3.5,0,6.5-2.8,6.7-6.4C253,212,250.2,208.8,246.5,208.6z M90.6,190.9c1.1,7.4-3.9,14.3-11.3,15.4\r\n\t\tc-7.4,1.1-14.3-3.9-15.4-11.3c-1.1-7.4,3.9-14.3,11.3-15.4c0.7-0.1,1.4-0.2,2.1-0.2c2.8,0,5.6,0.9,7.9,2.6\r\n\t\tC88.1,184.2,90,187.4,90.6,190.9z M130.7,82.5c-7.3,1.1-14.3-3.9-15.4-11.3c-1.1-7.4,3.9-14.3,11.3-15.4c0.7-0.1,1.4-0.2,2.1-0.2\r\n\t\tc6.6,0,12.3,4.8,13.4,11.4C143.1,74.4,138,81.4,130.7,82.5z M182,206.4c-7.4,1.1-14.3-3.9-15.4-11.3c-1.1-7.4,3.9-14.3,11.3-15.4\r\n\t\tc0.7-0.1,1.4-0.2,2.1-0.2c2.8,0,5.6,0.9,7.9,2.6c2.9,2.1,4.8,5.3,5.4,8.8C194.5,198.3,189.4,205.2,182,206.4z\"/> </g> <g id=\"paraviewweb_parallel-coordinates\" class=\"st0\"> <path class=\"st1\" d=\"M227.1,30.3c-3.7,0-6.7,3-6.7,6.7v46.1L134.5,51V37c0-3.7-3-6.7-6.7-6.7s-6.7,3-6.7,6.7v11.1L39,68.5V37\r\n\t\tc0-3.7-3-6.7-6.7-6.7c-3.7,0-6.7,3-6.7,6.7v191.2c0,3.7,3,6.7,6.7,6.7c3.7,0,6.7-3,6.7-6.7v-33l82,15.4v17.7c0,3.7,3,6.7,6.7,6.7\r\n\t\ts6.7-3,6.7-6.7V208l42.4-34.4l43.5,35.3v19.2c0,3.7,3,6.7,6.7,6.7c3.7,0,6.7-3,6.7-6.7V37C233.8,33.3,230.8,30.3,227.1,30.3z\r\n\t\t M220.4,90.3v39.5l-43.5,35.3l-42.4-34.4V58.1L220.4,90.3z M121.1,55v73.6l-82,20.5V75.4L121.1,55z M39,188.3V156l82-20.5v68.2\r\n\t\tL39,188.3z M134.5,199.4v-60.1l37.1,30.1L134.5,199.4z M182.2,169.4l38.2-31v62L182.2,169.4z\"/> </g> <g id=\"paraviewweb_function-linear\" class=\"st0\"> <path class=\"st1\" d=\"M249.8,45.9C249.8,45.9,249.8,45.9,249.8,45.9c-1.7-11-12-18.6-23.1-16.9c-5.3,0.8-10,3.7-13.2,8.1\r\n\t\tc-1.2,1.7-2.1,3.5-2.7,5.5h-22.9c-3.1-9.1-12.3-15-22.2-13.5c-5.3,0.8-10,3.7-13.2,8.1c-3.2,4.4-4.5,9.7-3.7,15\r\n\t\tc0.8,5,3.3,9.3,7.2,12.4l-63.8,129c-1.9-0.3-3.9-0.4-6-0.1c-7.6,1.2-13.5,6.5-15.9,13.3H45c-3.1-9-12.3-14.8-22.2-13.3\r\n\t\tc-5.3,0.8-10,3.7-13.2,8.1c-3.2,4.4-4.5,9.7-3.7,15c0.8,5.3,3.7,10,8,13.2c3.5,2.6,7.6,3.9,11.9,3.9c1,0,2.1-0.1,3.2-0.2\r\n\t\tc7.6-1.2,13.4-6.5,15.9-13.2h25.3c2.8,8,10.5,13.5,19,13.5c1,0,2.1-0.1,3.1-0.2c5.3-0.8,10-3.7,13.2-8.1c3.2-4.4,4.5-9.7,3.7-15\r\n\t\tc-0.6-4.2-2.5-7.8-5.2-10.7l64.5-130.5c0,0,0.1,0,0.1,0c1,0,2.1-0.1,3.2-0.2c7.5-1.2,13.3-6.4,15.8-13h23.2c1.4,3.7,3.8,7,7.1,9.4\r\n\t\tc3.5,2.6,7.6,3.9,11.9,3.9c1,0,2.1-0.1,3.2-0.2C244,67.3,251.6,57,249.8,45.9z M28,226.9c-3.6,0.5-7.2-0.3-10.1-2.4\r\n\t\ts-4.8-5.3-5.4-8.9c-0.6-3.6,0.3-7.2,2.4-10.1c2.1-2.9,5.3-4.8,8.9-5.4c0.7-0.1,1.4-0.2,2.1-0.2c6.6,0,12.3,4.8,13.4,11.5\r\n\t\tC40.5,218.9,35.4,225.8,28,226.9z M100.2,221.6c-2.1,2.9-5.3,4.8-8.9,5.4C84,228.1,77,223,75.9,215.6c-1.1-7.4,3.9-14.3,11.3-15.5\r\n\t\tc0.7-0.1,1.4-0.2,2.1-0.2c6.6,0,12.3,4.8,13.4,11.5c0,0,0,0,0,0C103.2,215.1,102.3,218.6,100.2,221.6z M170.8,62.4\r\n\t\tc-3.6,0.5-7.2-0.3-10.1-2.4c-2.9-2.1-4.8-5.3-5.4-8.9c-0.6-3.6,0.3-7.2,2.4-10.1s5.3-4.8,8.9-5.4c0.7-0.1,1.4-0.2,2.1-0.2\r\n\t\tc6.6,0,12.3,4.8,13.4,11.5C183.3,54.4,178.2,61.3,170.8,62.4z M231.9,62.4c-3.6,0.5-7.2-0.3-10.1-2.4c-2.9-2.1-4.8-5.3-5.4-8.9\r\n\t\tc-0.6-3.6,0.3-7.2,2.4-10.1s5.3-4.8,8.9-5.4c0.7-0.1,1.4-0.2,2.1-0.2c6.6,0,12.3,4.8,13.4,11.5C244.4,54.3,239.3,61.3,231.9,62.4z\"/> </g> <g id=\"paraviewweb_bounding-box\" class=\"st0\"> <path class=\"st1\" d=\"M236.6,161.9c0-0.3,0.2-0.5,0.2-0.8V36.8c0-0.3-0.1-0.6-0.2-1c-0.1-0.5-0.1-0.9-0.3-1.4\r\n\t\tc-0.2-0.5-0.5-0.8-0.7-1.3c-0.2-0.3-0.3-0.6-0.5-0.8c-0.1-0.1-0.1-0.1-0.2-0.1c-0.3-0.4-0.8-0.6-1.2-0.9c-0.3-0.2-0.6-0.5-0.9-0.6\r\n\t\tc-0.4-0.2-0.7-0.2-1.1-0.3c-0.5-0.1-0.9-0.3-1.4-0.3c-0.1,0-0.1,0-0.2,0h-121c-0.3,0-0.5,0.1-0.7,0.1c-0.4,0-0.9,0.1-1.3,0.3\r\n\t\tc-0.5,0.1-0.9,0.3-1.3,0.6c-0.2,0.1-0.4,0.2-0.7,0.3L26.5,88.4c-0.1,0.1-0.2,0.3-0.3,0.4c-0.4,0.3-0.7,0.6-0.9,1\r\n\t\tc-0.3,0.3-0.5,0.6-0.7,1c-0.2,0.4-0.3,0.8-0.4,1.2c-0.1,0.4-0.2,0.9-0.3,1.3c0,0.2-0.1,0.3-0.1,0.5v134.4c0,3.7,3,6.7,6.7,6.7\r\n\t\th134.4c0.9,0,1.8-0.2,2.6-0.5c0.8-0.3,1.6-0.9,2.2-1.5c0,0,0,0,0,0l65.2-67.1c0,0,0,0,0,0l0.1-0.1c0.2-0.2,0.2-0.4,0.4-0.6\r\n\t\tc0.4-0.5,0.8-1,1-1.6C236.5,163,236.6,162.5,236.6,161.9z M171.5,164.4h46l-46,47.3V164.4z M37.1,218.1V100.6h68.6v57.1v1.8\r\n\t\tL37.1,218.1z M162.3,87.1h-49.8V43.5h99.8L162.3,87.1z M105.7,47.5v39.6H51.1L105.7,47.5z M112.4,157.7v-57.1h45.6v57.1H112.4z\r\n\t\t M171.5,96.9l51.9-45.3v106.1h-51.9V96.9z M43.4,221.5l66.9-57.1h2.1h45.6v57.1H43.4z\"/> </g> <g id=\"paraviewweb_ruler\" class=\"st0\"> <g class=\"st1\"> <path d=\"M171,246.5H88.6c-3.7,0-6.7-3-6.7-6.7V13.6c0-3.7,3-6.7,6.7-6.7H171c3.7,0,6.7,3,6.7,6.7v226.1\r\n\t\t\tC177.7,243.4,174.7,246.5,171,246.5z M95.3,233h68.9V20.3H95.3V233z\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"35.4\" width=\"24.3\" height=\"6.7\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"60.7\" width=\"38.5\" height=\"6.7\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"86\" width=\"24.3\" height=\"6.7\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"111.2\" width=\"24.3\" height=\"6.7\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"136.5\" width=\"38.5\" height=\"6.7\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"161.8\" width=\"24.3\" height=\"6.7\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"187\" width=\"24.3\" height=\"6.7\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"212.3\" width=\"38.5\" height=\"6.7\"/> </g> </g> </symbol>";
+	module.exports = sprite.add(image, "paraviewweb");
 
 /***/ },
 /* 169 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(164)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "/*!\n *  Font Awesome 4.5.0 by @davegandy - http://fontawesome.io - @fontawesome\n *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)\n */\n/* FONT PATH\n * -------------------------- */\n@font-face {\n  font-family: 'FontAwesome';\n  src: url(" + __webpack_require__(170) + ");\n  src: url(" + __webpack_require__(171) + "?#iefix&v=4.5.0) format('embedded-opentype'), url(" + __webpack_require__(172) + ") format('woff2'), url(" + __webpack_require__(173) + ") format('woff'), url(" + __webpack_require__(174) + ") format('truetype'), url(" + __webpack_require__(175) + "#fontawesomeregular) format('svg');\n  font-weight: normal;\n  font-style: normal;\n}\n.font-awesome_fa_2otTb {\n  display: inline-block;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n/* makes the font 33% larger relative to the icon container */\n.font-awesome_fa-lg_2-2uP {\n  font-size: 1.33333333em;\n  line-height: 0.75em;\n  vertical-align: -15%;\n}\n.font-awesome_fa-2x_2Mgjx {\n  font-size: 2em;\n}\n.font-awesome_fa-3x_1gdsS {\n  font-size: 3em;\n}\n.font-awesome_fa-4x_2VkGW {\n  font-size: 4em;\n}\n.font-awesome_fa-5x_QKikc {\n  font-size: 5em;\n}\n.font-awesome_fa-fw_1FdA5 {\n  width: 1.28571429em;\n  text-align: center;\n}\n.font-awesome_fa-ul_2XTDQ {\n  padding-left: 0;\n  margin-left: 2.14285714em;\n  list-style-type: none;\n}\n.font-awesome_fa-ul_2XTDQ > li {\n  position: relative;\n}\n.font-awesome_fa-li_1vepp {\n  position: absolute;\n  left: -2.14285714em;\n  width: 2.14285714em;\n  top: 0.14285714em;\n  text-align: center;\n}\n.font-awesome_fa-li_1vepp.font-awesome_fa-lg_2-2uP {\n  left: -1.85714286em;\n}\n.font-awesome_fa-border_6EUMg {\n  padding: .2em .25em .15em;\n  border: solid 0.08em #eeeeee;\n  border-radius: .1em;\n}\n.font-awesome_fa-pull-left_3jHfw {\n  float: left;\n}\n.font-awesome_fa-pull-right_20ZAt {\n  float: right;\n}\n.font-awesome_fa_2otTb.font-awesome_fa-pull-left_3jHfw {\n  margin-right: .3em;\n}\n.font-awesome_fa_2otTb.font-awesome_fa-pull-right_20ZAt {\n  margin-left: .3em;\n}\n/* Deprecated as of 4.4.0 */\n.font-awesome_pull-right_1Mb60 {\n  float: right;\n}\n.font-awesome_pull-left_30vXl {\n  float: left;\n}\n.font-awesome_fa_2otTb.font-awesome_pull-left_30vXl {\n  margin-right: .3em;\n}\n.font-awesome_fa_2otTb.font-awesome_pull-right_1Mb60 {\n  margin-left: .3em;\n}\n.font-awesome_fa-spin_NsqCr {\n  -webkit-animation: font-awesome_fa-spin_NsqCr 2s infinite linear;\n  animation: font-awesome_fa-spin_NsqCr 2s infinite linear;\n}\n.font-awesome_fa-pulse_1Vv2f {\n  -webkit-animation: font-awesome_fa-spin_NsqCr 1s infinite steps(8);\n  animation: font-awesome_fa-spin_NsqCr 1s infinite steps(8);\n}\n@-webkit-keyframes font-awesome_fa-spin_NsqCr {\n  0% {\n    -webkit-transform: rotate(0deg);\n    transform: rotate(0deg);\n  }\n  100% {\n    -webkit-transform: rotate(359deg);\n    transform: rotate(359deg);\n  }\n}\n@keyframes font-awesome_fa-spin_NsqCr {\n  0% {\n    -webkit-transform: rotate(0deg);\n    transform: rotate(0deg);\n  }\n  100% {\n    -webkit-transform: rotate(359deg);\n    transform: rotate(359deg);\n  }\n}\n.font-awesome_fa-rotate-90_1snKw {\n  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);\n  -webkit-transform: rotate(90deg);\n  transform: rotate(90deg);\n}\n.font-awesome_fa-rotate-180_2hMM8 {\n  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);\n  -webkit-transform: rotate(180deg);\n  transform: rotate(180deg);\n}\n.font-awesome_fa-rotate-270_3eBDG {\n  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);\n  -webkit-transform: rotate(270deg);\n  transform: rotate(270deg);\n}\n.font-awesome_fa-flip-horizontal_33SUC {\n  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1);\n  -webkit-transform: scale(-1, 1);\n  transform: scale(-1, 1);\n}\n.font-awesome_fa-flip-vertical_klOOu {\n  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1);\n  -webkit-transform: scale(1, -1);\n  transform: scale(1, -1);\n}\n:root .font-awesome_fa-rotate-90_1snKw,\n:root .font-awesome_fa-rotate-180_2hMM8,\n:root .font-awesome_fa-rotate-270_3eBDG,\n:root .font-awesome_fa-flip-horizontal_33SUC,\n:root .font-awesome_fa-flip-vertical_klOOu {\n  -webkit-filter: none;\n          filter: none;\n}\n.font-awesome_fa-stack_3fqsM {\n  position: relative;\n  display: inline-block;\n  width: 2em;\n  height: 2em;\n  line-height: 2em;\n  vertical-align: middle;\n}\n.font-awesome_fa-stack-1x_14Vb0,\n.font-awesome_fa-stack-2x_It5yP {\n  position: absolute;\n  left: 0;\n  width: 100%;\n  text-align: center;\n}\n.font-awesome_fa-stack-1x_14Vb0 {\n  line-height: inherit;\n}\n.font-awesome_fa-stack-2x_It5yP {\n  font-size: 2em;\n}\n.font-awesome_fa-inverse_1e1EX {\n  color: #ffffff;\n}\n/* Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen\n   readers do not read off random characters that represent icons */\n.font-awesome_fa-glass_34uit:before {\n  content: \"\\F000\";\n}\n.font-awesome_fa-music_3f2s5:before {\n  content: \"\\F001\";\n}\n.font-awesome_fa-search_1C7GK:before {\n  content: \"\\F002\";\n}\n.font-awesome_fa-envelope-o_3EWEI:before {\n  content: \"\\F003\";\n}\n.font-awesome_fa-heart_3DHYT:before {\n  content: \"\\F004\";\n}\n.font-awesome_fa-star_2g4Ye:before {\n  content: \"\\F005\";\n}\n.font-awesome_fa-star-o_3ty_o:before {\n  content: \"\\F006\";\n}\n.font-awesome_fa-user_N3puO:before {\n  content: \"\\F007\";\n}\n.font-awesome_fa-film_2qmKe:before {\n  content: \"\\F008\";\n}\n.font-awesome_fa-th-large_2N4P8:before {\n  content: \"\\F009\";\n}\n.font-awesome_fa-th_3f0mR:before {\n  content: \"\\F00A\";\n}\n.font-awesome_fa-th-list_3qelJ:before {\n  content: \"\\F00B\";\n}\n.font-awesome_fa-check_3DXVm:before {\n  content: \"\\F00C\";\n}\n.font-awesome_fa-remove_1MIYz:before,\n.font-awesome_fa-close_1zysR:before,\n.font-awesome_fa-times_1Y-Cs:before {\n  content: \"\\F00D\";\n}\n.font-awesome_fa-search-plus_9OGuc:before {\n  content: \"\\F00E\";\n}\n.font-awesome_fa-search-minus_1j_Aj:before {\n  content: \"\\F010\";\n}\n.font-awesome_fa-power-off_vPefe:before {\n  content: \"\\F011\";\n}\n.font-awesome_fa-signal_1VxWh:before {\n  content: \"\\F012\";\n}\n.font-awesome_fa-gear_yfzjv:before,\n.font-awesome_fa-cog_30mdw:before {\n  content: \"\\F013\";\n}\n.font-awesome_fa-trash-o_2uFKh:before {\n  content: \"\\F014\";\n}\n.font-awesome_fa-home_3Fr6e:before {\n  content: \"\\F015\";\n}\n.font-awesome_fa-file-o_208AJ:before {\n  content: \"\\F016\";\n}\n.font-awesome_fa-clock-o_3vfig:before {\n  content: \"\\F017\";\n}\n.font-awesome_fa-road_2017v:before {\n  content: \"\\F018\";\n}\n.font-awesome_fa-download_1TDS9:before {\n  content: \"\\F019\";\n}\n.font-awesome_fa-arrow-circle-o-down_2M97h:before {\n  content: \"\\F01A\";\n}\n.font-awesome_fa-arrow-circle-o-up_2aqY-:before {\n  content: \"\\F01B\";\n}\n.font-awesome_fa-inbox_3bWnM:before {\n  content: \"\\F01C\";\n}\n.font-awesome_fa-play-circle-o_3vU6r:before {\n  content: \"\\F01D\";\n}\n.font-awesome_fa-rotate-right_1E_3J:before,\n.font-awesome_fa-repeat_27E0b:before {\n  content: \"\\F01E\";\n}\n.font-awesome_fa-refresh_2AOlD:before {\n  content: \"\\F021\";\n}\n.font-awesome_fa-list-alt_3nS4v:before {\n  content: \"\\F022\";\n}\n.font-awesome_fa-lock_inyGT:before {\n  content: \"\\F023\";\n}\n.font-awesome_fa-flag_1qWlx:before {\n  content: \"\\F024\";\n}\n.font-awesome_fa-headphones_13olw:before {\n  content: \"\\F025\";\n}\n.font-awesome_fa-volume-off_1llC2:before {\n  content: \"\\F026\";\n}\n.font-awesome_fa-volume-down_1jTgZ:before {\n  content: \"\\F027\";\n}\n.font-awesome_fa-volume-up_2XIXx:before {\n  content: \"\\F028\";\n}\n.font-awesome_fa-qrcode_17ZaI:before {\n  content: \"\\F029\";\n}\n.font-awesome_fa-barcode_1al4-:before {\n  content: \"\\F02A\";\n}\n.font-awesome_fa-tag_2CMhy:before {\n  content: \"\\F02B\";\n}\n.font-awesome_fa-tags_3kYb4:before {\n  content: \"\\F02C\";\n}\n.font-awesome_fa-book_32JVT:before {\n  content: \"\\F02D\";\n}\n.font-awesome_fa-bookmark_1s2Fl:before {\n  content: \"\\F02E\";\n}\n.font-awesome_fa-print_y2Ezw:before {\n  content: \"\\F02F\";\n}\n.font-awesome_fa-camera_Ls8dv:before {\n  content: \"\\F030\";\n}\n.font-awesome_fa-font_1VH0X:before {\n  content: \"\\F031\";\n}\n.font-awesome_fa-bold_11qyx:before {\n  content: \"\\F032\";\n}\n.font-awesome_fa-italic_1Gtc3:before {\n  content: \"\\F033\";\n}\n.font-awesome_fa-text-height_3db67:before {\n  content: \"\\F034\";\n}\n.font-awesome_fa-text-width_2yBeb:before {\n  content: \"\\F035\";\n}\n.font-awesome_fa-align-left_3DuVK:before {\n  content: \"\\F036\";\n}\n.font-awesome_fa-align-center_M9xyY:before {\n  content: \"\\F037\";\n}\n.font-awesome_fa-align-right_3Icru:before {\n  content: \"\\F038\";\n}\n.font-awesome_fa-align-justify_maoNA:before {\n  content: \"\\F039\";\n}\n.font-awesome_fa-list_3CT1m:before {\n  content: \"\\F03A\";\n}\n.font-awesome_fa-dedent_3p5N-:before,\n.font-awesome_fa-outdent_34S6p:before {\n  content: \"\\F03B\";\n}\n.font-awesome_fa-indent_2Y6xl:before {\n  content: \"\\F03C\";\n}\n.font-awesome_fa-video-camera_2Tfna:before {\n  content: \"\\F03D\";\n}\n.font-awesome_fa-photo_2f_lI:before,\n.font-awesome_fa-image_l6mTT:before,\n.font-awesome_fa-picture-o_3srts:before {\n  content: \"\\F03E\";\n}\n.font-awesome_fa-pencil_3o0Fh:before {\n  content: \"\\F040\";\n}\n.font-awesome_fa-map-marker_1Lc7q:before {\n  content: \"\\F041\";\n}\n.font-awesome_fa-adjust_1uk96:before {\n  content: \"\\F042\";\n}\n.font-awesome_fa-tint_23wIx:before {\n  content: \"\\F043\";\n}\n.font-awesome_fa-edit_2ITK3:before,\n.font-awesome_fa-pencil-square-o_1jFx_:before {\n  content: \"\\F044\";\n}\n.font-awesome_fa-share-square-o_1bC_y:before {\n  content: \"\\F045\";\n}\n.font-awesome_fa-check-square-o_2eIdJ:before {\n  content: \"\\F046\";\n}\n.font-awesome_fa-arrows_2tovc:before {\n  content: \"\\F047\";\n}\n.font-awesome_fa-step-backward_1aJ3J:before {\n  content: \"\\F048\";\n}\n.font-awesome_fa-fast-backward_rW1JQ:before {\n  content: \"\\F049\";\n}\n.font-awesome_fa-backward_WWKjR:before {\n  content: \"\\F04A\";\n}\n.font-awesome_fa-play_1vQTN:before {\n  content: \"\\F04B\";\n}\n.font-awesome_fa-pause_33hRm:before {\n  content: \"\\F04C\";\n}\n.font-awesome_fa-stop_1l1v_:before {\n  content: \"\\F04D\";\n}\n.font-awesome_fa-forward_3jJNW:before {\n  content: \"\\F04E\";\n}\n.font-awesome_fa-fast-forward_2JwE2:before {\n  content: \"\\F050\";\n}\n.font-awesome_fa-step-forward_3NyZe:before {\n  content: \"\\F051\";\n}\n.font-awesome_fa-eject_GA_Jm:before {\n  content: \"\\F052\";\n}\n.font-awesome_fa-chevron-left_1EwAm:before {\n  content: \"\\F053\";\n}\n.font-awesome_fa-chevron-right_3RxN_:before {\n  content: \"\\F054\";\n}\n.font-awesome_fa-plus-circle_1SAMg:before {\n  content: \"\\F055\";\n}\n.font-awesome_fa-minus-circle_Th8wG:before {\n  content: \"\\F056\";\n}\n.font-awesome_fa-times-circle_JfW7D:before {\n  content: \"\\F057\";\n}\n.font-awesome_fa-check-circle_PBRDH:before {\n  content: \"\\F058\";\n}\n.font-awesome_fa-question-circle_33ykP:before {\n  content: \"\\F059\";\n}\n.font-awesome_fa-info-circle_2ZdWr:before {\n  content: \"\\F05A\";\n}\n.font-awesome_fa-crosshairs_18oYo:before {\n  content: \"\\F05B\";\n}\n.font-awesome_fa-times-circle-o_3LLKK:before {\n  content: \"\\F05C\";\n}\n.font-awesome_fa-check-circle-o_1CW2E:before {\n  content: \"\\F05D\";\n}\n.font-awesome_fa-ban_1LOdy:before {\n  content: \"\\F05E\";\n}\n.font-awesome_fa-arrow-left_2G_P0:before {\n  content: \"\\F060\";\n}\n.font-awesome_fa-arrow-right_15DTA:before {\n  content: \"\\F061\";\n}\n.font-awesome_fa-arrow-up_12gpU:before {\n  content: \"\\F062\";\n}\n.font-awesome_fa-arrow-down_2zqoH:before {\n  content: \"\\F063\";\n}\n.font-awesome_fa-mail-forward_2tQrw:before,\n.font-awesome_fa-share_3O8Dc:before {\n  content: \"\\F064\";\n}\n.font-awesome_fa-expand_34Ihf:before {\n  content: \"\\F065\";\n}\n.font-awesome_fa-compress_1JDdS:before {\n  content: \"\\F066\";\n}\n.font-awesome_fa-plus_WEb-k:before {\n  content: \"\\F067\";\n}\n.font-awesome_fa-minus_1WAd4:before {\n  content: \"\\F068\";\n}\n.font-awesome_fa-asterisk_w7w6r:before {\n  content: \"\\F069\";\n}\n.font-awesome_fa-exclamation-circle_2bbrU:before {\n  content: \"\\F06A\";\n}\n.font-awesome_fa-gift_3bKvI:before {\n  content: \"\\F06B\";\n}\n.font-awesome_fa-leaf_2B5Uf:before {\n  content: \"\\F06C\";\n}\n.font-awesome_fa-fire_1qsDr:before {\n  content: \"\\F06D\";\n}\n.font-awesome_fa-eye_3XRn0:before {\n  content: \"\\F06E\";\n}\n.font-awesome_fa-eye-slash_18NEx:before {\n  content: \"\\F070\";\n}\n.font-awesome_fa-warning_32nGg:before,\n.font-awesome_fa-exclamation-triangle_ttuT-:before {\n  content: \"\\F071\";\n}\n.font-awesome_fa-plane_3L5mD:before {\n  content: \"\\F072\";\n}\n.font-awesome_fa-calendar_1niuw:before {\n  content: \"\\F073\";\n}\n.font-awesome_fa-random_2RH42:before {\n  content: \"\\F074\";\n}\n.font-awesome_fa-comment_2koYW:before {\n  content: \"\\F075\";\n}\n.font-awesome_fa-magnet_33k7m:before {\n  content: \"\\F076\";\n}\n.font-awesome_fa-chevron-up_2R5R_:before {\n  content: \"\\F077\";\n}\n.font-awesome_fa-chevron-down_746nC:before {\n  content: \"\\F078\";\n}\n.font-awesome_fa-retweet_2ma5b:before {\n  content: \"\\F079\";\n}\n.font-awesome_fa-shopping-cart_276KU:before {\n  content: \"\\F07A\";\n}\n.font-awesome_fa-folder_2MMW6:before {\n  content: \"\\F07B\";\n}\n.font-awesome_fa-folder-open_1a3bX:before {\n  content: \"\\F07C\";\n}\n.font-awesome_fa-arrows-v_27J04:before {\n  content: \"\\F07D\";\n}\n.font-awesome_fa-arrows-h_3EAQ6:before {\n  content: \"\\F07E\";\n}\n.font-awesome_fa-bar-chart-o_BMSPQ:before,\n.font-awesome_fa-bar-chart_3LGib:before {\n  content: \"\\F080\";\n}\n.font-awesome_fa-twitter-square_146CY:before {\n  content: \"\\F081\";\n}\n.font-awesome_fa-facebook-square_3IbRT:before {\n  content: \"\\F082\";\n}\n.font-awesome_fa-camera-retro_oM_mn:before {\n  content: \"\\F083\";\n}\n.font-awesome_fa-key_3bV7M:before {\n  content: \"\\F084\";\n}\n.font-awesome_fa-gears_3cjY1:before,\n.font-awesome_fa-cogs_CqXH5:before {\n  content: \"\\F085\";\n}\n.font-awesome_fa-comments_2lUtO:before {\n  content: \"\\F086\";\n}\n.font-awesome_fa-thumbs-o-up_3cD9j:before {\n  content: \"\\F087\";\n}\n.font-awesome_fa-thumbs-o-down_3AeCO:before {\n  content: \"\\F088\";\n}\n.font-awesome_fa-star-half_2zxdp:before {\n  content: \"\\F089\";\n}\n.font-awesome_fa-heart-o_QI-Zl:before {\n  content: \"\\F08A\";\n}\n.font-awesome_fa-sign-out_2IOU5:before {\n  content: \"\\F08B\";\n}\n.font-awesome_fa-linkedin-square_3HkV4:before {\n  content: \"\\F08C\";\n}\n.font-awesome_fa-thumb-tack_2gcw0:before {\n  content: \"\\F08D\";\n}\n.font-awesome_fa-external-link_1ku_O:before {\n  content: \"\\F08E\";\n}\n.font-awesome_fa-sign-in_1MYT-:before {\n  content: \"\\F090\";\n}\n.font-awesome_fa-trophy_3CyBM:before {\n  content: \"\\F091\";\n}\n.font-awesome_fa-github-square_1xm6W:before {\n  content: \"\\F092\";\n}\n.font-awesome_fa-upload_wVRel:before {\n  content: \"\\F093\";\n}\n.font-awesome_fa-lemon-o_2v3hR:before {\n  content: \"\\F094\";\n}\n.font-awesome_fa-phone_1EiFR:before {\n  content: \"\\F095\";\n}\n.font-awesome_fa-square-o_WbQ8x:before {\n  content: \"\\F096\";\n}\n.font-awesome_fa-bookmark-o_1R5xe:before {\n  content: \"\\F097\";\n}\n.font-awesome_fa-phone-square_3GkD1:before {\n  content: \"\\F098\";\n}\n.font-awesome_fa-twitter_cyUBg:before {\n  content: \"\\F099\";\n}\n.font-awesome_fa-facebook-f_3r4VF:before,\n.font-awesome_fa-facebook_f3EUw:before {\n  content: \"\\F09A\";\n}\n.font-awesome_fa-github_MdgBC:before {\n  content: \"\\F09B\";\n}\n.font-awesome_fa-unlock_XTSXp:before {\n  content: \"\\F09C\";\n}\n.font-awesome_fa-credit-card_28S4q:before {\n  content: \"\\F09D\";\n}\n.font-awesome_fa-feed_3tLbf:before,\n.font-awesome_fa-rss_3_EzS:before {\n  content: \"\\F09E\";\n}\n.font-awesome_fa-hdd-o_3ZoO6:before {\n  content: \"\\F0A0\";\n}\n.font-awesome_fa-bullhorn_3o7hz:before {\n  content: \"\\F0A1\";\n}\n.font-awesome_fa-bell_26AZW:before {\n  content: \"\\F0F3\";\n}\n.font-awesome_fa-certificate_11sLt:before {\n  content: \"\\F0A3\";\n}\n.font-awesome_fa-hand-o-right_2G1w_:before {\n  content: \"\\F0A4\";\n}\n.font-awesome_fa-hand-o-left_2KTOL:before {\n  content: \"\\F0A5\";\n}\n.font-awesome_fa-hand-o-up_3xrkS:before {\n  content: \"\\F0A6\";\n}\n.font-awesome_fa-hand-o-down_3cWAN:before {\n  content: \"\\F0A7\";\n}\n.font-awesome_fa-arrow-circle-left_2CgFw:before {\n  content: \"\\F0A8\";\n}\n.font-awesome_fa-arrow-circle-right_35XcE:before {\n  content: \"\\F0A9\";\n}\n.font-awesome_fa-arrow-circle-up_FHcwE:before {\n  content: \"\\F0AA\";\n}\n.font-awesome_fa-arrow-circle-down_1NJKi:before {\n  content: \"\\F0AB\";\n}\n.font-awesome_fa-globe_2fYFX:before {\n  content: \"\\F0AC\";\n}\n.font-awesome_fa-wrench_3snDo:before {\n  content: \"\\F0AD\";\n}\n.font-awesome_fa-tasks_2_oS8:before {\n  content: \"\\F0AE\";\n}\n.font-awesome_fa-filter_1q5k8:before {\n  content: \"\\F0B0\";\n}\n.font-awesome_fa-briefcase_aikwY:before {\n  content: \"\\F0B1\";\n}\n.font-awesome_fa-arrows-alt_1vqY9:before {\n  content: \"\\F0B2\";\n}\n.font-awesome_fa-group_XbMo9:before,\n.font-awesome_fa-users_1PfY8:before {\n  content: \"\\F0C0\";\n}\n.font-awesome_fa-chain_2QCgS:before,\n.font-awesome_fa-link_3kFkN:before {\n  content: \"\\F0C1\";\n}\n.font-awesome_fa-cloud_2l8rd:before {\n  content: \"\\F0C2\";\n}\n.font-awesome_fa-flask_3iTak:before {\n  content: \"\\F0C3\";\n}\n.font-awesome_fa-cut_17wpt:before,\n.font-awesome_fa-scissors_1xAHX:before {\n  content: \"\\F0C4\";\n}\n.font-awesome_fa-copy_a2GP3:before,\n.font-awesome_fa-files-o_2pUmI:before {\n  content: \"\\F0C5\";\n}\n.font-awesome_fa-paperclip_d4foW:before {\n  content: \"\\F0C6\";\n}\n.font-awesome_fa-save_10fTV:before,\n.font-awesome_fa-floppy-o_1MBo6:before {\n  content: \"\\F0C7\";\n}\n.font-awesome_fa-square_N1IJZ:before {\n  content: \"\\F0C8\";\n}\n.font-awesome_fa-navicon_3anpJ:before,\n.font-awesome_fa-reorder_2ukY7:before,\n.font-awesome_fa-bars_3WARK:before {\n  content: \"\\F0C9\";\n}\n.font-awesome_fa-list-ul_3s6_2:before {\n  content: \"\\F0CA\";\n}\n.font-awesome_fa-list-ol_AP-DO:before {\n  content: \"\\F0CB\";\n}\n.font-awesome_fa-strikethrough_h0-a_:before {\n  content: \"\\F0CC\";\n}\n.font-awesome_fa-underline_2PIFp:before {\n  content: \"\\F0CD\";\n}\n.font-awesome_fa-table_2mEeT:before {\n  content: \"\\F0CE\";\n}\n.font-awesome_fa-magic_qWQg_:before {\n  content: \"\\F0D0\";\n}\n.font-awesome_fa-truck_1AsFs:before {\n  content: \"\\F0D1\";\n}\n.font-awesome_fa-pinterest_1xKnl:before {\n  content: \"\\F0D2\";\n}\n.font-awesome_fa-pinterest-square_3Yhwf:before {\n  content: \"\\F0D3\";\n}\n.font-awesome_fa-google-plus-square_90VGD:before {\n  content: \"\\F0D4\";\n}\n.font-awesome_fa-google-plus_1Tp-z:before {\n  content: \"\\F0D5\";\n}\n.font-awesome_fa-money_32Lir:before {\n  content: \"\\F0D6\";\n}\n.font-awesome_fa-caret-down_1crEO:before {\n  content: \"\\F0D7\";\n}\n.font-awesome_fa-caret-up_2TwZv:before {\n  content: \"\\F0D8\";\n}\n.font-awesome_fa-caret-left_39lOf:before {\n  content: \"\\F0D9\";\n}\n.font-awesome_fa-caret-right_3p0nW:before {\n  content: \"\\F0DA\";\n}\n.font-awesome_fa-columns_nToc3:before {\n  content: \"\\F0DB\";\n}\n.font-awesome_fa-unsorted_2nhbR:before,\n.font-awesome_fa-sort_F3dcY:before {\n  content: \"\\F0DC\";\n}\n.font-awesome_fa-sort-down_3wTbK:before,\n.font-awesome_fa-sort-desc_3CQ5e:before {\n  content: \"\\F0DD\";\n}\n.font-awesome_fa-sort-up_Ad_bv:before,\n.font-awesome_fa-sort-asc_3MlT5:before {\n  content: \"\\F0DE\";\n}\n.font-awesome_fa-envelope_3xnLD:before {\n  content: \"\\F0E0\";\n}\n.font-awesome_fa-linkedin_25eMJ:before {\n  content: \"\\F0E1\";\n}\n.font-awesome_fa-rotate-left_3mzU5:before,\n.font-awesome_fa-undo_hNldt:before {\n  content: \"\\F0E2\";\n}\n.font-awesome_fa-legal_1C_3g:before,\n.font-awesome_fa-gavel_2ttLP:before {\n  content: \"\\F0E3\";\n}\n.font-awesome_fa-dashboard_3bEM7:before,\n.font-awesome_fa-tachometer_3R5zx:before {\n  content: \"\\F0E4\";\n}\n.font-awesome_fa-comment-o_2pEPg:before {\n  content: \"\\F0E5\";\n}\n.font-awesome_fa-comments-o_hQJKS:before {\n  content: \"\\F0E6\";\n}\n.font-awesome_fa-flash_1DU_v:before,\n.font-awesome_fa-bolt_3iT3l:before {\n  content: \"\\F0E7\";\n}\n.font-awesome_fa-sitemap_QKmtm:before {\n  content: \"\\F0E8\";\n}\n.font-awesome_fa-umbrella_3fE2k:before {\n  content: \"\\F0E9\";\n}\n.font-awesome_fa-paste_3RUtK:before,\n.font-awesome_fa-clipboard_1Wx9E:before {\n  content: \"\\F0EA\";\n}\n.font-awesome_fa-lightbulb-o_3MZxy:before {\n  content: \"\\F0EB\";\n}\n.font-awesome_fa-exchange_1cgNj:before {\n  content: \"\\F0EC\";\n}\n.font-awesome_fa-cloud-download_2fd-7:before {\n  content: \"\\F0ED\";\n}\n.font-awesome_fa-cloud-upload_BCKnV:before {\n  content: \"\\F0EE\";\n}\n.font-awesome_fa-user-md_3Unw6:before {\n  content: \"\\F0F0\";\n}\n.font-awesome_fa-stethoscope_3TPjy:before {\n  content: \"\\F0F1\";\n}\n.font-awesome_fa-suitcase_2ZK-F:before {\n  content: \"\\F0F2\";\n}\n.font-awesome_fa-bell-o_3iuFm:before {\n  content: \"\\F0A2\";\n}\n.font-awesome_fa-coffee_2tZxb:before {\n  content: \"\\F0F4\";\n}\n.font-awesome_fa-cutlery_2dZZ2:before {\n  content: \"\\F0F5\";\n}\n.font-awesome_fa-file-text-o_3vkBr:before {\n  content: \"\\F0F6\";\n}\n.font-awesome_fa-building-o_1ML8l:before {\n  content: \"\\F0F7\";\n}\n.font-awesome_fa-hospital-o_2dZPM:before {\n  content: \"\\F0F8\";\n}\n.font-awesome_fa-ambulance_3oMTO:before {\n  content: \"\\F0F9\";\n}\n.font-awesome_fa-medkit_3TuAD:before {\n  content: \"\\F0FA\";\n}\n.font-awesome_fa-fighter-jet_2EPG4:before {\n  content: \"\\F0FB\";\n}\n.font-awesome_fa-beer_25HMG:before {\n  content: \"\\F0FC\";\n}\n.font-awesome_fa-h-square_iRMP3:before {\n  content: \"\\F0FD\";\n}\n.font-awesome_fa-plus-square_28zW8:before {\n  content: \"\\F0FE\";\n}\n.font-awesome_fa-angle-double-left_3Q7bL:before {\n  content: \"\\F100\";\n}\n.font-awesome_fa-angle-double-right_2R24L:before {\n  content: \"\\F101\";\n}\n.font-awesome_fa-angle-double-up_2GMJK:before {\n  content: \"\\F102\";\n}\n.font-awesome_fa-angle-double-down_IlK-a:before {\n  content: \"\\F103\";\n}\n.font-awesome_fa-angle-left_7b-ty:before {\n  content: \"\\F104\";\n}\n.font-awesome_fa-angle-right_RfvDx:before {\n  content: \"\\F105\";\n}\n.font-awesome_fa-angle-up_2xGkU:before {\n  content: \"\\F106\";\n}\n.font-awesome_fa-angle-down_3nIhI:before {\n  content: \"\\F107\";\n}\n.font-awesome_fa-desktop_7pHFF:before {\n  content: \"\\F108\";\n}\n.font-awesome_fa-laptop_2QHxL:before {\n  content: \"\\F109\";\n}\n.font-awesome_fa-tablet_eRAwh:before {\n  content: \"\\F10A\";\n}\n.font-awesome_fa-mobile-phone_3tGZx:before,\n.font-awesome_fa-mobile_ry_56:before {\n  content: \"\\F10B\";\n}\n.font-awesome_fa-circle-o_We1QB:before {\n  content: \"\\F10C\";\n}\n.font-awesome_fa-quote-left_tgvF3:before {\n  content: \"\\F10D\";\n}\n.font-awesome_fa-quote-right_2LbYu:before {\n  content: \"\\F10E\";\n}\n.font-awesome_fa-spinner_1FgdF:before {\n  content: \"\\F110\";\n}\n.font-awesome_fa-circle_RFG4V:before {\n  content: \"\\F111\";\n}\n.font-awesome_fa-mail-reply_1ovuj:before,\n.font-awesome_fa-reply_1p4xy:before {\n  content: \"\\F112\";\n}\n.font-awesome_fa-github-alt_PGZGn:before {\n  content: \"\\F113\";\n}\n.font-awesome_fa-folder-o_28LsO:before {\n  content: \"\\F114\";\n}\n.font-awesome_fa-folder-open-o_3Hbbz:before {\n  content: \"\\F115\";\n}\n.font-awesome_fa-smile-o_3R1KH:before {\n  content: \"\\F118\";\n}\n.font-awesome_fa-frown-o_1PJe6:before {\n  content: \"\\F119\";\n}\n.font-awesome_fa-meh-o_1Yal3:before {\n  content: \"\\F11A\";\n}\n.font-awesome_fa-gamepad_DQkX5:before {\n  content: \"\\F11B\";\n}\n.font-awesome_fa-keyboard-o_1Zegg:before {\n  content: \"\\F11C\";\n}\n.font-awesome_fa-flag-o_2paT4:before {\n  content: \"\\F11D\";\n}\n.font-awesome_fa-flag-checkered_3Q50W:before {\n  content: \"\\F11E\";\n}\n.font-awesome_fa-terminal_1y_ce:before {\n  content: \"\\F120\";\n}\n.font-awesome_fa-code_373HL:before {\n  content: \"\\F121\";\n}\n.font-awesome_fa-mail-reply-all_1el1h:before,\n.font-awesome_fa-reply-all_1XbQQ:before {\n  content: \"\\F122\";\n}\n.font-awesome_fa-star-half-empty_NeM4g:before,\n.font-awesome_fa-star-half-full_3_GnR:before,\n.font-awesome_fa-star-half-o_1gMSG:before {\n  content: \"\\F123\";\n}\n.font-awesome_fa-location-arrow_gFy0a:before {\n  content: \"\\F124\";\n}\n.font-awesome_fa-crop_DFePA:before {\n  content: \"\\F125\";\n}\n.font-awesome_fa-code-fork_rNRd0:before {\n  content: \"\\F126\";\n}\n.font-awesome_fa-unlink_1hw62:before,\n.font-awesome_fa-chain-broken_3nVk7:before {\n  content: \"\\F127\";\n}\n.font-awesome_fa-question_EAoIA:before {\n  content: \"\\F128\";\n}\n.font-awesome_fa-info_2cQvQ:before {\n  content: \"\\F129\";\n}\n.font-awesome_fa-exclamation_297uN:before {\n  content: \"\\F12A\";\n}\n.font-awesome_fa-superscript_N7aMl:before {\n  content: \"\\F12B\";\n}\n.font-awesome_fa-subscript_ZG4gQ:before {\n  content: \"\\F12C\";\n}\n.font-awesome_fa-eraser_3NIuU:before {\n  content: \"\\F12D\";\n}\n.font-awesome_fa-puzzle-piece_3lKWq:before {\n  content: \"\\F12E\";\n}\n.font-awesome_fa-microphone_3_81_:before {\n  content: \"\\F130\";\n}\n.font-awesome_fa-microphone-slash_1DyxC:before {\n  content: \"\\F131\";\n}\n.font-awesome_fa-shield_1qKif:before {\n  content: \"\\F132\";\n}\n.font-awesome_fa-calendar-o_1BLCm:before {\n  content: \"\\F133\";\n}\n.font-awesome_fa-fire-extinguisher_3gz5K:before {\n  content: \"\\F134\";\n}\n.font-awesome_fa-rocket_lfSov:before {\n  content: \"\\F135\";\n}\n.font-awesome_fa-maxcdn_cD6Fn:before {\n  content: \"\\F136\";\n}\n.font-awesome_fa-chevron-circle-left_1aac7:before {\n  content: \"\\F137\";\n}\n.font-awesome_fa-chevron-circle-right_Evj_u:before {\n  content: \"\\F138\";\n}\n.font-awesome_fa-chevron-circle-up_tTcaI:before {\n  content: \"\\F139\";\n}\n.font-awesome_fa-chevron-circle-down_1oKtm:before {\n  content: \"\\F13A\";\n}\n.font-awesome_fa-html5_3LZaq:before {\n  content: \"\\F13B\";\n}\n.font-awesome_fa-css3_3hg4c:before {\n  content: \"\\F13C\";\n}\n.font-awesome_fa-anchor_2-wZ3:before {\n  content: \"\\F13D\";\n}\n.font-awesome_fa-unlock-alt_CLyLU:before {\n  content: \"\\F13E\";\n}\n.font-awesome_fa-bullseye_6Sp1E:before {\n  content: \"\\F140\";\n}\n.font-awesome_fa-ellipsis-h_4VBiE:before {\n  content: \"\\F141\";\n}\n.font-awesome_fa-ellipsis-v_Ktjfe:before {\n  content: \"\\F142\";\n}\n.font-awesome_fa-rss-square_4Vj2y:before {\n  content: \"\\F143\";\n}\n.font-awesome_fa-play-circle_ECzau:before {\n  content: \"\\F144\";\n}\n.font-awesome_fa-ticket_284VQ:before {\n  content: \"\\F145\";\n}\n.font-awesome_fa-minus-square_3w_Do:before {\n  content: \"\\F146\";\n}\n.font-awesome_fa-minus-square-o_qe1Jq:before {\n  content: \"\\F147\";\n}\n.font-awesome_fa-level-up_7RnC1:before {\n  content: \"\\F148\";\n}\n.font-awesome_fa-level-down_1rR4Q:before {\n  content: \"\\F149\";\n}\n.font-awesome_fa-check-square_3Qxfb:before {\n  content: \"\\F14A\";\n}\n.font-awesome_fa-pencil-square_3f_4W:before {\n  content: \"\\F14B\";\n}\n.font-awesome_fa-external-link-square_3TfmM:before {\n  content: \"\\F14C\";\n}\n.font-awesome_fa-share-square_4XEPu:before {\n  content: \"\\F14D\";\n}\n.font-awesome_fa-compass_3kP2n:before {\n  content: \"\\F14E\";\n}\n.font-awesome_fa-toggle-down_vVDIQ:before,\n.font-awesome_fa-caret-square-o-down_1Ao-B:before {\n  content: \"\\F150\";\n}\n.font-awesome_fa-toggle-up_1j96l:before,\n.font-awesome_fa-caret-square-o-up_1Lr5P:before {\n  content: \"\\F151\";\n}\n.font-awesome_fa-toggle-right_391jj:before,\n.font-awesome_fa-caret-square-o-right_Jc6ln:before {\n  content: \"\\F152\";\n}\n.font-awesome_fa-euro_1H752:before,\n.font-awesome_fa-eur_2JOH3:before {\n  content: \"\\F153\";\n}\n.font-awesome_fa-gbp_sXuSA:before {\n  content: \"\\F154\";\n}\n.font-awesome_fa-dollar_1Qw2b:before,\n.font-awesome_fa-usd_1Cyf0:before {\n  content: \"\\F155\";\n}\n.font-awesome_fa-rupee_3EdPr:before,\n.font-awesome_fa-inr_2v4ZE:before {\n  content: \"\\F156\";\n}\n.font-awesome_fa-cny_3RNlL:before,\n.font-awesome_fa-rmb_vAGyw:before,\n.font-awesome_fa-yen_UH2C8:before,\n.font-awesome_fa-jpy_CXaPK:before {\n  content: \"\\F157\";\n}\n.font-awesome_fa-ruble_1ms6_:before,\n.font-awesome_fa-rouble_fwC1R:before,\n.font-awesome_fa-rub_1c94U:before {\n  content: \"\\F158\";\n}\n.font-awesome_fa-won_1oqxL:before,\n.font-awesome_fa-krw_xc7hv:before {\n  content: \"\\F159\";\n}\n.font-awesome_fa-bitcoin_3h17C:before,\n.font-awesome_fa-btc_2EpsK:before {\n  content: \"\\F15A\";\n}\n.font-awesome_fa-file_2_TBG:before {\n  content: \"\\F15B\";\n}\n.font-awesome_fa-file-text_3uzzE:before {\n  content: \"\\F15C\";\n}\n.font-awesome_fa-sort-alpha-asc_l6x9i:before {\n  content: \"\\F15D\";\n}\n.font-awesome_fa-sort-alpha-desc_Au5Op:before {\n  content: \"\\F15E\";\n}\n.font-awesome_fa-sort-amount-asc_a4pl1:before {\n  content: \"\\F160\";\n}\n.font-awesome_fa-sort-amount-desc_sHYze:before {\n  content: \"\\F161\";\n}\n.font-awesome_fa-sort-numeric-asc_2fl5U:before {\n  content: \"\\F162\";\n}\n.font-awesome_fa-sort-numeric-desc_rZcNd:before {\n  content: \"\\F163\";\n}\n.font-awesome_fa-thumbs-up_32LEl:before {\n  content: \"\\F164\";\n}\n.font-awesome_fa-thumbs-down_115k7:before {\n  content: \"\\F165\";\n}\n.font-awesome_fa-youtube-square_1HADK:before {\n  content: \"\\F166\";\n}\n.font-awesome_fa-youtube_3PHGN:before {\n  content: \"\\F167\";\n}\n.font-awesome_fa-xing_2fXmL:before {\n  content: \"\\F168\";\n}\n.font-awesome_fa-xing-square_3AeWb:before {\n  content: \"\\F169\";\n}\n.font-awesome_fa-youtube-play__uWZW:before {\n  content: \"\\F16A\";\n}\n.font-awesome_fa-dropbox_1i2Rn:before {\n  content: \"\\F16B\";\n}\n.font-awesome_fa-stack-overflow_2tkuN:before {\n  content: \"\\F16C\";\n}\n.font-awesome_fa-instagram_1lV5f:before {\n  content: \"\\F16D\";\n}\n.font-awesome_fa-flickr_3JrtG:before {\n  content: \"\\F16E\";\n}\n.font-awesome_fa-adn_3a2Jf:before {\n  content: \"\\F170\";\n}\n.font-awesome_fa-bitbucket_12Rp4:before {\n  content: \"\\F171\";\n}\n.font-awesome_fa-bitbucket-square_Y0lMx:before {\n  content: \"\\F172\";\n}\n.font-awesome_fa-tumblr_18aB6:before {\n  content: \"\\F173\";\n}\n.font-awesome_fa-tumblr-square_3m4ld:before {\n  content: \"\\F174\";\n}\n.font-awesome_fa-long-arrow-down_2His0:before {\n  content: \"\\F175\";\n}\n.font-awesome_fa-long-arrow-up_vP_4l:before {\n  content: \"\\F176\";\n}\n.font-awesome_fa-long-arrow-left_1Uldc:before {\n  content: \"\\F177\";\n}\n.font-awesome_fa-long-arrow-right_1_jZV:before {\n  content: \"\\F178\";\n}\n.font-awesome_fa-apple_3f0-D:before {\n  content: \"\\F179\";\n}\n.font-awesome_fa-windows_2wDfa:before {\n  content: \"\\F17A\";\n}\n.font-awesome_fa-android_1Wzt9:before {\n  content: \"\\F17B\";\n}\n.font-awesome_fa-linux_3TBYa:before {\n  content: \"\\F17C\";\n}\n.font-awesome_fa-dribbble_IliEV:before {\n  content: \"\\F17D\";\n}\n.font-awesome_fa-skype_7ne23:before {\n  content: \"\\F17E\";\n}\n.font-awesome_fa-foursquare_52T_Z:before {\n  content: \"\\F180\";\n}\n.font-awesome_fa-trello_2ChtW:before {\n  content: \"\\F181\";\n}\n.font-awesome_fa-female_q-oMT:before {\n  content: \"\\F182\";\n}\n.font-awesome_fa-male_2PAqV:before {\n  content: \"\\F183\";\n}\n.font-awesome_fa-gittip_2fxKq:before,\n.font-awesome_fa-gratipay_xLz4x:before {\n  content: \"\\F184\";\n}\n.font-awesome_fa-sun-o_3QZ1O:before {\n  content: \"\\F185\";\n}\n.font-awesome_fa-moon-o_ZwK6C:before {\n  content: \"\\F186\";\n}\n.font-awesome_fa-archive_3FY1-:before {\n  content: \"\\F187\";\n}\n.font-awesome_fa-bug_20yJn:before {\n  content: \"\\F188\";\n}\n.font-awesome_fa-vk_1SLN3:before {\n  content: \"\\F189\";\n}\n.font-awesome_fa-weibo_3q9BS:before {\n  content: \"\\F18A\";\n}\n.font-awesome_fa-renren_27Rtg:before {\n  content: \"\\F18B\";\n}\n.font-awesome_fa-pagelines_3FZd_:before {\n  content: \"\\F18C\";\n}\n.font-awesome_fa-stack-exchange_1BbmA:before {\n  content: \"\\F18D\";\n}\n.font-awesome_fa-arrow-circle-o-right_1lS0I:before {\n  content: \"\\F18E\";\n}\n.font-awesome_fa-arrow-circle-o-left_270k0:before {\n  content: \"\\F190\";\n}\n.font-awesome_fa-toggle-left_q8rS1:before,\n.font-awesome_fa-caret-square-o-left_3leFq:before {\n  content: \"\\F191\";\n}\n.font-awesome_fa-dot-circle-o_fRUKP:before {\n  content: \"\\F192\";\n}\n.font-awesome_fa-wheelchair_2sPWn:before {\n  content: \"\\F193\";\n}\n.font-awesome_fa-vimeo-square_1nIhm:before {\n  content: \"\\F194\";\n}\n.font-awesome_fa-turkish-lira_1bCbG:before,\n.font-awesome_fa-try_1Olkg:before {\n  content: \"\\F195\";\n}\n.font-awesome_fa-plus-square-o_M6pBY:before {\n  content: \"\\F196\";\n}\n.font-awesome_fa-space-shuttle_9kmJU:before {\n  content: \"\\F197\";\n}\n.font-awesome_fa-slack_1EvN7:before {\n  content: \"\\F198\";\n}\n.font-awesome_fa-envelope-square_3aqlc:before {\n  content: \"\\F199\";\n}\n.font-awesome_fa-wordpress_2u9e0:before {\n  content: \"\\F19A\";\n}\n.font-awesome_fa-openid_2QLde:before {\n  content: \"\\F19B\";\n}\n.font-awesome_fa-institution_2uHKo:before,\n.font-awesome_fa-bank_D8hxY:before,\n.font-awesome_fa-university_3ECjv:before {\n  content: \"\\F19C\";\n}\n.font-awesome_fa-mortar-board_1em7v:before,\n.font-awesome_fa-graduation-cap_Y0mMc:before {\n  content: \"\\F19D\";\n}\n.font-awesome_fa-yahoo_33B-N:before {\n  content: \"\\F19E\";\n}\n.font-awesome_fa-google_1QYVJ:before {\n  content: \"\\F1A0\";\n}\n.font-awesome_fa-reddit_bwA4E:before {\n  content: \"\\F1A1\";\n}\n.font-awesome_fa-reddit-square_3rRiq:before {\n  content: \"\\F1A2\";\n}\n.font-awesome_fa-stumbleupon-circle_1TPid:before {\n  content: \"\\F1A3\";\n}\n.font-awesome_fa-stumbleupon_14d1U:before {\n  content: \"\\F1A4\";\n}\n.font-awesome_fa-delicious_3rkRQ:before {\n  content: \"\\F1A5\";\n}\n.font-awesome_fa-digg_3bIOw:before {\n  content: \"\\F1A6\";\n}\n.font-awesome_fa-pied-piper_1iXBb:before {\n  content: \"\\F1A7\";\n}\n.font-awesome_fa-pied-piper-alt_3UjUa:before {\n  content: \"\\F1A8\";\n}\n.font-awesome_fa-drupal_WQObj:before {\n  content: \"\\F1A9\";\n}\n.font-awesome_fa-joomla_2UQVh:before {\n  content: \"\\F1AA\";\n}\n.font-awesome_fa-language_DOnO2:before {\n  content: \"\\F1AB\";\n}\n.font-awesome_fa-fax_1SV_d:before {\n  content: \"\\F1AC\";\n}\n.font-awesome_fa-building_1FVgz:before {\n  content: \"\\F1AD\";\n}\n.font-awesome_fa-child_2gTU4:before {\n  content: \"\\F1AE\";\n}\n.font-awesome_fa-paw_NcsFR:before {\n  content: \"\\F1B0\";\n}\n.font-awesome_fa-spoon_IxNyL:before {\n  content: \"\\F1B1\";\n}\n.font-awesome_fa-cube_1Mq1-:before {\n  content: \"\\F1B2\";\n}\n.font-awesome_fa-cubes_1tGnD:before {\n  content: \"\\F1B3\";\n}\n.font-awesome_fa-behance_3mdMe:before {\n  content: \"\\F1B4\";\n}\n.font-awesome_fa-behance-square_5ghK4:before {\n  content: \"\\F1B5\";\n}\n.font-awesome_fa-steam_RIwxM:before {\n  content: \"\\F1B6\";\n}\n.font-awesome_fa-steam-square_2QEJn:before {\n  content: \"\\F1B7\";\n}\n.font-awesome_fa-recycle_-U8tZ:before {\n  content: \"\\F1B8\";\n}\n.font-awesome_fa-automobile_3z3Dw:before,\n.font-awesome_fa-car_30pca:before {\n  content: \"\\F1B9\";\n}\n.font-awesome_fa-cab_DDNE1:before,\n.font-awesome_fa-taxi_22WsM:before {\n  content: \"\\F1BA\";\n}\n.font-awesome_fa-tree_3RDTB:before {\n  content: \"\\F1BB\";\n}\n.font-awesome_fa-spotify_3UDVW:before {\n  content: \"\\F1BC\";\n}\n.font-awesome_fa-deviantart_2ZxWy:before {\n  content: \"\\F1BD\";\n}\n.font-awesome_fa-soundcloud_2ALXb:before {\n  content: \"\\F1BE\";\n}\n.font-awesome_fa-database_1lI0N:before {\n  content: \"\\F1C0\";\n}\n.font-awesome_fa-file-pdf-o_3kglo:before {\n  content: \"\\F1C1\";\n}\n.font-awesome_fa-file-word-o_1UetZ:before {\n  content: \"\\F1C2\";\n}\n.font-awesome_fa-file-excel-o_A4QBn:before {\n  content: \"\\F1C3\";\n}\n.font-awesome_fa-file-powerpoint-o_rrLjs:before {\n  content: \"\\F1C4\";\n}\n.font-awesome_fa-file-photo-o_2UoDO:before,\n.font-awesome_fa-file-picture-o_3Xjli:before,\n.font-awesome_fa-file-image-o_2lPT_:before {\n  content: \"\\F1C5\";\n}\n.font-awesome_fa-file-zip-o_2FWRa:before,\n.font-awesome_fa-file-archive-o_2Mk5P:before {\n  content: \"\\F1C6\";\n}\n.font-awesome_fa-file-sound-o_1AcTq:before,\n.font-awesome_fa-file-audio-o_2PC2o:before {\n  content: \"\\F1C7\";\n}\n.font-awesome_fa-file-movie-o_VAP4m:before,\n.font-awesome_fa-file-video-o_34mPw:before {\n  content: \"\\F1C8\";\n}\n.font-awesome_fa-file-code-o_1tJvu:before {\n  content: \"\\F1C9\";\n}\n.font-awesome_fa-vine_26AR6:before {\n  content: \"\\F1CA\";\n}\n.font-awesome_fa-codepen_2F2Jy:before {\n  content: \"\\F1CB\";\n}\n.font-awesome_fa-jsfiddle_pH8-y:before {\n  content: \"\\F1CC\";\n}\n.font-awesome_fa-life-bouy_3M9kq:before,\n.font-awesome_fa-life-buoy_-dMf6:before,\n.font-awesome_fa-life-saver_1NRqc:before,\n.font-awesome_fa-support_6Q01X:before,\n.font-awesome_fa-life-ring_1x6lZ:before {\n  content: \"\\F1CD\";\n}\n.font-awesome_fa-circle-o-notch_cWGUO:before {\n  content: \"\\F1CE\";\n}\n.font-awesome_fa-ra_2liTj:before,\n.font-awesome_fa-rebel_2UIOr:before {\n  content: \"\\F1D0\";\n}\n.font-awesome_fa-ge_1f9_K:before,\n.font-awesome_fa-empire_3Sw8V:before {\n  content: \"\\F1D1\";\n}\n.font-awesome_fa-git-square_DgHwD:before {\n  content: \"\\F1D2\";\n}\n.font-awesome_fa-git_1dhi0:before {\n  content: \"\\F1D3\";\n}\n.font-awesome_fa-y-combinator-square_lfSlT:before,\n.font-awesome_fa-yc-square_1Qf2g:before,\n.font-awesome_fa-hacker-news_CxkYC:before {\n  content: \"\\F1D4\";\n}\n.font-awesome_fa-tencent-weibo_2-fdG:before {\n  content: \"\\F1D5\";\n}\n.font-awesome_fa-qq_1OIck:before {\n  content: \"\\F1D6\";\n}\n.font-awesome_fa-wechat_7Wqz8:before,\n.font-awesome_fa-weixin_2rvXg:before {\n  content: \"\\F1D7\";\n}\n.font-awesome_fa-send_1PHOy:before,\n.font-awesome_fa-paper-plane_1JBzT:before {\n  content: \"\\F1D8\";\n}\n.font-awesome_fa-send-o_1K3Am:before,\n.font-awesome_fa-paper-plane-o_Am7EP:before {\n  content: \"\\F1D9\";\n}\n.font-awesome_fa-history_xEiAH:before {\n  content: \"\\F1DA\";\n}\n.font-awesome_fa-circle-thin_OCNZt:before {\n  content: \"\\F1DB\";\n}\n.font-awesome_fa-header_hMELn:before {\n  content: \"\\F1DC\";\n}\n.font-awesome_fa-paragraph_2r_mD:before {\n  content: \"\\F1DD\";\n}\n.font-awesome_fa-sliders_3eRoo:before {\n  content: \"\\F1DE\";\n}\n.font-awesome_fa-share-alt_3jAY7:before {\n  content: \"\\F1E0\";\n}\n.font-awesome_fa-share-alt-square_46dVM:before {\n  content: \"\\F1E1\";\n}\n.font-awesome_fa-bomb_1WRhh:before {\n  content: \"\\F1E2\";\n}\n.font-awesome_fa-soccer-ball-o_3rmya:before,\n.font-awesome_fa-futbol-o_Nqzpi:before {\n  content: \"\\F1E3\";\n}\n.font-awesome_fa-tty_3BPj2:before {\n  content: \"\\F1E4\";\n}\n.font-awesome_fa-binoculars_1vG29:before {\n  content: \"\\F1E5\";\n}\n.font-awesome_fa-plug_1Lbxt:before {\n  content: \"\\F1E6\";\n}\n.font-awesome_fa-slideshare_15ZAf:before {\n  content: \"\\F1E7\";\n}\n.font-awesome_fa-twitch_MNLu3:before {\n  content: \"\\F1E8\";\n}\n.font-awesome_fa-yelp_1c1W7:before {\n  content: \"\\F1E9\";\n}\n.font-awesome_fa-newspaper-o_1ecUe:before {\n  content: \"\\F1EA\";\n}\n.font-awesome_fa-wifi_dQ61U:before {\n  content: \"\\F1EB\";\n}\n.font-awesome_fa-calculator_2q6GV:before {\n  content: \"\\F1EC\";\n}\n.font-awesome_fa-paypal_3lmxL:before {\n  content: \"\\F1ED\";\n}\n.font-awesome_fa-google-wallet_2K_aw:before {\n  content: \"\\F1EE\";\n}\n.font-awesome_fa-cc-visa_2F8r8:before {\n  content: \"\\F1F0\";\n}\n.font-awesome_fa-cc-mastercard_T8WQ_:before {\n  content: \"\\F1F1\";\n}\n.font-awesome_fa-cc-discover_2QXm7:before {\n  content: \"\\F1F2\";\n}\n.font-awesome_fa-cc-amex_2w-j8:before {\n  content: \"\\F1F3\";\n}\n.font-awesome_fa-cc-paypal_gr0Zj:before {\n  content: \"\\F1F4\";\n}\n.font-awesome_fa-cc-stripe_5ubxJ:before {\n  content: \"\\F1F5\";\n}\n.font-awesome_fa-bell-slash_PIYu4:before {\n  content: \"\\F1F6\";\n}\n.font-awesome_fa-bell-slash-o_PTM9c:before {\n  content: \"\\F1F7\";\n}\n.font-awesome_fa-trash_-YVpH:before {\n  content: \"\\F1F8\";\n}\n.font-awesome_fa-copyright_3Cj5D:before {\n  content: \"\\F1F9\";\n}\n.font-awesome_fa-at_b7Ql8:before {\n  content: \"\\F1FA\";\n}\n.font-awesome_fa-eyedropper_1rpAm:before {\n  content: \"\\F1FB\";\n}\n.font-awesome_fa-paint-brush_3SJFh:before {\n  content: \"\\F1FC\";\n}\n.font-awesome_fa-birthday-cake_-17FP:before {\n  content: \"\\F1FD\";\n}\n.font-awesome_fa-area-chart_1fTy1:before {\n  content: \"\\F1FE\";\n}\n.font-awesome_fa-pie-chart_2TXFj:before {\n  content: \"\\F200\";\n}\n.font-awesome_fa-line-chart_20bFd:before {\n  content: \"\\F201\";\n}\n.font-awesome_fa-lastfm_3sP7Z:before {\n  content: \"\\F202\";\n}\n.font-awesome_fa-lastfm-square_3OBza:before {\n  content: \"\\F203\";\n}\n.font-awesome_fa-toggle-off_2TP0s:before {\n  content: \"\\F204\";\n}\n.font-awesome_fa-toggle-on_1ud4K:before {\n  content: \"\\F205\";\n}\n.font-awesome_fa-bicycle_r_nn3:before {\n  content: \"\\F206\";\n}\n.font-awesome_fa-bus_bm6kq:before {\n  content: \"\\F207\";\n}\n.font-awesome_fa-ioxhost_yWiPs:before {\n  content: \"\\F208\";\n}\n.font-awesome_fa-angellist_14KNT:before {\n  content: \"\\F209\";\n}\n.font-awesome_fa-cc_VsUyp:before {\n  content: \"\\F20A\";\n}\n.font-awesome_fa-shekel_3RcTu:before,\n.font-awesome_fa-sheqel_2_Sde:before,\n.font-awesome_fa-ils_CYDSg:before {\n  content: \"\\F20B\";\n}\n.font-awesome_fa-meanpath_8Utkv:before {\n  content: \"\\F20C\";\n}\n.font-awesome_fa-buysellads_3DmVj:before {\n  content: \"\\F20D\";\n}\n.font-awesome_fa-connectdevelop_24BDl:before {\n  content: \"\\F20E\";\n}\n.font-awesome_fa-dashcube_3gytt:before {\n  content: \"\\F210\";\n}\n.font-awesome_fa-forumbee_1Xmr9:before {\n  content: \"\\F211\";\n}\n.font-awesome_fa-leanpub_1qDwq:before {\n  content: \"\\F212\";\n}\n.font-awesome_fa-sellsy_w39BK:before {\n  content: \"\\F213\";\n}\n.font-awesome_fa-shirtsinbulk_3ht1E:before {\n  content: \"\\F214\";\n}\n.font-awesome_fa-simplybuilt_1V2xv:before {\n  content: \"\\F215\";\n}\n.font-awesome_fa-skyatlas_1HFEf:before {\n  content: \"\\F216\";\n}\n.font-awesome_fa-cart-plus_zqpg9:before {\n  content: \"\\F217\";\n}\n.font-awesome_fa-cart-arrow-down_vmvAL:before {\n  content: \"\\F218\";\n}\n.font-awesome_fa-diamond_2YKSj:before {\n  content: \"\\F219\";\n}\n.font-awesome_fa-ship_2d0Uf:before {\n  content: \"\\F21A\";\n}\n.font-awesome_fa-user-secret_1JgJF:before {\n  content: \"\\F21B\";\n}\n.font-awesome_fa-motorcycle_hAqgH:before {\n  content: \"\\F21C\";\n}\n.font-awesome_fa-street-view_3xS1E:before {\n  content: \"\\F21D\";\n}\n.font-awesome_fa-heartbeat_3SRsO:before {\n  content: \"\\F21E\";\n}\n.font-awesome_fa-venus_3jRFX:before {\n  content: \"\\F221\";\n}\n.font-awesome_fa-mars_2Le0W:before {\n  content: \"\\F222\";\n}\n.font-awesome_fa-mercury_3-x4u:before {\n  content: \"\\F223\";\n}\n.font-awesome_fa-intersex_26r-R:before,\n.font-awesome_fa-transgender_1hS0T:before {\n  content: \"\\F224\";\n}\n.font-awesome_fa-transgender-alt_3_fBb:before {\n  content: \"\\F225\";\n}\n.font-awesome_fa-venus-double_30rPd:before {\n  content: \"\\F226\";\n}\n.font-awesome_fa-mars-double_3Xnoh:before {\n  content: \"\\F227\";\n}\n.font-awesome_fa-venus-mars_2Ptfg:before {\n  content: \"\\F228\";\n}\n.font-awesome_fa-mars-stroke_f9_Cu:before {\n  content: \"\\F229\";\n}\n.font-awesome_fa-mars-stroke-v_1K5K9:before {\n  content: \"\\F22A\";\n}\n.font-awesome_fa-mars-stroke-h_3azEl:before {\n  content: \"\\F22B\";\n}\n.font-awesome_fa-neuter_1wUaY:before {\n  content: \"\\F22C\";\n}\n.font-awesome_fa-genderless_3mEtZ:before {\n  content: \"\\F22D\";\n}\n.font-awesome_fa-facebook-official_2NNdf:before {\n  content: \"\\F230\";\n}\n.font-awesome_fa-pinterest-p_1Xpu_:before {\n  content: \"\\F231\";\n}\n.font-awesome_fa-whatsapp_3G2qZ:before {\n  content: \"\\F232\";\n}\n.font-awesome_fa-server_NVGtN:before {\n  content: \"\\F233\";\n}\n.font-awesome_fa-user-plus_1UACc:before {\n  content: \"\\F234\";\n}\n.font-awesome_fa-user-times_24FFx:before {\n  content: \"\\F235\";\n}\n.font-awesome_fa-hotel_3W6s_:before,\n.font-awesome_fa-bed_1XbLs:before {\n  content: \"\\F236\";\n}\n.font-awesome_fa-viacoin_3b4Ln:before {\n  content: \"\\F237\";\n}\n.font-awesome_fa-train_2mIFj:before {\n  content: \"\\F238\";\n}\n.font-awesome_fa-subway_mahNW:before {\n  content: \"\\F239\";\n}\n.font-awesome_fa-medium_2UIgR:before {\n  content: \"\\F23A\";\n}\n.font-awesome_fa-yc_2pwL9:before,\n.font-awesome_fa-y-combinator_l4_A9:before {\n  content: \"\\F23B\";\n}\n.font-awesome_fa-optin-monster_2Vo1M:before {\n  content: \"\\F23C\";\n}\n.font-awesome_fa-opencart_2P3qK:before {\n  content: \"\\F23D\";\n}\n.font-awesome_fa-expeditedssl_1ay3x:before {\n  content: \"\\F23E\";\n}\n.font-awesome_fa-battery-4_1qRp1:before,\n.font-awesome_fa-battery-full_2fsqT:before {\n  content: \"\\F240\";\n}\n.font-awesome_fa-battery-3_3WHzS:before,\n.font-awesome_fa-battery-three-quarters_dBjV8:before {\n  content: \"\\F241\";\n}\n.font-awesome_fa-battery-2_2Pgt2:before,\n.font-awesome_fa-battery-half_2taE9:before {\n  content: \"\\F242\";\n}\n.font-awesome_fa-battery-1_1R1Ww:before,\n.font-awesome_fa-battery-quarter_1sRcE:before {\n  content: \"\\F243\";\n}\n.font-awesome_fa-battery-0_1zrhu:before,\n.font-awesome_fa-battery-empty_2Mn-c:before {\n  content: \"\\F244\";\n}\n.font-awesome_fa-mouse-pointer_DbB5u:before {\n  content: \"\\F245\";\n}\n.font-awesome_fa-i-cursor_xvyzh:before {\n  content: \"\\F246\";\n}\n.font-awesome_fa-object-group_3K3tV:before {\n  content: \"\\F247\";\n}\n.font-awesome_fa-object-ungroup_1ylE-:before {\n  content: \"\\F248\";\n}\n.font-awesome_fa-sticky-note_1dK3l:before {\n  content: \"\\F249\";\n}\n.font-awesome_fa-sticky-note-o_2zvyB:before {\n  content: \"\\F24A\";\n}\n.font-awesome_fa-cc-jcb_Q7v9N:before {\n  content: \"\\F24B\";\n}\n.font-awesome_fa-cc-diners-club_338EC:before {\n  content: \"\\F24C\";\n}\n.font-awesome_fa-clone_2LPS7:before {\n  content: \"\\F24D\";\n}\n.font-awesome_fa-balance-scale_3o2it:before {\n  content: \"\\F24E\";\n}\n.font-awesome_fa-hourglass-o_15XJL:before {\n  content: \"\\F250\";\n}\n.font-awesome_fa-hourglass-1_2iRUs:before,\n.font-awesome_fa-hourglass-start_qhpOV:before {\n  content: \"\\F251\";\n}\n.font-awesome_fa-hourglass-2_2V0b5:before,\n.font-awesome_fa-hourglass-half_cF0Po:before {\n  content: \"\\F252\";\n}\n.font-awesome_fa-hourglass-3_2-ugV:before,\n.font-awesome_fa-hourglass-end_3l-g6:before {\n  content: \"\\F253\";\n}\n.font-awesome_fa-hourglass_1Ar7q:before {\n  content: \"\\F254\";\n}\n.font-awesome_fa-hand-grab-o_3I7_Y:before,\n.font-awesome_fa-hand-rock-o_1Tb8S:before {\n  content: \"\\F255\";\n}\n.font-awesome_fa-hand-stop-o_37eq3:before,\n.font-awesome_fa-hand-paper-o_2dp3p:before {\n  content: \"\\F256\";\n}\n.font-awesome_fa-hand-scissors-o_tLXdy:before {\n  content: \"\\F257\";\n}\n.font-awesome_fa-hand-lizard-o_2afn0:before {\n  content: \"\\F258\";\n}\n.font-awesome_fa-hand-spock-o_22lUn:before {\n  content: \"\\F259\";\n}\n.font-awesome_fa-hand-pointer-o_3EDBr:before {\n  content: \"\\F25A\";\n}\n.font-awesome_fa-hand-peace-o_3KVDU:before {\n  content: \"\\F25B\";\n}\n.font-awesome_fa-trademark_1pZSQ:before {\n  content: \"\\F25C\";\n}\n.font-awesome_fa-registered_2bkiQ:before {\n  content: \"\\F25D\";\n}\n.font-awesome_fa-creative-commons_19SOu:before {\n  content: \"\\F25E\";\n}\n.font-awesome_fa-gg_8EwZk:before {\n  content: \"\\F260\";\n}\n.font-awesome_fa-gg-circle_ixSHX:before {\n  content: \"\\F261\";\n}\n.font-awesome_fa-tripadvisor_3SR4I:before {\n  content: \"\\F262\";\n}\n.font-awesome_fa-odnoklassniki_18Bc_:before {\n  content: \"\\F263\";\n}\n.font-awesome_fa-odnoklassniki-square_2tvme:before {\n  content: \"\\F264\";\n}\n.font-awesome_fa-get-pocket_1kDeB:before {\n  content: \"\\F265\";\n}\n.font-awesome_fa-wikipedia-w_2bnVT:before {\n  content: \"\\F266\";\n}\n.font-awesome_fa-safari_1d_gp:before {\n  content: \"\\F267\";\n}\n.font-awesome_fa-chrome_2lYJX:before {\n  content: \"\\F268\";\n}\n.font-awesome_fa-firefox_3G1uV:before {\n  content: \"\\F269\";\n}\n.font-awesome_fa-opera_2EABz:before {\n  content: \"\\F26A\";\n}\n.font-awesome_fa-internet-explorer_2e6T2:before {\n  content: \"\\F26B\";\n}\n.font-awesome_fa-tv_pyAzy:before,\n.font-awesome_fa-television_1MplB:before {\n  content: \"\\F26C\";\n}\n.font-awesome_fa-contao_1BTJ5:before {\n  content: \"\\F26D\";\n}\n.font-awesome_fa-500px_2dpFP:before {\n  content: \"\\F26E\";\n}\n.font-awesome_fa-amazon_1J6OF:before {\n  content: \"\\F270\";\n}\n.font-awesome_fa-calendar-plus-o_up6cZ:before {\n  content: \"\\F271\";\n}\n.font-awesome_fa-calendar-minus-o_2wY7J:before {\n  content: \"\\F272\";\n}\n.font-awesome_fa-calendar-times-o_1jaLQ:before {\n  content: \"\\F273\";\n}\n.font-awesome_fa-calendar-check-o_3xoZC:before {\n  content: \"\\F274\";\n}\n.font-awesome_fa-industry_3LSV8:before {\n  content: \"\\F275\";\n}\n.font-awesome_fa-map-pin_1mpnW:before {\n  content: \"\\F276\";\n}\n.font-awesome_fa-map-signs_21LXb:before {\n  content: \"\\F277\";\n}\n.font-awesome_fa-map-o_1CDpd:before {\n  content: \"\\F278\";\n}\n.font-awesome_fa-map_18QCe:before {\n  content: \"\\F279\";\n}\n.font-awesome_fa-commenting_2oYYM:before {\n  content: \"\\F27A\";\n}\n.font-awesome_fa-commenting-o_2BRal:before {\n  content: \"\\F27B\";\n}\n.font-awesome_fa-houzz_13-hb:before {\n  content: \"\\F27C\";\n}\n.font-awesome_fa-vimeo_3vcPv:before {\n  content: \"\\F27D\";\n}\n.font-awesome_fa-black-tie_34h9B:before {\n  content: \"\\F27E\";\n}\n.font-awesome_fa-fonticons_aNgtF:before {\n  content: \"\\F280\";\n}\n.font-awesome_fa-reddit-alien_3f_aH:before {\n  content: \"\\F281\";\n}\n.font-awesome_fa-edge_3UUWF:before {\n  content: \"\\F282\";\n}\n.font-awesome_fa-credit-card-alt_oOWN1:before {\n  content: \"\\F283\";\n}\n.font-awesome_fa-codiepie_2amwQ:before {\n  content: \"\\F284\";\n}\n.font-awesome_fa-modx__HnMH:before {\n  content: \"\\F285\";\n}\n.font-awesome_fa-fort-awesome_1Pxvs:before {\n  content: \"\\F286\";\n}\n.font-awesome_fa-usb_2-FsD:before {\n  content: \"\\F287\";\n}\n.font-awesome_fa-product-hunt_3WqRr:before {\n  content: \"\\F288\";\n}\n.font-awesome_fa-mixcloud_2e01G:before {\n  content: \"\\F289\";\n}\n.font-awesome_fa-scribd_1bAIo:before {\n  content: \"\\F28A\";\n}\n.font-awesome_fa-pause-circle_3wI6c:before {\n  content: \"\\F28B\";\n}\n.font-awesome_fa-pause-circle-o_2MdRS:before {\n  content: \"\\F28C\";\n}\n.font-awesome_fa-stop-circle_3aZ6V:before {\n  content: \"\\F28D\";\n}\n.font-awesome_fa-stop-circle-o_2oIr6:before {\n  content: \"\\F28E\";\n}\n.font-awesome_fa-shopping-bag_2mD0w:before {\n  content: \"\\F290\";\n}\n.font-awesome_fa-shopping-basket_2ZYTJ:before {\n  content: \"\\F291\";\n}\n.font-awesome_fa-hashtag_1sHh4:before {\n  content: \"\\F292\";\n}\n.font-awesome_fa-bluetooth_1tJ1-:before {\n  content: \"\\F293\";\n}\n.font-awesome_fa-bluetooth-b_LmWTh:before {\n  content: \"\\F294\";\n}\n.font-awesome_fa-percent_3jbSX:before {\n  content: \"\\F295\";\n}\n", ""]);
-
-	// exports
-	exports.locals = {
-		"fa": "font-awesome_fa_2otTb",
-		"fa-lg": "font-awesome_fa-lg_2-2uP",
-		"fa-2x": "font-awesome_fa-2x_2Mgjx",
-		"fa-3x": "font-awesome_fa-3x_1gdsS",
-		"fa-4x": "font-awesome_fa-4x_2VkGW",
-		"fa-5x": "font-awesome_fa-5x_QKikc",
-		"fa-fw": "font-awesome_fa-fw_1FdA5",
-		"fa-ul": "font-awesome_fa-ul_2XTDQ",
-		"fa-li": "font-awesome_fa-li_1vepp",
-		"fa-border": "font-awesome_fa-border_6EUMg",
-		"fa-pull-left": "font-awesome_fa-pull-left_3jHfw",
-		"fa-pull-right": "font-awesome_fa-pull-right_20ZAt",
-		"pull-right": "font-awesome_pull-right_1Mb60",
-		"pull-left": "font-awesome_pull-left_30vXl",
-		"fa-spin": "font-awesome_fa-spin_NsqCr",
-		"fa-pulse": "font-awesome_fa-pulse_1Vv2f",
-		"fa-rotate-90": "font-awesome_fa-rotate-90_1snKw",
-		"fa-rotate-180": "font-awesome_fa-rotate-180_2hMM8",
-		"fa-rotate-270": "font-awesome_fa-rotate-270_3eBDG",
-		"fa-flip-horizontal": "font-awesome_fa-flip-horizontal_33SUC",
-		"fa-flip-vertical": "font-awesome_fa-flip-vertical_klOOu",
-		"fa-stack": "font-awesome_fa-stack_3fqsM",
-		"fa-stack-1x": "font-awesome_fa-stack-1x_14Vb0",
-		"fa-stack-2x": "font-awesome_fa-stack-2x_It5yP",
-		"fa-inverse": "font-awesome_fa-inverse_1e1EX",
-		"fa-glass": "font-awesome_fa-glass_34uit",
-		"fa-music": "font-awesome_fa-music_3f2s5",
-		"fa-search": "font-awesome_fa-search_1C7GK",
-		"fa-envelope-o": "font-awesome_fa-envelope-o_3EWEI",
-		"fa-heart": "font-awesome_fa-heart_3DHYT",
-		"fa-star": "font-awesome_fa-star_2g4Ye",
-		"fa-star-o": "font-awesome_fa-star-o_3ty_o",
-		"fa-user": "font-awesome_fa-user_N3puO",
-		"fa-film": "font-awesome_fa-film_2qmKe",
-		"fa-th-large": "font-awesome_fa-th-large_2N4P8",
-		"fa-th": "font-awesome_fa-th_3f0mR",
-		"fa-th-list": "font-awesome_fa-th-list_3qelJ",
-		"fa-check": "font-awesome_fa-check_3DXVm",
-		"fa-remove": "font-awesome_fa-remove_1MIYz",
-		"fa-close": "font-awesome_fa-close_1zysR",
-		"fa-times": "font-awesome_fa-times_1Y-Cs",
-		"fa-search-plus": "font-awesome_fa-search-plus_9OGuc",
-		"fa-search-minus": "font-awesome_fa-search-minus_1j_Aj",
-		"fa-power-off": "font-awesome_fa-power-off_vPefe",
-		"fa-signal": "font-awesome_fa-signal_1VxWh",
-		"fa-gear": "font-awesome_fa-gear_yfzjv",
-		"fa-cog": "font-awesome_fa-cog_30mdw",
-		"fa-trash-o": "font-awesome_fa-trash-o_2uFKh",
-		"fa-home": "font-awesome_fa-home_3Fr6e",
-		"fa-file-o": "font-awesome_fa-file-o_208AJ",
-		"fa-clock-o": "font-awesome_fa-clock-o_3vfig",
-		"fa-road": "font-awesome_fa-road_2017v",
-		"fa-download": "font-awesome_fa-download_1TDS9",
-		"fa-arrow-circle-o-down": "font-awesome_fa-arrow-circle-o-down_2M97h",
-		"fa-arrow-circle-o-up": "font-awesome_fa-arrow-circle-o-up_2aqY-",
-		"fa-inbox": "font-awesome_fa-inbox_3bWnM",
-		"fa-play-circle-o": "font-awesome_fa-play-circle-o_3vU6r",
-		"fa-rotate-right": "font-awesome_fa-rotate-right_1E_3J",
-		"fa-repeat": "font-awesome_fa-repeat_27E0b",
-		"fa-refresh": "font-awesome_fa-refresh_2AOlD",
-		"fa-list-alt": "font-awesome_fa-list-alt_3nS4v",
-		"fa-lock": "font-awesome_fa-lock_inyGT",
-		"fa-flag": "font-awesome_fa-flag_1qWlx",
-		"fa-headphones": "font-awesome_fa-headphones_13olw",
-		"fa-volume-off": "font-awesome_fa-volume-off_1llC2",
-		"fa-volume-down": "font-awesome_fa-volume-down_1jTgZ",
-		"fa-volume-up": "font-awesome_fa-volume-up_2XIXx",
-		"fa-qrcode": "font-awesome_fa-qrcode_17ZaI",
-		"fa-barcode": "font-awesome_fa-barcode_1al4-",
-		"fa-tag": "font-awesome_fa-tag_2CMhy",
-		"fa-tags": "font-awesome_fa-tags_3kYb4",
-		"fa-book": "font-awesome_fa-book_32JVT",
-		"fa-bookmark": "font-awesome_fa-bookmark_1s2Fl",
-		"fa-print": "font-awesome_fa-print_y2Ezw",
-		"fa-camera": "font-awesome_fa-camera_Ls8dv",
-		"fa-font": "font-awesome_fa-font_1VH0X",
-		"fa-bold": "font-awesome_fa-bold_11qyx",
-		"fa-italic": "font-awesome_fa-italic_1Gtc3",
-		"fa-text-height": "font-awesome_fa-text-height_3db67",
-		"fa-text-width": "font-awesome_fa-text-width_2yBeb",
-		"fa-align-left": "font-awesome_fa-align-left_3DuVK",
-		"fa-align-center": "font-awesome_fa-align-center_M9xyY",
-		"fa-align-right": "font-awesome_fa-align-right_3Icru",
-		"fa-align-justify": "font-awesome_fa-align-justify_maoNA",
-		"fa-list": "font-awesome_fa-list_3CT1m",
-		"fa-dedent": "font-awesome_fa-dedent_3p5N-",
-		"fa-outdent": "font-awesome_fa-outdent_34S6p",
-		"fa-indent": "font-awesome_fa-indent_2Y6xl",
-		"fa-video-camera": "font-awesome_fa-video-camera_2Tfna",
-		"fa-photo": "font-awesome_fa-photo_2f_lI",
-		"fa-image": "font-awesome_fa-image_l6mTT",
-		"fa-picture-o": "font-awesome_fa-picture-o_3srts",
-		"fa-pencil": "font-awesome_fa-pencil_3o0Fh",
-		"fa-map-marker": "font-awesome_fa-map-marker_1Lc7q",
-		"fa-adjust": "font-awesome_fa-adjust_1uk96",
-		"fa-tint": "font-awesome_fa-tint_23wIx",
-		"fa-edit": "font-awesome_fa-edit_2ITK3",
-		"fa-pencil-square-o": "font-awesome_fa-pencil-square-o_1jFx_",
-		"fa-share-square-o": "font-awesome_fa-share-square-o_1bC_y",
-		"fa-check-square-o": "font-awesome_fa-check-square-o_2eIdJ",
-		"fa-arrows": "font-awesome_fa-arrows_2tovc",
-		"fa-step-backward": "font-awesome_fa-step-backward_1aJ3J",
-		"fa-fast-backward": "font-awesome_fa-fast-backward_rW1JQ",
-		"fa-backward": "font-awesome_fa-backward_WWKjR",
-		"fa-play": "font-awesome_fa-play_1vQTN",
-		"fa-pause": "font-awesome_fa-pause_33hRm",
-		"fa-stop": "font-awesome_fa-stop_1l1v_",
-		"fa-forward": "font-awesome_fa-forward_3jJNW",
-		"fa-fast-forward": "font-awesome_fa-fast-forward_2JwE2",
-		"fa-step-forward": "font-awesome_fa-step-forward_3NyZe",
-		"fa-eject": "font-awesome_fa-eject_GA_Jm",
-		"fa-chevron-left": "font-awesome_fa-chevron-left_1EwAm",
-		"fa-chevron-right": "font-awesome_fa-chevron-right_3RxN_",
-		"fa-plus-circle": "font-awesome_fa-plus-circle_1SAMg",
-		"fa-minus-circle": "font-awesome_fa-minus-circle_Th8wG",
-		"fa-times-circle": "font-awesome_fa-times-circle_JfW7D",
-		"fa-check-circle": "font-awesome_fa-check-circle_PBRDH",
-		"fa-question-circle": "font-awesome_fa-question-circle_33ykP",
-		"fa-info-circle": "font-awesome_fa-info-circle_2ZdWr",
-		"fa-crosshairs": "font-awesome_fa-crosshairs_18oYo",
-		"fa-times-circle-o": "font-awesome_fa-times-circle-o_3LLKK",
-		"fa-check-circle-o": "font-awesome_fa-check-circle-o_1CW2E",
-		"fa-ban": "font-awesome_fa-ban_1LOdy",
-		"fa-arrow-left": "font-awesome_fa-arrow-left_2G_P0",
-		"fa-arrow-right": "font-awesome_fa-arrow-right_15DTA",
-		"fa-arrow-up": "font-awesome_fa-arrow-up_12gpU",
-		"fa-arrow-down": "font-awesome_fa-arrow-down_2zqoH",
-		"fa-mail-forward": "font-awesome_fa-mail-forward_2tQrw",
-		"fa-share": "font-awesome_fa-share_3O8Dc",
-		"fa-expand": "font-awesome_fa-expand_34Ihf",
-		"fa-compress": "font-awesome_fa-compress_1JDdS",
-		"fa-plus": "font-awesome_fa-plus_WEb-k",
-		"fa-minus": "font-awesome_fa-minus_1WAd4",
-		"fa-asterisk": "font-awesome_fa-asterisk_w7w6r",
-		"fa-exclamation-circle": "font-awesome_fa-exclamation-circle_2bbrU",
-		"fa-gift": "font-awesome_fa-gift_3bKvI",
-		"fa-leaf": "font-awesome_fa-leaf_2B5Uf",
-		"fa-fire": "font-awesome_fa-fire_1qsDr",
-		"fa-eye": "font-awesome_fa-eye_3XRn0",
-		"fa-eye-slash": "font-awesome_fa-eye-slash_18NEx",
-		"fa-warning": "font-awesome_fa-warning_32nGg",
-		"fa-exclamation-triangle": "font-awesome_fa-exclamation-triangle_ttuT-",
-		"fa-plane": "font-awesome_fa-plane_3L5mD",
-		"fa-calendar": "font-awesome_fa-calendar_1niuw",
-		"fa-random": "font-awesome_fa-random_2RH42",
-		"fa-comment": "font-awesome_fa-comment_2koYW",
-		"fa-magnet": "font-awesome_fa-magnet_33k7m",
-		"fa-chevron-up": "font-awesome_fa-chevron-up_2R5R_",
-		"fa-chevron-down": "font-awesome_fa-chevron-down_746nC",
-		"fa-retweet": "font-awesome_fa-retweet_2ma5b",
-		"fa-shopping-cart": "font-awesome_fa-shopping-cart_276KU",
-		"fa-folder": "font-awesome_fa-folder_2MMW6",
-		"fa-folder-open": "font-awesome_fa-folder-open_1a3bX",
-		"fa-arrows-v": "font-awesome_fa-arrows-v_27J04",
-		"fa-arrows-h": "font-awesome_fa-arrows-h_3EAQ6",
-		"fa-bar-chart-o": "font-awesome_fa-bar-chart-o_BMSPQ",
-		"fa-bar-chart": "font-awesome_fa-bar-chart_3LGib",
-		"fa-twitter-square": "font-awesome_fa-twitter-square_146CY",
-		"fa-facebook-square": "font-awesome_fa-facebook-square_3IbRT",
-		"fa-camera-retro": "font-awesome_fa-camera-retro_oM_mn",
-		"fa-key": "font-awesome_fa-key_3bV7M",
-		"fa-gears": "font-awesome_fa-gears_3cjY1",
-		"fa-cogs": "font-awesome_fa-cogs_CqXH5",
-		"fa-comments": "font-awesome_fa-comments_2lUtO",
-		"fa-thumbs-o-up": "font-awesome_fa-thumbs-o-up_3cD9j",
-		"fa-thumbs-o-down": "font-awesome_fa-thumbs-o-down_3AeCO",
-		"fa-star-half": "font-awesome_fa-star-half_2zxdp",
-		"fa-heart-o": "font-awesome_fa-heart-o_QI-Zl",
-		"fa-sign-out": "font-awesome_fa-sign-out_2IOU5",
-		"fa-linkedin-square": "font-awesome_fa-linkedin-square_3HkV4",
-		"fa-thumb-tack": "font-awesome_fa-thumb-tack_2gcw0",
-		"fa-external-link": "font-awesome_fa-external-link_1ku_O",
-		"fa-sign-in": "font-awesome_fa-sign-in_1MYT-",
-		"fa-trophy": "font-awesome_fa-trophy_3CyBM",
-		"fa-github-square": "font-awesome_fa-github-square_1xm6W",
-		"fa-upload": "font-awesome_fa-upload_wVRel",
-		"fa-lemon-o": "font-awesome_fa-lemon-o_2v3hR",
-		"fa-phone": "font-awesome_fa-phone_1EiFR",
-		"fa-square-o": "font-awesome_fa-square-o_WbQ8x",
-		"fa-bookmark-o": "font-awesome_fa-bookmark-o_1R5xe",
-		"fa-phone-square": "font-awesome_fa-phone-square_3GkD1",
-		"fa-twitter": "font-awesome_fa-twitter_cyUBg",
-		"fa-facebook-f": "font-awesome_fa-facebook-f_3r4VF",
-		"fa-facebook": "font-awesome_fa-facebook_f3EUw",
-		"fa-github": "font-awesome_fa-github_MdgBC",
-		"fa-unlock": "font-awesome_fa-unlock_XTSXp",
-		"fa-credit-card": "font-awesome_fa-credit-card_28S4q",
-		"fa-feed": "font-awesome_fa-feed_3tLbf",
-		"fa-rss": "font-awesome_fa-rss_3_EzS",
-		"fa-hdd-o": "font-awesome_fa-hdd-o_3ZoO6",
-		"fa-bullhorn": "font-awesome_fa-bullhorn_3o7hz",
-		"fa-bell": "font-awesome_fa-bell_26AZW",
-		"fa-certificate": "font-awesome_fa-certificate_11sLt",
-		"fa-hand-o-right": "font-awesome_fa-hand-o-right_2G1w_",
-		"fa-hand-o-left": "font-awesome_fa-hand-o-left_2KTOL",
-		"fa-hand-o-up": "font-awesome_fa-hand-o-up_3xrkS",
-		"fa-hand-o-down": "font-awesome_fa-hand-o-down_3cWAN",
-		"fa-arrow-circle-left": "font-awesome_fa-arrow-circle-left_2CgFw",
-		"fa-arrow-circle-right": "font-awesome_fa-arrow-circle-right_35XcE",
-		"fa-arrow-circle-up": "font-awesome_fa-arrow-circle-up_FHcwE",
-		"fa-arrow-circle-down": "font-awesome_fa-arrow-circle-down_1NJKi",
-		"fa-globe": "font-awesome_fa-globe_2fYFX",
-		"fa-wrench": "font-awesome_fa-wrench_3snDo",
-		"fa-tasks": "font-awesome_fa-tasks_2_oS8",
-		"fa-filter": "font-awesome_fa-filter_1q5k8",
-		"fa-briefcase": "font-awesome_fa-briefcase_aikwY",
-		"fa-arrows-alt": "font-awesome_fa-arrows-alt_1vqY9",
-		"fa-group": "font-awesome_fa-group_XbMo9",
-		"fa-users": "font-awesome_fa-users_1PfY8",
-		"fa-chain": "font-awesome_fa-chain_2QCgS",
-		"fa-link": "font-awesome_fa-link_3kFkN",
-		"fa-cloud": "font-awesome_fa-cloud_2l8rd",
-		"fa-flask": "font-awesome_fa-flask_3iTak",
-		"fa-cut": "font-awesome_fa-cut_17wpt",
-		"fa-scissors": "font-awesome_fa-scissors_1xAHX",
-		"fa-copy": "font-awesome_fa-copy_a2GP3",
-		"fa-files-o": "font-awesome_fa-files-o_2pUmI",
-		"fa-paperclip": "font-awesome_fa-paperclip_d4foW",
-		"fa-save": "font-awesome_fa-save_10fTV",
-		"fa-floppy-o": "font-awesome_fa-floppy-o_1MBo6",
-		"fa-square": "font-awesome_fa-square_N1IJZ",
-		"fa-navicon": "font-awesome_fa-navicon_3anpJ",
-		"fa-reorder": "font-awesome_fa-reorder_2ukY7",
-		"fa-bars": "font-awesome_fa-bars_3WARK",
-		"fa-list-ul": "font-awesome_fa-list-ul_3s6_2",
-		"fa-list-ol": "font-awesome_fa-list-ol_AP-DO",
-		"fa-strikethrough": "font-awesome_fa-strikethrough_h0-a_",
-		"fa-underline": "font-awesome_fa-underline_2PIFp",
-		"fa-table": "font-awesome_fa-table_2mEeT",
-		"fa-magic": "font-awesome_fa-magic_qWQg_",
-		"fa-truck": "font-awesome_fa-truck_1AsFs",
-		"fa-pinterest": "font-awesome_fa-pinterest_1xKnl",
-		"fa-pinterest-square": "font-awesome_fa-pinterest-square_3Yhwf",
-		"fa-google-plus-square": "font-awesome_fa-google-plus-square_90VGD",
-		"fa-google-plus": "font-awesome_fa-google-plus_1Tp-z",
-		"fa-money": "font-awesome_fa-money_32Lir",
-		"fa-caret-down": "font-awesome_fa-caret-down_1crEO",
-		"fa-caret-up": "font-awesome_fa-caret-up_2TwZv",
-		"fa-caret-left": "font-awesome_fa-caret-left_39lOf",
-		"fa-caret-right": "font-awesome_fa-caret-right_3p0nW",
-		"fa-columns": "font-awesome_fa-columns_nToc3",
-		"fa-unsorted": "font-awesome_fa-unsorted_2nhbR",
-		"fa-sort": "font-awesome_fa-sort_F3dcY",
-		"fa-sort-down": "font-awesome_fa-sort-down_3wTbK",
-		"fa-sort-desc": "font-awesome_fa-sort-desc_3CQ5e",
-		"fa-sort-up": "font-awesome_fa-sort-up_Ad_bv",
-		"fa-sort-asc": "font-awesome_fa-sort-asc_3MlT5",
-		"fa-envelope": "font-awesome_fa-envelope_3xnLD",
-		"fa-linkedin": "font-awesome_fa-linkedin_25eMJ",
-		"fa-rotate-left": "font-awesome_fa-rotate-left_3mzU5",
-		"fa-undo": "font-awesome_fa-undo_hNldt",
-		"fa-legal": "font-awesome_fa-legal_1C_3g",
-		"fa-gavel": "font-awesome_fa-gavel_2ttLP",
-		"fa-dashboard": "font-awesome_fa-dashboard_3bEM7",
-		"fa-tachometer": "font-awesome_fa-tachometer_3R5zx",
-		"fa-comment-o": "font-awesome_fa-comment-o_2pEPg",
-		"fa-comments-o": "font-awesome_fa-comments-o_hQJKS",
-		"fa-flash": "font-awesome_fa-flash_1DU_v",
-		"fa-bolt": "font-awesome_fa-bolt_3iT3l",
-		"fa-sitemap": "font-awesome_fa-sitemap_QKmtm",
-		"fa-umbrella": "font-awesome_fa-umbrella_3fE2k",
-		"fa-paste": "font-awesome_fa-paste_3RUtK",
-		"fa-clipboard": "font-awesome_fa-clipboard_1Wx9E",
-		"fa-lightbulb-o": "font-awesome_fa-lightbulb-o_3MZxy",
-		"fa-exchange": "font-awesome_fa-exchange_1cgNj",
-		"fa-cloud-download": "font-awesome_fa-cloud-download_2fd-7",
-		"fa-cloud-upload": "font-awesome_fa-cloud-upload_BCKnV",
-		"fa-user-md": "font-awesome_fa-user-md_3Unw6",
-		"fa-stethoscope": "font-awesome_fa-stethoscope_3TPjy",
-		"fa-suitcase": "font-awesome_fa-suitcase_2ZK-F",
-		"fa-bell-o": "font-awesome_fa-bell-o_3iuFm",
-		"fa-coffee": "font-awesome_fa-coffee_2tZxb",
-		"fa-cutlery": "font-awesome_fa-cutlery_2dZZ2",
-		"fa-file-text-o": "font-awesome_fa-file-text-o_3vkBr",
-		"fa-building-o": "font-awesome_fa-building-o_1ML8l",
-		"fa-hospital-o": "font-awesome_fa-hospital-o_2dZPM",
-		"fa-ambulance": "font-awesome_fa-ambulance_3oMTO",
-		"fa-medkit": "font-awesome_fa-medkit_3TuAD",
-		"fa-fighter-jet": "font-awesome_fa-fighter-jet_2EPG4",
-		"fa-beer": "font-awesome_fa-beer_25HMG",
-		"fa-h-square": "font-awesome_fa-h-square_iRMP3",
-		"fa-plus-square": "font-awesome_fa-plus-square_28zW8",
-		"fa-angle-double-left": "font-awesome_fa-angle-double-left_3Q7bL",
-		"fa-angle-double-right": "font-awesome_fa-angle-double-right_2R24L",
-		"fa-angle-double-up": "font-awesome_fa-angle-double-up_2GMJK",
-		"fa-angle-double-down": "font-awesome_fa-angle-double-down_IlK-a",
-		"fa-angle-left": "font-awesome_fa-angle-left_7b-ty",
-		"fa-angle-right": "font-awesome_fa-angle-right_RfvDx",
-		"fa-angle-up": "font-awesome_fa-angle-up_2xGkU",
-		"fa-angle-down": "font-awesome_fa-angle-down_3nIhI",
-		"fa-desktop": "font-awesome_fa-desktop_7pHFF",
-		"fa-laptop": "font-awesome_fa-laptop_2QHxL",
-		"fa-tablet": "font-awesome_fa-tablet_eRAwh",
-		"fa-mobile-phone": "font-awesome_fa-mobile-phone_3tGZx",
-		"fa-mobile": "font-awesome_fa-mobile_ry_56",
-		"fa-circle-o": "font-awesome_fa-circle-o_We1QB",
-		"fa-quote-left": "font-awesome_fa-quote-left_tgvF3",
-		"fa-quote-right": "font-awesome_fa-quote-right_2LbYu",
-		"fa-spinner": "font-awesome_fa-spinner_1FgdF",
-		"fa-circle": "font-awesome_fa-circle_RFG4V",
-		"fa-mail-reply": "font-awesome_fa-mail-reply_1ovuj",
-		"fa-reply": "font-awesome_fa-reply_1p4xy",
-		"fa-github-alt": "font-awesome_fa-github-alt_PGZGn",
-		"fa-folder-o": "font-awesome_fa-folder-o_28LsO",
-		"fa-folder-open-o": "font-awesome_fa-folder-open-o_3Hbbz",
-		"fa-smile-o": "font-awesome_fa-smile-o_3R1KH",
-		"fa-frown-o": "font-awesome_fa-frown-o_1PJe6",
-		"fa-meh-o": "font-awesome_fa-meh-o_1Yal3",
-		"fa-gamepad": "font-awesome_fa-gamepad_DQkX5",
-		"fa-keyboard-o": "font-awesome_fa-keyboard-o_1Zegg",
-		"fa-flag-o": "font-awesome_fa-flag-o_2paT4",
-		"fa-flag-checkered": "font-awesome_fa-flag-checkered_3Q50W",
-		"fa-terminal": "font-awesome_fa-terminal_1y_ce",
-		"fa-code": "font-awesome_fa-code_373HL",
-		"fa-mail-reply-all": "font-awesome_fa-mail-reply-all_1el1h",
-		"fa-reply-all": "font-awesome_fa-reply-all_1XbQQ",
-		"fa-star-half-empty": "font-awesome_fa-star-half-empty_NeM4g",
-		"fa-star-half-full": "font-awesome_fa-star-half-full_3_GnR",
-		"fa-star-half-o": "font-awesome_fa-star-half-o_1gMSG",
-		"fa-location-arrow": "font-awesome_fa-location-arrow_gFy0a",
-		"fa-crop": "font-awesome_fa-crop_DFePA",
-		"fa-code-fork": "font-awesome_fa-code-fork_rNRd0",
-		"fa-unlink": "font-awesome_fa-unlink_1hw62",
-		"fa-chain-broken": "font-awesome_fa-chain-broken_3nVk7",
-		"fa-question": "font-awesome_fa-question_EAoIA",
-		"fa-info": "font-awesome_fa-info_2cQvQ",
-		"fa-exclamation": "font-awesome_fa-exclamation_297uN",
-		"fa-superscript": "font-awesome_fa-superscript_N7aMl",
-		"fa-subscript": "font-awesome_fa-subscript_ZG4gQ",
-		"fa-eraser": "font-awesome_fa-eraser_3NIuU",
-		"fa-puzzle-piece": "font-awesome_fa-puzzle-piece_3lKWq",
-		"fa-microphone": "font-awesome_fa-microphone_3_81_",
-		"fa-microphone-slash": "font-awesome_fa-microphone-slash_1DyxC",
-		"fa-shield": "font-awesome_fa-shield_1qKif",
-		"fa-calendar-o": "font-awesome_fa-calendar-o_1BLCm",
-		"fa-fire-extinguisher": "font-awesome_fa-fire-extinguisher_3gz5K",
-		"fa-rocket": "font-awesome_fa-rocket_lfSov",
-		"fa-maxcdn": "font-awesome_fa-maxcdn_cD6Fn",
-		"fa-chevron-circle-left": "font-awesome_fa-chevron-circle-left_1aac7",
-		"fa-chevron-circle-right": "font-awesome_fa-chevron-circle-right_Evj_u",
-		"fa-chevron-circle-up": "font-awesome_fa-chevron-circle-up_tTcaI",
-		"fa-chevron-circle-down": "font-awesome_fa-chevron-circle-down_1oKtm",
-		"fa-html5": "font-awesome_fa-html5_3LZaq",
-		"fa-css3": "font-awesome_fa-css3_3hg4c",
-		"fa-anchor": "font-awesome_fa-anchor_2-wZ3",
-		"fa-unlock-alt": "font-awesome_fa-unlock-alt_CLyLU",
-		"fa-bullseye": "font-awesome_fa-bullseye_6Sp1E",
-		"fa-ellipsis-h": "font-awesome_fa-ellipsis-h_4VBiE",
-		"fa-ellipsis-v": "font-awesome_fa-ellipsis-v_Ktjfe",
-		"fa-rss-square": "font-awesome_fa-rss-square_4Vj2y",
-		"fa-play-circle": "font-awesome_fa-play-circle_ECzau",
-		"fa-ticket": "font-awesome_fa-ticket_284VQ",
-		"fa-minus-square": "font-awesome_fa-minus-square_3w_Do",
-		"fa-minus-square-o": "font-awesome_fa-minus-square-o_qe1Jq",
-		"fa-level-up": "font-awesome_fa-level-up_7RnC1",
-		"fa-level-down": "font-awesome_fa-level-down_1rR4Q",
-		"fa-check-square": "font-awesome_fa-check-square_3Qxfb",
-		"fa-pencil-square": "font-awesome_fa-pencil-square_3f_4W",
-		"fa-external-link-square": "font-awesome_fa-external-link-square_3TfmM",
-		"fa-share-square": "font-awesome_fa-share-square_4XEPu",
-		"fa-compass": "font-awesome_fa-compass_3kP2n",
-		"fa-toggle-down": "font-awesome_fa-toggle-down_vVDIQ",
-		"fa-caret-square-o-down": "font-awesome_fa-caret-square-o-down_1Ao-B",
-		"fa-toggle-up": "font-awesome_fa-toggle-up_1j96l",
-		"fa-caret-square-o-up": "font-awesome_fa-caret-square-o-up_1Lr5P",
-		"fa-toggle-right": "font-awesome_fa-toggle-right_391jj",
-		"fa-caret-square-o-right": "font-awesome_fa-caret-square-o-right_Jc6ln",
-		"fa-euro": "font-awesome_fa-euro_1H752",
-		"fa-eur": "font-awesome_fa-eur_2JOH3",
-		"fa-gbp": "font-awesome_fa-gbp_sXuSA",
-		"fa-dollar": "font-awesome_fa-dollar_1Qw2b",
-		"fa-usd": "font-awesome_fa-usd_1Cyf0",
-		"fa-rupee": "font-awesome_fa-rupee_3EdPr",
-		"fa-inr": "font-awesome_fa-inr_2v4ZE",
-		"fa-cny": "font-awesome_fa-cny_3RNlL",
-		"fa-rmb": "font-awesome_fa-rmb_vAGyw",
-		"fa-yen": "font-awesome_fa-yen_UH2C8",
-		"fa-jpy": "font-awesome_fa-jpy_CXaPK",
-		"fa-ruble": "font-awesome_fa-ruble_1ms6_",
-		"fa-rouble": "font-awesome_fa-rouble_fwC1R",
-		"fa-rub": "font-awesome_fa-rub_1c94U",
-		"fa-won": "font-awesome_fa-won_1oqxL",
-		"fa-krw": "font-awesome_fa-krw_xc7hv",
-		"fa-bitcoin": "font-awesome_fa-bitcoin_3h17C",
-		"fa-btc": "font-awesome_fa-btc_2EpsK",
-		"fa-file": "font-awesome_fa-file_2_TBG",
-		"fa-file-text": "font-awesome_fa-file-text_3uzzE",
-		"fa-sort-alpha-asc": "font-awesome_fa-sort-alpha-asc_l6x9i",
-		"fa-sort-alpha-desc": "font-awesome_fa-sort-alpha-desc_Au5Op",
-		"fa-sort-amount-asc": "font-awesome_fa-sort-amount-asc_a4pl1",
-		"fa-sort-amount-desc": "font-awesome_fa-sort-amount-desc_sHYze",
-		"fa-sort-numeric-asc": "font-awesome_fa-sort-numeric-asc_2fl5U",
-		"fa-sort-numeric-desc": "font-awesome_fa-sort-numeric-desc_rZcNd",
-		"fa-thumbs-up": "font-awesome_fa-thumbs-up_32LEl",
-		"fa-thumbs-down": "font-awesome_fa-thumbs-down_115k7",
-		"fa-youtube-square": "font-awesome_fa-youtube-square_1HADK",
-		"fa-youtube": "font-awesome_fa-youtube_3PHGN",
-		"fa-xing": "font-awesome_fa-xing_2fXmL",
-		"fa-xing-square": "font-awesome_fa-xing-square_3AeWb",
-		"fa-youtube-play": "font-awesome_fa-youtube-play__uWZW",
-		"fa-dropbox": "font-awesome_fa-dropbox_1i2Rn",
-		"fa-stack-overflow": "font-awesome_fa-stack-overflow_2tkuN",
-		"fa-instagram": "font-awesome_fa-instagram_1lV5f",
-		"fa-flickr": "font-awesome_fa-flickr_3JrtG",
-		"fa-adn": "font-awesome_fa-adn_3a2Jf",
-		"fa-bitbucket": "font-awesome_fa-bitbucket_12Rp4",
-		"fa-bitbucket-square": "font-awesome_fa-bitbucket-square_Y0lMx",
-		"fa-tumblr": "font-awesome_fa-tumblr_18aB6",
-		"fa-tumblr-square": "font-awesome_fa-tumblr-square_3m4ld",
-		"fa-long-arrow-down": "font-awesome_fa-long-arrow-down_2His0",
-		"fa-long-arrow-up": "font-awesome_fa-long-arrow-up_vP_4l",
-		"fa-long-arrow-left": "font-awesome_fa-long-arrow-left_1Uldc",
-		"fa-long-arrow-right": "font-awesome_fa-long-arrow-right_1_jZV",
-		"fa-apple": "font-awesome_fa-apple_3f0-D",
-		"fa-windows": "font-awesome_fa-windows_2wDfa",
-		"fa-android": "font-awesome_fa-android_1Wzt9",
-		"fa-linux": "font-awesome_fa-linux_3TBYa",
-		"fa-dribbble": "font-awesome_fa-dribbble_IliEV",
-		"fa-skype": "font-awesome_fa-skype_7ne23",
-		"fa-foursquare": "font-awesome_fa-foursquare_52T_Z",
-		"fa-trello": "font-awesome_fa-trello_2ChtW",
-		"fa-female": "font-awesome_fa-female_q-oMT",
-		"fa-male": "font-awesome_fa-male_2PAqV",
-		"fa-gittip": "font-awesome_fa-gittip_2fxKq",
-		"fa-gratipay": "font-awesome_fa-gratipay_xLz4x",
-		"fa-sun-o": "font-awesome_fa-sun-o_3QZ1O",
-		"fa-moon-o": "font-awesome_fa-moon-o_ZwK6C",
-		"fa-archive": "font-awesome_fa-archive_3FY1-",
-		"fa-bug": "font-awesome_fa-bug_20yJn",
-		"fa-vk": "font-awesome_fa-vk_1SLN3",
-		"fa-weibo": "font-awesome_fa-weibo_3q9BS",
-		"fa-renren": "font-awesome_fa-renren_27Rtg",
-		"fa-pagelines": "font-awesome_fa-pagelines_3FZd_",
-		"fa-stack-exchange": "font-awesome_fa-stack-exchange_1BbmA",
-		"fa-arrow-circle-o-right": "font-awesome_fa-arrow-circle-o-right_1lS0I",
-		"fa-arrow-circle-o-left": "font-awesome_fa-arrow-circle-o-left_270k0",
-		"fa-toggle-left": "font-awesome_fa-toggle-left_q8rS1",
-		"fa-caret-square-o-left": "font-awesome_fa-caret-square-o-left_3leFq",
-		"fa-dot-circle-o": "font-awesome_fa-dot-circle-o_fRUKP",
-		"fa-wheelchair": "font-awesome_fa-wheelchair_2sPWn",
-		"fa-vimeo-square": "font-awesome_fa-vimeo-square_1nIhm",
-		"fa-turkish-lira": "font-awesome_fa-turkish-lira_1bCbG",
-		"fa-try": "font-awesome_fa-try_1Olkg",
-		"fa-plus-square-o": "font-awesome_fa-plus-square-o_M6pBY",
-		"fa-space-shuttle": "font-awesome_fa-space-shuttle_9kmJU",
-		"fa-slack": "font-awesome_fa-slack_1EvN7",
-		"fa-envelope-square": "font-awesome_fa-envelope-square_3aqlc",
-		"fa-wordpress": "font-awesome_fa-wordpress_2u9e0",
-		"fa-openid": "font-awesome_fa-openid_2QLde",
-		"fa-institution": "font-awesome_fa-institution_2uHKo",
-		"fa-bank": "font-awesome_fa-bank_D8hxY",
-		"fa-university": "font-awesome_fa-university_3ECjv",
-		"fa-mortar-board": "font-awesome_fa-mortar-board_1em7v",
-		"fa-graduation-cap": "font-awesome_fa-graduation-cap_Y0mMc",
-		"fa-yahoo": "font-awesome_fa-yahoo_33B-N",
-		"fa-google": "font-awesome_fa-google_1QYVJ",
-		"fa-reddit": "font-awesome_fa-reddit_bwA4E",
-		"fa-reddit-square": "font-awesome_fa-reddit-square_3rRiq",
-		"fa-stumbleupon-circle": "font-awesome_fa-stumbleupon-circle_1TPid",
-		"fa-stumbleupon": "font-awesome_fa-stumbleupon_14d1U",
-		"fa-delicious": "font-awesome_fa-delicious_3rkRQ",
-		"fa-digg": "font-awesome_fa-digg_3bIOw",
-		"fa-pied-piper": "font-awesome_fa-pied-piper_1iXBb",
-		"fa-pied-piper-alt": "font-awesome_fa-pied-piper-alt_3UjUa",
-		"fa-drupal": "font-awesome_fa-drupal_WQObj",
-		"fa-joomla": "font-awesome_fa-joomla_2UQVh",
-		"fa-language": "font-awesome_fa-language_DOnO2",
-		"fa-fax": "font-awesome_fa-fax_1SV_d",
-		"fa-building": "font-awesome_fa-building_1FVgz",
-		"fa-child": "font-awesome_fa-child_2gTU4",
-		"fa-paw": "font-awesome_fa-paw_NcsFR",
-		"fa-spoon": "font-awesome_fa-spoon_IxNyL",
-		"fa-cube": "font-awesome_fa-cube_1Mq1-",
-		"fa-cubes": "font-awesome_fa-cubes_1tGnD",
-		"fa-behance": "font-awesome_fa-behance_3mdMe",
-		"fa-behance-square": "font-awesome_fa-behance-square_5ghK4",
-		"fa-steam": "font-awesome_fa-steam_RIwxM",
-		"fa-steam-square": "font-awesome_fa-steam-square_2QEJn",
-		"fa-recycle": "font-awesome_fa-recycle_-U8tZ",
-		"fa-automobile": "font-awesome_fa-automobile_3z3Dw",
-		"fa-car": "font-awesome_fa-car_30pca",
-		"fa-cab": "font-awesome_fa-cab_DDNE1",
-		"fa-taxi": "font-awesome_fa-taxi_22WsM",
-		"fa-tree": "font-awesome_fa-tree_3RDTB",
-		"fa-spotify": "font-awesome_fa-spotify_3UDVW",
-		"fa-deviantart": "font-awesome_fa-deviantart_2ZxWy",
-		"fa-soundcloud": "font-awesome_fa-soundcloud_2ALXb",
-		"fa-database": "font-awesome_fa-database_1lI0N",
-		"fa-file-pdf-o": "font-awesome_fa-file-pdf-o_3kglo",
-		"fa-file-word-o": "font-awesome_fa-file-word-o_1UetZ",
-		"fa-file-excel-o": "font-awesome_fa-file-excel-o_A4QBn",
-		"fa-file-powerpoint-o": "font-awesome_fa-file-powerpoint-o_rrLjs",
-		"fa-file-photo-o": "font-awesome_fa-file-photo-o_2UoDO",
-		"fa-file-picture-o": "font-awesome_fa-file-picture-o_3Xjli",
-		"fa-file-image-o": "font-awesome_fa-file-image-o_2lPT_",
-		"fa-file-zip-o": "font-awesome_fa-file-zip-o_2FWRa",
-		"fa-file-archive-o": "font-awesome_fa-file-archive-o_2Mk5P",
-		"fa-file-sound-o": "font-awesome_fa-file-sound-o_1AcTq",
-		"fa-file-audio-o": "font-awesome_fa-file-audio-o_2PC2o",
-		"fa-file-movie-o": "font-awesome_fa-file-movie-o_VAP4m",
-		"fa-file-video-o": "font-awesome_fa-file-video-o_34mPw",
-		"fa-file-code-o": "font-awesome_fa-file-code-o_1tJvu",
-		"fa-vine": "font-awesome_fa-vine_26AR6",
-		"fa-codepen": "font-awesome_fa-codepen_2F2Jy",
-		"fa-jsfiddle": "font-awesome_fa-jsfiddle_pH8-y",
-		"fa-life-bouy": "font-awesome_fa-life-bouy_3M9kq",
-		"fa-life-buoy": "font-awesome_fa-life-buoy_-dMf6",
-		"fa-life-saver": "font-awesome_fa-life-saver_1NRqc",
-		"fa-support": "font-awesome_fa-support_6Q01X",
-		"fa-life-ring": "font-awesome_fa-life-ring_1x6lZ",
-		"fa-circle-o-notch": "font-awesome_fa-circle-o-notch_cWGUO",
-		"fa-ra": "font-awesome_fa-ra_2liTj",
-		"fa-rebel": "font-awesome_fa-rebel_2UIOr",
-		"fa-ge": "font-awesome_fa-ge_1f9_K",
-		"fa-empire": "font-awesome_fa-empire_3Sw8V",
-		"fa-git-square": "font-awesome_fa-git-square_DgHwD",
-		"fa-git": "font-awesome_fa-git_1dhi0",
-		"fa-y-combinator-square": "font-awesome_fa-y-combinator-square_lfSlT",
-		"fa-yc-square": "font-awesome_fa-yc-square_1Qf2g",
-		"fa-hacker-news": "font-awesome_fa-hacker-news_CxkYC",
-		"fa-tencent-weibo": "font-awesome_fa-tencent-weibo_2-fdG",
-		"fa-qq": "font-awesome_fa-qq_1OIck",
-		"fa-wechat": "font-awesome_fa-wechat_7Wqz8",
-		"fa-weixin": "font-awesome_fa-weixin_2rvXg",
-		"fa-send": "font-awesome_fa-send_1PHOy",
-		"fa-paper-plane": "font-awesome_fa-paper-plane_1JBzT",
-		"fa-send-o": "font-awesome_fa-send-o_1K3Am",
-		"fa-paper-plane-o": "font-awesome_fa-paper-plane-o_Am7EP",
-		"fa-history": "font-awesome_fa-history_xEiAH",
-		"fa-circle-thin": "font-awesome_fa-circle-thin_OCNZt",
-		"fa-header": "font-awesome_fa-header_hMELn",
-		"fa-paragraph": "font-awesome_fa-paragraph_2r_mD",
-		"fa-sliders": "font-awesome_fa-sliders_3eRoo",
-		"fa-share-alt": "font-awesome_fa-share-alt_3jAY7",
-		"fa-share-alt-square": "font-awesome_fa-share-alt-square_46dVM",
-		"fa-bomb": "font-awesome_fa-bomb_1WRhh",
-		"fa-soccer-ball-o": "font-awesome_fa-soccer-ball-o_3rmya",
-		"fa-futbol-o": "font-awesome_fa-futbol-o_Nqzpi",
-		"fa-tty": "font-awesome_fa-tty_3BPj2",
-		"fa-binoculars": "font-awesome_fa-binoculars_1vG29",
-		"fa-plug": "font-awesome_fa-plug_1Lbxt",
-		"fa-slideshare": "font-awesome_fa-slideshare_15ZAf",
-		"fa-twitch": "font-awesome_fa-twitch_MNLu3",
-		"fa-yelp": "font-awesome_fa-yelp_1c1W7",
-		"fa-newspaper-o": "font-awesome_fa-newspaper-o_1ecUe",
-		"fa-wifi": "font-awesome_fa-wifi_dQ61U",
-		"fa-calculator": "font-awesome_fa-calculator_2q6GV",
-		"fa-paypal": "font-awesome_fa-paypal_3lmxL",
-		"fa-google-wallet": "font-awesome_fa-google-wallet_2K_aw",
-		"fa-cc-visa": "font-awesome_fa-cc-visa_2F8r8",
-		"fa-cc-mastercard": "font-awesome_fa-cc-mastercard_T8WQ_",
-		"fa-cc-discover": "font-awesome_fa-cc-discover_2QXm7",
-		"fa-cc-amex": "font-awesome_fa-cc-amex_2w-j8",
-		"fa-cc-paypal": "font-awesome_fa-cc-paypal_gr0Zj",
-		"fa-cc-stripe": "font-awesome_fa-cc-stripe_5ubxJ",
-		"fa-bell-slash": "font-awesome_fa-bell-slash_PIYu4",
-		"fa-bell-slash-o": "font-awesome_fa-bell-slash-o_PTM9c",
-		"fa-trash": "font-awesome_fa-trash_-YVpH",
-		"fa-copyright": "font-awesome_fa-copyright_3Cj5D",
-		"fa-at": "font-awesome_fa-at_b7Ql8",
-		"fa-eyedropper": "font-awesome_fa-eyedropper_1rpAm",
-		"fa-paint-brush": "font-awesome_fa-paint-brush_3SJFh",
-		"fa-birthday-cake": "font-awesome_fa-birthday-cake_-17FP",
-		"fa-area-chart": "font-awesome_fa-area-chart_1fTy1",
-		"fa-pie-chart": "font-awesome_fa-pie-chart_2TXFj",
-		"fa-line-chart": "font-awesome_fa-line-chart_20bFd",
-		"fa-lastfm": "font-awesome_fa-lastfm_3sP7Z",
-		"fa-lastfm-square": "font-awesome_fa-lastfm-square_3OBza",
-		"fa-toggle-off": "font-awesome_fa-toggle-off_2TP0s",
-		"fa-toggle-on": "font-awesome_fa-toggle-on_1ud4K",
-		"fa-bicycle": "font-awesome_fa-bicycle_r_nn3",
-		"fa-bus": "font-awesome_fa-bus_bm6kq",
-		"fa-ioxhost": "font-awesome_fa-ioxhost_yWiPs",
-		"fa-angellist": "font-awesome_fa-angellist_14KNT",
-		"fa-cc": "font-awesome_fa-cc_VsUyp",
-		"fa-shekel": "font-awesome_fa-shekel_3RcTu",
-		"fa-sheqel": "font-awesome_fa-sheqel_2_Sde",
-		"fa-ils": "font-awesome_fa-ils_CYDSg",
-		"fa-meanpath": "font-awesome_fa-meanpath_8Utkv",
-		"fa-buysellads": "font-awesome_fa-buysellads_3DmVj",
-		"fa-connectdevelop": "font-awesome_fa-connectdevelop_24BDl",
-		"fa-dashcube": "font-awesome_fa-dashcube_3gytt",
-		"fa-forumbee": "font-awesome_fa-forumbee_1Xmr9",
-		"fa-leanpub": "font-awesome_fa-leanpub_1qDwq",
-		"fa-sellsy": "font-awesome_fa-sellsy_w39BK",
-		"fa-shirtsinbulk": "font-awesome_fa-shirtsinbulk_3ht1E",
-		"fa-simplybuilt": "font-awesome_fa-simplybuilt_1V2xv",
-		"fa-skyatlas": "font-awesome_fa-skyatlas_1HFEf",
-		"fa-cart-plus": "font-awesome_fa-cart-plus_zqpg9",
-		"fa-cart-arrow-down": "font-awesome_fa-cart-arrow-down_vmvAL",
-		"fa-diamond": "font-awesome_fa-diamond_2YKSj",
-		"fa-ship": "font-awesome_fa-ship_2d0Uf",
-		"fa-user-secret": "font-awesome_fa-user-secret_1JgJF",
-		"fa-motorcycle": "font-awesome_fa-motorcycle_hAqgH",
-		"fa-street-view": "font-awesome_fa-street-view_3xS1E",
-		"fa-heartbeat": "font-awesome_fa-heartbeat_3SRsO",
-		"fa-venus": "font-awesome_fa-venus_3jRFX",
-		"fa-mars": "font-awesome_fa-mars_2Le0W",
-		"fa-mercury": "font-awesome_fa-mercury_3-x4u",
-		"fa-intersex": "font-awesome_fa-intersex_26r-R",
-		"fa-transgender": "font-awesome_fa-transgender_1hS0T",
-		"fa-transgender-alt": "font-awesome_fa-transgender-alt_3_fBb",
-		"fa-venus-double": "font-awesome_fa-venus-double_30rPd",
-		"fa-mars-double": "font-awesome_fa-mars-double_3Xnoh",
-		"fa-venus-mars": "font-awesome_fa-venus-mars_2Ptfg",
-		"fa-mars-stroke": "font-awesome_fa-mars-stroke_f9_Cu",
-		"fa-mars-stroke-v": "font-awesome_fa-mars-stroke-v_1K5K9",
-		"fa-mars-stroke-h": "font-awesome_fa-mars-stroke-h_3azEl",
-		"fa-neuter": "font-awesome_fa-neuter_1wUaY",
-		"fa-genderless": "font-awesome_fa-genderless_3mEtZ",
-		"fa-facebook-official": "font-awesome_fa-facebook-official_2NNdf",
-		"fa-pinterest-p": "font-awesome_fa-pinterest-p_1Xpu_",
-		"fa-whatsapp": "font-awesome_fa-whatsapp_3G2qZ",
-		"fa-server": "font-awesome_fa-server_NVGtN",
-		"fa-user-plus": "font-awesome_fa-user-plus_1UACc",
-		"fa-user-times": "font-awesome_fa-user-times_24FFx",
-		"fa-hotel": "font-awesome_fa-hotel_3W6s_",
-		"fa-bed": "font-awesome_fa-bed_1XbLs",
-		"fa-viacoin": "font-awesome_fa-viacoin_3b4Ln",
-		"fa-train": "font-awesome_fa-train_2mIFj",
-		"fa-subway": "font-awesome_fa-subway_mahNW",
-		"fa-medium": "font-awesome_fa-medium_2UIgR",
-		"fa-yc": "font-awesome_fa-yc_2pwL9",
-		"fa-y-combinator": "font-awesome_fa-y-combinator_l4_A9",
-		"fa-optin-monster": "font-awesome_fa-optin-monster_2Vo1M",
-		"fa-opencart": "font-awesome_fa-opencart_2P3qK",
-		"fa-expeditedssl": "font-awesome_fa-expeditedssl_1ay3x",
-		"fa-battery-4": "font-awesome_fa-battery-4_1qRp1",
-		"fa-battery-full": "font-awesome_fa-battery-full_2fsqT",
-		"fa-battery-3": "font-awesome_fa-battery-3_3WHzS",
-		"fa-battery-three-quarters": "font-awesome_fa-battery-three-quarters_dBjV8",
-		"fa-battery-2": "font-awesome_fa-battery-2_2Pgt2",
-		"fa-battery-half": "font-awesome_fa-battery-half_2taE9",
-		"fa-battery-1": "font-awesome_fa-battery-1_1R1Ww",
-		"fa-battery-quarter": "font-awesome_fa-battery-quarter_1sRcE",
-		"fa-battery-0": "font-awesome_fa-battery-0_1zrhu",
-		"fa-battery-empty": "font-awesome_fa-battery-empty_2Mn-c",
-		"fa-mouse-pointer": "font-awesome_fa-mouse-pointer_DbB5u",
-		"fa-i-cursor": "font-awesome_fa-i-cursor_xvyzh",
-		"fa-object-group": "font-awesome_fa-object-group_3K3tV",
-		"fa-object-ungroup": "font-awesome_fa-object-ungroup_1ylE-",
-		"fa-sticky-note": "font-awesome_fa-sticky-note_1dK3l",
-		"fa-sticky-note-o": "font-awesome_fa-sticky-note-o_2zvyB",
-		"fa-cc-jcb": "font-awesome_fa-cc-jcb_Q7v9N",
-		"fa-cc-diners-club": "font-awesome_fa-cc-diners-club_338EC",
-		"fa-clone": "font-awesome_fa-clone_2LPS7",
-		"fa-balance-scale": "font-awesome_fa-balance-scale_3o2it",
-		"fa-hourglass-o": "font-awesome_fa-hourglass-o_15XJL",
-		"fa-hourglass-1": "font-awesome_fa-hourglass-1_2iRUs",
-		"fa-hourglass-start": "font-awesome_fa-hourglass-start_qhpOV",
-		"fa-hourglass-2": "font-awesome_fa-hourglass-2_2V0b5",
-		"fa-hourglass-half": "font-awesome_fa-hourglass-half_cF0Po",
-		"fa-hourglass-3": "font-awesome_fa-hourglass-3_2-ugV",
-		"fa-hourglass-end": "font-awesome_fa-hourglass-end_3l-g6",
-		"fa-hourglass": "font-awesome_fa-hourglass_1Ar7q",
-		"fa-hand-grab-o": "font-awesome_fa-hand-grab-o_3I7_Y",
-		"fa-hand-rock-o": "font-awesome_fa-hand-rock-o_1Tb8S",
-		"fa-hand-stop-o": "font-awesome_fa-hand-stop-o_37eq3",
-		"fa-hand-paper-o": "font-awesome_fa-hand-paper-o_2dp3p",
-		"fa-hand-scissors-o": "font-awesome_fa-hand-scissors-o_tLXdy",
-		"fa-hand-lizard-o": "font-awesome_fa-hand-lizard-o_2afn0",
-		"fa-hand-spock-o": "font-awesome_fa-hand-spock-o_22lUn",
-		"fa-hand-pointer-o": "font-awesome_fa-hand-pointer-o_3EDBr",
-		"fa-hand-peace-o": "font-awesome_fa-hand-peace-o_3KVDU",
-		"fa-trademark": "font-awesome_fa-trademark_1pZSQ",
-		"fa-registered": "font-awesome_fa-registered_2bkiQ",
-		"fa-creative-commons": "font-awesome_fa-creative-commons_19SOu",
-		"fa-gg": "font-awesome_fa-gg_8EwZk",
-		"fa-gg-circle": "font-awesome_fa-gg-circle_ixSHX",
-		"fa-tripadvisor": "font-awesome_fa-tripadvisor_3SR4I",
-		"fa-odnoklassniki": "font-awesome_fa-odnoklassniki_18Bc_",
-		"fa-odnoklassniki-square": "font-awesome_fa-odnoklassniki-square_2tvme",
-		"fa-get-pocket": "font-awesome_fa-get-pocket_1kDeB",
-		"fa-wikipedia-w": "font-awesome_fa-wikipedia-w_2bnVT",
-		"fa-safari": "font-awesome_fa-safari_1d_gp",
-		"fa-chrome": "font-awesome_fa-chrome_2lYJX",
-		"fa-firefox": "font-awesome_fa-firefox_3G1uV",
-		"fa-opera": "font-awesome_fa-opera_2EABz",
-		"fa-internet-explorer": "font-awesome_fa-internet-explorer_2e6T2",
-		"fa-tv": "font-awesome_fa-tv_pyAzy",
-		"fa-television": "font-awesome_fa-television_1MplB",
-		"fa-contao": "font-awesome_fa-contao_1BTJ5",
-		"fa-500px": "font-awesome_fa-500px_2dpFP",
-		"fa-amazon": "font-awesome_fa-amazon_1J6OF",
-		"fa-calendar-plus-o": "font-awesome_fa-calendar-plus-o_up6cZ",
-		"fa-calendar-minus-o": "font-awesome_fa-calendar-minus-o_2wY7J",
-		"fa-calendar-times-o": "font-awesome_fa-calendar-times-o_1jaLQ",
-		"fa-calendar-check-o": "font-awesome_fa-calendar-check-o_3xoZC",
-		"fa-industry": "font-awesome_fa-industry_3LSV8",
-		"fa-map-pin": "font-awesome_fa-map-pin_1mpnW",
-		"fa-map-signs": "font-awesome_fa-map-signs_21LXb",
-		"fa-map-o": "font-awesome_fa-map-o_1CDpd",
-		"fa-map": "font-awesome_fa-map_18QCe",
-		"fa-commenting": "font-awesome_fa-commenting_2oYYM",
-		"fa-commenting-o": "font-awesome_fa-commenting-o_2BRal",
-		"fa-houzz": "font-awesome_fa-houzz_13-hb",
-		"fa-vimeo": "font-awesome_fa-vimeo_3vcPv",
-		"fa-black-tie": "font-awesome_fa-black-tie_34h9B",
-		"fa-fonticons": "font-awesome_fa-fonticons_aNgtF",
-		"fa-reddit-alien": "font-awesome_fa-reddit-alien_3f_aH",
-		"fa-edge": "font-awesome_fa-edge_3UUWF",
-		"fa-credit-card-alt": "font-awesome_fa-credit-card-alt_oOWN1",
-		"fa-codiepie": "font-awesome_fa-codiepie_2amwQ",
-		"fa-modx": "font-awesome_fa-modx__HnMH",
-		"fa-fort-awesome": "font-awesome_fa-fort-awesome_1Pxvs",
-		"fa-usb": "font-awesome_fa-usb_2-FsD",
-		"fa-product-hunt": "font-awesome_fa-product-hunt_3WqRr",
-		"fa-mixcloud": "font-awesome_fa-mixcloud_2e01G",
-		"fa-scribd": "font-awesome_fa-scribd_1bAIo",
-		"fa-pause-circle": "font-awesome_fa-pause-circle_3wI6c",
-		"fa-pause-circle-o": "font-awesome_fa-pause-circle-o_2MdRS",
-		"fa-stop-circle": "font-awesome_fa-stop-circle_3aZ6V",
-		"fa-stop-circle-o": "font-awesome_fa-stop-circle-o_2oIr6",
-		"fa-shopping-bag": "font-awesome_fa-shopping-bag_2mD0w",
-		"fa-shopping-basket": "font-awesome_fa-shopping-basket_2ZYTJ",
-		"fa-hashtag": "font-awesome_fa-hashtag_1sHh4",
-		"fa-bluetooth": "font-awesome_fa-bluetooth_1tJ1-",
-		"fa-bluetooth-b": "font-awesome_fa-bluetooth-b_LmWTh",
-		"fa-percent": "font-awesome_fa-percent_3jbSX"
-	};
+	;
+	var sprite = __webpack_require__(161);;
+	var image = "<symbol viewBox=\"0 0 256 256\" id=\"function-gaussian\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"> <style type=\"text/css\"> .st0{display:none;} .st1{display:inline;} .st2{fill:#FFFFFF;} </style> <g id=\"function-gaussian_paraview\" class=\"st0\"> <g class=\"st1\"> <g> <polygon points=\"65.4,211.3 14.6,211.3 56.4,53.4 107.2,53.4 \t\t\t\"/> </g> <g> <polygon points=\"132.7,211.3 81.9,211.3 123.6,53.4 174.4,53.4 \t\t\t\"/> </g> <g> <polygon points=\"199.9,211.3 149.1,211.3 190.9,53.4 241.6,53.4 \t\t\t\"/> </g> </g> </g> <g id=\"function-gaussian_paraviewweb\" class=\"st0\"> <g class=\"st1\"> <polygon points=\"60.2,211.3 35.7,211.3 49,40 106.1,40 \t\t\"/> </g> <g class=\"st1\"> <polygon points=\"159.9,211.3 135.4,211.3 181.4,40 238.5,40 \t\t\"/> </g> <g class=\"st1\"> <polygon points=\"118.8,88.6 69.5,211.3 126.6,211.3 140.9,88.6 \t\t\"/> </g> </g> <g id=\"function-gaussian_kitware\" class=\"st0\"> <g class=\"st1\"> <g> <path d=\"M216.9,77c-6.2,0-12.3,0-18.5,0c-66.9,18.7-76.9,102.5-30,142.9c-54.2-36.8-44.4-130,29.5-149.8c-6.2,0-12.3,0-18.5,0\r\n\t\t\t\tc-66.9,18.7-76.9,102.5-30,142.9c-54.2-36.8-44.4-130,29.5-149.8c-6.2,0-12.3,0-18.5,0c-21,5.9-36.3,18.2-46.1,33.5\r\n\t\t\t\tc-0.7-28.8-5.2-58.2-13.9-87.7c-5.2,5-10.4,9.9-15.6,14.9c25.8,73.8,21.6,151.9-10.2,217.1c1.4,1.4,2.8,2.7,4.3,4.1\r\n\t\t\t\tc12.7-22.5,22-47.1,28-73c8.8,23.8,28.3,44.2,58.5,52.3c0.3,0,0.6,0,1,0c5.5,2.8,11.4,5.2,17.9,6.9c0.3,0,0.6,0,1,0\r\n\t\t\t\tc5.5,2.8,11.4,5.2,17.9,6.9c2.8,0,5.7,0,8.5,0C131.6,215.7,133.3,99.4,216.9,77z\"/> </g> <g> <path d=\"M57.1,50.6c-5.2,5-10.4,9.9-15.5,14.9c28,43.5,37,102.5,21.4,164c1.4,1.4,2.8,2.7,4.3,4.1\r\n\t\t\t\tC88.5,170.7,84.3,104.9,57.1,50.6z\"/> </g> <g> <path d=\"M78.8,29.8c-5.2,5-10.4,9.9-15.5,14.9c26.9,58.6,29.3,127.2,5.6,190.6c1.4,1.4,2.8,2.7,4.3,4.1\r\n\t\t\t\tC102.6,174.6,105,99.2,78.8,29.8z\"/> </g> </g> </g> <g id=\"function-gaussian_cluster\" class=\"st0\"> <path class=\"st1\" d=\"M233.1,88.5c1.9,0,3.3-1.5,3.3-3.3V31.3c0-1.8-1.5-3.3-3.3-3.3h-53.8c-1.9,0-3.3,1.5-3.3,3.3v20.6h-16V31.3\r\n\t\tc0-1.8-1.5-3.3-3.3-3.3h-53.8c-1.9,0-3.3,1.5-3.3,3.3v20.6h-16V31.3c0-1.8-1.5-3.3-3.3-3.3H26.3c-1.9,0-3.3,1.5-3.3,3.3v53.8\r\n\t\tc0,1.8,1.5,3.3,3.3,3.3h20.3v13.6H26.3c-1.9,0-3.3,1.5-3.3,3.3v53.8c0,1.8,1.5,3.3,3.3,3.3h20.3v13.7H26.3c-1.9,0-3.3,1.5-3.3,3.3\r\n\t\tv53.8c0,1.9,1.5,3.3,3.3,3.3h53.8c1.9,0,3.3-1.5,3.3-3.3V214h16v19.5c0,1.9,1.5,3.3,3.3,3.3h53.8c1.9,0,3.3-1.5,3.3-3.3V214h16\r\n\t\tv19.5c0,1.9,1.5,3.3,3.3,3.3h53.8c1.9,0,3.3-1.5,3.3-3.3v-53.8c0-1.9-1.5-3.3-3.3-3.3h-18.9v-13.6h18.9c1.9,0,3.3-1.5,3.3-3.3\r\n\t\tv-53.8c0-1.8-1.5-3.3-3.3-3.3h-18.9V88.5H233.1z M182.6,34.6h47.1v47.1h-47.1V34.6z M106.1,34.6h47.2v47.1h-47.2V34.6z M29.6,34.6\r\n\t\th47.2v47.1H29.6V34.6z M60,88.5h20.1c1.9,0,3.3-1.5,3.3-3.3V65.3h16v19.8c0,1.8,1.5,3.3,3.3,3.3h20.9v13.7h-20.9\r\n\t\tc-1.9,0-3.3,1.5-3.3,3.3V125h-16v-19.5c0-1.8-1.5-3.3-3.3-3.3H60V88.5z M106.1,156v-47.2h47.2V156H106.1z M29.6,108.8h47.2V156\r\n\t\tH29.6V108.8z M76.7,230.1H29.6V183h47.2V230.1z M83.4,200.5v-20.9c0-1.9-1.5-3.3-3.3-3.3H60v-13.7h20.1c1.9,0,3.3-1.5,3.3-3.3\r\n\t\tv-20.9h16v20.9c0,1.8,1.5,3.3,3.3,3.3h20.9v13.6h-20.9c-1.9,0-3.3,1.5-3.3,3.3v20.9H83.4z M153.3,230.1h-47.2V183h47.2V230.1z\r\n\t\t M229.8,230.1h-47.1V183h47.1V230.1z M200.8,176.3h-21.5c-1.9,0-3.3,1.5-3.3,3.3v20.9h-16v-20.9c0-1.9-1.5-3.3-3.3-3.3h-19.5v-13.6\r\n\t\th19.5c1.9,0,3.3-1.5,3.3-3.3v-20.9h16v20.9c0,1.8,1.5,3.3,3.3,3.3h21.5V176.3z M229.8,156h-47.1v-47.2h47.1V156z M200.8,102.1\r\n\t\th-21.5c-1.9,0-3.3,1.5-3.3,3.3V125h-16v-19.5c0-1.8-1.5-3.3-3.3-3.3h-19.5V88.5h19.5c1.9,0,3.3-1.5,3.3-3.3V65.3h16v19.8\r\n\t\tc0,1.8,1.5,3.3,3.3,3.3h21.5V102.1z\"/> </g> <g id=\"function-gaussian_axis-orientation\" class=\"st0\"> <path class=\"st1\" d=\"M232.9,239.4l-11.2-23.6c-0.5-1-1.4-1.7-2.6-1.9c-1.1-0.1-2.2,0.3-3,1.1l-2.6,2.9c0,0-80.6-70.1-81.1-70.7V139\r\n\t\th0V42.5h3.9c1.1,0,2.2-0.6,2.8-1.5c0.6-1,0.7-2.2,0.2-3.2l-10.8-23.9c-0.5-1.2-1.7-2-3.1-2c-1.2,0-2.5,0.8-3.1,2l-10.5,23.9\r\n\t\tc-0.5,1-0.4,2.2,0.3,3.2c0.6,0.9,1.7,1.5,2.8,1.5h3.9V139v8.3c0,0.2-81.1,70.7-81.1,70.7l-2.6-2.9c-0.7-0.9-1.9-1.2-3-1.1\r\n\t\tc-1.1,0.2-2.1,0.9-2.6,1.9l-11.2,23.6c-0.6,1.2-0.4,2.6,0.5,3.6c0.6,0.7,1.6,1.2,2.5,1.2c0.3,0,0.7,0,1-0.1l25.1-7.6\r\n\t\tc1.1-0.3,1.9-1.2,2.2-2.3c0.3-1.1,0.1-2.3-0.7-3.1l-2.6-2.9l79-68.8l79,68.8l-2.6,2.9c-0.7,0.9-1,2-0.7,3.1c0.3,1.1,1.2,2,2.2,2.3\r\n\t\tl25.1,7.6c0.3,0.1,0.6,0.1,1,0.1c1,0,1.9-0.4,2.5-1.2C233.3,242,233.5,240.6,232.9,239.4z\"/> </g> <g id=\"function-gaussian_axis-center\" class=\"st0\"> <path class=\"st1\" d=\"M226.9,119h-86.1L206,64.4c1.4-1.2,1.6-3.3,0.4-4.7c-1.2-1.4-3.3-1.6-4.7-0.4l-67.2,56.2V26.3\r\n\t\tc0-3.7-3-6.7-6.7-6.7c-3.7,0-6.7,3-6.7,6.7V119H28.5c-3.7,0-6.7,3-6.7,6.7c0,3.7,3,6.7,6.7,6.7h85.8l-64.7,54.1\r\n\t\tc-1.4,1.2-1.6,3.3-0.4,4.7c0.7,0.8,1.6,1.2,2.6,1.2c0.8,0,1.5-0.3,2.1-0.8l67.2-56.2v89.2c0,3.7,3,6.7,6.7,6.7c3.7,0,6.7-3,6.7-6.7\r\n\t\tv-92.2h92.4c3.7,0,6.7-3,6.7-6.7C233.6,122,230.6,119,226.9,119z\"/> </g> <g id=\"function-gaussian_function_x5F_gaussian\"> <rect x=\"118.9\" y=\"131.9\" transform=\"matrix(0.7071 0.7071 -0.7071 0.7071 137.8138 -49.4411)\" class=\"st2\" width=\"19.4\" height=\"19.4\"/> <path d=\"M128.6,158.7c-0.9,0-1.7-0.4-2.4-1L112.5,144c-1.3-1.3-1.3-3.4,0-4.7l13.8-13.8c0.6-0.6,1.5-1,2.4-1l0,0\r\n\t\tc0.9,0,1.7,0.4,2.4,1l13.8,13.8c1.3,1.3,1.3,3.4,0,4.7L131,157.8C130.3,158.4,129.5,158.7,128.6,158.7z M119.6,141.6l9,9l9-9l-9-9\r\n\t\tL119.6,141.6z\"/> <path d=\"M246.5,208.6c-20.9-1-35.7-6.1-46.4-14.1c0.1-1.5,0.1-3.1-0.1-4.7c-0.8-5.3-3.7-10-8-13.2c-2.8-2.1-6.1-3.2-9.5-3.6\r\n\t\tc-8.2-16.2-11.7-36.9-15.4-59.7c-3.5-21.5-9.7-36.5-18.3-44.8c0-0.8,0-1.7-0.1-2.5c-1.7-11-12.1-18.6-23.1-16.9\r\n\t\tc-9.8,1.5-16.8,9.9-17.1,19.4c-8.6,8.3-14.8,23.3-18.3,44.8c-3.7,22.8-7.2,43.4-15.4,59.6c-0.2,0-0.4,0-0.7,0\r\n\t\tc-10.5,1.6-17.7,11.1-16.9,21.5c-10.8,8-25.5,13.1-46.5,14.1c-3.7,0.2-6.5,3.3-6.4,7c0.2,3.6,3.1,6.4,6.7,6.4c0.1,0,0.2,0,0.3,0\r\n\t\tc22.7-1.1,39.2-6.5,51.6-14.9c3.7,3.7,8.8,6.1,14.3,6.1c1,0,2.1-0.1,3.1-0.2c11-1.7,18.6-12.1,16.9-23.1c-0.8-5.3-3.7-10-8-13.2\r\n\t\tc-0.3-0.2-0.6-0.3-0.9-0.5c8.1-17.7,11.6-38.9,15.1-60.6c2.8-17.1,6.9-26.9,10.6-32.6c3.7,4,9,6.4,14.6,6.4c1,0,2.1-0.1,3.1-0.2\r\n\t\tc4.6-0.7,8.6-3,11.5-6.2c3.7,5.7,7.8,15.5,10.6,32.6c3.5,21.7,7.1,42.9,15.1,60.6c-6.4,4.2-10.2,11.9-8.9,20c0.8,5.3,3.7,10,8,13.2\r\n\t\tc3.5,2.6,7.6,3.9,11.9,3.9c1,0,2.1-0.1,3.1-0.2c4.4-0.7,8.3-2.8,11.2-5.8c12.3,8.3,28.9,13.7,51.6,14.9c0.1,0,0.2,0,0.3,0\r\n\t\tc3.5,0,6.5-2.8,6.7-6.4C253,212,250.2,208.8,246.5,208.6z M90.6,190.9c1.1,7.4-3.9,14.3-11.3,15.4c-7.4,1.1-14.3-3.9-15.4-11.3\r\n\t\tc-1.1-7.4,3.9-14.3,11.3-15.4c0.7-0.1,1.4-0.2,2.1-0.2c2.8,0,5.6,0.9,7.9,2.6C88.1,184.2,90,187.4,90.6,190.9z M130.7,82.5\r\n\t\tc-7.3,1.1-14.3-3.9-15.4-11.3c-1.1-7.4,3.9-14.3,11.3-15.4c0.7-0.1,1.4-0.2,2.1-0.2c6.6,0,12.3,4.8,13.4,11.4\r\n\t\tC143.1,74.4,138,81.4,130.7,82.5z M182,206.4c-7.4,1.1-14.3-3.9-15.4-11.3c-1.1-7.4,3.9-14.3,11.3-15.4c0.7-0.1,1.4-0.2,2.1-0.2\r\n\t\tc2.8,0,5.6,0.9,7.9,2.6c2.9,2.1,4.8,5.3,5.4,8.8C194.5,198.3,189.4,205.2,182,206.4z\"/> </g> <g id=\"function-gaussian_parallel-coordinates\" class=\"st0\"> <path class=\"st1\" d=\"M227.1,30.3c-3.7,0-6.7,3-6.7,6.7v46.1L134.5,51V37c0-3.7-3-6.7-6.7-6.7s-6.7,3-6.7,6.7v11.1L39,68.5V37\r\n\t\tc0-3.7-3-6.7-6.7-6.7c-3.7,0-6.7,3-6.7,6.7v191.2c0,3.7,3,6.7,6.7,6.7c3.7,0,6.7-3,6.7-6.7v-33l82,15.4v17.7c0,3.7,3,6.7,6.7,6.7\r\n\t\ts6.7-3,6.7-6.7V208l42.4-34.4l43.5,35.3v19.2c0,3.7,3,6.7,6.7,6.7c3.7,0,6.7-3,6.7-6.7V37C233.8,33.3,230.8,30.3,227.1,30.3z\r\n\t\t M220.4,90.3v39.5l-43.5,35.3l-42.4-34.4V58.1L220.4,90.3z M121.1,55v73.6l-82,20.5V75.4L121.1,55z M39,188.3V156l82-20.5v68.2\r\n\t\tL39,188.3z M134.5,199.4v-60.1l37.1,30.1L134.5,199.4z M182.2,169.4l38.2-31v62L182.2,169.4z\"/> </g> <g id=\"function-gaussian_function-linear\" class=\"st0\"> <path class=\"st1\" d=\"M249.8,45.9C249.8,45.9,249.8,45.9,249.8,45.9c-1.7-11-12-18.6-23.1-16.9c-5.3,0.8-10,3.7-13.2,8.1\r\n\t\tc-1.2,1.7-2.1,3.5-2.7,5.5h-22.9c-3.1-9.1-12.3-15-22.2-13.5c-5.3,0.8-10,3.7-13.2,8.1c-3.2,4.4-4.5,9.7-3.7,15\r\n\t\tc0.8,5,3.3,9.3,7.2,12.4l-63.8,129c-1.9-0.3-3.9-0.4-6-0.1c-7.6,1.2-13.5,6.5-15.9,13.3H45c-3.1-9-12.3-14.8-22.2-13.3\r\n\t\tc-5.3,0.8-10,3.7-13.2,8.1c-3.2,4.4-4.5,9.7-3.7,15c0.8,5.3,3.7,10,8,13.2c3.5,2.6,7.6,3.9,11.9,3.9c1,0,2.1-0.1,3.2-0.2\r\n\t\tc7.6-1.2,13.4-6.5,15.9-13.2h25.3c2.8,8,10.5,13.5,19,13.5c1,0,2.1-0.1,3.1-0.2c5.3-0.8,10-3.7,13.2-8.1c3.2-4.4,4.5-9.7,3.7-15\r\n\t\tc-0.6-4.2-2.5-7.8-5.2-10.7l64.5-130.5c0,0,0.1,0,0.1,0c1,0,2.1-0.1,3.2-0.2c7.5-1.2,13.3-6.4,15.8-13h23.2c1.4,3.7,3.8,7,7.1,9.4\r\n\t\tc3.5,2.6,7.6,3.9,11.9,3.9c1,0,2.1-0.1,3.2-0.2C244,67.3,251.6,57,249.8,45.9z M28,226.9c-3.6,0.5-7.2-0.3-10.1-2.4\r\n\t\ts-4.8-5.3-5.4-8.9c-0.6-3.6,0.3-7.2,2.4-10.1c2.1-2.9,5.3-4.8,8.9-5.4c0.7-0.1,1.4-0.2,2.1-0.2c6.6,0,12.3,4.8,13.4,11.5\r\n\t\tC40.5,218.9,35.4,225.8,28,226.9z M100.2,221.6c-2.1,2.9-5.3,4.8-8.9,5.4C84,228.1,77,223,75.9,215.6c-1.1-7.4,3.9-14.3,11.3-15.5\r\n\t\tc0.7-0.1,1.4-0.2,2.1-0.2c6.6,0,12.3,4.8,13.4,11.5c0,0,0,0,0,0C103.2,215.1,102.3,218.6,100.2,221.6z M170.8,62.4\r\n\t\tc-3.6,0.5-7.2-0.3-10.1-2.4c-2.9-2.1-4.8-5.3-5.4-8.9c-0.6-3.6,0.3-7.2,2.4-10.1s5.3-4.8,8.9-5.4c0.7-0.1,1.4-0.2,2.1-0.2\r\n\t\tc6.6,0,12.3,4.8,13.4,11.5C183.3,54.4,178.2,61.3,170.8,62.4z M231.9,62.4c-3.6,0.5-7.2-0.3-10.1-2.4c-2.9-2.1-4.8-5.3-5.4-8.9\r\n\t\tc-0.6-3.6,0.3-7.2,2.4-10.1s5.3-4.8,8.9-5.4c0.7-0.1,1.4-0.2,2.1-0.2c6.6,0,12.3,4.8,13.4,11.5C244.4,54.3,239.3,61.3,231.9,62.4z\"/> </g> <g id=\"function-gaussian_bounding-box\" class=\"st0\"> <path class=\"st1\" d=\"M236.6,161.9c0-0.3,0.2-0.5,0.2-0.8V36.8c0-0.3-0.1-0.6-0.2-1c-0.1-0.5-0.1-0.9-0.3-1.4\r\n\t\tc-0.2-0.5-0.5-0.8-0.7-1.3c-0.2-0.3-0.3-0.6-0.5-0.8c-0.1-0.1-0.1-0.1-0.2-0.1c-0.3-0.4-0.8-0.6-1.2-0.9c-0.3-0.2-0.6-0.5-0.9-0.6\r\n\t\tc-0.4-0.2-0.7-0.2-1.1-0.3c-0.5-0.1-0.9-0.3-1.4-0.3c-0.1,0-0.1,0-0.2,0h-121c-0.3,0-0.5,0.1-0.7,0.1c-0.4,0-0.9,0.1-1.3,0.3\r\n\t\tc-0.5,0.1-0.9,0.3-1.3,0.6c-0.2,0.1-0.4,0.2-0.7,0.3L26.5,88.4c-0.1,0.1-0.2,0.3-0.3,0.4c-0.4,0.3-0.7,0.6-0.9,1\r\n\t\tc-0.3,0.3-0.5,0.6-0.7,1c-0.2,0.4-0.3,0.8-0.4,1.2c-0.1,0.4-0.2,0.9-0.3,1.3c0,0.2-0.1,0.3-0.1,0.5v134.4c0,3.7,3,6.7,6.7,6.7\r\n\t\th134.4c0.9,0,1.8-0.2,2.6-0.5c0.8-0.3,1.6-0.9,2.2-1.5c0,0,0,0,0,0l65.2-67.1c0,0,0,0,0,0l0.1-0.1c0.2-0.2,0.2-0.4,0.4-0.6\r\n\t\tc0.4-0.5,0.8-1,1-1.6C236.5,163,236.6,162.5,236.6,161.9z M171.5,164.4h46l-46,47.3V164.4z M37.1,218.1V100.6h68.6v57.1v1.8\r\n\t\tL37.1,218.1z M162.3,87.1h-49.8V43.5h99.8L162.3,87.1z M105.7,47.5v39.6H51.1L105.7,47.5z M112.4,157.7v-57.1h45.6v57.1H112.4z\r\n\t\t M171.5,96.9l51.9-45.3v106.1h-51.9V96.9z M43.4,221.5l66.9-57.1h2.1h45.6v57.1H43.4z\"/> </g> <g id=\"function-gaussian_ruler\" class=\"st0\"> <g class=\"st1\"> <path d=\"M171,246.5H88.6c-3.7,0-6.7-3-6.7-6.7V13.6c0-3.7,3-6.7,6.7-6.7H171c3.7,0,6.7,3,6.7,6.7v226.1\r\n\t\t\tC177.7,243.4,174.7,246.5,171,246.5z M95.3,233h68.9V20.3H95.3V233z\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"35.4\" width=\"24.3\" height=\"6.7\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"60.7\" width=\"38.5\" height=\"6.7\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"86\" width=\"24.3\" height=\"6.7\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"111.2\" width=\"24.3\" height=\"6.7\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"136.5\" width=\"38.5\" height=\"6.7\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"161.8\" width=\"24.3\" height=\"6.7\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"187\" width=\"24.3\" height=\"6.7\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"212.3\" width=\"38.5\" height=\"6.7\"/> </g> </g> </symbol>";
+	module.exports = sprite.add(image, "function-gaussian");
 
 /***/ },
 /* 170 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "32400f4e08932a94d8bfd2422702c446.eot";
-
-/***/ },
-/* 171 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "32400f4e08932a94d8bfd2422702c446.eot";
-
-/***/ },
-/* 172 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "db812d8a70a4e88e888744c1c9a27e89.woff2";
-
-/***/ },
-/* 173 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "a35720c2fed2c7f043bc7e4ffb45e073.woff";
-
-/***/ },
-/* 174 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "a3de2170e4e9df77161ea5d3f31b2668.ttf";
-
-/***/ },
-/* 175 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "f775f9cca88e21d45bebe185b27c0e5b.svg";
-
-/***/ },
-/* 176 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(177);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(165)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]_[local]_[hash:base64:5]!./../../node_modules/postcss-loader/index.js!./ColorByWidget.mcss", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]_[local]_[hash:base64:5]!./../../node_modules/postcss-loader/index.js!./ColorByWidget.mcss");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 177 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(164)();
-	// imports
-	exports.i(__webpack_require__(169), undefined);
-
-	// module
-	exports.push([module.id, ".ColorByWidget_container_1GRTD {\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-justify-content: flex-start;\n        -ms-flex-pack: start;\n            justify-content: flex-start;\n    -webkit-align-items: stretch;\n        -ms-flex-align: stretch;\n            align-items: stretch;\n}\n\n.ColorByWidget_line_1DrVl {\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-flex-direction: row;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    -webkit-justify-content: space-between;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    margin-bottom: 5px;\n}\n\n.ColorByWidget_advancedView_1SkNI {\n  margin-top: 3px;\n  position: relative;\n  width: 100%;\n  height: 6em;\n\n  display: -webkit-flex;\n\n  display: -ms-flexbox;\n\n  display: flex;\n  -webkit-flex-direction: row;\n      -ms-flex-direction: row;\n          flex-direction: row;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-align-items: stretch;\n      -ms-flex-align: stretch;\n          align-items: stretch;\n}\n\n.ColorByWidget_advancedViewControl_OJtfe {\n  -webkit-flex: none;\n      -ms-flex: none;\n          flex: none;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n\n.ColorByWidget_advancedViewContent_2OBhU {\n  -webkit-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n  max-width: calc(100% - 1.28571em - 4px);\n}\n\n.ColorByWidget_hidden_18Fi8 {\n  display: none;\n}\n\n.ColorByWidget_input_1jW6z {\n  -webkit-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n}\n\n.ColorByWidget_scalarBar_l9YRv {\n  width: calc(100% - 2.5em);\n  height: 1em;\n  cursor: pointer;\n  border: solid 1px black;\n}\n\n.ColorByWidget_representationIcon_2O9rT {\n  -webkit-flex: none;\n      -ms-flex: none;\n          flex: none;\n}\n\n.ColorByWidget_colorIcon_h2il5 {\n  -webkit-flex: none;\n      -ms-flex: none;\n          flex: none;\n}\n\n.ColorByWidget_scalarBarIconOn_P7eZ2 {\n  -webkit-flex: none;\n      -ms-flex: none;\n          flex: none;\n  cursor: pointer;\n}\n\n.ColorByWidget_scalarBarIconOff_1xZTj {\n  -webkit-flex: none;\n      -ms-flex: none;\n          flex: none;\n  cursor: pointer;\n}\n\n.ColorByWidget_advanceIconOn_5P90f {\n  -webkit-flex: none;\n      -ms-flex: none;\n          flex: none;\n  cursor: pointer;\n  color: #000;\n}\n\n.ColorByWidget_advanceIconOff_3H9W2 {\n  color: #aaa;\n}\n\n.ColorByWidget_icon_hTOma {\n  width: 1.28571em;\n  height: 1.28571em;\n  line-height: 1.28571em;\n  cursor: pointer;\n  text-align: center;\n  vertical-align: middle;\n}\n\n.ColorByWidget_activeIcon_XBa5F {\n  background: #555;\n  border-radius: 5px;\n}\n\n.ColorByWidget_presetIcon_2s6CD {\n}\n\n\n.ColorByWidget_activePresetIcon_Xvzmw {\n}\n\n.ColorByWidget_rangeIcon_2jjKy {\n}\n\n.ColorByWidget_activeRangeIcon_2izep {\n}\n\n.ColorByWidget_opacityIcon_5zodx {\n}\n\n.ColorByWidget_activeOpacityIcon_2s3sV {\n}\n\n.ColorByWidget_colorEditIcon_l4tmj {\n}\n\n.ColorByWidget_activeColorEditIcon_3aghX {\n}\n", ""]);
-
-	// exports
-	exports.locals = {
-		"container": "ColorByWidget_container_1GRTD",
-		"line": "ColorByWidget_line_1DrVl",
-		"advancedView": "ColorByWidget_advancedView_1SkNI",
-		"advancedViewControl": "ColorByWidget_advancedViewControl_OJtfe",
-		"advancedViewContent": "ColorByWidget_advancedViewContent_2OBhU",
-		"hidden": "ColorByWidget_hidden_18Fi8",
-		"input": "ColorByWidget_input_1jW6z",
-		"scalarBar": "ColorByWidget_scalarBar_l9YRv",
-		"representationIcon": "ColorByWidget_representationIcon_2O9rT " + __webpack_require__(169).locals["fa"] + " " + __webpack_require__(169).locals["fa-fw"] + " " + __webpack_require__(169).locals["fa-eye"] + "",
-		"colorIcon": "ColorByWidget_colorIcon_h2il5 " + __webpack_require__(169).locals["fa"] + " " + __webpack_require__(169).locals["fa-fw"] + " " + __webpack_require__(169).locals["fa-tint"] + "",
-		"scalarBarIconOn": "ColorByWidget_scalarBarIconOn_P7eZ2 " + __webpack_require__(169).locals["fa"] + " " + __webpack_require__(169).locals["fa-fw"] + " " + __webpack_require__(169).locals["fa-bookmark"] + "",
-		"scalarBarIconOff": "ColorByWidget_scalarBarIconOff_1xZTj " + __webpack_require__(169).locals["fa"] + " " + __webpack_require__(169).locals["fa-fw"] + " " + __webpack_require__(169).locals["fa-bookmark-o"] + "",
-		"advanceIconOn": "ColorByWidget_advanceIconOn_5P90f " + __webpack_require__(169).locals["fa"] + " " + __webpack_require__(169).locals["fa-fw"] + " " + __webpack_require__(169).locals["fa-cog"] + "",
-		"advanceIconOff": "ColorByWidget_advanceIconOff_3H9W2 ColorByWidget_advanceIconOn_5P90f " + __webpack_require__(169).locals["fa"] + " " + __webpack_require__(169).locals["fa-fw"] + " " + __webpack_require__(169).locals["fa-cog"] + "",
-		"icon": "ColorByWidget_icon_hTOma " + __webpack_require__(169).locals["fa"] + "",
-		"activeIcon": "ColorByWidget_activeIcon_XBa5F " + __webpack_require__(169).locals["fa-inverse"] + "",
-		"presetIcon": "ColorByWidget_presetIcon_2s6CD ColorByWidget_icon_hTOma " + __webpack_require__(169).locals["fa"] + " " + __webpack_require__(169).locals["fa-heart"] + "",
-		"activePresetIcon": "ColorByWidget_activePresetIcon_Xvzmw ColorByWidget_presetIcon_2s6CD ColorByWidget_icon_hTOma " + __webpack_require__(169).locals["fa"] + " " + __webpack_require__(169).locals["fa-heart"] + " ColorByWidget_activeIcon_XBa5F " + __webpack_require__(169).locals["fa-inverse"] + "",
-		"rangeIcon": "ColorByWidget_rangeIcon_2jjKy ColorByWidget_icon_hTOma " + __webpack_require__(169).locals["fa"] + " " + __webpack_require__(169).locals["fa-arrows-h"] + "",
-		"activeRangeIcon": "ColorByWidget_activeRangeIcon_2izep ColorByWidget_rangeIcon_2jjKy ColorByWidget_icon_hTOma " + __webpack_require__(169).locals["fa"] + " " + __webpack_require__(169).locals["fa-arrows-h"] + " ColorByWidget_activeIcon_XBa5F " + __webpack_require__(169).locals["fa-inverse"] + "",
-		"opacityIcon": "ColorByWidget_opacityIcon_5zodx ColorByWidget_icon_hTOma " + __webpack_require__(169).locals["fa"] + " " + __webpack_require__(169).locals["fa-adjust"] + "",
-		"activeOpacityIcon": "ColorByWidget_activeOpacityIcon_2s3sV ColorByWidget_opacityIcon_5zodx ColorByWidget_icon_hTOma " + __webpack_require__(169).locals["fa"] + " " + __webpack_require__(169).locals["fa-adjust"] + " ColorByWidget_activeIcon_XBa5F " + __webpack_require__(169).locals["fa-inverse"] + "",
-		"colorEditIcon": "ColorByWidget_colorEditIcon_l4tmj ColorByWidget_icon_hTOma " + __webpack_require__(169).locals["fa"] + " " + __webpack_require__(169).locals["fa-tint"] + "",
-		"activeColorEditIcon": "ColorByWidget_activeColorEditIcon_3aghX ColorByWidget_colorEditIcon_l4tmj ColorByWidget_icon_hTOma " + __webpack_require__(169).locals["fa"] + " " + __webpack_require__(169).locals["fa-tint"] + " ColorByWidget_activeIcon_XBa5F " + __webpack_require__(169).locals["fa-inverse"] + ""
-	};
-
-/***/ },
-/* 178 */
-/***/ function(module, exports) {
-
-	module.exports = {
-		"data": {
-			"arrays": [
-				{
-					"range": [
-						{
-							"max": 0.000013329898584157294,
-							"name": "Magnitude",
-							"min": 0
-						},
-						{
-							"max": 3.212448973499704e-7,
-							"name": "X",
-							"min": -4.965284006175352e-7
-						},
-						{
-							"max": 5.920081207477779e-7,
-							"name": "Y",
-							"min": -5.920087460253853e-7
-						},
-						{
-							"max": 0.000010021663911174983,
-							"name": "Z",
-							"min": -0.000013328498425835278
-						}
-					],
-					"location": "POINTS",
-					"type": "double",
-					"name": "ACCL",
-					"size": 3
-				},
-				{
-					"range": [
-						{
-							"max": 0,
-							"name": "Magnitude",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "X",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "Y",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "Z",
-							"min": 0
-						}
-					],
-					"location": "POINTS",
-					"type": "double",
-					"name": "DISPL",
-					"size": 3
-				},
-				{
-					"range": [
-						{
-							"max": 10088,
-							"name": "",
-							"min": 1
-						}
-					],
-					"location": "POINTS",
-					"type": "id_type",
-					"name": "GlobalNodeId",
-					"size": 1
-				},
-				{
-					"range": [
-						{
-							"max": 10088,
-							"name": "",
-							"min": 1
-						}
-					],
-					"location": "POINTS",
-					"type": "id_type",
-					"name": "PedigreeNodeId",
-					"size": 1
-				},
-				{
-					"range": [
-						{
-							"max": 5000,
-							"name": "Magnitude",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "X",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "Y",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "Z",
-							"min": -5000
-						}
-					],
-					"location": "POINTS",
-					"type": "double",
-					"name": "VEL",
-					"size": 3
-				},
-				{
-					"range": [
-						{
-							"max": 0,
-							"name": "",
-							"min": 0
-						}
-					],
-					"location": "CELLS",
-					"type": "double",
-					"name": "EQPS",
-					"size": 1
-				},
-				{
-					"range": [
-						{
-							"max": 7152,
-							"name": "",
-							"min": 7152
-						}
-					],
-					"location": "CELLS",
-					"type": "id_type",
-					"name": "GlobalElementId",
-					"size": 1
-				},
-				{
-					"range": [
-						{
-							"max": 2,
-							"name": "",
-							"min": 2
-						}
-					],
-					"location": "CELLS",
-					"type": "int",
-					"name": "ObjectId",
-					"size": 1
-				},
-				{
-					"range": [
-						{
-							"max": 7152,
-							"name": "",
-							"min": 7152
-						}
-					],
-					"location": "CELLS",
-					"type": "id_type",
-					"name": "PedigreeElementId",
-					"size": 1
-				},
-				{
-					"range": [
-						{
-							"max": 2959999.75,
-							"name": "",
-							"min": 1467643.625
-						}
-					],
-					"location": "FIELDS",
-					"type": "double",
-					"name": "KE",
-					"size": 1
-				},
-				{
-					"range": [
-						{
-							"max": 0.2753971517086029,
-							"name": "",
-							"min": -0.04863959178328514
-						}
-					],
-					"location": "FIELDS",
-					"type": "double",
-					"name": "XMOM",
-					"size": 1
-				},
-				{
-					"range": [
-						{
-							"max": 0.007546288892626762,
-							"name": "",
-							"min": -5.840920925140381
-						}
-					],
-					"location": "FIELDS",
-					"type": "double",
-					"name": "YMOM",
-					"size": 1
-				},
-				{
-					"range": [
-						{
-							"max": -765.4190673828125,
-							"name": "",
-							"min": -1183.9998779296875
-						}
-					],
-					"location": "FIELDS",
-					"type": "double",
-					"name": "ZMOM",
-					"size": 1
-				},
-				{
-					"range": [
-						{
-							"max": 28318,
-							"name": "",
-							"min": 0
-						}
-					],
-					"location": "FIELDS",
-					"type": "double",
-					"name": "NSTEPS",
-					"size": 1
-				},
-				{
-					"range": [
-						{
-							"max": 2.4712693402761943e-7,
-							"name": "",
-							"min": 5.355158805286919e-8
-						}
-					],
-					"location": "FIELDS",
-					"type": "double",
-					"name": "TMSTEP",
-					"size": 1
-				},
-				{
-					"range": [
-						{
-							"max": 2,
-							"name": "",
-							"min": 1
-						}
-					],
-					"location": "FIELDS",
-					"type": "int",
-					"name": "ElementBlockIds",
-					"size": 1
-				},
-				{
-					"range": [
-						{
-							"max": 80,
-							"name": "0",
-							"min": 32
-						},
-						{
-							"max": 101,
-							"name": "1",
-							"min": 32
-						},
-						{
-							"max": 111,
-							"name": "2",
-							"min": 32
-						},
-						{
-							"max": 105,
-							"name": "3",
-							"min": 46
-						},
-						{
-							"max": 110,
-							"name": "4",
-							"min": 0
-						},
-						{
-							"max": 79,
-							"name": "5",
-							"min": 0
-						},
-						{
-							"max": 57,
-							"name": "6",
-							"min": 0
-						},
-						{
-							"max": 68,
-							"name": "7",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "8",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "9",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "10",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "11",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "12",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "13",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "14",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "15",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "16",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "17",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "18",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "19",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "20",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "21",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "22",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "23",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "24",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "25",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "26",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "27",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "28",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "29",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "30",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "31",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "32",
-							"min": 0
-						}
-					],
-					"location": "FIELDS",
-					"type": "char",
-					"name": "QA_Records",
-					"size": 33
-				},
-				{
-					"range": [
-						{
-							"max": -1e+299,
-							"name": "",
-							"min": 1e+299
-						}
-					],
-					"location": "FIELDS",
-					"type": "unspecified",
-					"name": "Title",
-					"size": 1
-				},
-				{
-					"range": [
-						{
-							"max": 48,
-							"name": "0",
-							"min": 48
-						},
-						{
-							"max": 50,
-							"name": "1",
-							"min": 49
-						},
-						{
-							"max": 47,
-							"name": "2",
-							"min": 47
-						},
-						{
-							"max": 32,
-							"name": "3",
-							"min": 32
-						},
-						{
-							"max": 99,
-							"name": "4",
-							"min": 71
-						},
-						{
-							"max": 108,
-							"name": "5",
-							"min": 97
-						},
-						{
-							"max": 111,
-							"name": "6",
-							"min": 110
-						},
-						{
-							"max": 99,
-							"name": "7",
-							"min": 51
-						},
-						{
-							"max": 107,
-							"name": "8",
-							"min": 68
-						},
-						{
-							"max": 97,
-							"name": "9",
-							"min": 58
-						},
-						{
-							"max": 108,
-							"name": "10",
-							"min": 32
-						},
-						{
-							"max": 102,
-							"name": "11",
-							"min": 97
-						},
-						{
-							"max": 108,
-							"name": "12",
-							"min": 46
-						},
-						{
-							"max": 111,
-							"name": "13",
-							"min": 102
-						},
-						{
-							"max": 99,
-							"name": "14",
-							"min": 46
-						},
-						{
-							"max": 107,
-							"name": "15",
-							"min": 100
-						},
-						{
-							"max": 97,
-							"name": "16",
-							"min": 0
-						},
-						{
-							"max": 108,
-							"name": "17",
-							"min": 0
-						},
-						{
-							"max": 102,
-							"name": "18",
-							"min": 0
-						},
-						{
-							"max": 108,
-							"name": "19",
-							"min": 0
-						},
-						{
-							"max": 103,
-							"name": "20",
-							"min": 0
-						},
-						{
-							"max": 50,
-							"name": "21",
-							"min": 0
-						},
-						{
-							"max": 103,
-							"name": "22",
-							"min": 0
-						},
-						{
-							"max": 50,
-							"name": "23",
-							"min": 0
-						},
-						{
-							"max": 100,
-							"name": "24",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "25",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "26",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "27",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "28",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "29",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "30",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "31",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "32",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "33",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "34",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "35",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "36",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "37",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "38",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "39",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "40",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "41",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "42",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "43",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "44",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "45",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "46",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "47",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "48",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "49",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "50",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "51",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "52",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "53",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "54",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "55",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "56",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "57",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "58",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "59",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "60",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "61",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "62",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "63",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "64",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "65",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "66",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "67",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "68",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "69",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "70",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "71",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "72",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "73",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "74",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "75",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "76",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "77",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "78",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "79",
-							"min": 0
-						},
-						{
-							"max": 0,
-							"name": "80",
-							"min": 0
-						}
-					],
-					"location": "FIELDS",
-					"type": "char",
-					"name": "Info_Records",
-					"size": 81
-				}
-			],
-			"cells": 7152,
-			"memory": 2171,
-			"bounds": [
-				-7.878461837768555,
-				8.312582015991211,
-				0,
-				8,
-				-14.999999046325684,
-				4.778104782104492
-			],
-			"points": 10088,
-			"time": [
-				"0.0",
-				"0.000100073739304",
-				"0.000199905101908",
-				"0.000299964391161",
-				"0.000400086544687",
-				"0.000499919231515",
-				"0.000599935126957",
-				"0.000700049218722",
-				"0.000800035253633",
-				"0.00090006069513",
-				"0.00100000598468",
-				"0.00109998101834",
-				"0.00119993311819",
-				"0.00129998673219",
-				"0.00140009319875",
-				"0.00150004134048",
-				"0.0015999188181",
-				"0.00169999850914",
-				"0.00180007342715",
-				"0.00190002250019",
-				"0.00199998565949",
-				"0.0020999298431",
-				"0.00219992105849",
-				"0.00229999283329",
-				"0.00240005389787",
-				"0.00249994290061",
-				"0.00259992131032",
-				"0.00269998027943",
-				"0.00279999966733",
-				"0.00289991078898",
-				"0.00300002051517",
-				"0.00309997936711",
-				"0.00319999479689",
-				"0.00329994247295",
-				"0.00340002309531",
-				"0.00349996844307",
-				"0.00359999225475",
-				"0.00369996228255",
-				"0.00379998679273",
-				"0.00389998196624",
-				"0.00399998575449",
-				"0.00410001119599",
-				"0.00419997423887",
-				"0.0042999885045"
-			],
-			"type": "Multi-block Dataset"
-		},
-		"ui": [
-			{
-				"widget": "checkbox",
-				"name": "Generate Object Id Cell Array",
-				"doc": "Specifies whether a variable named \"ObjectId\" should be\n        created for each entry of each block and set being loaded and assigned\n        the identifying number of the block or set, so that given a cell one\n        can readily identify the block or set it came from. This is useful for\n        coloring a mesh by block ID or set ID.",
-				"type": "int",
-				"advanced": 0,
-				"size": 1
-			},
-			{
-				"widget": "checkbox",
-				"name": "Generate Global Element Id Array",
-				"doc": "Should the reader retrieve the first new-style element\n        map, or if that is not present, the solitary old-style element map\n        (which always exists but may be procedurally generated if it is not\n        stored with the file)?",
-				"type": "int",
-				"advanced": 0,
-				"size": 1
-			},
-			{
-				"widget": "list-n",
-				"name": "Element Variables",
-				"doc": "Use this property to select which variables defined over\n        elements (cells) should be loaded. Element variables specify a single\n        value per entry in some element block.",
-				"values": [
-					"EQPS"
-				],
-				"type": "str",
-				"advanced": 0,
-				"size": -1
-			},
-			{
-				"widget": "list-n",
-				"name": "Face Variables",
-				"doc": "Use this property to select which variables defined over\n        faces should be loaded. Faces are oriented boundaries of one or more\n        higher-dimensional cells also present in the mesh. Face variables\n        specify a single value per entry in some face block.",
-				"values": [],
-				"type": "str",
-				"advanced": 0,
-				"size": -1
-			},
-			{
-				"widget": "list-n",
-				"name": "Edge Variables",
-				"doc": "Use this property to select which variables defined over\n        edges should be loaded. Edges are oriented boundaries of one or more\n        higher-dimensional cells also present in the mesh. Edge variables\n        specify a single value per entry in some edge block.",
-				"values": [],
-				"type": "str",
-				"advanced": 0,
-				"size": -1
-			},
-			{
-				"widget": "list-n",
-				"name": "Side Set Result Array Status",
-				"doc": "An Exodus II file may define subsets of all the\n        of all the elements in a file as sets in their own\n        right. Variables, such as boundary conditions, may then be defined over\n        these sets by specifying a single number per side. For example, a\n        hexahedron has 18 sides: 6 faces and 12 edges. Any of these sides may\n        be individually called out in a set and assigned a result value. This\n        property specifies which of those variables should be loaded. The\n        corresponding set must also be loaded using the SideSetArrayStatus\n        property in order for the variable to appear.",
-				"values": [],
-				"type": "str",
-				"advanced": 0,
-				"size": -1
-			},
-			{
-				"widget": "list-n",
-				"name": "Node Set Result Array Status",
-				"doc": "An Exodus II file may define subsets of all the nodes\n        (points) in a file as sets in their own right. Variables, such as\n        boundary conditions, may then be defined over these sets by specifying\n        a single number per node. This property specifies which of those\n        variables should be loaded. The corresponding set must also be loaded\n        using the NodeSetArrayStatus property in order for the variable to\n        appear.",
-				"values": [],
-				"type": "str",
-				"advanced": 0,
-				"size": -1
-			},
-			{
-				"widget": "list-n",
-				"name": "Face Set Result Array Status",
-				"doc": "An Exodus II file may define subsets of all the faces\n        (across all face blocks) in a file as sets in their own right.\n        Variables, such as boundary conditions, may then be defined over these\n        sets by specifying a single number per face. This property specifies\n        which of those variables should be loaded. The corresponding set must\n        also be loaded using the FaceSetArrayStatus property in order for the\n        variable to appear.",
-				"values": [],
-				"type": "str",
-				"advanced": 0,
-				"size": -1
-			},
-			{
-				"widget": "list-n",
-				"name": "Edge Set Result Array Status",
-				"doc": "An Exodus II file may define subsets of all the edges\n        (across all edge blocks) in a file as sets in their own right.\n        Variables, such as boundary conditions, may then be defined over these\n        sets by specifying a single number per edge. This property specifies\n        which of those variables should be loaded. The corresponding set must\n        also be loaded using the EdgeSetArrayStatus property in order for the\n        variable to appear.",
-				"values": [],
-				"type": "str",
-				"advanced": 0,
-				"size": -1
-			},
-			{
-				"widget": "checkbox",
-				"name": "Generate Global Node Id Array",
-				"doc": "Should the reader retrieve the first new-style node map,\n        or if that is not present, the solitary old-style node map (which\n        always exists but may be procedurally generated if it is not stored\n        with the file)?",
-				"type": "int",
-				"advanced": 0,
-				"size": 1
-			},
-			{
-				"widget": "list-n",
-				"name": "Element Set Result Array Status",
-				"doc": "An Exodus II file may define subsets of all the elements\n        (across all element blocks) in a file as sets in their own right.\n        Variables, such as feature classifiers, may then be defined over these\n        sets by specifying a single number per element. This property specifies\n        which of those variables should be loaded. The corresponding set must\n        also be loaded using the ElementSetArrayStatus property in order for\n        the variable to appear.",
-				"values": [],
-				"type": "str",
-				"advanced": 0,
-				"size": -1
-			},
-			{
-				"widget": "list-n",
-				"name": "Point Variables",
-				"doc": "Use this property to select which nodal (i.e.,\n        per-point) variables should be loaded.",
-				"values": [
-					"DISPL",
-					"VEL",
-					"ACCL"
-				],
-				"type": "str",
-				"advanced": 0,
-				"size": -1
-			},
-			{
-				"widget": "list-n",
-				"name": "Global Variables",
-				"doc": "Use this property to select which global (i.e.,\n        per-mesh) variables should be loaded. Global variables are stored as\n        arrays in the field data of the reader's output.",
-				"values": [
-					"KE",
-					"XMOM",
-					"YMOM",
-					"ZMOM",
-					"NSTEPS",
-					"TMSTEP"
-				],
-				"type": "str",
-				"advanced": 0,
-				"size": -1
-			},
-			{
-				"widget": "checkbox",
-				"name": "Apply Displacements",
-				"doc": "Geometric locations can include displacements. When this\n        option is on, the nodal positions are 'displaced' by the standard\n        exodus displacement vector. If displacements are turned 'off', the user\n        can explicitly add them by applying a warp filter.",
-				"type": "int",
-				"advanced": 0,
-				"size": 1
-			},
-			{
-				"widget": "textfield",
-				"name": "Displacement Magnitude",
-				"doc": "When displacements are being applied, they are scaled by\n        this amount. Set to 1 for no scaling.",
-				"range": [],
-				"type": "float",
-				"advanced": 0,
-				"size": 1
-			},
-			{
-				"widget": "list-n",
-				"name": "Edge Blocks",
-				"doc": "Use this property to select which blocks of edges should\n        be loaded. All edges in the same block will have the same interpolant\n        (linear, quadratic, etc.) and have the same variables defined over\n        them.",
-				"values": [],
-				"type": "str",
-				"advanced": 0,
-				"size": -1
-			},
-			{
-				"widget": "list-n",
-				"name": "Node Set Array Status",
-				"doc": "An Exodus II file may define subsets of all the nodes\n        (points) in a file as sets in their own right. Variables, such as\n        boundary conditions, may then be defined over these sets by specifying\n        a single number per node. This property specifies which of those sets\n        should be loaded. The accompanying NodeSetResultArrayStatus property\n        specifies which variables defined over those sets should be\n        loaded.",
-				"values": [
-					"Unnamed set ID: 1",
-					"Unnamed set ID: 100"
-				],
-				"type": "str",
-				"advanced": 0,
-				"size": -1
-			},
-			{
-				"widget": "list-n",
-				"name": "Side Set Array Status",
-				"doc": "An Exodus II file may define subsets of all the\n        of all the elements in a file as sets in their own\n        right. This property specifies which of those sets should be loaded.\n        Variables, such as boundary conditions, may then be defined over these\n        sets by specifying a single number per side. For example, a hexahedron\n        has 18 sides: 6 faces and 12 edges. Any of these sides may be\n        individually called out in a set and assigned a result value. The\n        accompanying SideSetResultArrayStatus property specifies which\n        variables defined over those sets should be loaded.",
-				"values": [
-					"Unnamed set ID: 4"
-				],
-				"type": "str",
-				"advanced": 0,
-				"size": -1
-			},
-			{
-				"widget": "list-n",
-				"name": "Face Set Array Status",
-				"doc": "An Exodus II file may define subsets of all the faces\n        (across all face blocks) in a file as sets in their own right. This\n        property specifies which of those sets should be loaded. Variables,\n        such as boundary conditions, may then be defined over these sets by\n        specifying a single number per face. The accompanying\n        FaceSetResultArrayStatus property specifies which variables defined\n        over those sets should be loaded.",
-				"values": [],
-				"type": "str",
-				"advanced": 0,
-				"size": -1
-			},
-			{
-				"widget": "list-n",
-				"name": "Edge Set Array Status",
-				"doc": "An Exodus II file may define subsets of all the edges\n        (across all edge blocks) in a file as sets in their own right. This\n        property specifies which of those sets should be loaded. Variables,\n        such as boundary conditions, may then be defined over these sets by\n        specifying a single number per edge. The accompanying\n        EdgeSetResultArrayStatus property specifies which variables defined\n        over those sets should be loaded.",
-				"values": [],
-				"type": "str",
-				"advanced": 0,
-				"size": -1
-			},
-			{
-				"widget": "list-n",
-				"name": "Element Set Array Status",
-				"doc": "An Exodus II file may define subsets of all the elements\n        (across all element blocks) in a file as sets in their own right. This\n        property specifies which of those sets should be loaded. Variables,\n        such as feature classifiers, may then be defined over these sets by\n        specifying a single number per element. The accompanying\n        ElementSetResultArrayStatus property specifies which variables defined\n        over those sets should be loaded.",
-				"values": [],
-				"type": "str",
-				"advanced": 0,
-				"size": -1
-			},
-			{
-				"widget": "list-n",
-				"name": "Node Map Array Status",
-				"doc": "Specify which maps defined over nodes (points) in the\n        mesh should be loaded. A node map is a renumbering of all the points in\n        a file from their offset in the file to some arbitrary integers,\n        usually specifying a unique global ID across a set of files. These are\n        sometimes called new-style maps because they are specified differently\n        than in older Exodus files, which only allowed a single node\n        map.",
-				"values": [],
-				"type": "str",
-				"advanced": 0,
-				"size": -1
-			},
-			{
-				"widget": "list-n",
-				"name": "Edge Map Array Status",
-				"doc": "Specify which maps defined over edges in the mesh should\n        be loaded. An edge map is a renumbering of all the edges (across all\n        the edge blocks of a file) from their offset in the file to some\n        arbitrary integers, usually specifying a unique global ID across a set\n        of files.",
-				"values": [],
-				"type": "str",
-				"advanced": 0,
-				"size": -1
-			},
-			{
-				"widget": "list-n",
-				"name": "Face Map Array Status",
-				"doc": "Specify which maps defined over faces in the mesh should\n        be loaded. A face map is a renumbering of all the faces (across all the\n        face blocks of a file) from their offset in the file to some arbitrary\n        integers, usually specifying a unique global ID across a set of\n        files.",
-				"values": [],
-				"type": "str",
-				"advanced": 0,
-				"size": -1
-			},
-			{
-				"widget": "list-n",
-				"name": "Element Map Array Status",
-				"doc": "Specify which maps defined over elements (cells) in the\n        mesh should be loaded. An element map is a renumbering of all the\n        elements (across all the element blocks of a file) from their offset in\n        the file to some arbitrary integers, usually specifying a unique global\n        ID across a set of files. These are sometimes called new-style maps\n        because they are specified differently than in older Exodus files,\n        which only allowed a single element map.",
-				"values": [],
-				"type": "str",
-				"advanced": 0,
-				"size": -1
-			},
-			{
-				"widget": "textfield",
-				"name": "Element Blocks",
-				"doc": "Use this property to select which blocks of elements\n        (cells) should be loaded. All elements (cells) in the same block will\n        have the same interpolant (tetrahedral, triangular, trilinear\n        hexahedral, etc.) and have the same variables defined over\n        them.",
-				"type": "str",
-				"advanced": 0,
-				"size": -1
-			},
-			{
-				"widget": "list-n",
-				"name": "Face Blocks",
-				"doc": "Use this property to select which blocks of faces should\n        be loaded. All faces in the same block will have the same interpolant\n        (triangular, bilinear quadrilateral, etc.) and have the same variables\n        defined over them.",
-				"values": [],
-				"type": "str",
-				"advanced": 0,
-				"size": -1
-			},
-			{
-				"widget": "checkbox",
-				"name": "Has Mode Shapes",
-				"doc": "Some simulations overload the Exodus time steps to\n        represent mode shapes. In this case, it does not make sense to iterate\n        over the \"time steps\", because they are not meant to be played in\n        order. Rather, each represents the vibration at a different \"mode.\"\n        Setting the value of this property to 1 changes the semantics of the\n        reader to not report the time steps to downstream\n        filters.",
-				"type": "int",
-				"advanced": 1,
-				"size": 1
-			},
-			{
-				"widget": "textfield",
-				"name": "Mode Shape",
-				"doc": "Specify which mode shape to animate when HasModeShapes\n        is on.",
-				"range": [
-					{
-						"max": 44,
-						"min": 1
-					}
-				],
-				"type": "int",
-				"advanced": 1,
-				"size": 1
-			},
-			{
-				"widget": "checkbox",
-				"name": "Animate Vibrations",
-				"doc": "If this flag is on and HasModeShapes is also on, then\n        this reader will report a continuous time range [0,1] and animate the\n        displacements in a periodic sinusoid. If this flag is off and\n        HasModeShapes is on, this reader ignores time. This flag has no effect\n        if HasModeShapes is off.",
-				"type": "int",
-				"advanced": 1,
-				"size": 1
-			},
-			{
-				"widget": "textfield",
-				"name": "File Prefix",
-				"doc": "This property specifies the file root used with the file\n        pattern to format a file name. (See the File Pattern\n        property).",
-				"type": "str",
-				"advanced": 1,
-				"size": 1
-			},
-			{
-				"widget": "textfield",
-				"name": "File Pattern",
-				"doc": "This property contains a text string specifying the\n        pattern used to load files. There are two parts to it: the prefix (%s)\n        and the file number (%i). The format used is the same as that used for\n        printf.",
-				"type": "str",
-				"advanced": 1,
-				"size": 1
-			},
-			{
-				"widget": "textfield",
-				"name": "File Range",
-				"doc": "This property controls the indices of the first and last\n        files to be read.",
-				"range": [
-					{
-						"max": 0,
-						"min": 0
-					}
-				],
-				"type": "int",
-				"advanced": 1,
-				"size": 2
-			},
-			{
-				"widget": "textfield",
-				"name": "XML File Name",
-				"doc": "This property specifies the name of an XML file\n        containing part and material descriptions and a mapping to element\n        blocks.",
-				"type": "str",
-				"advanced": 1,
-				"size": 1
-			},
-			{
-				"widget": "checkbox",
-				"name": "Generate File Id Array",
-				"doc": "Should each cell in the mesh be assigned an integer\n        identifying the file it came from? If turned on, a cell variable named\n        \"FileId\" should be present.",
-				"type": "int",
-				"advanced": 0,
-				"size": 1
-			}
-		],
-		"id": "558",
-		"properties": [
-			{
-				"name": "GenerateObjectIdCellArray",
-				"value": 1,
-				"id": "558"
-			},
-			{
-				"name": "GenerateGlobalElementIdArray",
-				"value": 1,
-				"id": "558"
-			},
-			{
-				"name": "ElementVariables",
-				"value": [
-					"EQPS"
-				],
-				"id": "558"
-			},
-			{
-				"name": "FaceVariables",
-				"value": [],
-				"id": "558"
-			},
-			{
-				"name": "EdgeVariables",
-				"value": [],
-				"id": "558"
-			},
-			{
-				"name": "SideSetResultArrayStatus",
-				"value": [],
-				"id": "558"
-			},
-			{
-				"name": "NodeSetResultArrayStatus",
-				"value": [],
-				"id": "558"
-			},
-			{
-				"name": "FaceSetResultArrayStatus",
-				"value": [],
-				"id": "558"
-			},
-			{
-				"name": "EdgeSetResultArrayStatus",
-				"value": [],
-				"id": "558"
-			},
-			{
-				"name": "GenerateGlobalNodeIdArray",
-				"value": 1,
-				"id": "558"
-			},
-			{
-				"name": "ElementSetResultArrayStatus",
-				"value": [],
-				"id": "558"
-			},
-			{
-				"name": "PointVariables",
-				"value": [
-					"DISPL",
-					"VEL",
-					"ACCL"
-				],
-				"id": "558"
-			},
-			{
-				"name": "GlobalVariables",
-				"value": [
-					"KE",
-					"XMOM",
-					"YMOM",
-					"ZMOM",
-					"NSTEPS",
-					"TMSTEP"
-				],
-				"id": "558"
-			},
-			{
-				"name": "ApplyDisplacements",
-				"value": 1,
-				"id": "558"
-			},
-			{
-				"name": "DisplacementMagnitude",
-				"value": 1,
-				"id": "558"
-			},
-			{
-				"name": "EdgeBlocks",
-				"value": [],
-				"id": "558"
-			},
-			{
-				"name": "NodeSetArrayStatus",
-				"value": [],
-				"id": "558"
-			},
-			{
-				"name": "SideSetArrayStatus",
-				"value": [],
-				"id": "558"
-			},
-			{
-				"name": "FaceSetArrayStatus",
-				"value": [],
-				"id": "558"
-			},
-			{
-				"name": "EdgeSetArrayStatus",
-				"value": [],
-				"id": "558"
-			},
-			{
-				"name": "ElementSetArrayStatus",
-				"value": [],
-				"id": "558"
-			},
-			{
-				"name": "NodeMapArrayStatus",
-				"value": [],
-				"id": "558"
-			},
-			{
-				"name": "EdgeMapArrayStatus",
-				"value": [],
-				"id": "558"
-			},
-			{
-				"name": "FaceMapArrayStatus",
-				"value": [],
-				"id": "558"
-			},
-			{
-				"name": "ElementMapArrayStatus",
-				"value": [],
-				"id": "558"
-			},
-			{
-				"name": "ElementBlocks",
-				"value": [],
-				"id": "558"
-			},
-			{
-				"name": "FaceBlocks",
-				"value": [],
-				"id": "558"
-			},
-			{
-				"name": "HasModeShapes",
-				"value": 0,
-				"id": "558"
-			},
-			{
-				"name": "ModeShape",
-				"value": 1,
-				"id": "558"
-			},
-			{
-				"name": "AnimateVibrations",
-				"value": 1,
-				"id": "558"
-			},
-			{
-				"name": "FilePrefix",
-				"value": "/Users/seb/Downloads/ParaViewData-3.10.1/Data/can.ex2",
-				"id": "558"
-			},
-			{
-				"name": "FilePattern",
-				"value": "%s",
-				"id": "558"
-			},
-			{
-				"name": "FileRange",
-				"value": [
-					0,
-					0
-				],
-				"id": "558"
-			},
-			{
-				"name": "XMLFileName",
-				"value": "/Users/seb/Downloads/ParaViewData-3.10.1/Data/artifact.dta",
-				"id": "558"
-			},
-			{
-				"name": "GenerateFileIdArray",
-				"value": 0,
-				"id": "558"
-			}
-		]
-	};
-
-/***/ },
-/* 179 */
-/***/ function(module, exports) {
-
-	module.exports = {
-		"colorBy": {
-			"color": [
-				0,
-				0.3,
-				0.4
-			],
-			"representation": "729",
-			"scalarBar": 0,
-			"array": [
-				null,
-				"",
-				-1
-			],
-			"mode": "array"
-		},
-		"ui": [
-			{
-				"widget": "checkbox",
-				"name": "Cube Axes Visibility",
-				"doc": "Set the visibility for the cube axes.",
-				"type": "int",
-				"advanced": 1,
-				"size": 1
-			},
-			{
-				"widget": "list-1",
-				"name": "Representation",
-				"doc": "Choose the type for the representation.",
-				"values": [
-					"3D Glyphs",
-					"Outline",
-					"Points",
-					"Surface",
-					"Surface With Edges",
-					"Volume",
-					"Wireframe"
-				],
-				"type": "str",
-				"advanced": 0,
-				"size": 1
-			},
-			{
-				"widget": "textfield",
-				"name": "Ambient Color",
-				"range": [
-					{
-						"max": 1,
-						"min": 0
-					},
-					{
-						"max": 1,
-						"min": 0
-					},
-					{
-						"max": 1,
-						"min": 0
-					}
-				],
-				"type": "float",
-				"advanced": 0,
-				"size": 3
-			},
-			{
-				"widget": "textfield",
-				"name": "Diffuse Color",
-				"range": [
-					{
-						"max": 1,
-						"min": 0
-					},
-					{
-						"max": 1,
-						"min": 0
-					},
-					{
-						"max": 1,
-						"min": 0
-					}
-				],
-				"type": "float",
-				"advanced": 0,
-				"size": 3
-			},
-			{
-				"widget": "checkbox",
-				"name": "Map Scalars",
-				"doc": "When set to True, LookupTable will always be\n        used for scalar mapping. Otherwise, when up to 4 component\n        scalars are present, the components are clamped to a valid\n        color interval (0-255 for an integral type and 0.0-1.0 for a\n        floating point type) and then directly used as\n        color.",
-				"type": "int",
-				"advanced": 1,
-				"size": 1
-			},
-			{
-				"widget": "checkbox",
-				"name": "Interpolate Scalars Before Mapping",
-				"doc": "When set to true (default), texture coordinates\n        are sent to and interpolated by the graphics card. This is\n        equivalent with interpolating scalars and then mapping them to\n        obtain colors between points. Otherwise, colors are sent to\n        and interpolated by the graphics card.\n        ",
-				"type": "int",
-				"advanced": 1,
-				"size": 1
-			},
-			{
-				"widget": "textfield",
-				"name": "Opacity",
-				"range": [
-					{
-						"max": 1,
-						"min": 0
-					}
-				],
-				"type": "float",
-				"advanced": 0,
-				"size": 1
-			},
-			{
-				"widget": "textfield",
-				"name": "Point Size",
-				"range": [],
-				"type": "float",
-				"advanced": 1,
-				"size": 1
-			},
-			{
-				"widget": "textfield",
-				"name": "Line Width",
-				"range": [],
-				"type": "float",
-				"advanced": 1,
-				"size": 1
-			},
-			{
-				"widget": "list-1",
-				"name": "Interpolation",
-				"values": {
-					"Flat": 0,
-					"Gouraud": 1
-				},
-				"type": "int",
-				"advanced": 1,
-				"size": 1
-			},
-			{
-				"widget": "textfield",
-				"name": "Specular",
-				"range": [
-					{
-						"max": 1,
-						"min": 0
-					}
-				],
-				"type": "float",
-				"advanced": 0,
-				"size": 1
-			},
-			{
-				"widget": "textfield",
-				"name": "Specular Color",
-				"range": [
-					{
-						"max": 1,
-						"min": 0
-					},
-					{
-						"max": 1,
-						"min": 0
-					},
-					{
-						"max": 1,
-						"min": 0
-					}
-				],
-				"type": "float",
-				"advanced": 1,
-				"size": 3
-			},
-			{
-				"widget": "textfield",
-				"name": "Specular Power",
-				"range": [
-					{
-						"max": 100,
-						"min": 0
-					}
-				],
-				"type": "float",
-				"advanced": 1,
-				"size": 1
-			},
-			{
-				"widget": "textfield",
-				"name": "Ambient",
-				"range": [
-					{
-						"max": 1,
-						"min": 0
-					}
-				],
-				"type": "float",
-				"advanced": 1,
-				"size": 1
-			},
-			{
-				"widget": "textfield",
-				"name": "Diffuse",
-				"range": [
-					{
-						"max": 1,
-						"min": 0
-					}
-				],
-				"type": "float",
-				"advanced": 1,
-				"size": 1
-			},
-			{
-				"widget": "textfield",
-				"name": "Edge Color",
-				"doc": "Set the edge color. This color is used to draw the edge\n        for the polygonal data when EdgeVisibility is on.",
-				"range": [
-					{
-						"max": 1,
-						"min": 0
-					},
-					{
-						"max": 1,
-						"min": 0
-					},
-					{
-						"max": 1,
-						"min": 0
-					}
-				],
-				"type": "float",
-				"advanced": 1,
-				"size": 3
-			},
-			{
-				"widget": "list-1",
-				"name": "Backface Representation",
-				"doc": "Choose the representation type for the\n        backface.",
-				"values": {
-					"Cull Frontface": 402,
-					"Surface With Edges": 3,
-					"Wireframe": 1,
-					"Surface": 2,
-					"Cull Backface": 401,
-					"Points": 0,
-					"Follow Frontface": 400
-				},
-				"type": "int",
-				"advanced": 1,
-				"size": 1
-			},
-			{
-				"widget": "textfield",
-				"name": "Backface Ambient Color",
-				"range": [
-					{
-						"max": 1,
-						"min": 0
-					},
-					{
-						"max": 1,
-						"min": 0
-					},
-					{
-						"max": 1,
-						"min": 0
-					}
-				],
-				"type": "float",
-				"advanced": 1,
-				"size": 3
-			},
-			{
-				"widget": "textfield",
-				"name": "Backface Diffuse Color",
-				"range": [
-					{
-						"max": 1,
-						"min": 0
-					},
-					{
-						"max": 1,
-						"min": 0
-					},
-					{
-						"max": 1,
-						"min": 0
-					}
-				],
-				"type": "float",
-				"advanced": 1,
-				"size": 3
-			},
-			{
-				"widget": "textfield",
-				"name": "Backface Opacity",
-				"range": [
-					{
-						"max": 1,
-						"min": 0
-					}
-				],
-				"type": "float",
-				"advanced": 1,
-				"size": 1
-			},
-			{
-				"widget": "textfield",
-				"name": "Translation",
-				"range": [],
-				"type": "float",
-				"advanced": 1,
-				"size": 3
-			},
-			{
-				"widget": "textfield",
-				"name": "Scale",
-				"range": [],
-				"type": "float",
-				"advanced": 1,
-				"size": 3
-			},
-			{
-				"widget": "textfield",
-				"name": "Orientation",
-				"range": [],
-				"type": "float",
-				"advanced": 1,
-				"size": 3
-			},
-			{
-				"widget": "textfield",
-				"name": "Origin",
-				"range": [],
-				"type": "float",
-				"advanced": 1,
-				"size": 3
-			},
-			{
-				"widget": "checkbox",
-				"type": "int",
-				"name": "Pickable",
-				"advanced": 1,
-				"size": 1
-			},
-			{
-				"widget": "checkbox",
-				"name": "Triangulate",
-				"doc": "Triangulate the geometry internally to avoid rendering\n        issues of non-convex polygons. This feature has a processing and memory\n        cost, it should be enabled only when needed.",
-				"type": "int",
-				"advanced": 1,
-				"size": 1
-			},
-			{
-				"widget": "textfield",
-				"name": "Nonlinear Subdivision Level",
-				"range": [
-					{
-						"max": 4,
-						"min": 0
-					}
-				],
-				"type": "int",
-				"advanced": 1,
-				"size": 1
-			},
-			{
-				"widget": "textfield",
-				"name": "Block Colors Distinct Values",
-				"doc": "\n          Determines the number of distinct values in\n          vtkBlockColors. This array is added to each block if\n          the dataset is a composite dataset. The array has one value\n          set to (blockIndex % BlockColorsDistinctValues)\n        ",
-				"range": [],
-				"type": "int",
-				"advanced": 1,
-				"size": 1
-			},
-			{
-				"widget": "list-1",
-				"name": "Glyph Type",
-				"doc": "Specify the source objects.",
-				"values": {
-					"Box": "603",
-					"2D Glyph": "647",
-					"Cylinder": "614",
-					"Sphere": "636",
-					"Cone": "592",
-					"Arrow": "581",
-					"Line": "625"
-				},
-				"type": "proxy",
-				"advanced": 1,
-				"size": 1
-			},
-			{
-				"widget": "textfield",
-				"type": "float",
-				"name": "Custom Bounds",
-				"advanced": 0,
-				"size": 6
-			},
-			{
-				"widget": "textfield",
-				"type": "int",
-				"name": "Custom Bounds Active",
-				"advanced": 0,
-				"size": 3
-			},
-			{
-				"widget": "textfield",
-				"type": "int",
-				"name": "Original Bounds Range Active",
-				"advanced": 0,
-				"size": 3
-			},
-			{
-				"widget": "textfield",
-				"type": "float",
-				"name": "Custom Range",
-				"advanced": 0,
-				"size": 6
-			},
-			{
-				"widget": "textfield",
-				"type": "int",
-				"name": "Custom Range Active",
-				"advanced": 0,
-				"size": 3
-			},
-			{
-				"widget": "checkbox",
-				"name": "Use Axes Origin",
-				"doc": "Specify if the AxesCenter should be used to draw the axes.",
-				"type": "int",
-				"advanced": 0,
-				"size": 1
-			},
-			{
-				"widget": "textfield",
-				"name": "Axes Origin",
-				"range": [],
-				"type": "float",
-				"advanced": 0,
-				"size": 3
-			},
-			{
-				"widget": "checkbox",
-				"name": "Sticky Axes",
-				"doc": "Adjust the axes to always be visible in the viewport unless the\n  original bounds of the axes are entirely outside the viewport.",
-				"type": "int",
-				"advanced": 0,
-				"size": 1
-			},
-			{
-				"widget": "checkbox",
-				"name": "Center Sticky Axes",
-				"doc": "Keep the sticky axes centered in the view window.",
-				"type": "int",
-				"advanced": 0,
-				"size": 1
-			},
-			{
-				"widget": "textfield",
-				"type": "float",
-				"name": "Scalar Opacity Unit Distance",
-				"advanced": 1,
-				"size": 1
-			},
-			{
-				"widget": "list-1",
-				"name": "Select Mapper",
-				"doc": "Select the volume mapper to use for Volume\n        rendering.",
-				"values": [
-					"Projected tetra",
-					"HAVS",
-					"Z sweep",
-					"Bunyk ray cast"
-				],
-				"type": "str",
-				"advanced": 1,
-				"size": 1
-			}
-		],
-		"id": "729",
-		"properties": [
-			{
-				"name": "CubeAxesVisibility",
-				"value": 0,
-				"id": "729"
-			},
-			{
-				"name": "Representation",
-				"value": "Surface",
-				"id": "729"
-			},
-			{
-				"name": "AmbientColor",
-				"value": [
-					1,
-					1,
-					1
-				],
-				"id": "729"
-			},
-			{
-				"name": "DiffuseColor",
-				"value": [
-					1,
-					1,
-					1
-				],
-				"id": "729"
-			},
-			{
-				"name": "MapScalars",
-				"value": 1,
-				"id": "729"
-			},
-			{
-				"name": "InterpolateScalarsBeforeMapping",
-				"value": 1,
-				"id": "729"
-			},
-			{
-				"name": "Opacity",
-				"value": 1,
-				"id": "729"
-			},
-			{
-				"name": "PointSize",
-				"value": 2,
-				"id": "729"
-			},
-			{
-				"name": "LineWidth",
-				"value": 1,
-				"id": "729"
-			},
-			{
-				"name": "Interpolation",
-				"value": "Gouraud",
-				"id": "729"
-			},
-			{
-				"name": "Specular",
-				"value": 0,
-				"id": "729"
-			},
-			{
-				"name": "SpecularColor",
-				"value": [
-					1,
-					1,
-					1
-				],
-				"id": "729"
-			},
-			{
-				"name": "SpecularPower",
-				"value": 100,
-				"id": "729"
-			},
-			{
-				"name": "Ambient",
-				"value": 0,
-				"id": "729"
-			},
-			{
-				"name": "Diffuse",
-				"value": 1,
-				"id": "729"
-			},
-			{
-				"name": "EdgeColor",
-				"value": [
-					0,
-					0,
-					0.5
-				],
-				"id": "729"
-			},
-			{
-				"name": "BackfaceRepresentation",
-				"value": "Follow Frontface",
-				"id": "729"
-			},
-			{
-				"name": "BackfaceAmbientColor",
-				"value": [
-					1,
-					1,
-					1
-				],
-				"id": "729"
-			},
-			{
-				"name": "BackfaceDiffuseColor",
-				"value": [
-					1,
-					1,
-					1
-				],
-				"id": "729"
-			},
-			{
-				"name": "BackfaceOpacity",
-				"value": 1,
-				"id": "729"
-			},
-			{
-				"name": "Position",
-				"value": [
-					0,
-					0,
-					0
-				],
-				"id": "729"
-			},
-			{
-				"name": "Scale",
-				"value": [
-					1,
-					1,
-					1
-				],
-				"id": "729"
-			},
-			{
-				"name": "Orientation",
-				"value": [
-					0,
-					0,
-					0
-				],
-				"id": "729"
-			},
-			{
-				"name": "Origin",
-				"value": [
-					0,
-					0,
-					0
-				],
-				"id": "729"
-			},
-			{
-				"name": "Pickable",
-				"value": 1,
-				"id": "729"
-			},
-			{
-				"name": "Triangulate",
-				"value": 0,
-				"id": "729"
-			},
-			{
-				"name": "NonlinearSubdivisionLevel",
-				"value": 1,
-				"id": "729"
-			},
-			{
-				"name": "BlockColorsDistinctValues",
-				"value": 12,
-				"id": "729"
-			},
-			{
-				"name": "GlyphType",
-				"value": "Arrow",
-				"id": "729"
-			},
-			{
-				"name": "CustomBounds",
-				"value": [
-					0,
-					1,
-					0,
-					1,
-					0,
-					1
-				],
-				"id": "729"
-			},
-			{
-				"name": "CustomBoundsActive",
-				"value": [
-					0,
-					0,
-					0
-				],
-				"id": "729"
-			},
-			{
-				"name": "OriginalBoundsRangeActive",
-				"value": [
-					0,
-					0,
-					0
-				],
-				"id": "729"
-			},
-			{
-				"name": "CustomRange",
-				"value": [
-					0,
-					1,
-					0,
-					1,
-					0,
-					1
-				],
-				"id": "729"
-			},
-			{
-				"name": "CustomRangeActive",
-				"value": [
-					0,
-					0,
-					0
-				],
-				"id": "729"
-			},
-			{
-				"name": "UseAxesOrigin",
-				"value": 0,
-				"id": "729"
-			},
-			{
-				"name": "AxesOrigin",
-				"value": [
-					0,
-					0,
-					0
-				],
-				"id": "729"
-			},
-			{
-				"name": "StickyAxes",
-				"value": 0,
-				"id": "729"
-			},
-			{
-				"name": "CenterStickyAxes",
-				"value": 0,
-				"id": "729"
-			},
-			{
-				"name": "ScalarOpacityUnitDistance",
-				"value": 1.3901072164734267,
-				"id": "729"
-			},
-			{
-				"name": "SelectMapper",
-				"value": "Projected tetra",
-				"id": "729"
-			}
-		]
-	};
-
-/***/ },
-/* 180 */
-/***/ function(module, exports) {
-
-	module.exports = {
-		"Brewer Diverging Purple-Orange (5)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AV48mQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJ3BATWK0Q0LAAAAAElFTkSuQmCC",
-		"Brewer Diverging Brown-Blue-Green (8)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQFmXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFP+AMf72HzHAAAAAElFTkSuQmCC",
-		"coolwarm": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78ATtMwAECAgECAQEBAgICAQECAQEBAgECAQECAgICAQEBAgECAQECAgECAQEBAgECAQICAgEBAQECAQICAQEBAQECAQECAQIBAgECAQEBAQECAQICAQEBAQECAgECAQIBAQECAQECAQIBAQECAAEBAQICAQEBAQECAQIBAQECAAEBAQICAQEBAQECAQIBAAECAQEBAQICAAEBAQIBAAECAQEBAAIBAQECAAIBAAECAQEBAAIBAQECAAEBAQIBAAECAAEBAQIBAAEBAAIBAAEBAAECAAIBAAEBAAIBAAEBAAEBAAIBAAEBAAECAAIBAAEBAQEB/wIBAAEBAAIB/wEAAAEBAAIB/wEBAAEBAAIB/wEBAAEBAAIA/wEBAAEBAAEB/wIBAAEA/wEB/wEAAAIB/wEB/wEA/wEBAAIA/wEB/wEAAAEB/wEB/wIA/wEBAAEA/wEB/wEA/wEA/wIB/wEA/wEA/wEA/wEB/wEA/wEA/wEA/wEB/gEA/wEA/wEA/wEB/wH//wEA/gH//wEA/wH//gH//wEA/gH//wEA/gH//wH//gEA/wH//gH//wAA/wH//gH//wEA/gD//wH//gD//gH//wH//gD//wH//gD//wH//gD//wH//gD//wEA/gD//gH//wD+/gD//wD//gH//wD//gD+/gD//wD//gD//wH+/gD//wD//gD//gD//wD+/gD//wD//gD+/wD//gD+/v///wD+/gD//wD+/gD////+/gD//gD//wD+/gD////+/gD+/////gD+///+/gD////+/gD+/////gD+///+/gD////+/v/+/wD//v/+/wD+/v/+///+/v/////+/gD+///+///+/v/+///+/v/+///+/////v/+/wD+/v/+///+///+/v7+///+///9///+/v/+///+//7+/v/+///+///9///+/v/+//79///+///+/v/9//7+///9//7+///9//79/v/9///9//79///9//78///9//77///7/v76///5/6Y3Uu837Q1rAAAAAElFTkSuQmCC",
-		"Brewer Sequential Yellow-Orange-Brown (9)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AWYlBgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALjgAJOYDd69AAAAAElFTkSuQmCC",
-		"Brewer Diverging Purple-Orange (7)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AVQniAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA34AQVdYF9GAAAAAElFTkSuQmCC",
-		"BLUE-WHITE": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAAAAAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAgEAAQAAAQAAAgEAAQAAAQAAAgAAAQAAAQAAAgAAAQAAAf8AAgAAAQAAAv8AAQEAAQAAAgEAAQAAAQAAAgAAAQEAAQAAAgAAAf8AAgAAAQAAAf8AAgAAAf8AAgAAAQAAAQAAAgABAQAAAQAAAQAAAgAAAQAAAQAAAgAAAQAAAQAAAgAAAQD/AQAAAgAAAQAAAQAAAgAAAQABAQAAAgAAAQAAAgAAAQAAAQD/AgAAAQAAAQAAAgAAAQAAAgAAAQAAAQAAAgAAAQAAAQAAAgAAAQAAAgAAAQAAAQAAAgAAAQAAAQAAAgAAAQAAAgAAAQACAQABAgACAQACAQEBAgACAQACAQACAQACAgABAQACAf8BAgACAQABAQACAgABAQACAQECAgABAQACAQACAgABAQACAgABAQACAQACAgABAQACAQABAgACAf8BAgACAQACAQEBAgACAQABAQACAgABAQACAgACAQABAQACAgABAQACAQABAgACAf8BAgACAQACAQEBAgACAQABAQACAgACAQABAgACAQACAQABAgACAQABAQACAgACAf8BAgACAQACAQEBAgACAQABAQACAgACAQABAQACAQACAgABAQACAQABAgACAQACAf8BAgACAQACAQEBAQACAQABAQACAQABAQECAQABAQACAgACAf8BAQACAQABAQACAf8BAQACAQsCAAgBAAcCAAUBAAQCAAQCAAMBAAMCAAMCAAMBAAMCAAIBAAMCAAICAAIBAAICAAYCAAUBAAUCAAUBAAQCAAQCAAQBAAQCAAQBAAQCAAMCAAQBAAMCAAQCAAMBAAMCAAUCAAQBAAUCAAQBAAQCAAQBAAUCAAQBAAQCAAMBAAQCAAQCAAQBAAQCAAMBAAQCAAQCAAQBAAUCAAQBAAQCAAQBAAQCAAQCAAQBAAQCAAQCAAMBAAQCAAQBAAQCAJENEP/7eYICAAAAAElFTkSuQmCC",
-		"erdc_blue2gold": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AS0L/wED/wED/wED/wACAAEC/wEC/wEC/wEB/wAC/wEB/wEC/wEBAAAC/wEB/wAB/wEC/wEB/wEB/wECAAEB/wEB/wAB/wEC/wEB/wEB/wEBAAAB/wEB/wEB/wAB/wEB/wAB/wECAAEB/wEB/wEB/wEB/wEB/wEB/wAB/wEBAAEB/wEB/wAB/wEB/wEB/wAA/wEBAAEB/wEB/wEB/wAB/wEB/wEB/wEBAAEB/wAB/wEB/wEB/wEB/wAA/wEB/wEBAAAB/wEB/wEB/wEB/wEB/wEB/wAAAAEB/wEB/wEB/wAB/wEB/wEB/wEA/wABAAEB/wEB/wAB/wEB/wEB/wEA/wEB/wEBAAAB/wEB/wEB/wEA/wAB/wEB/wEB/wEBAAAB/wEB/wEA/wEB/wAB/wEB/wEB/wEA/wEBAAAB/wEB/wEB/wEB/wAA/wEB/wEB/wEB/wAB/wEAAAEB/wEB/wEA/wEB/wEB/wEA/wEB/wEB/wEA/wABAAEA/wEB/wEB/wEA/wEB/wEB/wEAAAAB/wEB/wEAAAEB/wEA/wEBAAEB/wEA/wEBAAEB/wEA/wABAAEA/wEB/wEBAAEA/wEB/wEAAAEB/wEA/wEBAAEA/wEB/wEAAAEB/wEA/wEBAAAA/wEA/wEB/wEAAAEB/wEA/wEBAAEA/wEB/wEA/wABAAEA/wEB/wEAAAEB/wEA/wEB/wEAAAAB/wEA/wEB/wEAAAEB/wEA/wEB/wAB/wEAAAEB/wEA/wEB/wEAAAEB/wAA/wEB/wEA/wEB/wEAAAEB/wAA/wEB/wEA/wEB/wEAAAAB/wEA/wEB/wEA/wEB/wAA/wEB/wEA/wEB/wEA/wABAAEA/wEB/wEA/wEB/wAA/wEB/wEB/wEA/gEB/wAA/wEB/wEA/wEB/wEA/wAB/wEA/gEB/wEA/wAB/wEA/gEB/wEA/wEB/gAB/wEA/wEB/gEA/wAB/gEA/gEB/wEA/gAB/gEA/gEB/gEA/gAB/gEA/QEB/gEB/QEA/QAB/AEA/AEB+gEA+2h229Hb+xOtAAAAAElFTkSuQmCC",
-		"Haze": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78Af/V/v7///7+//7///7+//7///7///7+//7///7+//7///7///7+//////7+//7///7///7+//7///7///7+//7///7+//7///7///7+//7///7+//7///7///7+//7///7+//7///7///7+//7///7+//7///////7+//7///7+//7///7///7+//7///7+//7///7///7+//7///7///7+//7///7+//7///7///7+//7///7+//7///7///7+//////7+//7///7///7+//7///7+//7///7///7+//7///7+//7///7///7+//7///7///7+//7///7+//7///7///7+//7///7+//////7///7+//7///7+//7///7///7+//7///7+//7///7///7+//7///7+//7///7///7+//7///7+//7///7///7+//7///7///7+//////7+//7///7///7+//7///7+//7///7///7+//7///7+//7///7//wIB/wIC/wIB/wIB/wIB/wIC/wIB/wIB/wIB/wEC/wIB/wIB/wIB/wIC/wIB/wIB/wIB/wIC/wIB/wIB/wIB/wIC/wIB/wIB/wIB/wIC/wIB/wEB/wIC/wIB/wIB/wIB/wIC/wIB/wIB/wIB/wIC/wIB/wIB/wIB/wIC/wIB/wIB/wIB/wIC/wEB/wIB/wIB/wIC/wIB/wIB/wIC/wIB/wIB/wIB/wIC/wIB/wIB/wIB/wIC/wIB/wIB/wIB/wECAAIB/wIB/wIB/wIC/wIB/wIB/wIB/wIC/wIB/wIB/wIB/wIC/wIB/wIB/wIC/wIB/wIB/wEB/wIC/wIB/wIB/wIB/wIC/wIB/wIB/wIB/wIC/wIB/wIB/wIB/wIC/wIB/wIB/wIB/wIC/wEB/wIB/wIC/wIB/wIB/wIB/wIC/wIB/wIB/wIB/wIC/wIB/wIB/wIB/wIC/wIB/wIB/wIB/wEC/wIB/wIB/wIB/wIC/wIB/wIB/wIB/wIC/wIB/2fh/8/XWt1tAAAAAElFTkSuQmCC",
-		"GREEN-WHITE_LINEAR": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAAAAABAAABAAABAAABAAABAAABAAABAAACAAABAAABAAABAAABAAABAAAAAAABAAABAAABAAACAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAAAAAABAAABAAABAAEBAAABAAEBAAABAAABAAABAAABAAABAAABAAABAAABAP8BAAABAAABAP8BAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAEBAAIBAAIBAAEBAAIBAAIBAAEBAAIBAAIBAAEBAAIBAAEBAAEBAAIBAAEBAAEBAAIBAAIBAAIBAAEBAAIBAAIBAAEBAAIBAAIBAAEBAAIBAAEBAAIBAAEBAAIBAAEBAAIBAAEBAAIBAAIBAAEBAAIBAAEBAAIBAAEBAAIBAAEBAAIBAAIBAAEBAAIBAAEBAAIBAAEBAAIBAAIBAAEBAAIBAAIBAAEBAAIBAAEBAAIBAAIBAAEBAAIBAAEBAAIBAAIBAAEBAAIBAAIBAAEBAAIBAAEBAAIBAAIBAAEBAAIBAAIBAAEBAAIBAAEBAAIBAAIBAwEBAwIBBAIBAwEBAwIBAgEBAgIBAwIBAgEBAgIBAQIBAgEBAgIBAgEBAQIBAgIBBQEBBAIBBAIBBAEBAwIBBAIBAwEBBAIBAwEBAwIBBAIBAwEBAwIBAwEBAwIBAwIBBAEBAwIBBAEBAwIBBAIBAwEBBAIBAwEBAwIBBAEBAwIBBAIBAwEBAwIBBAEBAwIBAwEBBAIBAwIBBAEBAwIBBAIBAwEBAwIBBAIBAwEBBAIBAwEBBAIBAwEBBAIBAwIBAwEBBAIBAwIBBAIBAwEBBAIBAwIBBAEBAwIBBAEBAwIBBAIBAwEBBAIBA9CZBP/PUQxWAAAAAElFTkSuQmCC",
-		"erdc_purple2green": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78ATwMhwEBAQEBAAECAAEBAQIBAAEBAAEAAQEBAAEBAAEBAQEBAAEBAAEBAQEBAAEBAQEBAAEBAAEBAAEBAQEAAAEBAAEBAQEBAAEBAAEBAAEBAQABAAEBAAEBAAEBAQEAAAEBAAEBAAABAQEBAAEBAAEBAAABAAEBAAEBAAEBAQABAAEBAAEBAAEBAAABAAEBAQEBAAABAAEBAAEBAAABAAEBAAABAAEBAAEBAAABAAEBAAABAAEBAAEBAAABAAEBAAABAAEBAAABAAEBAAABAAEBAAABAAEBAAABAAEBAAABAAEBAAABAAABAAEBAAAB/wEBAAABAAEBAAABAAABAAEBAAAB/wEBAAABAAABAAECAAABAAAB/wEBAAABAAEBAAABAAABAAEB/wABAAABAAEBAAABAAAB/wEBAAABAAABAAEB/wABAAABAAEBAAAB/wABAAEBAAABAAEBAAABAAAB/wEBAAABAAABAAEBAAABAAEB/wABAAABAAEAAAABAAAB/wEBAAABAAEBAAAB/wABAAEBAAABAAEBAAAB/wABAAEBAAABAAAB/wEBAAABAAABAAEB/wABAAEBAAABAAEBAAABAAEB/wABAAEAAAABAAEBAAABAAAB/wEBAAABAAEBAAABAAEBAAABAAEB/wABAAEBAAEAAAABAAEBAAABAAEBAAABAAEBAAAB/wEBAAABAAEBAAABAAEBAAEAAAABAAEBAAABAAEBAAEBAAABAAEBAAABAAEBAAEBAAAAAAEBAAABAAEBAAEBAAABAAEBAAABAAEBAAEBAAABAAEAAAABAAEBAAEBAAABAAEBAAEBAAABAAEBAAABAAEBAAEAAAABAAEBAAEBAAABAAEBAAEBAAABAAEBAAABAAEBAAEBAAAAAAEBAAEBAAABAAEBAAABAAEBAAEBAAABAAEBAAEBAAABAAEBAQABAAEAAAEBAAABAAEBAAEBAAABAAEBAAAAAAEBAAEBAAABAAEBAAABAAEAAAEBAAABAAEBAGpGFFXJSE+tAAAAAElFTkSuQmCC",
-		"Brewer Qualitative Pastel2": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AczMzAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAHAmYTDVWaAAAAAElFTkSuQmCC",
-		"Brewer Qualitative Pastel1": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AfLy8gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIWkAtiNC1MiAAAAAElFTkSuQmCC",
-		"erdc_purple_BW": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAAAAIBAwMBBAIBAwIBAwIBAwIBAgIBAwIBAgEBAQIBAgEBAgEBAgEBAgEBAQEAAgEBAgEBAgEAAQEBAgEBAgEAAgEAAQEBAgEAAgEBAgEAAQEBAgEAAgEAAgIBAQEAAgEBAgEAAgEBAQEAAgEBAgEAAQEBAgEAAgEBAQEBAgEAAgEBAQEAAgEBAgEAAQEBAgEAAgEBAgEBAQEAAgEBAQEBAgEAAQEBAgEAAgEBAQEBAgEAAQEBAgEBAgIAAQEBAgEBAgEAAQEBAgEBAQEAAQEBAgEBAQEBAgEAAQEBAgEBAQEBAgEAAQEBAgEBAQIBAgEAAQEBAQEBAgEBAQEBAQEAAgEBAQEBAQEBAgEBAQEBAQEAAgIBAQEBAQEBAgEBAQEAAQEBAgEBAQEBAQEBAQEBAQEBAQEBAQEBAQIBAQEBAQEBAQEBAgEBAQEBAQEBAQEBAQEBAQEBAQEAAQEBAgIBAQEBAQEBAQEBAQEBAQEBAQEBAgEBAQEBAQEBAQIBAQEBAQEBAQEBAgEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQECAQABAQEBAQEBAQEBAQEBAQEBAAEBAQECAQEBAQEBAQEBAQEBAAEBAQEBAQECAQEBAQEBAAEBAQABAQEBAQECAAEBAQEBAQEBAAEBAQEBAQECAAEBAQEBAQEBAQEBAAECAQEBAQEBAAEBAQEBAAECAQABAQEBAAEBAQEBAAECAQEBAQEBAAEBAQECAAEBAQABAQEBAAECAQEBAAEBAAACAAEBAAEBAQACAAEBAAEBAAECAQABAAECAAEBAAEBAQACAAEBAAEBAAECAAABAAEBAAECAAABAAEBAAECAAEBAAACAAEBAAEBAAECAAABAAEBAAECAAEBAQABAAECAAEBAAEBAAECAAEBAAACAAEBAAEBAAECAAEBAAABAAECAAEBAAEBAAECAAEBAAEBAAACAAEBAAEBAAEBAAECAAEBAAEBAQECAAABAAEBAAECAAEBAPe0Av8FjhUIAAAAAElFTkSuQmCC",
-		"blot": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAA/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKoAAFUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH/7BAEtZRGJAAAAAElFTkSuQmCC",
-		"Brewer Diverging Spectral (3)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AZnVlAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAApfAgQ+V4EVAAAAAElFTkSuQmCC",
-		"erdc_divLow_icePeach": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AXrQ/wD//v///v/+/v///v/+/v///v/+/////gD+/v///v///v/+/v/////+/v///gD+/v///v/+/v///v/+/v///v/+///+/v///v/+/v///v/+/v///v/+/v///v/+/gD//v/+/v/+/v///v/+/v///v/+///+/v///v/+/v///v/+/v///v/+/gD//v/+/v/+/v///v/+/v/////+/gD//v/+/v///v/+/v///gD+/////v/+/v///v/+/gD//v/+/v///wD//v/+/v///wD//v/+/v///gD////+/gD//v/////+/gD//v///wD+/v///gD//////gD+/////gD//wD//v///wD//gD////+/gD//////gD//wD//v///wD//gD//wD//////wD//gD//wD//wD//wAA/wD//gD//////wD//wD//gD//wAA/wD//wD//wAA/wD//wAA/wD//wD/AAAA/wH//wAA/wD//wAA/wD//wAAAAD//wAA/wD//wEAAAEBAAEAAAEAAAEBAAEAAAEBAAEAAAEAAAEBAAEAAAEAAAEBAAEAAAEAAAEBAAIAAAEBAAEBAQIAAAEBAAEAAAIBAQEBAAEAAAIBAAEBAQEAAAIBAAEBAAEAAAIBAQEBAAIBAQIAAAEBAAIBAQIBAAEBAQIBAAIBAQEBAAIAAAIBAQEBAAIBAQIBAAEBAQIBAAIBAQIBAAIBAQIBAQIBAAIBAQIBAAIBAQEBAQICAAIBAQIBAAIBAQIBAQIBAAIBAQIBAAIBAQMCAQIBAQIBAAIBAQIBAQICAAIBAQIBAQIBAAMBAQICAQIBAAIBAQIBAQIBAQMCAAIBAQIBAQIBAQICAAMBAQIBAQIBAAICAQIBAQMBAQIBAAICAQIBAQIBAQMCAQIBAAIBAQICAQIBAQIBAQMCAQIBAAICAQIBAQIBAQICAQMBAQIBAAICAQEBAQACAQABAQECAQACAQEBAQACAQEBAQACAQEBAQACAQEBAQACAQEBAgACASRKQT2QmpQOAAAAAElFTkSuQmCC",
-		"Grayscale": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAAAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAX7BAv8QUFyOAAAAAElFTkSuQmCC",
-		"erdc_rainbow_bright": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AVMm9QAFAAAEAAAEAP8EAAAEAAADAAAEAP8DAAADAP8EAQADAP8DAAACAP8DAP8DAAADAP8DAP8CAP8DAP8CAP8DAP4CAP8DAP8CAP4DAP8CAP4CAP4DAP4CAP4CAP4DAP0CAP0CAP0DAAABAAAC//8CAAAB/wAC//8CAAAC//8BAP8C/wACAP8B//8CAP8C//8BAP4C//8CAP8B//8C/wAB/wAC/wAB//8C/wAB//8C//8B//8C/v8B//8C//4B//4C//4B//4C//0B//wC/wEB/gIB/gIC/gEB/gEB/gEB/gAB/gAC/gAB/gAB/v8B/v8B/v8C/v8B/v4B/v0B/v0B/ggB/QgB/gYA/QUB/QQA/gQB/QMA/QMB/gIA/QMB/QIA/gIB/QIB/QEA/gIB/QEA/QIB/gMA/QMA/QQB/QMA/QMB/QMA/QMA/QIB/QMA/AIA/QIB/QIA/QIA/AIB/QIA/QIB/AIA/QIA/QIA/gIA/gMB/wIA/gIA/gIA/gMA/gIA/gIA/gIA/QIB/gIA/gIA/gEA/QIA/gIA/QMA/gIA/wMA/wMA/gIA/wMA/wP//gIA/wMA/wIA/gMA/wIA/gMA/gIA/gL//gMA/gIA/gIA/wL//wEA/wIA/wL//wEAAAL//wIA/wH//wIA/wEA/wL//gIA/wH//wIA/wH//wIA/gH/AAEA/wH/AAH/AAH/AAH//wEAAAH/AAH/AAH/AAH//wEAAAH/AAH/AAH/AAH//wEAAAH/AAH+AAH/AAD+AAH/AAH+AAH/AAH+AAD/AAH/AAH+AAH/AAD+AAH/AAH+AAD/AAH+AAH/AAD+AAH+AQH/AAD+AAH/AAD+AQH+AAD/AAH+AAD+AQH/AAD+AAH+AAH/AQD+AAH+AAD/AgD9BgD+BQD+BAD+AwD+AwD9AwD+Av/+AgD9AgD+AgD+AgD9AgD+AgD+AQD9AgD+Af/9AgD+AQD9AQD9AgD9AQD+Af/9AQD9AQD9AQD9AQD8Af/9AQD9AQD8AQD9Af/8AQD8Af87Go1Kyik0AAAAAElFTkSuQmCC",
-		"bone_Matlab": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAAAAEBAQEBAgEBAQEBAQEBAgAAAQEBAgEBAQEBAQEBAQEBAgEBAQEBAQAAAQEBAAEBAQEBAgEBAQEBAQEBAQEBAQEBAgEBAQEBAQEBAQAAAQEBAgEBAQEBAQAAAQEBAQEBAgEBAQEBAQEBAQAAAQEBAgEBAQEBAQEBAQEBAQEBAgEBAQAAAQEBAQEBAgEBAQEBAQEBAQEBAQEBAgAAAQEBAQEBAQEBAQEBAgEBAQEBAQEBAQAAAQEBAgEBAQEBAQEBAQEBAgEBAQEBAQAAAQEBAQEBAQEBAgEBAQEBAQEBAQEBAgAAAQEBAQEBAQEBAQEBAgEBAQEBAQEBAQAAAQEBAgEBAQEBAQEBAQEBAQEBAgEBAQABAQEAAQEBAQEBAgEBAQEBAQECAQEBAAABAQEBAQEBAQECAQEBAQEBAQEBAQEBAAACAQEBAQEBAQEBAQEBAQECAQEBAQEBAAABAQEBAQECAQEBAQEBAQEBAQEBAQECAAABAQEBAQEBAQECAQEBAQEBAQEBAQEBAAACAQEBAQEBAQEBAQEBAQECAQEBAQEBAAABAQEBAQECAQEBAQEBAQEBAQECAQEBAAABAQEBAQEBAQECAQEBAQEBAQEBAQEBAAACAQEBAQEBAQEBAQEBAQECAQEBAQEBAAABAQEBAQECAQEBAQEBAQEBAQECAQEBAAABAQEBAQEBAQECAQEBAQEBAQEBAQEBAAECAQABAQEBAQEBAQEBAQEBAQECAQEBAAEBAQEBAQEBAQACAQEBAQIBAQEBAQEAAAIBAQEBAQIBAQEBAQEBAQIBAQEBAQEAAAIBAQEBAQIBAQEBAQEBAQIBAQEBAQEAAAIBAQEBAQIBAQEBAQEBAQIBAQEBAQEAAAIBAQEBAQIBAQEBAQEBAQIBAQEBAQEAAAIBAQEBAQIBAQEBAQEBAQIBAQEBAQEAAAIBAQEBAQIBAQEBAQEBAQIBAQEBAQEAAAIBAQEBAQIBAQEBAQEBAQIBAQEBAQEAAAIBAQEBAQIBAQEBAXLNAv/1qKklAAAAAElFTkSuQmCC",
-		"Brewer Qualitative Accent": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AWZmZgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJr9ATTHBWfOAAAAAElFTkSuQmCC",
-		"Brewer Diverging Brown-Blue-Green (11)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQA8MAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEl1AG5abVZ8AAAAAElFTkSuQmCC",
-		"Brewer Sequential Blue-Purple (6)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AYEPfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACkoAQ4EmOC/AAAAAElFTkSuQmCC",
-		"Green Linear (9_17f)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78Af/89wD++wD+/AD/+wD+/AD++////f/+/f/+/P///f/+/P///f/+/f///AAA/v8A/QD//gAA/f8A/QAA/v8A/QAA/gAA/f///gAA/f8A/QAA/v///v8A//8A/v///v8A/v///v8A//8A/v///v8A/v///v8A/v8A/////v8A//8A/v////8A/v////8A/v4A/////v8A//////8A/v3///3///0A//3///z///3///0A//3///3/AP3///3///wA//3///3///z///3///z///3///z///3///z///3///z///3///z///z///3///3///3///z///3///z///3///z///z///3///z///z///7/Af//Af//Af/+Af//Af//Av7+Af//Af//Af//Af/+Af7/Af//Af8AAf//Af8AAQD/Af8AAP8AAf//Af8AAf//Af8AAf8AAf//AP8AAf//AQD/AQD/Af8AAQD/Af//Af//AQAAAf//AgD/Af//Af//AQAAAf//AQD/Af8AAQD/Af8AAQD/Af//Af8AAQD/Af//Af8AAf//AQD/AP//AAD/Af//AP//AAD/AP//AQD/AP//AP//AP//AQD/AP//AAD/AAD/AAD+AAD//wD/AP//AAD/AAD/AAD+AAD/////AAD/AAD/AAD+AAD//wD/AAD/AAD+AP//AAD//wD/AAD+AAD/AP///wD/AAD+AAD/AAD+AAD//wD+AAD/AAD+AP//AAD+AAD/AAD+////AAD+AAD/AAD/AAH//wD+AAD/AAD/AAD//wD+AAD/AAD/AAD//wD+AAD/AAD/AAEAAAD/AAAA/wD/AAH/AAAAAAD/AAD/AAAA/wH/AAD/AAAAAAD/AAH//wAAAAD/AAD/AAEAAAD//wD/AAAAAAH/AAD//wD/AAEAAAH//wAAAAH/AAEA/wH/AAEA/wH/AAH/AAEA/wD/AAEA/wH/AAEAAAIB/wIB/wEAAAIB/wEB/wEAAAIB/wEAAAEB/wIB/wEAAAEB/4qcrvX0SKVKAAAAAElFTkSuQmCC",
-		"Brewer Sequential Blue-Green (3)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78ASyiXwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIvPAS8iZ1l8AAAAAElFTkSuQmCC",
-		"RdPu": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AWcAHwIAAQEAAQIAAQEAAQIAAgEAAQIAAQEAAQIAAQEAAQIAAQEAAQIAAgEAAQIAAQIAAQEAAQIAAQEAAQIAAQEAAgIAAQEAAQIAAQEAAQIAAQEAAQIAAQIAAgEAAQIAAQEAAQIBAQIAAAEAAQIBAAIAAQEBAQIBAAIAAQEBAAIAAQIBAQEAAAIBAQIBAAIAAQEBAQIBAAIAAQEBAAIBAQIAAQEBAAIAAQIBAAEAAQIBAQIAAAEBAQIBAQIAAAEBAQIAAAEBAgEBAgEBAQAAAgEBAQEBAgEAAgEBAQABAgEBAgEAAQEBAgABAgEAAQEBAgEBAgEBAQAAAgEBAQEBAgEBAgAAAQEBAgEBAQEBAgAAAgEBAQEBAgEBAgAAAQEBAgEBAQACAv8CAQADAQACAQACAQACAv8CAQACAQABAQACAf8CAgABAQACAf8CAQABAQACAgACAf8CAQACAQACAQACAQACAv8CAQACAQACAf8BAQACAQACAgACAf8BAQACAQACAf8BAf8CAQABAf8CAP8CAQABAf8CAP8BAQABAf8CAf8BAAACAf8BAf8CAP8BAQABAf8CAf8BAAACAf8BAQACAP8BAf8CAQABAf8CAP8BAQACAf8BAP8CAQABAf8BAf8CAAEBAQABAQABAAEBAQACAAABAQEBAQABAAABAQEBAAACAQABAQEBAAABAQABAAEBAQABAQACAAEBAQABAAEBAQABAQABAAECAQABAAABAQEBAAABAQABAQECAAABAQABAAEBAQEBAQACAAEBAQABAQEBAAECAQABAQEBAAABAQECAQEBAAABAQECAQABAAEBAQEBAQABAAECAQABAQEBAAEBAQACAQEBAAABAQEBAAEBAQACAQEBAAABAQEBAQACAAEAAQABAAEAAAABAQEAAAABAAEBAAAAAQEBAAAAAAEBAQABAAEAAAABAQEAAAABAAEBAQAAAAEBAAAAAQEBAAABAAEAAAABAQEAAAABAAEBAQAAAAEBAAAAAQEBALoOIOYjb73ZAAAAAElFTkSuQmCC",
-		"erdc_divHi_purpleGreen_dim": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AWchlwECAQICAQECAQEBAQICAQEBAQECAQICAQEBAQECAAIBAQECAQEBAQECAQIBAQECAQECAQIBAQECAQICAQECAQIBAQECAQECAgICAQEBAQICAQECAQEBAQICAQECAQICAQEBAQECAQICAQECAQICAQECAQEBAQICAQECAgICAQECAQECAQIBAQECAQICAQECAQECAQICAQEBAQECAQECAQICAQECAQECAAEBAQICAQECAQECAQECAQICAQECAQEBAQECAQECAAECAQEBAQECAAECAQICAQEBAAECAQECAQEBAQECAAECAQECAQEBAAECAQECAAABAQECAAEBAAABAQECAAEBAAECAQABAAECAAEBAQACAAEBAAECAQEBAAACAAEBAAABAAABAAEBAAABAAABAAEBAAABAAABAAEBAAAB/wABAAEBAAABAAABAAECAAAA/wAAAP8B/wAAAAAB/wAAAAAB/wAA/wABAAAA/wABAP8A/wABAAAA/wABAAAA//8A/wAA//8A/wAA/////v8A/wAA//8A/wAA//8A//8A/wD///8A//8A/gAA//8A/////////v8A/////v///v8A/////v////8A/v///////v////8A/v///////v4A/////v/+/v7//v///v///v7//////v7//v///v/+/v7//v///////v7//v///v7//v/+/v7//v///v7+/v///v7+/v7//v///v7+/v///v7+/v7//////v7+/v///v7//v7+/v///v7+/v7//v/+/f7+/v7//v/+/v7//v7+/v///v7+/v7//v/+/v7//v7+/v7//v/+/v7//v7+/v///v7+/v7//v/+//7//v7+/v///v7+/v7//v/+/v7//v7+/v///v7//v7+/v///v7+/v///v7//v7+/////v7+/v///v7//v7+/v///v7//v/+/f7///////7//v/+/////v7//v////7//v///v/+//7//v////7//////v///xJUcJCCs2zzAAAAAElFTkSuQmCC",
-		"Brewer Diverging Spectral (11)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AV5PogAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPGcAVHQ6DqeAAAAAElFTkSuQmCC",
-		"Brewer Diverging Purple-Orange (6)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AVQniAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA34AQVdYF9GAAAAAElFTkSuQmCC",
-		"erdc_blue2gold_BW": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAAAAMBBgIABgMBBAIBBAIABAIBAwIBAwEAAwEBAwEBAwABAwABAwAABAABAwABAwAABAEAAgABAwEAAwEAAwH/AwEAAwEAAwAAAwH/AwEAAwEAAwH/AwEAAwD/AwH/AwEAAwAAAwH/AgAAAwAAAwEAAwAAAgAAAwEAAwAAAwD/AwEAAwAAAgAAAwAAAwD/AwEAAwEBAgEAAQEBAgEBAgEAAgEBAgEBAQEBAgIBAgEAAgEBAgEBAQEBAgEAAgEBAgEBAgIBAQECAQIBAQICAQEBAAIBAQEBAQICAQEBAQIBAQEBAQEBAQICAQEBAQIBAQEBAQICAAEBAAICAAEBAAECAQIBAAECAAIBAAECAAEBAAIBAAECAQEBAAECAAIBAAEBAAEC/wIC/wEC/wEB/wEC/wIC/wEB/wEC/wEC/wEB/wEC/wEB/wEC/wEC/wEB/wEC/wEB/gIC/gEB/gIC/gEB/gIC/gEB/gEB/wIC/gEB/gEC/gEB/gEC/gEB/gEC/gEB/gIB/gEC/gEB/gIB/gEB/gEC/gIB/gEB/gEC/gEB/gEB/gEB/gEC/gEB/gEB/gEC/gIB/QEB/gIB/gEB/QIB/gEB/gIC/QEB/gEB/gIB/QEB/gEB/QEB/gIB/QEC/QEB/gIB/gEB/gIB/gEB/gEB/gIB/gEB/gIB/gEB/gEB/gIB/gEB/QEB/gIB/QEB/QIB/QEBAAEC/wEB/wIBAAEB/wEB/wEB/wIBAAEB/wEB/wIB/wEB/wEB/wEB/wIB/wEB/wEBAQEBAAECAQEBAAEBAQEBAQEBAAEBAQEBAQECAAIBAQEBAQEBAAEBAQEBAAEBAQACBQEBBQABBQEBBAACBQEBBAABBAECBAABBAEBAwABBAECBAABAwEBBAACAwABBAEBBQABBQEBBQABBQECBQABBAABBQEBBQABBQACBQEBBAABBQABBQABBQACBAABBQEBBQABBQEBBQABBQABBAEBBQABBQABBQEBBQACBQABBAABBQABBQABBQABBVieZ//zBDguAAAAAElFTkSuQmCC",
-		"RED-PURPLE": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAAAAYAAAUAAAUAAAQAAAMAAQMBAAMAAAIAAAMAAAIAAAIAAAIAAAIAAQIAAAIAAAL/AAIBAAIAAQMAAAIAAQMAAAIAAQMAAAIAAQMAAAIAAQMAAAIAAQMAAAP/AAIAAQMAAAEAAQIAAgEAAQIAAQEAAQIAAQEAAQIAAQEAAQIAAQEAAQIAAQEAAQIAAAEAAQIAAQEAAQIAAQEAAQIAAAEAAQIAAQEAAQIAAQEAAQIAAQEAAQIAAAEAAQIAAQEAAQIAAQEAAQIAAQEBAQIAAQEAAQIAAQEBAAIAAQEAAQIAAQEBAQIAAQEAAQIAAQEBAQIAAQEAAQIAAQEBAQIAAAEAAQIAAQEBAQIAAQEAAQIAAQEBAQIAAAEAAQIAAQEBAQIAAQEAAQEAAQIBAQEAAQEAAQEAAQIBAQEAAQEAAQEAAQIBAQEAAQEAAQEBAQIAAQEAAQEAAQEAAQEAAgEAAQEAAQEAAQEAAQEAAQEAAgEAAQEAAQEAAQEAAQEAAgEAAQEAAQEAAQEBAQIAAQEAAQEAAQEBAQIAAQEAAQEAAQEBAQIAAQEAAQEAAQEBAQIAAQEAAQEAAQEBAgAAAQEAAQEAAgEAAQABAQEAAQEAAgEAAQABAQEAAgEAAQEBAQAAAgEAAQABAQABAgACAQABAgABAQABAgABAQABAgABAQABAgABAQABAgAAAQABAgABAQABAgACAQACAgACAQACAQACAgACAQACAgACAQABAQACAgACAQABAQACAgABAQACAgABAQACAQADAgACAQACAQACAgACAQACAQACAQACAgACAQACAQACAgACAQABAQACAgACAQADAQADAQADAgADAQADAQADAQACAQADAQADAgADAQACAQADAQACAQADAgACAQADAQADAQAEAQADAQAEAQADAQEDAQADAQAEAgADAQADAf8DAQADAQAEAQADAQADAQADAQAEAQEEAQAFAAAEAQAEAQEEAQAEAAAEAQAEAQAFAAAEAQAEAQAEAQAEAAAEAcW1BfxnMQXEAAAAAElFTkSuQmCC",
-		"Rainbow Desaturated": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AUdH2/7+/f7+/P7+/f7+/P7+/f7+/P7+/f7+/P7+/f///P7+/f7+/P7+/f7+/P7+/f7+/P7+/f7+/P7+/f7+/P7+/f7+/P7+/f7+/P7+/f7+/P7+/f7+/P///f7+/f7+/P7+/f7+/P7+/f7+/P7+/f8DAAAHBQAHBAAHBQAHBAAHBQAHBAAHBQAHBAAHBQAHBAAHBQAHBAAHBQAHBAAHBQAHBAAHBQAIBAAHBQAHBAAHBQAHBAAHBQAHBAAHBQAHBAAHBQAHBAAHBQAHBAAHBQAHBAAHBQAHBAAHBQAEAQD8+QD9+QD9+QD8+QD9+QD8+QD9+QD8+QD9+QD8+QD9+QD8+QD9+QD8+gD9+QD9+QD8+QD9+QD8+QD9+QD8+QD9+QD8+QD9+QD8+QD9+QD8+QD9+QD9+QD8+QD9+QD8+gD9+QD8+QD9+QD8+QQB/QcEAAcDAAcEAAcDAAcEAAgDAAcEAAcDAAcEAAcDAAcEAAcDAAcEAAcDAAcEAAcDAAcEAAcDAAcEAAcDAAcEAAcDAAcEAAcDAAcEAAcDAAcEAAcDAAcEAAgDAAcEAAcDAAcEAAcDAAcEAAQAAAD8AAD8AAD7AAD8AAD8AAD7AAD8AAD8AAD7AAD8AAD8AAD7AAD8AAD8AAD7AAD8AAD8AAD7AAD8AAD8AAD7AAD8AAD8AAD7AAD8AAD8AAD7AAD8AAD8AAD7AAD8AAD8AAD7AAD8AAD8AAD7APz+APz9APz9APz+APz9APz9APz+APz9APz9APz+APz9APz9APz+APv9APz9APz+APz9APz9APz+APz9APz9APz+APz9APz9APz+APz9APz9APz+APz9APz9APv+APz9APz9APz+APz9APz9AP8AAQQCAgMCAgMCAgMCAgQDAwMCAgMCAgMCAgMCAgQCAgMCAgMCAgMCAgMDAwQCAgMCAgMCAgMCAgMCAgQCAgMCAgMCAgMDAwMCAgQCAgMCAgMCAgMCAgQCAgMCAgMCAgMDAwMCAgQCAgMCAgMCAv+QJIuPLqP7AAAAAElFTkSuQmCC",
-		"erdc_red2yellow_BW": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAAAAUBAAYAAAQBAAQAAAMBAAMAAAMBAAIAAAMBAAIAAAIBAAIAAAEBAAIAAAMAAAIAAAEAAAIAAAIAAAL/AAIAAAIAAAL/AAIAAAL/AAIAAAL/AAIAAAL/AAIAAAL/AAL/AAIAAAIAAAIAAAEAAAIAAAIAAAIAAAIAAAIAAAIAAAEAAAIAAAIAAAIAAAIAAAIAAAEAAAIAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAIAAAEAAAIAAAEAAAIAAAIAAAEAAAIAAAEAAAEAAAIAAAEAAAEAAAIAAAEAAAEAAAEAAAIAAAEAAAEAAAIAAAEAAAEAAAIDAAEDAAEDAAEDAAEDAAEDAAECAAECAAECAAECAAECAAECAAEBAAECAAECAAEBAAECAAECAAECAAEBAAECAAECAAEBAAECAAACAAEBAAECAAEBAAECAAEBAAECAAEBAAECAAABAAECAAEBAAECAAEBAAEBAAACAAEBAAECAAEBAAECAAEBAAEBAAACAAEBAAECAAEBAAABAAECAAEBAAACAAEBAAECAAEBAAACAAEBAAEBAAACAAEBAAECAAABAAECAAABAAECAAABAAECAAABAAECAAABAAECAAABAAEBAAACAAEBAAACAAEBAAACAAEBAAACAAABAAECAAABAAECAAABAAACAAEBAAACAAEBAAABAAACAAEBAAACAAEBAAACAAEBAAABAAACAAEBAAACAAEBAAABAAECAAABAAEBAAACAAEBAAACAAEBAAABAAECBwABBgEBBQACBQEBAwABBAECAwABAwEBAwACAwEBAwABAgECAwABAgEBAwACAgEBBQABBAEBBQACBAEBBAABBAABBAECBAABBAEBBAACAwABBAEBBAABAwECBAABBAABBAEBBQABBAECBQABBAABBQEBBAABBQACBAEBBAABBQABBAABBQACBAEBBAABBQABBAABBAEBBAABBAACBQEBBAABBAABBAABBQEBBAABBAACBAABBAABBQABBFz6Cf/Hfz8fAAAAAElFTkSuQmCC",
-		"Brewer Qualitative Dark2": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AWZmZgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJr9ATTHBWfOAAAAAElFTkSuQmCC",
-		"Blue to Yellow": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQoK8gEB/wEB/wEB/wEB/wEB/wAAAAEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wAAAAEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wAAAAEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wAAAAEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wAAAAEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wAAAAEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wAAAAEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wAAAAEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wAAAAEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wAAAAEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wAAAAEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wAAAAEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wAAAAEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wAAAAEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wAAAAEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wAAAAEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wAAAAEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wAAAAEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wAAAAEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wAAAAEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wAAAAEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wAAAAEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wAAAAEB/wEB/wEB/wEB/wEB/7d+6fCnseAvAAAAAElFTkSuQmCC",
-		"Brewer Sequential Yellow-Orange-Brown (6)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AZk0BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHjkANPzsXBSAAAAAElFTkSuQmCC",
-		"Linear YGB 1211g": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78Af/89wD++wD+/AD/+wD+/AD++////f/+/f/+/P///f/+/P///f/+/f///AAA/v8A/QD//gAA/f8A/QAA/v8A/QAA/gAA/f///gAA/f8A/QAA/v///v8A//8A/v///v8A/v///v8A//8A/v///v8A/v///v8A/v8A/////v8A//8A/v////8A/v////8A/v4A/////v8A//////8A/v3///3///0A//3///z///3///0A//3///3/AP3///3///wA//3///3///z///3///z///3///z///3///z///3///z///3///z///z///3///3///3///z///3///z///3///z///z///3///z///z///7/Af//Af//Af/+Af//Af//Av7+Af//Af//Af//Af/+Af7/Af//Af8AAf//Af8AAQD/Af8AAP8AAf//Af8AAf//Af8AAf8AAf//AP8AAf//AQD/AQD/Af8AAQD/Af//Af//AQAAAf//AgD/Af//Af//AQAAAf//AQD/Af8AAQD/Af8AAQD/Af//Af8AAQD/Af//Af8AAf//AQD/AP//AAD/Af//AP//AAD/AP//AQD/AP//AP//AP//AQD/AP//AAD/AAD/AAD+AAD//wD/AP//AAD/AAD/AAD+AAD/////AAD/AAD/AAD+AAD//wD/AAD/AAD+AP//AAD//wD/AAD+AAD/AP///wD/AAD+AAD/AAD+AAD//wD+AAD/AAD+AP//AAD+AAD/AAD+////AAD+AAD/AAD/AAH//wD+AAD/AAD/AAD//wD+AAD/AAD/AAD//wD+AAD/AAD/AAEAAAD/AAAA/wD/AAH/AAAAAAD/AAD/AAAA/wH/AAD/AAAAAAD/AAH//wAAAAD/AAD/AAEAAAD//wD/AAAAAAH/AAD//wD/AAEAAAH//wAAAAH/AAEA/wH/AAEA/wH/AAH/AAEA/wD/AAEA/wH/AAEAAAIB/wIB/wEAAAIB/wEB/wEAAAIB/wEAAAEB/wIB/wEAAAEB/4qcrvX0SKVKAAAAAElFTkSuQmCC",
-		"Brewer Diverging Brown-Blue-Green (3)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AVq0rAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADJBAbwqQHuCAAAAAElFTkSuQmCC",
-		"GnBu": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQBEGwABAQACAAABAQABAAABAQACAAABAQABAAABAQACAAABAQABAAACAQABAAABAQACAQABAAABAQABAAACAQABAAABAQABAAACAQABAAABAQACAAABAQABAAACAQABAQABAAEBAQEBAQEBAAEBAQEBAQIBAQEBAQEBAAEBAQEAAQIBAQEBAAEBAQEBAQEBAQEBAQEBAAEBAQEBAQIBAQEBAQEBAAEBAQEBAQEBAQEBAQEBAAEAAQEBAQEBAQEBAQEBAAEBAgEBAQECAgEBAgEBAQEBAgEBAQEBAgEBAQEBAgEBAQEBAgECAQEBAgABAQEBAgEBAgEBAQEBAgEBAQEBAgEBAQEBAgECAQEBAgEBAQEBAgEBAQEBAgEBAQEBAgABAgIBAQEAAQEBAgEBAQIAAgEBAQEBAgEAAQEBAgEBAQEAAQIBAgEAAQEBAgEBAQEAAgEBAQEBAQIAAgEBAQEAAgEBAQEBAgIAAQEBAgEBAQEAAQEBAgEAAQIBAgEBAQEAAgEBAQIBAQIAAQEBAQIBAQIAAgEBAQIBAQEBAQIAAQIBAQEBAQIAAgEBAQIBAQEAAQIBAQIBAQEAAgIBAQIBAQEBAQIAAQEBAQIBAQIAAgEBAQIBAQEAAQIBAQEBAQIAAgIBAAEBAQIAAQEBAQIBAQIAAQEBAQIAAQIBAQEBAQIAAQEBAAIBAQEAAQIBAQIAAQEBAQIBAQEAAQIBAQEBAQIAAAIBAQEAAQIBAQEBAQIAAQEBAQIAAQEBAQIBAQIAAAABAQEAAQEAAAEAAQEBAAAAAQEAAQEAAAEBAQAAAAEAAQEBAQEAAAEAAQAAAAEBAQEAAQEAAAABAQEAAAEAAQEAAAEBAQAAAQEAAAEBAQEAAAAAAQEAAAEBAQEAAQAAAAEAAAEBAAAAAAEAAQAAAAEBAAAAAAEAAAEAAAAAAAEBAAAAAQEAAAAAAAEAAAEBAAAAAAEAAAAAAAEBAQAAAAEAAAAAAAEAAAEBAAAAAAEAAAAAAQEBAAAAAAEAAEjcAvIYz0VtAAAAAElFTkSuQmCC",
-		"erdc_divLow_purpleGreen": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AfSq8//+AP7////+AP//AP7+AP/////+AP7/AP/+AP/////+AP7/AP//AP/+//7/AP/+AP7///7+AP7///7/AP7+AP////7/AP7+//7/AP7///7+AP7/AP7+//7/AP7///7/AP7+/f7//v7//v7//f7+/v///v7//f7//v7//v7//v7+/f7//v7//v7//f7//v7+/v///f7//v7//v7//f7//v7//v7//v7//f7//v7//v///f7+/v7//v7//v7//f7//v7//v///v7//v7//f4A/v///v7//v7//v7//f///v7//v7//v7//v///v7//v7//v8A/v7//v///v4A/v///v7//v///v4A/v///v7//v///v4A/v///v7//v////4A/v///v8A/v////8A/v////4A/v///v8A/////v////8A/v7//v8A/////v8A/////v8A//8A/wAA//////8A/v8A/wD///8A//8A/wAA//////8A//8A/gAA//////8A/wABAAAA/wEBAAABAAAA/wABAAAB/wAAAAABAAAB/wEAAAABAAAB/wAAAAAB/wAAAAEBAAABAAEBAAABAAEBAAABAAABAAEBAAABAAEBAAAB/wEBAAABAAEBAAAAAAEBAAACAAEBAQEBAAEBAAEBAAABAAECAQEBAAEBAAEBAAABAQECAAEBAAEBAAABAAEBAQECAAEBAAEBAQECAAEBAQECAAIBAQEBAAECAAEBAQECAAEBAQEBAAECAQEBAAECAAEBAQECAQIBAAECAQEBAAECAQEBAQICAAEBAQECAAEBAQICAQEBAAECAQECAAEBAQICAQEBAAECAQIBAQECAAECAQIBAQECAAEBAQECAAICAQEBAQECAQICAAEBAQECAQIBAAECAQEBAAECAQICAQEBAAECAQIBAQECAAECAQEBAQICAAEBAQECAQECAAIBAQECAAEBAQECAAEBAQECAQIBAAECAQEBAAECAQEBAAEBAQECAAIBAQECAAEBARESVudTCUwLAAAAAElFTkSuQmCC",
-		"CIELab Blue to Red": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQCZvwgAAAcA/wUAAAUA/wT/AAMAAAMA/wMAAAIA/wMAAAIA/wIAAAIAAAL//wIAAAIA/wIAAAEAAAIA/wIAAAEA/wIAAAH//wIAAAEAAAEA/wIAAAEA/wEAAAEAAAL//wEAAAEA/wEAAAEAAAEA/wEAAAEA/wEAAAL//wEAAAEAAAEA/wEAAAAA/wEAAAEAAAEA/wH/AAEA/wEAAAEAAAEA/wEAAAAA/wEAAAH//wEAAAEAAAEA/wAAAAEA/wEAAAEAAAD//wEAAAEA/wEAAAAAAAEA/wEAAAEA/wAAAAH/AAEA/wAAAAEA/wEAAAAA/wEAAAEAAAD//wEAAAEA/wAAAAEAAAEA/wAAAAEA/wH/AAAAAAEA/wAAAAEA/wEAAAAAAAEA/wD/AAEA/wEAAAAA/wEAAAAAAAEA/wAAAAH//wEAAAAAAAEA/wAAAAEA/wAAAAEAAAD//wEAAAAA/wEAAAEAAAAA/wEAAAAA/wH/AAAAAAEA/wAAAAEA/wAAAAEAAAD//wEAAAAA/wEAAAAA/wEAAAAAAAAA/wH/AAAA/wEAAAAAAAEA/wAAAAEA/wD/AAEAAAAA/wEAAAAA/wAAAAEAAAAA/wH/AAAA/wEAAAAAAAEA/wAAAAAA/wH/AAAAAAEA/wAAAAEA/wAAAAAAAAH//wAAAAEA/wAAAAEAAAAA/wAAAAH//wAAAAEAAAAA/wAAAAEA/wAAAAH//wAAAAAAAAEA/wAAAAEA/wAAAAD/AAEA/wAAAAAA/wEAAAAAAAEA/wD/AAAA/wEAAAAAAAAA/wEAAAAA/wH/AAAAAAAA/wEAAAAA/wAAAAEAAAD//wEAAAAA/wAAAAEAAAAA/wD/AAEA/wAAAAAAAAEA/wAAAAAA/wH/AAAA/wAAAAEAAAAA/wAAAAH//wAAAAAAAAEA/wAAAAEA/wAAAAD/AAEA/wAAAAAA/wEAAAAAAAD//wAAAAEA/wAAAAAAAAEA/wD/AAAA/wEAAAAA/wAAAAEAAAD//wAAAAEA/wAAACFji5TtXksSAAAAAElFTkSuQmCC",
-		"GYPi": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78ASdkGQECAAICAQEBAAICAAECAQICAAEBAAICAQECAAICAAECAAICAQEBAAICAAECAQICAAICAQEBAAICAQICAQEBAAICAQICAQECAQIBAAICAQECAQICAAIBAQECAQICAAICAQIBAQICAgICAQIBAQICAQICAgEBAQICAQIBAQICAgICAQIBAQICAQICAgIBAQICAQICAwMBAgICAwIBAgIBAwICAgMBAwICAgIBAgICAwIBAgICAwMBAgICAgIBAwICAgIBAwIBAwMCAwIBAgIBAwICAwIBAwIBAgICAwMBAwIBAgICAwIBAwIBAwIBAgICAwIBAwIAAwIBAwIBAwIBAwEAAwIBAgIBAwIBAwIBAwEAAwIBAwIBAwIBAwEBAwIAAwEBAgEAAgIAAgEBAgEAAgEAAgEBAgEAAgEAAgEBAgEAAgEAAgEBAgIAAgEAAgEBAgAAAgEAAQEAAgAAAQEAAgEAAQAAAgEAAQEAAgAAAQEAAQEAAgAAAQEAAgABAQEAAgD/AAH//wD/AAD/AAD//wH/AAD/AAD//wD/AAEAAAD//wD/AAD/AAD//wH/AAD/AAD//wD/AAD+/wD/AAD//wD/AP///wD+AAD//wD//wD/AAD+/wD/AAD//wD/AAD+/////wD+AP///wD+///+/wD//wD+///+AAD////+/wD+/////wD+AP/+/wD////+/wD+/v/9///+/gD+///9/v/+/v/+/wD9/v/+///+/gD9///+/v/+/v/9/wD+/v/+///9/v/9/gD+/v/9///9/v/+/gD9/v/9/v/9///+/v/9/gD9/v/9///9/v/9/v/+/v/8/v/9/v/9/v/9///9/gD8/v/9/v/9/v/8/v/9/v/8/v/8/v/8/v/8/v78/v/7///+/v7//v7+/v7+/v////7+/v7+/v7+/v/+//7//v7+/v7+/v/9//7+/v7+/v79/v7///7//v7//v7//v3///7//v7//v7///7+/v7//v4A//3//v7//v7///7//m9xNvIg2ovIAAAAAElFTkSuQmCC",
-		"hue_L60": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AfZmWQAAAwD/AwAAAwD/AwAAAwD/AwAAAwEAAwD/A/8AAwD/AwAAAwD/AwAAAwD/AwAAA/8ABP8BA/8ABP8BA/8ABP8BA/8ABP8AA/8BBP8AA/4BBP8AA/8BBP4ABP8BA/8ABP4BAv8BAv4BAv8AA/4BAv8BAv4AA/8BAv4BAv8BAv4AA/4BAv8BAv4BA/4AAv4BAv8BAf4BAf4BAf8BAf4AAf4BAf8BAf4BAf4BAf4BAf4AAf8BAf4BAf4BAf4BAf4AAv4BAP4BAP8BAP4BAP4BAP4BAP4BAP8BAP4AAP4BAP4BAP4BAP4BAP4AAP4BAP4BAP4B//4B//4B//8B//4B//4A//4B//4B/v4B//4B//4B//4A//4B//4B//4B//4B//4B/v4A/v4B/f4B/v4B/v4B/v4B/v4A/v4B/f4B/v4B/v0B/v4A/v0B/v4B/f0B/v8A/v4B/v8A/f8B/v4A/v8B/f4A/v8B/v4A/v4B/f4A/v4B/v4A/f4A/v4B/v0A/QEB/gAA/gAA/QEA/gAB/gAA/QAA/gAA/gAA/QAB/v8A/QAA/gAA/v8B/QAA/v8A/gIA/QEA/gIA/gEA/QEA/gEA/QEA/gEA/gAB/QEA/gEA/QEA/gAA/QEA/gAA/QEA/gIA/gIA/gIA/gIA/wH//gIA/gIA/gEA/wIA/gEA/gIA/gH//gIA/gEA/gEA/gIA/gL//wMA/wMA/gL//wMA/wL//wMA/wL//wIA/gP//wIA/wIA/gL//wIA/wL//gIA/wL/AAP//wIAAAP/AAL//wIAAAP/AAL/AAIA/wL/AAL/AAIA/wL/AAL/AAP/AAIA/wL/AQL/AQL/AQL/AQL/AQIAAAL/AQL/AQL/AQL/AQL/AAL/AQL/AQL/AAH/AQL/AQL/AQP/AgL+AQL/AgL/AQL+AgL/AQL/AQL+AgL/AQL+AQL/AgL+AQL/AQL+AQL/AQH+AgH/AgL/AgH/AgH+AgL/AgH/AgH+AgH/AgL/AQH+AgH/AgL+AgH/AQH+AvGDM8aO/jjIAAAAAElFTkSuQmCC",
-		"Brewer Diverging Brown-Blue-Green (10)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQA8MAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEl1AG5abVZ8AAAAAElFTkSuQmCC",
-		"Brewer Sequential Blue-Green (5)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQBtLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANBMAJtwOX2uAAAAAElFTkSuQmCC",
-		"Brewer Diverging Spectral (5)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78ASuDugAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADxHAWqWZMCYAAAAAElFTkSuQmCC",
-		"Brewer Diverging Spectral (4)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78ASuDugAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADxHAWqWZMCYAAAAAElFTkSuQmCC",
-		"erdc_blue2cyan_BW": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAAAAEBBAECBQEBBAEBBAABAwECAgEBAwEBAgECAgABAwABAgABAgABA/8BAv8BA/8BAgABAgABAv8AAgABAgABAgABAgAAAf8BAgABAgAAAv8BAgABAgABAv8AAgABAv8BAgABAgAAAgABAgABAQAAAgABAgABAgABAgAAAQABAgABAgABAgAAAgABAQABAgABAgAAAgABAgABAQABAgAAAgABAQABAgABAgABAgAAAQABAgABAgABAgABAQAAAgABAgABAQABAQEBAgABAQABAQABAgEBAQABAQABAgEBAQABAQAAAgABAQEBAQABAgABAQEBAQEBAQACAQEBAAEBAQABAQEBAQEBAQABAAEBAQABAQEBAQACAQEBAAABAQEBAQEBAQABAAEBAQECAAABAAEBAQEBAAABAQECAAABAQEBAAABAQABAAEBAQACAAABAQEBAAEBAQEBAAECAQABAAEBAQEBAAABAQEBAAACAQEBAAEBAQABAAEBAQABAAECAQABAAABAQEBAAABAQEBAQACAAABAQEBAAABAQABAQECAAABAQABAAEBAQABAAACAQEBAQEBAAABAQEBAAEBAQACAAEBAQABAQEBAAEBAQACAAEBAQABAAEBAQEBAAACAQEBAQEBAAEBAQEBAAEBAQECAAEBAQEBAQEBAAEBAQABAAECAQEBAAEBAQEBAAEBAQECAQEBAQIBAAEBAQIBAQEBAQEBAAIBAQECAQEBAQIBAAEBAQEBAQEBAQIBAAEBAQICAQIBAAIBAQIBAQMBAQIBAAIBAQIBAQEBAAIBAQIBAQIBAAIBAQIBAQIBAQIBAAMBAQMBAAMBAQMBAAIBAQMBAQMBAAMBAQIBAAMBAQMBAAIBAQMAAQMBAAIBAQMBAAMBAQMBAAQBAQMAAAMBAAMBAQMBAAQAAQMBAAMBAAMBAQMAAAMBAQMBAAMBAQMAAAMBAAMBAQMBAAMAAAMBAQMBAAMAAAMBAQMBAAMBAAMAAQMBAAMBAAMAAQMBAB0ECv+AHijQAAAAAElFTkSuQmCC",
-		"erdc_red2purple_BW": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAAAAUAAQUBAAQAAQMAAQQBAAIAAQMAAQIAAAIBAQIAAQIAAQIBAAEAAQIAAQIAAAIAAQEBAQIAAAEAAQEAAQIAAAEAAQIAAAEAAQIAAQH/AAIAAQIAAAEAAQL/AAEAAQIAAAEAAQIAAAEAAAIAAQEAAAEAAAIAAQEAAAIAAAEAAQEAAAIAAAEAAQIAAAEAAAIAAQEAAAIAAQEAAAEAAQIAAAEAAQIAAAEAAQEAAAIAAQEBAAIAAQEAAAIAAQEAAAIAAQEBAQEAAQEBAQIAAQEBAQEBAQEAAQIBAQEAAQEBAQIBAQEBAQEAAQIBAQEBAQEAAQEBAgEBAQIBAgEAAgEBAgEBAgEBAQEBAgIAAgEBAgEBAgEBAgEAAgEBAQEBAgEBAgEAAgEBAgEBAwEBAgEBAgEBAgEBAgEBAwEAAgEBAgEBAgEBAgEBAwEBAgEAAgEBAgEBAgEBAgEBAgABAgEBAgEBAgEBAgEBAgEBAgABAgEBAgEBAgEBAQEBAgEBAgABAgECAgEBAgABAgEBAQEBAgEBAgACAQEBAgEBAgABAgEBAQEBAgABAgECAgABAQEBAgEBAgABAQECAgABAQEBAgABAgECAQABAgEBAQABAgEBAgACAQEBAgABAQEBAgABAgECAQABAQEBAQACAgEBAQABAQECAQABAQABAgEBAQACAQEBAQABAgECAQABAQEBAQABAQECAQABAAEBAQACAQEBAAABAQEBAQACAQEBAAEBAQABAQECAAABAQEBAQACAQEBAAABAAACAAEBAQACAAABAAECAAABAQABAAECAAABAAACAQEBAAACAAABAAEBAQACAAAB/wACAAABAAECAAABAAACAAABAAACAAABAAACAAEBAAAC/wABAAACAAABAAACAAABAAEC/wABAAABAAACAAABAAAC/wABAAACAAABAAAC/wABAAACAAEBAAABAAAC/wABAAACAAABAAABAAACAAEBAAAC/wABAAABAAACAAABAAACAAAB/wABAK21DKgwo7U5AAAAAElFTkSuQmCC",
-		"Brewer Diverging Brown-Blue-Green (4)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQGFcQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOm5APkFomP2AAAAAElFTkSuQmCC",
-		"Warm to Cool (Extended)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AVkAIQIA/wIA/wIA/wIB/wIA/wIA/gMAAAMB/wIAAAMB/wMAAAMB/wMAAAMB/wMA/wMAAAMB/wMA/wQB/wIB/wMC/wMB/wMC/wMB/wMB/wIC/wMDAQMDAQMCAQMDAQMCAAICAQIDAQICAAIDAAICAQICAAICAQIEAQIDAAIEAQIDAQIDAQIDAAEDAQEEAQEDAQEDAQEDAAEDAQEDAQEDAQECAQADAAEDAQECAQEDAQEDAAACAQEDAAECAQEDAAACAQEDAAEDAQEDAAEDAQADAAEDAAEDAQADAAECAQADAAADAQEDAAADAQACAQEBAQACAQEBAQACAQECAQABAQEDAgECAQACAgEDAQECAgECAgEDAQACAgECAgEDAQECAgEDAgACAgECAgECAgEDAgECAgECAwECAwEDBAECBAECAwACBAECBAECBAACBAEBBAACBAACBAECBAABBQECBQABBQACBQEBBQACBQABBgABBQEABQABBQABCQABCgABCv8BC+wCEvr//fsA/fr//PsA/vwA/vsA//wA//sA/vkA//kA/vkA//r///sA//z/APr///v/APv/Avr/Avr/Afn/Avn/Avn/Afj+//j9APf+//f+//j+APr+Afr+APn+APj+APX+Aff+AP/+///9///9///+///9/wD+/wD9AP/8///9AP/9///9//79AP/9/wL9/wH9AAD9/wD9/wD9AAD9/wD9AP/+/wH9/wD+AAD+/wH+/wD+AP/+/wD+/wD+AP/+/wH9/wH9AAD9/wH9/wD+///9/wH9AAH9/gD9/wH9/wD+/wD9/wD9/wH9/wD9/gH9/wD8/wD9///9/gD9/wH9/wD9/wD9/gD9///9/wD9/wD9/gD9/v/9/wD9/v/9///8/gD+/wD9/v/+/gD9///9/v/9/wD+/gH+/wD+/gD9/gH+/wD9/gH+/wQB/gMA/gIB/gMA/gIA/gIB/gD//QH//gD//QD//gH//gD//QD//gH//QD+/QEA/QD//gH//QD//UBlIZJAqDAxAAAAAElFTkSuQmCC",
-		"Haze_cyan": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AfT/1QD////+/wD//gD//////wD+/////wD//gD//////wD+/wD//////wD//v/+/wD////+///+/v/+///+/v/////+/v/+///+///+/v/+///+/v/+/////v/+///+///+/v/+///+/v/+///+///+/v/+/////v/+///+///+/v/+///+/v/+///+///+/v/+/////v/+///+/v/+///+///+/v/////+/v/+///+/v/+///+/////v/+///+/v/+///+/v/+///+/v/+/v/+///+/v/9/v/+///+/v/+/v/+///+/v/+/v/+///+/v/+/v/9/v/+/v/+/v/9/v/+/gD+/v/9/v/+/v/9/v/+/v/+/v/9/v/+/v/9/v/+/v79/gD+/v/+/v/+/v/+/v/+/v/+/v/9/v/+/v/+/v/+/v/9/v/+///+/v/9/v/9/v7+/gD+/v/////+/v/////+/v/+/////v/+///+/v/+///+/v/+//7+/v/9/v/9///+/v8DAQADAv8DAv8CAf8CAf8CAv8CAf8BAv8CAf8CAf8BAf8BAv8CAf8BAf8BAv4BAQADAv8CAv8CAv8CAgADAv8CAv8CAv8CAv8CAv8BAv8CAv8CAv4CAv8CAv8BAv4CAgACAv8CAv8CAgACAf8CAv8CAv8CAv8BAv8CAv8CAv8CAf8CAv4CAv8CAv8CAv4BAgACAv8CAv8CAgACAv8CAv8CAf8CAv8CAv8CAv8CAv8CAv8CAv8CAv4CAv8CAv4CAv8BAgACAv8CAgACAv8CAv8CAv8CAv8CAv8CAv8CAv8CAv8CAv8CAv4CAv8CAv4DAv8BAgACAv8CAv8CAgACAv8CAv8CAv8CAv8CAv8CAv8CAv8CAv8CAv4CAv8CAv4DA/8BAQACAv8CAv8CAgACAv8CAv8CAv8CAv8CAv8CAf8CAv8CAv8CAv4CAv8CAv4BAv8CAgACAv8CAv8CAf8CAv8CAv8CAgACAv8CAv8BAv4CAf8CAv8CAv8CAv8CAj7Q5QbaTLIBAAAAAElFTkSuQmCC",
-		"2hot": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQsAAAUAAAQAAAMBAAMAAAMAAAIAAAMBAAIAAAIAAAIAAAIAAAIAAAIAAAIAAAL/AAP/AAIAAAMAAAIAAAMAAAIAAAMAAAIAAAMAAAMAAAIAAAMAAAMAAAIAAAMAAAMAAAMAAAIAAAMAAAIAAAMAAAIAAAMAAQMAAAIAAAMAAAMAAAIAAAMA/wIAAAMAAAMAAAMAAAIAAAMAAAIAAAMAAAMAAQIAAAMAAAIAAAMAAAMAAAIAAAMAAAMA/wIAAAMAAAMAAAIAAAIAAAMAAAIAAAIAAAMAAAIAAAIAAAIAAAMAAAIAAAIAAAMAAAIAAAIAAAMAAAIAAAEBAAEAAAIBAAEAAAEBAAIAAAEBAAEBAAIAAAEBAAEBAAIAAAEBAAEBAAIAAAEBAAEEAAEFAAEDAAEEAAEDAAECAAEDAAECAAEDAAECAAECAAECAAECAAECAAECAAECAAACAAAEAAADAAADAAADAAADAAACAAADAAACAAADAAACAAADAAACAAACAAACAAADAAACAAADAAADAAADAAACAAADAAADAAACAAADAAACAAADAAADAAACAAACAAADAAACAAADAAADAAACAAADAAADAAACAAADAAACAAADAAADAAACAAADAAADAAACAAADAAACAAADAAACAAADAQACAAACAQADAAACAAACAQADAAACAQACAAADAQACAAADAQACAQACAAADAQABAwACAwABAgABAwACAgABAgACAgABAgABAQACAgABAgACAQABAgABAgACAQABAQABAwABAwABAwABAwAAAgABAwABAwABAgABAgAAAwABAgABAgABAgABAwABAgABAgAAAwAABQAABAAABAAABAAABQD/BAAAAwAABAAABAABBAAABAAAAwAABAAAAwAABAAABAAABAAABAD/BAAABAAABAAAAwAABAAABAAABAAABAAABAAABAABBAAABAAABAAABAAABAAAAwAABAAABAD/BAAABAAABAABBAAABAAABAAABAAABGw+Cf97ZLQNAAAAAElFTkSuQmCC",
-		"erdc_purple2green_dark": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78ARsAbQIAAQIAAAEAAAIAAQEAAAEAAAIAAQEAAAEAAAIAAQEAAAEAAAEAAQIAAAEAAAEAAQEBAAEBAAEBAQEBAAEBAAEBAAEBAQEBAAEBAAEBAAEBAQEBAAEBAAECAAEBAQEBAAEBAAEBAAEBAQABAAEBAAECAAEBAAEBAAABAAEBAQEBAAEBAAABAAEBAAEBAAEBAQABAAEBAAEBAAABAAEBAAABAAEBAAEBAAABAAEBAAEBAAABAAEBAAABAAEBAAEBAAABAAEBAAABAAEBAAABAAEBAAABAAEBAAABAAEBAAABAAABAAEBAAABAAEBAAAB/wEBAAABAAEBAAABAAABAAEBAAAB/wEBAAABAAABAAEBAAABAAEBAAAB/wABAAEBAAABAAABAAEB/wABAAABAAEBAAABAAEB/wABAAABAAEBAAABAAAB/wABAAEBAAABAAABAAEB/wABAAEBAAABAAABAAEBAAAA/wEBAAABAAABAAEBAAABAAAB/wEBAAABAAABAAEBAAAB/wEBAAABAAABAAEB/wABAAAAAAEBAAAB/wABAAEBAAABAAAB/wEBAAABAAEBAAABAAEBAAAB/wAAAAEBAAABAAEBAAABAAEB/wABAAABAAEBAAABAAEB/wAAAAEBAAABAAEBAAABAAEBAAABAAEBAAABAAEA/wABAAEBAAABAAEBAAABAAEBAAABAAEBAAAAAAEBAAEBAAABAAEB/wABAAEBAAABAAEBAAAAAAEBAAEBAAABAAEBAAABAAEBAAABAAEBAAEAAAABAAEBAAABAAEBAAEBAAABAAEBAAAAAAEBAAEBAAABAAEBAAABAAEBAAEBAAABAAEAAAABAAEBAAEBAAABAAEBAAABAAEBAAEBAAABAAEAAAABAAEBAAEBAAABAAEBAAABAAEBAAEBAAABAAEAAAABAAEBAAEBAAABAAEBAAABAAEBAAEBAAABAAEBAAAAAAEBAAABAAEBAAEBAAABAAEBAAABAAEBAAABAAEBAOCPFAIwM4cXAAAAAElFTkSuQmCC",
-		"OrPu": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AS0ASwEBAgIBAwIBAgECAgIBAwECAgICAgEBAwICAgECAwIBAgECAgICAwEBAgICAwEBAgIDAgICAgECAgICAgICAgEDAgICAgECAgICAgICAgECAgICAgECAgICAgICAgECAgIDAgIDAQIDAQEDAgIDAQIDAgIDAQEDAQIDAgIDAQIDAgEDAQIDAgIDAQEDAQIDAgICAQIDAgICAQICAgEDAQICAgICAQIDAgICAQICAQIDAgICAQICAgIDAQICAgEDAQICAgICAQICAQICAgICAQICAgECAQICAQICAgIDAQICAgICAQICAQECAgICAQICAQICAQECAQICAQECAQICAQEBAQICAQECAQICAQECAQICAQECAQIBAQECAQICAQECAQEBAQICAAEBAQECAQIBAAEBAQECAQIBAAECAQEBAQIBAAECAQEBAQICAAEBAQEBAQEBAAICAAEBAQEBAAEBAQEBAAEBAAIBAQEBAAEBAAEBAQEBAAIBAQEBAAEBAAECAQH//QD//gD//QH//QD//gD//QH//gD//QD//gAA/QH//gD//QD//gD//QD//QH//gD//QD//QD//QD+/QH//gD//QD//QD//QD+/QD//QD//QH//gD//QD+/QD//QD//QD+/QD//QD+/AD//QD+/QD//QD+/QD+/AD//QD+/QD//QD+/AD//f/+/QD+/AD//f/+/f/+/f/+/QD+/f/+/f/+/f/+/f/+/f/+/f/+/f/+/P/+/f/9/f/+/f/+/f/+/P7+/v/+/v/+/v/+/f7+/v/+/v/+/v7+/f/+/v/+/v/+/f7+/f/+/v/+/f7+/f/+/f7///7+AP/+//7/AP7+//7+AP////7+//7/AP7+//7+AP////7+AP7+//7/AP/+//7/AP7+AP7/AP7///7+AP7/AP7/AP7+AP7/AP7/AP7///7+AP7/AP7/AP/+AP7/AP7/AP3/AP7/AP7+AP7/AP7/AP7/Af7/AP7/AP7/AP7+AP7/AP7/AP7/AP7/AApNKNOH3cMeAAAAAElFTkSuQmCC",
-		"Yellow 15": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78Af///AAA/wAA/P///QAA/QAA/f8A/QD//QAA/f8A/QAA/QD//f8A/QAA/QAA/gAA/gAA/gAA/gEA/gAA/gAA/gAA/gAA/gAA/gAA/gAA/gAA/gD//gAA/wAA/v///gAA/wD//gAA/gAA/gD///8A/gD//gAA/gAA/wD//gAA/wD//gAA/wD//gAA/gD//wAA/gD//wAA/gD//wAA/gD//gD//v8A/wD//gD//gD//v8A/gD//wD//gD//v///gAA/gD//wD//gD//gD//gD//gD//gAA/gD//gD//gD//gD//gD//gD//gD//gD//gD//gD//v///gD//gD+/gD//gD//gD//v///gD+/gD//gD//gD//////gD+/wD//wD//v///wD+/wD//gD//wD////+/gD//wD//wD//gD+/////wD//gD+/wD//gD//wD////+/gD//wD//gD//wD+/wD////+/wD//wD//wD+/v///wD+/wD//wD////+/wD//wD+/wD//wD//////wD+AAD//wD//wD//wD+AAD//////wD//wD+/wD/AAD/////AAD/AAD+/wD/AP///wD/AAD/AAD////+AAD//wD/AAD/AP/+/wD/AP/+AAD//wD+AP//AAD+/wD/AP/+AAD////+AAD+AP7+//7+AP7+//7+AP/+AP7+//7+AP7+//7+AP/9AP7+//7+AP/+AP//AP//AP/+AP//AAD/AP//AP/+AP//AAD+AP//AP//AP/+AP//AP7/AP7/Af//AP7+AP7/Af//AP7/AP//AP7/AP7+Af//AP7/AP7/AP//Af7/AP/+AP7/AP//Af7/AP7/AP//AP7+AP//Af7/AP//AP7+AP7/Af7/AP7/AP7+AP7/AP7/Af7+AP7/AP7/AP7+AP7/AP7/AP4AAf7/Af4AAP4AAf7/Af4AAP4AAf7/AP4AAf4AAP7/AP4AAf4AAf4AAP4BAf4AAf4AAP4AAf4AAf4BAP4AAf4AAP4AAf4AAP4AAX2jzYGu5yuaAAAAAElFTkSuQmCC",
-		"Black, Orange and White": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAICAAEBAAICAAEBAAICAAEBAAICAAEBAAICAAEBAAICAAEBAAICAAEBAAICAAEBAAICAAEBAAICAAEBAAICAAEBAAICAAEBAAICAAEBAAICAAEBAAECAAIBAAECAAIBAAECAAIBAAECAAIBAAECAAIBAAECAAIBAAECAAIBAAECAAIBAAECAAIBAAECAAIBAAECAAIBAAECAAICAAEBAAICAAEBAAICAAEBAAICAAEBAAICAAEBAAICAAEBAAICAAEBAAICAAEBAAICAAEBAAICAAEBAAICAAEBAAICAAEBAAICAAEBAAICAAEBAAICAAEBAAICAAEBAAICAAEBAQACAwABAgACAwABAwACAwABAwACAwABAwACAwABAwACAwABAwACAwABAwACAwABAwACAwABAwACAwABAwACAwABAwACAwABAwACAwABAwACAwABAwABAwACAwABAwACAwABAwACAwABAwACAwABAwACAwABAwACAwABAwACAwABAwACAwABAwACAwABAwACAwABAwACAwABAwACAwABAwACAwABAwACAwABAwACAwABAwACAwABAwACAwABAwACAwABAwACAwABAwACAwABAwACAwABAwACAwABAwACAwABAwACAwABAwACAwABAwACAwABAwACAwABAwACAwABA4JYAv8EQZ6EAAAAAElFTkSuQmCC",
-		"Cool to Warm": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78ATtMwAECAgECAQEBAgICAQECAgEBAQECAgECAQECAgIBAQECAgECAQECAQEBAgICAQECAQEBAgECAQICAQEBAQECAgECAQIBAQECAQECAQEBAgICAQECAQEBAQICAQEBAQECAQECAQIBAQECAQEBAQICAQEBAAECAQIBAQECAQEBAQICAAEBAQECAQIBAQECAAEBAQICAAEBAQICAQEBAAEBAQICAAEBAQEBAAICAQEBAAIBAAECAQEBAAIBAAECAQEBAAIBAAEBAAICAAEBAQEBAAIBAAEBAAIBAAEBAAECAAIBAAEBAAEBAAIBAAEBAAEB/wIBAAEBAAIBAAEBAAEB/wIBAAEAAAEB/wIBAAEBAAEB/wEBAAIA/wEBAAEB/wIBAAEA/wEBAAEB/wIA/wEBAAEB/wEA/wIBAAEA/wEB/wEA/wEBAAIA/wEB/wEA/wEB/wEA/wEB/wIA/wEA/wEB/wEA/wEA/wEA/wEB/wEA/wEA/wEA/wEA/wEA/gEB/wH//wEA/gH//wEA/wH//gEA/wH//gEA/wH//gH//wEA/wH//gH//wEA/gH//wD//gH//wEA/gD//wH//gH//wD//gH//gEA/wD//gH//wD//gH//wD//gH//wD//gD//gH//wD+/gD//wH//gD//wD//gD//gH//wD+/gD//wD//gD//wD+/gD//gD//wD+/gD//wD//gD+/wD//gD//gD+/wD//gD+/////gD+/wD//gD+/v///wD+/gD////+/gD//wD+/v/+/wD//v/+/wD+/v///wD+/v/+/wD//v/+///+/gD////+/gD+///+/v/+/////gD+///+/v/+///+/v/+///+/wD//v/+///+/v/+///+///+/v/+///+///+/v/+///+///+/v79///+///+/v/+///+///+//79/v/+///+///+//79/v/+///9//7+///9///+/v79///9//79///9///9//79/v/8//78///8//77///6//75/yPGUu/gMTvLAAAAAElFTkSuQmCC",
-		"gray_Matlab": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAAAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQICAgEBAQEBAQEBAQEBAQEBAQAAAAEBAQEBAQEBAQEBAQICAgEBAQEBAQEBAQAAAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAX8bAv/4oUV2AAAAAElFTkSuQmCC",
-		"pink_Matlab": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAAAAgFBQcFBQYFBAQDBAQDAwQDAwUDAwQCAgUDAwQDAwUDAwQDAgUCAwUDAwUDAwUDAwIBAQICAgIBAQIBAQICAgIBAQIBAQICAgIBAQICAgIBAQIBAQICAgIBAQMBAQICAgEBAQIBAQEBAQIBAQEBAQIBAQIBAQEBAQIBAQEBAQIBAQIBAQEBAQIBAQEBAQIBAQEBAQIBAQEBAQEBAQIBAQEBAQEAAAIBAQEBAQEBAQIBAQEBAQEBAQIBAQEAAAEBAQEBAQIBAQEBAQEAAAEBAQEBAQIBAQEAAAEBAQEBAQEBAQEBAQIAAAEBAQEBAQEBAQEAAAEBAQEBAQEAAAEBAQEBAQEBAAEAAQIBAQEBAQEAAAEBAQEBAQEBAAEAAQEBAQACAAEBAQABAQECAAABAQECAQABAAACAQEBAAABAQECAQABAAECAQABAQABAAECAQABAQEBAAACAQABAAEBAQABAQEBAAACAQEBAAABAQABAQECAAABAQEBAAABAQACAQEBAAABAQEBAAABAQABAAEBAQABAAEBAQACAQABAAEBAQABAAEBAQABAAABAQEBAAABAQEBAQABAAABAQEBAAABAQEBAAABAQABAAEBAQABAAEBAQABAAABAQEBAAABAQABAAEBAQABAAEBAQABAAABAQEBAAABAQEBAAABAQABAAEBAQABAAABAQEAAAABAQEBAAABAQABAQEBAAABAQABAAEAAQABAAABAQEBAAABAQEBAAAAAQABAAEBAQABAAAAAgEBAQAAAQEAAgABAQAAAQEBAgAAAQAAAQEBAgAAAQAAAQEBAgAAAQAAAQEBAgAAAQEBAQAAAQAAAQEBAgAAAQAAAQEBAQAAAQAAAgEBAQAAAQAAAQEBAQAAAgAAAQEBAQAAAQEAAQABAQAAAQEBAQAAAgAAAQEBAQAAAQAAAQEBAQAAAQAAAQEBAQAAAgAAAQEBAQAAAQAAAQEBAQAAAQAAAQEBAQAAAQAAAQEBAQAAAQAAAQEBAQAAAdD7Av8GKfntAAAAAElFTkSuQmCC",
-		"Brewer Sequential Blue-Purple (5)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AYEPfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACkoAQ4EmOC/AAAAAElFTkSuQmCC",
-		"BuGn": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQhAgQABAQABAgACAQABAQABAgABAQACAQABAgABAQABAQACAgABAQABAQACAgABAQABAgABAQACAQABAgABAQABAQACAgABAQABAQABAgACAQABAQABAgABAQACAQABAgABAQIBAQEBAAIBAQECAAEBAQEBAAIBAQEBAQEBAAEBAQECAAABAQEBAAEBAQEBAQEBAAEBAQEBAAICAQEBAAEBAQEBAQEBAAEBAQEBAAEBAQICAAABAQEBAAEBAQEBAQEBAAICAQEBAAEBAQEBAQEBAAECAQEBAQIBAAEBAQEBAQECAAEBAQEBAQEBAAECAQEBAQEBAAEBAQEBAQICAAEBAQEBAQEBAAECAQEBAAEBAQEBAQEBAAECAQEBAQEBAAIBAQEB/wIBAAEB/wIAAAEBAAIB/wEBAAIB/wEAAAEB/wIBAAEB/wEAAAIB/wEBAAEB/wIBAAEA/wIBAAEB/wIBAAEAAAIB/wEBAAEB/wIBAAEA/wEBAAIB/wEBAAEA/wIBAAEB/wIAAAEB/wIAAAEB/wIAAAEBAAEB/wIAAAEB/wIAAAEB/wEAAAIB/wEAAAEB/wIAAAEB/wIAAAEBAAIA/wEBAAEB/wIAAAEB/wIAAAEBAAEA/wIBAAEA/wEBAAIA/wEBAQEAAAEBAQEAAAEAAQIBAAEAAQEBAAEAAQEBAAEAAQEBAAEAAQIAAAEBAQEAAAEBAQEAAAEBAQEAAAEAAQEBAAIAAQEBAAEAAQEBAAEAAQEAAAEBAQEAAAEBAQEAAQEAAAEBAQAAAQEAAAEAAQABAQEAAAAAAQEAAQEBAAAAAQEAAQEAAAABAQEAAQEAAQAAAAEBAQAAAQEAAAEAAQABAQEAAAEAAQAAAQEBAAAAAQEAAQEAAQABAAEAAQEAAQABAAEAAQEAAQEAAAABAQEAAQEAAAABAQEAAAEAAQEAAQABAAEAAQEAAQAAAAEBAQEAAQEAAAABAQEAAQEAAAEAAQABAQEAAAEAAQABAQEAAAEAAQEAAQABAAEAAY74IOUDpmpuAAAAAElFTkSuQmCC",
-		"Brewer Sequential Blue-Green (8)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQBYJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHlxAH4ezj+pAAAAAElFTkSuQmCC",
-		"Warm": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78Af/lBgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMNcAewNEq2dAAAAAElFTkSuQmCC",
-		"erdc_blue_BW": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAAAAEBBAECAwEBBAEBAwECAwABAgECAgEBAgEBAgEBAgEBAgACAgEBAgABAgABAQAAAgABAgEBAgABAgAAAgABAgEBAgAAAgABAgABAgEAAgABAgABAgAAAgABAgABAgEAAgABAgABAgABAgAAAgABAgABAQEAAgABAgABAgABAgAAAgABAgABAgABAgAAAgABAgABAgEBAQAAAgABAgABAgEBAgAAAQABAgABAgEBAgABAgAAAgABAQABAgEBAgABAgAAAgEBAQABAgEBAgABAQEBAgAAAgABAQEBAgABAgEBAQABAgEBAgAAAQEBAgABAgABAgEBAQABAgABAQABAgEBAgAAAQABAgABAgEBAQABAgABAgABAgEBAQABAgABAgEBAQABAQEBAgEBAQABAQEBAgEBAQABAgEBAQABAQEBAgEBAQABAgEBAQABAQEBAgEBAQEBAQEBAQEBAQABAQEBAgEBAQEBAQEBAQEBAQABAQEBAQEBAQECAgEBAQEBAQABAQEBAQEBAAEBAQEBAQEBAQECAQEBAQABAQEBAQEBAAEBAQEBAQECAQABAQEBAQEBAAEBAQEBAAECAQEBAQEBAAEBAQEBAAEBAQECAAEBAQEBAQEBAAEBAQACAAEBAQIBAAEBAAEBAQICAAEBAAEBAAEBAQIBAAECAAEBAQEBAAEBAAEBAAICAQEBAAEBAAIBAAEBAQIBAAECAAIBAAIBAQEBAAIBAAEBAAIBAQEBAAICAAEBAAIBAQEBAAEBAAIBAAIBAAIBAAIBAAICAAIBAAIBAAIBAAEBAAIBAAIBAAIBAAIBAAEBAAIBAAICAAIBAAIBAAIBAAIBAAMBAAIBAAIBAAIBAAIBAAIBAAIBAAIBAAIBAAIBAAIBAAIBAAIBAAIBAAIBAAIBAAMBAAIBAAIBAAIBAAIBAAIBAAIBAAMBAAIBAAIBAAIBAAIBAAIBAAIBAAIBAAIBAAIBAAIBAAMBAAIBAAIBAAIBAAIBAAIBAAIBAAIBAAIBAJO7Av9B/96pAAAAAElFTkSuQmCC",
-		"CIELab_blue2red": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQCZvwgAAAcA/wUAAAUA/wT/AAMAAAMA/wMAAAIA/wMAAAIA/wIAAAIAAAL//wIAAAIA/wIAAAEAAAIA/wIAAAEA/wIAAAH//wIAAAEAAAEA/wIAAAEA/wEAAAEAAAL//wEAAAEA/wEAAAEAAAEA/wEAAAEA/wEAAAL//wEAAAEAAAEA/wEAAAAA/wEAAAEAAAEA/wH/AAEA/wEAAAEAAAEA/wEAAAAA/wEAAAH//wEAAAEAAAEA/wAAAAEA/wEAAAEAAAD//wEAAAEA/wEAAAAAAAEA/wEAAAEA/wAAAAH/AAEA/wAAAAEA/wEAAAAA/wEAAAEAAAD//wEAAAEA/wAAAAEAAAEA/wAAAAEA/wH/AAAAAAEA/wAAAAEA/wEAAAAAAAEA/wD/AAEA/wEAAAAA/wEAAAAAAAEA/wAAAAH//wEAAAAAAAEA/wAAAAEA/wAAAAEAAAD//wEAAAAA/wEAAAEAAAAA/wEAAAAA/wH/AAAAAAEA/wAAAAEA/wAAAAEAAAD//wEAAAAA/wEAAAAA/wEAAAAAAAAA/wH/AAAA/wEAAAAAAAEA/wAAAAEA/wD/AAEAAAAA/wEAAAAA/wAAAAEAAAAA/wH/AAAA/wEAAAAAAAEA/wAAAAAA/wH/AAAAAAEA/wAAAAEA/wAAAAAAAAH//wAAAAEA/wAAAAEAAAAA/wAAAAH//wAAAAEAAAAA/wAAAAEA/wAAAAH//wAAAAAAAAEA/wAAAAEA/wAAAAD/AAEA/wAAAAAA/wEAAAAAAAEA/wD/AAAA/wEAAAAAAAAA/wEAAAAA/wH/AAAAAAAA/wEAAAAA/wAAAAEAAAD//wEAAAAA/wAAAAEAAAAA/wD/AAEA/wAAAAAAAAEA/wAAAAAA/wH/AAAA/wAAAAEAAAAA/wAAAAH//wAAAAAAAAEA/wAAAAEA/wAAAAD/AAEA/wAAAAAA/wEAAAAAAAD//wAAAAEA/wAAAAAAAAEA/wD/AAAA/wEAAAAA/wAAAAEAAAAA/wD/AAEA/wAAAB5mi5Rpl/nhAAAAAElFTkSuQmCC",
-		"Cool": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AV8zgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADr8ARRH3VIDAAAAAElFTkSuQmCC",
-		"Asymmtrical Earth Tones (6_21b)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78ASQmMwECAgICAwECAgIDAgECAwICAgECAwICAgEDAwICAgECAwICAgEDAgECAQACAgECAQECAQACAQEDAQACAgECAQACAQECAQADAQECAQACAQEBAQEBAAACAAEBAQECAAABAQECAAABAAEBAQECAAABAQECAAEBAAEB/wEBAAECAAEBAAEB/wEBAAECAAEB/wEBAAEBAAEC/wEBAAICAQECAAICAQECAQICAQECAAICAQICAQECAAICAQECAQICAAECAQICAQICAQECAAICAQICAQECAAICAQICAQECAQICAAICAQECAQIBAAEBAQIBAQEBAQEBAQIBAAEBAQIBAQEBAQEBAAIBAQEBAQIBAQIBAQIBAQIBAQMBAQIBAQIBAQIBAQMBAQIBAQIBAQIBAQMBAQIBAQIBAQIBAQIBAQEBAAIBAQIBAQIBAQIBAQIBAQEBAQIBAAIBAQIBAQIBAQIBAQEBAQIBAQIBAAIBAQIBAQIBAQIBAQEBAQIBAQIBAQIBAQEBAQIBAQEBAQEBAgIAAQEBAQIBAQEBAgEAAQIBAQEBAQIBAgEAAQAAAgEAAgEBAQAAAgEAAQEAAgEAAgAAAQEBAgEAAgAAAQEAAgEAAwABAgEAAwABAwEAAgAAAwEBAwEAAgABAwEAAwAAAgEBA///Af39/v39/f39/f39/f39/f39/v39/f39/f39/v39/f39/f39/f78/f39/f39/f39/f79/f39/f39/P39/f79/f39/f39/f39/f79/f39/f79/f7+/f79/v79/f7+/f79/f79/v7+/f79/f79/f7+/v79/f79/v7+/f79/v7+/f79/v7+/v79/f7+/v79/v7+/f79/v7+/v/+/v7+/v/+///+/v/+//7+/////v/+///+/v7+///+/v/////+//7+/v/////+//7////+//7////+/v////7+//////7+///////+/v7////+//////7+//////7+///////+//7//v/+//////7+/////7/kEbV8TJMUAAAAAElFTkSuQmCC",
-		"Brewer Diverging Purple-Orange (4)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AV48mQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJ3BATWK0Q0LAAAAAElFTkSuQmCC",
-		"erdc_red_BW": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAAAAQBAQQBAAQAAQMBAQMBAAIBAQIBAAIAAQIBAQIBAAIBAQIAAQEBAAIBAQEBAQIAAAEBAAIAAAEBAAIAAAIA/wEAAAIAAAIBAAIAAAEAAAIAAAIA/wEAAAIBAAIAAAIAAAEAAAIAAAEAAAIBAQIAAAEAAAIAAQIBAAEAAAIAAAEAAAIAAQIBAAEAAAIAAAIAAAEAAQIBAAIAAQEAAAIBAAEAAQIAAAIAAAEBAAIAAQEAAAIBAAIAAQEAAAIBAAIAAAEAAQIBAAEAAAIBAQIAAAEBAAIAAQEBAAIAAAEAAQIBAAIAAAEBAQIAAAEBAQIAAAIBAAEAAQIAAAIBAAIAAAEAAQIBAAIAAAEAAQIBAAIAAAIAAQEBAAIAAAIAAQIBAAEAAAIBAQEBAAIBAQEAAQIBAAIBAQEAAAIBAQEBAAIAAQEBAAIBAQIAAAEBAQIBAAEBAQEBAQIBAQEBAQEBAAIBAQEBAQEBAQICAQEBAAEBAQIBAQEBAQEBAQIBAAEBAQEBAQECAQEBAgECAQEBAQECAQEBAQECAQABAQECAQEBAQECAQEBAgEBAQECAQEBAQECAQACAgEBAQACAQECAgABAQECAgEBAQACAQECAgABAQECAgABAQECAQEBAgACAQACAgEBAgACAgECAQABAgACAgEBAgACAQABAgECAgACAgABAgECAQABAgACAgABAgECAQABAgECAgABAgECAgABAQACAgEBAgABAgECAgABAQACAgEBAgACAgEBAgACAQABAgACAgABAgECAgABAgACAgABAQACAgABAgACAgABAgACAgABAgACAgABAgECAQABAgACAgABAgACAgABAQACAgABAgACAgABAQACAgABAgACAgABAv8CAgABAQACAgABAgACAQABAgEBAgACAgABAQACAgABAgACAQABAgACAgABAQACAgABAgABAQACAgABAgACAQABAgACAQABAgABAgACAQEBAgACAQABAgABAgACAQABAgACAQABAgL0Bf+i9CV0AAAAAElFTkSuQmCC",
-		"Greens": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQBEGwABAQACAAABAQABAAABAQACAAABAQABAAABAQACAAABAQABAAACAQABAAABAQACAQABAAABAQABAAACAQABAAABAQABAAACAQABAAABAQACAAABAQABAAACAQABAQABAAEBAQEBAQEBAAEBAQEBAQIBAQEBAQEBAAEBAQEAAQIBAQEBAAEBAQEBAQEBAQEBAQEBAAEBAQEBAQIBAQEBAQEBAAEBAQEBAQEBAQEBAAEBAQEAAQEBAQEBAQEBAAEBAQEBAQEBAQEBAAEBAQEBAQEBAQEBAAEBAQEBAQEBAQEBAAEBAQEBAQABAQEBAAEBAQEBAQEBAQEBAAEBAQEBAQEBAQEBAAEBAQEBAQEBAQEBAQEBAAEBAQEBAQEBAQEBAAEBAQIBAQIBAQEAAAIBAQIBAQEBAQIBAQEAAAIBAQIBAQEBAQIAAAEBAQIBAQEBAQIBAQIAAAEBAQIBAQEBAQIBAQIAAAEBAQIBAQEBAQIAAQIBAAEBAQIBAQEBAQIAAQEBAQIBAQEAAQEBAQIBAQEAAgIBAQEBAQIAAQEBAQEBAQIAAQEBAgIBAQEAAQEBAQIBAQEAAQIBAgEAAQEBAQIBAQEAAQIBAQEBAgEAAQIBAQEBAQIAAQEBAQEBAgIAAQEBAQEAAQEBAQIAAQEBAgEAAQEBAQEAAQIBAQEAAQEBAQEAAgEBAQEAAQIBAQEAAQEBAQEAAgEBAQIAAQEBAQEAAQEBAQEAAgEBAQIAAQEBAQEAAQEBAQEAAQIBAgEAAQEBAQEAAQEAAQABAQEAAQEBAQEAAQEAAQEBAQEAAQEAAQEBAQEAAQEBAQEAAQEAAQEBAQEAAQEAAQABAQEAAQEBAQEAAQEAAQEBAQEAAQEAAQEBAQEAAQEAAQEBAQAAAQEAAAEBAQAAAQEAAAAAAQEBAQAAAAEAAQEAAQAAAAEBAQAAAAEAAQAAAQEAAAEBAQAAAQEAAAAAAQEBAQAAAAEAAQAAAQEAAAEBAQAAAQEAAAAAAQEBAQAAAAEAAQllAuqO2aMQAAAAAElFTkSuQmCC",
-		"PRGn": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AUAASwIBAgICAgIBAgIBAwICAgICAgMCAgICAgICAgIBAwICAgICAgIBAgMCAwICAgIBAgIDAgECAgICAgICAgICAgICAgIDAgECAgICAQICAgICAgICAgECAgICAgICAgICAgEDAgIDAQECAgIDAQEDAgEDAgICAQEDAgEDAQIDAgECAQIDAgEDAgECAQIDAgEDAQECAgICAQICAgEDAQICAQECAgICAQECAgIDAQICAgECAQICAgECAQIDAQECAgICAQECAgICAQICAQECAgICAQECAQICAgECAQICAQICAQECAgICAQECAQICAgICAQECAQICAQECAQECAQICAQECAQIBAQECAQICAQECAQICAQECAQECAQIBAQECAQICAQECAQEBAQECAQECAAEBAQECAQEBAQECAAEBAQECAQEBAAECAQECAQABAQECAAEBAQECAQEBAAABAQECAAEBAQABAQECAAABAQEBAAACAQEBAAEBAQACAAEBAQABAAECAQABAP8A/////v8A//8A//8A/v7///8A/v8A//////8A/v8A//4A/v////8A//8A/v////4A/v///v4A//7//v8A/v7///8A/v7//v8A//7//v8A/v7///8A/v7//v8A//7//v7//v4A/v7//v7//v7//v7//v4A/v7//v7//v7//v7//v7//v4A/v7//v7//v7//v3+/v3//f7+/v3//f3+/v3+/f3//v7+/v3+/f3//v3+/v3//f3+/v7+/f3//v3+/v3+/f3+/v3//v7+/f3+/v3+/v3+/v3+/f7+/v3//v3+/v3+/f3+/v3+/v3+/v3//f79//3+/v7+/v7+//3+/v7+/v7+//39/v7+/v3+//7+/v3+//7+/v3+/v3+//7+/v7+///9/v7+///+//7+///+/v7+///+//7+/v/+//7+//7+///+/v7+///+//7+/v/9//7+///+///+///+//7+///+///+///+/v/+///+///+///+/wD+///+/3auZnAUTm5+AAAAAElFTkSuQmCC",
-		"Cold and Hot": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQD//wD+AAD+AAD9AAD+AAD+AAD+AAD9AAD+AAD+AAD+AAD+AAD9AAD+AAD+AAD+AAD9AAD+AAD+AAD+AAD+AAD9AAD+AAD+AAD+AAD9AAD+AAD+AAD+AAD+AAD9AAD+AAD+AAD+AAD9AAD+AAD+AAD+AAD+AAD9AAD+AAD+AAD+AAD9AAD+AAD+AAD+AAD+AAD9AAD+AAD+AAD+AAD9AAD+AAD+AAD+AAD+AAD9AAD+AAD+AAD+AAD9AAD+AAD+AAD+AAD+AAD9AAD+AAD+AAD+AAD9AAD+AAD+AAD+AAD+AAD9AAD+AAD+AAD+AAD9AAD+AAD+AAD+AAD+AAD9AAD+AAD+AAD+AAD9AAD+AAD+AAD+AAD+AAD9AAD+AAD+AAD+AAD9AAD+AAD+AAD+AAD+AAD9AAD+AAD+AAD+AAD9AAD+AAD+AAD+AAD+AAD9AAD+AAD+AAD+AAD+/gAA9gAA9gAA9gAA9gAA9gAA9gAA9gAA9gAA9gAA9gAA9gAA9goA9hQA9hQA9hQA9hQA9hQA9hQA9hQA9hQA9hQA9hQA9hQA9hQA9gUC/QACAAACAAACAAADAAACAAACAAACAAACAAADAAACAAACAAACAAADAAACAAACAAACAAACAAADAAACAAACAAACAAADAAACAAACAAACAAACAAADAAACAAACAAACAAADAAACAAACAAACAAACAAADAAACAAACAAACAAADAAACAAACAAACAAACAAADAAACAAACAAACAAADAAACAAACAAACAAACAAADAAACAAACAAACAAADAAACAAACAAACAAACAAADAAACAAACAAACAAADAAACAAACAAACAAACAAADAAACAAACAAACAAADAAACAAACAAACAAACAAADAAACAAACAAACAAADAAACAAACAAACAAACAAADAAACAAACAAACAAADAAACAAACAAACAAACAAADAAACAAACAAACAAADAAACAAACAAACAAACAAADAAACAAACAAACAAADAAACAAACAAhCkACOKayFAAAAAElFTkSuQmCC",
-		"GBBr": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQA8MAACAgABAQACAgABAgACAgACAgABAQACAgACAgABAgACAgECAQABAgACAgACAgABAgACAgECAQECAgABAgECAgECAgEBAgECAQACAgECAgECAgEBAgECAgECAgECAgEBAQMCAgICAgMCAgICAgICAgICAgICAgICAgICAgICAgIBAQICAgICAgECAgICAgICAgMCAgMCAgMCAgMCAgMDAgMCAgICAgMCAgMCAgMCAgICAgMCAgICAgMCAgMCAgIDAQMBAgMCAgMCAgMCAgMCAgMCAQMCAgMCAgMCAgMBAgMCAgICAQMCAgMCAgMCAgMCAgMBAQMBAgIBAQMCAgMBAQMBAQMBAgIBAQMBAgMBAQMCAQIBAgMBAQMBAgMBAQIBAgMBAAIBAQIAAQIBAQIBAQIAAQMBAQIBAQIAAQIBAQIBAQIBAQMAAAIBAQIBAQIAAQIBAQIAAAEBAQIAAAIAAQIBAQEAAAIBAQIAAAIAAQEBAAIAAQIBAAIAAQEAAAIBAQD//gAA/gD//gAA/gD//gAA/gH//gAA/gD//gAA/gD//gAA/gD//wAA/gD//gAA/v///QD//gD//v///QD//gD//v///QD//gD//v///gD//f///gD//gD//f8A/gD//v/+/f///f/+/f///v/+/QD//f/+/f///v/+/f///f/+/v///f/+/f///f/+/v///f/9/f/+/f/9/f/+/P/+/f79/f/+/f/+/f/9/f/+/f79/f/+/f/+/f/9/f7+/f/+/f/9/f7+/f/9/v/+/f7+/f/9/v7+/f/9/f7+/v/+/f79/f/+/v7+/f/9/f/+/f79/v7//v7+//7+/v7+//7+//7+/v7+//7+//7+/v7///7+//7+/v7+//7+/v7+//7+//7///7+//3/AP7+//7///7+AP7///7+AP7///7+//3/AP7+//7/AP7+//7///7+AP7/AP3/AP7+AP7///7/AP7/AP3+AP7/AP7/AP7+AP7///3/AP7/AP7+//7/AAe1R5q091pBAAAAAElFTkSuQmCC",
-		"hsv": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78Af8AAAAABgAABgAABgAABgAABgAABgAABgAABgAABgAABgAABgAABgAABgAABgAABgAABgAABgAABgAABgAABgAABgAABgAABgAABgAABgAABgAABgAABgAABgAABgAABgAABgAABgAABgAABgAABgAABgAABgAABgAABgAABgAABv0AA/oAAPoAAPoAAPoAAPoAAPoAAPoAAPoAAPoAAPoAAPoAAPoAAPoAAPoAAPoAAPoAAPoAAPoAAPoAAPoAAPoAAPoAAPoAAPoAAPoAAPoAAPoAAPoAAPoAAPoAAPoAAPoAAPoAAPoAAPoAAPoAAPoAAPoAAPoAAPoAAPoAAPoAAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAD/QAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAP9AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AMmhggGGnlS6AAAAAElFTkSuQmCC",
-		"Red to Blue Rainbow": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78Af8AAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAP8DAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAP4AAgAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAD9AQD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AIbOggE4NSmLAAAAAElFTkSuQmCC",
-		"Wild Flower": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AT0QUgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOJdAKE04LvdAAAAAElFTkSuQmCC",
-		"RdOrYl": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AYAAJgIAAAIAAAIAAAIAAAEAAAIAAAIAAAIAAAIAAAIAAAIAAAIAAAIAAAIAAAIAAAIAAAIAAAEAAAIAAAIAAAIAAAIAAAIAAAIAAAIAAAIAAAIAAAEAAAIAAAIAAAIAAAIAAAEBAAIB/wEAAAEBAAEBAAEB/wEAAAIBAAEB/wEBAAEBAAEB/wIBAAEBAAEA/wEBAAEBAAIB/wEBAAEBAAEBAAEB/wEAAAIBAAEB/wEBAAEBAAEA/wIBAAEBAAEB/wEAAAEDAQECAAEBAAACAQECAAECAQEBAAACAQECAAEBAAECAQEBAAABAQECAAEBAQECAAEBAQACAAECAAECAQEBAAACAQECAAEBAQECAAACAQEBAAECAAEBAQACAAEBAQECAAACAQACAAACAQACAAADAQACAQACAAACAQABAAACAQACAAACAQACAQECAAACAQABAAACAQADAAACAQACAAACAQACAQACAAABAQACAAACAQACAAACAQACAQACAAACAQACAAABAQABAAABAQABAAABAQACAAABAQABAAABAQABAAABAQACAAABAQABAAEBAQABAAABAQACAAABAQABAAABAQABAAABAQACAQABAAABAQABAAABAQABAAABAQACAAABAQABAQABAQABAgACAQABAQABAgABAQACAQABAgABAQABAQABAgACAQABAQABAgABAQACAQABAgABAQABAQABAgACAQABAQABAQABAgABAQACAQABAgABAQABAQABAgABAQABAQABAgAAAQABAQABAgAAAQABAQAAAgABAQABAQAAAgABAQABAQEAAQABAgABAQAAAQABAgAAAQABAQABAgAAAQABAQAAAgABAQABAQAAAgABAQABAQAAAgABAQABAQAAAgABAQAAAQABAgAAAQABAQAAAgABAQAAAgABAQABAQAAAgABAQAAAgABAQABAQAAAgABAQAAAQABAgAAAQABAgAAAQABAQABAgAAAQABAQAAAgABAQAAAgABAWLODMw9Uh6tAAAAAElFTkSuQmCC",
-		"erdc_rainbow_dark": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAAbAACAgABAQECAgACAQACAgACAQACAgACAgACAQACAgACAQABAgACAQACAv8BAgACAQABAgACAQECAgACAgACAQABAgECAQACAgACAQACAgABAgACAQACAv8CAQABAgACAv8CAQACAgABAQECAAACAQEBAQACAQABAQACAAACAQEBAf8CAQABAQACAAACAQABAf8CAQACAP8BAQECAQABAAECAQABAAACAQEBAAACAQACAAABAAACAQABAAACAf8BAAACAf8BAAACAf8BAAECAAIC/wEB/wEC/wEB/wECAAAB/wEC/wAB/wAC//8BAAAC//8C//8B//8C//4BAP8C/wIB/gMC/gMB/gIC/gIB/QEB/gEC/gAB/gAC/gAB/v8C/gAB/f4C/v4B/v4C/v0B/fwC/gIB/gUB/gUB/QMB/gMB/QIB/gIB/gEB/QIB/gEC/QEB/gAB/QEB/gAB/QEB/QAB/gAB/QMB/QYB/gQB/QQB/gQB/QQA/gMB/QMB/QMB/QIB/QMB/QMB/QIA/AIB/QIB/AIB/AIB+wMA/QQB/wMA/wMA/wQA/gMB/wMA/wMA/wMB/gIA/wMA/gMA/gMB/gIA/gMA/gIA/gMB/QMA/gP/AAMA/wMAAAIAAAMAAAMA/wMAAAIAAAP//wMAAAIAAAMA/wIAAAMAAAL/AAMA/wIAAAP/AAIAAAL/AAIAAAL//wIAAAP/AAIAAAL/AAL/AAIAAAL//wIAAAL/AAIAAAL/AAL/AAL/AAIAAAH/AAL/AAL/AAH/AAL/AAL/AAH/AAL/AAIAAAH/AAL/AAH/AAL/AAL/AAH/AAH+AQD+AQH+AgH/AQD+AQH+AQD+AQH+AQH+AQD/AAH+AQD+AQH+AQD+AQH+AQD+AAH+AgD+AgD+AgD9AwD+Af/+AgD9AgD+AQD9AgD+AQD+AgD9AQD9Af/+AQD9AQD+AQD9AQD9AQD+AgD+AgD+AgD+Av/+AQD9AgD+AQD+AgD9AQD+AgD9AQD9Av/+AQD9AQD9AgD9AcpWwX6tAroUAAAAAElFTkSuQmCC",
-		"Haze_green": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78Af/V4v//AP/+AP//////AP//AP/+AP//////AP//AP/+////AP//AP//AP/+////AP//AP//AP/+AP/////+AP//AP/+AP//AP/+////AP//AP/+AP//AP/+////AP/+AP//AP////7+//////7/AP/+//7///7////+//7/AP////7+//////7////+AP7///7////+//7////+//7///7////+//7///7+//////7+//////7///7+//////7+//7////+//7///7+//7+//7///7+///+//7///7+//7+//7///7+///+//7///7+//7+//7+//7+//7+//7+//7+///+//7+//7+//7+//7+//7+//7+//7+//7+//7+//7+//7+//7+//7+///+//7+//7///7+//7+//7+//7+///+//7+//7+//7+//7+//7+//7+//7////+//7+//7///7+//7+///+//7+//7+//7+//7+//7+//7+//7+//7+/wEC/wIC/wEC/wED/wEB/wEC/wEC/wEC/wEB/wEC/wEB/wEC/wAB/wEB/wEC/wEB/wECAAEC/wED/wEC/wAC/wEC/wEC/wEC/wEC/wAC/wEC/wAC/wEB/gEC/wAC/wAC/wECAAEC/wEC/wEC/wEC/wEC/wAC/wEC/wEC/wAC/wEB/wEC/wAC/wEC/wAC/wEC/wECAAAC/wEB/wEC/wECAAAC/wEC/wEB/wEC/wAC/wECAAAB/wEC/wEC/wAC/wEC/wEB/wAC/wECAAEC/wEC/wACAAEB/wEC/wAC/wEC/wEC/wAC/wEC/wEB/wAC/wEC/wECAAAC/wEC/wEBAAAC/wEC/wECAAEC/wAC/wEB/wEC/wAC/wEC/wEC/wAC/wEC/wEB/wECAAAC/wECAAEB/wAC/wEC/wECAAAB/wEC/wEC/wAC/wEB/wEC/wAC/wEC/wEB/wECAAAC/wEC/wEBAAAC/wEC/wECAAEB/wAC/wEC/wEC/wEB/wAC/wEC/58J1J88/US0AAAAAElFTkSuQmCC",
-		"X Ray": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78Af///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////0fV/SBizts0AAAAAElFTkSuQmCC",
-		"blue2cyan": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAAAAMDCQMECAMDBgMDBQIDBQEDBQACBQACBQACBf8CBv8CBf8CBv4CBv0CBf0CBvwCBgACAgABAQACAgABAgECAQACAgABAgACAQABAgACAgACAQABAv8CAgACAgABAQACAgABAgACAQABAgACAQABAgACAgABAQACAgABAgACAQABAgACAQABAgACAgABAQACAgABAgACAQABAgACAQABAgACAQABAgACAQABAgACAgABAQACAgABAQACAgABAQACAgABAgACAQABAgACAQABAgACAgABAQACAgABAgACAQABAgACAQABAgACAgABAQACAgABAgACAQABAgACAQABAgACAQABAgABAQACAgABAgACAQABAgACAQABAgACAQABAgABAQACAgABAQACAgABAQACAgABAQABAgACAQABAgACAQABAgACAQABAgACAQABAgEBAQIBAAEBAQIAAAEBAQIBAAEBAQEBAAIBAQEBAQEBAAEAAQEBAAEBAQEBAAEBAQQBAAMCAAIBAAMBAAICAAIBAAMCAAEBAAIBAAICAAIBAAEBAAICAAEBAAICAAEBAAIBAAMCAAIBAAIBAAIBAAICAAIBAAIBAAICAAEBAAIBAAICAAEBAAIBAAECAAIBAAIBAAMBAAIBAAIBAAIBAAIBAAIBAAIAAAIBAAIBAAIBAAIBAAIBAAEBAAIBAAIBAAIAAAIAAAIAAAIAAAEAAAIAAAIAAAIAAAEAAAIAAAIAAAIAAAEAAAIAAAEAAAIAAAIAAAEAAAIAAAIAAAIAAAEAAAIAAAEAAAIAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAIAAAEAAAIAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAIAAAEAAAIAAAEAAAIAAAIAAAEAAAIAAAIAAAIAAAIAAAEAAAIAAAIAAAIAAAEAAAIAAAIAAAEAAAIAAAIAAAMAAAIAAAIAAAIAAAIAAAMAAAIAAAIAAAIAAAIAAAMAAAIAAAIAAAIAAPshCv+Hc/rSAAAAAElFTkSuQmCC",
-		"Green-Blue Asymmetric Divergent (62Blbc)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AR8zJQECAgICAQECAgICAQECAgICAQECAgICAQECAgICAgECAQICAgECAQICAQECAQECAgECAQICAQECAQECAQECAQICAQECAQECAQECAQECAQEBAQECAQEBAAECAQABAAEBAQECAQEBAAECAQEBAQACAAEBAQECAAEBAQECAQEBAAACAQEBAQECAAEBAQECAAEBAQACAQEBAAECAQIBAQECAAIBAQECAQIBAQEBAAICAQIBAQECAAIBAQECAQIBAAIBAQICAAMCAQIBAAMCAAICAQMBAAICAAMCAQIBAAMCAAICAQMBAAICAAIBAAICAQIBAAICAAICAAIBAQICAAIBAAICAAIBAAICAQICAAEBAQIAAQIBAQEBAQIBAAIBAQIAAQEBAQIBAQIBAQIAAQEBAQIBAQIBAQEBAgIBAQIBAgEBAQIBAQIBAgEBAQIBAgEBAQIBAgIBAQEBAQIBAQIBAQIBAQEAAQIBAQIBAAIBAQEAAQIBAQIBAQEBAQIBAQEAAQEAAwEBAgEAAwEAAgEBAgEAAwEAAgABAwEAAgEAAwEBAgEAAgAAAgEBAgAAAgEBAgAAAgABAQEAAgABAgAAAgEBAgAAAQEBAgAAAgEBBgECBQEBBgEBBQEBBgECBQEBBgEBBgEBBQECBvf///X//ff//v3+/vz+//3+/v3+//z+//3+/v3+//z+/v3///3+//z+/v3+//3+/v7///7+//////7//v7+//7///7+/////v7///7+//7///7+/v7+/v78/f79/f39/v79/f78/f79/f39/v79/f79/f38/f79/v79/f39/f78/f39/f38/f39/f78/P39/f39/f78/f39/f79/f38/f79/v7+/v79/v79/v/9/v7+/v79/v79/v/+/v79/v7+/v/9/v79/v7+/v/+/v79/v/+/v7+/v/+/v7+/v/9/v7+/v/+/v7+/v/+/f7+/v/9/v7+/v7+/f///v7+/f7+/v/+/f7+/v7+/f/+/v79+/78+v79+nb6FIcurEwLAAAAAElFTkSuQmCC",
-		"Brewer Sequential Blue-Green (7)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQBYJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHlxAH4ezj+pAAAAAElFTkSuQmCC",
-		"Brewer Sequential Yellow-Orange-Brown (4)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AcxMAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFPfARyFjSLKAAAAAElFTkSuQmCC",
-		"nic_CubicL": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AXoDhwEBAwEAAwEBAwAAAgEBAwEBAwAAAwEBAwEBAgAAAwEBAwEBAwABAwEBAwEAAgABAwAFAwAEAgAEAwADAgADAwADAv8DAwADAwACAgADA/8CAgADAwACAv8CAwACAwADAv8CAv8CAgADAv8CAv8CAv8DAv8CAgACAf8CAv8CAv8CAv8CAv8CAv8CAv4CAv8CAv8CAAAD//8CAP8CAP8CAP8CAAAC//8CAP8CAP8CAP8BAP8C//8CAP8CAP8CAP4CAAAC/v8B//8C//8C/v8B/wAC//8C/v8B//8C//4B/v8C//8C//8B/v8C//4B//8C/v8B//8C/v8B/gAC/v8B/v8C//4B/v8C/v8B/v8B/v4C//8B/v4C/v8B/v4C/v4B/wAB/QEB/gAC/gEB/gAB/gAB/gAB/gAC/gAB/gAB/gAB/f8B/gAB/gAC/v8B/gAB/gEB/gEB/QEB/gEB/gEB/gEA/QEB/gEB/gEB/gAB/gEB/QAB/gEB/gAB/QEB/gAA/gEB/QEB/gEB/gAB/gEB/gEA/QEB/gAB/gEB/gAB/QEA/gAB/QEB/gAB/gEB/QAB/QIAAAEB/wIA/wEB/wIB/wEA/wIB/wEB/wIA/wEB/wIB/wEA/wIB/wEB/wEA/wIB/wIAAAMBAQMAAQMAAAIAAQMBAAIAAQMAAAIBAQMAAQIAAAIAAQMBAAIAAQIAAAMBAQIAAAMAAQIAAAIAAAIAAQMAAAIAAAIAAQMAAAIAAAIAAQIAAAIAAAIBAQMAAAIAAAH/AAIAAQIAAAEAAAIAAAH/AAIAAAEAAQIAAAL/AAEAAAIAAAEAAQL/AAEAAAIAAAH/AAH/AAH+AAH/AQH/AAH/AAL/AAH+AAH/AAH/AAH/AAH/AQH+AAH/AAH/AAH/AAH+AAH+AAL/AAH+AAH+AQH/AAH+AAH+AAL/AAH+AAH+AAH+AAH/AAH+AAH+AAH+AQH+/wD+AAD9AAH+AAD+AAD9/wH+AAD+AAD9AAH+AAD9/wD+AAD9AAH+AAD9AJkf1/MfUlDSAAAAAElFTkSuQmCC",
-		"erdc_marine2gold_BW": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAAAAIBBQEBBgIBBAIBBAEBAwIBAwEBAwEBAgEBAwEBAwABAwABA/8BAwABA/8BA/8BA/8BAgAAAgABAgABAv8AAgABAwAAAgABAv8BAgAAAwABAv8AAgABAv8BA/8AAgABAgABAv8AAgABAgABAQABAgAAAgABAv8BAQABAgABAgAAAv8BAQABAgABAgAAAv8BAgIBAAEBAQEBAQIBAQEBAQIBAQEBAQEBAQIBAQEBAQEBAQEBAAEBAQEBAQEBAQEBAQIBAAIBAQIBAAEBAQIBAAEBAAIBAQEBAAIBAQEBAAEBAAEBAQIBAAEBAAEBAQEBAAIBAAECAAIBAAIBAAEBAAIBAAEBAAEB/wIBAAEBAAEBAAEBAAIBAAEBAAECAAEBAAIB/wIBAAIB/wIBAAEB/wIBAAIB/wEBAAIB/wIBAAEB/wIBAAEB/wIBAAEB/wEBAAIB/wIB/wIBAAIB/wEBAAIB/wIBAAIB/wEBAAIB/wEB/wIBAAIA/wEBAAIB/wEB/wIB/wIB/wIB/gIB/wIB/gIB/wIB/gIB/wIB/gEB/wIB/gIB/wIB/gEB/wIB/gIB/wEA/gIB/wIB/gIB/wIB/gEB/wIB/gIB/gIB/wEB/gIB/wIB/gEA/gIB/gIB/wEB/gIBAAEB/wIBAAEB/wIBAAEBAAIB/wEBAAIB/wEBAAIB/wEBAAIBAAEB/wIBAAEB/wEBAQEBAAIBAAEBAQEBAAEBAQIBAAEBAQEBAAEBAAIBAQEBAAEBAQEBAAIBAQEBAAEBAQEBAgECAQEBAQEBAQABAgEBAQEBAQECAQEBAQEBAgEBAQEBAQEBAQEBAQECAgABAwEBAwEBAwACAwEBAwABAgEBAwEBAwACAwEBAwABAwEBAwACAwEBAgABAwEBAwABBAECBAABBAEBBAABBAABBAEBBAACBAABBAEBBAABAwABBAACBAEBBAABBAABBAABBAEBAwACBAEBBAABBAEBAwABBAEBBAABBAABAwEBBAACBAABAwEBBAABBIQxSf+xsLpkAAAAAElFTkSuQmCC",
-		"Brewer Sequential Blue-Green (9)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQBEGwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACKXAGGhf2dSAAAAAElFTkSuQmCC",
-		"erdc_purple2pink_BW": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAAAAMABAMBBQMABAMBAwIAAwMBAwIAAgIBAgEAAwIBAgEAAgEBAgEAAwEBAgEAAgEAAwEBAgEBAQEAAgAAAgEBAQEAAgEAAgEAAgEBAQEAAgEAAgEAAgEAAQEAAgEBAgEAAgEAAQEAAgEBAgEAAQEAAgEBAQEAAgEAAgEBAQEAAgEBAgEAAQEAAgEBAgEAAQEAAgEBAQEAAgEBAQEAAgEBAQEAAgEAAgEBAQEAAgEBAQEAAgEBAQEAAgEAAQEBAgEAAgEBAQEBAQEAAQEBAQEBAQEAAQIBAQEBAgEAAQEBAQEBAQEAAQEBAQEBAQEAAQIBAgEBAAEBAQEAAAIBAQEBAAEBAQEBAAIBAQEAAAEBAQEBAAIBAQEBAAEBAQEAAQIBAAEBAAEBAAEBAQIBAAEBAAEBAAIBAAEAAAEBAQIBAAEBAAEBAAEBAAIBAAEBAAEBAQEBAAIAAAEBAAEBAAIBAQEBAAEBAAEBAAIBAAEAAQEBAAEBAAIBAAEBAAEBAAIBAQEAAAEBAAIBAAEBAAIBAAEAAAEBAAIBAAEBAQEBAAIBAAEAAAIBAAEBAAEBAAIBAAEAAAIBAAEBAAEBAAIBAAEAAAIBAAEBAAIBAAEBAAEAAAIBAAEBAAIBAAEBAAEBAAIAAQEBAAEBAQEBAAEBAQIBAAEBAAEBAQEAAAIBAQEBAAEBAQEBAAEBAQIBAAEBAAEBAQEBAQABAQEBAQEBAQEBAQEBAQABAQEBAQEBAQECAQEBAQEBAQABAQEBAQEBAQABAQECAQABAQABAQECAQABAQACAQABAQEBAQACAQABAQEBAQACAQABAQEBAQACAQABAAACAf8BAQACAQACAQABAAACAQABAQACAf8BAQACAAABAQACAQABAf8CAQABAAACAQABAf8CAAABAQACAf8CAAABAQACAP8BAQACAQABAP8CAQABAQACAP8BAQACAAABAf8CAAABAQACAAABAQABAf8CAAABAQACAAABAf8CAAABAQABAAACAf8BAIAsDqjPQRFDAAAAAElFTkSuQmCC",
-		"erdc_green2yellow_BW": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAAAAACAQACAQADAQACAQACAQACAQACAQACAQABAQACAQABAQABAQACAQABAQABAQABAAABAQEAAQABAQEBAQABAAABAQABAQAAAAABAQABAQABAAABAf8BAQABAP8BAQABAQABAAABAQAAAQABAQABAQABAAABAQABAQABAQABAQABAAABAQABAQABAQABAQABAQABAAABAQABAQABAQABAAABAQABAQABAQABAQABAAABAQABAQABAQABAAABAQABAQABAAABAQABAAABAQABAAABAQABAQABAAABAQABAAABAQABAAABAQABAAABAQABAAABAAABAAABAAABAAABAAACAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAAB/wABAAEBAAABAAAB/wABAAABAAAB/wABAP8BAAACAAAB/wABAAABAAEBAAEB/wEBAAEBAAEBAAEBAAEBAAEBAAEBAAEBAAEBAAEBAAEBAAABAAEBAAEB/wUBAAQBAAMBAAQBAAMBAAIBAAMBAAMBAAIBAAMBAAIBAAIBAAIBAAIBAAIBAAIBAAMBAAIBAAMBAAIBAQIBAAIBAAMBAAIBAQIBAAIBAAIBAAIBAQIBAAIBAAIBAQIBAAIAAQMBAQIBAQIBAQIBAQIBAQIBAQIBAQIBAQIBAQIBAQIBAQIAAQIBAQIBAQIBAQIBAQEBAQIBAgIBAQEBAgIBAQIBAgEBAQIBAgIBAQEBAgIBAQIBAgEBAQIBAgEAAQIBAgIBAgEBAgIBAwIBAgEBAgIBAgEBAgIBAgIBAgEBAgIBAgIBAgEAAgIBAwEBAgIBAgIBAwEBAgIBAwEBAwIBAgIBAwEAAgIBAwEBAgIBAwIBAwEBAgIBAwEBAgIBAwEAAwIBAgIBAwEBAwIBAwIBAgEBAwIAAwEBAwIBAgIBAwEBAwIBAwEBAgIAAwEBAwIBAgIBAwEBAwIBAgIBAwEAAgIBAwIBAwEBAgIBAwIBAwEAAgIBAwEBAgIBA6n+C//3rnSOAAAAAElFTkSuQmCC",
-		"Brewer Diverging Brown-Blue-Green (5)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQGFcQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOm5APkFomP2AAAAAElFTkSuQmCC",
-		"Brewer Diverging Spectral (6)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78ATKIvQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGk8AXnG2pBwAAAAAElFTkSuQmCC",
-		"BuPu": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQI4WAABAgABAQABAgABAgABAQABAgABAQABAgECAgABAQABAgABAgABAgABAQABAgABAgABAQABAgABAgABAQABAgABAQABAgECAgABAQABAgABAgABAQABAgABAgABAQABAgABAQAAAQABAQABAQABAgAAAQABAQABAQAAAQABAQABAQAAAQABAQABAQEAAgABAQABAQABAQAAAQABAQABAQAAAQABAQABAQAAAQABAgABAQAAAQABAQABAQABAQAAAQMBAQIBAAIBAQIBAAIBAQEBAAIBAQEBAAIBAQEBAAEBAQIBAAEBAQEBAAEBAQEBAAIBAQIBAAIBAQEBAAIBAQIBAAEBAQIBAAEBAQIBAAEBAQEBAAIBAQEBAAEBAQIBAAIBAQIBAAIBAQMAAAIBAQIBAAIBAAIBAQEAAAIBAQIBAAIBAQIAAAEBAQIBAAIBAQIBAAIAAQIBAAIBAQIBAAIBAQIAAAIBAAIBAQIBAAIAAQIBAAEBAQIBAAIBAQIAAAEBAQIBAAIAAAEBAQIAAAEBAAIBAQIAAAEBAQIBAAEAAAIBAQEAAAIBAAEBAQIAAAEBAQIBAAIAAAEBAQIAAAEBAAIBAQIAAAEBAQIBAAEAAAIBAQEBAAIAAAEBAQIAAAEBAQEBAAIAAAEBAQEBAAIAAAEBAQEAAAIBAAEBAQEAAAIBAAEBAQEAAAIBAAEAAQEBAAIBAAEAAQEBAAEBAAIAAQEBAAEAAQIBAAEBAAEAAQIBAAEBAAEAAQEBAAIBAAEAAQABAAEBAAEAAQEBAAEBAQEAAAEBAAEBAQAAAAEBAAEBAQEAAAEBAQEBAAEBAAEAAQABAAEBAAEAAQEBAAEBAQEAAAEBAAABAQEAAAEBAAEBAQEAAAEBAQEBAAEAAAABAQEAAAABAAEAAAEBAQAAAAEBAAAAAQEBAAAAAAEBAAEAAQABAAEAAAABAAEAAQEBAAAAAAEBAQAAAAEBAAEAAAABAQEAAAABAAEAAQEBAAAAAAEBAAABAQEAAJCpAvOgKS5SAAAAAElFTkSuQmCC",
-		"Muted Blue-Green": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78ARxGTQECAgECAgEBAgECAgECAgEBAQABAQEBAgEBAQABAQEBAgEBAQABAQECAgEBAQEBAgABAgECAQEBAgEBAQABAgECAQEBAgEBAgEBAQABAgEBAQEBAQEBAQEBAgABAQEBAQEAAQEBAgABAQEBAQEBAQEBAgEBAQEBAQEBAgIBAQEAAQEBAgIBAQEBAQEBAgEBAQIBAQEBAgEBAQIBAgEBAQICAgEBAgIBAQEBAgIBAQIBAgECAgIBAQEBAgIBAgEBAQICAgIBAgIBAQICAgIBAQEBAgICAQIBAgIBAQICAgEBAgIBAQICAgMCAgICAgMCAgMBAgICAgMCAgICAgMCAgMCAgICAgMCAgICAgMCAgMCAgMCAgICAgMCAgMCAQMCAgICAgMCAgMCAgMCAQICAgMCAgIBAQICAQIBAAMBAQICAQIBAQIBAAICAQIBAQIBAQICAQIBAAMCAQMCAQMCAQMCAQMCAAMCAQQCAQICAAMCAAMCAAMCAAMCAAMCAAUF8v///f8A/v///v8A/f///v8A/v7//v3//f7//v7+/v7//v7//v7//v4A//7//////v7///8A//7///7//v////7///4A/v////7///8A//7/AP8A//////4A//8AAP////4A////AP8A//4A////AP8A//7+/v7//v7+//7//v7//v7+//7//v7+/v7///7//v7+/v7///7+/v7///7+/v7///////7+/v7///7+/v7///7///7+/v7///7+/v////7+///+//7//v/+//7+//7//v/+//7////+//7+/v////7+//7+/v79/v7+/v39/v7+/v7+//79/v7+/v7+/v79/v7+/v7+/v79//7+/v7+/v7+/v7+/v79/v7+/v7+/v7+/v7+/v79//7+/v7+/v7+/v7+///+/v7+/v7+///+/v7+///+/v7+//7+/v/+/v79//7//v/+///+//////////7+/v/////+//////////7+/v/////+/////4i7bLGoK3RYAAAAAElFTkSuQmCC",
-		"Haze_lime": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AbTI//7+////AP/////+////AP/+///////+//7/AP/+///////+AP/////+////AP7+///////+////AP/+////////AP/+///////+AP////7+///////+AP/////////+AP/////+////AP/+//////7////+AP/////+////AP/////+////AP/+///////////+AP/////+////AP/////+////AP/+//7////////+AP/////////+AP/////+////AP/////+////////AP/+////////AP/+////////AP/+///////////+AP/////////+AP//////////AP/+///////////+AP/////////+AP//////////AP/+/////////wD/AP/+////////AP/////+////////AP/////+////AP/////+////AP///////////wD/AP/////////+AP//////////AAD////////////+AP///////wECAAIB/wEC/wEBAAEB/wEC/wEBAAEB/wEC/wEB/wEBAAEC/wEB/wEBAAEB/wEB/wECAAEB/wEC/wIB/wEBAAEC/wEB/wEBAAEC/wEB/wEBAAEC/wEB/wAB/wECAAEB/wEB/wICAAEB/wEC/wEBAAEB/wEC/wEB/wEBAAEC/wEB/wEBAAEC/wEB/wECAAEB/wEB/wEC/wIBAAEB/wEC/wEBAAEC/wEB/wEBAAEC/wEB/wECAAEB/wEB/wEC/wEBAAIC/wEB/wEBAAEC/wEB/wICAAEB/wEB/wEC/wEBAAEC/wEB/wECAAEB/wEB/wEC/wIBAAEC/wEB/wECAAEB/wIB/wECAAEB/wEC/wEBAAEC/wEB/wIC/wEBAAEC/wEB/wEBAAEC/wEB/wICAAEB/wEC/wEBAAEC/wIB/wECAAEB/wEC/wEB/wECAAEB/wIC/wEB/wECAAEB/wECAAIB/wEC/wEB/wECAAEB/wIC/wEBAAEC/wEB/wEC/wEBAOlWsOrQV3KgAAAAAElFTkSuQmCC",
-		"Brewer Diverging Purple-Orange (3)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AZmOwwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMI5AezgZGV2AAAAAElFTkSuQmCC",
-		"Brewer Diverging Spectral (8)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78ATKIvQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGk8AXnG2pBwAAAAAElFTkSuQmCC",
-		"erdc_blue2yellow": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78ARUAfgEBAgEAAQEBAQEBAQEBAgEBAQEAAQEBAQEBAgEBAQEBAQEBAQEBAgABAQEBAQEBAQEBAQEBAAEBAQEBAAEBAQABAAEBAQEAAAEBAQEBAAABAQEBAAEBAQEBAAAAAQEBAAEBAAEB/wEBAAAB/wEBAAEB/wABAAEAAAEB/wABAAEB/wABAAEB/wEBAAAA/wEBAAEBAAAB/wEBAAEB/wABAAEB/wEAAAAB/wEBAAEBAAAB/wEBAAEB/wABAAEA/wABAAEB/wEBAAAB/wEBAAEBAAEB/wAAAAEB/wEBAAAB/wEBAAAB/wEBAAEBAAAA/wEBAAAB/wEBAAEB/wEBAAAB/wEBAAEAAAAB/wEBAAEB/wABAAEB/wABAAEB/wEAAAAB/wEBAAEBAAAB/wEBAAEB/wABAAEA/wEBAAAB/wEBAAEBAAAB/wEBAAEB/wABAAEA/wEBAAAB/wEBAAEB/wEB/wEAAAEB/wABAAEB/wEB/wEBAAEA/wABAAEB/wEB/wEBAAEB/wEA/wEBAAEB/wEB/wEB/wEAAAEB/wEB/wEB/wEBAAEA/wEB/wEB/wEBAAAB/wIA/wEB/wEB/wEBAAEA/wEB/wEB/wIB/wEA/wEB/wEBAAEB/wEA/wEB/wEB/wEB/wEA/wEB/wIBAAEB/wEA/wEB/wEB/wEB/wEBAAEA/wEB/wIB/wEB/wEA/wEB/wEB/wEB/wEAAAEB/wEB/wIB/wEA/wEBAAEB/wEB/wEA/wEB/wEB/wEB/wIB/wEA/wEB/wEBAAEB/wEA/wEB/wEBAAEB/wIA/wEB/wEB/wEB/wEA/wEBAAEB/wEB/wEA/wEB/wIB/wEB/wEA/wEBAAEB/wEB/wEB/wEAAAEB/wIB/wEB/wEA/wEB/wEB/wEB/wEA/wEBAAEBAQEBAAAAAQEBAAEBAQEBAAEAAQABAAEBAQEBAAEAAQEBAAABAQEBAAEAAQABBAEBAwABAwAAAwEBAwABAwABAwEAAwABAgABAwABAgEAAwABAgABAwEAAvL7gA00dmH9AAAAAElFTkSuQmCC",
-		"Brewer Diverging Spectral (10)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AV5PogAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPGcAVHQ6DqeAAAAAElFTkSuQmCC",
-		"copper_Matlab": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAAAAEBAQIBAAEAAQIBAAEBAQIBAAEBAQEBAAIAAQEBAAEBAQEBAAEBAQEAAAEBAQEBAAIBAQEBAAEBAQIBAAEBAQEBAAEAAQEBAAEBAQIBAAEAAQEBAAEBAQIAAAEBAQEBAAEAAQEBAAIBAQEBAAEBAQEAAAIBAQEBAAEBAQEBAAIAAQEBAAEBAQEBAAIBAQEAAAEBAAEBAQIBAAEBAQEAAAEBAQIBAAEBAQEBAAEAAQIBAAEBAQEBAAEBAQIAAAEBAQEBAAEBAQIBAAEAAQEBAAEBAQIBAAEBAQEAAAEBAQIBAAEBAQEBAAEAAQIBAAEBAQEBAAEBAQIAAAEBAQEBAAEBAQIBAAEAAQEBAAEBAQIBAAEBAQEAAAEBAQIBAAEBAQEBAAEAAQIBAAEBAQEBAAEBAQIAAAEBAQEBAAEBAQIBAAEAAQEBAAEBAQIBAAEBAQEAAAEBAQIBAAEBAQEBAAEAAQIBAAEBAQEBAAEBAQIAAAEBAQEBAAEBAQIBAAEAAQEBAAEBAQIBAAEBAQEAAAEBAQIBAAEBAQEBAAEAAQIBAAEBAQEBAAEBAQIAAAEBAQEBAAEBAQIBAAEAAQEBAAEBAQIBAAEBAQEAAAEBAQIBAAEBAQEBAAEAAQIBAAEBAQEBAAEBAQIAAAEBAQEBAAEBAQIBAAEAAQEBAAEBAQIBAAEBAQEAAAEBAQIBAAEBAQEBAAEAAQIBAAEBAQEBAAEBAQIAAAEBAQEBAAEBAQIBAAEAAQEBAAEBAQIBAAEBAQEAAAEBAQEBAAEBAQEBAAEAAQEBAAABAQEBAAEBAQEAAAEBAQEBAAEBAQEBAAEAAQABAAABAQABAAABAQAAAAABAQABAAABAQABAAAAAQABAAABAQABAAABAQAAAAABAQABAAABAQABAAAAAQABAAABAQABAAABAQAAAAABAQABAAABAQABAAAAAQABAAABAQABAAABAQAAAAABAQABAAABAQABAAAAAQABAAABAQABAAABAQAAAAABAQABAb+nAk0ERdenAAAAAElFTkSuQmCC",
-		"Brewer Sequential Yellow-Orange-Brown (5)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AZk0BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHjkANPzsXBSAAAAAElFTkSuQmCC",
-		"erdc_blue2green_BW": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAAAAIBBQIBBgIBBAIBBAEAAwIBAwIBAwEBAwEBAwABAgEBAwABAwABA/8BA/8BAwABAwAAAwABAwAAAgEBAwAAAwAAAwAAAgEBAwAAAwAAAwAAAwABAwAAAgAAAwAAAwAAAwABAwAAAgABAgEAAwAAAgABAwAAAgABAgAAAwABAgAAAwEAAgABAwAAAgABAwAAAgEBAgABAQEBAgEAAgABAQEBAgEBAQABAgEBAgEBAQEAAgABAgEBAQEBAgABAQEBAgEBAAACAQEBAAECAQEBAAABAQECAAEBAAACAQEBAAABAQECAAABAQEBAAACAAEBAQAC/wEB/wACAAAC/wEB/wAC/wACAAAB/wAC/wAB/wACAAAC/wAB/wAC/wABAP8C/wEB/gAC/wEB/wAC/gAB/wAC/gAB/wAC/gAC/wAB/wAC/v8B/wAC/v8B//8C/gAB/wAB/wEC/wEB/gAB/wEC/wAB/wEB/wAB/gAC/wEB/wAB/wAC/wAB/gAB/wAC/wAB/wEB/gEB/wIC/gEB/wEB/wEB/gEC/wAB/gEB/wEB/gEC/wAB/gEB/wEB/gAC/gEB/wIB/gEB/wIB/gIB/wIB/gEB/wIC/gEB/gIB/wEB/gIB/gEB/gIB/wEC/gEB/gEB/gIBAAIB/wIBAAIB/wIBAAIB/wIB/wIBAAIB/wIBAAIB/wIBAAEB/wIB/wIBAAIB/wIBAQIBAAEBAQIBAAIBAQIBAAIBAQIBAAIBAQEBAAIBAQIBAAIBAQIBAQIBAAEBAQIBAQIBAQIBAgIBAQIAAQIBAgEBAQIBAQIBAgIBAQIBAQIBAgEBAQIBAQIBAgIBAQIBAwIBAwEAAwIBAwIBAwIBAwIBAwIBAwEBAwIBAwIBAwIAAgEBAwIBAwIBAwIBAwIBBAEABAIBBAIBBAIBBAIBBAEABAIBBAIBBAIBBAEABAIBBAIBBAEBBAIBBAIABAEBBAIBAwIABAIBBAIBBAEBBAIAAwIBBAIBBAEABAIBBAIBBAIBAwEABAIBBEaYXf8iR9WoAAAAAElFTkSuQmCC",
-		"Blue to Red Rainbow": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAA/wAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAD/wAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AIA/gQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAH9AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAbMggHoSfkgAAAAAElFTkSuQmCC",
-		"nic_CubicYF": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AYMMqwEDAgADAgACAgACAgACAgACAgACAgACAgECAgACAwABAgACAgACAgABAgACAgABAv8CAgACAgACAf8CAgACAgACAv8BAQACAv8CAgABAgACAv8CAQABAv8CAv8BAgACAv8CAf8BAQACAf8BAf8CAf8BAQACAv8BAf8BAf8CAf8BAf8CAf8BAv8BAf8CAf8BAQACAP8BAAACAP8BAP8CAAABAP8BAP8CAAABAP8CAf8BAAABAP8CAP8BAAABAP8CAP8B/wAB//8C//8B/wAC//8B//8B//8C/wAB//8BAP8B//8C//8B//8B//8C//8B/wAB//8B/wAC//8B/v8B//8B/wAB//8C//8B//8B//8B/v8B//8B//8C//8B//8B/wAB/v8B//8B/wAB/v8C//8B/v8B//8B//8B/v8B//8B/v8B//8B/v8C//8B//4B/gAB/wAA/gAB/wAB/gAB/wAB/gAB/wAB/gAA/wAB/v8B/gAB/wAB/v8B/wAB/v8B/wEA/gEB/gEB/wEA/gAB/wEB/gEB/gAA/wEB/gAB/gEB/wAA/gAB/gEB/wAB/gAA/gEB/wEB/gAA/gEB/wEB/gAA/gEB/gEB/wAA/gEB/gAB/gEB/wAA/gAB/gEB/gAA/gEB/wAA/gEB/wEA/gAB/gEB/wAA/gEB/gAA/gEB/wAA/gEB/gAB/gEA/wAB/gAA/gEB/wEA/wEB/wEB/wEA/wEB/wAA/wEB/wEA/wEB/wEA/wEB/wAA/wEB/wEA/gEB/wIAAQEBAAIAAAIAAQIBAAIAAAEAAQIBAAIAAAEAAQIAAAIBAAEAAQIAAAEBAAIAAQIAAAMAAAIAAQIBAAIAAAIAAQMAAAIAAQIAAAIAAAIBAQIAAAIAAQIAAAIAAAIAAQIAAAEAAAIAAAEAAAIAAQEAAAIAAAEAAAIAAAEAAAIAAQEAAAIAAAEAAAIAAAEAAAEAAQIAAAEAAAIAAAEAAAIAAAEAAQEAAAIAAAEAAAIAAAEAAAEAAQIAAAEAAF6XyxT/RDXjAAAAAElFTkSuQmCC",
-		"Rainbow Blended White": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78Af////r6APr6APr6APr6APv7APr6APr6APr6APr6APr6APr6APr6APv7APr6APr6APr6APr6APr6APr6APr6APr6APv7APr6APr6APr6APr6APr6APr6APr6APv7APr6APr6APr6APr6APr6APr6APr6APr6APv7APr6APr6APr6APr6AP4CAAAGAAAGAAAFAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAFAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAFAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAFAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAFAAAGAAAGAAAGAAAGAAAGAAAE/gAA+gAA+gAA+QAA+gAA+gAA+gAA+QAA+gAA+gAA+gAA+QAA+gAA+gAA+gAA+QAA+gAA+gAA+gAA+QAA+gAA+gAA+gAA+QAA+gAA+gAA+gAA+QAA+gAA+gAA+gAA+QAA+gAA+gAA+gAA+QAA+gAA+gAA+gAA+QAA+gMA/QYAAAYAAAYAAAUAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAUAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAUAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAUAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAUAAAYAAAYAAAYAAAYAAAX/AAD6AAD6AAD6AAD7AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD7AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD7AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD7AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD7AAD6AAD6AAD6AAD6AAD6AP//BQAABv8AB/8ABv8ABgAABv8AB/8ABv8ABgAABv8AB/8ABv8ABgAABv8AB/8ABv8ABv8ABgAABv8AB/8ABv8ABgAAB/8ABv8ABv8ABgAABv8AB/8ABv8ABgAAB/8ABv8ABv8ABgAABv8AB/8ABv8ABgAAB/8ABv8ABlmWzuFQQKPWAAAAAElFTkSuQmCC",
-		"erdc_divHi_purpleGreen": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AUwAfQIDAQEDAQIDAQIDAgEDAQICAQIDAQECAgICAQICAQEDAQICAgICAQECAQICAgICAQECAQICAgICAQICAgIDAQICAQECAgICAQICAgICAQICAgECAQICAQICAgIDAQICAgECAQICAgICAQIDAgICAQECAgICAQICAgIDAQICAgICAQECAgICAQIDAgICAQICAQECAgICAQIDAgECAQICAQICAgEDAQICAQICAgECAQIDAQICAgECAQICAQICAgEDAQICAQECAQICAQECAQICAgECAQECAQICAQEDAQICAQECAQICAQECAQECAQICAQECAQECAQECAQECAAEBAQECAQECAAECAQECAQIBAAECAQECAQECAAECAQEBAQECAAECAQABAAEBAAACAAEBAAEBAQABAAECAAABAAEBAAACAAEBAAABAAEBAAACAQEBAAABAAAB/wAAAAAB/wAAAAAB/wAAAAAB/wABAAAA/wABAAAA/wABAAAA/wABAAAA/wABAP8A/////gAA//8A//8A/wAA/////v8A/wAA//8A//8A/wD//v8A//8A//8A/wD///7//v8A/v///v///v7//////v///v///v7//////v///v7//v////8A/v///v7//v/+/v7//v7+/v///v7+/v7//f///v7+/v7//v7+/v///v7+/v7//f///v7+/v7//v7+/v7+/f7+/v7//v/+/f7+/v7+/v7//f7+/v7+/v7+/f7//v7+/v7+/f7+/v7//v7+/f7+/v7+/f7+/v7+/v7+/f3+/v7+/f7+/v7+/v7+/f7//v7+/v7+/f7+/v7+/v7+/f7+/v7+/v7+/f7//v7+/v3+/f7+/v7+/v7+/f7+/v7+/v7//f7+/v7+/v7+/f7+/v7//v7+/v7+/f7+/v7//v7+/f7+/v7//f7+/v/+/f7//f7+/f7+/v7+/f7//v7+AP//AP7+AP//AP7/AP/+AP7/AP/+AP7/AP/+AP//AP7/AP/+//7/AP/+AASSZGPuoQ8aAAAAAElFTkSuQmCC",
-		"Traffic Lights For Deuteranopes 2": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78Ac0AzQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANKkAZyoIPjoAAAAAElFTkSuQmCC",
-		"erdc_pbj_lin": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAAAAIBAgIBAgEBAwIBAgIBAgIBAgIBAgEBAgEBAQIBAgEBAQEBAQEBAgEBAQEBAQEBAQEAAQEBAgEBAQEAAQIBAgEAAQEAAQEBAgEAAQEBAgEAAQEAAQEBAgIAAQEBAgEAAQEAAQEBAgEAAQEBAQEAAQEBAgEAAQEBAQEAAQEBAgEAAQEBAQEAAgEBAQEAAQEBAQEAAQEBAgEBAQIAAQEBAQEAAQEBAQEAAQEBAQEBAQEAAQEBAQEAAgEBAQEBAQEAAQEBAQEBAAIAAQEBAQEBAQEAAAEBAQEBAQEAAQEBAQEBAAEAAQEBAQIBAQEAAAEBAQEBAAEBAAIAAAEBAAEBAAEBAAIBAAEAAAEBAAEBAAEBAAIBAAEAAAEBAAEBAAIBAAEB/wEAAAEB/wIBAAEB/wEBAAEB/wEBAAIB/wEAAAEB/wEBAAEB/wEBAAIB/wEBAAEB/wEBAAEAAAEB/wEBAAEBAAIBAAEB/wEBAAEB/wEBAAEAAAEB/wEBAAEBAAIB/wEBAAEBAAEB/wEBAAEA/wIBAAEB/wEBAAEB/wEBAAEBAAEB/wIAAAEB/wEBAAEB/wEBAAEB/wEBAAIBAAEB/wEBAAEA/wEBAAEB/wEBAAEB/wIBAAEBAAEB/wEBAAEB/wEBAQEBAAEBAAABAQEBAAEBAAEBAQEBAAEBAQABAAEBAAEBAQEBAAEBAAEBAQABAAEBAQEBAgABAQECAQABAgEBAQEBAQABAQEBAgEBAQABAQEBAQABAgECAQABAQEBAgABAQEBAgABAgEBAgACAgABAgEBAQABAgEBAgABAgABAgECAgABAQABAgEBAgABAgABAgECAgABAgABAgABAwEBAgABAgABAgACAgEBAgABAgABAwABAgEBAgACAgABAgABAgEBAgABAwABAgABAgEBAgACAgABAgABAwEBAgABAgABAgABAgABAwECAgABAgABAgABAgEBAgABAgABAgEBAgABAgACAgEBAgABAgABAgEBAgABAgABAgABAqDgHqjlkvMEAAAAAElFTkSuQmCC",
-		"Brewer Diverging Spectral (7)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78ATKIvQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGk8AXnG2pBwAAAAAElFTkSuQmCC",
-		"jet": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAAjwAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAAAwAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAADAQAEAAAEAAADAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAADAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAADAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAADAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAQA/AMA/QQA/AQA/AQA/AQA/AQA/AQA/AQA/AQA/AQA/AQA/AQA/AQA/AQA/AQA/AQA/AMA/QQA/AQA/AQA/AQA/AQA/AQA/AQA/AQA/AQA/AQA/AQA/AQA/AQA/AQA/AQA/AMA/QQA/AQA/AQA/AQA/AQA/AQA/AQA/AQA/AQA/AQA/AQA/AQA/AQA/AQA/AQA/AQA/AMA/QQA/AQA/AQA/AQA/AQA/AQA/AQA/AQA/AQA/AQA/AQA/AQA/AQA/AP//QD8AAD9AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD9AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD9AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD9AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AP/+APwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAP0AAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAPwAAP0AAOFGpIIPnWFaAAAAAElFTkSuQmCC",
-		"erdc_iceFire_H": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAAAAIDCAMCBwIDBQICBAIDBAICBAACBQACBAABBP8CBf8BBP4CBf8BBP4CBf0BBP0CBQABBAACAwABAwACBAABAwACBAABAwACBAABAwACBAABBAACAwABBAACAwACBAABBAECAgECAgECAgECAgECAgACAwECAgECAgECAgECAgEDAgECAgECAwECAgACAgECAgICAQIDAQICAQECAQIDAQECAQECAQEDAQECAQECAQEDAQECAQECAQADAQECAQEDAQECAQECAQEDAQECAQICAQEDAgECAQECAQADAQECAQEDAQECAQECAgEDAQACAQEDAQMCAQICAgMCAQIDAQMCAQICAgICAQIDAQICAgICAQMDAQICAgICAQIDAQICAQICAgUCAQUCAQUBAQUCAQUCAQUBAQQCAQUCAQQBAQQCAQQCAQQCAQQBAQQCAQQCAQQCAQUA/gYA/gQB/gUA/gUA/gQA/gUB/wQA/gQA/gUB/gQA/gQA/gMB/gQA/gQA/wQB/gL++gH/+gL/+gH/+gL++wH/+gH/+gH/+gH++gH/+wH/+gH/+gH/+gD++gH/+gH/+v/++gD9+//++//++wD9+v/++//++gD9+//++v/++v/++f/9+QD++P/+9//99f/+7v/9AP/9AP/+AAD9AP/9AP/9AP/9AAD9AP/9AP/+AP/9AP/9AP/9AAD9AP/9AP/9AP/9AP7+AP/9AP/9AP/9AP/9AP7+AP/9AP/9AP/9AP79AP/9AP/9AP/9AP79AP/9AP/+AP79AP79AP/9AP7+AP79AP/9AP79AP79AP/9AP79AP79AP/8Af79AP78AP/8AP3/AP3+AP7+AP3+Af3+AP7+AP3+AP3+AP7+AP39//7+AP39AP39AP7+AP39//7+APwAAP0AAPwAAf0AAP0AAPwAAP0AAPwAAP0AAP0AAPwAAP0AAP0AAP0AAP0A//wAAPwCAPwCAPsBAPwCAPwBAPsBAPwAAPwAAP3/APz/APz/APv/APv+APn/APb/AOCACRYGsv2NAAAAAElFTkSuQmCC",
-		"gist_earth": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAAAAcCCwcCCAYCBgQCBQICBgMCBgMABgMBBgMABgQABgP/BwMABgP/BwT/BgP/BwP+B/8GAv8GAv8EA/8EAv8EAv4EAv4DA/8DAv4DAv0DAv4EA/0DAvwCAv0DAvsDA/oDAgECAAABAAACAAEBAAAC/wABAAACAAACAAABAAACAAABAAACAAAB/wACAP8BAAACAAEBAAACAAAB/wEBAAACAAEBAAAB/wABAAACAAABAAAB/wACAAABAAABAAAC/wABAAEBAAAC/wEBAAEC/wABAAEC/wABAAAB/wACAAEB/wACAAAB/wACAAAB/wACAAAB/wEB/wEB/wAB/wEB/wEC/wABAAEB/wAB/wEB/wAB/wEB/wAB/wAC/wEB/wAB/wAB/wEB/wEB/wAB/wEA/wEB/wEB/wAB/wEB/wEB/wAB/wEB/wAA/wEB/wAB/wEB/wAB/wIB/wEB/wIB/wEB/gIB/wEB/wIB/wEB/wIC/gEB/wEB/wEB/gIB/wEB/wEB/gEB/wMBAAQB/wMBAAMB/wMAAAMBAAMB/wMBAAMB/wMBAAMB/wIBAAMA/wMBAAIB/wMBAAQAAQMAAAQBAQQAAAMAAQQAAAMBAQMAAAQAAQMAAQMAAAMAAQQBAAMAAQMAAAMAAQQAAQT/AQMAAQQAAQT/AQMAAQT/AgMAAQQAAQP/AQQAAQP/AQQAAQP/AQQAAQP/AQL/AgH/AwIAAgH/AwH/AgL/AgEAAwL/AgH/AgL/AwH/AgH/AgIAAgH/AwL/AgH/AgAAAwAAAwEBAwAAAwAAAgAAAwABAwAAAwEAAwAAAwABAwAAAwAAAgAAAwABAwAAAwABAQABAgABAQABAQABAQABAgABAQABAQABAgABAQABAQABAgABAQABAQABAgABAQABAQACAgABAQABAQABAQACAgABAQABAQACAgABAQABAQACAgABAQABAQACAgABAQACAgACAgADAgACAwACAgACAgACAgADAwACAgACAgADAwACAgACAgADAwACArWEcP+ZulYAAAAAAElFTkSuQmCC",
-		"erdc_iceFire_L": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78Ad7p1PwAAvz/AvwAAfz/AvwAAvwAAfz/AvsAAfz/AvsAAvsAAfz/AvsAAfr/AvsAAvv/Afz///z+//z+//z+//z+//z///z+//z+//z+//z///v+//z+//v+/vv///v+//v+//7+//79//7+/v7+//79//7+//7+/v79//7+//7+//3+/v79//7+//7+/v39//7+///+///9///+/v/+///9/wD+///9///+/v/+//79///+///+///9///+/v7+///9/wD+///+/wD9///+///+///9/wD+///9AP/+///+//79///+///+//79//7+//7+///+/v/+/QD+/v/9/v/+/f/+/v/+/v/+/gD+/f/+/v/+/v/+/f/+/gD+/v/+/v///gD+/AD+/AD//AD+/QD//AD+/QD//AD+/AD//QD+/AD//QD+/AD//QD+/QD//AD+/QP/+wP+/AL//AL/+wL+/AH//AH/+wD+/AD+/AD+/P/+/f/+/P7++/7++/79+f7++QoBAAcBAAUCAAUBAAQBAAMCAAQAAAQBAAT/AAQAAAT/AAT/AAX+AAT/AAT+AAX+AAMAAAMAAAMAAQQAAAMAAAMAAAMAAAQAAAMAAAMAAAQAAAMAAAQAAAMA/wMAAAQAAAIDAAMDAQIDAAMDAAIDAAMCAQIDAAMCAAIDAAMCAAMCAAIC/wMCAAICAAMCAAICAAIEAAIDAAID/wEDAAIEAAIDAAEDAAIDAAICAAEDAAIDAAIDAAEDAAICAAIDAAEDAAEDAAIDAAEDAAEDAAEDAAEDAAIDAAECAAEDAAEDAAEDAAEDAAEDAAEDAAICAAEDAAEDAAADAAEDAAEDAAEDAAECAAEDAAEDAAEDAAADAAECAAEDAAEDAAEDAAEDAAACAAEDFAECDAECCQECCAEDBwACBwECBwEDBgACBgECBgECBgADBgECBQACBgADBgECBf8BBv8BBv8BBgACBv8BBf8BBv8BBv4BBv8BBf8CBv4BBv8BBv4BBf8BBv4CBt63X6xO9tvVAAAAAElFTkSuQmCC",
-		"Oranges": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AX8nBAEAAAEBAAIAAAEBAAEAAAEBAAEAAAIBAAEAAAEBAAEAAAIBAAEAAAEBAAEAAAIB/wEAAAEAAAEBAAEAAAIBAAEAAAEBAAEAAAIBAAEAAAEBAAEAAAEBAAIAAAEBAAEAAAIBAAEAAAIBAAIAAAEBAAIAAAEBAAIBAAIA/wEBAAIAAAEBAAIAAAIBAAEBAAIAAAEBAAIAAAIBAAEAAAIBAAEBAAIAAAEBAAIAAAIBAAEA/wIBAAEBAAIAAAIBAAEAAAEBAQEBAAABAQECAAEBAQEBAAABAQEBAAEBAQEBAAABAQEBAQEBAAEBAQABAQEBAAEBAQEBAAABAQEBAQEBAAEBAQABAAEBAQEBAQEBAAABAQEBAAEBAQEBAAABAQEBAAECAgABAQABAgEBAQABAgABAQEBAQACAQEBAgABAQABAQEBAQABAgABAQEBAQACAQEBAQABAgABAQEBAQABAgABAQEBAQACAgEBAQABAQABAQEBAgABAQABAQEBAQACAgABAQABAgABAQABAgABAQABAgABAQABAgABAQABAgABAQABAgABAQABAQABAgABAQABAgABAQABAgABAQABAgABAQABAgABAQABAgABAQACAgABAQABAgABAQABAgABAQABAgABAgABAQABAgABAgABAQABAgABAgABAgABAQABAgABAgACAgABAQABAgABAgABAQABAgABAgABAgABAQABAgABAgABAQABAgABAgABAQABAgABAgABAgABAQACAgAAAQABAgABAQAAAgABAQABAQAAAgABAQABAQAAAgABAQABAgEAAQABAQABAgABAQAAAQABAgABAQAAAgABAQABAQAAAgABAQABAQAAAgABAQABAQAAAgABAQABAQAAAgABAQAAAQABAQAAAAABAQAAAQABAQAAAQABAQAAAQABAQAAAQABAQAAAQEAAAABAQAAAQABAQAAAQABAQAAAQABAQAAAQABAQAAAQABAAAAAQABAQAAAQABAQAAAfPZBeH5c1YpAAAAAElFTkSuQmCC",
-		"erdc_magenta_BW": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAAAAMBAwMAAgMBAwMBAgMBAwIAAgIBAgIBAQIBAgEAAgIBAQEBAQIBAgEAAQEBAQIBAgEAAQIAAQEBAgIAAQEAAQIAAgIAAQEAAQIAAgEAAQIAAQIAAgEAAQIAAgL/AQEAAQIAAgEAAQIAAQEAAQIAAgEAAQIAAQIAAgH/AQIAAQEAAQIAAgL/AQEAAQIAAgEAAQIAAQEAAQIAAQEAAgIAAQEAAQIAAQEAAQIAAgEAAQIAAQEAAQIAAQEAAgIAAQEAAQIBAQEAAQIBAgEAAQEAAQIBAQEAAQIAAQEBAgIAAQEBAQIAAQEAAQIBAQEAAgEAAQIBAQEBAQIAAQEBAQEAAgIBAQEBAQIAAQEBAQEBAQIAAgEBAQIAAQEBAQEBAQIAAgEBAQIBAQEBAQEAAQIBAgEBAQEBAQIAAQEBAQEBAgIBAQEAAQEBAQIBAQEBAgIAAQEBAQEBAQEBAQIBAgEBAQEBAQIBAQEBAQEAAgEBAQIBAQEBAQEBAgIBAQEBAQEBAQEBAQIBAgEBAQEBAQEBAQEBAQEBAgIBAQEBAQEBAQEBAgEBAQEBAQIBAQEBAQEBAgECAQEBAQECAQEBAQABAQECAQEBAQECAQEBAQEBAQECAQEBAQEBAQECAQABAQEBAQECAQACAQEBAQECAAABAQECAQACAQEBAQACAAEBAQACAQECAQEBAQACAAEBAQACAQACAQEBAAACAQACAAECAQABAAACAQACAAEBAQACAAACAQABAAECAQACAAABAQACAQACAAABAAACAQECAAACAAABAQACAAACAAABAQACAAACAAABAQACAAACAAABAQACAAACAAABAQACAAACAAABAAACAQACAAABAAACAAABAQACAAACAAABAAACAQABAAACAAACAAABAQACAAABAAACAAABAQACAAABAAACAAACAQABAAACAAABAQACAAABAAACAAABAQACAAABAAACAQABAAABAAECAQABAAACAAABAQACAAABAAACAQABAAABAFtPBdtEtGP7AAAAAElFTkSuQmCC",
-		"PiYG": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AY4BUgIBAgIBAQIBAgMBAgIAAQIBAgICAgIBAQIBAgIBAgMBAQIBAgIBAgIBAgIBAQMBAgEDAgIDAQICAgECAgIDAgICAgECAQICAgICAgECAgICAQIBAgECAgICAgICAgEBAQEFAgEEAgIEAgEEAgEEAgEEAgEDAgEEAgEDAgEEAgADAgEDAQEEAgEDAgEDAgEDAgEDAgEDAgECAQADAgEDAgEDAgECAQEDAgADAgECAgEDAgEDAQACAgEDAgEDAgECAQACAgEDAQECAgECAQADAgECAgECAQADAgECAQECAgACAQEDAgECAQACAgECAQEDAgABAQECAQACAAEBAQACAQECAQABAQECAAACAQABAQECAQACAQEBAQACAAEBAQACAQABAQABAAACAQABAAABAQABAAABAQECAAABAQABAAABAQABAAABAQACAAABAQABAP8BAAABAQABAAABAP8AAAABAQABAAABAP8BAAABAQABAAAAAP8BAAABAQABAAABAP8A//8A/gAA//8A/v8A/wAA/v////8A/gAA/v8A//8A/gAA//8A/v8A/wAA/v8A/////v8A/f8A/v7//v8A/v///v8A/v8A/v///v4A/f///v8A/v8A/v///v8A/v4A/v///f7//f7//f7//f8A/f7//f7//f7//v7//f8A/f7//f7//f7//f4A/f7//f///f3//v7+/f7//f7//f7+/v7//f3//f7+/f7//v7+/f7//f7//v3+/f7//f7//f7+/f7//v7+/v3//v7+/f7//v7+/v7//f7+/v3//v7+/f7//v7+/v7//f7+/v3//f7+/v7///7+/v7+//7///7+//7+/v7///7+//////7+/v7+//7///7+//7+/v7///7+//7+//7/AP/+//7+///+AP7+//7////+AP7+//7+////AP7+//7+AP////7+//7+AP/+//7+AP//AP7+///+AP7+AP/+AP7+////AP7+AP/+//7+AP//AP7+///+AEkjULUlAO38AAAAAElFTkSuQmCC",
-		"erdc_brown_BW": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAAAAQBAAQBAAQBAAMAAAMBAAIBAAIBAAIBAAIBAAIBAAIAAAIBAAEBAAIBAAEBAAEAAAIBAAEBAAEAAAEBAAEAAAIAAAEBAAEAAAIBAAEAAAEBAAEAAAIAAAEBAAEAAAIBAAEAAAEBAAEAAAEBAAIAAAEBAAEAAAEBAAEAAAIBAAEAAAEAAAEBAAEAAAIBAAEAAAEBAAEBAAEAAAEBAAEBAAEAAAIBAAEAAAEBAAEBAAEAAAEBAAEBAAEAAAEBAAEAAAEBAAEBAAEBAAEBAAEAAAEBAAEBAAEBAAEAAAEBAAEBAAEBAAEBAAEAAAEBAAEBAAEBAAEBAAABAAEAAAEBAAEBAAEBAAEBAAEBAAABAAEBAAEBAAEAAAEBAAEBAAEBAAABAAEBAAEBAAEBAAEBAAEBAAABAAEAAAEBAAEBAAEBAAEBAAABAAEBAAEBAAEBAAEBAAEBAAEBAAABAAEBAAEAAAEBAAEBAAEBAAEBAAEBAAEBAAABAAEBAAEBAAEBAAEBAAEAAAEBAAEBAAEBAAEBAAEBAAEBAAEBAAEBAAEBAAEBAAEAAAEBAAEBAAEBAAEBAQABAAEBAQEBAAEBAQEBAAEBAQEBAAEAAQEBAQEBAAEBAQEBAQEBAAEBAQEBAQEBAQEBAgEBAQEBAgEBAQEBAQEBAgEAAQEBAQEBAQEBAQEBAQEBAgEBAQEBAQEBAQABAQEBAQEBAQEBAQEBAQEBAQEBAgEBAQEBAQEBAQABAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQABAgEBAQEBAQEBAQABAgEBAQECAQEBAQEBAQABAgEBAQEBAQEBAQABAQEBAgEBAgEBAgABAQEBAgEBAgACAQEBAgEBAgABAgEBAQEBAgABAgEBAQEBAgABAgEBAgACAgEBAgEBAgABAgEBAgABAgEBAgEBAgABAgEBAwABAgECAgEBAgABAgEBAgABAgEBAgABAgEBAgEBAgABAwEBAgACAgEBAgEBAgABAgEBAgABAgEBAwABAj/iAn3X3vLYAAAAAElFTkSuQmCC",
-		"Brewer Sequential Blue-Purple (3)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AYhWpwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJOaAYfzM+85AAAAAElFTkSuQmCC",
-		"Linear Blue (8_31f)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AfX/+v3///3//v0A//7///3//v3///0A//3//v3///3///3//v0A//3///3///4A//3///3///0A//3/AP0A//3///3///4A//3///3///0AAP7///4AAP3///4AAP7///7///0AAP7///4AAP3///4AAP7///4AAP7/////AP4AAP////7/AP8A//7/AP4AAP////7/AP8A//7/AP//AP///wAAAP//////AP//AAAA////AP//////AP//AAAA////AP//AP8A////AAD/AP8A////AP//AAAA////AP8AAP//////AAAAAP///wD/AP8AAAD///8AAAD/////AAAAAAD/////AAAA////AAD/////AP///wD////+/wD/////AAD//////wD////+AAD//////wD//////wD/AP///wD+/////wD/AP///wD//////wD/////AAD//////wD/AP///wD//wD/AP///wD/////AAD/////AAD/////////AP/////////////+////AP/////////+////AP////7////+/wD//wD/AAD//////wD//wD//wD/AAD//wD//wD/////AAD//wD//wD//wD/////AAD//wD+/wD//////wD/AAD//wD//////wD/AAD//wD/AAD//wAAAAD//wD/AAAAAAD//wD/AAD//wAAAAD/AAD//wAAAAD//wD/AAAAAAD//wH/AAD//wAAAAD/AAD//wAAAAD//wD/AAD/AAD//wD//wD/AAAA/wD//wD/AP///wD/AAD//wD//wD/AAD//wD//wD/AAAA/////wD/AAD//wD/AAAA/wD/////AAD//wAA/wD/AP///wD//////wD/AP///wD/////////AAD//////wD//////wD//////////wD//////wD//////////wD//////////wD//////wD//////wD////////+AAD//////wD//////wD////+/wD//////4IrCq/rpO7pAAAAAElFTkSuQmCC",
-		"Brewer Diverging Spectral (9)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78ATKIvQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGk8AXnG2pBwAAAAAElFTkSuQmCC",
-		"GnBuPu": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQFGNgABAQABAQACAQABAQABAQABAQABAgABAQACAQABAQABAQABAQABAQACAQABAQABAgABAQABAQACAQABAQABAQABAQABAQABAQACAQABAgABAQABAQABAQACAQABAQABAQABAgAAAQEBAgABAQAAAgABAQABAgAAAQABAgABAQAAAgABAgABAQAAAgABAQABAgAAAQABAgABAQAAAgABAQEBAgAAAQABAgABAgAAAQABAgAAAQABAgABAQAAAv8BAQMBAgIAAgIBAQIAAgIAAgIBAgIAAQEBAgIAAgEBAQIAAgEBAgEAAQEBAgEAAgIBAgIAAQIBAgEAAQIBAgIAAgIBAQEAAgIAAgIBAQEAAgIBAgEAAQEBAgIAAgEBAQIAAgEBAQIBAAIBAQEAAAIBAQIBAAEBAAIBAQEAAAIBAQEBAAIBAQEAAAEBAQIBAAEBAQIBAAIAAQEBAAIBAQEBAAIAAQIBAAEBAAIBAQEBAAIAAQEBAAIBAQEBAAIBAQEAAAIBAQIBAAIAAAIBAQIAAAIBAAIBAQIAAAIBAQIBAAIAAAIBAQIAAAIBAAIBAQIAAAIBAQIBAAIAAAIBAQIAAAIBAAIBAQIAAAIBAQEBAAIAAAIBAQIBAAIAAAIBAQIAAAEBAQEBAAIAAAEBAQEBAAIAAAEBAQEAAAIBAAEBAQEAAAIBAAEBAQEAAAIBAAEAAQEBAAIBAAEAAQEBAAEBAAIAAQEBAAEAAAIBAQEBAAEAAQIBAAEBAAEAAQEBAAIAAAEBAQAAAAEBAAEBAAEAAQEBAAEAAAEBAQEAAAABAAEAAQEBAAEAAAEBAQEAAAEBAAEAAQABAAEBAAEAAQEBAAEAAAEBAAEAAQABAAEAAAEBAQEAAAEBAAEAAQEBAAEBAAAAAQEBAAABAAEAAQEBAAABAAEAAQABAAEBAAAAAQEBAAEAAAABAQEBAAAAAAEBAQEBAAAAAQEBAAABAAEAAQEBAAABAAEAAQABAAEBAAEAAQABAAEBAAAAAQEBAK7OA/NiRy3uAAAAAElFTkSuQmCC",
-		"Brewer Diverging Brown-Blue-Green (7)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQFmXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFP+AMf72HzHAAAAAElFTkSuQmCC",
-		"erdc_sapphire2gold_BW": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78ARsbGwIBBAEAAwIAAwEAAwIAAwEAAwEBAwIAAwEABAEAAwEAAwEAAwEABAEAAwEAAwEABAEAAgEAAwEAAwEAAwEAAwEAAgAAAwEAAwEAAwEAAwEAAwAAAwEAAwEAAwEAAgAAAwEAAwEBAgEAAwAAAgEAAgEAAwEBAgAAAwEAAgEAAgEAAwAAAgEBAwEAAgAAAwEAAgEBAgEBAQEAAgEBAQEBAgEBAgEAAQEBAgEBAQEAAgEBAgEBAQEBAgEAAQEBAgEBAgEBAAEBAQEBAAEBAQICAAEBAAEBAQEBAAEBAQEBAAEBAQEBAAECAQEBAAEBAQEBAAIB/wEBAAEB/wEB/wEC/wIB/wEBAAEB/wEB/wEB/wEBAAEB/wEC/wEB/wEB/wEBAAEB/gIB/gEB/gEB/wEC/gEB/gIB/wEB/gEB/gEB/gEB/wEB/gEC/gEB/wAB/gEB/gIB/wEB/gEB/gEB/wEB/gIC/wEB/gEB/gEB/wEB/gEB/wEB/gEC/gEB/wEB/gEB/gEB/wEB/gEB/gIB/gEB/wEC/gEB/gEB/gEB/wEB/gEB/gEB/gEC/wEB/gEB/gEB/gEB/gIB/wEB/gEB/gEC/wEB/gEB/gEB/wEB/gEB/gIB/gEB/wEC/gEB/gEB/gEB/gEB/wEBAAEB/wEBAAEC/wEBAAEB/wIBAAEB/wEBAAEB/wEBAAEC/wEB/wEBAAEB/wEBAAEBAQIBAAEBAQECAAEBAAEBAQEBAAEBAAEBAQEBAAEBAAECAQIBAAEBAAEBAQABAQEBAQEBAQEBAQABAgEBAQEBAQECAQABAQEBAgEBAQEBAQABAQEBAQEBAgABAQEBAwABAwECAwABAwEBAwABAwEBAwABAwEBAwABAgEBAwACAwABAwEBAwABAwABAwEBBAABBAEBBAABAwABBAEBBAABBAACBAABBAEBBAABBAABBAABBAABBAABBAABBAEBAwABBAEBBAABAwABBAEBBAABAwABBAEBBAABAwABBAABBAEBBAABAwABBIvOV/+D8eB+AAAAAElFTkSuQmCC",
-		"BrBG": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AVQwBQIBAAICAQIBAAMBAAIBAQICAAIBAAIBAAICAAMBAAIBAQIBAAICAAMBAAIBAAICAAIBAQICAAIBAQICAQMBAAICAQIBAQICAAIBAQICAQIBAQICAAMCAQIBAQICAAIBAQICAQICAgICAQICAgICAQIBAQICAgICAQICAQICAgICAQICAgICAQICAQIBAgICAQEDAwICAwEDAwICAgECAwIDAwECAwEDAwICAgECAwIDAwECAwEDAwICAgEDAwECAwICAwEDAwECAwECAwIDAwECAwECAwEDAwECAwECAwIDAwECAwECAwEDAwECBAECAwECAgEBAwECAwEBAwECAgEBAwECAwEBAgECAwABAwECAwEBAgECAwEBAwECAwEBAwABAgABAgEBAgABAwAAAgEBAgABAgABAwEBAgABAgABAgEBAwAAAgABAgABAgEBAwABAQAAAv8BAgAAAgAAAgABAgAAAgABAgAAAgABAQAAAgABAgAAAv8BAgAAAgABAv7///8A//4AAP7///4AAP7///8A//7/AP4A//4A//7/AP8A//7/AP4A//7///4AAP7///7///4A//3///7///7///4A//7///3///4A//7///7///3///4A//7///7///3///3//v3///7//v3+//3///3//v7///3//v3///3///3+/v7///3//v3///3///3+/v3+/v3+/v7+/v3+/v3+/v3+/v3+/v3+//3+/v3+/v3+/v3+/v3+/v3+/v3+//7+/v3+/v7+/v3+/v7+/v3+/v3+/v7+/v3+/v3+/v7+/v39/v3+/v3+/v3+/v3+/v7+/v7+/v/+/v7//v7+//7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v3+/v7+/v3////+/v/+/gD+/v/+/v///v/+/v/+/v/+/wD//v/+/v/+/gD//v/+/gD+///+/gD//gD+/gD+/gD////+/gD+/gD//gD+/gD+/gD//wD+/gD+/gD//gD+/gD//wD+/nflWX1zTMk+AAAAAElFTkSuQmCC",
-		"RdOr": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AX8AAAIAAAEAAAIAAAEAAAIAAAIAAAEAAAIAAAIAAAEAAAIAAAEAAAIAAAIAAAEAAAIAAAIAAAEAAAIAAAIAAAEAAAIAAAEAAAIAAAIAAAEAAAIAAAIAAAEAAAIAAAEAAAIAAAECAQECAQIBAQECAAECAQEBAQECAQECAQEBAQECAQIBAQEBAgECAQEBAQEBAQEBAQECAQECAQICAQEBAQECAQEBAQECAQEBAQECAQEBAQICAQEBAQEBAAECAQEBAQEBAQECAgECAQACAQECAgEBAQECAQECAQACAgEBAQECAQEBAgACAQEBAQECAQACAgEBAQECAQECAQEBAgACAQECAQEBAQECAgACAQEBAQECAgECAQABAQECAQEBAgACAQEBAQECAQABAAABAQECAAABAQEBAAABAQACAAEBAQABAQEBAAACAQABAAEBAQABAAECAQABAAABAQEBAAACAQEBAQABAAEBAQACAAABAQEBAAACAQABAAEBAQABAQEBAAACAQABAQACAQABAgACAQABAQACAgABAQABAQACAgEBAQACAQABAgACAQABAgABAQACAQABAgACAQABAQACAgABAQABAQACAgABAQACAQABAQABAgACAQABAQACAgABAQABAgABAAABAQABAQABAQAAAQABAAABAQABAQABAQAAAQABAAABAQABAQAAAQABAQABAQABAAABAQAAAQABAQABAQABAQAAAAABAQABAQABAQABAQAAAQABAAABAQABAQAAAQABAQABAgAAAQABAQABAgAAAQABAQAAAgABAQABAQAAAQABAgABAQEAAQABAgABAQAAAQABAgAAAQABAQABAgAAAQABAQAAAgABAQABAQAAAQABAgABAQAAAQABAgAAAQABAQAAAQABAQAAAQABAgAAAQABAQAAAQABAQAAAQABAQAAAgABAQAAAQEAAQABAQAAAQABAQAAAQABAgAAAQABAQAAAQABAQAAAQABAQAAAQABAgAAAQABAQAAAWfPAuSW3R8HAAAAAElFTkSuQmCC",
-		"Brewer Sequential Blue-Purple (9)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AU0ASwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAM17AJphMz7rAAAAAElFTkSuQmCC",
-		"Reds": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AWcADQIAAAIBAQIAAAIAAAIBAQEAAAIBAAIAAAIBAQIAAAIBAAIAAAIBAAIAAQIBAAIBAAIAAAIAAQIBAAIAAAIBAAIAAQIBAAEAAAIBAAIAAQIBAAIAAAIBAAIAAQIBAAIAAAEAAAIBAQEAAAEAAAEAAAEBAQEAAAIAAAEBAAEAAQEAAAEAAAIBAAEAAQEAAAEBAAEAAAIAAQEAAAEBAAEAAAEAAQIBAAEAAAEAAAEBAQEAAAEAAAIAAAEBAQEAAAEAAAECAQIBAAEBAQEBAAEBAAEBAQECAAEBAQEBAAIBAQEBAAEBAQEBAAEBAQEBAAEBAQEBAAIBAQEBAAECAQEBAAEBAQEBAAEBAAEBAQEBAAIBAQEBAAEBAQEBAAECAQEBAAEBAQACAQABAQECAQACAQABAQECAQABAQEBAQACAQABAQECAQABAQABAQECAAABAQECAQABAQACAQEBAQACAQABAQECAQABAQECAQABAQACAQEBAQABAQACAQEBAQACAQABAQABAQACAQABAgABAQABAQACAQABAgABAQABAQACAQABAgEBAQABAQACAQABAgABAQABAQACAQABAgABAQABAQACAgABAQABAQABAQACAgABAQABAQABAQACAgABAQABAQABAgACAQABAgABAQACAgABAQABAgABAQACAgABAQABAgACAQABAgABAQABAgACAQABAQABAgACAQABAgABAQABAgACAQABAgABAQACAgABAQABAgABAQACAgABAQABAgABAQABAgACAQEBAgABAQABAgABAQABAgABAQACAgABAgABAQABAgABAQABAgACAQABAgABAQABAgABAQEBAgABAQACAgABAQABAgABAQABAgABAQABAgABAQACAgAAAQABAQABAQAAAQABAQABAAAAAQABAQABAQAAAQABAQAAAQABAQABAQEAAQABAQABAQAAAQABAQABAQAAAQABAQABAAAAAQABAQABAQAAAQABAQABAQAAAQABARRxAuZN+jl5AAAAAElFTkSuQmCC",
-		"Brewer Sequential Blue-Green (6)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQBtLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANBMAJtwOX2uAAAAAElFTkSuQmCC",
-		"BuGnYl": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQgdWAEBAgEAAgEBAgEBAQEBAgEAAgABAgEBAgEAAgEBAgEBAgEBAQEAAgEBAgEBAgEBAgAAAgEBAgEBAgEAAQEBAgEBAgEBAgEAAgEBAgEBAgAAAgEBAQEBAgEBAgEAAgEBAgACAQABAAABAQACAQABAAABAQABAAACAQABAQABAP8CAQABAQABAAACAQABAP8BAQECAQABAAABAQACAQABAAABAf8CAQABAAABAQABAAACAQABAQABAP8CAQABAQABAAACAQACAQABAAACAQABAQACAQACAAABAQACAf8BAQACAAACAQABAf8CAQABAP8CAQECAQABAQACAAABAQACAQABAf8CAAACAQABAQACAQABAAACAf8CAQABAQACAP8BAQICAAEBAAIBAAEBAQEBAAEBAAICAAEBAAEBAAEBAAEBAAEBAQEBAAECAAEBAAEBAAEBAAEBAAEBAAICAQEBAAEBAAEBAAEBAAIBAAEBAAECAAEBAAEBAQEBAAEBAAEBAAIBAAMB/wIBAAIAAAIB/wIBAAIAAAIBAAIB/wIBAAIAAAEB/wIBAAIAAAEBAAIB/wIBAAIAAAMBAAIB/wIBAAIAAAIB/wIBAAIAAAEBAAIB/wIBAAIAAAIB/wIBAAEBAAMAAAIB/wMBAAIBAAIBAAMBAAIB/wIBAAIAAAMBAAIB/wIBAAIBAAIBAAIBAAMB/wIAAAIBAAIBAAMBAAIB/wIBAAIBAAMAAAIB/wIBAAIBAAIBAAIBAAMB/wIAAAIBAAEBAAEAAAIBAAEAAAEB/wEAAAEBAAIAAAEBAAEAAAEBAAEAAAEAAAIBAAEAAAEB/wEAAAEBAAEAAAIBAAEAAAEBAAEAAAEBAAEAAAIAAAEBAAEAAAEBAAEAAAEBAAEAAAEAAQEBAgAAAQEAAQAAAQEBAgAAAQEAAQEAAQAAAgEBAQAAAQEAAQAAAgEAAQEBAQAAAQEAAgAAAQEBAQAAAQEAAgEAAQAAAQEBAQAAAgEAAQAAAQEBAQAAAgEAAVcmHtkUuHOdAAAAAElFTkSuQmCC",
-		"Brewer Sequential Blue-Purple (8)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AW4BawAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJNJANwTjcz2AAAAAElFTkSuQmCC",
-		"Brewer Diverging Purple-Orange (10)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AS0ASwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG17AHpSYyyxAAAAAElFTkSuQmCC",
-		"PuRd": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AUkAagIAAAEAAQIAAAEAAQIAAAEAAAIAAQEAAAIAAQIAAAEAAAIAAQEAAAIAAQEAAAIBAQEAAAIAAAEAAQIAAAEAAQIAAAEAAAIAAQIAAAEAAQIAAAEAAAIAAQEAAAIAAQEAAAIAAAEAAAIAAQIAAAEAAAIAAAIAAQEAAAIAAAIAAAEAAAIAAQEAAAIAAAIAAAEAAQIAAAIAAAEAAAIAAAEAAQIAAAIAAAEAAAIAAQIAAAEAAAIAAAEAAQIAAAIAAAEAAAICAQECAQICAQECAAICAQECAQIBAQECAAICAQEBAQICAQEBAQIBAAECAQEBAQIBAQECAQICAAECAQIBAQECAQICAAEBAQICAQEBAQICAAEBAQECAQIBAQECAQIBAAECAQEBAAECAQECAAECAAABAQECAAECAAEBAQECAAACAAEBAQECAAEBAAECAQEBAAACAAEBAAECAQECAAECAAABAQECAAECAAEBAQECAAABAAECAQECAAEBAAACAQEBAAECAAACAQACAQABAAECAQACAAACAQABAQACAAACAQACAQABAAACAQACAAABAQACAQEBAAACAQACAQACAAABAQACAAACAQACAQABAAECAQACAQABAAACAQACAAABAQACAQACAAABAQABAAABAAACAQABAAABAAEBAQABAAACAAABAQABAAABAAABAQABAAACAAABAQABAAABAAABAQACAAABAQABAAEBAAABAQABAAACAAABAQABAAABAQABAAABAAACAQAAAQABAAABAQABAQABAQABAQABAQAAAQABAQABAQABAQABAQABAAABAQEAAQABAQABAQABAQABAQABAQAAAQABAQABAQABAAABAQABAQAAAQABAQABAQABAQABAQABAQAAAAABAQABAQABAAAAAQABAQEBAAAAAQABAQABAAABAQAAAQABAQABAAAAAQABAQABAAABAQAAAQABAAABAQABAQEAAAABAQABAQAAAQABAAABAQABAQAAAAABAa8HAuvMO25IAAAAAElFTkSuQmCC",
-		"RED_TEMPERATURE": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAAAAIAAAIAAAEAAAIAAAIAAAIAAAEAAAIAAAEAAAEAAAIAAAEAAAEAAAEAAAEAAAEAAAIAAAIAAAEAAAIAAAIAAAEAAAEAAAIAAAEAAAEBAAIAAAEAAAEAAAH/AAIAAAEAAAEAAAIBAAEAAAEAAAIAAAEBAAL/AAEAAAIAAAEAAAEAAAIAAAEAAAL/AAEAAAIAAAEAAAIAAAEAAAIAAAEAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAIAAAEAAAEBAAIBAAEBAAIAAAEBAAIBAAEBAAEBAAIBAAEBAAIBAAEBAAIBAAEBAAIBAAEBAAEDAAICAAECAAICAAECAAICAAECAAECAAICAAECAAIBAAECAAIBAAECAAIBAAECAAECAAICAAECAAICAAECAAICAAECAAECAAICAAEBAAICAAECAAICAAECAAIBAAECAAECAAICAAECAAICAAECAAICAAEBAAICAAECAAICAAECAAICAAECAAIBAAECAAICAAACAAACAQACAAACAAACAQACAAACAQACAAACAAACAQACAAACAQABAAACAQACAAACAQACCAACBgACBQACBAABBAACBAACBAACAwACBAACAwACAwABAwACAwACAwACAwACAwACBAACBAABBAACBAACBAACBAACBAABBAACBAACBAACBAACAwACBAACBAACBAACBAACBAABBAACAwACBAACBAABBAACBAACBAACBAACBAACBAACBAACBAACBAACBAACBAACBAABAwACBAACBAACBAACBAACBAACBAACAwACBAACBAACBQACBAACBAACBMq0Bf9jUuLbAAAAAElFTkSuQmCC",
-		"Blues": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQgwawABAgABAQABAgABAQABAgABAQABAgABAQABAgABAQABAgABAQABAgABAQACAgABAgABAQABAgABAQABAgABAQABAgABAQABAgABAQABAgABAQABAgABAQABAgABAgABAQEBAQEBAQEBAAEBAQEBAQEBAQABAQEBAAEBAQEBAQABAQEBAAEBAQABAQEBAQEBAQEBAAABAQEBAQEBAQEBAQEBAAEBAQABAQEBAQEBAAEBAQABAQEBAQEBAQEBAAABAQEBAQIBAAEBAQEBAAEBAQEBAAEBAQEBAAECAQEBAAEBAQEBAQEBAAEBAQEBAAEBAQEBAAEBAQEBAAEBAQEBAAEBAQIBAAEBAQEBAAEBAQEBAQEBAAEBAQEBAAEBAQABAAIBAQEBAAIBAQEBAAEBAQIBAAEAAQEBAAEBAQIBAAEBAQEBAAEBAQIBAAEBAQEAAAEBAQIBAAEBAQEBAAIBAQEBAAEBAQIAAAEBAQEBAAIBAQEBAAEBAQEBAAIBAQEAAAEBAQIBAAIBAAEBAQIBAAIBAAEBAQIAAAIBAAEBAQIBAAEBAAIBAQEBAAIBAAEAAQIBAAIBAAEBAQIBAAIBAAEBAQIBAAEAAAIBAQEBAAIBAQIBAAEBAAIBAQEAAAIBAAEBAQEAAAIBAQEAAAEBAAEBAQIAAAEBAQEAAAEBAQIAAAEBAQEAAAEBAAIAAQEBAAEAAQEBAAIAAQEBAAEBAAEAAQIBAAEAAQEBAAEAAQEBAAIAAAEBAQEAAAEBAQIAAAABAAEAAQEBAAEAAAABAAEAAQEBAAEAAAABAAEAAQEBAAEAAAABAAEAAQEBAAEAAAABAAEAAQEBAAEAAAABAAEAAQEBAAEAAAABAAEAAQEBAAEAAAABAAEAAQEBAAEAAAABAAEAAQEBAAEAAAEBAAAAAQEBAAEAAAEBAAEAAQABAAEAAAEBAAEAAQABAAEAAAEBAAEAAQEBAAAAAAEBAAEAAQEBAAEAAAABAAEAAQEBAAEAAAABAAEBAQEAALIYAvPDVIvFAAAAAElFTkSuQmCC",
-		"BuRd": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQUwYQECAwECAwECAwECAgECAwECAwICAwEDAwECAwECAwECAwECAwECAwECAwEDAwICAwECAgECAgECAgICAgECAgECAwEBAgECAgICAgECAgECAgECAgECAgECAwICAgECAgECAQICAQECAQIBAAECAQECAQICAQEBAQECAQICAQECAQECAQEBAQICAAECAQECAQMCAQMBAQMCAQMCAQMCAQMCAQMCAgMCAQICAQMCAQMCAQICAQMCAQICAQMCAQIBAQMCAQQCAQMCAQMCAQMBAQMCAQMCAQMCAQMCAQMBAQICAQMCAQMCAQMCAQMCAAMBAQICAQMBAQIBAQMBAAICAQMBAQIBAAMBAQICAQMBAQIBAAMBAQICAQIBAAMBAQIBAQIBAAIBAQIBAAIBAQIBAAEBAAIBAQIBAAIBAQIBAAIAAQIBAAEBAAIBAQIBAAIBAQEBAAIAAAEBAAIBAQEAAAIBAAEBAAIAAAEBAQEBAAIAAAEBAAIBAAEAAQIBAAEAAAD//gH//gD//gD//gH//wD//gD//gD//gH//gD+/gD//gD//gD//wH//gD//gD//gD+/gD//QD+/gD//gD+/gD//QD+/gD//gD+/gD+/QD//gD+/gD//gD+/QD//gD+/v/+/QD+/gD+/QD+/f/+/QD9/gD+/f/+/QD+/v/+/QD+/QD+/f/+/gD+/f/9/QD+/v/+/v/9/f/+/v/9/v/9/v/+/v/9/f/9/v/+/v/9/v/+/v/9/f79/v/+/v/9/v/9/v/+/v/9/v/+/v79/v/9/v/9/v/+/v/9//79/v/+/v/9/v/9/v79/v/9/v/+//79/v/9/v/+//79///+/v79///9/v/+//79///9/v79///+///9//78/v/9//79///9/v3+AP7///3+//7///7+//3/AP7+//3///7+//3/AP7+//7+//3///7+AP3+//7+//3/AP3///3/AP3+//3/AP3///3/AP3///3/AP3///4AAP3///3/AP0A//3/ANxURZfn+HcyAAAAAElFTkSuQmCC",
-		"BrOrYl": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AWYlBgIAAAEBAAIAAAEBAAIAAAEBAAIAAAIBAAEAAAIBAAEAAAIB/wIAAAEBAAIAAAIBAAEAAAIAAAEBAAIAAAIBAAEAAAIBAAEAAAIBAAIAAAEB/wIAAAEBAAIAAAIBAAEAAAIBAAEBAAIAAAIBAAEBAAIBAAEAAAIBAAIBAAEB/wIAAAEBAAIBAAIBAAEAAAIBAAEBAAIBAAIAAAEBAAIBAAEBAAIAAAEBAAIBAAIBAAEA/wIBAAEBAAIBAAIBAAEAAAEBAQECAAEBAQEBAAEBAQEBAAEBAQEBAAECAQEBAAEBAQEBAQEBAAEBAQEBAQEBAAECAQEBAAEBAQEBAQEBAAEBAQEBAAEBAQECAAEBAQEBAQEBAAEBAQEBAAEBAQEBAAECAQABAQEBAAECAQABAQEBAAACAQEBAQABAAEBAQACAQEBAAEBAQACAQEBAAABAQEBAAACAQEBAQABAQECAAEBAQABAQEBAAACAQEBAQABAAECAQABAQEBAAABAQECAQABAQABAQACAQABAgACAQABAQABAQACAQABAgABAQACAQABAQABAQACAQABAgABAQACAQABAQABAQACAgABAQABAQACAQABAgABAQACAQABAQABAQACAgABAQABAQACAQABAgABAwABAgAAAgABAgABAgABAgABAgABAgABAgABAgABAgABAgABAgABAgABAgABAgABAwABAgABAgABAgABAgABAgABAgABAgABAgABAgABAgABAgABAgABAgAAAgABAQABAgAAAQABAQABAgAAAQABAQAAAgABAQABAgAAAQABAQABAgEAAQABAQABAgAAAQABAQAAAgABAQABAQAAAgABAQAAAQABAgABAQAAAQABAgAAAQABAQABAgAAAQAAAQABAgAAAQAAAQAAAgABAQAAAQAAAQAAAgABAQAAAQAAAgAAAQABAQAAAQAAAgAAAQABAQAAAgAAAQAAAQABAQAAAgAAAQAAAQABAgAAAQAAAQAAAQABAgAAAZvXBuVXnaVfAAAAAElFTkSuQmCC",
-		"PuBu": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AU0ASwIAAgEBAQIAAgEAAQIBAgIAAQEBAgIAAQIBAgEAAQIBAgEAAQIBAgIAAQEBAgIBAgIAAQEAAgIBAQEAAgIBAQIAAgEBAQIAAgIBAQEAAgIBAQEAAgIBAQIAAgEBAgIAAQACAQECAQACAQACAQACAQABAQECAQACAQABAQABAQECAQABAgABAQACAQABAQEBAQACAQACAQACAQEBAQACAQABAQACAQACAQEBAQACAQABAQACAQABAQEBAQACAQABAQACAQABAAABAQECAQABAAACAQABAQABAAABAQACAAEBAQABAQACAAABAQABAQABAAACAQABAAABAQECAQABAAABAQACAQABAAABAQACAAEBAQABAQACAAABAQABAQACAAABAQABAQACAAABAQABAQACAAABAQABAQACAAABAQABAAACAQABAQABAAACAQABAQABAAACAQABAQABAAACAQABAQACAAABAQABAQACAAABAQABAQACAAABAQABAQACAAEBAQABAQEBAAEBAQACAAEBAQABAQEBAAABAQEBAQECAAABAQEBAAABAQEBAQACAAEBAQABAQEBAAEBAQACAAEBAQABAQEBAAEBAQABAQECAAABAQEBAAABAQEBAQEBAAEBAQEBAAEBAAEAAQEBAAEBAAEAAQEBAAEBAQEBAAEAAAEBAQEBAAEBAQEAAAEBAAEBAQEAAAEBAAEBAQEBAAEAAQEBAAIBAAEBAQEAAAEBAAEBAQEAAAEBAQEBAAEBAAEAAQEBAAEBAQEBAAEAAQEBAAEBAAEBAQEBAAEAAQEBAAEBAQEBAAEBAAEAAQEBAAEBAQEBAAEAAQEBAAEBAQEBAAEBAAEAAQIBAAEBAQEBAAEAAQEBAAEBAAEBAQEAAAABAQEAAAEBAAEAAAABAQEAAAEBAAAAAQEBAAEAAAEBAAAAAQEBAAEAAAABAAEAAQEBAAEAAAABAQEAAAEBAAEAAAABAQEAAAEBAAAAAQEBAAEAAAEBAAABAQEAALXMAvJg4fvHAAAAAElFTkSuQmCC",
-		"Spectral_lowBlue": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AV5Pov8CAf8DAf4CAf8CAf8DAf4CAf8CAf4CAf4DAv8CAf4CAf4CAf4CAf0CAf4DAf0CAQECAAACAAACAQADAAACAAACAf8CAAADAAACAAACAAACAf8DAAACAP8CAAADAf8CAAMC/wMC/wIC/wMD/wIC/wIC/wIDAAIC/wIC/wIC/wID/wIC/wEC/wID/wEC/wIC/wMBAAMC/wIBAAMBAAMCAAIBAAMB/wMBAAICAAMBAAIBAAMC/wIBAAIBAAMBAAIC/wMBAAMBAAIBAAMBAAMBAAMBAAIBAAMB/wIBAAMBAAMBAAIBAAMBAAIBAAMBAAIB/wMBAAIB/wIBAAMBAAIB/wIBAAMB/wIBAAIB/wMBAAIB/wIBAAIB/wMAAAIB/wIBAAIBAQEBAAIAAQEBAQIAAQEBAAEBAQIAAQEBAQIAAQEBAAIBAQEAAQIBAQEAAQIBAAEAAgEBAQEAAgEAAQEBAQEAAgAAAQEBAgEAAQEAAQEBAgEAAQEAAgEBAQEAAgEAAQD//gD//gD//gD+/gD//gD//gD//gD//gD+/gD//gD//gD//QD//gD+/v///gD//gD+/gD//wD+/gD//gD+/gD//gD+/gD//gD+/wD//gD+/gD+/gD//gD+/gD//gD+/gD+/wD+/gD+/gD+/wD//gD+/wD+/gD+/gD+/wD+/gD+/gD+///+/gD+/gD+/wD+/gD+/wD9///+/gD9/wD+/wD9///+/gD+/wD9///+/wD9/gD+///9/wD+/wD9/v/+/wD9///+AAD+///9/wD+///+///+AAD9///+/wD9///+AAD+///9///+/wD9AP/+///+AP/+Af/+AP7/Af/+Af/+AP/+AP7+Af/+AP//Af/+AP/+Af7+AP/+Af/+AP/+AP7+AP7+AP7+AP7+AP7+AP/+//7+AP7+AP79AP7+AP7+AP/+//79AP7+AP79AP7+AP7+//7+AP7+//7+AP3+//7+AP7+//7+AP7+//79AP79//39AP79//79AP79/w5+RPICPM2FAAAAAElFTkSuQmCC",
-		"heated_object": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAAAAsDAAkCAAYDAAUDAAQCAAQCAAUBAQUBAAUBAAQBAAUAAAUBAAUBAAYA/wUBAAUAAAIBAAECAAIBAAECAQIBAAIBAAECAAIBAAEBAAICAAIBAAECAAIB/wIBAAECAAIBAAEBAAEBAAIBAAEBAAEBAAEBAAEBAAEAAAIBAAEBAAEBAAEBAAEBAAIBAAEBAAEBAAEBAAEAAAEBAAABAAEBAAEAAAEBAAEBAAEBAAEAAAEBAAABAAEBAAEAAAEBAAEBAAEBAAAAAAEBAAEAAAABAAEAAAEBAAAAAAEBAAEBAAEAAAABAAEAAAEBAAAAAAEBAAEBAAAAAAEBAAEAAAEBAAABAAEAAAEBAAEBAAAAAAEBAAEAAAEBAAABAAEAAAEBAAEBAAAAAAEBAAEAAAEBAAABAAEAAAEBAAEBAAAAAAEBAAEAAAEBAAABAAEAAAEBAAEBAAEAAAEBAAABAAEBAAEAAAEBAAEBAAEBAAEAAAEBAAABAAEBAAEAAAEBAAEBAAEBAAEBAAEBAAEAAAEBAAEBAAEBAAEBAAIBAAEBAAEBAAEAAAEBAAEBAAEBAAEBAAEBAAEAAAEBAAEBAAEBAAEAAAEBAAEBAAEBAAEAAAEBAAEBAAEBAAEAAAEBAAEBAAEBAAEBAAEBAAEBAAEBAAEBAAEBAAEAAAIBAAEBAAEBAAEBAAEBAAEBAAEBAAEBAAEBAAABAAEBAAABAAEBAAABAAEBAAABAAEAAAABAAEBAAABAAEBAAABAAEBAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAABAAACCwABCAACBwACBQABBQACBQACBAABBAACBAACAwABBAACAwACAwABBAACAwACAwACCAACBwACBwACBwACBwACBgADBwACBgACBwADBwACBgADBwACBwADBgADBwADBwAABQAABAABBQAABAAABQAABAABBQAABAABBQAABQABBQAABAABBQAABQABBWm4BP8SQskKAAAAAElFTkSuQmCC",
-		"Rainbow Blended Grey": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AVFXbv7+A/7+BP7+A//+A/7+BP7+A/7+A/7+BP7+A/7+A/7+BP/+A/7+A/7+BP7+A/7+BP7+A/7+A/7+BP/+A/7+A/7+BP7+A/7+A/7+BP7+A//+A/7+BP7+A/7+A/7+BP7+A/7+A/7+BP/+A/7+A/7+BP7+A/7+A/7+BP7+A//+A/7+BP8DAQAGAAAGAAAFAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAFAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAFAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAFAAAGAAAGAAAGAAAGAAAGAAAGAAAGAAAFAAAGAAAGAAAGAAAGAAAGAAAE/gAA+gAA+gAA+QAA+gAA+gAA+gAA+QAA+gAA+gAA+gAA+QAA+gAA+gAA+gAA+QAA+gAA+gAA+gAA+QAA+gAA+gAA+gAA+QAA+gAA+gAA+gAA+QAA+gAA+gAA+gAA+QAA+gAA+gAA+gAA+QAA+gAA+gAA+gAA+QAA+gMA/QYAAAYAAAYAAAUAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAUAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAUAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAUAAAYAAAYAAAYAAAYAAAYAAAYAAAYAAAUAAAYAAAYAAAYAAAYAAAX/AAD6AAD6AAD6AAD7AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD7AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD7AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD7AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD6AAD7AAD6AAD6AAD6AAD6AAD6AP//BQAABv8AB/8ABv8ABgAABv8AB/8ABv8ABgAABv8AB/8ABv8ABgAABv8AB/8ABv8ABv8ABgAABv8AB/8ABv8ABgAAB/8ABv8ABv8ABgAABv8AB/8ABv8ABgAAB/8ABv8ABv8ABgAABv8AB/8ABv8ABgAAB/8ABv8ABtsGzuG8pAatAAAAAElFTkSuQmCC",
-		"Brewer Qualitative Paired": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78Af//mQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMk6ApkeZPJzAAAAAElFTkSuQmCC",
-		"magenta": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAAAAsCBAgCAwYCBAUCAwUCAgQCAwUAAgUAAgYAAgX/AgX/Agb/AgX+Agb+AgX+Agb9AgIAAgEAAQIAAgIAAQEAAgIAAgIAAQEAAgIAAQIAAgEAAgIAAQIAAgIAAgEAAQIAAgIAAQEAAgIAAQEAAgIAAQIAAgEAAQIAAgIAAQEAAgIAAQEAAgIAAQIAAgEAAQIAAgIAAQEAAgIAAQEAAgIAAQEAAgIAAQEAAgIAAQIAAgEAAQIAAgEAAQIAAgEAAQIAAgIAAQEAAgIAAQEAAgIAAQIAAgEAAQIAAgIAAQEAAgIAAQEAAgIAAQIAAgEAAQIAAgIAAQEAAgIAAQEAAgIAAQEAAgIAAQEAAQIAAgIAAQEAAgIAAQEAAgIAAQEAAgIAAQEAAQIAAgEAAQIAAgEAAQIAAgEAAQIAAQEAAgIAAQEAAgIAAQEAAgIAAQEAAgIAAQEBAQACAQEBAQACAAEBAQABAQECAQEBAQABAQECAQABAQEBAAABAQEBAQABAQEBAQADAQADAgADAQACAQACAgADAQACAQACAgABAQACAgACAQACAQABAgACAQABAgACAQACAQACAgADAQACAQACAQACAgABAQACAQACAgACAQACAQABAgACAQACAQABAgACAQACAQACAQADAQACAQACAQACAAACAQACAQACAQACAQACAQACAQABAQACAQACAQACAQACAAACAAACAAABAAACAAACAAACAAABAAACAAACAAACAAABAAACAAACAAABAAACAAACAAABAAACAAACAAABAAACAAACAAABAAACAAABAAACAAACAAABAAACAAABAAACAAACAAABAAACAAABAAACAAABAAACAAACAAABAAACAAABAAACAAABAAACAAABAAACAAACAAABAAACAAACAAACAAABAAACAAACAAACAAABAAACAAACAAACAAABAAACAAACAAACAAACAAACAAADAAACAAACAAACAAACAAADAAACAAACAAACAAADAAACAAACAEo3Cf+aWbnhAAAAAElFTkSuQmCC",
-		"Brewer Sequential Yellow-Orange-Brown (3)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AdlfDgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANe0AUgb20NpAAAAAElFTkSuQmCC",
-		"rainbow": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAA/wAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAD/wAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AAA/AIA/gQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAQAAAH9AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAD8AAbMggHoSfkgAAAAAElFTkSuQmCC",
-		"GyRd": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78ARoaGgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMDAwICAgICAgICAgICAgICAgICAgMDAwICAgICAgICAgICAgMDAwICAgICAgICAgMDAwICAgICAgMDAwICAgICAgMDAwICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMDAwICAgICAgICAgICAgICAgICAgICAgICAgICAgEBAQICAgICAgICAgICAgICAgICAgICAgICAgEBAQICAgICAgICAgICAgEBAQICAgEBAQICAgEBAQICAgEBAQICAgEBAQICAgEBAQICAgEBAQICAgEBAQEBAQICAgEBAQEBAQICAgEBAQEBAQICAgEBAQEBAQICAgEBAQEBAQICAgEBAQEBAQEBAQEBAQICAQEBAgEBAQEBAQEBAQIBAQEBAQEBAQECAQEBAQEBAgIBAQEBAQEBAQD//gD+/QD//gD//gD+/gD//gD+/QD//gD//v/+/gD//gD+/QD//gD//gD+/gD//gD+/f/+/gD//QD+/gD+/gD+/QD//v/+/QD+/gD+/QD//gD+/v/+/QD//gD+/QD+/v/+/QD+/gD+/QD+/f/+/QD9/gD+/f/+/QD+/v/+/QD+/QD+/f/+/gD+/f/9/QD+/v/+/v/9/f/+/v/9/v/9/v/+/v/9/f/9/v/+/v/9/v/+/v/9/f79/v/+/v/9/v/9/v/+/v/9/v/+/v79/v/9/v/9/v/+/v/9//79/v/+/v/9/v/9/v79/v/9/v/+//79/v/9/v/+//79///+/v79///9/v/+//79///9/v79///+///9//78/v/9//79///9/v3+AP7///3+//7///7+//3/AP7+//3///7+//3/AP7+//7+//3///7+AP3+//7+//3/AP3///3/AP3+//3/AP3///3/AP3///3/AP3///4AAP3///3/AP0A//3/AMpPSZeMBuR0AAAAAElFTkSuQmCC",
-		"Brewer Diverging Purple-Orange (11)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AS0ASwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG17AHpSYyyxAAAAAElFTkSuQmCC",
-		"Brewer Qualitative Set3": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78Af/tbwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABWgAl0Jfoe/AAAAAElFTkSuQmCC",
-		"Brewer Sequential Blue-Green (4)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78ASOLRQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN4LAPW6NH9bAAAAAElFTkSuQmCC",
-		"Brewer Qualitative Set1": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AZmZmQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGWCAc0Sa/XWAAAAAElFTkSuQmCC",
-		"Black-Body Radiation": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAAAAIAAAMAAAIAAAIAAAIAAAMAAAIAAAIAAAIAAAMAAAIAAAIAAAIAAAMAAAIAAAIAAAIAAAMAAAIAAAIAAAIAAAMAAAIAAAIAAAIAAAMAAAIAAAIAAAIAAAMAAAIAAAIAAAIAAAMAAAIAAAIAAAIAAAMAAAIAAAIAAAIAAAMAAAIAAAIAAAIAAAMAAAIAAAIAAAIAAAMAAAIAAAIAAAMAAAIAAAIAAAIAAAMAAAIAAAIAAAIAAAMAAAIAAAIAAAIAAAMAAAIAAAIAAAIAAAMAAAIAAAIAAAIAAAMAAAIAAAIAAAIAAAMAAAIAAAIAAAIAAAMAAAIAAAIAAAIAAAMAAAIAAAIAAAIAAAMAAAIAAAIAAAIAAAMAAAIAAAIAAAIAAAMAAAIAAAIAAAIAAAMAAAIAAAACAAADAAACAAACAAACAAADAAACAAACAAACAAADAAACAAACAAACAAADAAACAAACAAACAAADAAACAAACAAACAAADAAACAAACAAACAAADAAACAAACAAACAAADAAACAAACAAACAAADAAACAAACAAACAAADAAACAAACAAACAAADAAACAAACAAACAAADAAACAAACAAACAAADAAACAAACAAADAAACAAACAAACAAADAAACAAACAAACAAADAAACAAACAAACAAADAAACAAACAAACAAADAAACAAACAAACAAADAAACAAACAAACAAADAAACAAACAAACAAADAAACAAACAAACAAADAAACAAACAAACAAADAAACAAACAAACAAADAAACAAACAAACAAADAAACAAACAAACAAADAAACAAAABQEBBQAABQEBBQAABQEBBQAABQEBBQAABQEBBQAABQEBBQAABQEBBQAABQEBBQAABQEBBQAABQEBBQAABQEBBQAABQEBBQAABQEBBQAABQEBBQAABQEBBQAABQEBBQAABQEBBQAABQEBBQAABQEBBQAABQEBBQAABQEBBQAABQEBBQAABQEBBQAABQEBBQAABQEBBQAABZuWAv8QIrzHAAAAAElFTkSuQmCC",
-		"Brewer Sequential Blue-Purple (4)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AYhBnQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADbDAWhvpF1wAAAAAElFTkSuQmCC",
-		"Brewer Diverging Brown-Blue-Green (6)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQFmXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFP+AMf72HzHAAAAAElFTkSuQmCC",
-		"erdc_blue2green_muted": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78ARsbGwEBAwEAAgEBAwEAAwAAAgEBAwAAAgEAAwEBAgAAAwABAwEAAgAAAwEBAwAAAgAAAwEBAgEAAwAAAgEAAgEBAwAAAgEAAwAAAgEBAwEAAgAAAgEAAwABAgEAAwAAAgEAAwABAgEAAgAAAgEBAgAAAgEBAgAAAgEAAgABAgEAAgAAAgEBAgAAAgEBAwAAAgEAAgABAQEBAQAAAgABAQEBAQAAAgEBAQABAQEAAgABAQEBAQABAgEAAQABAQEBAgAAAQABAAECAQABAAABAAABAAEBAQABAAABAAABAQECAAABAAABAAABAQABAAEBAAABAQAC/wAB/wABAAAC/wAB//8B/wACAAAB/wAB/wACAAAB//8B/wAC/wABAP8B/wAC/wAB/wAB/wAB/gAC/wAB/wAB/v8C/wAB/wAB/wAB/v8C/wAB//8B/gAB//8C/wAB/gAB/wAB/wEB/wAB/wAB/wEB/wAB/wAC/wAB/wAB/wAB/wAB/gAB/wAB/wAB/wAB/wEB/wEB/gEB/wAB/wEB/wEB/gAB/wEB/wEB/gAB/wEB/wAB/gEB/wAB/wEB/gAB/wEB/wIB/gEB/wEB/wIB/gEB/wEB/wEA/gIB/wEB/gEB/wEB/gEB/wEB/wEB/gEB/gIAAAEBAAIB/wEBAAIB/wEAAAIBAAEB/wIBAAEB/wIAAAEB/wIBAAEB/wIBAAEA/wIBAQEBAAIBAQEAAAIBAAEBAQIBAAEAAQIBAAEBAAEBAQIAAAEBAQIBAAEBAAIAAQEBAQIBAQEBAQIAAQEBAQIBAQEBAQIAAQEBAQEBAQIBAQEAAQIBAQEBAQIAAQEBAQIBAgEBAwIAAgEBAwIBAgEAAgEBAwIBAgEAAgIBAwEBAgIAAgEBAwEBAgIAAgEBAwIBAwEAAwIBBAEAAwEBAwIABAEBAwIBAwEAAwEBBAIAAwEBAwEBBAIAAwEBAwEAAwIBAwEABAIBAwEAAwEBAwIBAwEAAwIBAwEAAwIBBAEAAwEBAwIAAwEBAwEAA18lXKjeqZWeAAAAAElFTkSuQmCC",
-		"Black, Blue and White": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAAAAAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQAAAgAAAQACAgABAQACAgABAQACAgABAQACAgABAQACAgABAQACAgABAQACAgABAQACAgABAQACAgABAQACAgABAQACAgABAQACAgABAQACAgABAQACAgABAQACAQABAgACAQABAgACAQABAgACAQABAgACAQABAgACAQABAgACAQABAgACAQABAgACAQABAgACAQABAgACAQABAgACAQACAgABAQACAgABAQACAgABAQACAgABAQACAgABAQACAgABAQACAgABAQACAgABAQACAgABAQACAgABAQACAgABAQACAgABAQACAgABAQACAgABAQACAgABAQACAgABAQACAgEBAQMCAAIBAAMCAAMBAAMCAAMBAAMCAAMBAAMCAAMBAAMCAAMBAAMCAAMBAAMCAAMBAAMCAAMBAAMCAAMBAAMCAAMBAAMCAAMBAAMCAAMBAAMCAAMBAAMBAAMCAAMBAAMCAAMBAAMCAAMBAAMCAAMBAAMCAAMBAAMCAAMBAAMCAAMBAAMCAAMBAAMCAAMBAAMCAAMBAAMCAAMBAAMCAAMBAAMCAAMBAAMCAAMBAAMCAAMBAAMCAAMBAAMCAAMBAAMCAAMBAAMCAAMBAAMCAAMBAAMCAAMBAAMCAAMBAAMCAAMBAAMCAAMBAAMCAAMBAAMCAAMBAAMCAAMBAAMCAAMBAIJYAv+DAxumAAAAAElFTkSuQmCC",
-		"GnRP": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQBEGwECAQACAQECAQECAQECAQECAQECAgECAQECAQECAQICAQECAQECAQICAQEDAQECAgICAQICAQECAQICAgICAQECAQICAgICAQECAQICAgECAQICAQECAgIDAQICAQECAgMCAQICAgMCAgMCAQICAgMCAQICAgIDAgMCAQICAgMCAgICAQMCAgICAgICAQMDAgMBAgMCAwMCAgMCAgICAwMCAgMBAgMCAgMCAwMCAgMCAgMCAwIBAgMCAgMCAwMCAgMCAgIBAwMCAgMBAgMCAwIBAgMCAwMBAgMCAgMCAwIBAgMCAgMBAwMCAgIBAwMCAgIBAgIBAgIAAgIBAgIBAgIBAgIBAgIBAgIAAgIBAgIBAgIBAgIBAgIAAgIBAgIBAgEBAgIAAQEBAgIAAgEAAQIBAgEAAQIBAgEAAgIBAQEAAgIBAgEAAQIBAgEAAQIBAgEAAQEAAgEAAQEBAgEAAQIAAQEAAgEBAQEAAQEAAgEAAQEAAQEBAgEAAQIAAQEAAv//////AAD+/////wD+AP//////AAD+////////AAD+////AAD+////////AAD+////AP/+///////+///+////AP/+///////+////AP/+///+///////+AP/////+//7+///+//7////+///+//7+///+//7+///+//7////+//7+///+///+//7+//////7+//79///+/v7+///+//7+/v/+//7+//7+/v/+//7+///+/v7+//7+///+/v7+///+/v79///+//7+/v/+//79/v7+///+/v7+///9/v7+///+/v7+///9//7+/v/+//79/v/+///9/v79/v/+//79/v/9///+/v79///9/v/9/v79///+/v79///9/v/9//7+/v7+/v7+/v7+/v7+/v7+/v7+/v/+/v7+/v7+/v7+/v7+/v7+/v7+/v/+/v7+/v7+/v3+/f7//v7+/v7+/v7//v7+/f7+/v3+/v7+/v7+/v7//f7//v7+/v7//ijdbZyCWrLQAAAAAElFTkSuQmCC",
-		"Brewer Diverging Brown-Blue-Green (9)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQFmXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFP+AMf72HzHAAAAAElFTkSuQmCC",
-		"erdc_gold_BW": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAAAAMBAAMBAAMBAAMBAAMBAAICAAIBAAIBAAIBAAEBAAIBAAEBAAIBAAEBAAEAAAIBAAEBAAEBAAEBAAEBAAEAAAEBAAEBAAEAAAEBAAEBAAEBAAEAAAEBAAEBAAEBAAEAAAEBAAEBAAEBAAIAAAEBAAEBAAEBAAEAAAEBAAEBAAEBAAEBAAEAAAEBAAEBAAEBAAEBAAEAAAEBAAIBAAEBAAEBAAEAAAEBAAEBAAEBAAEBAAEAAAEBAAIBAAEBAAEBAAEBAAEAAAEBAAEBAAEBAAEBAAIBAAEAAAEBAAEBAAEBAAEBAAEBAAIAAAEBAAEBAAEBAAEBAAEBAAIBAAEAAAEBAAEBAAEBAAEBAAIBAAEBAAEBAAEAAAEBAAEBAAIBAAEBAAEBAAEBAAEBAAEBAAIBAAEBAAEAAAEBAAEBAAEBAAIBAAEBAAEBAAEBAAEBAAEBAAIBAAEBAAEBAAEBAAEBAAEBAAEBAAEBAAIAAAEBAAEBAAEBAAEBAAEBAAEBAAIBAAEBAAEBAAEBAAEBAAEBAAECAAEBAAEBAAEBAAEBAAEBAAIBAAEBAAEBAAEBAAEBAAEBAAEBAAEBAAEBAAEBAAEBAAEBAAEBAAECAAEBAAEBAAEBAAEBAAEBAAEBAAEBAAEBAAEBAAECAAEBAAEBAAEBAAEBAAEBAAEBAAEBAAECAAEBAAEBAAABAAEBAAEBAgEBAgECAgEBAQEBAgEBAgEBAgEBAgACAgEBAQEBAgEBAQEBAQEBAgECAQEBAQEBAwABAgEBAwEBAgECAgEBAgEBAwABAgEBAgECAgEBAQEBAgEBAgABAgECAgEBAgEBAgEBAgABAwECAgEBAgEBAgEBAgABAwECAgEBAgEBAgEBAgABAgECAgEBAgEBAgABAgECAgABAgEBAgABAgEBAwACAgEBAgABAgEBAgABAgECAgEBAgABAgEBAgACAgABAQABAgABAgABAgABAgABAgABAgABAgABAgABAgABAgABAgABAgABAgABAnFLApwjqFaEAAAAAElFTkSuQmCC",
-		"Brewer Sequential Yellow-Orange-Brown (8)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AYwtBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADzrAL96bdahAAAAAElFTkSuQmCC",
-		"Brewer Diverging Purple-Orange (9)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AVQniAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA34AQVdYF9GAAAAAElFTkSuQmCC",
-		"Traffic Lights": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78Ac0AzQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANKkAZyoIPjoAAAAAElFTkSuQmCC",
-		"nic_Edge": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78ATExMQL/BgP+BwL/BgL+BwH/BgL+BwH+BgH+BwH9BwD+BwD9BwD8BwD9Bv/7CP/5B//4BwABBAABAwAABAABBAABBAABBAABBP8BBAABBAABBP8BBAABBP8BBAABBP8BBP8BBAAGAgAEAv8FAgAEAf8DAgAEAv8DAgADAv8EAv8DAf8CAv8DAv8DAv8DAv8CAv8DAQEFAQIGAAEFAAAFAQEEAAAFAQAFAAAFAAAEAf8FAP8EAP8FAP4EAf4FAP0EAP0FAQMF/wMEAAMF/wIFAAEE/wEFAAEF/wEEAAAF/wAFAP8F//8EAP8F//4FAP4F//0E/wUCAQUCAAQCAAQCAAQCAQMCAAQCAAMCAAMCAQMCAAMCAAMCAAIBAQMCAAICAAMCAAcAAQYAAAYAAAUAAAUAAQYAAAQAAAUAAQUAAAQAAAUAAAQAAQQAAAQAAAQAAQQAAAX//wUA/wX//wUA/wT//wX//wQAAAT//wUA/wT//wT//wQA/wT//wT//wQAAAP//wEB+wEA/AEB+wEA/AEB/AEB+wEA/AEB+wAB/AEA+wEB/AAB+wEA/AAB+wEB/AAA+wAA/AAA+/8A/AAA+wAA+wAA/P8A+wAA+wAA/P8A+wAA+wAA+/8A+wAA+v8A+wAA+gD+/gD9/QD+/f/+/QD+/QD+/QD+/QD9/QD+/QD+/f/+/QD+/QD+/AD9/f/+/AD+/AH7AAH8AAH7AAD8/wH7AAH8AAD7/wH7AAD7AAD8/wH7AAD7AAD7AAH7/wD7AAD7AAD8Af/8AAD8AQD8Af/8AAD7AQD8Af/8AAD7Af/7AAD7Af/7AAD7AP/7AQD6AP/6AP79Af7+Af/9Af7+Af79Af79AP7+Af79Af79Af78AP79Af79Af78AP77Af77AP76AfwAAPz/Afz/APz/APv/APz/Afz/APwAAPz/Afz/APwAAPz/APwAAPz/AfsAAPz/APoN//kI//oG//kE//kDAPoD//kC//kC//oC//kBAPkB//kB//kA//gBAPkA/yPRGqSIJnklAAAAAElFTkSuQmCC",
-		"erdc_cyan2orange": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQw3agAAAAEBAAABAQEAAAABAQABAAEAAAABAQABAAAAAQEBAAABAAAAAQEBAAABAQAAAAEBAAABAQEAAAABAAEBAQABAAEAAQABAAEBAAAAAQABAAEBAAAAAQEBAAABAAAAAQEBAAEBAQAAAAEBAAEBAQAAAAEBAAABAQEAAAEBAAABAQEAAAABAAEBAQAAAAEBAAEBAAEAAQEBAAEBAAEAAQEBAAABAAEAAAEBAQEBAAEAAAEBAQEBAAAAAAEBAAEBAQIAAAEBAAEAAAIBAAEBAQEAAAIBAAEAAAEBAAEBAQIAAAEBAAEAAAEBAAEBAAEAAQIBAAEAAAIBAAEAAAIBAAEBAAEAAAIBAQEAAAEBAAIAAAEBAAEAAAEBAAIBAAEAAAEBAAIAAAEBAAIAAQEBAAEAAAIBAAEAAAIBAAEBAAEAAAIBAAEAAAEBAAIAAAEBAAEAAAIBAAEAAAEBAAIAAAEBAAEAAAIBAAEBAAEAAAIBAAEAAAEBAAIAAAEBAAEAAAEBAAIAAQEBAAEAAAEBAAIAAAEBAAEAAAEBAQIBAAEAAAEBAAEAAAIBAAEAAQEBAAEAAAIBAAEAAAEBAAEAAAIBAAEAAAEBAQIAAAEBAAEAAAEBAAIAAAEBAAEAAAEBAAIAAQEBAAEAAAIBAAEAAAEBAAEAAAIBAAEAAAEBAAIAAAEBAQEAAAEBAAIAAAEBAAEAAAIBAAEAAAEBAAIAAAEBAAEAAAEBAAIAAAEBAQEAAAIBAAEAAAEBAAIAAAEBAAEBAAEAAAEBAAEAAAEBAQEAAAEBAAIBAAEAAAEBAAEAAQEBAAEBAAEAAAEBAAEAAAEBAQEBAAABAAEAAQEBAAABAAEBAAEAAQABAAEBAAEBAQAAAAEBAAABAQEBAAEAAAABAQEBAAABAQABAAEBAAABAQABAAEAAQABAAEBAQABAAABAQEBAAABAAABAQEAAAABAQABAAEBAQABAAABAQABAAEBAQABAAABAQABAAEAAAABAQABAAABAQEBAK4xAnerkAt9AAAAAElFTkSuQmCC",
-		"Traffic Lights For Deuteranopes": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78Ac0AzQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANKkAZyoIPjoAAAAAElFTkSuQmCC",
-		"Purples": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AT8AfQEBAQABAAECAQEBAAABAQEBAAECAQABAQEBAAECAQABAAEBAQEBAAABAQECAAEBAQABAQEBAAECAQABAAEBAQECAAABAQEBAQEBAAABAQECAAEBAQABAAEBAQABAQEBAAECAQEBAAABAQECAQEBAAABAQECAAEBAQABAQECAAEBAQABAQEBAAECAQABAAEBAQECAQEBAAABAQECAQEBAAABAQECAQEBAAABAQECAAEBAQABAQEBAAECAQEBAQABAAECAQEBAQABAAECAQEBAQACAQEBAAEBAQACAQEBAAECAQEBAQABAQECAAEBAQABAQECAAEBAQACAQEBAQEBAAACAQEBAQEBAAECAQABAQEBAQECAAABAQECAQEBAAABAQEBAQEBAAEBAAEBAQEBAAEBAQEBAAEBAQEAAAEBAQEBAAEBAAEBAQEBAAABAQEBAAEBAQEBAAEBAQEBAAEAAAEBAQEBAAEBAQEBAAEBAQEBAAEBAQEBAAEBAAEBAQABAAEBAQEBAQEBAAEBAQEBAAEBAQEBAQEBAAEBAQEBAQECAAEBAQEBAAEBAQEBAQEBAAABAQEBAQEBAAEBAQECAAEBAQEBAQEBAAEBAQEBAQEBAAEBAQEBAAEBAQEBAQECAAEAAQABAAEBAQEBAAEBAQEBAAEBAQEBAAEBAQEBAAEBAAEAAQEBAAEBAQEBAAEBAQEBAAEBAQABAAEBAQEBAAEAAQEBAAEBAQEBAAEBAAEBAQEBAAEBAQEBAAEBAQAAAAEBAQEBAAAAAAEBAAEAAQABAAEBAAEAAQABAAEAAAEBAQABAAEAAAEBAQAAAAEBAAEBAQAAAAEBAAEAAAABAQEBAAEAAAABAQEAAAABAAEAAQEBAAABAAEAAQEBAAAAAAEBAAAAAQEBAAAAAAABAAEAAQAAAAEBAAAAAAABAQEAAAABAAEAAAABAQAAAAEAAAABAAEAAQABAAEAAAABAAAAAQEAAAABAAEAAAABAQAAAAEBAAAAAAEBAQAAAOmNAvbMp2ZGAAAAAElFTkSuQmCC",
-		"Brewer Qualitative Set2": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AbOzswAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE9DAhsevSXNAAAAAElFTkSuQmCC",
-		"blue2yellow": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAA/wwD/wgD/wcD/wUD/wQC/wQD/wMC/wMC/wMC/wMB/wMC/wIC/wIB/wIC/wIB/wIB/wIC/wIB/wIB/wEC/wIB/wIB/wEB/wEB/wIB/wEB/wIC/wEB/wEB/wEB/wEB/wIB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEA/wAB/wEB/wEB/wEB/wEB/wEB/wAB/wEB/wEB/wAA/wEB/wEB/wEB/wAB/wEB/wAA/wEB/wEB/wAB/wEB/wAB/wEA/wAB/wEB/wAB/wEB/wAA/wEB/wAB/wEB/wAB/wEA/wAB/wAB/wEB/wAB/wEA/wAB/wAB/wEB/wAA/wAB/wEB/wAB/wAA/wEB/wAB/wAB/wAA/wEB/wAB/wAB/wAA/wEB/wAB/wAB/wAA/wAB/wEB/wAB/wAA/wAB/wAB/wAA/wAB/wEB/wAB/wAA/wAB/wAB/wAA/wAB/wAB/wAB/wAA/wAB/wAB/wEA/wAB/wAB/wAB/wAA/wAB/wAB/wAA/wAB/wAB/wEBAAEBAAIB/wEBAAEB/wEBAAEA/wEBAAEBAAEB/wIBAAEB/wEBAAEBAAEB/wEBAAEB/wEBAAEB/wEBAAEB/wEBAAEAAAIB/wEBAAEB/wEBAAEB/wEBAAEB/wEBAAEB/wEBAAEB/wEBAAEB/wEBAAEB/wEBAAEB/wEBAAEB/wEBAAEB/wEBAAEB/wEBAAEB/wEB/wEBAAEB/wEBAAEB/wEBAAEB/wEB/wEBAAEB/wEBAAEB/wEB/wEBAAEB/wEB/wEBAAEB/wEB/wEBAAEB/wEB/wEBAAEB/wEB/wEB/wEBAAEB/wEB/wEB/wAB/wEBAAEB/wEB/wEB/wEB/wEBAAEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEB/wEC/wAB/gEB/wEB/wEB/wEB/gEB/wEB/wEB/gEB/wEB/gEB/wEB/gEB/gEB/gEB/wEB/gEB/QEB/gAB/gEC/QEB/gEB/AEB/QEB/AEB+wEB+gEB+fjg2wCZpyqHAAAAAElFTkSuQmCC",
-		"Brewer Diverging Purple-Orange (8)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AVQniAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA34AQVdYF9GAAAAAElFTkSuQmCC",
-		"GnYlRd": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQBoNwECAQECAQACAQEBAQECAQECAQECAQECAQECAQICAQECAQEBAQECAQECAQECAQECAQMCAQIBAAICAQICAQICAQIBAQICAQECAQIBAQICAAECAQICAQIBAQECAQICAQEBAQQCAQQBAAMCAQMBAQMCAQMBAAMCAQMBAQMBAQMCAAMBAQMCAQIBAQMCAAIBAQMCAQMBAAMBAAIBAQMBAAMBAQICAAMBAAMBAQIBAAMBAAIBAQMCAAIBAAMBAQIBAAMBAQIBAAMBAQIBAAIBAQMCAAIBAQMBAAIBAQIBAAMBAQIBAAMBAQIBAAIBAQMBAAIBAQIBAQIBAQIBAQIAAgIBAQIBAQIBAgIBAQIBAQIBAQIBAgIAAQIBAQIBAgIBAQIBAQIBAgEAAgIBAgIBAQEAAgIBAgIBAgEBAQIAAgIBAgIBAgEAAQIBAgIBAgEBAgIAAQEBAgIAAgEBAgIBAgEAAgIBAgEAAgEBAgIAAgEBAgIBAQEAAgIBAgEAAgIBAgEAAgD//gD//gD//gD+/gD//gD//gD//gD//gD+/gD//gD//gD//QD//gD+/v///gD//gD+/gD//wD+/gD//gD+/gD//gD+/gD//gD+/wD//gD+/gD+/gD//gD+/gD//gD+/gD+/wD+/gD+/gD+/wD//gD+/wD+/gD+/gD+/wD+/gD+/gD+///+/gD+/gD+/wD+/gD+/wD9///+/gD9/wD+/wD9///+/gD+/wD9///+/wD9/gD+///9/wD+/wD9/v/+/wD9///+/wD9///+/gD+///9/wD+///9/wD+///9/v/+/wD9///9/wD+///9///9///+/v/+///+///+///9///+///+//79///+///+///9/v/+///9///9//7+///9///+AP7///7+AP/+//7+AP7+AP7+///+AP7+//7+AP/+AP7+//7+AP/9//7+AP79AP7/AP7+AP7/AP7+AP/+AP7///7+AP7+AP7+AP7+AP7+AP79AP7+AP7+AP7+AOJqJdzQEL2wAAAAAElFTkSuQmCC",
-		"Brewer Sequential Yellow-Orange-Brown (7)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AYwtBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADzrAL96bdahAAAAAElFTkSuQmCC",
-		"Spectrum": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AaZWKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHGJASYKgLW3AAAAAElFTkSuQmCC",
-		"Citrus": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AfmDJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOVzAaKNLBIxAAAAAElFTkSuQmCC",
-		"PuOr": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AX87CAIBAAIBAAIBAAIBAAICAAIBAAIBAAIBAAIBAAIB/wIBAAICAAIBAAIBAAMBAAIBAAICAAEBAAIBAAICAAIBAQIBAAICAAIBAAIBAAICAAIBAQIBAAICAAIBAAIBAAECAQIBAAICAQICAAEBAQICAAICAQIBAAICAQEBAQICAAICAQIBAAECAQICAAIBAQICAAECBAECAwICAwECAwECAwECAgICAwECAgECAwECAgICAwECAgECAgECAwICAgEDAgECBAECAwEBAwECAwECAwECBAACAwECAwECAwECAwECAwECAwECAwECAwACAwECAwACBAACAwEBAwACBAABAwACAwABAwACBAACAwABAwACAwABAwACBAABAwACAwACAwABAwABAwABAwABA/8BAgABAwACAwABAwABAwABA/8BAgABAwACAwABAwABA/8BAgABAwABAgABA/8AAgABAwABAgABA/8BAgABAwAAAv8BAgABAwABAv8BAwABAv8AA///////AP//////AP7/////AP/+////AP7/AP//////AP//////AP7+////AP//////AP7+///////+//7/AP/////+//7/AP/+//////7+AP/////+//7/AP/////+//7+///+//7////+//7+///+//7+///+//7+//////7+///+//7+///+//7+//////79//7+//7+/v7+//7+/v7+//79///+/v7+//7+/v7+//7+/v7+//7+//79/v/+//7+/v79//7+/v7+//79//7+/v79//7+/v7+///9/v7+//7+/v79//7+/v79//7+/v79///9//79/v/9//79/v79//79/v/9//79//79/v79///9/v79//79//79/v79///+/v7+/v/+/f7+/v7//v/+/v7+/v/+/v7+/v/+/v79/v7+/v/+/v7+/v/+/v7+/v7+/f///v7+/v/+/f7//v/+/f7+/v///f7+/v/+/v7//f/+/v7//v///f7//oGweYlzdUIuAAAAAElFTkSuQmCC",
-		"Cool to Warm (Extended)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAAWQECAQECAQECAQICAQECAQECAQICAQECAQECAQECAQECAQABAQECAQECAQABAQECAQECAQECAgEDAQECAQECAQECAgACAQECAQEDAgICAQEDAgECAgEDAQECAgEDAgECAQEDAQICAgECAQEDAQECAQEDAgECAQECAQICAQECAQECAQECAQICAQECAAEBAQECAQICAQECAQECAQECAQICAQECAQECAQEBAQIDAgECAgICAQECAgICAQECAgICAgEDAQICAgICAgECAQIDAgICAgECAQICAgEDAQICAgICAQECAgICAQICAgECAQICAgICAgICAgMDAgIDAgMCAwIDAgMDAgICAwMDAgQDAgMCAQMDAgQCAgMDAgQDAgMCAgMDAQMBAQICAQMBAQMCAQIBAQMCAQIBAQMCAQMBAQQCAQMCAQMBAQMCAQMBAQMCAQMCAQIBAQMBAQIBAQICAQIBAQMBAQIBAQMBAAQBAQMBAQQBAAQBAQQBAAMBAQQBAQ766QD//QD//gD//QD//gD//QD+/P/9/QD+/f/+/AD9/f/9/AD+/P/9/AD9/P/9/QD9/P/9/AD9/f/8/P/9/QD9/P/9/f/8/AD9/f/+/v/9/QD+/v/9/QD9/v/+/f/9/gD9/f/+/v/9/gD9/f/9/gD+/v/9/f/9/v/9/f/8/v/9/f/9/f/8/v/9/f/9/f/8/v/9/v/+/f/+/v7+/v/9/v/+/v/+/v7+/v79/f79/v39/f79/v39/v79/f39/v79/v79/v7+//79/v79//7+/v79//79//7+/v/+//7+//7+/v////7+///+//7+/v7+//////7+//7+///+//7+///+/v7+//79////AP7/AP4AAP//Af7/AP7/AP//AP7/AP8AAf7/Af8AAf7/Af8AAP7/Af8AAf7/Af8AAf4AAv4AAf8AAv4BAf4AAv8AAf4AAv4AAf8AAP4AAf8AAf4AAP4AAf8AAP4AAf4BAf8AAP4BAf8AAf4BAP4AAf8BAP4AAVyaJ7KVZg9PAAAAAElFTkSuQmCC",
-		"erdc_orange_BW": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AQAAAAMBAAQBAAMBAAMBAAMBAAIBAAIBAAIBAAIBAAIBAAIBAAEBAAIBAAEBAAEAAAIBAAEBAAEBAAIAAAEBAAEAAAIBAAEAAAIAAAEBAAEAAAIBAAEAAAIBAAEAAAIBAAEAAAIBAAEAAAIBAAEAAAIAAAEBAAEAAAIBAAEAAAIBAAEAAAIBAAIAAAEBAAIAAAEBAAIAAAEAAAIBAAEAAAIBAAEAAAIBAAEAAAIBAAEAAAIBAAEAAAIBAAIAAAEBAAIAAAEBAAIAAAEBAAIBAAEAAAIBAAEAAAIBAAEAAAIBAAIAAAEBAAIAAAEBAAIBAAEAAAIBAAEAAAIBAAEBAAIAAAEBAAIBAAEAAAIBAAEBAAIAAAEBAAIBAAEAAAIBAAEBAAIAAAEBAAIBAAEBAAEBAAIAAAEBAAIBAAEBAAIAAAEBAAIBAAEBAAEBAAIAAAEBAAIBAAEBAAEBAAIBAAEBAAEBAAEBAAIBAAEBAAEBAAIBAAEBAAEAAAIBAAEBAAEBAAIBAAEBAAECAAEBAAEBAAEBAAIBAAEBAAEBAAEBAAEBAAEBAAIBAAEBAAECAAEBAAEBAAEBAAEBAAEBAAECAAEBAAEBAAEBAAEBAAECAAEBAAEBAAEBAAEBAAICAAEBAAABAQEBAAECAQEBAAEBAQEBAAECAQEBAAEBAQECAAABAQEBAQEBAAECAQEBAQEBAAACAgEBAwABAgECAQABAgEBAgACAQEBAgABAQACAgEBAQABAQECAgABAQEBAQACAgABAgABAwABAwACAgABAwABAgACAgABAgABAwACAgABAgACAgABAgABAgACAgABAgABAwABAwACAgABAwABAgACAwABAgABAwACAgABAwABAgACAwABAgABAwACAgABAwABAgACAgABAwABAgACAwABAgABAgACAwABAgABAgACAwABAgABAgACAwABAgACAwABAgABAgACAgABAwACAgABAgACAgABAwABAgACAgABAwACAgABAgACAwABApaiArJC2yPPAAAAAElFTkSuQmCC",
-		"Brewer Sequential Blue-Purple (7)": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAIAAAC+O+cgAAADDElEQVQoFQEBA/78AW4BawAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJNJANwTjcz2AAAAAElFTkSuQmCC"
-	};
-
-/***/ },
-/* 181 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(182);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(165)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../css-loader/index.js!./../postcss-loader/index.js!./normalize.css", function() {
-				var newContent = require("!!./../css-loader/index.js!./../postcss-loader/index.js!./normalize.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 182 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(164)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */\n\n/**\n * 1. Set default font family to sans-serif.\n * 2. Prevent iOS and IE text size adjust after device orientation change,\n *    without disabling user zoom.\n */\n\nhtml {\n  font-family: sans-serif; /* 1 */\n  -ms-text-size-adjust: 100%; /* 2 */\n  -webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/**\n * Remove default margin.\n */\n\nbody {\n  margin: 0;\n}\n\n/* HTML5 display definitions\n   ========================================================================== */\n\n/**\n * Correct `block` display not defined for any HTML5 element in IE 8/9.\n * Correct `block` display not defined for `details` or `summary` in IE 10/11\n * and Firefox.\n * Correct `block` display not defined for `main` in IE 11.\n */\n\narticle,\naside,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmain,\nmenu,\nnav,\nsection,\nsummary {\n  display: block;\n}\n\n/**\n * 1. Correct `inline-block` display not defined in IE 8/9.\n * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.\n */\n\naudio,\ncanvas,\nprogress,\nvideo {\n  display: inline-block; /* 1 */\n  vertical-align: baseline; /* 2 */\n}\n\n/**\n * Prevent modern browsers from displaying `audio` without controls.\n * Remove excess height in iOS 5 devices.\n */\n\naudio:not([controls]) {\n  display: none;\n  height: 0;\n}\n\n/**\n * Address `[hidden]` styling not present in IE 8/9/10.\n * Hide the `template` element in IE 8/9/10/11, Safari, and Firefox < 22.\n */\n\n[hidden],\ntemplate {\n  display: none;\n}\n\n/* Links\n   ========================================================================== */\n\n/**\n * Remove the gray background color from active links in IE 10.\n */\n\na {\n  background-color: transparent;\n}\n\n/**\n * Improve readability of focused elements when they are also in an\n * active/hover state.\n */\n\na:active,\na:hover {\n  outline: 0;\n}\n\n/* Text-level semantics\n   ========================================================================== */\n\n/**\n * Address styling not present in IE 8/9/10/11, Safari, and Chrome.\n */\n\nabbr[title] {\n  border-bottom: 1px dotted;\n}\n\n/**\n * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.\n */\n\nb,\nstrong {\n  font-weight: bold;\n}\n\n/**\n * Address styling not present in Safari and Chrome.\n */\n\ndfn {\n  font-style: italic;\n}\n\n/**\n * Address variable `h1` font-size and margin within `section` and `article`\n * contexts in Firefox 4+, Safari, and Chrome.\n */\n\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0;\n}\n\n/**\n * Address styling not present in IE 8/9.\n */\n\nmark {\n  background: #ff0;\n  color: #000;\n}\n\n/**\n * Address inconsistent and variable font size in all browsers.\n */\n\nsmall {\n  font-size: 80%;\n}\n\n/**\n * Prevent `sub` and `sup` affecting `line-height` in all browsers.\n */\n\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline;\n}\n\nsup {\n  top: -0.5em;\n}\n\nsub {\n  bottom: -0.25em;\n}\n\n/* Embedded content\n   ========================================================================== */\n\n/**\n * Remove border when inside `a` element in IE 8/9/10.\n */\n\nimg {\n  border: 0;\n}\n\n/**\n * Correct overflow not hidden in IE 9/10/11.\n */\n\nsvg:not(:root) {\n  overflow: hidden;\n}\n\n/* Grouping content\n   ========================================================================== */\n\n/**\n * Address margin not present in IE 8/9 and Safari.\n */\n\nfigure {\n  margin: 1em 40px;\n}\n\n/**\n * Address differences between Firefox and other browsers.\n */\n\nhr {\n  box-sizing: content-box;\n  height: 0;\n}\n\n/**\n * Contain overflow in all browsers.\n */\n\npre {\n  overflow: auto;\n}\n\n/**\n * Address odd `em`-unit font size rendering in all browsers.\n */\n\ncode,\nkbd,\npre,\nsamp {\n  font-family: monospace, monospace;\n  font-size: 1em;\n}\n\n/* Forms\n   ========================================================================== */\n\n/**\n * Known limitation: by default, Chrome and Safari on OS X allow very limited\n * styling of `select`, unless a `border` property is set.\n */\n\n/**\n * 1. Correct color not being inherited.\n *    Known issue: affects color of disabled elements.\n * 2. Correct font properties not being inherited.\n * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.\n */\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  color: inherit; /* 1 */\n  font: inherit; /* 2 */\n  margin: 0; /* 3 */\n}\n\n/**\n * Address `overflow` set to `hidden` in IE 8/9/10/11.\n */\n\nbutton {\n  overflow: visible;\n}\n\n/**\n * Address inconsistent `text-transform` inheritance for `button` and `select`.\n * All other form control elements do not inherit `text-transform` values.\n * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.\n * Correct `select` style inheritance in Firefox.\n */\n\nbutton,\nselect {\n  text-transform: none;\n}\n\n/**\n * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`\n *    and `video` controls.\n * 2. Correct inability to style clickable `input` types in iOS.\n * 3. Improve usability and consistency of cursor style between image-type\n *    `input` and others.\n */\n\nbutton,\nhtml input[type=\"button\"], /* 1 */\ninput[type=\"reset\"],\ninput[type=\"submit\"] {\n  -webkit-appearance: button; /* 2 */\n  cursor: pointer; /* 3 */\n}\n\n/**\n * Re-set default cursor for disabled elements.\n */\n\nbutton[disabled],\nhtml input[disabled] {\n  cursor: default;\n}\n\n/**\n * Remove inner padding and border in Firefox 4+.\n */\n\nbutton::-moz-focus-inner,\ninput::-moz-focus-inner {\n  border: 0;\n  padding: 0;\n}\n\n/**\n * Address Firefox 4+ setting `line-height` on `input` using `!important` in\n * the UA stylesheet.\n */\n\ninput {\n  line-height: normal;\n}\n\n/**\n * It's recommended that you don't attempt to style these elements.\n * Firefox's implementation doesn't respect box-sizing, padding, or width.\n *\n * 1. Address box sizing set to `content-box` in IE 8/9/10.\n * 2. Remove excess padding in IE 8/9/10.\n */\n\ninput[type=\"checkbox\"],\ninput[type=\"radio\"] {\n  box-sizing: border-box; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Fix the cursor style for Chrome's increment/decrement buttons. For certain\n * `font-size` values of the `input`, it causes the cursor style of the\n * decrement button to change from `default` to `text`.\n */\n\ninput[type=\"number\"]::-webkit-inner-spin-button,\ninput[type=\"number\"]::-webkit-outer-spin-button {\n  height: auto;\n}\n\n/**\n * 1. Address `appearance` set to `searchfield` in Safari and Chrome.\n * 2. Address `box-sizing` set to `border-box` in Safari and Chrome.\n */\n\ninput[type=\"search\"] {\n  -webkit-appearance: textfield; /* 1 */\n  box-sizing: content-box; /* 2 */\n}\n\n/**\n * Remove inner padding and search cancel button in Safari and Chrome on OS X.\n * Safari (but not Chrome) clips the cancel button when the search input has\n * padding (and `textfield` appearance).\n */\n\ninput[type=\"search\"]::-webkit-search-cancel-button,\ninput[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n\n/**\n * Define consistent border, margin, and padding.\n */\n\nfieldset {\n  border: 1px solid #c0c0c0;\n  margin: 0 2px;\n  padding: 0.35em 0.625em 0.75em;\n}\n\n/**\n * 1. Correct `color` not being inherited in IE 8/9/10/11.\n * 2. Remove padding so people aren't caught out if they zero out fieldsets.\n */\n\nlegend {\n  border: 0; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Remove default vertical scrollbar in IE 8/9/10/11.\n */\n\ntextarea {\n  overflow: auto;\n}\n\n/**\n * Don't inherit the `font-weight` (applied by a rule above).\n * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.\n */\n\noptgroup {\n  font-weight: bold;\n}\n\n/* Tables\n   ========================================================================== */\n\n/**\n * Remove most spacing between table cells.\n */\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\n\ntd,\nth {\n  padding: 0;\n}\n", ""]);
-
-	// exports
-
+	;
+	var sprite = __webpack_require__(161);;
+	var image = "<symbol viewBox=\"0 0 256 256\" id=\"function-linear\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"> <style type=\"text/css\"> .st0{display:none;} .st1{display:inline;} .st2{display:inline;fill:#FFFFFF;} </style> <g id=\"function-linear_paraview\" class=\"st0\"> <g class=\"st1\"> <g> <polygon points=\"65.4,211.3 14.6,211.3 56.4,53.4 107.2,53.4 \t\t\t\"/> </g> <g> <polygon points=\"132.7,211.3 81.9,211.3 123.6,53.4 174.4,53.4 \t\t\t\"/> </g> <g> <polygon points=\"199.9,211.3 149.1,211.3 190.9,53.4 241.6,53.4 \t\t\t\"/> </g> </g> </g> <g id=\"function-linear_paraviewweb\" class=\"st0\"> <g class=\"st1\"> <polygon points=\"60.2,211.3 35.7,211.3 49,40 106.1,40 \t\t\"/> </g> <g class=\"st1\"> <polygon points=\"159.9,211.3 135.4,211.3 181.4,40 238.5,40 \t\t\"/> </g> <g class=\"st1\"> <polygon points=\"118.8,88.6 69.5,211.3 126.6,211.3 140.9,88.6 \t\t\"/> </g> </g> <g id=\"function-linear_kitware\" class=\"st0\"> <g class=\"st1\"> <g> <path d=\"M216.9,77c-6.2,0-12.3,0-18.5,0c-66.9,18.7-76.9,102.5-30,142.9c-54.2-36.8-44.4-130,29.5-149.8c-6.2,0-12.3,0-18.5,0\r\n\t\t\t\tc-66.9,18.7-76.9,102.5-30,142.9c-54.2-36.8-44.4-130,29.5-149.8c-6.2,0-12.3,0-18.5,0c-21,5.9-36.3,18.2-46.1,33.5\r\n\t\t\t\tc-0.7-28.8-5.2-58.2-13.9-87.7c-5.2,5-10.4,9.9-15.6,14.9c25.8,73.8,21.6,151.9-10.2,217.1c1.4,1.4,2.8,2.7,4.3,4.1\r\n\t\t\t\tc12.7-22.5,22-47.1,28-73c8.8,23.8,28.3,44.2,58.5,52.3c0.3,0,0.6,0,1,0c5.5,2.8,11.4,5.2,17.9,6.9c0.3,0,0.6,0,1,0\r\n\t\t\t\tc5.5,2.8,11.4,5.2,17.9,6.9c2.8,0,5.7,0,8.5,0C131.6,215.7,133.3,99.4,216.9,77z\"/> </g> <g> <path d=\"M57.1,50.6c-5.2,5-10.4,9.9-15.5,14.9c28,43.5,37,102.5,21.4,164c1.4,1.4,2.8,2.7,4.3,4.1\r\n\t\t\t\tC88.5,170.7,84.3,104.9,57.1,50.6z\"/> </g> <g> <path d=\"M78.8,29.8c-5.2,5-10.4,9.9-15.5,14.9c26.9,58.6,29.3,127.2,5.6,190.6c1.4,1.4,2.8,2.7,4.3,4.1\r\n\t\t\t\tC102.6,174.6,105,99.2,78.8,29.8z\"/> </g> </g> </g> <g id=\"function-linear_cluster\" class=\"st0\"> <path class=\"st1\" d=\"M233.1,88.5c1.9,0,3.3-1.5,3.3-3.3V31.3c0-1.8-1.5-3.3-3.3-3.3h-53.8c-1.9,0-3.3,1.5-3.3,3.3v20.6h-16V31.3\r\n\t\tc0-1.8-1.5-3.3-3.3-3.3h-53.8c-1.9,0-3.3,1.5-3.3,3.3v20.6h-16V31.3c0-1.8-1.5-3.3-3.3-3.3H26.3c-1.9,0-3.3,1.5-3.3,3.3v53.8\r\n\t\tc0,1.8,1.5,3.3,3.3,3.3h20.3v13.6H26.3c-1.9,0-3.3,1.5-3.3,3.3v53.8c0,1.8,1.5,3.3,3.3,3.3h20.3v13.7H26.3c-1.9,0-3.3,1.5-3.3,3.3\r\n\t\tv53.8c0,1.9,1.5,3.3,3.3,3.3h53.8c1.9,0,3.3-1.5,3.3-3.3V214h16v19.5c0,1.9,1.5,3.3,3.3,3.3h53.8c1.9,0,3.3-1.5,3.3-3.3V214h16\r\n\t\tv19.5c0,1.9,1.5,3.3,3.3,3.3h53.8c1.9,0,3.3-1.5,3.3-3.3v-53.8c0-1.9-1.5-3.3-3.3-3.3h-18.9v-13.6h18.9c1.9,0,3.3-1.5,3.3-3.3\r\n\t\tv-53.8c0-1.8-1.5-3.3-3.3-3.3h-18.9V88.5H233.1z M182.6,34.6h47.1v47.1h-47.1V34.6z M106.1,34.6h47.2v47.1h-47.2V34.6z M29.6,34.6\r\n\t\th47.2v47.1H29.6V34.6z M60,88.5h20.1c1.9,0,3.3-1.5,3.3-3.3V65.3h16v19.8c0,1.8,1.5,3.3,3.3,3.3h20.9v13.7h-20.9\r\n\t\tc-1.9,0-3.3,1.5-3.3,3.3V125h-16v-19.5c0-1.8-1.5-3.3-3.3-3.3H60V88.5z M106.1,156v-47.2h47.2V156H106.1z M29.6,108.8h47.2V156\r\n\t\tH29.6V108.8z M76.7,230.1H29.6V183h47.2V230.1z M83.4,200.5v-20.9c0-1.9-1.5-3.3-3.3-3.3H60v-13.7h20.1c1.9,0,3.3-1.5,3.3-3.3\r\n\t\tv-20.9h16v20.9c0,1.8,1.5,3.3,3.3,3.3h20.9v13.6h-20.9c-1.9,0-3.3,1.5-3.3,3.3v20.9H83.4z M153.3,230.1h-47.2V183h47.2V230.1z\r\n\t\t M229.8,230.1h-47.1V183h47.1V230.1z M200.8,176.3h-21.5c-1.9,0-3.3,1.5-3.3,3.3v20.9h-16v-20.9c0-1.9-1.5-3.3-3.3-3.3h-19.5v-13.6\r\n\t\th19.5c1.9,0,3.3-1.5,3.3-3.3v-20.9h16v20.9c0,1.8,1.5,3.3,3.3,3.3h21.5V176.3z M229.8,156h-47.1v-47.2h47.1V156z M200.8,102.1\r\n\t\th-21.5c-1.9,0-3.3,1.5-3.3,3.3V125h-16v-19.5c0-1.8-1.5-3.3-3.3-3.3h-19.5V88.5h19.5c1.9,0,3.3-1.5,3.3-3.3V65.3h16v19.8\r\n\t\tc0,1.8,1.5,3.3,3.3,3.3h21.5V102.1z\"/> </g> <g id=\"function-linear_axis-orientation\" class=\"st0\"> <path class=\"st1\" d=\"M232.9,239.4l-11.2-23.6c-0.5-1-1.4-1.7-2.6-1.9c-1.1-0.1-2.2,0.3-3,1.1l-2.6,2.9c0,0-80.6-70.1-81.1-70.7V139\r\n\t\th0V42.5h3.9c1.1,0,2.2-0.6,2.8-1.5c0.6-1,0.7-2.2,0.2-3.2l-10.8-23.9c-0.5-1.2-1.7-2-3.1-2c-1.2,0-2.5,0.8-3.1,2l-10.5,23.9\r\n\t\tc-0.5,1-0.4,2.2,0.3,3.2c0.6,0.9,1.7,1.5,2.8,1.5h3.9V139v8.3c0,0.2-81.1,70.7-81.1,70.7l-2.6-2.9c-0.7-0.9-1.9-1.2-3-1.1\r\n\t\tc-1.1,0.2-2.1,0.9-2.6,1.9l-11.2,23.6c-0.6,1.2-0.4,2.6,0.5,3.6c0.6,0.7,1.6,1.2,2.5,1.2c0.3,0,0.7,0,1-0.1l25.1-7.6\r\n\t\tc1.1-0.3,1.9-1.2,2.2-2.3c0.3-1.1,0.1-2.3-0.7-3.1l-2.6-2.9l79-68.8l79,68.8l-2.6,2.9c-0.7,0.9-1,2-0.7,3.1c0.3,1.1,1.2,2,2.2,2.3\r\n\t\tl25.1,7.6c0.3,0.1,0.6,0.1,1,0.1c1,0,1.9-0.4,2.5-1.2C233.3,242,233.5,240.6,232.9,239.4z\"/> </g> <g id=\"function-linear_axis-center\" class=\"st0\"> <path class=\"st1\" d=\"M226.9,119h-86.1L206,64.4c1.4-1.2,1.6-3.3,0.4-4.7c-1.2-1.4-3.3-1.6-4.7-0.4l-67.2,56.2V26.3\r\n\t\tc0-3.7-3-6.7-6.7-6.7c-3.7,0-6.7,3-6.7,6.7V119H28.5c-3.7,0-6.7,3-6.7,6.7c0,3.7,3,6.7,6.7,6.7h85.8l-64.7,54.1\r\n\t\tc-1.4,1.2-1.6,3.3-0.4,4.7c0.7,0.8,1.6,1.2,2.6,1.2c0.8,0,1.5-0.3,2.1-0.8l67.2-56.2v89.2c0,3.7,3,6.7,6.7,6.7c3.7,0,6.7-3,6.7-6.7\r\n\t\tv-92.2h92.4c3.7,0,6.7-3,6.7-6.7C233.6,122,230.6,119,226.9,119z\"/> </g> <g id=\"function-linear_function_x5F_gaussian\" class=\"st0\"> <rect x=\"118.9\" y=\"131.9\" transform=\"matrix(0.7071 0.7071 -0.7071 0.7071 137.8138 -49.4411)\" class=\"st2\" width=\"19.4\" height=\"19.4\"/> <path class=\"st1\" d=\"M128.6,158.7c-0.9,0-1.7-0.4-2.4-1L112.5,144c-1.3-1.3-1.3-3.4,0-4.7l13.8-13.8c0.6-0.6,1.5-1,2.4-1l0,0\r\n\t\tc0.9,0,1.7,0.4,2.4,1l13.8,13.8c1.3,1.3,1.3,3.4,0,4.7L131,157.8C130.3,158.4,129.5,158.7,128.6,158.7z M119.6,141.6l9,9l9-9l-9-9\r\n\t\tL119.6,141.6z\"/> <path class=\"st1\" d=\"M246.5,208.6c-20.9-1-35.7-6.1-46.4-14.1c0.1-1.5,0.1-3.1-0.1-4.7c-0.8-5.3-3.7-10-8-13.2\r\n\t\tc-2.8-2.1-6.1-3.2-9.5-3.6c-8.2-16.2-11.7-36.9-15.4-59.7c-3.5-21.5-9.7-36.5-18.3-44.8c0-0.8,0-1.7-0.1-2.5\r\n\t\tc-1.7-11-12.1-18.6-23.1-16.9c-9.8,1.5-16.8,9.9-17.1,19.4c-8.6,8.3-14.8,23.3-18.3,44.8c-3.7,22.8-7.2,43.4-15.4,59.6\r\n\t\tc-0.2,0-0.4,0-0.7,0c-10.5,1.6-17.7,11.1-16.9,21.5c-10.8,8-25.5,13.1-46.5,14.1c-3.7,0.2-6.5,3.3-6.4,7c0.2,3.6,3.1,6.4,6.7,6.4\r\n\t\tc0.1,0,0.2,0,0.3,0c22.7-1.1,39.2-6.5,51.6-14.9c3.7,3.7,8.8,6.1,14.3,6.1c1,0,2.1-0.1,3.1-0.2c11-1.7,18.6-12.1,16.9-23.1\r\n\t\tc-0.8-5.3-3.7-10-8-13.2c-0.3-0.2-0.6-0.3-0.9-0.5c8.1-17.7,11.6-38.9,15.1-60.6c2.8-17.1,6.9-26.9,10.6-32.6c3.7,4,9,6.4,14.6,6.4\r\n\t\tc1,0,2.1-0.1,3.1-0.2c4.6-0.7,8.6-3,11.5-6.2c3.7,5.7,7.8,15.5,10.6,32.6c3.5,21.7,7.1,42.9,15.1,60.6c-6.4,4.2-10.2,11.9-8.9,20\r\n\t\tc0.8,5.3,3.7,10,8,13.2c3.5,2.6,7.6,3.9,11.9,3.9c1,0,2.1-0.1,3.1-0.2c4.4-0.7,8.3-2.8,11.2-5.8c12.3,8.3,28.9,13.7,51.6,14.9\r\n\t\tc0.1,0,0.2,0,0.3,0c3.5,0,6.5-2.8,6.7-6.4C253,212,250.2,208.8,246.5,208.6z M90.6,190.9c1.1,7.4-3.9,14.3-11.3,15.4\r\n\t\tc-7.4,1.1-14.3-3.9-15.4-11.3c-1.1-7.4,3.9-14.3,11.3-15.4c0.7-0.1,1.4-0.2,2.1-0.2c2.8,0,5.6,0.9,7.9,2.6\r\n\t\tC88.1,184.2,90,187.4,90.6,190.9z M130.7,82.5c-7.3,1.1-14.3-3.9-15.4-11.3c-1.1-7.4,3.9-14.3,11.3-15.4c0.7-0.1,1.4-0.2,2.1-0.2\r\n\t\tc6.6,0,12.3,4.8,13.4,11.4C143.1,74.4,138,81.4,130.7,82.5z M182,206.4c-7.4,1.1-14.3-3.9-15.4-11.3c-1.1-7.4,3.9-14.3,11.3-15.4\r\n\t\tc0.7-0.1,1.4-0.2,2.1-0.2c2.8,0,5.6,0.9,7.9,2.6c2.9,2.1,4.8,5.3,5.4,8.8C194.5,198.3,189.4,205.2,182,206.4z\"/> </g> <g id=\"function-linear_parallel-coordinates\" class=\"st0\"> <path class=\"st1\" d=\"M227.1,30.3c-3.7,0-6.7,3-6.7,6.7v46.1L134.5,51V37c0-3.7-3-6.7-6.7-6.7s-6.7,3-6.7,6.7v11.1L39,68.5V37\r\n\t\tc0-3.7-3-6.7-6.7-6.7c-3.7,0-6.7,3-6.7,6.7v191.2c0,3.7,3,6.7,6.7,6.7c3.7,0,6.7-3,6.7-6.7v-33l82,15.4v17.7c0,3.7,3,6.7,6.7,6.7\r\n\t\ts6.7-3,6.7-6.7V208l42.4-34.4l43.5,35.3v19.2c0,3.7,3,6.7,6.7,6.7c3.7,0,6.7-3,6.7-6.7V37C233.8,33.3,230.8,30.3,227.1,30.3z\r\n\t\t M220.4,90.3v39.5l-43.5,35.3l-42.4-34.4V58.1L220.4,90.3z M121.1,55v73.6l-82,20.5V75.4L121.1,55z M39,188.3V156l82-20.5v68.2\r\n\t\tL39,188.3z M134.5,199.4v-60.1l37.1,30.1L134.5,199.4z M182.2,169.4l38.2-31v62L182.2,169.4z\"/> </g> <g id=\"function-linear_function-linear\"> <path d=\"M249.8,45.9C249.8,45.9,249.8,45.9,249.8,45.9c-1.7-11-12-18.6-23.1-16.9c-5.3,0.8-10,3.7-13.2,8.1\r\n\t\tc-1.2,1.7-2.1,3.5-2.7,5.5h-22.9c-3.1-9.1-12.3-15-22.2-13.5c-5.3,0.8-10,3.7-13.2,8.1c-3.2,4.4-4.5,9.7-3.7,15\r\n\t\tc0.8,5,3.3,9.3,7.2,12.4l-63.8,129c-1.9-0.3-3.9-0.4-6-0.1c-7.6,1.2-13.5,6.5-15.9,13.3H45c-3.1-9-12.3-14.8-22.2-13.3\r\n\t\tc-5.3,0.8-10,3.7-13.2,8.1c-3.2,4.4-4.5,9.7-3.7,15c0.8,5.3,3.7,10,8,13.2c3.5,2.6,7.6,3.9,11.9,3.9c1,0,2.1-0.1,3.2-0.2\r\n\t\tc7.6-1.2,13.4-6.5,15.9-13.2h25.3c2.8,8,10.5,13.5,19,13.5c1,0,2.1-0.1,3.1-0.2c5.3-0.8,10-3.7,13.2-8.1c3.2-4.4,4.5-9.7,3.7-15\r\n\t\tc-0.6-4.2-2.5-7.8-5.2-10.7l64.5-130.5c0,0,0.1,0,0.1,0c1,0,2.1-0.1,3.2-0.2c7.5-1.2,13.3-6.4,15.8-13h23.2c1.4,3.7,3.8,7,7.1,9.4\r\n\t\tc3.5,2.6,7.6,3.9,11.9,3.9c1,0,2.1-0.1,3.2-0.2C244,67.3,251.6,57,249.8,45.9z M28,226.9c-3.6,0.5-7.2-0.3-10.1-2.4\r\n\t\ts-4.8-5.3-5.4-8.9c-0.6-3.6,0.3-7.2,2.4-10.1c2.1-2.9,5.3-4.8,8.9-5.4c0.7-0.1,1.4-0.2,2.1-0.2c6.6,0,12.3,4.8,13.4,11.5\r\n\t\tC40.5,218.9,35.4,225.8,28,226.9z M100.2,221.6c-2.1,2.9-5.3,4.8-8.9,5.4C84,228.1,77,223,75.9,215.6c-1.1-7.4,3.9-14.3,11.3-15.5\r\n\t\tc0.7-0.1,1.4-0.2,2.1-0.2c6.6,0,12.3,4.8,13.4,11.5c0,0,0,0,0,0C103.2,215.1,102.3,218.6,100.2,221.6z M170.8,62.4\r\n\t\tc-3.6,0.5-7.2-0.3-10.1-2.4c-2.9-2.1-4.8-5.3-5.4-8.9c-0.6-3.6,0.3-7.2,2.4-10.1s5.3-4.8,8.9-5.4c0.7-0.1,1.4-0.2,2.1-0.2\r\n\t\tc6.6,0,12.3,4.8,13.4,11.5C183.3,54.4,178.2,61.3,170.8,62.4z M231.9,62.4c-3.6,0.5-7.2-0.3-10.1-2.4c-2.9-2.1-4.8-5.3-5.4-8.9\r\n\t\tc-0.6-3.6,0.3-7.2,2.4-10.1s5.3-4.8,8.9-5.4c0.7-0.1,1.4-0.2,2.1-0.2c6.6,0,12.3,4.8,13.4,11.5C244.4,54.3,239.3,61.3,231.9,62.4z\"/> </g> <g id=\"function-linear_bounding-box\" class=\"st0\"> <path class=\"st1\" d=\"M236.6,161.9c0-0.3,0.2-0.5,0.2-0.8V36.8c0-0.3-0.1-0.6-0.2-1c-0.1-0.5-0.1-0.9-0.3-1.4\r\n\t\tc-0.2-0.5-0.5-0.8-0.7-1.3c-0.2-0.3-0.3-0.6-0.5-0.8c-0.1-0.1-0.1-0.1-0.2-0.1c-0.3-0.4-0.8-0.6-1.2-0.9c-0.3-0.2-0.6-0.5-0.9-0.6\r\n\t\tc-0.4-0.2-0.7-0.2-1.1-0.3c-0.5-0.1-0.9-0.3-1.4-0.3c-0.1,0-0.1,0-0.2,0h-121c-0.3,0-0.5,0.1-0.7,0.1c-0.4,0-0.9,0.1-1.3,0.3\r\n\t\tc-0.5,0.1-0.9,0.3-1.3,0.6c-0.2,0.1-0.4,0.2-0.7,0.3L26.5,88.4c-0.1,0.1-0.2,0.3-0.3,0.4c-0.4,0.3-0.7,0.6-0.9,1\r\n\t\tc-0.3,0.3-0.5,0.6-0.7,1c-0.2,0.4-0.3,0.8-0.4,1.2c-0.1,0.4-0.2,0.9-0.3,1.3c0,0.2-0.1,0.3-0.1,0.5v134.4c0,3.7,3,6.7,6.7,6.7\r\n\t\th134.4c0.9,0,1.8-0.2,2.6-0.5c0.8-0.3,1.6-0.9,2.2-1.5c0,0,0,0,0,0l65.2-67.1c0,0,0,0,0,0l0.1-0.1c0.2-0.2,0.2-0.4,0.4-0.6\r\n\t\tc0.4-0.5,0.8-1,1-1.6C236.5,163,236.6,162.5,236.6,161.9z M171.5,164.4h46l-46,47.3V164.4z M37.1,218.1V100.6h68.6v57.1v1.8\r\n\t\tL37.1,218.1z M162.3,87.1h-49.8V43.5h99.8L162.3,87.1z M105.7,47.5v39.6H51.1L105.7,47.5z M112.4,157.7v-57.1h45.6v57.1H112.4z\r\n\t\t M171.5,96.9l51.9-45.3v106.1h-51.9V96.9z M43.4,221.5l66.9-57.1h2.1h45.6v57.1H43.4z\"/> </g> <g id=\"function-linear_ruler\" class=\"st0\"> <g class=\"st1\"> <path d=\"M171,246.5H88.6c-3.7,0-6.7-3-6.7-6.7V13.6c0-3.7,3-6.7,6.7-6.7H171c3.7,0,6.7,3,6.7,6.7v226.1\r\n\t\t\tC177.7,243.4,174.7,246.5,171,246.5z M95.3,233h68.9V20.3H95.3V233z\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"35.4\" width=\"24.3\" height=\"6.7\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"60.7\" width=\"38.5\" height=\"6.7\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"86\" width=\"24.3\" height=\"6.7\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"111.2\" width=\"24.3\" height=\"6.7\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"136.5\" width=\"38.5\" height=\"6.7\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"161.8\" width=\"24.3\" height=\"6.7\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"187\" width=\"24.3\" height=\"6.7\"/> </g> <g class=\"st1\"> <rect x=\"98.6\" y=\"212.3\" width=\"38.5\" height=\"6.7\"/> </g> </g> </symbol>";
+	module.exports = sprite.add(image, "function-linear");
 
 /***/ }
 /******/ ]);
