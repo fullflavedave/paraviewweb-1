@@ -20432,7 +20432,40 @@
 
 	    valueChange: function valueChange(idx, newVal) {
 	        var newData = this.state.data;
-	        newData.value[idx] = newVal;
+	        if (newVal === null) {
+	            newData.value.splice(idx, 1);
+	        } else {
+	            newData.value[idx] = newVal;
+	        }
+
+	        this.setState({ data: newData });
+	        if (this.props.onChange) {
+	            this.props.onChange(newData);
+	        }
+	    },
+	    addValue: function addValue() {
+	        var newData = this.state.data,
+	            values = newData.value;
+
+	        switch (values.length) {
+	            case 0:
+	                values.push(0);
+	                break;
+	            case 1:
+	                values.push(values[0]);
+	                break;
+	            default:
+	                var last = Number(values[values.length - 1]);
+	                var beforeLast = Number(values[values.length - 2]);
+	                var newValue = last + (last - beforeLast);
+	                if (!Number.isNaN(newValue) && Number.isFinite(newValue)) {
+	                    values.push(newValue);
+	                } else {
+	                    values.push(values[values.length - 1]);
+	                }
+
+	        }
+
 	        this.setState({ data: newData });
 	        if (this.props.onChange) {
 	            this.props.onChange(newData);
@@ -20453,6 +20486,8 @@
 	                _react2.default.createElement(
 	                    'span',
 	                    null,
+	                    _react2.default.createElement('i', { className: this.props.ui.layout === '-1' ? _CellProperty2.default.plusIcon : _CellProperty2.default.hidden,
+	                        onClick: this.addValue }),
 	                    _react2.default.createElement(_ToggleIconButtonWidget2.default, {
 	                        icon: _CellProperty2.default.helpIcon,
 	                        value: this.state.helpOpen,
@@ -20466,11 +20501,7 @@
 	                _react2.default.createElement(
 	                    'table',
 	                    { className: _CellProperty2.default.inputTable },
-	                    _react2.default.createElement(
-	                        'tbody',
-	                        null,
-	                        (0, _layouts2.default)(this.props.data, this.state.ui, this.valueChange)
-	                    )
+	                    (0, _layouts2.default)(this.props.data, this.props.ui, this.valueChange)
 	                )
 	            ),
 	            _react2.default.createElement('div', { className: this.state.helpOpen ? _CellProperty2.default.helpBox : _CellProperty2.default.hidden,
@@ -20594,97 +20625,151 @@
 	        ui.componentLabels = arrayFill(ui.componentLabels, 1);
 	        data.value = arrayFill(data.value, 1, null);
 	        return _react2.default.createElement(
-	            'tr',
-	            { className: _CellProperty2.default.inputRow },
-	            _react2.default.createElement(_InputCell2.default, { idx: 0, label: ui.componentLabels[0], type: ui.type, value: data.value[0], name: data.name, domain: ui.domain, onChange: callback })
+	            'tbody',
+	            null,
+	            _react2.default.createElement(
+	                'tr',
+	                { className: _CellProperty2.default.inputRow },
+	                _react2.default.createElement(_InputCell2.default, { idx: 0, label: ui.componentLabels[0], type: ui.type, value: data.value[0], name: data.name, domain: ui.domain, onChange: callback })
+	            )
 	        );
 	    },
 	    '2': function _(data, ui, callback) {
 	        ui.componentLabels = arrayFill(ui.componentLabels, 2);
 	        data.value = arrayFill(data.value, 2, null);
 	        return _react2.default.createElement(
-	            'tr',
-	            { className: _CellProperty2.default.inputRow },
-	            _react2.default.createElement(_InputCell2.default, { idx: 0, label: ui.componentLabels[0], type: ui.type, value: data.value[0], name: data.name, domain: ui.domain, onChange: callback }),
-	            _react2.default.createElement(_InputCell2.default, { idx: 1, label: ui.componentLabels[1], type: ui.type, value: data.value[1], name: data.name, domain: ui.domain, onChange: callback })
+	            'tbody',
+	            null,
+	            _react2.default.createElement(
+	                'tr',
+	                { className: _CellProperty2.default.inputRow },
+	                _react2.default.createElement(_InputCell2.default, { idx: 0, label: ui.componentLabels[0], type: ui.type, value: data.value[0], name: data.name, domain: ui.domain, onChange: callback }),
+	                _react2.default.createElement(_InputCell2.default, { idx: 1, label: ui.componentLabels[1], type: ui.type, value: data.value[1], name: data.name, domain: ui.domain, onChange: callback })
+	            )
 	        );
 	    },
 	    '3': function _(data, ui, callback) {
 	        ui.componentLabels = arrayFill(ui.componentLabels, 3);
 	        data.value = arrayFill(data.value, 3, null);
 	        return _react2.default.createElement(
-	            'tr',
-	            { className: _CellProperty2.default.inputRow },
-	            _react2.default.createElement(_InputCell2.default, { idx: 0, label: ui.componentLabels[0], type: ui.type, value: data.value[0], name: data.name, domain: ui.domain, onChange: callback }),
-	            _react2.default.createElement(_InputCell2.default, { idx: 1, label: ui.componentLabels[1], type: ui.type, value: data.value[1], name: data.name, domain: ui.domain, onChange: callback }),
-	            _react2.default.createElement(_InputCell2.default, { idx: 2, label: ui.componentLabels[2], type: ui.type, value: data.value[2], name: data.name, domain: ui.domain, onChange: callback })
+	            'tbody',
+	            null,
+	            _react2.default.createElement(
+	                'tr',
+	                { className: _CellProperty2.default.inputRow },
+	                _react2.default.createElement(_InputCell2.default, { idx: 0, label: ui.componentLabels[0], type: ui.type, value: data.value[0], name: data.name, domain: ui.domain, onChange: callback }),
+	                _react2.default.createElement(_InputCell2.default, { idx: 1, label: ui.componentLabels[1], type: ui.type, value: data.value[1], name: data.name, domain: ui.domain, onChange: callback }),
+	                _react2.default.createElement(_InputCell2.default, { idx: 2, label: ui.componentLabels[2], type: ui.type, value: data.value[2], name: data.name, domain: ui.domain, onChange: callback })
+	            )
 	        );
 	    },
 	    '2x3': function x3(data, ui, callback) {
 	        ui.componentLabels = arrayFill(ui.componentLabels, 6);
 	        data.value = arrayFill(data.value, 6, null);
-	        return [_react2.default.createElement(
-	            'tr',
-	            { className: _CellProperty2.default.inputRow, key: data.id + '_0' },
-	            _react2.default.createElement(_InputCell2.default, { idx: 0, label: ui.componentLabels[0], type: ui.type, value: data.value[0], name: data.name, domain: ui.domain, onChange: callback }),
-	            _react2.default.createElement(_InputCell2.default, { idx: 1, label: ui.componentLabels[1], type: ui.type, value: data.value[1], name: data.name, domain: ui.domain, onChange: callback }),
-	            _react2.default.createElement(_InputCell2.default, { idx: 2, label: ui.componentLabels[2], type: ui.type, value: data.value[2], name: data.name, domain: ui.domain, onChange: callback })
-	        ), _react2.default.createElement(
-	            'tr',
-	            { className: _CellProperty2.default.inputRow, key: data.id + '_1' },
-	            _react2.default.createElement(_InputCell2.default, { idx: 3, label: ui.componentLabels[3], type: ui.type, value: data.value[3], name: data.name, domain: ui.domain, onChange: callback }),
-	            _react2.default.createElement(_InputCell2.default, { idx: 4, label: ui.componentLabels[4], type: ui.type, value: data.value[4], name: data.name, domain: ui.domain, onChange: callback }),
-	            _react2.default.createElement(_InputCell2.default, { idx: 5, label: ui.componentLabels[5], type: ui.type, value: data.value[5], name: data.name, domain: ui.domain, onChange: callback })
-	        )];
+	        return _react2.default.createElement(
+	            'tbody',
+	            null,
+	            _react2.default.createElement(
+	                'tr',
+	                { className: _CellProperty2.default.inputRow, key: data.id + '_0' },
+	                _react2.default.createElement(_InputCell2.default, { idx: 0, label: ui.componentLabels[0], type: ui.type, value: data.value[0], name: data.name, domain: ui.domain, onChange: callback }),
+	                _react2.default.createElement(_InputCell2.default, { idx: 1, label: ui.componentLabels[1], type: ui.type, value: data.value[1], name: data.name, domain: ui.domain, onChange: callback }),
+	                _react2.default.createElement(_InputCell2.default, { idx: 2, label: ui.componentLabels[2], type: ui.type, value: data.value[2], name: data.name, domain: ui.domain, onChange: callback })
+	            ),
+	            _react2.default.createElement(
+	                'tr',
+	                { className: _CellProperty2.default.inputRow, key: data.id + '_1' },
+	                _react2.default.createElement(_InputCell2.default, { idx: 3, label: ui.componentLabels[3], type: ui.type, value: data.value[3], name: data.name, domain: ui.domain, onChange: callback }),
+	                _react2.default.createElement(_InputCell2.default, { idx: 4, label: ui.componentLabels[4], type: ui.type, value: data.value[4], name: data.name, domain: ui.domain, onChange: callback }),
+	                _react2.default.createElement(_InputCell2.default, { idx: 5, label: ui.componentLabels[5], type: ui.type, value: data.value[5], name: data.name, domain: ui.domain, onChange: callback })
+	            )
+	        );
 	    },
 	    '3x2': function x2(data, ui, callback) {
 	        ui.componentLabels = arrayFill(ui.componentLabels, 6);
 	        data.value = arrayFill(data.value, 6, null);
-	        return [_react2.default.createElement(
-	            'tr',
-	            { className: _CellProperty2.default.inputRow, key: data.id + '_0' },
-	            _react2.default.createElement(_InputCell2.default, { idx: 0, label: ui.componentLabels[0], type: ui.type, value: data.value[0], name: data.name, domain: ui.domain, onChange: callback }),
-	            _react2.default.createElement(_InputCell2.default, { idx: 1, label: ui.componentLabels[1], type: ui.type, value: data.value[1], name: data.name, domain: ui.domain, onChange: callback })
-	        ), _react2.default.createElement(
-	            'tr',
-	            { className: _CellProperty2.default.inputRow, key: data.id + '_1' },
-	            _react2.default.createElement(_InputCell2.default, { idx: 2, label: ui.componentLabels[2], type: ui.type, value: data.value[2], name: data.name, domain: ui.domain, onChange: callback }),
-	            _react2.default.createElement(_InputCell2.default, { idx: 3, label: ui.componentLabels[3], type: ui.type, value: data.value[3], name: data.name, domain: ui.domain, onChange: callback })
-	        ), _react2.default.createElement(
-	            'tr',
-	            { className: _CellProperty2.default.inputRow, key: data.id + '_2' },
-	            _react2.default.createElement(_InputCell2.default, { idx: 4, label: ui.componentLabels[4], type: ui.type, value: data.value[4], name: data.name, domain: ui.domain, onChange: callback }),
-	            _react2.default.createElement(_InputCell2.default, { idx: 5, label: ui.componentLabels[5], type: ui.type, value: data.value[5], name: data.name, domain: ui.domain, onChange: callback })
-	        )];
+	        return _react2.default.createElement(
+	            'tbody',
+	            null,
+	            _react2.default.createElement(
+	                'tr',
+	                { className: _CellProperty2.default.inputRow, key: data.id + '_0' },
+	                _react2.default.createElement(_InputCell2.default, { idx: 0, label: ui.componentLabels[0], type: ui.type, value: data.value[0], name: data.name, domain: ui.domain, onChange: callback }),
+	                _react2.default.createElement(_InputCell2.default, { idx: 1, label: ui.componentLabels[1], type: ui.type, value: data.value[1], name: data.name, domain: ui.domain, onChange: callback })
+	            ),
+	            _react2.default.createElement(
+	                'tr',
+	                { className: _CellProperty2.default.inputRow, key: data.id + '_1' },
+	                _react2.default.createElement(_InputCell2.default, { idx: 2, label: ui.componentLabels[2], type: ui.type, value: data.value[2], name: data.name, domain: ui.domain, onChange: callback }),
+	                _react2.default.createElement(_InputCell2.default, { idx: 3, label: ui.componentLabels[3], type: ui.type, value: data.value[3], name: data.name, domain: ui.domain, onChange: callback })
+	            ),
+	            _react2.default.createElement(
+	                'tr',
+	                { className: _CellProperty2.default.inputRow, key: data.id + '_2' },
+	                _react2.default.createElement(_InputCell2.default, { idx: 4, label: ui.componentLabels[4], type: ui.type, value: data.value[4], name: data.name, domain: ui.domain, onChange: callback }),
+	                _react2.default.createElement(_InputCell2.default, { idx: 5, label: ui.componentLabels[5], type: ui.type, value: data.value[5], name: data.name, domain: ui.domain, onChange: callback })
+	            )
+	        );
 	    },
 	    'm6': function m6(data, ui, callback) {
 	        ui.componentLabels = arrayFill(ui.componentLabels, 6);
 	        data.value = arrayFill(data.value, 6, null);
-	        return [_react2.default.createElement(
-	            'tr',
-	            { className: _CellProperty2.default.inputRow, key: data.id + '_0' },
-	            _react2.default.createElement(_InputCell2.default, { idx: 0, label: ui.componentLabels[0], type: ui.type, value: data.value[0], name: data.name, domain: ui.domain, onChange: callback }),
-	            _react2.default.createElement(_InputCell2.default, { idx: 1, label: ui.componentLabels[1], type: ui.type, value: data.value[1], name: data.name, domain: ui.domain, onChange: callback }),
-	            _react2.default.createElement(_InputCell2.default, { idx: 2, label: ui.componentLabels[2], type: ui.type, value: data.value[2], name: data.name, domain: ui.domain, onChange: callback })
-	        ), _react2.default.createElement(
-	            'tr',
-	            { className: _CellProperty2.default.inputRow, key: data.id + '_1' },
-	            _react2.default.createElement('td', null),
-	            _react2.default.createElement(_InputCell2.default, { idx: 3, label: ui.componentLabels[3], type: ui.type, value: data.value[3], name: data.name, domain: ui.domain, onChange: callback }),
-	            _react2.default.createElement(_InputCell2.default, { idx: 4, label: ui.componentLabels[4], type: ui.type, value: data.value[4], name: data.name, domain: ui.domain, onChange: callback })
-	        ), _react2.default.createElement(
-	            'tr',
-	            { className: _CellProperty2.default.inputRow, key: data.id + '_2' },
-	            _react2.default.createElement('td', null),
-	            _react2.default.createElement('td', null),
-	            _react2.default.createElement(_InputCell2.default, { idx: 5, label: ui.componentLabels[5], type: ui.type, value: data.value[5], name: data.name, domain: ui.domain, onChange: callback })
-	        )];
+	        return _react2.default.createElement(
+	            'tbody',
+	            null,
+	            _react2.default.createElement(
+	                'tr',
+	                { className: _CellProperty2.default.inputRow, key: data.id + '_0' },
+	                _react2.default.createElement(_InputCell2.default, { idx: 0, label: ui.componentLabels[0], type: ui.type, value: data.value[0], name: data.name, domain: ui.domain, onChange: callback }),
+	                _react2.default.createElement(_InputCell2.default, { idx: 1, label: ui.componentLabels[1], type: ui.type, value: data.value[1], name: data.name, domain: ui.domain, onChange: callback }),
+	                _react2.default.createElement(_InputCell2.default, { idx: 2, label: ui.componentLabels[2], type: ui.type, value: data.value[2], name: data.name, domain: ui.domain, onChange: callback })
+	            ),
+	            _react2.default.createElement(
+	                'tr',
+	                { className: _CellProperty2.default.inputRow, key: data.id + '_1' },
+	                _react2.default.createElement('td', null),
+	                _react2.default.createElement(_InputCell2.default, { idx: 3, label: ui.componentLabels[3], type: ui.type, value: data.value[3], name: data.name, domain: ui.domain, onChange: callback }),
+	                _react2.default.createElement(_InputCell2.default, { idx: 4, label: ui.componentLabels[4], type: ui.type, value: data.value[4], name: data.name, domain: ui.domain, onChange: callback })
+	            ),
+	            _react2.default.createElement(
+	                'tr',
+	                { className: _CellProperty2.default.inputRow, key: data.id + '_2' },
+	                _react2.default.createElement('td', null),
+	                _react2.default.createElement('td', null),
+	                _react2.default.createElement(_InputCell2.default, { idx: 5, label: ui.componentLabels[5], type: ui.type, value: data.value[5], name: data.name, domain: ui.domain, onChange: callback })
+	            )
+	        );
+	    },
+	    '-1': function _(data, ui, callback) {
+	        return _react2.default.createElement(
+	            'tbody',
+	            null,
+	            data.value.map(function (value, index) {
+	                return _react2.default.createElement(
+	                    'tr',
+	                    { key: [data.id, index].join('_'), className: _CellProperty2.default.inputRow },
+	                    _react2.default.createElement(
+	                        'td',
+	                        null,
+	                        _react2.default.createElement('i', { className: index ? _CellProperty2.default.deleteIcon : _CellProperty2.default.hidden,
+	                            onClick: function onClick() {
+	                                callback(index, null);
+	                            } })
+	                    ),
+	                    _react2.default.createElement(_InputCell2.default, { idx: index, label: '', type: ui.type, value: value, name: data.name, domain: ui.domain, onChange: callback })
+	                );
+	            })
+	        );
 	    },
 	    'NO_LAYOUT': function NO_LAYOUT(data, ui, callback) {
 	        return _react2.default.createElement(
-	            'tr',
-	            { className: _CellProperty2.default.inputRow },
-	            _react2.default.createElement(_InputCell2.default, { idx: 0, label: ui.componentLabels[0], type: ui.type, value: data.value[0], name: data.name, domain: ui.domain, onChange: callback })
+	            'tbody',
+	            null,
+	            _react2.default.createElement(
+	                'tr',
+	                { className: _CellProperty2.default.inputRow },
+	                _react2.default.createElement(_InputCell2.default, { idx: 0, label: ui.componentLabels[0], type: ui.type, value: data.value[0], name: data.name, domain: ui.domain, onChange: callback })
+	            )
 	        );
 	    }
 	};
@@ -20698,7 +20783,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _react = __webpack_require__(1);
@@ -20721,76 +20806,105 @@
 
 	exports.default = _react2.default.createClass({
 
-	    displayName: 'InputCell',
+	  displayName: 'InputCell',
 
-	    propTypes: {
-	        domain: _react2.default.PropTypes.object,
-	        idx: _react2.default.PropTypes.number.isRequired,
-	        label: _react2.default.PropTypes.string,
-	        onChange: _react2.default.PropTypes.func,
-	        type: _react2.default.PropTypes.string,
-	        value: _react2.default.PropTypes.any
-	    },
+	  propTypes: {
+	    domain: _react2.default.PropTypes.object,
+	    idx: _react2.default.PropTypes.number.isRequired,
+	    label: _react2.default.PropTypes.string,
+	    onChange: _react2.default.PropTypes.func,
+	    type: _react2.default.PropTypes.string,
+	    value: _react2.default.PropTypes.any
+	  },
 
-	    getDefaultProps: function getDefaultProps() {
-	        return {
-	            label: '',
-	            idx: 0,
-	            value: '',
-	            type: 'string'
-	        };
-	    },
-	    getInitialState: function getInitialState() {
-	        return {
-	            editing: false,
-	            valueRep: this.props.value
-	        };
-	    },
-	    valueChange: function valueChange(e) {
-	        var newVal = e.target.value;
-	        this.setState({ editing: true, valueRep: newVal });
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      label: '',
+	      idx: 0,
+	      value: '',
+	      type: 'string'
+	    };
+	  },
+	  getInitialState: function getInitialState() {
+	    return {
+	      editing: false,
+	      valueRep: this.props.value
+	    };
+	  },
+	  valueChange: function valueChange(e) {
+	    var newVal = e.target.value;
+	    this.setState({ editing: true, valueRep: newVal });
 
-	        if (_Validate2.default[this.props.type](newVal)) {
-	            var propVal = _Convert2.default[this.props.type](newVal);
-	            propVal = this.applyDomains(this.props.idx, propVal);
-	            this.props.onChange(this.props.idx, propVal);
-	        }
-	    },
-	    applyDomains: function applyDomains(idx, val) {
-	        if (!this.props.domain) {
-	            return val;
-	        }
-
-	        // Handle range
-	        if (this.props.domain.hasOwnProperty('range')) {
-	            var _props$domain$range$i = this.props.domain.range[idx];
-	            var min = _props$domain$range$i.min;
-	            var max = _props$domain$range$i.max;
-
-	            val = min !== undefined ? Math.max(min, val) : val;
-	            val = max !== undefined ? Math.min(max, val) : val;
-	        }
-	        return val;
-	    },
-	    endEditing: function endEditing() {
-	        this.setState({ editing: false });
-	    },
-	    render: function render() {
-	        return _react2.default.createElement(
-	            'td',
-	            { className: _CellProperty2.default.inputCell },
-	            _react2.default.createElement(
-	                'label',
-	                { className: _CellProperty2.default.inputCellLabel },
-	                this.props.label
-	            ),
-	            _react2.default.createElement('input', {
-	                className: _CellProperty2.default.inputCellInput,
-	                value: this.state.editing ? this.state.valueRep : this.props.value,
-	                onChange: this.valueChange,
-	                onBlur: this.endEditing })
-	        );
+	    if (_Validate2.default[this.props.type](newVal)) {
+	      var propVal = _Convert2.default[this.props.type](newVal);
+	      propVal = this.applyDomains(this.props.idx, propVal);
+	      this.props.onChange(this.props.idx, propVal);
 	    }
+	  },
+	  applyDomains: function applyDomains(idx, val) {
+	    if (!this.props.domain) {
+	      return val;
+	    }
+
+	    // Handle range
+	    if (this.props.domain.hasOwnProperty('range') && this.props.domain.range.length) {
+	      var size = this.props.domain.range.length;
+	      var _props$domain$range = this.props.domain.range[idx % size];
+	      var min = _props$domain$range.min;
+	      var max = _props$domain$range.max;
+	      var force = _props$domain$range.force;
+
+	      if (force) {
+	        val = min !== undefined ? Math.max(min, val) : val;
+	        val = max !== undefined ? Math.min(max, val) : val;
+	      }
+	    }
+	    return val;
+	  },
+	  getTooltip: function getTooltip() {
+	    var tooltip = '';
+	    var idx = this.props.idx;
+
+	    if (!this.props.domain) {
+	      return tooltip;
+	    }
+
+	    // Handle range
+	    if (this.props.domain.hasOwnProperty('range') && this.props.domain.range.length) {
+	      var size = this.props.domain.range.length;
+
+	      var _ref = this.props.domain.range[idx % size] || {};
+
+	      var min = _ref.min;
+	      var max = _ref.max;
+
+
+	      tooltip += min !== undefined ? 'min(' + min + ') ' : '';
+	      tooltip += max !== undefined ? 'max(' + max + ') ' : '';
+	    }
+
+	    return tooltip;
+	  },
+	  endEditing: function endEditing() {
+	    this.setState({ editing: false });
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'td',
+	      { className: _CellProperty2.default.inputCell },
+	      _react2.default.createElement(
+	        'label',
+	        { className: _CellProperty2.default.inputCellLabel },
+	        this.props.label
+	      ),
+	      _react2.default.createElement('input', {
+	        className: _CellProperty2.default.inputCellInput,
+	        value: this.state.editing ? this.state.valueRep : this.props.value,
+	        onChange: this.valueChange,
+	        title: this.getTooltip(),
+	        onBlur: this.endEditing })
+	    );
+	  }
 	});
 
 /***/ },
@@ -20907,14 +21021,16 @@
 	exports.i(__webpack_require__(184), undefined);
 
 	// module
-	exports.push([module.id, ".CellProperty_container_1HMbR {\n    width: calc(100% - 20px);\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    padding: 8px 10px;\n}\n\n.CellProperty_hidden_nEytP {\n    display: none;\n}\n\n@media(screen) and (max-width: 400px) {\n    .CellProperty_container_1HMbR {\n        max-width: 400px;\n    }\n}\n\n.CellProperty_header_1gpb3 {\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-justify-content: space-between;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    width: 100%;\n}\n\n.CellProperty_helpIcon_3dfzg {\n}\n\n.CellProperty_helpBox_P6fhW {\n    padding: 18px;\n    border: 1px solid #ddd;\n    background-color: #efefef;\n    margin-top: 10px;\n    width: 100%;\n    box-sizing: border-box;\n}\n\n.CellProperty_inputBlock_4ZaJo {\n    width: 100%;\n    border-collapse: separate;\n    border-spacing: 5px 0;\n}\n\n.CellProperty_inputTable_JjCuc {\n}\n\n.CellProperty_inputRow_Qy_Kd {\n  margin: 0;\n  padding: 0;\n}\n\n.CellProperty_inputCell_1Vcnf {\n  border-bottom: 1px solid gray;\n  min-height: 40px;\n  margin: 4px 5px;\n  padding: 0;\n}\n\n.CellProperty_inputCellLabel_3ml68 {\n  display: block;\n  min-height: 16px;\n  padding: 2px 6px 0;\n  font-size: 0.75em;\n  color: #aaa;\n}\n\n.CellProperty_inputCellInput_2U4fW {\n  margin: 0;\n  padding: 3px 6px;\n  width: 100%;\n  box-sizing: border-box;\n}\n", ""]);
+	exports.push([module.id, ".CellProperty_container_1HMbR {\n    width: calc(100% - 20px);\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    padding: 8px 10px;\n}\n\n.CellProperty_hidden_nEytP {\n    display: none;\n}\n\n@media(screen) and (max-width: 400px) {\n    .CellProperty_container_1HMbR {\n        max-width: 400px;\n    }\n}\n\n.CellProperty_header_1gpb3 {\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-justify-content: space-between;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    width: 100%;\n}\n\n.CellProperty_helpIcon_3dfzg {\n}\n\n.CellProperty_plusIcon_-xYFl {\n  cursor: pointer;\n}\n\n.CellProperty_deleteIcon_aRrhs {\n  position: relative;\n  top: 10px;\n  cursor: pointer;\n}\n\n.CellProperty_helpBox_P6fhW {\n    padding: 18px;\n    border: 1px solid #ddd;\n    background-color: #efefef;\n    margin-top: 10px;\n    width: 100%;\n    box-sizing: border-box;\n}\n\n.CellProperty_inputBlock_4ZaJo {\n    width: 100%;\n    border-collapse: separate;\n    border-spacing: 5px 0;\n}\n\n.CellProperty_inputTable_JjCuc {\n}\n\n.CellProperty_inputRow_Qy_Kd {\n  margin: 0;\n  padding: 0;\n}\n\n.CellProperty_inputCell_1Vcnf {\n  border-bottom: 1px solid gray;\n  min-height: 40px;\n  margin: 4px 5px;\n  padding: 0;\n}\n\n.CellProperty_inputCellLabel_3ml68 {\n  display: block;\n  min-height: 16px;\n  padding: 2px 6px 0;\n  font-size: 0.75em;\n  color: #aaa;\n}\n\n.CellProperty_inputCellInput_2U4fW {\n  margin: 0;\n  padding: 3px 6px;\n  width: 100%;\n  box-sizing: border-box;\n}\n", ""]);
 
 	// exports
 	exports.locals = {
 		"container": "CellProperty_container_1HMbR",
 		"hidden": "CellProperty_hidden_nEytP",
 		"header": "CellProperty_header_1gpb3",
-		"helpIcon": "CellProperty_helpIcon_3dfzg " + __webpack_require__(184).locals["fa-question-circle"] + "",
+		"helpIcon": "CellProperty_helpIcon_3dfzg " + __webpack_require__(184).locals["fa"] + " " + __webpack_require__(184).locals["fa-question-circle"] + "",
+		"plusIcon": "CellProperty_plusIcon_-xYFl " + __webpack_require__(184).locals["fa"] + " " + __webpack_require__(184).locals["fa-plus"] + "",
+		"deleteIcon": "CellProperty_deleteIcon_aRrhs " + __webpack_require__(184).locals["fa"] + " " + __webpack_require__(184).locals["fa-trash-o"] + "",
 		"helpBox": "CellProperty_helpBox_P6fhW",
 		"inputBlock": "CellProperty_inputBlock_4ZaJo",
 		"inputTable": "CellProperty_inputTable_JjCuc CellProperty_inputBlock_4ZaJo",
@@ -22839,6 +22955,10 @@
 	};
 
 	function extractLayout(ui) {
+	  if (ui.size === 0) {
+	    return '-1';
+	  }
+
 	  if (ui.size < 4) {
 	    return ui.size.toString();
 	  }
