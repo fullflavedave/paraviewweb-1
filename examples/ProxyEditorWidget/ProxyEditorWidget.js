@@ -22951,7 +22951,8 @@
 	  slider: 'Slider',
 	  'list-n': 'Enum',
 	  'list-1': 'Enum',
-	  checkbox: 'Checkbox'
+	  checkbox: 'Checkbox',
+	  textarea: 'Cell'
 	};
 
 	function extractLayout(ui) {
