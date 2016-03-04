@@ -327,7 +327,7 @@ body {
 }
 @media screen and (min-width: 769px) {
   #banner-title {
-    padding-top: 50px;
+    padding-top: 40px;
     font-size: 45px;
   }
 }
@@ -337,7 +337,7 @@ body {
 }
 @media screen and (min-width: 769px) {
   #banner-start {
-    padding: 60px 0;
+    padding: 40px 0;
     font-size: 18px;
   }
 }
