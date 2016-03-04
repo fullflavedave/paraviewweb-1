@@ -19757,8 +19757,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]_[local]_[hash:base64:5]!./../../node_modules/postcss-loader/index.js!./TextInputWidget.mcss", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]_[local]_[hash:base64:5]!./../../node_modules/postcss-loader/index.js!./TextInputWidget.mcss");
+			module.hot.accept("!!./../../node_modules/kw-web-suite/node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]_[local]_[hash:base64:5]!./../../node_modules/kw-web-suite/node_modules/postcss-loader/index.js!./TextInputWidget.mcss", function() {
+				var newContent = require("!!./../../node_modules/kw-web-suite/node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]_[local]_[hash:base64:5]!./../../node_modules/kw-web-suite/node_modules/postcss-loader/index.js!./TextInputWidget.mcss");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -20891,8 +20891,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../css-loader/index.js!./../postcss-loader/index.js!./normalize.css", function() {
-				var newContent = require("!!./../css-loader/index.js!./../postcss-loader/index.js!./normalize.css");
+			module.hot.accept("!!./../kw-web-suite/node_modules/css-loader/index.js!./../kw-web-suite/node_modules/postcss-loader/index.js!./normalize.css", function() {
+				var newContent = require("!!./../kw-web-suite/node_modules/css-loader/index.js!./../kw-web-suite/node_modules/postcss-loader/index.js!./normalize.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});

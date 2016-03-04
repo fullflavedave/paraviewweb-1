@@ -43585,8 +43585,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]_[local]_[hash:base64:5]!./../../node_modules/postcss-loader/index.js!./Coordinate2DWidget.mcss", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]_[local]_[hash:base64:5]!./../../node_modules/postcss-loader/index.js!./Coordinate2DWidget.mcss");
+			module.hot.accept("!!./../../node_modules/kw-web-suite/node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]_[local]_[hash:base64:5]!./../../node_modules/kw-web-suite/node_modules/postcss-loader/index.js!./Coordinate2DWidget.mcss", function() {
+				var newContent = require("!!./../../node_modules/kw-web-suite/node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]_[local]_[hash:base64:5]!./../../node_modules/kw-web-suite/node_modules/postcss-loader/index.js!./Coordinate2DWidget.mcss");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
