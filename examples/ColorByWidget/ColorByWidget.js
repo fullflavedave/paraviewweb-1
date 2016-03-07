@@ -19934,7 +19934,8 @@
 	          'select',
 	          { className: _ColorByWidget2.default.input,
 	            value: this.state.representationValue,
-	            onChange: this.onRepresentationChange },
+	            onChange: this.onRepresentationChange
+	          },
 	          this.state.representationValues.map(function (v, idx) {
 	            return _react2.default.createElement(
 	              'option',
@@ -19952,7 +19953,8 @@
 	          'select',
 	          { className: _ColorByWidget2.default.input,
 	            value: this.state.colorValue,
-	            onChange: this.onColorChange },
+	            onChange: this.onColorChange
+	          },
 	          this.state.colorValues.map(function (c, idx) {
 	            return _react2.default.createElement(
 	              'option',
@@ -19965,11 +19967,15 @@
 	      _react2.default.createElement(
 	        'div',
 	        { className: _ColorByWidget2.default.line },
-	        _react2.default.createElement('i', { onClick: this.toggleAdvancedView,
-	          className: this.state.advancedView ? _ColorByWidget2.default.advanceIconOn : _ColorByWidget2.default.advanceIconOff }),
+	        _react2.default.createElement('i', {
+	          onClick: this.toggleAdvancedView,
+	          className: this.state.advancedView ? _ColorByWidget2.default.advanceIconOn : _ColorByWidget2.default.advanceIconOff
+	        }),
 	        this.props.scalarBar && this.state.colorValue && this.state.colorValue.split(SEP)[1].length ? _react2.default.createElement('img', { onClick: this.toggleScalarBar, className: _ColorByWidget2.default.scalarBar, src: 'data:image/png;base64,' + this.props.scalarBar }) : _react2.default.createElement('div', { className: _ColorByWidget2.default.scalarBar, style: { backgroundColor: this.state.solidColor } }),
-	        _react2.default.createElement('i', { onClick: this.toggleScalarBar,
-	          className: this.state.scalarBarVisible ? _ColorByWidget2.default.scalarBarIconOn : _ColorByWidget2.default.scalarBarIconOff })
+	        _react2.default.createElement('i', {
+	          onClick: this.toggleScalarBar,
+	          className: this.state.scalarBarVisible ? _ColorByWidget2.default.scalarBarIconOn : _ColorByWidget2.default.scalarBarIconOff
+	        })
 	      ),
 	      _react2.default.createElement(_AdvancedView2.default, _extends({ visible: this.state.advancedView }, this.props))
 	    );
@@ -20056,16 +20062,20 @@
 	        { className: _ColorByWidget2.default.advancedViewControl },
 	        _react2.default.createElement('i', { 'data-idx': '0',
 	          onClick: this.updateActiveView,
-	          className: this.state.activeAdvanceView === '0' ? _ColorByWidget2.default.activePresetIcon : _ColorByWidget2.default.presetIcon }),
+	          className: this.state.activeAdvanceView === '0' ? _ColorByWidget2.default.activePresetIcon : _ColorByWidget2.default.presetIcon
+	        }),
 	        _react2.default.createElement('i', { 'data-idx': '1',
 	          onClick: this.updateActiveView,
-	          className: this.state.activeAdvanceView === '1' ? _ColorByWidget2.default.activeRangeIcon : _ColorByWidget2.default.rangeIcon }),
+	          className: this.state.activeAdvanceView === '1' ? _ColorByWidget2.default.activeRangeIcon : _ColorByWidget2.default.rangeIcon
+	        }),
 	        _react2.default.createElement('i', { 'data-idx': '2',
 	          onClick: this.updateActiveView,
-	          className: this.state.activeAdvanceView === '2' ? _ColorByWidget2.default.activeOpacityIcon : _ColorByWidget2.default.opacityIcon }),
+	          className: this.state.activeAdvanceView === '2' ? _ColorByWidget2.default.activeOpacityIcon : _ColorByWidget2.default.opacityIcon
+	        }),
 	        _react2.default.createElement('i', { 'data-idx': '3',
 	          onClick: this.updateActiveView,
-	          className: this.state.activeAdvanceView === '3' ? _ColorByWidget2.default.activeColorEditIcon : _ColorByWidget2.default.colorEditIcon })
+	          className: this.state.activeAdvanceView === '3' ? _ColorByWidget2.default.activeColorEditIcon : _ColorByWidget2.default.colorEditIcon
+	        })
 	      ),
 	      _react2.default.createElement(
 	        'div',
@@ -20073,12 +20083,14 @@
 	        _react2.default.createElement(_PresetListWidget2.default, {
 	          visible: this.state.activeAdvanceView === '0',
 	          onChange: this.updatePreset,
-	          presets: this.props.presets }),
+	          presets: this.props.presets
+	        }),
 	        _react2.default.createElement(_ScalarRangeWidget2.default, {
 	          visible: this.state.activeAdvanceView === '1',
 	          min: this.props.min,
 	          max: this.props.max,
-	          onApply: this.updateRange })
+	          onApply: this.updateRange
+	        })
 	      )
 	    );
 	  }
@@ -20091,7 +20103,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _react = __webpack_require__(1);
@@ -20106,63 +20118,65 @@
 
 	exports.default = _react2.default.createClass({
 
-	    displayName: 'PresetListWidget',
+	  displayName: 'PresetListWidget',
 
-	    propTypes: {
-	        activeName: _react2.default.PropTypes.string,
-	        height: _react2.default.PropTypes.string,
-	        onChange: _react2.default.PropTypes.func,
-	        presets: _react2.default.PropTypes.object,
-	        visible: _react2.default.PropTypes.bool
-	    },
+	  propTypes: {
+	    activeName: _react2.default.PropTypes.string,
+	    height: _react2.default.PropTypes.string,
+	    onChange: _react2.default.PropTypes.func,
+	    presets: _react2.default.PropTypes.object,
+	    visible: _react2.default.PropTypes.bool
+	  },
 
-	    getDefaultProps: function getDefaultProps() {
-	        return {
-	            activeName: '',
-	            height: '1em',
-	            presets: {},
-	            visible: true
-	        };
-	    },
-	    getInitialState: function getInitialState() {
-	        return {
-	            activeName: this.props.activeName
-	        };
-	    },
-	    updateActive: function updateActive(event) {
-	        var activeName = event.target.dataset.name;
-	        this.setState({ activeName: activeName });
-	        if (this.props.onChange) {
-	            this.props.onChange(activeName);
-	        }
-	    },
-	    render: function render() {
-	        var _this = this;
-
-	        if (!this.props.presets || !this.props.visible) {
-	            return null;
-	        }
-
-	        var activeName = this.state.activeName,
-	            height = this.props.height,
-	            presets = this.props.presets,
-	            names = Object.keys(presets);
-
-	        return _react2.default.createElement(
-	            'div',
-	            { className: _PresetListWidget2.default.container },
-	            _react2.default.createElement('div', { className: _PresetListWidget2.default.bottomPadding }),
-	            names.map(function (name) {
-	                return _react2.default.createElement('img', { src: 'data:image/png;base64,' + presets[name],
-	                    key: name,
-	                    style: { height: height },
-	                    'data-name': name,
-	                    onClick: _this.updateActive,
-	                    className: name === activeName ? _PresetListWidget2.default.activeLine : _PresetListWidget2.default.line });
-	            }),
-	            _react2.default.createElement('div', { className: _PresetListWidget2.default.bottomPadding })
-	        );
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      activeName: '',
+	      height: '1em',
+	      presets: {},
+	      visible: true
+	    };
+	  },
+	  getInitialState: function getInitialState() {
+	    return {
+	      activeName: this.props.activeName
+	    };
+	  },
+	  updateActive: function updateActive(event) {
+	    var activeName = event.target.dataset.name;
+	    this.setState({ activeName: activeName });
+	    if (this.props.onChange) {
+	      this.props.onChange(activeName);
 	    }
+	  },
+	  render: function render() {
+	    var _this = this;
+
+	    if (!this.props.presets || !this.props.visible) {
+	      return null;
+	    }
+
+	    var activeName = this.state.activeName,
+	        height = this.props.height,
+	        presets = this.props.presets,
+	        names = Object.keys(presets);
+
+	    return _react2.default.createElement(
+	      'div',
+	      { className: _PresetListWidget2.default.container },
+	      _react2.default.createElement('div', { className: _PresetListWidget2.default.bottomPadding }),
+	      names.map(function (name) {
+	        return _react2.default.createElement('img', {
+	          src: 'data:image/png;base64,' + presets[name],
+	          key: name,
+	          style: { height: height },
+	          'data-name': name,
+	          onClick: _this.updateActive,
+	          className: name === activeName ? _PresetListWidget2.default.activeLine : _PresetListWidget2.default.line
+	        });
+	      }),
+	      _react2.default.createElement('div', { className: _PresetListWidget2.default.bottomPadding })
+	    );
+	  }
 	});
 
 /***/ },
@@ -20602,14 +20616,16 @@
 	        pattern: '-*[0-9]*.*[0-9]*',
 	        name: 'min',
 	        value: this.state.min,
-	        onChange: this.updateRange }),
+	        onChange: this.updateRange
+	      }),
 	      _react2.default.createElement('input', {
 	        className: _ScalarRangeWidget2.default.rangeInput,
 	        type: 'text',
 	        pattern: '-*[0-9]*.*[0-9]*',
 	        name: 'max',
 	        value: this.state.max,
-	        onChange: this.updateRange }),
+	        onChange: this.updateRange
+	      }),
 	      _react2.default.createElement(
 	        'div',
 	        { className: _ScalarRangeWidget2.default.actionLine },

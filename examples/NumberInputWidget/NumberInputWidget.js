@@ -142,7 +142,8 @@
 	      step: this.props.step,
 	      value: this.state.editing ? this.state.valueRep : this.props.value,
 	      onChange: this.valueChange,
-	      onBlur: this.endEditing });
+	      onBlur: this.endEditing
+	    });
 	  }
 	});
 

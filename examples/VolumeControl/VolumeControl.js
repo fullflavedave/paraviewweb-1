@@ -97,7 +97,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -113,127 +113,124 @@
 	var CHANGE_TOPIC = 'model.change';
 
 	var EqualizerState = function () {
+	  function EqualizerState(_ref) {
+	    var _this = this;
 
-	    // ------------------------------------------------------------------------
+	    var _ref$size = _ref.size;
+	    var size = _ref$size === undefined ? 1 : _ref$size;
+	    var _ref$colors = _ref.colors;
+	    var colors = _ref$colors === undefined ? ['#cccccc'] : _ref$colors;
+	    var _ref$lookupTable = _ref.lookupTable;
+	    var lookupTable = _ref$lookupTable === undefined ? null : _ref$lookupTable;
+	    var _ref$scalars = _ref.scalars;
+	    var scalars = _ref$scalars === undefined ? [] : _ref$scalars;
 
-	    function EqualizerState(_ref) {
-	        var _this = this;
+	    _classCallCheck(this, EqualizerState);
 
-	        var _ref$size = _ref.size;
-	        var size = _ref$size === undefined ? 1 : _ref$size;
-	        var _ref$colors = _ref.colors;
-	        var colors = _ref$colors === undefined ? ['#cccccc'] : _ref$colors;
-	        var _ref$lookupTable = _ref.lookupTable;
-	        var lookupTable = _ref$lookupTable === undefined ? null : _ref$lookupTable;
-	        var _ref$scalars = _ref.scalars;
-	        var scalars = _ref$scalars === undefined ? [] : _ref$scalars;
+	    this.size = size;
+	    this.scalars = scalars;
+	    this.lookupTable = lookupTable;
+	    this.colors = colors;
 
-	        _classCallCheck(this, EqualizerState);
-
-	        this.size = size;
-	        this.scalars = scalars;
-	        this.lookupTable = lookupTable;
-	        this.colors = colors;
-
-	        // Handle colors
-	        if (lookupTable) {
-	            (function () {
-	                var convertColor = function convertColor(color) {
-	                    var R = Math.floor(color[0] * 255),
-	                        G = Math.floor(color[1] * 255),
-	                        B = Math.floor(color[2] * 255);
-	                    return 'rgb(' + R + ',' + G + ',' + B + ')';
-	                };
-	                var callback = function callback(data, envelope) {
-	                    for (var idx = 0; idx < _this.size; idx++) {
-	                        var color = _this.lookupTable.getColor(_this.scalars[idx]);
-	                        _this.colors[idx] = convertColor(color);
-	                    }
-	                    if (envelope) {
-	                        _this.emit(CHANGE_TOPIC, _this);
-	                    }
-	                };
-
-	                _this.lutChangeSubscription = _this.lookupTable.onChange(callback);
-	                callback();
-	            })();
-	        }
-
-	        // Fill opacity
-	        this.opacities = [];
-	        while (this.opacities.length < this.size) {
-	            this.opacities.push(-1);
-	        }
-
-	        // Make the updateOpacities a closure to prevent any this issue
-	        // when using it as a callback
-	        this.updateOpacities = function (values) {
-	            var changeDetected = false;
-	            for (var i = 0; i < _this.size; i++) {
-	                changeDetected = changeDetected || _this.opacities[i] !== values[i];
-	                _this.opacities[i] = values[i];
-	            }
-	            if (changeDetected) {
-	                _this.emit(CHANGE_TOPIC, _this);
-	            }
+	    // Handle colors
+	    if (lookupTable) {
+	      (function () {
+	        var convertColor = function convertColor(color) {
+	          var R = Math.floor(color[0] * 255);
+	          var G = Math.floor(color[1] * 255);
+	          var B = Math.floor(color[2] * 255);
+	          return 'rgb(' + R + ',' + G + ',' + B + ')';
+	        };
+	        var callback = function callback(data, envelope) {
+	          for (var idx = 0; idx < _this.size; idx++) {
+	            var color = _this.lookupTable.getColor(_this.scalars[idx]);
+	            _this.colors[idx] = convertColor(color);
+	          }
+	          if (envelope) {
+	            _this.emit(CHANGE_TOPIC, _this);
+	          }
 	        };
 
-	        // Make the resetOpacities a closure to prevent any this issue
-	        // when using it as a callback
-	        this.resetOpacities = function () {
-	            var opacityStep = 1.0 / _this.size,
-	                opacity = 0.0,
-	                changeDetected = false;
+	        _this.lutChangeSubscription = _this.lookupTable.onChange(callback);
+	        callback();
+	      })();
+	    }
 
-	            for (var i = 0; i < _this.size; i++) {
-	                opacity += opacityStep;
-	                changeDetected = changeDetected || _this.opacities[i] !== opacity;
-	                _this.opacities[i] = opacity;
-	            }
-	            if (changeDetected) {
-	                _this.emit(CHANGE_TOPIC, _this);
-	            }
-	        };
-	        this.resetOpacities();
+	    // Fill opacity
+	    this.opacities = [];
+	    while (this.opacities.length < this.size) {
+	      this.opacities.push(-1);
+	    }
+
+	    // Make the updateOpacities a closure to prevent any this issue
+	    // when using it as a callback
+	    this.updateOpacities = function (values) {
+	      var changeDetected = false;
+	      for (var i = 0; i < _this.size; i++) {
+	        changeDetected = changeDetected || _this.opacities[i] !== values[i];
+	        _this.opacities[i] = values[i];
+	      }
+	      if (changeDetected) {
+	        _this.emit(CHANGE_TOPIC, _this);
+	      }
+	    };
+
+	    // Make the resetOpacities a closure to prevent any this issue
+	    // when using it as a callback
+	    this.resetOpacities = function () {
+	      var opacityStep = 1.0 / _this.size;
+	      var opacity = 0.0;
+	      var changeDetected = false;
+
+	      for (var i = 0; i < _this.size; i++) {
+	        opacity += opacityStep;
+	        changeDetected = changeDetected || _this.opacities[i] !== opacity;
+	        _this.opacities[i] = opacity;
+	      }
+	      if (changeDetected) {
+	        _this.emit(CHANGE_TOPIC, _this);
+	      }
+	    };
+	    this.resetOpacities();
+	  }
+
+	  // ------------------------------------------------------------------------
+
+	  _createClass(EqualizerState, [{
+	    key: 'getOpacities',
+	    value: function getOpacities() {
+	      return this.opacities;
 	    }
 
 	    // ------------------------------------------------------------------------
 
-	    _createClass(EqualizerState, [{
-	        key: 'getOpacities',
-	        value: function getOpacities() {
-	            return this.opacities;
-	        }
+	  }, {
+	    key: 'getColors',
+	    value: function getColors() {
+	      return this.colors;
+	    }
 
-	        // ------------------------------------------------------------------------
+	    // ------------------------------------------------------------------------
 
-	    }, {
-	        key: 'getColors',
-	        value: function getColors() {
-	            return this.colors;
-	        }
+	  }, {
+	    key: 'onChange',
+	    value: function onChange(callback) {
+	      return this.on(CHANGE_TOPIC, callback);
+	    }
 
-	        // ------------------------------------------------------------------------
+	    // ------------------------------------------------------------------------
 
-	    }, {
-	        key: 'onChange',
-	        value: function onChange(callback) {
-	            return this.on(CHANGE_TOPIC, callback);
-	        }
+	  }, {
+	    key: 'destroy',
+	    value: function destroy() {
+	      this.off();
 
-	        // ------------------------------------------------------------------------
+	      this.lutChangeSubscription.unsubscribe();
+	      this.lutChangeSubscription = null;
+	    }
+	  }]);
 
-	    }, {
-	        key: 'destroy',
-	        value: function destroy() {
-	            this.off();
-
-	            this.lutChangeSubscription.unsubscribe();
-	            this.lutChangeSubscription = null;
-	        }
-	    }]);
-
-	    return EqualizerState;
+	  return EqualizerState;
 	}();
 
 	// Add Observer pattern using Monologue.js
@@ -11554,7 +11551,7 @@
 	/* WEBPACK VAR INJECTION */(function(setImmediate) {'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -11572,118 +11569,118 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var TOPIC = {
-	    CHANGE: 'LookupTable.change',
-	    ACTIVE_CHANGE: 'LookupTable.active.change',
-	    LIST_CHANGE: 'LookupTable.list.change'
+	  CHANGE: 'LookupTable.change',
+	  ACTIVE_CHANGE: 'LookupTable.active.change',
+	  LIST_CHANGE: 'LookupTable.list.change'
 	};
 
 	var LookupTableManager = function () {
-	    function LookupTableManager() {
-	        var _this = this;
+	  function LookupTableManager() {
+	    var _this = this;
 
-	        _classCallCheck(this, LookupTableManager);
+	    _classCallCheck(this, LookupTableManager);
 
-	        this.luts = {};
-	        this.lutSubscriptions = {};
+	    this.luts = {};
+	    this.lutSubscriptions = {};
 
-	        this.onChangeCallback = function (data, envelope) {
-	            _this.emit(TOPIC.CHANGE, data);
-	        };
+	    this.onChangeCallback = function (data, envelope) {
+	      _this.emit(TOPIC.CHANGE, data);
+	    };
+	  }
+
+	  _createClass(LookupTableManager, [{
+	    key: 'addLookupTable',
+	    value: function addLookupTable(name, range, preset) {
+	      if (!this.activeField) {
+	        this.activeField = name;
+	      }
+
+	      var lut = this.luts[name];
+	      if (lut === undefined) {
+	        lut = new _LookupTable2.default(name);
+
+	        this.luts[name] = lut;
+	        this.lutSubscriptions[name] = lut.onChange(this.onChangeCallback);
+	      }
+
+	      lut.setPreset(preset || 'spectralflip');
+	      lut.setScalarRange(range[0], range[1]);
+
+	      this.emit(TOPIC.LIST_CHANGE, this);
+
+	      return lut;
 	    }
+	  }, {
+	    key: 'removeLookupTable',
+	    value: function removeLookupTable(name) {
+	      if (this.luts.hasOwn(name)) {
+	        this.lutSubscriptions[name].unsubscribe();
+	        this.luts[name].destroy();
 
-	    _createClass(LookupTableManager, [{
-	        key: 'addLookupTable',
-	        value: function addLookupTable(name, range, preset) {
-	            if (!this.activeField) {
-	                this.activeField = name;
-	            }
+	        delete this.luts[name];
+	        delete this.lutSubscriptions[name];
 
-	            var lut = this.luts[name];
-	            if (lut === undefined) {
-	                lut = new _LookupTable2.default(name);
+	        this.emit(TOPIC.LIST_CHANGE, this);
+	      }
+	    }
+	  }, {
+	    key: 'updateActiveLookupTable',
+	    value: function updateActiveLookupTable(name) {
+	      var _this2 = this;
 
-	                this.luts[name] = lut;
-	                this.lutSubscriptions[name] = lut.onChange(this.onChangeCallback);
-	            }
-
-	            lut.setPreset(preset || 'spectralflip');
-	            lut.setScalarRange(range[0], range[1]);
-
-	            this.emit(TOPIC.LIST_CHANGE, this);
-
-	            return lut;
+	      setImmediate(function () {
+	        _this2.emit(TOPIC.ACTIVE_CHANGE, name);
+	      });
+	      this.activeField = name;
+	    }
+	  }, {
+	    key: 'getLookupTable',
+	    value: function getLookupTable(name) {
+	      return this.luts[name];
+	    }
+	  }, {
+	    key: 'addFields',
+	    value: function addFields(fieldsRange, lutConfigs) {
+	      for (var field in fieldsRange) {
+	        var lut = this.addLookupTable(field, fieldsRange[field]);
+	        if (lutConfigs && lutConfigs[field]) {
+	          if (lutConfigs[field].discrete !== undefined) {
+	            lut.discrete = lutConfigs[field].discrete;
+	          }
+	          if (lutConfigs[field].preset) {
+	            lut.setPreset(lutConfigs[field].preset);
+	          } else if (lutConfigs[field].controlpoints) {
+	            lut.updateControlPoints(lutConfigs[field].controlpoints);
+	          }
+	          if (lutConfigs[field].range) {
+	            lut.setScalarRange(lutConfigs[field].range[0], lutConfigs[field].range[1]);
+	          }
 	        }
-	    }, {
-	        key: 'removeLookupTable',
-	        value: function removeLookupTable(name) {
-	            if (this.luts.hasOwn(name)) {
-	                this.lutSubscriptions[name].unsubscribe();
-	                this.luts[name].destroy();
+	      }
+	    }
+	  }, {
+	    key: 'getActiveField',
+	    value: function getActiveField() {
+	      return this.activeField;
+	    }
+	  }, {
+	    key: 'onChange',
+	    value: function onChange(callback) {
+	      return this.on(TOPIC.CHANGE, callback);
+	    }
+	  }, {
+	    key: 'onFieldsChange',
+	    value: function onFieldsChange(callback) {
+	      return this.on(TOPIC.LIST_CHANGE, callback);
+	    }
+	  }, {
+	    key: 'onActiveLookupTableChange',
+	    value: function onActiveLookupTableChange(callback) {
+	      return this.on(TOPIC.ACTIVE_CHANGE, callback);
+	    }
+	  }]);
 
-	                delete this.luts[name];
-	                delete this.lutSubscriptions[name];
-
-	                this.emit(TOPIC.LIST_CHANGE, this);
-	            }
-	        }
-	    }, {
-	        key: 'updateActiveLookupTable',
-	        value: function updateActiveLookupTable(name) {
-	            var _this2 = this;
-
-	            setImmediate(function () {
-	                _this2.emit(TOPIC.ACTIVE_CHANGE, name);
-	            });
-	            this.activeField = name;
-	        }
-	    }, {
-	        key: 'getLookupTable',
-	        value: function getLookupTable(name) {
-	            return this.luts[name];
-	        }
-	    }, {
-	        key: 'addFields',
-	        value: function addFields(fieldsRange, lutConfigs) {
-	            for (var field in fieldsRange) {
-	                var lut = this.addLookupTable(field, fieldsRange[field]);
-	                if (lutConfigs && lutConfigs[field]) {
-	                    if (lutConfigs[field].discrete !== undefined) {
-	                        lut.discrete = lutConfigs[field].discrete;
-	                    }
-	                    if (lutConfigs[field].preset) {
-	                        lut.setPreset(lutConfigs[field].preset);
-	                    } else if (lutConfigs[field].controlpoints) {
-	                        lut.updateControlPoints(lutConfigs[field].controlpoints);
-	                    }
-	                    if (lutConfigs[field].range) {
-	                        lut.setScalarRange(lutConfigs[field].range[0], lutConfigs[field].range[1]);
-	                    }
-	                }
-	            }
-	        }
-	    }, {
-	        key: 'getActiveField',
-	        value: function getActiveField() {
-	            return this.activeField;
-	        }
-	    }, {
-	        key: 'onChange',
-	        value: function onChange(callback) {
-	            return this.on(TOPIC.CHANGE, callback);
-	        }
-	    }, {
-	        key: 'onFieldsChange',
-	        value: function onFieldsChange(callback) {
-	            return this.on(TOPIC.LIST_CHANGE, callback);
-	        }
-	    }, {
-	        key: 'onActiveLookupTableChange',
-	        value: function onActiveLookupTableChange(callback) {
-	            return this.on(TOPIC.ACTIVE_CHANGE, callback);
-	        }
-	    }]);
-
-	    return LookupTableManager;
+	  return LookupTableManager;
 	}();
 
 	// Add Observer pattern using Monologue.js
@@ -11886,7 +11883,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -11908,294 +11905,294 @@
 	// Initialize liste
 	var presetList = [];
 	for (var key in _Presets2.default.lookuptables) {
-	    presetList.push(key);
+	  presetList.push(key);
 	}
 
 	// Global helper methods ------------------------------------------------------
 
 	function applyRatio(a, b, ratio) {
-	    return (b - a) * ratio + a;
+	  return (b - a) * ratio + a;
 	}
 
 	function interpolateColor(pointA, pointB, scalar) {
-	    var ratio = (scalar - pointA[0]) / (pointB[0] - pointA[0]);
-	    return [applyRatio(pointA[1], pointB[1], ratio), applyRatio(pointA[2], pointB[2], ratio), applyRatio(pointA[3], pointB[3], ratio), 255];
+	  var ratio = (scalar - pointA[0]) / (pointB[0] - pointA[0]);
+	  return [applyRatio(pointA[1], pointB[1], ratio), applyRatio(pointA[2], pointB[2], ratio), applyRatio(pointA[3], pointB[3], ratio), 255];
 	}
 
 	function extractPoint(controlPoints, idx) {
-	    return [controlPoints[idx].x, controlPoints[idx].r, controlPoints[idx].g, controlPoints[idx].b];
+	  return [controlPoints[idx].x, controlPoints[idx].r, controlPoints[idx].g, controlPoints[idx].b];
 	}
 
 	function xrgbCompare(a, b) {
-	    return a.x - b.x;
+	  return a.x - b.x;
 	}
 
 	// ----------------------------------------------------------------------------
 
 	var LookupTable = function () {
-	    function LookupTable(name) {
-	        var discrete = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
+	  function LookupTable(name) {
+	    var discrete = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
 
-	        _classCallCheck(this, LookupTable);
+	    _classCallCheck(this, LookupTable);
 
-	        this.name = name;
-	        this.scalarRange = [0, 1];
-	        this.delta = 1;
-	        this.controlPoints = null;
-	        this.colorTableSize = 256;
-	        this.colorTable = null;
-	        this.colorNaN = [0, 0, 0, 0];
-	        this.setPreset('spectralflip');
-	        this.discrete = discrete;
-	        this.scale = 1;
+	    this.name = name;
+	    this.scalarRange = [0, 1];
+	    this.delta = 1;
+	    this.controlPoints = null;
+	    this.colorTableSize = 256;
+	    this.colorTable = null;
+	    this.colorNaN = [0, 0, 0, 0];
+	    this.setPreset('spectralflip');
+	    this.discrete = discrete;
+	    this.scale = 1;
 
-	        // Auto rebuild
-	        this.build();
+	    // Auto rebuild
+	    this.build();
+	  }
+
+	  _createClass(LookupTable, [{
+	    key: 'getName',
+	    value: function getName() {
+	      return this.name;
 	    }
+	  }, {
+	    key: 'getPresets',
+	    value: function getPresets() {
+	      return presetList;
+	    }
+	  }, {
+	    key: 'setPreset',
+	    value: function setPreset(name) {
+	      this.colorTable = null;
+	      this.controlPoints = [];
 
-	    _createClass(LookupTable, [{
-	        key: 'getName',
-	        value: function getName() {
-	            return this.name;
+	      var colors = _Presets2.default.lookuptables[name].controlpoints;
+	      var count = colors.length;
+
+	      for (var i = 0; i < count; i++) {
+	        this.controlPoints.push({
+	          x: colors[i].x,
+	          r: colors[i].r,
+	          g: colors[i].g,
+	          b: colors[i].b
+	        });
+	      }
+
+	      // Auto rebuild
+	      this.build();
+
+	      this.emit(CHANGE_TOPIC, { change: 'preset', lut: this });
+	    }
+	  }, {
+	    key: 'updateControlPoints',
+	    value: function updateControlPoints(controlPoints) {
+	      this.colorTable = null;
+	      this.controlPoints = [];
+
+	      var count = controlPoints.length;
+
+	      for (var i = 0; i < count; i++) {
+	        this.controlPoints.push({
+	          x: controlPoints[i].x,
+	          r: controlPoints[i].r,
+	          g: controlPoints[i].g,
+	          b: controlPoints[i].b
+	        });
+	      }
+
+	      // Auto rebuild
+	      this.build();
+
+	      this.emit(CHANGE_TOPIC, { change: 'controlPoints', lut: this });
+	    }
+	  }, {
+	    key: 'setColorForNaN',
+	    value: function setColorForNaN() {
+	      var r = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
+	      var g = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
+	      var b = arguments.length <= 2 || arguments[2] === undefined ? 0 : arguments[2];
+	      var a = arguments.length <= 3 || arguments[3] === undefined ? 0 : arguments[3];
+
+	      this.colorNaN = [r, g, b, a];
+	    }
+	  }, {
+	    key: 'getColorForNaN',
+	    value: function getColorForNaN() {
+	      return this.colorNaN;
+	    }
+	  }, {
+	    key: 'getScalarRange',
+	    value: function getScalarRange() {
+	      return [Number(this.scalarRange[0]), Number(this.scalarRange[1])];
+	    }
+	  }, {
+	    key: 'setScalarRange',
+	    value: function setScalarRange(min, max) {
+	      this.scalarRange = [min, max];
+	      this.delta = max - min;
+
+	      this.emit(CHANGE_TOPIC, { change: 'scalarRange', lut: this });
+	    }
+	  }, {
+	    key: 'build',
+	    value: function build(trigger) {
+	      var currentControlIdx = 0;
+
+	      if (this.colorTable) {
+	        return;
+	      }
+
+	      this.colorTable = [];
+	      if (this.discrete) {
+	        this.colorTableSize = this.controlPoints.length;
+	        this.scale = 50;
+	        for (var idx = 0; idx < this.colorTableSize; idx++) {
+	          var color = this.controlPoints[idx];
+	          this.colorTable.push([color.r, color.g, color.b, 255]);
 	        }
-	    }, {
-	        key: 'getPresets',
-	        value: function getPresets() {
-	            return presetList;
+	      } else {
+	        this.scale = 1;
+	        for (var _idx = 0; _idx < this.colorTableSize; _idx++) {
+	          var value = _idx / (this.colorTableSize - 1);
+	          var pointA = extractPoint(this.controlPoints, currentControlIdx);
+	          var pointB = extractPoint(this.controlPoints, currentControlIdx + 1);
+
+	          if (value > pointB[0]) {
+	            currentControlIdx += 1;
+	            pointA = extractPoint(this.controlPoints, currentControlIdx);
+	            pointB = extractPoint(this.controlPoints, currentControlIdx + 1);
+	          }
+
+	          this.colorTable.push(interpolateColor(pointA, pointB, value));
 	        }
-	    }, {
-	        key: 'setPreset',
-	        value: function setPreset(name) {
-	            this.colorTable = null;
-	            this.controlPoints = [];
+	      }
 
-	            var colors = _Presets2.default.lookuptables[name].controlpoints,
-	                count = colors.length;
+	      if (trigger) {
+	        this.emit(CHANGE_TOPIC, { change: 'controlPoints', lut: this });
+	      }
+	    }
+	  }, {
+	    key: 'setNumberOfColors',
+	    value: function setNumberOfColors(nbColors) {
+	      this.colorTableSize = nbColors;
+	      this.colorTable = null;
 
-	            for (var i = 0; i < count; i++) {
-	                this.controlPoints.push({
-	                    x: colors[i].x,
-	                    r: colors[i].r,
-	                    g: colors[i].g,
-	                    b: colors[i].b
-	                });
-	            }
+	      // Auto rebuild
+	      this.build();
 
-	            // Auto rebuild
-	            this.build();
+	      this.emit(CHANGE_TOPIC, { change: 'numberOfColors', lut: this });
+	    }
+	  }, {
+	    key: 'getNumberOfControlPoints',
+	    value: function getNumberOfControlPoints() {
+	      return this.controlPoints ? this.controlPoints.length : 0;
+	    }
+	  }, {
+	    key: 'removeControlPoint',
+	    value: function removeControlPoint(idx) {
+	      if (idx > 0 && idx < this.controlPoints.length - 1) {
+	        this.controlPoints.splice(idx, 1);
 
-	            this.emit(CHANGE_TOPIC, { change: 'preset', lut: this });
+	        // Auto rebuild and trigger change
+	        this.colorTable = null;
+	        this.build(true);
+
+	        return true;
+	      }
+	      return false;
+	    }
+	  }, {
+	    key: 'getControlPoint',
+	    value: function getControlPoint(idx) {
+	      return this.controlPoints[idx];
+	    }
+	  }, {
+	    key: 'updateControlPoint',
+	    value: function updateControlPoint(idx, xrgb) {
+	      this.controlPoints[idx] = xrgb;
+	      var xValue = xrgb.x;
+
+	      // Ensure order
+	      this.controlPoints.sort(xrgbCompare);
+
+	      // Auto rebuild and trigger change
+	      this.colorTable = null;
+	      this.build(true);
+
+	      // Return the modified index of current control point
+	      for (var i = 0; i < this.controlPoints.length; i++) {
+	        if (this.controlPoints[i].x === xValue) {
+	          return i;
 	        }
-	    }, {
-	        key: 'updateControlPoints',
-	        value: function updateControlPoints(controlPoints) {
-	            this.colorTable = null;
-	            this.controlPoints = [];
+	      }
+	      return 0;
+	    }
+	  }, {
+	    key: 'addControlPoint',
+	    value: function addControlPoint(xrgb) {
+	      this.controlPoints.push(xrgb);
+	      var xValue = xrgb.x;
 
-	            var count = controlPoints.length;
+	      // Ensure order
+	      this.controlPoints.sort(xrgbCompare);
 
-	            for (var i = 0; i < count; i++) {
-	                this.controlPoints.push({
-	                    x: controlPoints[i].x,
-	                    r: controlPoints[i].r,
-	                    g: controlPoints[i].g,
-	                    b: controlPoints[i].b
-	                });
-	            }
+	      // Auto rebuild and trigger change
+	      this.colorTable = null;
+	      this.build(true);
 
-	            // Auto rebuild
-	            this.build();
-
-	            this.emit(CHANGE_TOPIC, { change: 'controlPoints', lut: this });
+	      // Return the modified index of current control point
+	      for (var i = 0; i < this.controlPoints.length; i++) {
+	        if (this.controlPoints[i].x === xValue) {
+	          return i;
 	        }
-	    }, {
-	        key: 'setColorForNaN',
-	        value: function setColorForNaN() {
-	            var r = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
-	            var g = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
-	            var b = arguments.length <= 2 || arguments[2] === undefined ? 0 : arguments[2];
-	            var a = arguments.length <= 3 || arguments[3] === undefined ? 0 : arguments[3];
+	      }
+	      return -1;
+	    }
+	  }, {
+	    key: 'drawToCanvas',
+	    value: function drawToCanvas(canvas) {
+	      var colors = this.colorTable;
+	      var length = this.scale * colors.length;
+	      var ctx = canvas.getContext('2d');
+	      var canvasData = ctx.getImageData(0, 0, length, 1);
 
-	            this.colorNaN = [r, g, b, a];
-	        }
-	    }, {
-	        key: 'getColorForNaN',
-	        value: function getColorForNaN() {
-	            return this.colorNaN;
-	        }
-	    }, {
-	        key: 'getScalarRange',
-	        value: function getScalarRange() {
-	            return [Number(this.scalarRange[0]), Number(this.scalarRange[1])];
-	        }
-	    }, {
-	        key: 'setScalarRange',
-	        value: function setScalarRange(min, max) {
-	            this.scalarRange = [min, max];
-	            this.delta = max - min;
+	      for (var i = 0; i < length; i++) {
+	        var colorIdx = Math.floor(i / this.scale);
+	        canvasData.data[i * 4 + 0] = Math.floor(255 * colors[colorIdx][0]);
+	        canvasData.data[i * 4 + 1] = Math.floor(255 * colors[colorIdx][1]);
+	        canvasData.data[i * 4 + 2] = Math.floor(255 * colors[colorIdx][2]);
+	        canvasData.data[i * 4 + 3] = 255;
+	      }
+	      ctx.putImageData(canvasData, 0, 0);
+	    }
+	  }, {
+	    key: 'getColor',
+	    value: function getColor(scalar) {
+	      if (isNaN(scalar)) {
+	        return this.colorNaN;
+	      }
+	      var idxValue = Math.floor(this.colorTableSize * (scalar - this.scalarRange[0]) / this.delta);
+	      if (idxValue < 0) {
+	        return this.colorTable[0];
+	      }
+	      if (idxValue >= this.colorTableSize) {
+	        return this.colorTable[this.colorTable.length - 1];
+	      }
+	      return this.colorTable[idxValue];
+	    }
+	  }, {
+	    key: 'destroy',
+	    value: function destroy() {
+	      this.off();
+	    }
+	  }, {
+	    key: 'onChange',
+	    value: function onChange(callback) {
+	      return this.on(CHANGE_TOPIC, callback);
+	    }
+	  }]);
 
-	            this.emit(CHANGE_TOPIC, { change: 'scalarRange', lut: this });
-	        }
-	    }, {
-	        key: 'build',
-	        value: function build(trigger) {
-	            var currentControlIdx = 0;
-
-	            if (this.colorTable) {
-	                return;
-	            }
-
-	            this.colorTable = [];
-	            if (this.discrete) {
-	                this.colorTableSize = this.controlPoints.length;
-	                this.scale = 50;
-	                for (var idx = 0; idx < this.colorTableSize; idx++) {
-	                    var color = this.controlPoints[idx];
-	                    this.colorTable.push([color.r, color.g, color.b, 255]);
-	                }
-	            } else {
-	                this.scale = 1;
-	                for (var idx = 0; idx < this.colorTableSize; idx++) {
-	                    var value = idx / (this.colorTableSize - 1);
-	                    var pointA = extractPoint(this.controlPoints, currentControlIdx),
-	                        pointB = extractPoint(this.controlPoints, currentControlIdx + 1);
-
-	                    if (value > pointB[0]) {
-	                        currentControlIdx += 1;
-	                        pointA = extractPoint(this.controlPoints, currentControlIdx);
-	                        pointB = extractPoint(this.controlPoints, currentControlIdx + 1);
-	                    }
-
-	                    this.colorTable.push(interpolateColor(pointA, pointB, value));
-	                }
-	            }
-
-	            if (trigger) {
-	                this.emit(CHANGE_TOPIC, { change: 'controlPoints', lut: this });
-	            }
-	        }
-	    }, {
-	        key: 'setNumberOfColors',
-	        value: function setNumberOfColors(nbColors) {
-	            this.colorTableSize = nbColors;
-	            this.colorTable = null;
-
-	            // Auto rebuild
-	            this.build();
-
-	            this.emit(CHANGE_TOPIC, { change: 'numberOfColors', lut: this });
-	        }
-	    }, {
-	        key: 'getNumberOfControlPoints',
-	        value: function getNumberOfControlPoints() {
-	            return this.controlPoints ? this.controlPoints.length : 0;
-	        }
-	    }, {
-	        key: 'removeControlPoint',
-	        value: function removeControlPoint(idx) {
-	            if (idx > 0 && idx < this.controlPoints.length - 1) {
-	                this.controlPoints.splice(idx, 1);
-
-	                // Auto rebuild and trigger change
-	                this.colorTable = null;
-	                this.build(true);
-
-	                return true;
-	            }
-	            return false;
-	        }
-	    }, {
-	        key: 'getControlPoint',
-	        value: function getControlPoint(idx) {
-	            return this.controlPoints[idx];
-	        }
-	    }, {
-	        key: 'updateControlPoint',
-	        value: function updateControlPoint(idx, xrgb) {
-	            this.controlPoints[idx] = xrgb;
-	            var xValue = xrgb.x;
-
-	            // Ensure order
-	            this.controlPoints.sort(xrgbCompare);
-
-	            // Auto rebuild and trigger change
-	            this.colorTable = null;
-	            this.build(true);
-
-	            // Return the modified index of current control point
-	            for (var i = 0; i < this.controlPoints.length; i++) {
-	                if (this.controlPoints[i].x === xValue) {
-	                    return i;
-	                }
-	            }
-	            return 0;
-	        }
-	    }, {
-	        key: 'addControlPoint',
-	        value: function addControlPoint(xrgb) {
-	            this.controlPoints.push(xrgb);
-	            var xValue = xrgb.x;
-
-	            // Ensure order
-	            this.controlPoints.sort(xrgbCompare);
-
-	            // Auto rebuild and trigger change
-	            this.colorTable = null;
-	            this.build(true);
-
-	            // Return the modified index of current control point
-	            for (var i = 0; i < this.controlPoints.length; i++) {
-	                if (this.controlPoints[i].x === xValue) {
-	                    return i;
-	                }
-	            }
-	            return -1;
-	        }
-	    }, {
-	        key: 'drawToCanvas',
-	        value: function drawToCanvas(canvas) {
-	            var colors = this.colorTable,
-	                length = this.scale * colors.length,
-	                ctx = canvas.getContext("2d"),
-	                canvasData = ctx.getImageData(0, 0, length, 1);
-
-	            for (var i = 0; i < length; i++) {
-	                var colorIdx = Math.floor(i / this.scale);
-	                canvasData.data[i * 4 + 0] = Math.floor(255 * colors[colorIdx][0]);
-	                canvasData.data[i * 4 + 1] = Math.floor(255 * colors[colorIdx][1]);
-	                canvasData.data[i * 4 + 2] = Math.floor(255 * colors[colorIdx][2]);
-	                canvasData.data[i * 4 + 3] = 255;
-	            }
-	            ctx.putImageData(canvasData, 0, 0);
-	        }
-	    }, {
-	        key: 'getColor',
-	        value: function getColor(scalar) {
-	            if (isNaN(scalar)) {
-	                return this.colorNaN;
-	            }
-	            var idxValue = Math.floor(this.colorTableSize * (scalar - this.scalarRange[0]) / this.delta);
-	            if (idxValue < 0) {
-	                return this.colorTable[0];
-	            }
-	            if (idxValue >= this.colorTableSize) {
-	                return this.colorTable[this.colorTable.length - 1];
-	            }
-	            return this.colorTable[idxValue];
-	        }
-	    }, {
-	        key: 'destroy',
-	        value: function destroy() {
-	            this.off();
-	        }
-	    }, {
-	        key: 'onChange',
-	        value: function onChange(callback) {
-	            return this.on(CHANGE_TOPIC, callback);
-	        }
-	    }]);
-
-	    return LookupTable;
+	  return LookupTable;
 	}();
 
 	// Add Observer pattern using Monologue.js
@@ -12208,91 +12205,91 @@
 /* 12 */
 /***/ function(module, exports) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	exports.default = {
-	    "lookuptables": {
-	        "spectralflip": {
-	            "controlpoints": [{ "x": 0, "r": 0.3686274509803922, "g": 0.3098039215686275, "b": 0.6352941176470588 }, { "x": 0.1, "r": 0.196078431372549, "g": 0.5333333333333333, "b": 0.7411764705882353 }, { "x": 0.2, "r": 0.4, "g": 0.7607843137254902, "b": 0.6470588235294118 }, { "x": 0.3, "r": 0.6705882352941176, "g": 0.8666666666666667, "b": 0.6431372549019608 }, { "x": 0.4, "r": 0.9019607843137255, "g": 0.9607843137254902, "b": 0.596078431372549 }, { "x": 0.5, "r": 1, "g": 1, "b": 0.7490196078431373 }, { "x": 0.6, "r": 0.996078431372549, "g": 0.8784313725490196, "b": 0.5450980392156862 }, { "x": 0.7, "r": 0.9921568627450981, "g": 0.6823529411764706, "b": 0.3803921568627451 }, { "x": 0.8, "r": 0.9568627450980393, "g": 0.4274509803921568, "b": 0.2627450980392157 }, { "x": 0.9, "r": 0.8352941176470589, "g": 0.2431372549019608, "b": 0.3098039215686275 }, { "x": 1, "r": 0.6196078431372549, "g": 0.00392156862745098, "b": 0.2588235294117647 }],
-	            "range": [0.0, 1.0]
-	        },
-	        "cold2warm": {
-	            "controlpoints": [{ "x": 0.00, "r": 0.23137254902, "g": 0.298039215686, "b": 0.752941176471 }, { "x": 0.50, "r": 0.865, "g": 0.865, "b": 0.865 }, { "x": 1.00, "r": 0.705882352941, "g": 0.0156862745098, "b": 0.149019607843 }],
-	            "range": [0.0, 1.0]
-	        },
-	        "rainbow": {
-	            "controlpoints": [{ "x": 0.00, "r": 0.0, "g": 0.0, "b": 1.0 }, { "x": 0.25, "r": 0.0, "g": 1.0, "b": 1.0 }, { "x": 0.50, "r": 0.0, "g": 1.0, "b": 0.0 }, { "x": 0.75, "r": 1.0, "g": 1.0, "b": 0.0 }, { "x": 1.00, "r": 1.0, "g": 0.0, "b": 0.0 }],
-	            "range": [0.0, 1.0]
-	        },
-	        "gray scale": {
-	            "controlpoints": [{ "x": 0.0, "r": 0.0, "g": 0.0, "b": 0.0 }, { "x": 1.0, "r": 1.0, "g": 1.0, "b": 1.0 }],
-	            "range": [0.0, 1.0]
-	        },
-	        "gray scale flip": {
-	            "controlpoints": [{ "x": 0.0, "r": 1.0, "g": 1.0, "b": 1.0 }, { "x": 1.0, "r": 0.0, "g": 0.0, "b": 0.0 }],
-	            "range": [0.0, 1.0]
-	        },
-	        "spectral": {
-	            "controlpoints": [{ "x": 0, "r": 0.6196078431372549, "g": 0.00392156862745098, "b": 0.2588235294117647 }, { "x": 0.1, "r": 0.8352941176470589, "g": 0.2431372549019608, "b": 0.3098039215686275 }, { "x": 0.2, "r": 0.9568627450980393, "g": 0.4274509803921568, "b": 0.2627450980392157 }, { "x": 0.3, "r": 0.9921568627450981, "g": 0.6823529411764706, "b": 0.3803921568627451 }, { "x": 0.4, "r": 0.996078431372549, "g": 0.8784313725490196, "b": 0.5450980392156862 }, { "x": 0.5, "r": 1, "g": 1, "b": 0.7490196078431373 }, { "x": 0.6, "r": 0.9019607843137255, "g": 0.9607843137254902, "b": 0.596078431372549 }, { "x": 0.7, "r": 0.6705882352941176, "g": 0.8666666666666667, "b": 0.6431372549019608 }, { "x": 0.8, "r": 0.4, "g": 0.7607843137254902, "b": 0.6470588235294118 }, { "x": 0.9, "r": 0.196078431372549, "g": 0.5333333333333333, "b": 0.7411764705882353 }, { "x": 1, "r": 0.3686274509803922, "g": 0.3098039215686275, "b": 0.6352941176470588 }],
-	            "range": [0.0, 1.0]
-	        },
-	        "warm": {
-	            "controlpoints": [{ "x": 0.00, "r": 0.4745098039215686, "g": 0.09019607843137255, "b": 0.09019607843137255 }, { "x": 0.20, "r": 0.7098039215686275, "g": 0.00392156862745098, "b": 0.00392156862745098 }, { "x": 0.40, "r": 0.9372549019607843, "g": 0.2784313725490196, "b": 0.09803921568627451 }, { "x": 0.60, "r": 0.9764705882352941, "g": 0.5137254901960784, "b": 0.1411764705882353 }, { "x": 0.80, "r": 1.0, "g": 0.7058823529411765, "b": 0.0 }, { "x": 1.00, "r": 1.0, "g": 0.8980392156862745, "b": 0.02352941176470588 }],
-	            "range": [0.0, 1.0]
-	        },
-	        "cool": {
-	            "controlpoints": [{ "x": 0, "r": 0.4588235294117647, "g": 0.6941176470588235, "b": 0.00392156862745098 }, { "x": 0.1666666666666667, "r": 0.3450980392156863, "g": 0.5019607843137255, "b": 0.1607843137254902 }, { "x": 0.3333333333333333, "r": 0.3137254901960784, "g": 0.8431372549019608, "b": 0.7490196078431373 }, { "x": 0.5, "r": 0.1098039215686274, "g": 0.5843137254901961, "b": 0.803921568627451 }, { "x": 0.6666666666666666, "r": 0.2313725490196079, "g": 0.407843137254902, "b": 0.6705882352941176 }, { "x": 0.8333333333333334, "r": 0.6039215686274509, "g": 0.407843137254902, "b": 1 }, { "x": 1, "r": 0.3725490196078431, "g": 0.2, "b": 0.5019607843137255 }],
-	            "range": [0.0, 1.0]
-	        },
-	        "blues": {
-	            "controlpoints": [{ "x": 0, "r": 0.2313725490196079, "g": 0.407843137254902, "b": 0.6705882352941176 }, { "x": 0.1666666666666667, "r": 0.1098039215686274, "g": 0.5843137254901961, "b": 0.803921568627451 }, { "x": 0.3333333333333333, "r": 0.3058823529411765, "g": 0.8509803921568627, "b": 0.9176470588235294 }, { "x": 0.5, "r": 0.4509803921568628, "g": 0.6039215686274509, "b": 0.8352941176470589 }, { "x": 0.6666666666666666, "r": 0.2588235294117647, "g": 0.2392156862745098, "b": 0.6627450980392157 }, { "x": 0.8333333333333334, "r": 0.3137254901960784, "g": 0.3294117647058823, "b": 0.5294117647058824 }, { "x": 1, "r": 0.06274509803921569, "g": 0.1647058823529412, "b": 0.3215686274509804 }],
-	            "range": [0.0, 1.0]
-	        },
-	        "wildflower": {
-	            "controlpoints": [{ "x": 0, "r": 0.1098039215686274, "g": 0.5843137254901961, "b": 0.803921568627451 }, { "x": 0.1666666666666667, "r": 0.2313725490196079, "g": 0.407843137254902, "b": 0.6705882352941176 }, { "x": 0.3333333333333333, "r": 0.4, "g": 0.2431372549019608, "b": 0.7176470588235294 }, { "x": 0.5, "r": 0.6352941176470588, "g": 0.3294117647058823, "b": 0.8117647058823529 }, { "x": 0.6666666666666666, "r": 0.8705882352941177, "g": 0.3803921568627451, "b": 0.807843137254902 }, { "x": 0.8333333333333334, "r": 0.8627450980392157, "g": 0.3803921568627451, "b": 0.5843137254901961 }, { "x": 1, "r": 0.2392156862745098, "g": 0.06274509803921569, "b": 0.3215686274509804 }],
-	            "range": [0.0, 1.0]
-	        },
-	        "citrus": {
-	            "controlpoints": [{ "x": 0, "r": 0.396078431372549, "g": 0.4862745098039216, "b": 0.2156862745098039 }, { "x": 0.2, "r": 0.4588235294117647, "g": 0.6941176470588235, "b": 0.00392156862745098 }, { "x": 0.4, "r": 0.6980392156862745, "g": 0.7294117647058823, "b": 0.1882352941176471 }, { "x": 0.6, "r": 1, "g": 0.8980392156862745, "b": 0.02352941176470588 }, { "x": 0.8, "r": 1, "g": 0.7058823529411765, "b": 0 }, { "x": 1, "r": 0.9764705882352941, "g": 0.5137254901960784, "b": 0.1411764705882353 }],
-	            "range": [0.0, 1.0]
-	        },
-	        "organge2purple": {
-	            "controlpoints": [{ "x": 0, "r": 0.4980392156862745, "g": 0.2313725490196079, "b": 0.03137254901960784 }, { "x": 0.1, "r": 0.7019607843137254, "g": 0.3450980392156863, "b": 0.02352941176470588 }, { "x": 0.2, "r": 0.8784313725490196, "g": 0.5098039215686274, "b": 0.07843137254901961 }, { "x": 0.3, "r": 0.9921568627450981, "g": 0.7215686274509804, "b": 0.3882352941176471 }, { "x": 0.4, "r": 0.996078431372549, "g": 0.8784313725490196, "b": 0.7137254901960784 }, { "x": 0.5, "r": 0.9686274509803922, "g": 0.9686274509803922, "b": 0.9686274509803922 }, { "x": 0.6, "r": 0.8470588235294118, "g": 0.8549019607843137, "b": 0.9215686274509803 }, { "x": 0.7, "r": 0.6980392156862745, "g": 0.6705882352941176, "b": 0.8235294117647058 }, { "x": 0.8, "r": 0.5019607843137255, "g": 0.4509803921568628, "b": 0.6745098039215687 }, { "x": 0.9, "r": 0.3294117647058823, "g": 0.1529411764705882, "b": 0.5333333333333333 }, { "x": 1, "r": 0.1764705882352941, "g": 0, "b": 0.2941176470588235 }],
-	            "range": [0.0, 1.0]
-	        },
-	        "brown2green": {
-	            "controlpoints": [{ "x": 0, "r": 0.3294117647058823, "g": 0.1882352941176471, "b": 0.0196078431372549 }, { "x": 0.1, "r": 0.5490196078431373, "g": 0.3176470588235294, "b": 0.0392156862745098 }, { "x": 0.2, "r": 0.7490196078431373, "g": 0.5058823529411764, "b": 0.1764705882352941 }, { "x": 0.3, "r": 0.8745098039215686, "g": 0.7607843137254902, "b": 0.4901960784313725 }, { "x": 0.4, "r": 0.9647058823529412, "g": 0.9098039215686274, "b": 0.7647058823529411 }, { "x": 0.5, "r": 0.9607843137254902, "g": 0.9607843137254902, "b": 0.9607843137254902 }, { "x": 0.6, "r": 0.7803921568627451, "g": 0.9176470588235294, "b": 0.8980392156862745 }, { "x": 0.7, "r": 0.5019607843137255, "g": 0.803921568627451, "b": 0.7568627450980392 }, { "x": 0.8, "r": 0.207843137254902, "g": 0.592156862745098, "b": 0.5607843137254902 }, { "x": 0.9, "r": 0.00392156862745098, "g": 0.4, "b": 0.3686274509803922 }, { "x": 1, "r": 0, "g": 0.2352941176470588, "b": 0.1882352941176471 }],
-	            "range": [0.0, 1.0]
-	        },
-	        "blue2green": {
-	            "controlpoints": [{ "x": 0, "r": 0.9686274509803922, "g": 0.9882352941176471, "b": 0.9921568627450981 }, { "x": 0.125, "r": 0.8980392156862745, "g": 0.9607843137254902, "b": 0.9764705882352941 }, { "x": 0.25, "r": 0.8, "g": 0.9254901960784314, "b": 0.9019607843137255 }, { "x": 0.375, "r": 0.6, "g": 0.8470588235294118, "b": 0.788235294117647 }, { "x": 0.5, "r": 0.4, "g": 0.7607843137254902, "b": 0.6431372549019608 }, { "x": 0.625, "r": 0.2549019607843137, "g": 0.6823529411764706, "b": 0.4627450980392157 }, { "x": 0.75, "r": 0.1372549019607843, "g": 0.5450980392156862, "b": 0.2705882352941176 }, { "x": 0.875, "r": 0, "g": 0.4274509803921568, "b": 0.1725490196078431 }, { "x": 1, "r": 0, "g": 0.2666666666666667, "b": 0.1058823529411765 }],
-	            "range": [0.0, 1.0]
-	        },
-	        "yellow2brown": {
-	            "controlpoints": [{ "x": 0, "r": 1, "g": 1, "b": 0.8980392156862745 }, { "x": 0.125, "r": 1, "g": 0.9686274509803922, "b": 0.7372549019607844 }, { "x": 0.25, "r": 0.996078431372549, "g": 0.8901960784313725, "b": 0.5686274509803921 }, { "x": 0.375, "r": 0.996078431372549, "g": 0.7686274509803922, "b": 0.3098039215686275 }, { "x": 0.5, "r": 0.996078431372549, "g": 0.6, "b": 0.1607843137254902 }, { "x": 0.625, "r": 0.9254901960784314, "g": 0.4392156862745098, "b": 0.07843137254901961 }, { "x": 0.75, "r": 0.8, "g": 0.2980392156862745, "b": 0.007843137254901961 }, { "x": 0.875, "r": 0.6, "g": 0.203921568627451, "b": 0.01568627450980392 }, { "x": 1, "r": 0.4, "g": 0.1450980392156863, "b": 0.02352941176470588 }],
-	            "range": [0.0, 1.0]
-	        },
-	        "blue2purple": {
-	            "controlpoints": [{ "x": 0, "r": 0.9686274509803922, "g": 0.9882352941176471, "b": 0.9921568627450981 }, { "x": 0.125, "r": 0.8784313725490196, "g": 0.9254901960784314, "b": 0.9568627450980393 }, { "x": 0.25, "r": 0.7490196078431373, "g": 0.8274509803921568, "b": 0.9019607843137255 }, { "x": 0.375, "r": 0.6196078431372549, "g": 0.7372549019607844, "b": 0.8549019607843137 }, { "x": 0.5, "r": 0.5490196078431373, "g": 0.5882352941176471, "b": 0.7764705882352941 }, { "x": 0.625, "r": 0.5490196078431373, "g": 0.4196078431372549, "b": 0.6941176470588235 }, { "x": 0.75, "r": 0.5333333333333333, "g": 0.2549019607843137, "b": 0.615686274509804 }, { "x": 0.875, "r": 0.5058823529411764, "g": 0.05882352941176471, "b": 0.4862745098039216 }, { "x": 1, "r": 0.3019607843137255, "g": 0, "b": 0.2941176470588235 }],
-	            "range": [0.0, 1.0]
-	        },
-	        "ocean": {
-	            "controlpoints": [{ "x": 0.0, "r": 0.039215, "g": 0.090195, "b": 0.25098 }, { "x": 0.125, "r": 0.133333, "g": 0.364706, "b": 0.521569 }, { "x": 0.25, "r": 0.321569, "g": 0.760784, "b": 0.8 }, { "x": 0.375, "r": 0.690196, "g": 0.960784, "b": 0.894118 }, { "x": 0.5, "r": 0.552941, "g": 0.921569, "b": 0.552941 }, { "x": 0.625, "r": 0.329412, "g": 0.6, "b": 0.239216 }, { "x": 0.75, "r": 0.211765, "g": 0.349020, "b": 0.078435 }, { "x": 0.875, "r": 0.011765, "g": 0.207843, "b": 0.023525 }, { "x": 1.0, "r": 0.286275, "g": 0.294118, "b": 0.301961 }],
-	            "range": [0.0, 1.0]
-	        },
-	        "earth": {
-	            "controlpoints": [{ "x": 0.000000, "r": 0.392157, "g": 0.392157, "b": 0.392157 }, { "x": 0.586175, "r": 0.392157, "g": 0.392157, "b": 0.392157 }, { "x": 0.589041, "r": 0.141176, "g": 0.345098, "b": 0.478431 }, { "x": 0.589042, "r": 0.501961, "g": 0.694118, "b": 0.172549 }, { "x": 0.617699, "r": 0.74902, "g": 0.560784, "b": 0.188235 }, { "x": 0.789648, "r": 0.752941, "g": 0.741176, "b": 0.729412 }, { "x": 0.993079, "r": 0.796078, "g": 0.780392, "b": 0.772549 }, { "x": 1.000000, "r": 0.796078, "g": 0.780392, "b": 0.772549 }],
-	            "range": [0.0, 1.0]
-	        }
+	  lookuptables: {
+	    spectralflip: {
+	      controlpoints: [{ x: 0, r: 0.3686274509803922, g: 0.3098039215686275, b: 0.6352941176470588 }, { x: 0.1, r: 0.196078431372549, g: 0.5333333333333333, b: 0.7411764705882353 }, { x: 0.2, r: 0.4, g: 0.7607843137254902, b: 0.6470588235294118 }, { x: 0.3, r: 0.6705882352941176, g: 0.8666666666666667, b: 0.6431372549019608 }, { x: 0.4, r: 0.9019607843137255, g: 0.9607843137254902, b: 0.596078431372549 }, { x: 0.5, r: 1, g: 1, b: 0.7490196078431373 }, { x: 0.6, r: 0.996078431372549, g: 0.8784313725490196, b: 0.5450980392156862 }, { x: 0.7, r: 0.9921568627450981, g: 0.6823529411764706, b: 0.3803921568627451 }, { x: 0.8, r: 0.9568627450980393, g: 0.4274509803921568, b: 0.2627450980392157 }, { x: 0.9, r: 0.8352941176470589, g: 0.2431372549019608, b: 0.3098039215686275 }, { x: 1, r: 0.6196078431372549, g: 0.00392156862745098, b: 0.2588235294117647 }],
+	      range: [0.0, 1.0]
 	    },
-	    "swatches": {
-	        "colors": [{ "r": 255, "g": 255, "b": 255 }, { "r": 204, "g": 255, "b": 255 }, { "r": 204, "g": 204, "b": 255 }, { "r": 204, "g": 204, "b": 255 }, { "r": 204, "g": 204, "b": 255 }, { "r": 204, "g": 204, "b": 255 }, { "r": 204, "g": 204, "b": 255 }, { "r": 204, "g": 204, "b": 255 }, { "r": 204, "g": 204, "b": 255 }, { "r": 204, "g": 204, "b": 255 }, { "r": 204, "g": 204, "b": 255 }, { "r": 255, "g": 204, "b": 255 }, { "r": 255, "g": 204, "b": 204 }, { "r": 255, "g": 204, "b": 204 }, { "r": 255, "g": 204, "b": 204 }, { "r": 255, "g": 204, "b": 204 }, { "r": 255, "g": 204, "b": 204 }, { "r": 255, "g": 204, "b": 204 }, { "r": 255, "g": 204, "b": 204 }, { "r": 255, "g": 204, "b": 204 }, { "r": 255, "g": 204, "b": 204 }, { "r": 255, "g": 255, "b": 204 }, { "r": 204, "g": 255, "b": 204 }, { "r": 204, "g": 255, "b": 204 }, { "r": 204, "g": 255, "b": 204 }, { "r": 204, "g": 255, "b": 204 }, { "r": 204, "g": 255, "b": 204 }, { "r": 204, "g": 255, "b": 204 }, { "r": 204, "g": 255, "b": 204 }, { "r": 204, "g": 255, "b": 204 }, { "r": 204, "g": 255, "b": 204 }, { "r": 204, "g": 204, "b": 204 }, { "r": 153, "g": 255, "b": 255 }, { "r": 153, "g": 204, "b": 255 }, { "r": 153, "g": 153, "b": 255 }, { "r": 153, "g": 153, "b": 255 }, { "r": 153, "g": 153, "b": 255 }, { "r": 153, "g": 153, "b": 255 }, { "r": 153, "g": 153, "b": 255 }, { "r": 153, "g": 153, "b": 255 }, { "r": 153, "g": 153, "b": 255 }, { "r": 204, "g": 153, "b": 255 }, { "r": 255, "g": 153, "b": 255 }, { "r": 255, "g": 153, "b": 204 }, { "r": 255, "g": 153, "b": 153 }, { "r": 255, "g": 153, "b": 153 }, { "r": 255, "g": 153, "b": 153 }, { "r": 255, "g": 153, "b": 153 }, { "r": 255, "g": 153, "b": 153 }, { "r": 255, "g": 153, "b": 153 }, { "r": 255, "g": 153, "b": 153 }, { "r": 255, "g": 204, "b": 153 }, { "r": 255, "g": 255, "b": 153 }, { "r": 204, "g": 255, "b": 153 }, { "r": 153, "g": 255, "b": 153 }, { "r": 153, "g": 255, "b": 153 }, { "r": 153, "g": 255, "b": 153 }, { "r": 153, "g": 255, "b": 153 }, { "r": 153, "g": 255, "b": 153 }, { "r": 153, "g": 255, "b": 153 }, { "r": 153, "g": 255, "b": 153 }, { "r": 153, "g": 255, "b": 204 }, { "r": 204, "g": 204, "b": 204 }, { "r": 102, "g": 255, "b": 255 }, { "r": 102, "g": 204, "b": 255 }, { "r": 102, "g": 153, "b": 255 }, { "r": 102, "g": 102, "b": 255 }, { "r": 102, "g": 102, "b": 255 }, { "r": 102, "g": 102, "b": 255 }, { "r": 102, "g": 102, "b": 255 }, { "r": 102, "g": 102, "b": 255 }, { "r": 153, "g": 102, "b": 255 }, { "r": 204, "g": 102, "b": 255 }, { "r": 255, "g": 102, "b": 255 }, { "r": 255, "g": 102, "b": 204 }, { "r": 255, "g": 102, "b": 153 }, { "r": 255, "g": 102, "b": 102 }, { "r": 255, "g": 102, "b": 102 }, { "r": 255, "g": 102, "b": 102 }, { "r": 255, "g": 102, "b": 102 }, { "r": 255, "g": 102, "b": 102 }, { "r": 255, "g": 153, "b": 102 }, { "r": 255, "g": 204, "b": 102 }, { "r": 255, "g": 255, "b": 102 }, { "r": 204, "g": 255, "b": 102 }, { "r": 153, "g": 255, "b": 102 }, { "r": 102, "g": 255, "b": 102 }, { "r": 102, "g": 255, "b": 102 }, { "r": 102, "g": 255, "b": 102 }, { "r": 102, "g": 255, "b": 102 }, { "r": 102, "g": 255, "b": 102 }, { "r": 102, "g": 255, "b": 153 }, { "r": 102, "g": 255, "b": 204 }, { "r": 153, "g": 153, "b": 153 }, { "r": 51, "g": 255, "b": 255 }, { "r": 51, "g": 204, "b": 255 }, { "r": 51, "g": 153, "b": 255 }, { "r": 51, "g": 102, "b": 255 }, { "r": 51, "g": 51, "b": 255 }, { "r": 51, "g": 51, "b": 255 }, { "r": 51, "g": 51, "b": 255 }, { "r": 102, "g": 51, "b": 255 }, { "r": 153, "g": 51, "b": 255 }, { "r": 204, "g": 51, "b": 255 }, { "r": 255, "g": 51, "b": 255 }, { "r": 255, "g": 51, "b": 204 }, { "r": 255, "g": 51, "b": 153 }, { "r": 255, "g": 51, "b": 102 }, { "r": 255, "g": 51, "b": 51 }, { "r": 255, "g": 51, "b": 51 }, { "r": 255, "g": 51, "b": 51 }, { "r": 255, "g": 102, "b": 51 }, { "r": 255, "g": 153, "b": 51 }, { "r": 255, "g": 204, "b": 51 }, { "r": 255, "g": 255, "b": 51 }, { "r": 204, "g": 255, "b": 51 }, { "r": 153, "g": 255, "b": 51 }, { "r": 102, "g": 255, "b": 51 }, { "r": 51, "g": 255, "b": 51 }, { "r": 51, "g": 255, "b": 51 }, { "r": 51, "g": 255, "b": 51 }, { "r": 51, "g": 255, "b": 102 }, { "r": 51, "g": 255, "b": 153 }, { "r": 51, "g": 255, "b": 204 }, { "r": 153, "g": 153, "b": 153 }, { "r": 0, "g": 255, "b": 255 }, { "r": 0, "g": 204, "b": 255 }, { "r": 0, "g": 153, "b": 255 }, { "r": 0, "g": 102, "b": 255 }, { "r": 0, "g": 51, "b": 255 }, { "r": 0, "g": 0, "b": 255 }, { "r": 51, "g": 0, "b": 255 }, { "r": 102, "g": 0, "b": 255 }, { "r": 153, "g": 0, "b": 255 }, { "r": 204, "g": 0, "b": 255 }, { "r": 255, "g": 0, "b": 255 }, { "r": 255, "g": 0, "b": 204 }, { "r": 255, "g": 0, "b": 153 }, { "r": 255, "g": 0, "b": 102 }, { "r": 255, "g": 0, "b": 51 }, { "r": 255, "g": 0, "b": 0 }, { "r": 255, "g": 51, "b": 0 }, { "r": 255, "g": 102, "b": 0 }, { "r": 255, "g": 153, "b": 0 }, { "r": 255, "g": 204, "b": 0 }, { "r": 255, "g": 255, "b": 0 }, { "r": 204, "g": 255, "b": 0 }, { "r": 153, "g": 255, "b": 0 }, { "r": 102, "g": 255, "b": 0 }, { "r": 51, "g": 255, "b": 0 }, { "r": 0, "g": 255, "b": 0 }, { "r": 0, "g": 255, "b": 51 }, { "r": 0, "g": 255, "b": 102 }, { "r": 0, "g": 255, "b": 153 }, { "r": 0, "g": 255, "b": 204 }, { "r": 102, "g": 102, "b": 102 }, { "r": 0, "g": 204, "b": 204 }, { "r": 0, "g": 204, "b": 204 }, { "r": 0, "g": 153, "b": 204 }, { "r": 0, "g": 102, "b": 204 }, { "r": 0, "g": 51, "b": 204 }, { "r": 0, "g": 0, "b": 204 }, { "r": 51, "g": 0, "b": 204 }, { "r": 102, "g": 0, "b": 204 }, { "r": 153, "g": 0, "b": 204 }, { "r": 204, "g": 0, "b": 204 }, { "r": 204, "g": 0, "b": 204 }, { "r": 204, "g": 0, "b": 204 }, { "r": 204, "g": 0, "b": 153 }, { "r": 204, "g": 0, "b": 102 }, { "r": 204, "g": 0, "b": 51 }, { "r": 204, "g": 0, "b": 0 }, { "r": 204, "g": 51, "b": 0 }, { "r": 204, "g": 102, "b": 0 }, { "r": 204, "g": 153, "b": 0 }, { "r": 204, "g": 204, "b": 0 }, { "r": 204, "g": 204, "b": 0 }, { "r": 204, "g": 204, "b": 0 }, { "r": 153, "g": 204, "b": 0 }, { "r": 102, "g": 204, "b": 0 }, { "r": 51, "g": 204, "b": 0 }, { "r": 0, "g": 204, "b": 0 }, { "r": 0, "g": 204, "b": 51 }, { "r": 0, "g": 204, "b": 102 }, { "r": 0, "g": 204, "b": 153 }, { "r": 0, "g": 204, "b": 204 }, { "r": 102, "g": 102, "b": 102 }, { "r": 0, "g": 153, "b": 153 }, { "r": 0, "g": 153, "b": 153 }, { "r": 0, "g": 153, "b": 153 }, { "r": 0, "g": 102, "b": 153 }, { "r": 0, "g": 51, "b": 153 }, { "r": 0, "g": 0, "b": 153 }, { "r": 51, "g": 0, "b": 153 }, { "r": 102, "g": 0, "b": 153 }, { "r": 153, "g": 0, "b": 153 }, { "r": 153, "g": 0, "b": 153 }, { "r": 153, "g": 0, "b": 153 }, { "r": 153, "g": 0, "b": 153 }, { "r": 153, "g": 0, "b": 153 }, { "r": 153, "g": 0, "b": 102 }, { "r": 153, "g": 0, "b": 51 }, { "r": 153, "g": 0, "b": 0 }, { "r": 153, "g": 51, "b": 0 }, { "r": 153, "g": 102, "b": 0 }, { "r": 153, "g": 153, "b": 0 }, { "r": 153, "g": 153, "b": 0 }, { "r": 153, "g": 153, "b": 0 }, { "r": 153, "g": 153, "b": 0 }, { "r": 153, "g": 153, "b": 0 }, { "r": 102, "g": 153, "b": 0 }, { "r": 51, "g": 153, "b": 0 }, { "r": 0, "g": 153, "b": 0 }, { "r": 0, "g": 153, "b": 51 }, { "r": 0, "g": 153, "b": 102 }, { "r": 0, "g": 153, "b": 153 }, { "r": 0, "g": 153, "b": 153 }, { "r": 51, "g": 51, "b": 51 }, { "r": 0, "g": 102, "b": 102 }, { "r": 0, "g": 102, "b": 102 }, { "r": 0, "g": 102, "b": 102 }, { "r": 0, "g": 102, "b": 102 }, { "r": 0, "g": 51, "b": 102 }, { "r": 0, "g": 0, "b": 102 }, { "r": 51, "g": 0, "b": 102 }, { "r": 102, "g": 0, "b": 102 }, { "r": 102, "g": 0, "b": 102 }, { "r": 102, "g": 0, "b": 102 }, { "r": 102, "g": 0, "b": 102 }, { "r": 102, "g": 0, "b": 102 }, { "r": 102, "g": 0, "b": 102 }, { "r": 102, "g": 0, "b": 102 }, { "r": 102, "g": 0, "b": 51 }, { "r": 102, "g": 0, "b": 0 }, { "r": 102, "g": 51, "b": 0 }, { "r": 102, "g": 102, "b": 0 }, { "r": 102, "g": 102, "b": 0 }, { "r": 102, "g": 102, "b": 0 }, { "r": 102, "g": 102, "b": 0 }, { "r": 102, "g": 102, "b": 0 }, { "r": 102, "g": 102, "b": 0 }, { "r": 102, "g": 102, "b": 0 }, { "r": 51, "g": 102, "b": 0 }, { "r": 0, "g": 102, "b": 0 }, { "r": 0, "g": 102, "b": 51 }, { "r": 0, "g": 102, "b": 102 }, { "r": 0, "g": 102, "b": 102 }, { "r": 0, "g": 102, "b": 102 }, { "r": 0, "g": 0, "b": 0 }, { "r": 0, "g": 51, "b": 51 }, { "r": 0, "g": 51, "b": 51 }, { "r": 0, "g": 51, "b": 51 }, { "r": 0, "g": 51, "b": 51 }, { "r": 0, "g": 51, "b": 51 }, { "r": 0, "g": 0, "b": 51 }, { "r": 51, "g": 0, "b": 51 }, { "r": 51, "g": 0, "b": 51 }, { "r": 51, "g": 0, "b": 51 }, { "r": 51, "g": 0, "b": 51 }, { "r": 51, "g": 0, "b": 51 }, { "r": 51, "g": 0, "b": 51 }, { "r": 51, "g": 0, "b": 51 }, { "r": 51, "g": 0, "b": 51 }, { "r": 51, "g": 0, "b": 51 }, { "r": 51, "g": 0, "b": 0 }, { "r": 51, "g": 51, "b": 0 }, { "r": 51, "g": 51, "b": 0 }, { "r": 51, "g": 51, "b": 0 }, { "r": 51, "g": 51, "b": 0 }, { "r": 51, "g": 51, "b": 0 }, { "r": 51, "g": 51, "b": 0 }, { "r": 51, "g": 51, "b": 0 }, { "r": 51, "g": 51, "b": 0 }, { "r": 0, "g": 51, "b": 0 }, { "r": 0, "g": 51, "b": 51 }, { "r": 0, "g": 51, "b": 51 }, { "r": 0, "g": 51, "b": 51 }, { "r": 0, "g": 51, "b": 51 }, { "r": 51, "g": 51, "b": 51 }],
-	        "columns": 31,
-	        "rows": 9
+	    cold2warm: {
+	      controlpoints: [{ x: 0.00, r: 0.23137254902, g: 0.298039215686, b: 0.752941176471 }, { x: 0.50, r: 0.865, g: 0.865, b: 0.865 }, { x: 1.00, r: 0.705882352941, g: 0.0156862745098, b: 0.149019607843 }],
+	      range: [0.0, 1.0]
+	    },
+	    rainbow: {
+	      controlpoints: [{ x: 0.00, r: 0.0, g: 0.0, b: 1.0 }, { x: 0.25, r: 0.0, g: 1.0, b: 1.0 }, { x: 0.50, r: 0.0, g: 1.0, b: 0.0 }, { x: 0.75, r: 1.0, g: 1.0, b: 0.0 }, { x: 1.00, r: 1.0, g: 0.0, b: 0.0 }],
+	      range: [0.0, 1.0]
+	    },
+	    'gray scale': {
+	      controlpoints: [{ x: 0.0, r: 0.0, g: 0.0, b: 0.0 }, { x: 1.0, r: 1.0, g: 1.0, b: 1.0 }],
+	      range: [0.0, 1.0]
+	    },
+	    'gray scale flip': {
+	      controlpoints: [{ x: 0.0, r: 1.0, g: 1.0, b: 1.0 }, { x: 1.0, r: 0.0, g: 0.0, b: 0.0 }],
+	      range: [0.0, 1.0]
+	    },
+	    spectral: {
+	      controlpoints: [{ x: 0, r: 0.6196078431372549, g: 0.00392156862745098, b: 0.2588235294117647 }, { x: 0.1, r: 0.8352941176470589, g: 0.2431372549019608, b: 0.3098039215686275 }, { x: 0.2, r: 0.9568627450980393, g: 0.4274509803921568, b: 0.2627450980392157 }, { x: 0.3, r: 0.9921568627450981, g: 0.6823529411764706, b: 0.3803921568627451 }, { x: 0.4, r: 0.996078431372549, g: 0.8784313725490196, b: 0.5450980392156862 }, { x: 0.5, r: 1, g: 1, b: 0.7490196078431373 }, { x: 0.6, r: 0.9019607843137255, g: 0.9607843137254902, b: 0.596078431372549 }, { x: 0.7, r: 0.6705882352941176, g: 0.8666666666666667, b: 0.6431372549019608 }, { x: 0.8, r: 0.4, g: 0.7607843137254902, b: 0.6470588235294118 }, { x: 0.9, r: 0.196078431372549, g: 0.5333333333333333, b: 0.7411764705882353 }, { x: 1, r: 0.3686274509803922, g: 0.3098039215686275, b: 0.6352941176470588 }],
+	      range: [0.0, 1.0]
+	    },
+	    warm: {
+	      controlpoints: [{ x: 0.00, r: 0.4745098039215686, g: 0.09019607843137255, b: 0.09019607843137255 }, { x: 0.20, r: 0.7098039215686275, g: 0.00392156862745098, b: 0.00392156862745098 }, { x: 0.40, r: 0.9372549019607843, g: 0.2784313725490196, b: 0.09803921568627451 }, { x: 0.60, r: 0.9764705882352941, g: 0.5137254901960784, b: 0.1411764705882353 }, { x: 0.80, r: 1.0, g: 0.7058823529411765, b: 0.0 }, { x: 1.00, r: 1.0, g: 0.8980392156862745, b: 0.02352941176470588 }],
+	      range: [0.0, 1.0]
+	    },
+	    cool: {
+	      controlpoints: [{ x: 0, r: 0.4588235294117647, g: 0.6941176470588235, b: 0.00392156862745098 }, { x: 0.1666666666666667, r: 0.3450980392156863, g: 0.5019607843137255, b: 0.1607843137254902 }, { x: 0.3333333333333333, r: 0.3137254901960784, g: 0.8431372549019608, b: 0.7490196078431373 }, { x: 0.5, r: 0.1098039215686274, g: 0.5843137254901961, b: 0.803921568627451 }, { x: 0.6666666666666666, r: 0.2313725490196079, g: 0.407843137254902, b: 0.6705882352941176 }, { x: 0.8333333333333334, r: 0.6039215686274509, g: 0.407843137254902, b: 1 }, { x: 1, r: 0.3725490196078431, g: 0.2, b: 0.5019607843137255 }],
+	      range: [0.0, 1.0]
+	    },
+	    blues: {
+	      controlpoints: [{ x: 0, r: 0.2313725490196079, g: 0.407843137254902, b: 0.6705882352941176 }, { x: 0.1666666666666667, r: 0.1098039215686274, g: 0.5843137254901961, b: 0.803921568627451 }, { x: 0.3333333333333333, r: 0.3058823529411765, g: 0.8509803921568627, b: 0.9176470588235294 }, { x: 0.5, r: 0.4509803921568628, g: 0.6039215686274509, b: 0.8352941176470589 }, { x: 0.6666666666666666, r: 0.2588235294117647, g: 0.2392156862745098, b: 0.6627450980392157 }, { x: 0.8333333333333334, r: 0.3137254901960784, g: 0.3294117647058823, b: 0.5294117647058824 }, { x: 1, r: 0.06274509803921569, g: 0.1647058823529412, b: 0.3215686274509804 }],
+	      range: [0.0, 1.0]
+	    },
+	    wildflower: {
+	      controlpoints: [{ x: 0, r: 0.1098039215686274, g: 0.5843137254901961, b: 0.803921568627451 }, { x: 0.1666666666666667, r: 0.2313725490196079, g: 0.407843137254902, b: 0.6705882352941176 }, { x: 0.3333333333333333, r: 0.4, g: 0.2431372549019608, b: 0.7176470588235294 }, { x: 0.5, r: 0.6352941176470588, g: 0.3294117647058823, b: 0.8117647058823529 }, { x: 0.6666666666666666, r: 0.8705882352941177, g: 0.3803921568627451, b: 0.807843137254902 }, { x: 0.8333333333333334, r: 0.8627450980392157, g: 0.3803921568627451, b: 0.5843137254901961 }, { x: 1, r: 0.2392156862745098, g: 0.06274509803921569, b: 0.3215686274509804 }],
+	      range: [0.0, 1.0]
+	    },
+	    citrus: {
+	      controlpoints: [{ x: 0, r: 0.396078431372549, g: 0.4862745098039216, b: 0.2156862745098039 }, { x: 0.2, r: 0.4588235294117647, g: 0.6941176470588235, b: 0.00392156862745098 }, { x: 0.4, r: 0.6980392156862745, g: 0.7294117647058823, b: 0.1882352941176471 }, { x: 0.6, r: 1, g: 0.8980392156862745, b: 0.02352941176470588 }, { x: 0.8, r: 1, g: 0.7058823529411765, b: 0 }, { x: 1, r: 0.9764705882352941, g: 0.5137254901960784, b: 0.1411764705882353 }],
+	      range: [0.0, 1.0]
+	    },
+	    organge2purple: {
+	      controlpoints: [{ x: 0, r: 0.4980392156862745, g: 0.2313725490196079, b: 0.03137254901960784 }, { x: 0.1, r: 0.7019607843137254, g: 0.3450980392156863, b: 0.02352941176470588 }, { x: 0.2, r: 0.8784313725490196, g: 0.5098039215686274, b: 0.07843137254901961 }, { x: 0.3, r: 0.9921568627450981, g: 0.7215686274509804, b: 0.3882352941176471 }, { x: 0.4, r: 0.996078431372549, g: 0.8784313725490196, b: 0.7137254901960784 }, { x: 0.5, r: 0.9686274509803922, g: 0.9686274509803922, b: 0.9686274509803922 }, { x: 0.6, r: 0.8470588235294118, g: 0.8549019607843137, b: 0.9215686274509803 }, { x: 0.7, r: 0.6980392156862745, g: 0.6705882352941176, b: 0.8235294117647058 }, { x: 0.8, r: 0.5019607843137255, g: 0.4509803921568628, b: 0.6745098039215687 }, { x: 0.9, r: 0.3294117647058823, g: 0.1529411764705882, b: 0.5333333333333333 }, { x: 1, r: 0.1764705882352941, g: 0, b: 0.2941176470588235 }],
+	      range: [0.0, 1.0]
+	    },
+	    brown2green: {
+	      controlpoints: [{ x: 0, r: 0.3294117647058823, g: 0.1882352941176471, b: 0.0196078431372549 }, { x: 0.1, r: 0.5490196078431373, g: 0.3176470588235294, b: 0.0392156862745098 }, { x: 0.2, r: 0.7490196078431373, g: 0.5058823529411764, b: 0.1764705882352941 }, { x: 0.3, r: 0.8745098039215686, g: 0.7607843137254902, b: 0.4901960784313725 }, { x: 0.4, r: 0.9647058823529412, g: 0.9098039215686274, b: 0.7647058823529411 }, { x: 0.5, r: 0.9607843137254902, g: 0.9607843137254902, b: 0.9607843137254902 }, { x: 0.6, r: 0.7803921568627451, g: 0.9176470588235294, b: 0.8980392156862745 }, { x: 0.7, r: 0.5019607843137255, g: 0.803921568627451, b: 0.7568627450980392 }, { x: 0.8, r: 0.207843137254902, g: 0.592156862745098, b: 0.5607843137254902 }, { x: 0.9, r: 0.00392156862745098, g: 0.4, b: 0.3686274509803922 }, { x: 1, r: 0, g: 0.2352941176470588, b: 0.1882352941176471 }],
+	      range: [0.0, 1.0]
+	    },
+	    blue2green: {
+	      controlpoints: [{ x: 0, r: 0.9686274509803922, g: 0.9882352941176471, b: 0.9921568627450981 }, { x: 0.125, r: 0.8980392156862745, g: 0.9607843137254902, b: 0.9764705882352941 }, { x: 0.25, r: 0.8, g: 0.9254901960784314, b: 0.9019607843137255 }, { x: 0.375, r: 0.6, g: 0.8470588235294118, b: 0.788235294117647 }, { x: 0.5, r: 0.4, g: 0.7607843137254902, b: 0.6431372549019608 }, { x: 0.625, r: 0.2549019607843137, g: 0.6823529411764706, b: 0.4627450980392157 }, { x: 0.75, r: 0.1372549019607843, g: 0.5450980392156862, b: 0.2705882352941176 }, { x: 0.875, r: 0, g: 0.4274509803921568, b: 0.1725490196078431 }, { x: 1, r: 0, g: 0.2666666666666667, b: 0.1058823529411765 }],
+	      range: [0.0, 1.0]
+	    },
+	    yellow2brown: {
+	      controlpoints: [{ x: 0, r: 1, g: 1, b: 0.8980392156862745 }, { x: 0.125, r: 1, g: 0.9686274509803922, b: 0.7372549019607844 }, { x: 0.25, r: 0.996078431372549, g: 0.8901960784313725, b: 0.5686274509803921 }, { x: 0.375, r: 0.996078431372549, g: 0.7686274509803922, b: 0.3098039215686275 }, { x: 0.5, r: 0.996078431372549, g: 0.6, b: 0.1607843137254902 }, { x: 0.625, r: 0.9254901960784314, g: 0.4392156862745098, b: 0.07843137254901961 }, { x: 0.75, r: 0.8, g: 0.2980392156862745, b: 0.007843137254901961 }, { x: 0.875, r: 0.6, g: 0.203921568627451, b: 0.01568627450980392 }, { x: 1, r: 0.4, g: 0.1450980392156863, b: 0.02352941176470588 }],
+	      range: [0.0, 1.0]
+	    },
+	    blue2purple: {
+	      controlpoints: [{ x: 0, r: 0.9686274509803922, g: 0.9882352941176471, b: 0.9921568627450981 }, { x: 0.125, r: 0.8784313725490196, g: 0.9254901960784314, b: 0.9568627450980393 }, { x: 0.25, r: 0.7490196078431373, g: 0.8274509803921568, b: 0.9019607843137255 }, { x: 0.375, r: 0.6196078431372549, g: 0.7372549019607844, b: 0.8549019607843137 }, { x: 0.5, r: 0.5490196078431373, g: 0.5882352941176471, b: 0.7764705882352941 }, { x: 0.625, r: 0.5490196078431373, g: 0.4196078431372549, b: 0.6941176470588235 }, { x: 0.75, r: 0.5333333333333333, g: 0.2549019607843137, b: 0.615686274509804 }, { x: 0.875, r: 0.5058823529411764, g: 0.05882352941176471, b: 0.4862745098039216 }, { x: 1, r: 0.3019607843137255, g: 0, b: 0.2941176470588235 }],
+	      range: [0.0, 1.0]
+	    },
+	    ocean: {
+	      controlpoints: [{ x: 0.0, r: 0.039215, g: 0.090195, b: 0.25098 }, { x: 0.125, r: 0.133333, g: 0.364706, b: 0.521569 }, { x: 0.25, r: 0.321569, g: 0.760784, b: 0.8 }, { x: 0.375, r: 0.690196, g: 0.960784, b: 0.894118 }, { x: 0.5, r: 0.552941, g: 0.921569, b: 0.552941 }, { x: 0.625, r: 0.329412, g: 0.6, b: 0.239216 }, { x: 0.75, r: 0.211765, g: 0.349020, b: 0.078435 }, { x: 0.875, r: 0.011765, g: 0.207843, b: 0.023525 }, { x: 1.0, r: 0.286275, g: 0.294118, b: 0.301961 }],
+	      range: [0.0, 1.0]
+	    },
+	    earth: {
+	      controlpoints: [{ x: 0.000000, r: 0.392157, g: 0.392157, b: 0.392157 }, { x: 0.586175, r: 0.392157, g: 0.392157, b: 0.392157 }, { x: 0.589041, r: 0.141176, g: 0.345098, b: 0.478431 }, { x: 0.589042, r: 0.501961, g: 0.694118, b: 0.172549 }, { x: 0.617699, r: 0.74902, g: 0.560784, b: 0.188235 }, { x: 0.789648, r: 0.752941, g: 0.741176, b: 0.729412 }, { x: 0.993079, r: 0.796078, g: 0.780392, b: 0.772549 }, { x: 1.000000, r: 0.796078, g: 0.780392, b: 0.772549 }],
+	      range: [0.0, 1.0]
 	    }
+	  },
+	  swatches: {
+	    colors: [{ r: 255, g: 255, b: 255 }, { r: 204, g: 255, b: 255 }, { r: 204, g: 204, b: 255 }, { r: 204, g: 204, b: 255 }, { r: 204, g: 204, b: 255 }, { r: 204, g: 204, b: 255 }, { r: 204, g: 204, b: 255 }, { r: 204, g: 204, b: 255 }, { r: 204, g: 204, b: 255 }, { r: 204, g: 204, b: 255 }, { r: 204, g: 204, b: 255 }, { r: 255, g: 204, b: 255 }, { r: 255, g: 204, b: 204 }, { r: 255, g: 204, b: 204 }, { r: 255, g: 204, b: 204 }, { r: 255, g: 204, b: 204 }, { r: 255, g: 204, b: 204 }, { r: 255, g: 204, b: 204 }, { r: 255, g: 204, b: 204 }, { r: 255, g: 204, b: 204 }, { r: 255, g: 204, b: 204 }, { r: 255, g: 255, b: 204 }, { r: 204, g: 255, b: 204 }, { r: 204, g: 255, b: 204 }, { r: 204, g: 255, b: 204 }, { r: 204, g: 255, b: 204 }, { r: 204, g: 255, b: 204 }, { r: 204, g: 255, b: 204 }, { r: 204, g: 255, b: 204 }, { r: 204, g: 255, b: 204 }, { r: 204, g: 255, b: 204 }, { r: 204, g: 204, b: 204 }, { r: 153, g: 255, b: 255 }, { r: 153, g: 204, b: 255 }, { r: 153, g: 153, b: 255 }, { r: 153, g: 153, b: 255 }, { r: 153, g: 153, b: 255 }, { r: 153, g: 153, b: 255 }, { r: 153, g: 153, b: 255 }, { r: 153, g: 153, b: 255 }, { r: 153, g: 153, b: 255 }, { r: 204, g: 153, b: 255 }, { r: 255, g: 153, b: 255 }, { r: 255, g: 153, b: 204 }, { r: 255, g: 153, b: 153 }, { r: 255, g: 153, b: 153 }, { r: 255, g: 153, b: 153 }, { r: 255, g: 153, b: 153 }, { r: 255, g: 153, b: 153 }, { r: 255, g: 153, b: 153 }, { r: 255, g: 153, b: 153 }, { r: 255, g: 204, b: 153 }, { r: 255, g: 255, b: 153 }, { r: 204, g: 255, b: 153 }, { r: 153, g: 255, b: 153 }, { r: 153, g: 255, b: 153 }, { r: 153, g: 255, b: 153 }, { r: 153, g: 255, b: 153 }, { r: 153, g: 255, b: 153 }, { r: 153, g: 255, b: 153 }, { r: 153, g: 255, b: 153 }, { r: 153, g: 255, b: 204 }, { r: 204, g: 204, b: 204 }, { r: 102, g: 255, b: 255 }, { r: 102, g: 204, b: 255 }, { r: 102, g: 153, b: 255 }, { r: 102, g: 102, b: 255 }, { r: 102, g: 102, b: 255 }, { r: 102, g: 102, b: 255 }, { r: 102, g: 102, b: 255 }, { r: 102, g: 102, b: 255 }, { r: 153, g: 102, b: 255 }, { r: 204, g: 102, b: 255 }, { r: 255, g: 102, b: 255 }, { r: 255, g: 102, b: 204 }, { r: 255, g: 102, b: 153 }, { r: 255, g: 102, b: 102 }, { r: 255, g: 102, b: 102 }, { r: 255, g: 102, b: 102 }, { r: 255, g: 102, b: 102 }, { r: 255, g: 102, b: 102 }, { r: 255, g: 153, b: 102 }, { r: 255, g: 204, b: 102 }, { r: 255, g: 255, b: 102 }, { r: 204, g: 255, b: 102 }, { r: 153, g: 255, b: 102 }, { r: 102, g: 255, b: 102 }, { r: 102, g: 255, b: 102 }, { r: 102, g: 255, b: 102 }, { r: 102, g: 255, b: 102 }, { r: 102, g: 255, b: 102 }, { r: 102, g: 255, b: 153 }, { r: 102, g: 255, b: 204 }, { r: 153, g: 153, b: 153 }, { r: 51, g: 255, b: 255 }, { r: 51, g: 204, b: 255 }, { r: 51, g: 153, b: 255 }, { r: 51, g: 102, b: 255 }, { r: 51, g: 51, b: 255 }, { r: 51, g: 51, b: 255 }, { r: 51, g: 51, b: 255 }, { r: 102, g: 51, b: 255 }, { r: 153, g: 51, b: 255 }, { r: 204, g: 51, b: 255 }, { r: 255, g: 51, b: 255 }, { r: 255, g: 51, b: 204 }, { r: 255, g: 51, b: 153 }, { r: 255, g: 51, b: 102 }, { r: 255, g: 51, b: 51 }, { r: 255, g: 51, b: 51 }, { r: 255, g: 51, b: 51 }, { r: 255, g: 102, b: 51 }, { r: 255, g: 153, b: 51 }, { r: 255, g: 204, b: 51 }, { r: 255, g: 255, b: 51 }, { r: 204, g: 255, b: 51 }, { r: 153, g: 255, b: 51 }, { r: 102, g: 255, b: 51 }, { r: 51, g: 255, b: 51 }, { r: 51, g: 255, b: 51 }, { r: 51, g: 255, b: 51 }, { r: 51, g: 255, b: 102 }, { r: 51, g: 255, b: 153 }, { r: 51, g: 255, b: 204 }, { r: 153, g: 153, b: 153 }, { r: 0, g: 255, b: 255 }, { r: 0, g: 204, b: 255 }, { r: 0, g: 153, b: 255 }, { r: 0, g: 102, b: 255 }, { r: 0, g: 51, b: 255 }, { r: 0, g: 0, b: 255 }, { r: 51, g: 0, b: 255 }, { r: 102, g: 0, b: 255 }, { r: 153, g: 0, b: 255 }, { r: 204, g: 0, b: 255 }, { r: 255, g: 0, b: 255 }, { r: 255, g: 0, b: 204 }, { r: 255, g: 0, b: 153 }, { r: 255, g: 0, b: 102 }, { r: 255, g: 0, b: 51 }, { r: 255, g: 0, b: 0 }, { r: 255, g: 51, b: 0 }, { r: 255, g: 102, b: 0 }, { r: 255, g: 153, b: 0 }, { r: 255, g: 204, b: 0 }, { r: 255, g: 255, b: 0 }, { r: 204, g: 255, b: 0 }, { r: 153, g: 255, b: 0 }, { r: 102, g: 255, b: 0 }, { r: 51, g: 255, b: 0 }, { r: 0, g: 255, b: 0 }, { r: 0, g: 255, b: 51 }, { r: 0, g: 255, b: 102 }, { r: 0, g: 255, b: 153 }, { r: 0, g: 255, b: 204 }, { r: 102, g: 102, b: 102 }, { r: 0, g: 204, b: 204 }, { r: 0, g: 204, b: 204 }, { r: 0, g: 153, b: 204 }, { r: 0, g: 102, b: 204 }, { r: 0, g: 51, b: 204 }, { r: 0, g: 0, b: 204 }, { r: 51, g: 0, b: 204 }, { r: 102, g: 0, b: 204 }, { r: 153, g: 0, b: 204 }, { r: 204, g: 0, b: 204 }, { r: 204, g: 0, b: 204 }, { r: 204, g: 0, b: 204 }, { r: 204, g: 0, b: 153 }, { r: 204, g: 0, b: 102 }, { r: 204, g: 0, b: 51 }, { r: 204, g: 0, b: 0 }, { r: 204, g: 51, b: 0 }, { r: 204, g: 102, b: 0 }, { r: 204, g: 153, b: 0 }, { r: 204, g: 204, b: 0 }, { r: 204, g: 204, b: 0 }, { r: 204, g: 204, b: 0 }, { r: 153, g: 204, b: 0 }, { r: 102, g: 204, b: 0 }, { r: 51, g: 204, b: 0 }, { r: 0, g: 204, b: 0 }, { r: 0, g: 204, b: 51 }, { r: 0, g: 204, b: 102 }, { r: 0, g: 204, b: 153 }, { r: 0, g: 204, b: 204 }, { r: 102, g: 102, b: 102 }, { r: 0, g: 153, b: 153 }, { r: 0, g: 153, b: 153 }, { r: 0, g: 153, b: 153 }, { r: 0, g: 102, b: 153 }, { r: 0, g: 51, b: 153 }, { r: 0, g: 0, b: 153 }, { r: 51, g: 0, b: 153 }, { r: 102, g: 0, b: 153 }, { r: 153, g: 0, b: 153 }, { r: 153, g: 0, b: 153 }, { r: 153, g: 0, b: 153 }, { r: 153, g: 0, b: 153 }, { r: 153, g: 0, b: 153 }, { r: 153, g: 0, b: 102 }, { r: 153, g: 0, b: 51 }, { r: 153, g: 0, b: 0 }, { r: 153, g: 51, b: 0 }, { r: 153, g: 102, b: 0 }, { r: 153, g: 153, b: 0 }, { r: 153, g: 153, b: 0 }, { r: 153, g: 153, b: 0 }, { r: 153, g: 153, b: 0 }, { r: 153, g: 153, b: 0 }, { r: 102, g: 153, b: 0 }, { r: 51, g: 153, b: 0 }, { r: 0, g: 153, b: 0 }, { r: 0, g: 153, b: 51 }, { r: 0, g: 153, b: 102 }, { r: 0, g: 153, b: 153 }, { r: 0, g: 153, b: 153 }, { r: 51, g: 51, b: 51 }, { r: 0, g: 102, b: 102 }, { r: 0, g: 102, b: 102 }, { r: 0, g: 102, b: 102 }, { r: 0, g: 102, b: 102 }, { r: 0, g: 51, b: 102 }, { r: 0, g: 0, b: 102 }, { r: 51, g: 0, b: 102 }, { r: 102, g: 0, b: 102 }, { r: 102, g: 0, b: 102 }, { r: 102, g: 0, b: 102 }, { r: 102, g: 0, b: 102 }, { r: 102, g: 0, b: 102 }, { r: 102, g: 0, b: 102 }, { r: 102, g: 0, b: 102 }, { r: 102, g: 0, b: 51 }, { r: 102, g: 0, b: 0 }, { r: 102, g: 51, b: 0 }, { r: 102, g: 102, b: 0 }, { r: 102, g: 102, b: 0 }, { r: 102, g: 102, b: 0 }, { r: 102, g: 102, b: 0 }, { r: 102, g: 102, b: 0 }, { r: 102, g: 102, b: 0 }, { r: 102, g: 102, b: 0 }, { r: 51, g: 102, b: 0 }, { r: 0, g: 102, b: 0 }, { r: 0, g: 102, b: 51 }, { r: 0, g: 102, b: 102 }, { r: 0, g: 102, b: 102 }, { r: 0, g: 102, b: 102 }, { r: 0, g: 0, b: 0 }, { r: 0, g: 51, b: 51 }, { r: 0, g: 51, b: 51 }, { r: 0, g: 51, b: 51 }, { r: 0, g: 51, b: 51 }, { r: 0, g: 51, b: 51 }, { r: 0, g: 0, b: 51 }, { r: 51, g: 0, b: 51 }, { r: 51, g: 0, b: 51 }, { r: 51, g: 0, b: 51 }, { r: 51, g: 0, b: 51 }, { r: 51, g: 0, b: 51 }, { r: 51, g: 0, b: 51 }, { r: 51, g: 0, b: 51 }, { r: 51, g: 0, b: 51 }, { r: 51, g: 0, b: 51 }, { r: 51, g: 0, b: 0 }, { r: 51, g: 51, b: 0 }, { r: 51, g: 51, b: 0 }, { r: 51, g: 51, b: 0 }, { r: 51, g: 51, b: 0 }, { r: 51, g: 51, b: 0 }, { r: 51, g: 51, b: 0 }, { r: 51, g: 51, b: 0 }, { r: 51, g: 51, b: 0 }, { r: 0, g: 51, b: 0 }, { r: 0, g: 51, b: 51 }, { r: 0, g: 51, b: 51 }, { r: 0, g: 51, b: 51 }, { r: 0, g: 51, b: 51 }, { r: 51, g: 51, b: 51 }],
+	    columns: 31,
+	    rows: 9
+	  }
 	};
 
 /***/ },
@@ -31854,7 +31851,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -31871,61 +31868,61 @@
 
 	var ToggleState = function () {
 
-	    // ------------------------------------------------------------------------
+	  // ------------------------------------------------------------------------
 
-	    function ToggleState() {
-	        var _this = this;
+	  function ToggleState() {
+	    var _this = this;
 
-	        var initialState = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
+	    var initialState = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
 
-	        _classCallCheck(this, ToggleState);
+	    _classCallCheck(this, ToggleState);
 
-	        this.state = initialState;
+	    this.state = initialState;
 
-	        // Make a closure so that function can be passed around
-	        this.toggleState = function () {
-	            _this.state = !_this.state;
-	            _this.emit(CHANGE_TOPIC, _this.state);
-	        };
+	    // Make a closure so that function can be passed around
+	    this.toggleState = function () {
+	      _this.state = !_this.state;
+	      _this.emit(CHANGE_TOPIC, _this.state);
+	    };
+	  }
+
+	  // ------------------------------------------------------------------------
+
+	  _createClass(ToggleState, [{
+	    key: 'setState',
+	    value: function setState(value) {
+	      if (!!value !== this.state) {
+	        this.state = !!value;
+	        this.emit(CHANGE_TOPIC, this.state);
+	      }
 	    }
 
 	    // ------------------------------------------------------------------------
 
-	    _createClass(ToggleState, [{
-	        key: 'setState',
-	        value: function setState(value) {
-	            if (!!value !== this.state) {
-	                this.state = !!value;
-	                this.emit(CHANGE_TOPIC, this.state);
-	            }
-	        }
+	  }, {
+	    key: 'getState',
+	    value: function getState() {
+	      return this.state;
+	    }
 
-	        // ------------------------------------------------------------------------
+	    // ------------------------------------------------------------------------
 
-	    }, {
-	        key: 'getState',
-	        value: function getState() {
-	            return this.state;
-	        }
+	  }, {
+	    key: 'onChange',
+	    value: function onChange(callback) {
+	      return this.on(CHANGE_TOPIC, callback);
+	    }
 
-	        // ------------------------------------------------------------------------
+	    // ------------------------------------------------------------------------
 
-	    }, {
-	        key: 'onChange',
-	        value: function onChange(callback) {
-	            return this.on(CHANGE_TOPIC, callback);
-	        }
+	  }, {
+	    key: 'destroy',
+	    value: function destroy() {
+	      this.off();
+	    }
+	  }]);
 
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'destroy',
-	        value: function destroy() {
-	            this.off();
-	        }
-	    }]);
-
-	    return ToggleState;
+	  return ToggleState;
 	}();
 
 	// Add Observer pattern using Monologue.js
@@ -31941,7 +31938,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _CollapsibleWidget = __webpack_require__(172);
@@ -31972,87 +31969,96 @@
 
 	exports.default = _react2.default.createClass({
 
-	    displayName: 'VolumeControl',
+	  displayName: 'VolumeControl',
 
-	    propTypes: {
-	        computation: _react2.default.PropTypes.object.isRequired,
-	        equalizer: _react2.default.PropTypes.object.isRequired,
-	        intensity: _react2.default.PropTypes.object,
-	        lookupTable: _react2.default.PropTypes.object.isRequired
-	    },
+	  propTypes: {
+	    computation: _react2.default.PropTypes.object.isRequired,
+	    equalizer: _react2.default.PropTypes.object.isRequired,
+	    intensity: _react2.default.PropTypes.object,
+	    lookupTable: _react2.default.PropTypes.object.isRequired
+	  },
 
-	    componentWillMount: function componentWillMount() {
-	        var _this = this;
+	  componentWillMount: function componentWillMount() {
+	    var _this = this;
 
-	        this.equalizerSubscription = this.props.equalizer.onChange(function () {
-	            _this.forceUpdate();
-	        });
-	        this.intensitySubscription = this.props.intensity.onChange(function () {
-	            _this.forceUpdate();
-	        });
-	        this.computationSubscription = this.props.intensity.onChange(function () {
-	            _this.forceUpdate();
-	        });
-	    },
-	    componentWillUnmount: function componentWillUnmount() {
-	        if (this.equalizerSubscription) {
-	            this.equalizerSubscription.unsubscribe();
-	            this.equalizerSubscription = null;
-	        }
-	        if (this.intensitySubscription) {
-	            this.intensitySubscription.unsubscribe();
-	            this.intensitySubscription = null;
-	        }
-	        if (this.computationSubscription) {
-	            this.computationSubscription.unsubscribe();
-	            this.computationSubscription = null;
-	        }
-	    },
-	    render: function render() {
-	        var equalizer = this.props.equalizer,
-	            lut = this.props.lookupTable,
-	            intensityButton = _react2.default.createElement(_ToggleIconButtonWidget2.default, {
-	            key: 'toggle-intensity',
-	            onChange: this.props.intensity.toggleState,
-	            value: this.props.intensity.getState() }),
-	            resetOpacityButton = _react2.default.createElement(_ToggleIconButtonWidget2.default, {
-	            key: 'reset',
-	            icon: _VolumeControl2.default.undoIcon,
-	            toggle: false,
-	            onChange: this.props.equalizer.resetOpacities,
-	            value: true }),
-	            cpuGpuButton = _react2.default.createElement(_ToggleIconButtonWidget2.default, {
-	            key: 'toggle-gpu',
-	            icon: _VolumeControl2.default.mobileIcon,
-	            onChange: this.props.computation.toggleState,
-	            value: !this.props.computation.getState() });
-	        return _react2.default.createElement(
-	            'div',
-	            null,
-	            _react2.default.createElement(
-	                _CollapsibleWidget2.default,
-	                { title: 'LookupTable', key: 'LookupTableWidget_parent', subtitle: intensityButton },
-	                _react2.default.createElement(_LookupTableWidget2.default, {
-	                    key: 'LookupTableWidget',
-	                    ref: 'LookupTableWidget',
-	                    originalRange: lut.originalRange,
-	                    lookupTable: lut.lookupTable,
-	                    lookupTableManager: lut.lookupTableManager
-	                })
-	            ),
-	            _react2.default.createElement(
-	                _CollapsibleWidget2.default,
-	                { title: 'Opacity Control', subtitle: [cpuGpuButton, resetOpacityButton] },
-	                _react2.default.createElement(_EqualizerWidget2.default, {
-	                    ref: 'EqualizerWidget',
-	                    key: 'Equalizer',
-	                    layers: equalizer.getOpacities(),
-	                    onChange: equalizer.updateOpacities,
-	                    colors: equalizer.getColors(),
-	                    spacing: 5 })
-	            )
-	        );
+	    this.equalizerSubscription = this.props.equalizer.onChange(function () {
+	      _this.forceUpdate();
+	    });
+	    this.intensitySubscription = this.props.intensity.onChange(function () {
+	      _this.forceUpdate();
+	    });
+	    this.computationSubscription = this.props.intensity.onChange(function () {
+	      _this.forceUpdate();
+	    });
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    if (this.equalizerSubscription) {
+	      this.equalizerSubscription.unsubscribe();
+	      this.equalizerSubscription = null;
 	    }
+	    if (this.intensitySubscription) {
+	      this.intensitySubscription.unsubscribe();
+	      this.intensitySubscription = null;
+	    }
+	    if (this.computationSubscription) {
+	      this.computationSubscription.unsubscribe();
+	      this.computationSubscription = null;
+	    }
+	  },
+	  render: function render() {
+	    var equalizer = this.props.equalizer,
+	        lut = this.props.lookupTable,
+	        intensityButton = _react2.default.createElement(_ToggleIconButtonWidget2.default, {
+	      key: 'toggle-intensity',
+	      onChange: this.props.intensity.toggleState,
+	      value: this.props.intensity.getState()
+	    }),
+	        resetOpacityButton = _react2.default.createElement(_ToggleIconButtonWidget2.default, {
+	      key: 'reset',
+	      icon: _VolumeControl2.default.undoIcon,
+	      toggle: false,
+	      onChange: this.props.equalizer.resetOpacities,
+	      value: true
+	    }),
+	        cpuGpuButton = _react2.default.createElement(_ToggleIconButtonWidget2.default, {
+	      key: 'toggle-gpu',
+	      icon: _VolumeControl2.default.mobileIcon,
+	      onChange: this.props.computation.toggleState,
+	      value: !this.props.computation.getState()
+	    });
+
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        _CollapsibleWidget2.default,
+	        {
+	          title: 'LookupTable',
+	          key: 'LookupTableWidget_parent',
+	          subtitle: intensityButton
+	        },
+	        _react2.default.createElement(_LookupTableWidget2.default, {
+	          key: 'LookupTableWidget',
+	          ref: 'LookupTableWidget',
+	          originalRange: lut.originalRange,
+	          lookupTable: lut.lookupTable,
+	          lookupTableManager: lut.lookupTableManager
+	        })
+	      ),
+	      _react2.default.createElement(
+	        _CollapsibleWidget2.default,
+	        { title: 'Opacity Control', subtitle: [cpuGpuButton, resetOpacityButton] },
+	        _react2.default.createElement(_EqualizerWidget2.default, {
+	          ref: 'EqualizerWidget',
+	          key: 'Equalizer',
+	          layers: equalizer.getOpacities(),
+	          onChange: equalizer.updateOpacities,
+	          colors: equalizer.getColors(),
+	          spacing: 5
+	        })
+	      )
+	    );
+	  }
 	});
 
 /***/ },
@@ -33356,8 +33362,8 @@
 	    this.draw();
 	    this.mouseHandler = new _MouseHandler2.default(_reactDom2.default.findDOMNode(this.refs.canvas));
 	    this.mouseHandler.attach({
-	      'click': this.clicked,
-	      'drag': this.clicked
+	      click: this.clicked,
+	      drag: this.clicked
 	    });
 	  },
 	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
@@ -33872,7 +33878,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -33894,261 +33900,274 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	// Module dependencies and constants
-	var Modifier = { NONE: 0, ALT: 1, META: 2, SHIFT: 4, CTRL: 8 },
+	var Modifier = {
+	  NONE: 0,
+	  ALT: 1,
+	  META: 2,
+	  SHIFT: 4,
+	  CTRL: 8
+	},
 	    eventTypeMapping = {
-	    'contextmenu': 'contextmenu',
-	    'mousewheel': 'zoom',
-	    'DOMMouseScroll': 'zoom'
+	  contextmenu: 'contextmenu',
+	  mousewheel: 'zoom',
+	  DOMMouseScroll: 'zoom'
 	},
 	    TIMEOUT_BETWEEN_ZOOM = 300;
 
 	var handlerCount = 0;
 
 	function getModifier(e) {
-	    var modifier = 0;
-	    if (e.srcEvent) {
-	        modifier += e.srcEvent.altKey ? Modifier.ALT : 0;
-	        modifier += e.srcEvent.ctrlKey ? Modifier.CTRL : 0;
-	        modifier += e.srcEvent.metaKey ? Modifier.META : 0;
-	        modifier += e.srcEvent.shiftKey ? Modifier.SHIFT : 0;
-	    }
+	  var modifier = 0;
+	  if (e.srcEvent) {
+	    modifier += e.srcEvent.altKey ? Modifier.ALT : 0;
+	    modifier += e.srcEvent.ctrlKey ? Modifier.CTRL : 0;
+	    modifier += e.srcEvent.metaKey ? Modifier.META : 0;
+	    modifier += e.srcEvent.shiftKey ? Modifier.SHIFT : 0;
+	  }
 
-	    return modifier;
+	  return modifier;
 	}
 
 	function getRelative(el, event) {
-	    return {
-	        x: event.center.x - (el.getClientRects()[0].x || el.getClientRects()[0].left),
-	        y: event.center.y - (el.getClientRects()[0].y || el.getClientRects()[0].top)
-	    };
+	  return {
+	    x: event.center.x - (el.getClientRects()[0].x || el.getClientRects()[0].left),
+	    y: event.center.y - (el.getClientRects()[0].y || el.getClientRects()[0].top)
+	  };
 	}
 
 	function broadcast(ctx, topic, event) {
-	    event.preventDefault();
+	  event.preventDefault();
 
-	    event.button = 0;
-	    event.topic = topic;
-	    event.modifier = ctx.modifier ? ctx.modifier : getModifier(event);
-	    event.relative = getRelative(ctx.el, event);
+	  event.button = 0;
+	  event.topic = topic;
+	  event.modifier = ctx.modifier ? ctx.modifier : getModifier(event);
+	  event.relative = getRelative(ctx.el, event);
 
-	    ctx.emit(topic, event);
+	  ctx.emit(topic, event);
 	}
 
 	var MouseHandler = function () {
-	    function MouseHandler(domElement, options) {
-	        var _this = this;
+	  function MouseHandler(domElement, options) {
+	    var _this = this;
 
-	        _classCallCheck(this, MouseHandler);
+	    _classCallCheck(this, MouseHandler);
 
-	        var defaultOptions = {
-	            pan: {
-	                threshold: 0
-	            },
-	            pinch: {
-	                threshold: 0
-	            }
-	        };
-	        options = (0, _merge2.default)(defaultOptions, options);
+	    var defaultOptions = {
+	      pan: {
+	        threshold: 0
+	      },
+	      pinch: {
+	        threshold: 0
+	      }
+	    };
+	    options = (0, _merge2.default)(defaultOptions, options);
 
-	        this.Modifier = Modifier;
+	    this.Modifier = Modifier;
 
-	        handlerCount++;
-	        this.id = 'mouse_handler_' + handlerCount;
-	        this.el = domElement;
-	        this.modifier = 0;
-	        this.toggleModifiers = [0];
-	        this.toggleModifierIdx = 0;
-	        this.toggleModifierEnable = false;
-	        this.hammer = new _hammerjs2.default(domElement);
-	        this.scrollInternal = {
-	            ts: +new Date(),
-	            deltaX: 0,
-	            deltaY: 0
-	        };
-	        this.finalZoomEvent = null;
-	        this.finalZoomTimerId = 0;
-	        this.triggerFinalZoomEvent = function () {
-	            if (_this.finalZoomEvent) {
-	                _this.finalZoomEvent.isFirst = false;
-	                _this.finalZoomEvent.isFinal = true;
-	            }
-	            _this.emit(_this.finalZoomEvent.topic, _this.finalZoomEvent);
-	        };
+	    this.id = 'mouse_handler_' + ++handlerCount;
+	    this.el = domElement;
+	    this.modifier = 0;
+	    this.toggleModifiers = [0];
+	    this.toggleModifierIdx = 0;
+	    this.toggleModifierEnable = false;
+	    this.hammer = new _hammerjs2.default(domElement);
+	    this.scrollInternal = {
+	      ts: +new Date(),
+	      deltaX: 0,
+	      deltaY: 0
+	    };
+	    this.finalZoomEvent = null;
+	    this.finalZoomTimerId = 0;
+	    this.triggerFinalZoomEvent = function () {
+	      if (_this.finalZoomEvent) {
+	        _this.finalZoomEvent.isFirst = false;
+	        _this.finalZoomEvent.isFinal = true;
+	      }
+	      _this.emit(_this.finalZoomEvent.topic, _this.finalZoomEvent);
+	    };
 
-	        this.domEventHandler = function (e) {
-	            e.preventDefault();
-	            var event = {
-	                srcEvent: e,
-	                button: e.type === 'contextmenu' ? 2 : 0,
-	                topic: eventTypeMapping[e.type],
+	    this.domEventHandler = function (e) {
+	      e.preventDefault();
+	      var event = {
+	        srcEvent: e,
+	        button: e.type === 'contextmenu' ? 2 : 0,
+	        topic: eventTypeMapping[e.type],
 
-	                center: {
-	                    x: e.clientX,
-	                    y: e.clientY
-	                },
-	                relative: {
-	                    x: e.clientX - (_this.el.getClientRects()[0].x || _this.el.getClientRects()[0].left),
-	                    y: e.clientY - (_this.el.getClientRects()[0].y || _this.el.getClientRects()[0].top)
-	                },
+	        center: {
+	          x: e.clientX,
+	          y: e.clientY
+	        },
+	        relative: {
+	          x: e.clientX - (_this.el.getClientRects()[0].x || _this.el.getClientRects()[0].left),
+	          y: e.clientY - (_this.el.getClientRects()[0].y || _this.el.getClientRects()[0].top)
+	        },
 
-	                scale: 1,
+	        scale: 1,
 
-	                deltaX: 0,
-	                deltaY: 0,
-	                delta: 0,
-	                deltaTime: 0,
+	        deltaX: 0,
+	        deltaY: 0,
+	        delta: 0,
+	        deltaTime: 0,
 
-	                velocityX: 0,
-	                velocityY: 0,
-	                velocity: 0,
+	        velocityX: 0,
+	        velocityY: 0,
+	        velocity: 0,
 
-	                isFirst: false,
-	                isFinal: false
-	            };
-	            event.modifier = _this.modifier ? _this.modifier : getModifier(event);
+	        isFirst: false,
+	        isFinal: false
+	      };
+	      event.modifier = _this.modifier ? _this.modifier : getModifier(event);
 
-	            // Handle scroll/zoom if any
-	            if (event.topic === 'zoom') {
-	                // Register final zoom
-	                clearTimeout(_this.finalZoomTimerId);
-	                _this.finalZoomTimerId = setTimeout(_this.triggerFinalZoomEvent, TIMEOUT_BETWEEN_ZOOM);
+	      // Handle scroll/zoom if any
+	      if (event.topic === 'zoom') {
+	        // Register final zoom
+	        clearTimeout(_this.finalZoomTimerId);
+	        _this.finalZoomTimerId = setTimeout(_this.triggerFinalZoomEvent, TIMEOUT_BETWEEN_ZOOM);
 
-	                var currentTime = +new Date();
-	                if (currentTime - _this.scrollInternal.ts > TIMEOUT_BETWEEN_ZOOM) {
-	                    _this.scrollInternal.deltaX = 0;
-	                    _this.scrollInternal.deltaY = 0;
-	                    event.isFirst = true;
-	                    event.isFinal = false;
-	                } else {
-	                    event.isFinal = false;
-	                }
+	        var currentTime = +new Date();
+	        if (currentTime - _this.scrollInternal.ts > TIMEOUT_BETWEEN_ZOOM) {
+	          _this.scrollInternal.deltaX = 0;
+	          _this.scrollInternal.deltaY = 0;
+	          event.isFirst = true;
+	          event.isFinal = false;
+	        } else {
+	          event.isFinal = false;
+	        }
 
-	                if (e.wheelDeltaX === undefined) {
-	                    event.zoom = _this.lastScrollZoomFactor;
-	                    _this.scrollInternal.deltaY -= e.detail * 2.0;
-	                } else {
-	                    event.zoom = _this.lastScrollZoomFactor;
-	                    _this.scrollInternal.deltaX += e.wheelDeltaX;
-	                    _this.scrollInternal.deltaY += e.wheelDeltaY;
-	                }
+	        if (e.wheelDeltaX === undefined) {
+	          event.zoom = _this.lastScrollZoomFactor;
+	          _this.scrollInternal.deltaY -= e.detail * 2.0;
+	        } else {
+	          event.zoom = _this.lastScrollZoomFactor;
+	          _this.scrollInternal.deltaX += e.wheelDeltaX;
+	          _this.scrollInternal.deltaY += e.wheelDeltaY;
+	        }
 
-	                event.deltaX = _this.scrollInternal.deltaX;
-	                event.deltaY = _this.scrollInternal.deltaY;
-	                event.scale = 1.0 + event.deltaY / _this.el.getClientRects()[0].height;
-	                event.scale = event.scale < 0.1 ? 0.1 : event.scale;
-	                _this.scrollInternal.ts = currentTime;
+	        event.deltaX = _this.scrollInternal.deltaX;
+	        event.deltaY = _this.scrollInternal.deltaY;
+	        event.scale = 1.0 + event.deltaY / _this.el.getClientRects()[0].height;
+	        event.scale = event.scale < 0.1 ? 0.1 : event.scale;
+	        _this.scrollInternal.ts = currentTime;
 
-	                _this.finalZoomEvent = event;
-	            }
+	        _this.finalZoomEvent = event;
+	      }
 
-	            _this.emit(event.topic, event);
-	            return false;
-	        };
+	      _this.emit(event.topic, event);
+	      return false;
+	    };
 
-	        // set hammer options
-	        this.hammer.get('pan').set(options.pan);
-	        this.hammer.get('pinch').set(options.pinch);
+	    // set hammer options
+	    this.hammer.get('pan').set(options.pan);
+	    this.hammer.get('pinch').set(options.pinch);
 
-	        // Listen to hammer events
-	        this.hammer.on('tap', function (e) {
-	            broadcast(_this, 'click', e);
+	    // Listen to hammer events
+	    this.hammer.on('tap', function (e) {
+	      broadcast(_this, 'click', e);
+	    });
+
+	    this.hammer.on('doubletap', function (e) {
+	      broadcast(_this, 'dblclick', e);
+	    });
+
+	    this.hammer.on('pan', function (e) {
+	      broadcast(_this, 'drag', e);
+	    });
+
+	    this.hammer.on('panstart', function (e) {
+	      e.isFirst = true;
+	      broadcast(_this, 'drag', e);
+	    });
+
+	    this.hammer.on('panend', function (e) {
+	      e.isFinal = true;
+	      broadcast(_this, 'drag', e);
+	    });
+
+	    this.hammer.on('pinch', function (e) {
+	      broadcast(_this, 'zoom', e);
+	    });
+
+	    this.hammer.on('pinchstart', function (e) {
+	      console.log('zoom start');
+	      e.isFirst = true;
+	      broadcast(_this, 'zoom', e);
+	    });
+
+	    this.hammer.on('pinchend', function (e) {
+	      e.isFinal = true;
+	      console.log('zoom end');
+	      broadcast(_this, 'zoom', e);
+	    });
+
+	    this.hammer.get('pinch').set({
+	      enable: true
+	    });
+
+	    this.hammer.on('press', function (e) {
+	      if (_this.toggleModifierEnable) {
+	        _this.toggleModifierIdx = (_this.toggleModifierIdx + 1) % _this.toggleModifiers.length;
+	        _this.modifier = _this.toggleModifiers[_this.toggleModifierIdx];
+
+	        e.relative = getRelative(_this.el, e);
+
+	        _this.emit('modifier.change', {
+	          value: _this.modifier,
+	          list: Modifier,
+	          event: e
 	        });
+	      }
+	    });
 
-	        this.hammer.on('doubletap', function (e) {
-	            broadcast(_this, 'dblclick', e);
-	        });
+	    // Manage events that are not captured by hammer
+	    this.el.addEventListener('contextmenu', this.domEventHandler);
+	    this.el.addEventListener('mousewheel', this.domEventHandler);
+	    this.el.addEventListener('DOMMouseScroll', this.domEventHandler);
+	  }
 
-	        this.hammer.on('pan', function (e) {
-	            broadcast(_this, 'drag', e);
-	        });
-
-	        this.hammer.on('panstart', function (e) {
-	            e.isFirst = true;
-	            broadcast(_this, 'drag', e);
-	        });
-
-	        this.hammer.on('panend', function (e) {
-	            e.isFinal = true;
-	            broadcast(_this, 'drag', e);
-	        });
-
-	        this.hammer.on('pinch', function (e) {
-	            broadcast(_this, 'zoom', e);
-	        });
-
-	        this.hammer.on('pinchstart', function (e) {
-	            console.log('zoom start');
-	            e.isFirst = true;
-	            broadcast(_this, 'zoom', e);
-	        });
-
-	        this.hammer.on('pinchend', function (e) {
-	            e.isFinal = true;
-	            console.log('zoom end');
-	            broadcast(_this, 'zoom', e);
-	        });
-
-	        this.hammer.get('pinch').set({ enable: true });
-
-	        this.hammer.on('press', function (e) {
-	            if (_this.toggleModifierEnable) {
-	                _this.toggleModifierIdx = (_this.toggleModifierIdx + 1) % _this.toggleModifiers.length;
-	                _this.modifier = _this.toggleModifiers[_this.toggleModifierIdx];
-
-	                e.relative = getRelative(_this.el, e);
-
-	                _this.emit('modifier.change', { value: _this.modifier, list: Modifier, event: e });
-	            }
-	        });
-
-	        // Manage events that are not captured by hammer
-	        this.el.addEventListener('contextmenu', this.domEventHandler);
-	        this.el.addEventListener('mousewheel', this.domEventHandler);
-	        this.el.addEventListener('DOMMouseScroll', this.domEventHandler);
+	  _createClass(MouseHandler, [{
+	    key: 'enablePinch',
+	    value: function enablePinch(enable) {
+	      this.hammer.get('pinch').set({
+	        enable: enable
+	      });
 	    }
+	  }, {
+	    key: 'setModifier',
+	    value: function setModifier(modifier) {
+	      this.modifier = modifier;
+	    }
+	  }, {
+	    key: 'toggleModifierOnPress',
+	    value: function toggleModifierOnPress(enable, modifiers) {
+	      this.toggleModifiers = modifiers;
+	      this.toggleModifierEnable = enable;
+	    }
+	  }, {
+	    key: 'attach',
+	    value: function attach(listeners) {
+	      var subscriptions = {};
+	      for (var key in listeners) {
+	        subscriptions[key] = this.on(key, listeners[key]);
+	      }
+	      return subscriptions;
+	    }
+	  }, {
+	    key: 'destroy',
+	    value: function destroy() {
+	      // Remove all listeners is any
+	      this.off();
 
-	    _createClass(MouseHandler, [{
-	        key: 'enablePinch',
-	        value: function enablePinch(enable) {
-	            this.hammer.get('pinch').set({ enable: enable });
-	        }
-	    }, {
-	        key: 'setModifier',
-	        value: function setModifier(modifier) {
-	            this.modifier = modifier;
-	        }
-	    }, {
-	        key: 'toggleModifierOnPress',
-	        value: function toggleModifierOnPress(enable, modifiers) {
-	            this.toggleModifiers = modifiers;
-	            this.toggleModifierEnable = enable;
-	        }
-	    }, {
-	        key: 'attach',
-	        value: function attach(listeners) {
-	            var subscriptions = {};
-	            for (var key in listeners) {
-	                subscriptions[key] = this.on(key, listeners[key]);
-	            }
-	            return subscriptions;
-	        }
-	    }, {
-	        key: 'destroy',
-	        value: function destroy() {
-	            // Remove all listeners is any
-	            this.off();
+	      // Release hammer
+	      this.hammer.destroy();
 
-	            // Release hammer
-	            this.hammer.destroy();
+	      // Remove events that are not captured by hammer
+	      this.el.removeEventListener('contextmenu', this.domEventHandler);
+	      this.el.removeEventListener('mousewheel', this.domEventHandler);
+	      this.el.removeEventListener('DOMMouseScroll', this.domEventHandler);
+	    }
+	  }]);
 
-	            // Remove events that are not captured by hammer
-	            this.el.removeEventListener('contextmenu', this.domEventHandler);
-	            this.el.removeEventListener('mousewheel', this.domEventHandler);
-	            this.el.removeEventListener('DOMMouseScroll', this.domEventHandler);
-	        }
-	    }]);
-
-	    return MouseHandler;
+	  return MouseHandler;
 	}();
 
 	// Add Observer pattern using Monologue.js
@@ -36944,7 +36963,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	exports.getSize = getSize;
 	exports.onSizeChange = onSizeChange;
@@ -36961,80 +36980,82 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var observableInstance = new _Observable2.default(),
-	    TOPIC = 'window.size.change',
-	    domSizes = new WeakMap(),
-	    sizeProperties = ['scrollWidth', 'scrollHeight', 'clientWidth', 'clientHeight'],
-	    windowListener = (0, _Debounce.debounce)(invalidateSize, 250);
+	/* eslint-disable no-use-before-define */
 
-	var timestamp = 0,
-	    listenerAttached = false;
+	var observableInstance = new _Observable2.default();
+	var TOPIC = 'window.size.change';
+	var domSizes = new WeakMap();
+	var sizeProperties = ['scrollWidth', 'scrollHeight', 'clientWidth', 'clientHeight'];
+	var windowListener = (0, _Debounce.debounce)(invalidateSize, 250);
+
+	var timestamp = 0;
+	var listenerAttached = false;
 
 	// ------ internal functions ------
 
 	function updateSize(domElement, cacheObj) {
-	    if (cacheObj.timestamp < timestamp) {
-	        sizeProperties.forEach(function (prop) {
-	            cacheObj[prop] = domElement[prop];
-	        });
-	        cacheObj.clientRect = domElement.getClientRects()[0];
-	    }
+	  if (cacheObj.timestamp < timestamp) {
+	    sizeProperties.forEach(function (prop) {
+	      cacheObj[prop] = domElement[prop];
+	    });
+	    cacheObj.clientRect = domElement.getClientRects()[0];
+	  }
 	}
 
 	// ------ New API ------
 
 	function getSize(domElement) {
-	    var cachedSize = domSizes.get(domElement);
-	    if (!cachedSize) {
-	        cachedSize = { timestamp: -1 };
-	        domSizes.set(domElement, cachedSize);
-	    }
-	    updateSize(domElement, cachedSize);
+	  var cachedSize = domSizes.get(domElement);
+	  if (!cachedSize) {
+	    cachedSize = { timestamp: -1 };
+	    domSizes.set(domElement, cachedSize);
+	  }
+	  updateSize(domElement, cachedSize);
 
-	    return cachedSize;
+	  return cachedSize;
 	}
 
 	function onSizeChange(callback) {
-	    return observableInstance.on(TOPIC, callback);
+	  return observableInstance.on(TOPIC, callback);
 	}
 
 	function triggerChange() {
-	    observableInstance.emit(TOPIC);
+	  observableInstance.emit(TOPIC);
 	}
 
 	function isListening() {
-	    return listenerAttached;
+	  return listenerAttached;
 	}
 
 	function startListening() {
-	    if (!listenerAttached) {
-	        window.addEventListener("resize", windowListener);
-	        listenerAttached = true;
-	    }
+	  if (!listenerAttached) {
+	    window.addEventListener('resize', windowListener);
+	    listenerAttached = true;
+	  }
 	}
 
 	function stopListening() {
-	    if (listenerAttached) {
-	        window.removeEventListener("resize", windowListener);
-	        listenerAttached = false;
-	    }
+	  if (listenerAttached) {
+	    window.removeEventListener('resize', windowListener);
+	    listenerAttached = false;
+	  }
 	}
 
 	// ------ internal functions ------
 
 	function invalidateSize() {
-	    timestamp++;
-	    triggerChange();
+	  timestamp++;
+	  triggerChange();
 	}
 
 	// Export
 	exports.default = {
-	    getSize: getSize,
-	    isListening: isListening,
-	    onSizeChange: onSizeChange,
-	    startListening: startListening,
-	    stopListening: stopListening,
-	    triggerChange: triggerChange
+	  getSize: getSize,
+	  isListening: isListening,
+	  onSizeChange: onSizeChange,
+	  startListening: startListening,
+	  stopListening: stopListening,
+	  triggerChange: triggerChange
 	};
 
 /***/ },
@@ -37044,7 +37065,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -37058,18 +37079,18 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var Observable = function () {
-	    function Observable() {
-	        _classCallCheck(this, Observable);
+	  function Observable() {
+	    _classCallCheck(this, Observable);
+	  }
+
+	  _createClass(Observable, [{
+	    key: 'destroy',
+	    value: function destroy() {
+	      this.off();
 	    }
+	  }]);
 
-	    _createClass(Observable, [{
-	        key: 'destroy',
-	        value: function destroy() {
-	            this.off();
-	        }
-	    }]);
-
-	    return Observable;
+	  return Observable;
 	}();
 
 	// Add Observer pattern using Monologue.js
@@ -37085,7 +37106,7 @@
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	exports.debounce = debounce;
 	// Returns a function, that, as long as it continues to be invoked, will not
@@ -37094,27 +37115,32 @@
 	// leading edge, instead of the trailing.
 
 	function debounce(func, wait, immediate) {
-	    var timeout;
-	    return function () {
-	        var context = this,
-	            args = arguments;
-	        var later = function later() {
-	            timeout = null;
-	            if (!immediate) {
-	                func.apply(context, args);
-	            }
-	        };
-	        var callNow = immediate && !timeout;
-	        clearTimeout(timeout);
-	        timeout = setTimeout(later, wait);
-	        if (callNow) {
-	            func.apply(context, args);
-	        }
+	  var _this = this;
+
+	  var timeout;
+	  return function () {
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+
+	    var context = _this;
+	    var later = function later() {
+	      timeout = null;
+	      if (!immediate) {
+	        func.apply(context, args);
+	      }
 	    };
+	    var callNow = immediate && !timeout;
+	    clearTimeout(timeout);
+	    timeout = setTimeout(later, wait);
+	    if (callNow) {
+	      func.apply(context, args);
+	    }
+	  };
 	}
 
 	exports.default = {
-	    debounce: debounce
+	  debounce: debounce
 	};
 
 /***/ },
@@ -37280,7 +37306,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _ColorPickerWidget = __webpack_require__(215);
@@ -37306,39 +37332,39 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var STYLE = {
-	    range: {
-	        none: {
-	            display: 'flex'
-	        },
-	        edit: {
-	            display: 'flex'
-	        },
-	        preset: {
-	            display: 'none'
-	        }
+	  range: {
+	    none: {
+	      display: 'flex'
 	    },
-	    editContent: {
-	        none: {
-	            display: 'none'
-	        },
-	        edit: {
-	            display: 'flex'
-	        },
-	        preset: {
-	            display: 'none'
-	        }
+	    edit: {
+	      display: 'flex'
 	    },
-	    presets: {
-	        none: {
-	            display: 'none'
-	        },
-	        edit: {
-	            display: 'none'
-	        },
-	        preset: {
-	            display: 'flex'
-	        }
+	    preset: {
+	      display: 'none'
 	    }
+	  },
+	  editContent: {
+	    none: {
+	      display: 'none'
+	    },
+	    edit: {
+	      display: 'flex'
+	    },
+	    preset: {
+	      display: 'none'
+	    }
+	  },
+	  presets: {
+	    none: {
+	      display: 'none'
+	    },
+	    edit: {
+	      display: 'none'
+	    },
+	    preset: {
+	      display: 'flex'
+	    }
+	  }
 	};
 
 	/**
@@ -37360,249 +37386,277 @@
 	 */
 	exports.default = _react2.default.createClass({
 
-	    displayName: 'LookupTableWidget',
+	  displayName: 'LookupTableWidget',
 
-	    propTypes: {
-	        inverse: _react2.default.PropTypes.bool,
-	        lookupTable: _react2.default.PropTypes.object.isRequired,
-	        lookupTableManager: _react2.default.PropTypes.object,
-	        originalRange: _react2.default.PropTypes.array
-	    },
+	  propTypes: {
+	    inverse: _react2.default.PropTypes.bool,
+	    lookupTable: _react2.default.PropTypes.object.isRequired,
+	    lookupTableManager: _react2.default.PropTypes.object,
+	    originalRange: _react2.default.PropTypes.array
+	  },
 
-	    getInitialState: function getInitialState() {
-	        return {
-	            mode: 'none',
-	            activePreset: this.props.lookupTable.getPresets()[0],
-	            currentControlPointIndex: 0,
-	            internal_lut: false
-	        };
-	    },
-	    componentDidMount: function componentDidMount() {
-	        var canvas = _reactDom2.default.findDOMNode(this.refs.canvas);
-	        this.props.lookupTable.drawToCanvas(canvas);
-	    },
-	    componentDidUpdate: function componentDidUpdate(prevProps, prevState) {
-	        if (!this.state.internal_lut) {
-	            var canvas = _reactDom2.default.findDOMNode(this.refs.canvas);
-	            this.props.lookupTable.drawToCanvas(canvas);
+	  getInitialState: function getInitialState() {
+	    return {
+	      mode: 'none',
+	      activePreset: this.props.lookupTable.getPresets()[0],
+	      currentControlPointIndex: 0,
+	      internal_lut: false
+	    };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    var canvas = _reactDom2.default.findDOMNode(this.refs.canvas);
+	    this.props.lookupTable.drawToCanvas(canvas);
+	  },
+	  componentDidUpdate: function componentDidUpdate(prevProps, prevState) {
+	    if (!this.state.internal_lut) {
+	      var canvas = _reactDom2.default.findDOMNode(this.refs.canvas);
+	      this.props.lookupTable.drawToCanvas(canvas);
 
-	            if (this.state.mode === 'edit') {
-	                // Draw control point
-	                var ctx = canvas.getContext('2d'),
-	                    x = Math.floor(this.props.lookupTable.getControlPoint(this.state.currentControlPointIndex).x * this.props.lookupTable.colorTableSize),
-	                    imageData = ctx.getImageData(0, 0, this.props.lookupTable.colorTableSize, 1);
+	      if (this.state.mode === 'edit') {
+	        // Draw control point
+	        var ctx = canvas.getContext('2d'),
+	            x = Math.floor(this.props.lookupTable.getControlPoint(this.state.currentControlPointIndex).x * this.props.lookupTable.colorTableSize),
+	            imageData = ctx.getImageData(0, 0, this.props.lookupTable.colorTableSize, 1);
 
-	                var color = imageData.data[x * 4] + imageData.data[x * 4 + 1] + imageData.data[x * 4 + 2] > 3 * 255 / 2 ? 0 : 255;
-	                imageData.data[x * 4 + 0] = this.props.inverse ? (imageData.data[x * 4 + 0] + 128) % 256 : color;
-	                imageData.data[x * 4 + 1] = this.props.inverse ? (imageData.data[x * 4 + 1] + 128) % 256 : color;
-	                imageData.data[x * 4 + 2] = this.props.inverse ? (imageData.data[x * 4 + 2] + 128) % 256 : color;
+	        var color = imageData.data[x * 4] + imageData.data[x * 4 + 1] + imageData.data[x * 4 + 2] > 3 * 255 / 2 ? 0 : 255;
+	        imageData.data[x * 4 + 0] = this.props.inverse ? (imageData.data[x * 4 + 0] + 128) % 256 : color;
+	        imageData.data[x * 4 + 1] = this.props.inverse ? (imageData.data[x * 4 + 1] + 128) % 256 : color;
+	        imageData.data[x * 4 + 2] = this.props.inverse ? (imageData.data[x * 4 + 2] + 128) % 256 : color;
 
-	                ctx.putImageData(imageData, 0, 0);
-	            }
-	        }
-	    },
-	    toggleEditMode: function toggleEditMode() {
-	        if (this.state.mode === 'none' || this.state.mode !== 'edit') {
-	            this.setState({ mode: 'edit', internal_lut: false });
-	        } else {
-	            this.setState({ mode: 'none', internal_lut: false });
-	        }
-	    },
-	    togglePresetMode: function togglePresetMode() {
-	        if (this.state.mode === 'none' || this.state.mode !== 'preset') {
-	            this.deltaPreset(0); // Render preset
-	            this.setState({ mode: 'preset', internal_lut: true });
-	        } else {
-	            this.setState({ mode: 'none', internal_lut: false });
-	        }
-	    },
-	    updateScalarRange: function updateScalarRange() {
-	        var minValue = _reactDom2.default.findDOMNode(this.refs.min).value,
-	            maxValue = _reactDom2.default.findDOMNode(this.refs.max).value;
-	        this.props.lookupTable.setScalarRange(minValue, minValue === maxValue ? maxValue + 1 : maxValue);
-	        this.forceUpdate();
-	    },
-	    addControlPoint: function addControlPoint() {
-	        var newIdx = this.props.lookupTable.addControlPoint({
-	            x: 0.5,
-	            r: 0,
-	            g: 0,
-	            b: 0
-	        });
-	        this.setState({ currentControlPointIndex: newIdx });
-	    },
-	    deleteControlPoint: function deleteControlPoint() {
-	        if (this.props.lookupTable.removeControlPoint(this.state.currentControlPointIndex)) {
-	            this.forceUpdate();
-	        }
-	    },
-	    nextControlPoint: function nextControlPoint() {
-	        var newIdx = this.state.currentControlPointIndex + 1;
-
-	        if (newIdx < this.props.lookupTable.getNumberOfControlPoints()) {
-	            this.setState({ currentControlPointIndex: newIdx });
-	        }
-	    },
-	    previousControlPoint: function previousControlPoint() {
-	        var newIdx = this.state.currentControlPointIndex - 1;
-
-	        if (newIdx > -1) {
-	            this.setState({ currentControlPointIndex: newIdx });
-	        }
-	    },
-	    updateScalar: function updateScalar(newVal) {
-	        var scalarRange = this.props.lookupTable.getScalarRange(),
-	            xValue = (newVal - scalarRange[0]) / (scalarRange[1] - scalarRange[0]),
-	            controlPoint = this.props.lookupTable.getControlPoint(this.state.currentControlPointIndex);
-
-	        var newIdx = this.props.lookupTable.updateControlPoint(this.state.currentControlPointIndex, {
-	            x: xValue,
-	            r: controlPoint.r,
-	            g: controlPoint.g,
-	            b: controlPoint.b
-	        });
-	        this.setState({ currentControlPointIndex: newIdx });
-	        this.forceUpdate();
-	    },
-	    updateRGB: function updateRGB(rgb) {
-	        var controlPoint = this.props.lookupTable.getControlPoint(this.state.currentControlPointIndex);
-
-	        var newIdx = this.props.lookupTable.updateControlPoint(this.state.currentControlPointIndex, {
-	            x: controlPoint.x,
-	            r: rgb[0] / 255,
-	            g: rgb[1] / 255,
-	            b: rgb[2] / 255
-	        });
-	        this.setState({ currentControlPointIndex: newIdx });
-	    },
-	    setPreset: function setPreset(event) {
-	        this.props.lookupTable.setPreset(event.target.dataset.name);
-	        this.togglePresetMode();
-	    },
-	    resetRange: function resetRange() {
-	        var range = this.props.originalRange;
-	        this.props.lookupTable.setScalarRange(range[0], range[1]);
-	    },
-	    changePreset: function changePreset(event) {
-	        var delta = event.detail || event.deltaY || event.deltaX;
-	        event.preventDefault();
-	        this.deltaPreset(delta);
-	    },
-	    nextPreset: function nextPreset() {
-	        this.deltaPreset(1);
-	    },
-	    previousPreset: function previousPreset() {
-	        this.deltaPreset(-1);
-	    },
-	    deltaPreset: function deltaPreset(delta) {
-	        var presets = this.props.lookupTable.getPresets(),
-	            currentIdx = presets.indexOf(this.state.activePreset),
-	            newPreset = null;
-
-	        currentIdx += delta === 0 ? 0 : delta < 0 ? -1 : 1;
-	        if (currentIdx < 0 || currentIdx === presets.length) {
-	            return;
-	        }
-
-	        newPreset = presets[currentIdx];
-	        if (this.props.lookupTableManager) {
-	            var lut = this.props.lookupTableManager.getLookupTable('__internal');
-	            if (!lut) {
-	                lut = this.props.lookupTableManager.addLookupTable('__internal', [0, 1], newPreset);
-	            } else {
-	                lut.setPreset(newPreset);
-	            }
-	            lut.drawToCanvas(_reactDom2.default.findDOMNode(this.refs.canvas));
-	        }
-	        this.setState({ activePreset: newPreset });
-	    },
-	    render: function render() {
-	        var _this = this;
-
-	        var scalarRange = this.props.lookupTable.getScalarRange(),
-	            controlPoint = this.props.lookupTable.getControlPoint(this.state.currentControlPointIndex),
-	            controlPointValue = controlPoint.x * (scalarRange[1] - scalarRange[0]) + scalarRange[0],
-	            color = [Math.floor(255 * controlPoint.r), Math.floor(255 * controlPoint.g), Math.floor(255 * controlPoint.b)];
-
-	        return _react2.default.createElement(
-	            'div',
-	            { className: _LookupTableWidget2.default.container },
-	            _react2.default.createElement(
-	                'div',
-	                { className: _LookupTableWidget2.default.line },
-	                _react2.default.createElement('i', { className: _LookupTableWidget2.default.editButton,
-	                    onClick: this.toggleEditMode }),
-	                _react2.default.createElement('canvas', { ref: 'canvas',
-	                    className: _LookupTableWidget2.default.canvas,
-	                    width: this.props.lookupTable.colorTableSize * this.props.lookupTable.scale,
-	                    height: '1' }),
-	                _react2.default.createElement('i', { className: _LookupTableWidget2.default.presetButton,
-	                    onClick: this.togglePresetMode })
-	            ),
-	            _react2.default.createElement(
-	                'div',
-	                { className: _LookupTableWidget2.default.range, style: STYLE.range[this.state.mode] },
-	                _react2.default.createElement(_NumberInputWidget2.default, { ref: 'min',
-	                    className: _LookupTableWidget2.default.input,
-	                    value: this.props.lookupTable.getScalarRange()[0],
-	                    onChange: this.updateScalarRange }),
-	                _react2.default.createElement('i', { onClick: this.resetRange,
-	                    className: _LookupTableWidget2.default.resetRangeButton }),
-	                _react2.default.createElement(_NumberInputWidget2.default, { ref: 'max',
-	                    className: _LookupTableWidget2.default.inputRight,
-	                    value: this.props.lookupTable.getScalarRange()[1],
-	                    onChange: this.updateScalarRange })
-	            ),
-	            _react2.default.createElement(
-	                'div',
-	                { className: _LookupTableWidget2.default.editContent, style: STYLE.editContent[this.state.mode] },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: _LookupTableWidget2.default.line },
-	                    _react2.default.createElement('i', { onClick: this.previousControlPoint,
-	                        className: _LookupTableWidget2.default.previousButton }),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: _LookupTableWidget2.default.label },
-	                        this.state.currentControlPointIndex + 1,
-	                        ' / ',
-	                        this.props.lookupTable.getNumberOfControlPoints()
-	                    ),
-	                    _react2.default.createElement('i', { onClick: this.nextControlPoint,
-	                        className: _LookupTableWidget2.default.nextButton }),
-	                    _react2.default.createElement('i', { onClick: this.addControlPoint,
-	                        className: _LookupTableWidget2.default.addButton }),
-	                    _react2.default.createElement(_NumberInputWidget2.default, { ref: 'x',
-	                        className: _LookupTableWidget2.default.inputRight,
-	                        value: controlPointValue,
-	                        onChange: this.updateScalar }),
-	                    _react2.default.createElement('i', { onClick: this.deleteControlPoint,
-	                        className: _LookupTableWidget2.default.deleteButton })
-	                ),
-	                _react2.default.createElement(_ColorPickerWidget2.default, { color: color, onChange: this.updateRGB })
-	            ),
-	            _react2.default.createElement(
-	                'div',
-	                { className: _LookupTableWidget2.default.presets, style: STYLE.presets[this.state.mode] },
-	                _react2.default.createElement('i', { onClick: this.previousPreset,
-	                    className: this.state.activePreset === this.props.lookupTable.getPresets()[0] ? _LookupTableWidget2.default.disablePreviousButton : _LookupTableWidget2.default.previousButton }),
-	                this.props.lookupTable.getPresets().map(function (preset) {
-	                    return _react2.default.createElement(
-	                        'div',
-	                        { onClick: _this.setPreset,
-	                            onScroll: _this.changePreset,
-	                            onWheel: _this.changePreset,
-	                            className: _this.state.activePreset === preset ? _LookupTableWidget2.default.preset : _LookupTableWidget2.default.hiddenPreset,
-	                            'data-name': preset,
-	                            key: preset },
-	                        preset
-	                    );
-	                }),
-	                _react2.default.createElement('i', { onClick: this.nextPreset,
-	                    className: this.state.activePreset === this.props.lookupTable.getPresets()[this.props.lookupTable.getPresets().length - 1] ? _LookupTableWidget2.default.disableNextButton : _LookupTableWidget2.default.nextButton })
-	            )
-	        );
+	        ctx.putImageData(imageData, 0, 0);
+	      }
 	    }
+	  },
+	  toggleEditMode: function toggleEditMode() {
+	    if (this.state.mode === 'none' || this.state.mode !== 'edit') {
+	      this.setState({ mode: 'edit', internal_lut: false });
+	    } else {
+	      this.setState({ mode: 'none', internal_lut: false });
+	    }
+	  },
+	  togglePresetMode: function togglePresetMode() {
+	    if (this.state.mode === 'none' || this.state.mode !== 'preset') {
+	      this.deltaPreset(0); // Render preset
+	      this.setState({ mode: 'preset', internal_lut: true });
+	    } else {
+	      this.setState({ mode: 'none', internal_lut: false });
+	    }
+	  },
+	  updateScalarRange: function updateScalarRange() {
+	    var minValue = _reactDom2.default.findDOMNode(this.refs.min).value,
+	        maxValue = _reactDom2.default.findDOMNode(this.refs.max).value;
+	    this.props.lookupTable.setScalarRange(minValue, minValue === maxValue ? maxValue + 1 : maxValue);
+	    this.forceUpdate();
+	  },
+	  addControlPoint: function addControlPoint() {
+	    var newIdx = this.props.lookupTable.addControlPoint({
+	      x: 0.5,
+	      r: 0,
+	      g: 0,
+	      b: 0
+	    });
+	    this.setState({ currentControlPointIndex: newIdx });
+	  },
+	  deleteControlPoint: function deleteControlPoint() {
+	    if (this.props.lookupTable.removeControlPoint(this.state.currentControlPointIndex)) {
+	      this.forceUpdate();
+	    }
+	  },
+	  nextControlPoint: function nextControlPoint() {
+	    var newIdx = this.state.currentControlPointIndex + 1;
+
+	    if (newIdx < this.props.lookupTable.getNumberOfControlPoints()) {
+	      this.setState({ currentControlPointIndex: newIdx });
+	    }
+	  },
+	  previousControlPoint: function previousControlPoint() {
+	    var newIdx = this.state.currentControlPointIndex - 1;
+
+	    if (newIdx > -1) {
+	      this.setState({ currentControlPointIndex: newIdx });
+	    }
+	  },
+	  updateScalar: function updateScalar(newVal) {
+	    var scalarRange = this.props.lookupTable.getScalarRange(),
+	        xValue = (newVal - scalarRange[0]) / (scalarRange[1] - scalarRange[0]),
+	        controlPoint = this.props.lookupTable.getControlPoint(this.state.currentControlPointIndex);
+
+	    var newIdx = this.props.lookupTable.updateControlPoint(this.state.currentControlPointIndex, {
+	      x: xValue,
+	      r: controlPoint.r,
+	      g: controlPoint.g,
+	      b: controlPoint.b
+	    });
+	    this.setState({ currentControlPointIndex: newIdx });
+	    this.forceUpdate();
+	  },
+	  updateRGB: function updateRGB(rgb) {
+	    var controlPoint = this.props.lookupTable.getControlPoint(this.state.currentControlPointIndex);
+
+	    var newIdx = this.props.lookupTable.updateControlPoint(this.state.currentControlPointIndex, {
+	      x: controlPoint.x,
+	      r: rgb[0] / 255,
+	      g: rgb[1] / 255,
+	      b: rgb[2] / 255
+	    });
+	    this.setState({ currentControlPointIndex: newIdx });
+	  },
+	  setPreset: function setPreset(event) {
+	    this.props.lookupTable.setPreset(event.target.dataset.name);
+	    this.togglePresetMode();
+	  },
+	  resetRange: function resetRange() {
+	    var range = this.props.originalRange;
+	    this.props.lookupTable.setScalarRange(range[0], range[1]);
+	  },
+	  changePreset: function changePreset(event) {
+	    var delta = event.detail || event.deltaY || event.deltaX;
+	    event.preventDefault();
+	    this.deltaPreset(delta);
+	  },
+	  nextPreset: function nextPreset() {
+	    this.deltaPreset(1);
+	  },
+	  previousPreset: function previousPreset() {
+	    this.deltaPreset(-1);
+	  },
+	  deltaPreset: function deltaPreset(delta) {
+	    var presets = this.props.lookupTable.getPresets(),
+	        currentIdx = presets.indexOf(this.state.activePreset),
+	        newPreset = null;
+
+	    currentIdx += delta === 0 ? 0 : delta < 0 ? -1 : 1;
+	    if (currentIdx < 0 || currentIdx === presets.length) {
+	      return;
+	    }
+
+	    newPreset = presets[currentIdx];
+	    if (this.props.lookupTableManager) {
+	      var lut = this.props.lookupTableManager.getLookupTable('__internal');
+	      if (!lut) {
+	        lut = this.props.lookupTableManager.addLookupTable('__internal', [0, 1], newPreset);
+	      } else {
+	        lut.setPreset(newPreset);
+	      }
+	      lut.drawToCanvas(_reactDom2.default.findDOMNode(this.refs.canvas));
+	    }
+	    this.setState({ activePreset: newPreset });
+	  },
+	  render: function render() {
+	    var _this = this;
+
+	    var scalarRange = this.props.lookupTable.getScalarRange(),
+	        controlPoint = this.props.lookupTable.getControlPoint(this.state.currentControlPointIndex),
+	        controlPointValue = controlPoint.x * (scalarRange[1] - scalarRange[0]) + scalarRange[0],
+	        color = [Math.floor(255 * controlPoint.r), Math.floor(255 * controlPoint.g), Math.floor(255 * controlPoint.b)];
+
+	    return _react2.default.createElement(
+	      'div',
+	      { className: _LookupTableWidget2.default.container },
+	      _react2.default.createElement(
+	        'div',
+	        { className: _LookupTableWidget2.default.line },
+	        _react2.default.createElement('i', {
+	          className: _LookupTableWidget2.default.editButton,
+	          onClick: this.toggleEditMode
+	        }),
+	        _react2.default.createElement('canvas', {
+	          ref: 'canvas',
+	          className: _LookupTableWidget2.default.canvas,
+	          width: this.props.lookupTable.colorTableSize * this.props.lookupTable.scale,
+	          height: '1'
+	        }),
+	        _react2.default.createElement('i', {
+	          className: _LookupTableWidget2.default.presetButton,
+	          onClick: this.togglePresetMode
+	        })
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: _LookupTableWidget2.default.range, style: STYLE.range[this.state.mode] },
+	        _react2.default.createElement(_NumberInputWidget2.default, {
+	          ref: 'min',
+	          className: _LookupTableWidget2.default.input,
+	          value: this.props.lookupTable.getScalarRange()[0],
+	          onChange: this.updateScalarRange
+	        }),
+	        _react2.default.createElement('i', {
+	          onClick: this.resetRange,
+	          className: _LookupTableWidget2.default.resetRangeButton
+	        }),
+	        _react2.default.createElement(_NumberInputWidget2.default, {
+	          ref: 'max',
+	          className: _LookupTableWidget2.default.inputRight,
+	          value: this.props.lookupTable.getScalarRange()[1],
+	          onChange: this.updateScalarRange
+	        })
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: _LookupTableWidget2.default.editContent, style: STYLE.editContent[this.state.mode] },
+	        _react2.default.createElement(
+	          'div',
+	          { className: _LookupTableWidget2.default.line },
+	          _react2.default.createElement('i', {
+	            onClick: this.previousControlPoint,
+	            className: _LookupTableWidget2.default.previousButton
+	          }),
+	          _react2.default.createElement(
+	            'div',
+	            { className: _LookupTableWidget2.default.label },
+	            this.state.currentControlPointIndex + 1,
+	            ' / ',
+	            this.props.lookupTable.getNumberOfControlPoints()
+	          ),
+	          _react2.default.createElement('i', {
+	            onClick: this.nextControlPoint,
+	            className: _LookupTableWidget2.default.nextButton
+	          }),
+	          _react2.default.createElement('i', {
+	            onClick: this.addControlPoint,
+	            className: _LookupTableWidget2.default.addButton
+	          }),
+	          _react2.default.createElement(_NumberInputWidget2.default, {
+	            ref: 'x',
+	            className: _LookupTableWidget2.default.inputRight,
+	            value: controlPointValue,
+	            onChange: this.updateScalar
+	          }),
+	          _react2.default.createElement('i', {
+	            onClick: this.deleteControlPoint,
+	            className: _LookupTableWidget2.default.deleteButton
+	          })
+	        ),
+	        _react2.default.createElement(_ColorPickerWidget2.default, { color: color, onChange: this.updateRGB })
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: _LookupTableWidget2.default.presets, style: STYLE.presets[this.state.mode] },
+	        _react2.default.createElement('i', {
+	          onClick: this.previousPreset,
+	          className: this.state.activePreset === this.props.lookupTable.getPresets()[0] ? _LookupTableWidget2.default.disablePreviousButton : _LookupTableWidget2.default.previousButton
+	        }),
+	        this.props.lookupTable.getPresets().map(function (preset) {
+	          return _react2.default.createElement(
+	            'div',
+	            {
+	              onClick: _this.setPreset,
+	              onScroll: _this.changePreset,
+	              onWheel: _this.changePreset,
+	              className: _this.state.activePreset === preset ? _LookupTableWidget2.default.preset : _LookupTableWidget2.default.hiddenPreset,
+	              'data-name': preset,
+	              key: preset
+	            },
+	            preset
+	          );
+	        }),
+	        _react2.default.createElement('i', {
+	          onClick: this.nextPreset,
+	          className: this.state.activePreset === this.props.lookupTable.getPresets()[this.props.lookupTable.getPresets().length - 1] ? _LookupTableWidget2.default.disableNextButton : _LookupTableWidget2.default.nextButton
+	        })
+	      )
+	    );
+	  }
 	});
 
 /***/ },
@@ -37758,39 +37812,48 @@
 	        _react2.default.createElement('canvas', { className: _ColorPickerWidget2.default.colorCanvas,
 	          ref: 'canvas',
 	          width: '1',
-	          height: '1' }),
-	        _react2.default.createElement('input', { className: _ColorPickerWidget2.default.colorRGB,
+	          height: '1'
+	        }),
+	        _react2.default.createElement('input', {
+	          className: _ColorPickerWidget2.default.colorRGB,
 	          type: 'number',
 	          min: '0',
 	          max: '255',
 	          value: this.state.color[0],
 	          'data-color-idx': '0',
-	          onChange: this.rgbColorChange }),
-	        _react2.default.createElement('input', { className: _ColorPickerWidget2.default.colorRGB,
+	          onChange: this.rgbColorChange
+	        }),
+	        _react2.default.createElement('input', {
+	          className: _ColorPickerWidget2.default.colorRGB,
 	          type: 'number',
 	          min: '0',
 	          max: '255',
 	          value: this.state.color[1],
 	          'data-color-idx': '1',
-	          onChange: this.rgbColorChange }),
-	        _react2.default.createElement('input', { className: _ColorPickerWidget2.default.colorRGB,
+	          onChange: this.rgbColorChange
+	        }),
+	        _react2.default.createElement('input', {
+	          className: _ColorPickerWidget2.default.colorRGB,
 	          type: 'number',
 	          min: '0',
 	          max: '255',
 	          value: this.state.color[2],
 	          'data-color-idx': '2',
-	          onChange: this.rgbColorChange })
+	          onChange: this.rgbColorChange
+	        })
 	      ),
 	      _react2.default.createElement(
 	        'div',
 	        { className: _ColorPickerWidget2.default.swatch },
-	        _react2.default.createElement('img', { ref: 'swatch',
+	        _react2.default.createElement('img', {
+	          ref: 'swatch',
 	          className: _ColorPickerWidget2.default.swatchImage,
 	          width: '100%',
 	          src: this.state.swatch,
 	          onClick: this.showColor,
 	          onMouseMove: this.showColor,
-	          onMouseLeave: this.showColor })
+	          onMouseLeave: this.showColor
+	        })
 	      )
 	    );
 	  }
@@ -37918,7 +37981,8 @@
 	      step: this.props.step,
 	      value: this.state.editing ? this.state.valueRep : this.props.value,
 	      onChange: this.valueChange,
-	      onBlur: this.endEditing });
+	      onBlur: this.endEditing
+	    });
 	  }
 	});
 

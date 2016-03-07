@@ -132,7 +132,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _CollapsibleWidget = __webpack_require__(2);
@@ -159,142 +159,151 @@
 
 	exports.default = _react2.default.createClass({
 
-	    displayName: 'FloatImageControl',
+	  displayName: 'FloatImageControl',
 
-	    propTypes: {
-	        model: _react2.default.PropTypes.object.isRequired
-	    },
+	  propTypes: {
+	    model: _react2.default.PropTypes.object.isRequired
+	  },
 
-	    getInitialState: function getInitialState() {
-	        this.attachListener(this.props.model);
-	        return { change: false, x: this.props.model.dimensions[0] / 2, y: this.props.model.dimensions[1] / 2 };
-	    },
-	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	        var previous = this.props.model,
-	            next = nextProps.model;
+	  getInitialState: function getInitialState() {
+	    this.attachListener(this.props.model);
+	    return {
+	      change: false,
+	      x: this.props.model.dimensions[0] / 2,
+	      y: this.props.model.dimensions[1] / 2
+	    };
+	  },
+	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    var previous = this.props.model,
+	        next = nextProps.model;
 
-	        if (previous !== next) {
-	            this.detachListener();
-	            this.attachListener(next);
+	    if (previous !== next) {
+	      this.detachListener();
+	      this.attachListener(next);
 
-	            // Force redraw
-	            this.setState({ change: !this.state.change });
-	        }
-	    },
-	    attachListener: function attachListener(model) {
-	        var _this = this;
-
-	        this.changeSubscription = model.onProbeChange(function (data, envelope) {
-	            _this.forceUpdate();
-	        });
-	    },
-	    detachListener: function detachListener() {
-	        if (this.changeSubscription) {
-	            this.changeSubscription.unsubscribe();
-	            this.changeSubscription = null;
-	        }
-	    },
-	    updateLight: function updateLight(event) {
-	        this.props.model.setLight(255 - event.target.value);
-	        this.setState({ change: !this.state.change });
-	    },
-	    onProbeChange: function onProbeChange(e) {
-	        var name = e.target.name,
-	            newVal = Number(e.target.value),
-	            newState = { x: this.state.x, y: this.state.y };
-
-	        newState[name] = newVal;
-	        this.setState(newState);
-	        this.props.model.getTimeChart(newState.x, newState.y);
-	    },
-	    toggleProbe: function toggleProbe(newVal) {
-	        this.props.model.getTimeProbe().enabled = !!newVal;
-
-	        if (this.props.model.getTimeProbe().enabled) {
-	            this.props.model.getTimeChart();
-	        }
-
-	        this.setState({ change: !this.state.change });
-
-	        this.props.model.getTimeProbe().triggerChange();
-	        this.props.model.render();
-	    },
-	    render: function render() {
-	        var floatImageModel = this.props.model,
-	            timeProbe = floatImageModel.getTimeProbe(),
-	            width = floatImageModel.dimensions[0],
-	            height = floatImageModel.dimensions[1];
-	        return _react2.default.createElement(
-	            'div',
-	            { className: _FloatImageControl2.default.container },
-	            _react2.default.createElement(
-	                _CollapsibleWidget2.default,
-	                { title: 'Scene' },
-	                floatImageModel.getLayers().map(function (item, idx) {
-	                    return _react2.default.createElement(_LayerItem2.default, { key: idx, item: item, model: floatImageModel });
-	                }),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: _FloatImageControl2.default.item },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: _FloatImageControl2.default.label },
-	                        'Light'
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: _FloatImageControl2.default.actions },
-	                        _react2.default.createElement('input', { className: _FloatImageControl2.default.lightSlider,
-	                            type: 'range', min: '0', max: '128',
-	                            value: 255 - floatImageModel.getLight(),
-	                            onChange: this.updateLight })
-	                    )
-	                )
-	            ),
-	            _react2.default.createElement(
-	                _CollapsibleWidget2.default,
-	                {
-	                    title: 'Time probe',
-	                    open: timeProbe.enabled,
-	                    subtitle: timeProbe.enabled ? timeProbe.value : '',
-	                    visible: floatImageModel.isMultiView(),
-	                    onChange: this.toggleProbe },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: _FloatImageControl2.default.item },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: _FloatImageControl2.default.label },
-	                        'X'
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: _FloatImageControl2.default.actions },
-	                        _react2.default.createElement(_NumberSliderWidget2.default, {
-	                            step: 1, min: 0.0, max: width,
-	                            key: 'x', value: this.state.x, name: 'x',
-	                            onChange: this.onProbeChange })
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: _FloatImageControl2.default.item },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: _FloatImageControl2.default.label },
-	                        'Y'
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: _FloatImageControl2.default.actions },
-	                        _react2.default.createElement(_NumberSliderWidget2.default, {
-	                            step: 1, min: 0.0, max: height,
-	                            key: 'y', value: this.state.y, name: 'y', onChange: this.onProbeChange })
-	                    )
-	                )
-	            )
-	        );
+	      // Force redraw
+	      this.setState({ change: !this.state.change });
 	    }
+	  },
+	  attachListener: function attachListener(model) {
+	    var _this = this;
+
+	    this.changeSubscription = model.onProbeChange(function (data, envelope) {
+	      _this.forceUpdate();
+	    });
+	  },
+	  detachListener: function detachListener() {
+	    if (this.changeSubscription) {
+	      this.changeSubscription.unsubscribe();
+	      this.changeSubscription = null;
+	    }
+	  },
+	  updateLight: function updateLight(event) {
+	    this.props.model.setLight(255 - event.target.value);
+	    this.setState({ change: !this.state.change });
+	  },
+	  onProbeChange: function onProbeChange(e) {
+	    var name = e.target.name,
+	        newVal = Number(e.target.value),
+	        newState = { x: this.state.x, y: this.state.y };
+
+	    newState[name] = newVal;
+	    this.setState(newState);
+	    this.props.model.getTimeChart(newState.x, newState.y);
+	  },
+	  toggleProbe: function toggleProbe(newVal) {
+	    this.props.model.getTimeProbe().enabled = !!newVal;
+
+	    if (this.props.model.getTimeProbe().enabled) {
+	      this.props.model.getTimeChart();
+	    }
+
+	    this.setState({ change: !this.state.change });
+
+	    this.props.model.getTimeProbe().triggerChange();
+	    this.props.model.render();
+	  },
+	  render: function render() {
+	    var floatImageModel = this.props.model,
+	        timeProbe = floatImageModel.getTimeProbe(),
+	        width = floatImageModel.dimensions[0],
+	        height = floatImageModel.dimensions[1];
+
+	    return _react2.default.createElement(
+	      'div',
+	      { className: _FloatImageControl2.default.container },
+	      _react2.default.createElement(
+	        _CollapsibleWidget2.default,
+	        { title: 'Scene' },
+	        floatImageModel.getLayers().map(function (item, idx) {
+	          return _react2.default.createElement(_LayerItem2.default, { key: idx, item: item, model: floatImageModel });
+	        }),
+	        _react2.default.createElement(
+	          'div',
+	          { className: _FloatImageControl2.default.item },
+	          _react2.default.createElement(
+	            'div',
+	            { className: _FloatImageControl2.default.label },
+	            'Light'
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: _FloatImageControl2.default.actions },
+	            _react2.default.createElement('input', { className: _FloatImageControl2.default.lightSlider,
+	              type: 'range', min: '0', max: '128',
+	              value: 255 - floatImageModel.getLight(),
+	              onChange: this.updateLight
+	            })
+	          )
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _CollapsibleWidget2.default,
+	        {
+	          title: 'Time probe',
+	          open: timeProbe.enabled,
+	          subtitle: timeProbe.enabled ? timeProbe.value : '',
+	          visible: floatImageModel.isMultiView(),
+	          onChange: this.toggleProbe
+	        },
+	        _react2.default.createElement(
+	          'div',
+	          { className: _FloatImageControl2.default.item },
+	          _react2.default.createElement(
+	            'div',
+	            { className: _FloatImageControl2.default.label },
+	            'X'
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: _FloatImageControl2.default.actions },
+	            _react2.default.createElement(_NumberSliderWidget2.default, {
+	              step: 1, min: 0.0, max: width,
+	              key: 'x', value: this.state.x, name: 'x',
+	              onChange: this.onProbeChange
+	            })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: _FloatImageControl2.default.item },
+	          _react2.default.createElement(
+	            'div',
+	            { className: _FloatImageControl2.default.label },
+	            'Y'
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: _FloatImageControl2.default.actions },
+	            _react2.default.createElement(_NumberSliderWidget2.default, {
+	              step: 1, min: 0.0, max: height,
+	              key: 'y', value: this.state.y, name: 'y', onChange: this.onProbeChange
+	            })
+	          )
+	        )
+	      )
+	    );
+	  }
 	});
 
 /***/ },
@@ -21174,7 +21183,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _react = __webpack_require__(3);
@@ -21189,78 +21198,82 @@
 
 	exports.default = _react2.default.createClass({
 
-	    displayName: 'FloatImageControl.LayerItem',
+	  displayName: 'FloatImageControl.LayerItem',
 
-	    propTypes: {
-	        item: _react2.default.PropTypes.object.isRequired,
-	        model: _react2.default.PropTypes.object.isRequired
-	    },
+	  propTypes: {
+	    item: _react2.default.PropTypes.object.isRequired,
+	    model: _react2.default.PropTypes.object.isRequired
+	  },
 
-	    getInitialState: function getInitialState() {
-	        return {
-	            change: false,
-	            dropDown: false
-	        };
-	    },
-	    toggleMesh: function toggleMesh() {
-	        if (this.props.item.hasMesh) {
-	            this.props.model.updateMaskLayerVisibility(this.props.item.name, !this.props.item.meshActive);
-	            this.setState({ change: !this.state.change });
-	        }
-	    },
-	    toggleVisibility: function toggleVisibility() {
-	        this.props.model.updateLayerVisibility(this.props.item.name, !this.props.item.active);
-	        this.setState({ change: !this.state.change });
-	    },
-	    toggleDropDown: function toggleDropDown() {
-	        if (this.props.item.arrays.length > 1) {
-	            this.setState({ dropDown: !this.state.dropDown });
-	        }
-	    },
-	    updateColorBy: function updateColorBy(event) {
-	        this.props.model.updateLayerColorBy(this.props.item.name, event.target.dataset.color);
-	        this.toggleDropDown();
-	    },
-	    render: function render() {
-	        var layer = this.props.item,
-	            visible = layer.active,
-	            meshVisible = layer.meshActive,
-	            meshAvailable = layer.hasMesh,
-	            hasDropDown = layer.arrays.length > 1;
-
-	        return _react2.default.createElement(
-	            'div',
-	            { className: _FloatImageControl2.default.item },
-	            _react2.default.createElement(
-	                'div',
-	                { className: _FloatImageControl2.default.label },
-	                layer.name
-	            ),
-	            _react2.default.createElement(
-	                'div',
-	                { className: _FloatImageControl2.default.actions },
-	                _react2.default.createElement('i', { className: meshAvailable ? meshVisible ? _FloatImageControl2.default.meshButtonOn : _FloatImageControl2.default.meshButtonOff : _FloatImageControl2.default.hidden,
-	                    onClick: this.toggleMesh }),
-	                _react2.default.createElement('i', { className: visible ? _FloatImageControl2.default.visibleButtonOn : _FloatImageControl2.default.visibleButtonOff, onClick: this.toggleVisibility }),
-	                _react2.default.createElement('i', { className: hasDropDown ? _FloatImageControl2.default.dropDownButtonOn : _FloatImageControl2.default.dropDownButtonOff, onClick: this.toggleDropDown }),
-	                _react2.default.createElement(
-	                    'div',
-	                    {
-	                        onClick: this.updateColorBy,
-	                        className: this.state.dropDown ? _FloatImageControl2.default.menu : _FloatImageControl2.default.hidden },
-	                    layer.arrays.map(function (color) {
-	                        return _react2.default.createElement(
-	                            'div',
-	                            { key: color,
-	                                'data-color': color,
-	                                className: color === layer.array ? _FloatImageControl2.default.selectedMenuItem : _FloatImageControl2.default.menuItem },
-	                            color
-	                        );
-	                    })
-	                )
-	            )
-	        );
+	  getInitialState: function getInitialState() {
+	    return {
+	      change: false,
+	      dropDown: false
+	    };
+	  },
+	  toggleMesh: function toggleMesh() {
+	    if (this.props.item.hasMesh) {
+	      this.props.model.updateMaskLayerVisibility(this.props.item.name, !this.props.item.meshActive);
+	      this.setState({ change: !this.state.change });
 	    }
+	  },
+	  toggleVisibility: function toggleVisibility() {
+	    this.props.model.updateLayerVisibility(this.props.item.name, !this.props.item.active);
+	    this.setState({ change: !this.state.change });
+	  },
+	  toggleDropDown: function toggleDropDown() {
+	    if (this.props.item.arrays.length > 1) {
+	      this.setState({ dropDown: !this.state.dropDown });
+	    }
+	  },
+	  updateColorBy: function updateColorBy(event) {
+	    this.props.model.updateLayerColorBy(this.props.item.name, event.target.dataset.color);
+	    this.toggleDropDown();
+	  },
+	  render: function render() {
+	    var layer = this.props.item,
+	        visible = layer.active,
+	        meshVisible = layer.meshActive,
+	        meshAvailable = layer.hasMesh,
+	        hasDropDown = layer.arrays.length > 1;
+
+	    return _react2.default.createElement(
+	      'div',
+	      { className: _FloatImageControl2.default.item },
+	      _react2.default.createElement(
+	        'div',
+	        { className: _FloatImageControl2.default.label },
+	        layer.name
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: _FloatImageControl2.default.actions },
+	        _react2.default.createElement('i', { className: meshAvailable ? meshVisible ? _FloatImageControl2.default.meshButtonOn : _FloatImageControl2.default.meshButtonOff : _FloatImageControl2.default.hidden,
+	          onClick: this.toggleMesh
+	        }),
+	        _react2.default.createElement('i', { className: visible ? _FloatImageControl2.default.visibleButtonOn : _FloatImageControl2.default.visibleButtonOff, onClick: this.toggleVisibility }),
+	        _react2.default.createElement('i', { className: hasDropDown ? _FloatImageControl2.default.dropDownButtonOn : _FloatImageControl2.default.dropDownButtonOff, onClick: this.toggleDropDown }),
+	        _react2.default.createElement(
+	          'div',
+	          {
+	            onClick: this.updateColorBy,
+	            className: this.state.dropDown ? _FloatImageControl2.default.menu : _FloatImageControl2.default.hidden
+	          },
+	          layer.arrays.map(function (color) {
+	            return _react2.default.createElement(
+	              'div',
+	              {
+	                key: color,
+	                'data-color': color,
+	                className: color === layer.array ? _FloatImageControl2.default.selectedMenuItem : _FloatImageControl2.default.menuItem
+	              },
+	              color
+	            );
+	          })
+	        )
+	      )
+	    );
+	  }
 	});
 
 /***/ },
@@ -21328,7 +21341,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _react = __webpack_require__(3);
@@ -21343,69 +21356,73 @@
 
 	exports.default = _react2.default.createClass({
 
-	    displayName: 'NumberSliderWidget',
+	  displayName: 'NumberSliderWidget',
 
-	    propTypes: {
-	        max: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.string]),
-	        min: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.string]),
-	        name: _react2.default.PropTypes.string,
-	        onChange: _react2.default.PropTypes.func,
-	        step: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.string]),
-	        value: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.string])
-	    },
+	  propTypes: {
+	    max: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.string]),
+	    min: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.string]),
+	    name: _react2.default.PropTypes.string,
+	    onChange: _react2.default.PropTypes.func,
+	    step: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.string]),
+	    value: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.string])
+	  },
 
-	    getDefaultProps: function getDefaultProps() {
-	        return {
-	            max: 100,
-	            min: 0,
-	            step: 1,
-	            value: 50
-	        };
-	    },
-	    getInitialState: function getInitialState() {
-	        return {
-	            max: this.props.max,
-	            min: this.props.min,
-	            step: this.props.step,
-	            value: this.props.value
-	        };
-	    },
-	    valInput: function valInput(e) {
-	        this.setState({ value: e.target.value });
-	        if (this.props.onChange) {
-	            if (this.props.name) {
-	                e.target.name = this.props.name;
-	            }
-	            this.props.onChange(e);
-	        }
-	    },
-	    value: function value(newVal) {
-	        if (arguments.length === 0) {
-	            return this.state.value;
-	        }
-
-	        newVal = Math.max(this.state.min, Math.min(newVal, this.state.max));
-	        this.setState({ value: newVal });
-	    },
-	    render: function render() {
-	        var min = this.props.min;
-	        var max = this.props.max;
-
-	        return _react2.default.createElement(
-	            'div',
-	            { className: _NumberSliderWidget2.default.container },
-	            _react2.default.createElement('input', { type: 'range',
-	                className: _NumberSliderWidget2.default.range,
-	                value: this.props.value,
-	                onChange: this.valInput,
-	                max: max, min: min }),
-	            _react2.default.createElement('input', { type: 'number',
-	                className: _NumberSliderWidget2.default.text,
-	                value: this.props.value,
-	                onChange: this.valInput,
-	                max: max, min: min })
-	        );
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      max: 100,
+	      min: 0,
+	      step: 1,
+	      value: 50
+	    };
+	  },
+	  getInitialState: function getInitialState() {
+	    return {
+	      max: this.props.max,
+	      min: this.props.min,
+	      step: this.props.step,
+	      value: this.props.value
+	    };
+	  },
+	  valInput: function valInput(e) {
+	    this.setState({ value: e.target.value });
+	    if (this.props.onChange) {
+	      if (this.props.name) {
+	        e.target.name = this.props.name;
+	      }
+	      this.props.onChange(e);
 	    }
+	  },
+	  value: function value(newVal) {
+	    if (newVal === null || newVal === undefined) {
+	      return this.state.value;
+	    }
+
+	    newVal = Math.max(this.state.min, Math.min(newVal, this.state.max));
+	    this.setState({ value: newVal });
+	    return newVal;
+	  },
+	  render: function render() {
+	    var min = this.props.min;
+	    var max = this.props.max;
+
+
+	    return _react2.default.createElement(
+	      'div',
+	      { className: _NumberSliderWidget2.default.container },
+	      _react2.default.createElement('input', { type: 'range',
+	        className: _NumberSliderWidget2.default.range,
+	        value: this.props.value,
+	        onChange: this.valInput,
+	        max: max, min: min
+	      }),
+	      _react2.default.createElement('input', { type: 'number',
+	        className: _NumberSliderWidget2.default.text,
+	        value: this.props.value,
+	        onChange: this.valInput,
+	        max: max, min: min
+	      })
+	    );
+	  }
 	});
 
 /***/ },

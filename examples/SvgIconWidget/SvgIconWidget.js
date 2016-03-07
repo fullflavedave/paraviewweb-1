@@ -19798,7 +19798,8 @@
 	      className: this.props.className,
 	      dangerouslySetInnerHTML: {
 	        __html: '<use xlink:href="' + this.props.icon + '"></use>'
-	      } });
+	      }
+	    });
 	  }
 	});
 

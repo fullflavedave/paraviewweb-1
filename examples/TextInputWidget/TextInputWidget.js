@@ -143,7 +143,8 @@
 	        type: 'text',
 	        value: this.state.editing ? this.state.valueRep : this.props.value,
 	        onChange: this.valueChange,
-	        onBlur: this.endEditing }),
+	        onBlur: this.endEditing
+	      }),
 	      _react2.default.createElement('i', { className: this.state.editing ? _TextInputWidget2.default.editingButton : _TextInputWidget2.default.button })
 	    );
 	  }

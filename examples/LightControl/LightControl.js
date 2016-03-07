@@ -115,7 +115,7 @@
 	/* WEBPACK VAR INJECTION */(function(setImmediate) {'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _CollapsibleWidget = __webpack_require__(4);
@@ -146,93 +146,103 @@
 
 	exports.default = _react2.default.createClass({
 
-	    displayName: 'LightControl',
+	  displayName: 'LightControl',
 
-	    propTypes: {
-	        light: _react2.default.PropTypes.object.isRequired
-	    },
+	  propTypes: {
+	    light: _react2.default.PropTypes.object.isRequired
+	  },
 
-	    getInitialState: function getInitialState() {
-	        return this.props.light.getLightProperties().lightTerms;
-	    },
-	    onLightTermsChange: function onLightTermsChange(newVal, name) {
-	        var _this = this;
+	  getInitialState: function getInitialState() {
+	    return this.props.light.getLightProperties().lightTerms;
+	  },
+	  onLightTermsChange: function onLightTermsChange(newVal, name) {
+	    var _this = this;
 
-	        var newState = {};
-	        newState[name] = newVal;
-	        this.setState(newState);
-	        setImmediate(function () {
-	            _this.props.light.setLightProperties({ lightTerms: newState });
-	        });
-	    },
-	    onLightPositionChange: function onLightPositionChange(event) {
-	        this.props.light.setLightProperties({
-	            'lightPosition': event
-	        });
-	    },
-	    toggleLight: function toggleLight(enabled) {
-	        this.props.light.setLightingEnabled(enabled);
-	    },
-	    render: function render() {
-	        var lightButton = _react2.default.createElement(_ToggleIconButtonWidget2.default, { key: 'enable-light-button', onChange: this.toggleLight, value: this.props.light.getLightingEnabled() });
-	        return _react2.default.createElement(
-	            _CollapsibleWidget2.default,
-	            { title: 'Light Properties', subtitle: lightButton },
+	    var newState = {};
+	    newState[name] = newVal;
+	    this.setState(newState);
+	    setImmediate(function () {
+	      _this.props.light.setLightProperties({
+	        lightTerms: newState
+	      });
+	    });
+	  },
+	  onLightPositionChange: function onLightPositionChange(event) {
+	    this.props.light.setLightProperties({
+	      lightPosition: event
+	    });
+	  },
+	  toggleLight: function toggleLight(enabled) {
+	    this.props.light.setLightingEnabled(enabled);
+	  },
+	  render: function render() {
+	    var lightButton = _react2.default.createElement(_ToggleIconButtonWidget2.default, { key: 'enable-light-button', onChange: this.toggleLight, value: this.props.light.getLightingEnabled() });
+	    return _react2.default.createElement(
+	      _CollapsibleWidget2.default,
+	      { title: 'Light Properties', subtitle: lightButton },
+	      _react2.default.createElement(
+	        'section',
+	        { className: _LightControl2.default.container },
+	        _react2.default.createElement(_Coordinate2DWidget2.default, { onChange: this.onLightPositionChange, width: 114, height: 114, hideXY: true }),
+	        _react2.default.createElement(
+	          'section',
+	          { className: _LightControl2.default.controls },
+	          _react2.default.createElement(
+	            'div',
+	            { className: _LightControl2.default.inputRow },
 	            _react2.default.createElement(
-	                'section',
-	                { className: _LightControl2.default.container },
-	                _react2.default.createElement(_Coordinate2DWidget2.default, { onChange: this.onLightPositionChange, width: 114, height: 114, hideXY: true }),
-	                _react2.default.createElement(
-	                    'section',
-	                    { className: _LightControl2.default.controls },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: _LightControl2.default.inputRow },
-	                        _react2.default.createElement(
-	                            'label',
-	                            null,
-	                            'Ambient'
-	                        ),
-	                        _react2.default.createElement(_NumberInputWidget2.default, { className: _LightControl2.default.property, step: 0.05, min: 0.0, max: 1.0,
-	                            key: 'ka', value: this.state.ka, name: 'ka', onChange: this.onLightTermsChange })
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: _LightControl2.default.inputRow },
-	                        _react2.default.createElement(
-	                            'label',
-	                            null,
-	                            'Diffuse'
-	                        ),
-	                        _react2.default.createElement(_NumberInputWidget2.default, { className: _LightControl2.default.property, step: 0.05, min: 0.0, max: 1.0,
-	                            key: 'kd', value: this.state.kd, name: 'kd', onChange: this.onLightTermsChange })
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: _LightControl2.default.inputRow },
-	                        _react2.default.createElement(
-	                            'label',
-	                            null,
-	                            'Specular'
-	                        ),
-	                        _react2.default.createElement(_NumberInputWidget2.default, { className: _LightControl2.default.property, step: 0.05, min: 0.0, max: 1.0,
-	                            key: 'ks', value: this.state.ks, name: 'ks', onChange: this.onLightTermsChange })
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: _LightControl2.default.inputRow },
-	                        _react2.default.createElement(
-	                            'label',
-	                            null,
-	                            'Alpha'
-	                        ),
-	                        _react2.default.createElement(_NumberInputWidget2.default, { className: _LightControl2.default.property, step: 1, min: 0.0, max: 100,
-	                            key: 'alpha', value: this.state.alpha, name: 'alpha', onChange: this.onLightTermsChange })
-	                    )
-	                )
-	            )
-	        );
-	    }
+	              'label',
+	              null,
+	              'Ambient'
+	            ),
+	            _react2.default.createElement(_NumberInputWidget2.default, {
+	              className: _LightControl2.default.property, step: 0.05, min: 0.0, max: 1.0,
+	              key: 'ka', value: this.state.ka, name: 'ka', onChange: this.onLightTermsChange
+	            })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: _LightControl2.default.inputRow },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              'Diffuse'
+	            ),
+	            _react2.default.createElement(_NumberInputWidget2.default, {
+	              className: _LightControl2.default.property, step: 0.05, min: 0.0, max: 1.0,
+	              key: 'kd', value: this.state.kd, name: 'kd', onChange: this.onLightTermsChange
+	            })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: _LightControl2.default.inputRow },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              'Specular'
+	            ),
+	            _react2.default.createElement(_NumberInputWidget2.default, {
+	              className: _LightControl2.default.property, step: 0.05, min: 0.0, max: 1.0,
+	              key: 'ks', value: this.state.ks, name: 'ks', onChange: this.onLightTermsChange
+	            })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: _LightControl2.default.inputRow },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              'Alpha'
+	            ),
+	            _react2.default.createElement(_NumberInputWidget2.default, {
+	              className: _LightControl2.default.property, step: 1, min: 0.0, max: 100,
+	              key: 'alpha', value: this.state.alpha, name: 'alpha', onChange: this.onLightTermsChange
+	            })
+	          )
+	        )
+	      )
+	    );
+	  }
 	});
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2).setImmediate))
 
@@ -21259,10 +21269,10 @@
 	    this.drawControl();
 	    this.mouseHandler = new _MouseHandler2.default(_reactDom2.default.findDOMNode(this.refs.canvas));
 	    this.mouseHandler.attach({
-	      'click': this.pointerAction,
-	      'mousedown': this.pointerAction,
-	      'mouseup': this.pointerAction,
-	      'drag': this.pointerAction
+	      click: this.pointerAction,
+	      mousedown: this.pointerAction,
+	      mouseup: this.pointerAction,
+	      drag: this.pointerAction
 	    });
 	  },
 	  componentDidUpdate: function componentDidUpdate(nextProps, nextState) {
@@ -21296,7 +21306,7 @@
 	  },
 
 
-	  //no need to limit the values, for updateX/Y, the input already does that.
+	  // no need to limit the values, for updateX/Y, the input already does that.
 	  updateX: function updateX(e) {
 	    var newVal = parseFloat(e.target.value);
 	    this.setState({ x: newVal });
@@ -21322,7 +21332,7 @@
 	        height = ctx.canvas.height,
 	        width = ctx.canvas.width;
 
-	    //clear
+	    // clear
 	    ctx.clearRect(0, 0, width, height);
 
 	    // draw a lightgrey center plus
@@ -21338,8 +21348,8 @@
 
 	    if (this.props.onChange) {
 	      var currentState = {
-	        'x': this.state.x,
-	        'y': this.state.y
+	        x: this.state.x,
+	        y: this.state.y
 	      };
 	      if (!(0, _equals2.default)(currentState, this.lastSharedState)) {
 	        this.lastSharedState = currentState;
@@ -21352,6 +21362,7 @@
 	        height = ctx.canvas.height,
 	        width = ctx.canvas.width,
 	        lineLen = 5;
+
 	    if (location === undefined) {
 	      location = {
 	        x: width / 2,
@@ -21362,17 +21373,17 @@
 	      location.y += this.props.height / 2;
 	    }
 
-	    //style
+	    // style
 	    ctx.beginPath();
 	    ctx.lineWidth = 2;
 	    ctx.strokeStyle = color;
 
-	    //vert
+	    // vert
 	    ctx.moveTo(location.x, location.y - lineLen);
 	    ctx.lineTo(location.x, location.y + lineLen);
 	    ctx.stroke();
 
-	    //horiz
+	    // horiz
 	    ctx.moveTo(location.x - lineLen, location.y);
 	    ctx.lineTo(location.x + lineLen, location.y);
 	    ctx.stroke();
@@ -21383,7 +21394,8 @@
 	      { className: _Coordinate2DWidget2.default.container },
 	      _react2.default.createElement('canvas', { ref: 'canvas', className: _Coordinate2DWidget2.default.canvas,
 	        width: this.props.width,
-	        height: this.props.height }),
+	        height: this.props.height
+	      }),
 	      _react2.default.createElement(
 	        'section',
 	        { className: this.props.hideXY ? _Coordinate2DWidget2.default.hidden : _Coordinate2DWidget2.default.inputContainer },
@@ -21393,7 +21405,8 @@
 	          ' x: '
 	        ),
 	        _react2.default.createElement('input', { className: _Coordinate2DWidget2.default.input, type: 'number', onChange: this.updateX,
-	          min: '-1.0', max: '1.0', step: '0.01', value: this.state.x }),
+	          min: '-1.0', max: '1.0', step: '0.01', value: this.state.x
+	        }),
 	        _react2.default.createElement('br', null),
 	        _react2.default.createElement(
 	          'label',
@@ -21401,7 +21414,8 @@
 	          ' y: '
 	        ),
 	        _react2.default.createElement('input', { className: _Coordinate2DWidget2.default.input, type: 'number', onChange: this.updateY,
-	          min: '-1.0', max: '1.0', step: '0.01', value: this.state.y })
+	          min: '-1.0', max: '1.0', step: '0.01', value: this.state.y
+	        })
 	      )
 	    );
 	  }
@@ -21833,7 +21847,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -21855,261 +21869,274 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	// Module dependencies and constants
-	var Modifier = { NONE: 0, ALT: 1, META: 2, SHIFT: 4, CTRL: 8 },
+	var Modifier = {
+	  NONE: 0,
+	  ALT: 1,
+	  META: 2,
+	  SHIFT: 4,
+	  CTRL: 8
+	},
 	    eventTypeMapping = {
-	    'contextmenu': 'contextmenu',
-	    'mousewheel': 'zoom',
-	    'DOMMouseScroll': 'zoom'
+	  contextmenu: 'contextmenu',
+	  mousewheel: 'zoom',
+	  DOMMouseScroll: 'zoom'
 	},
 	    TIMEOUT_BETWEEN_ZOOM = 300;
 
 	var handlerCount = 0;
 
 	function getModifier(e) {
-	    var modifier = 0;
-	    if (e.srcEvent) {
-	        modifier += e.srcEvent.altKey ? Modifier.ALT : 0;
-	        modifier += e.srcEvent.ctrlKey ? Modifier.CTRL : 0;
-	        modifier += e.srcEvent.metaKey ? Modifier.META : 0;
-	        modifier += e.srcEvent.shiftKey ? Modifier.SHIFT : 0;
-	    }
+	  var modifier = 0;
+	  if (e.srcEvent) {
+	    modifier += e.srcEvent.altKey ? Modifier.ALT : 0;
+	    modifier += e.srcEvent.ctrlKey ? Modifier.CTRL : 0;
+	    modifier += e.srcEvent.metaKey ? Modifier.META : 0;
+	    modifier += e.srcEvent.shiftKey ? Modifier.SHIFT : 0;
+	  }
 
-	    return modifier;
+	  return modifier;
 	}
 
 	function getRelative(el, event) {
-	    return {
-	        x: event.center.x - (el.getClientRects()[0].x || el.getClientRects()[0].left),
-	        y: event.center.y - (el.getClientRects()[0].y || el.getClientRects()[0].top)
-	    };
+	  return {
+	    x: event.center.x - (el.getClientRects()[0].x || el.getClientRects()[0].left),
+	    y: event.center.y - (el.getClientRects()[0].y || el.getClientRects()[0].top)
+	  };
 	}
 
 	function broadcast(ctx, topic, event) {
-	    event.preventDefault();
+	  event.preventDefault();
 
-	    event.button = 0;
-	    event.topic = topic;
-	    event.modifier = ctx.modifier ? ctx.modifier : getModifier(event);
-	    event.relative = getRelative(ctx.el, event);
+	  event.button = 0;
+	  event.topic = topic;
+	  event.modifier = ctx.modifier ? ctx.modifier : getModifier(event);
+	  event.relative = getRelative(ctx.el, event);
 
-	    ctx.emit(topic, event);
+	  ctx.emit(topic, event);
 	}
 
 	var MouseHandler = function () {
-	    function MouseHandler(domElement, options) {
-	        var _this = this;
+	  function MouseHandler(domElement, options) {
+	    var _this = this;
 
-	        _classCallCheck(this, MouseHandler);
+	    _classCallCheck(this, MouseHandler);
 
-	        var defaultOptions = {
-	            pan: {
-	                threshold: 0
-	            },
-	            pinch: {
-	                threshold: 0
-	            }
-	        };
-	        options = (0, _merge2.default)(defaultOptions, options);
+	    var defaultOptions = {
+	      pan: {
+	        threshold: 0
+	      },
+	      pinch: {
+	        threshold: 0
+	      }
+	    };
+	    options = (0, _merge2.default)(defaultOptions, options);
 
-	        this.Modifier = Modifier;
+	    this.Modifier = Modifier;
 
-	        handlerCount++;
-	        this.id = 'mouse_handler_' + handlerCount;
-	        this.el = domElement;
-	        this.modifier = 0;
-	        this.toggleModifiers = [0];
-	        this.toggleModifierIdx = 0;
-	        this.toggleModifierEnable = false;
-	        this.hammer = new _hammerjs2.default(domElement);
-	        this.scrollInternal = {
-	            ts: +new Date(),
-	            deltaX: 0,
-	            deltaY: 0
-	        };
-	        this.finalZoomEvent = null;
-	        this.finalZoomTimerId = 0;
-	        this.triggerFinalZoomEvent = function () {
-	            if (_this.finalZoomEvent) {
-	                _this.finalZoomEvent.isFirst = false;
-	                _this.finalZoomEvent.isFinal = true;
-	            }
-	            _this.emit(_this.finalZoomEvent.topic, _this.finalZoomEvent);
-	        };
+	    this.id = 'mouse_handler_' + ++handlerCount;
+	    this.el = domElement;
+	    this.modifier = 0;
+	    this.toggleModifiers = [0];
+	    this.toggleModifierIdx = 0;
+	    this.toggleModifierEnable = false;
+	    this.hammer = new _hammerjs2.default(domElement);
+	    this.scrollInternal = {
+	      ts: +new Date(),
+	      deltaX: 0,
+	      deltaY: 0
+	    };
+	    this.finalZoomEvent = null;
+	    this.finalZoomTimerId = 0;
+	    this.triggerFinalZoomEvent = function () {
+	      if (_this.finalZoomEvent) {
+	        _this.finalZoomEvent.isFirst = false;
+	        _this.finalZoomEvent.isFinal = true;
+	      }
+	      _this.emit(_this.finalZoomEvent.topic, _this.finalZoomEvent);
+	    };
 
-	        this.domEventHandler = function (e) {
-	            e.preventDefault();
-	            var event = {
-	                srcEvent: e,
-	                button: e.type === 'contextmenu' ? 2 : 0,
-	                topic: eventTypeMapping[e.type],
+	    this.domEventHandler = function (e) {
+	      e.preventDefault();
+	      var event = {
+	        srcEvent: e,
+	        button: e.type === 'contextmenu' ? 2 : 0,
+	        topic: eventTypeMapping[e.type],
 
-	                center: {
-	                    x: e.clientX,
-	                    y: e.clientY
-	                },
-	                relative: {
-	                    x: e.clientX - (_this.el.getClientRects()[0].x || _this.el.getClientRects()[0].left),
-	                    y: e.clientY - (_this.el.getClientRects()[0].y || _this.el.getClientRects()[0].top)
-	                },
+	        center: {
+	          x: e.clientX,
+	          y: e.clientY
+	        },
+	        relative: {
+	          x: e.clientX - (_this.el.getClientRects()[0].x || _this.el.getClientRects()[0].left),
+	          y: e.clientY - (_this.el.getClientRects()[0].y || _this.el.getClientRects()[0].top)
+	        },
 
-	                scale: 1,
+	        scale: 1,
 
-	                deltaX: 0,
-	                deltaY: 0,
-	                delta: 0,
-	                deltaTime: 0,
+	        deltaX: 0,
+	        deltaY: 0,
+	        delta: 0,
+	        deltaTime: 0,
 
-	                velocityX: 0,
-	                velocityY: 0,
-	                velocity: 0,
+	        velocityX: 0,
+	        velocityY: 0,
+	        velocity: 0,
 
-	                isFirst: false,
-	                isFinal: false
-	            };
-	            event.modifier = _this.modifier ? _this.modifier : getModifier(event);
+	        isFirst: false,
+	        isFinal: false
+	      };
+	      event.modifier = _this.modifier ? _this.modifier : getModifier(event);
 
-	            // Handle scroll/zoom if any
-	            if (event.topic === 'zoom') {
-	                // Register final zoom
-	                clearTimeout(_this.finalZoomTimerId);
-	                _this.finalZoomTimerId = setTimeout(_this.triggerFinalZoomEvent, TIMEOUT_BETWEEN_ZOOM);
+	      // Handle scroll/zoom if any
+	      if (event.topic === 'zoom') {
+	        // Register final zoom
+	        clearTimeout(_this.finalZoomTimerId);
+	        _this.finalZoomTimerId = setTimeout(_this.triggerFinalZoomEvent, TIMEOUT_BETWEEN_ZOOM);
 
-	                var currentTime = +new Date();
-	                if (currentTime - _this.scrollInternal.ts > TIMEOUT_BETWEEN_ZOOM) {
-	                    _this.scrollInternal.deltaX = 0;
-	                    _this.scrollInternal.deltaY = 0;
-	                    event.isFirst = true;
-	                    event.isFinal = false;
-	                } else {
-	                    event.isFinal = false;
-	                }
+	        var currentTime = +new Date();
+	        if (currentTime - _this.scrollInternal.ts > TIMEOUT_BETWEEN_ZOOM) {
+	          _this.scrollInternal.deltaX = 0;
+	          _this.scrollInternal.deltaY = 0;
+	          event.isFirst = true;
+	          event.isFinal = false;
+	        } else {
+	          event.isFinal = false;
+	        }
 
-	                if (e.wheelDeltaX === undefined) {
-	                    event.zoom = _this.lastScrollZoomFactor;
-	                    _this.scrollInternal.deltaY -= e.detail * 2.0;
-	                } else {
-	                    event.zoom = _this.lastScrollZoomFactor;
-	                    _this.scrollInternal.deltaX += e.wheelDeltaX;
-	                    _this.scrollInternal.deltaY += e.wheelDeltaY;
-	                }
+	        if (e.wheelDeltaX === undefined) {
+	          event.zoom = _this.lastScrollZoomFactor;
+	          _this.scrollInternal.deltaY -= e.detail * 2.0;
+	        } else {
+	          event.zoom = _this.lastScrollZoomFactor;
+	          _this.scrollInternal.deltaX += e.wheelDeltaX;
+	          _this.scrollInternal.deltaY += e.wheelDeltaY;
+	        }
 
-	                event.deltaX = _this.scrollInternal.deltaX;
-	                event.deltaY = _this.scrollInternal.deltaY;
-	                event.scale = 1.0 + event.deltaY / _this.el.getClientRects()[0].height;
-	                event.scale = event.scale < 0.1 ? 0.1 : event.scale;
-	                _this.scrollInternal.ts = currentTime;
+	        event.deltaX = _this.scrollInternal.deltaX;
+	        event.deltaY = _this.scrollInternal.deltaY;
+	        event.scale = 1.0 + event.deltaY / _this.el.getClientRects()[0].height;
+	        event.scale = event.scale < 0.1 ? 0.1 : event.scale;
+	        _this.scrollInternal.ts = currentTime;
 
-	                _this.finalZoomEvent = event;
-	            }
+	        _this.finalZoomEvent = event;
+	      }
 
-	            _this.emit(event.topic, event);
-	            return false;
-	        };
+	      _this.emit(event.topic, event);
+	      return false;
+	    };
 
-	        // set hammer options
-	        this.hammer.get('pan').set(options.pan);
-	        this.hammer.get('pinch').set(options.pinch);
+	    // set hammer options
+	    this.hammer.get('pan').set(options.pan);
+	    this.hammer.get('pinch').set(options.pinch);
 
-	        // Listen to hammer events
-	        this.hammer.on('tap', function (e) {
-	            broadcast(_this, 'click', e);
+	    // Listen to hammer events
+	    this.hammer.on('tap', function (e) {
+	      broadcast(_this, 'click', e);
+	    });
+
+	    this.hammer.on('doubletap', function (e) {
+	      broadcast(_this, 'dblclick', e);
+	    });
+
+	    this.hammer.on('pan', function (e) {
+	      broadcast(_this, 'drag', e);
+	    });
+
+	    this.hammer.on('panstart', function (e) {
+	      e.isFirst = true;
+	      broadcast(_this, 'drag', e);
+	    });
+
+	    this.hammer.on('panend', function (e) {
+	      e.isFinal = true;
+	      broadcast(_this, 'drag', e);
+	    });
+
+	    this.hammer.on('pinch', function (e) {
+	      broadcast(_this, 'zoom', e);
+	    });
+
+	    this.hammer.on('pinchstart', function (e) {
+	      console.log('zoom start');
+	      e.isFirst = true;
+	      broadcast(_this, 'zoom', e);
+	    });
+
+	    this.hammer.on('pinchend', function (e) {
+	      e.isFinal = true;
+	      console.log('zoom end');
+	      broadcast(_this, 'zoom', e);
+	    });
+
+	    this.hammer.get('pinch').set({
+	      enable: true
+	    });
+
+	    this.hammer.on('press', function (e) {
+	      if (_this.toggleModifierEnable) {
+	        _this.toggleModifierIdx = (_this.toggleModifierIdx + 1) % _this.toggleModifiers.length;
+	        _this.modifier = _this.toggleModifiers[_this.toggleModifierIdx];
+
+	        e.relative = getRelative(_this.el, e);
+
+	        _this.emit('modifier.change', {
+	          value: _this.modifier,
+	          list: Modifier,
+	          event: e
 	        });
+	      }
+	    });
 
-	        this.hammer.on('doubletap', function (e) {
-	            broadcast(_this, 'dblclick', e);
-	        });
+	    // Manage events that are not captured by hammer
+	    this.el.addEventListener('contextmenu', this.domEventHandler);
+	    this.el.addEventListener('mousewheel', this.domEventHandler);
+	    this.el.addEventListener('DOMMouseScroll', this.domEventHandler);
+	  }
 
-	        this.hammer.on('pan', function (e) {
-	            broadcast(_this, 'drag', e);
-	        });
-
-	        this.hammer.on('panstart', function (e) {
-	            e.isFirst = true;
-	            broadcast(_this, 'drag', e);
-	        });
-
-	        this.hammer.on('panend', function (e) {
-	            e.isFinal = true;
-	            broadcast(_this, 'drag', e);
-	        });
-
-	        this.hammer.on('pinch', function (e) {
-	            broadcast(_this, 'zoom', e);
-	        });
-
-	        this.hammer.on('pinchstart', function (e) {
-	            console.log('zoom start');
-	            e.isFirst = true;
-	            broadcast(_this, 'zoom', e);
-	        });
-
-	        this.hammer.on('pinchend', function (e) {
-	            e.isFinal = true;
-	            console.log('zoom end');
-	            broadcast(_this, 'zoom', e);
-	        });
-
-	        this.hammer.get('pinch').set({ enable: true });
-
-	        this.hammer.on('press', function (e) {
-	            if (_this.toggleModifierEnable) {
-	                _this.toggleModifierIdx = (_this.toggleModifierIdx + 1) % _this.toggleModifiers.length;
-	                _this.modifier = _this.toggleModifiers[_this.toggleModifierIdx];
-
-	                e.relative = getRelative(_this.el, e);
-
-	                _this.emit('modifier.change', { value: _this.modifier, list: Modifier, event: e });
-	            }
-	        });
-
-	        // Manage events that are not captured by hammer
-	        this.el.addEventListener('contextmenu', this.domEventHandler);
-	        this.el.addEventListener('mousewheel', this.domEventHandler);
-	        this.el.addEventListener('DOMMouseScroll', this.domEventHandler);
+	  _createClass(MouseHandler, [{
+	    key: 'enablePinch',
+	    value: function enablePinch(enable) {
+	      this.hammer.get('pinch').set({
+	        enable: enable
+	      });
 	    }
+	  }, {
+	    key: 'setModifier',
+	    value: function setModifier(modifier) {
+	      this.modifier = modifier;
+	    }
+	  }, {
+	    key: 'toggleModifierOnPress',
+	    value: function toggleModifierOnPress(enable, modifiers) {
+	      this.toggleModifiers = modifiers;
+	      this.toggleModifierEnable = enable;
+	    }
+	  }, {
+	    key: 'attach',
+	    value: function attach(listeners) {
+	      var subscriptions = {};
+	      for (var key in listeners) {
+	        subscriptions[key] = this.on(key, listeners[key]);
+	      }
+	      return subscriptions;
+	    }
+	  }, {
+	    key: 'destroy',
+	    value: function destroy() {
+	      // Remove all listeners is any
+	      this.off();
 
-	    _createClass(MouseHandler, [{
-	        key: 'enablePinch',
-	        value: function enablePinch(enable) {
-	            this.hammer.get('pinch').set({ enable: enable });
-	        }
-	    }, {
-	        key: 'setModifier',
-	        value: function setModifier(modifier) {
-	            this.modifier = modifier;
-	        }
-	    }, {
-	        key: 'toggleModifierOnPress',
-	        value: function toggleModifierOnPress(enable, modifiers) {
-	            this.toggleModifiers = modifiers;
-	            this.toggleModifierEnable = enable;
-	        }
-	    }, {
-	        key: 'attach',
-	        value: function attach(listeners) {
-	            var subscriptions = {};
-	            for (var key in listeners) {
-	                subscriptions[key] = this.on(key, listeners[key]);
-	            }
-	            return subscriptions;
-	        }
-	    }, {
-	        key: 'destroy',
-	        value: function destroy() {
-	            // Remove all listeners is any
-	            this.off();
+	      // Release hammer
+	      this.hammer.destroy();
 
-	            // Release hammer
-	            this.hammer.destroy();
+	      // Remove events that are not captured by hammer
+	      this.el.removeEventListener('contextmenu', this.domEventHandler);
+	      this.el.removeEventListener('mousewheel', this.domEventHandler);
+	      this.el.removeEventListener('DOMMouseScroll', this.domEventHandler);
+	    }
+	  }]);
 
-	            // Remove events that are not captured by hammer
-	            this.el.removeEventListener('contextmenu', this.domEventHandler);
-	            this.el.removeEventListener('mousewheel', this.domEventHandler);
-	            this.el.removeEventListener('DOMMouseScroll', this.domEventHandler);
-	        }
-	    }]);
-
-	    return MouseHandler;
+	  return MouseHandler;
 	}();
 
 	// Add Observer pattern using Monologue.js
@@ -36426,7 +36453,8 @@
 	      step: this.props.step,
 	      value: this.state.editing ? this.state.valueRep : this.props.value,
 	      onChange: this.valueChange,
-	      onBlur: this.endEditing });
+	      onBlur: this.endEditing
+	    });
 	  }
 	});
 

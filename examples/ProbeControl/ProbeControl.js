@@ -19786,7 +19786,7 @@
 	/* WEBPACK VAR INJECTION */(function(setImmediate) {'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _react = __webpack_require__(1);
@@ -19805,183 +19805,197 @@
 
 	exports.default = _react2.default.createClass({
 
-	    displayName: 'ProbeControl',
+	  displayName: 'ProbeControl',
 
-	    propTypes: {
-	        imageBuilder: _react2.default.PropTypes.object.isRequired,
-	        imageBuilders: _react2.default.PropTypes.object
-	    },
+	  propTypes: {
+	    imageBuilder: _react2.default.PropTypes.object.isRequired,
+	    imageBuilders: _react2.default.PropTypes.object
+	  },
 
-	    getDefaultProps: function getDefaultProps() {
-	        return {
-	            imageBuilders: {}
-	        };
-	    },
-	    getInitialState: function getInitialState() {
-	        var imageBuilder = this.getImageBuilder(this.props);
-	        return {
-	            probe: [imageBuilder.getProbe()[0], imageBuilder.getProbe()[1], imageBuilder.getProbe()[2]],
-	            showFieldValue: true
-	        };
-	    },
-	    componentWillMount: function componentWillMount() {
-	        this.attachImageBuilderListeners(this.getImageBuilder(this.props));
-	    },
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      imageBuilders: {}
+	    };
+	  },
+	  getInitialState: function getInitialState() {
+	    var imageBuilder = this.getImageBuilder(this.props);
+	    return {
+	      probe: [imageBuilder.getProbe()[0], imageBuilder.getProbe()[1], imageBuilder.getProbe()[2]],
+	      showFieldValue: true
+	    };
+	  },
+	  componentWillMount: function componentWillMount() {
+	    this.attachImageBuilderListeners(this.getImageBuilder(this.props));
+	  },
 
 
-	    /* eslint-disable react/no-did-mount-set-state */
-	    componentDidMount: function componentDidMount() {
-	        this.setState({ showFieldValue: this.refs.ProbeInput.isExpanded() });
-	    },
+	  /* eslint-disable react/no-did-mount-set-state */
+	  componentDidMount: function componentDidMount() {
+	    this.setState({
+	      showFieldValue: this.refs.ProbeInput.isExpanded()
+	    });
+	  },
 
-	    /* eslint-enable react/no-did-mount-set-state */
+	  /* eslint-enable react/no-did-mount-set-state */
 
-	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	        var previousImageBuilder = this.getImageBuilder(this.props),
-	            nextImageBuilder = this.getImageBuilder(nextProps);
+	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    var previousImageBuilder = this.getImageBuilder(this.props),
+	        nextImageBuilder = this.getImageBuilder(nextProps);
 
-	        if (previousImageBuilder !== nextImageBuilder) {
-	            this.attachImageBuilderListeners(nextImageBuilder);
-	        }
-	    },
-	    componentWillUnmount: function componentWillUnmount() {
-	        this.detachImageBuilderListeners();
-	    },
-	    getImageBuilder: function getImageBuilder(props) {
-	        var imageBuilder = props.imageBuilder;
-
-	        if (!imageBuilder) {
-	            var key = Object.keys(props.imageBuilders)[0];
-	            imageBuilder = props.imageBuilders[key].builder;
-	        }
-
-	        return imageBuilder;
-	    },
-	    attachImageBuilderListeners: function attachImageBuilderListeners(imageBuilder) {
-	        var _this = this;
-
-	        this.detachImageBuilderListeners();
-	        this.probeListenerSubscription = imageBuilder.onProbeChange(function (probe, envelope) {
-	            var field = imageBuilder.getFieldValueAtProbeLocation();
-	            if (_this.isMounted()) {
-	                _this.setState({ probe: probe, field: field });
-	            }
-	        });
-
-	        this.probeDataListenerSubscription = imageBuilder.onProbeLineReady(function (data, envelope) {
-	            var field = imageBuilder.getFieldValueAtProbeLocation();
-	            if (_this.isMounted() && field !== _this.state.field) {
-	                _this.setState({ field: field });
-	            }
-	        });
-	    },
-	    detachImageBuilderListeners: function detachImageBuilderListeners() {
-	        if (this.probeListenerSubscription) {
-	            this.probeListenerSubscription.unsubscribe();
-	            this.probeListenerSubscription = null;
-	        }
-	        if (this.probeDataListenerSubscription) {
-	            this.probeDataListenerSubscription.unsubscribe();
-	            this.probeDataListenerSubscription = null;
-	        }
-	    },
-	    updateRenderMethod: function updateRenderMethod(event) {
-	        if (this.props.imageBuilder) {
-	            this.props.imageBuilder.setRenderMethod(event.target.value);
-	            this.props.imageBuilder.render();
-	            this.forceUpdate();
-	        }
-	    },
-	    probeChange: function probeChange(event) {
-	        var value = Number(event.target.value),
-	            probe = this.state.probe,
-	            idx = Number(event.target.name);
-
-	        probe[idx] = value;
-
-	        this.getImageBuilder(this.props).setProbe(probe[0], probe[1], probe[2]);
-	    },
-	    onProbeVisibilityChange: function onProbeVisibilityChange(isProbeOpen) {
-	        var _this2 = this;
-
-	        this.setState({ showFieldValue: isProbeOpen });
-
-	        setImmediate(function () {
-	            if (_this2.props.imageBuilders) {
-	                for (var key in _this2.props.imageBuilders) {
-	                    var builder = _this2.props.imageBuilders[key].builder;
-	                    builder.setCrossHairEnable(isProbeOpen);
-	                    builder.render();
-	                }
-	            }
-	            if (_this2.props.imageBuilder) {
-	                _this2.props.imageBuilder.setCrossHairEnable(isProbeOpen);
-	                _this2.props.imageBuilder.render();
-	            }
-	        });
-	    },
-	    render: function render() {
-	        var imageBuilder = this.getImageBuilder(this.props),
-	            value = this.state.field || imageBuilder.getFieldValueAtProbeLocation(),
-	            valueStr = '' + value;
-
-	        if (value === undefined) {
-	            valueStr = '';
-	        } else {
-	            if (valueStr && valueStr.length > 6) {
-	                valueStr = value.toFixed(5);
-	            }
-	            if (Math.abs(value) < 0.00001) {
-	                valueStr = '0';
-	            }
-	        }
-
-	        return _react2.default.createElement(
-	            'div',
-	            null,
-	            _react2.default.createElement(
-	                _CollapsibleWidget2.default,
-	                { title: 'Render method', visible: imageBuilder.isRenderMethodMutable() },
-	                _react2.default.createElement(
-	                    'select',
-	                    { style: { width: '100%' },
-	                        value: imageBuilder.getRenderMethod(),
-	                        onChange: this.updateRenderMethod },
-	                    imageBuilder.getRenderMethods().map(function (v) {
-	                        return _react2.default.createElement(
-	                            'option',
-	                            { key: v, value: v },
-	                            v
-	                        );
-	                    })
-	                )
-	            ),
-	            _react2.default.createElement(
-	                _CollapsibleWidget2.default,
-	                {
-	                    title: 'Probe',
-	                    subtitle: this.state.showFieldValue ? valueStr : '',
-	                    ref: 'ProbeInput',
-	                    onChange: this.onProbeVisibilityChange,
-	                    open: imageBuilder.isCrossHairEnabled() },
-	                _react2.default.createElement(_NumberSliderWidget2.default, { name: '0',
-	                    min: '0', max: imageBuilder.metadata.dimensions[0] - 1,
-	                    key: 'slider-x',
-	                    value: this.state.probe[0],
-	                    onChange: this.probeChange }),
-	                _react2.default.createElement(_NumberSliderWidget2.default, { name: '1',
-	                    min: '0', max: imageBuilder.metadata.dimensions[1] - 1,
-	                    key: 'slider-Y',
-	                    value: this.state.probe[1],
-	                    onChange: this.probeChange }),
-	                _react2.default.createElement(_NumberSliderWidget2.default, { name: '2',
-	                    min: '0', max: imageBuilder.metadata.dimensions[2] - 1,
-	                    key: 'slider-Z',
-	                    value: this.state.probe[2],
-	                    onChange: this.probeChange })
-	            )
-	        );
+	    if (previousImageBuilder !== nextImageBuilder) {
+	      this.attachImageBuilderListeners(nextImageBuilder);
 	    }
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.detachImageBuilderListeners();
+	  },
+	  getImageBuilder: function getImageBuilder(props) {
+	    var imageBuilder = props.imageBuilder;
+
+	    if (!imageBuilder) {
+	      var key = Object.keys(props.imageBuilders)[0];
+	      imageBuilder = props.imageBuilders[key].builder;
+	    }
+
+	    return imageBuilder;
+	  },
+	  attachImageBuilderListeners: function attachImageBuilderListeners(imageBuilder) {
+	    var _this = this;
+
+	    this.detachImageBuilderListeners();
+	    this.probeListenerSubscription = imageBuilder.onProbeChange(function (probe, envelope) {
+	      var field = imageBuilder.getFieldValueAtProbeLocation();
+	      if (_this.isMounted()) {
+	        _this.setState({
+	          probe: probe, field: field
+	        });
+	      }
+	    });
+
+	    this.probeDataListenerSubscription = imageBuilder.onProbeLineReady(function (data, envelope) {
+	      var field = imageBuilder.getFieldValueAtProbeLocation();
+	      if (_this.isMounted() && field !== _this.state.field) {
+	        _this.setState({
+	          field: field
+	        });
+	      }
+	    });
+	  },
+	  detachImageBuilderListeners: function detachImageBuilderListeners() {
+	    if (this.probeListenerSubscription) {
+	      this.probeListenerSubscription.unsubscribe();
+	      this.probeListenerSubscription = null;
+	    }
+	    if (this.probeDataListenerSubscription) {
+	      this.probeDataListenerSubscription.unsubscribe();
+	      this.probeDataListenerSubscription = null;
+	    }
+	  },
+	  updateRenderMethod: function updateRenderMethod(event) {
+	    if (this.props.imageBuilder) {
+	      this.props.imageBuilder.setRenderMethod(event.target.value);
+	      this.props.imageBuilder.render();
+	      this.forceUpdate();
+	    }
+	  },
+	  probeChange: function probeChange(event) {
+	    var value = Number(event.target.value),
+	        probe = this.state.probe,
+	        idx = Number(event.target.name);
+
+	    probe[idx] = value;
+
+	    this.getImageBuilder(this.props).setProbe(probe[0], probe[1], probe[2]);
+	  },
+	  onProbeVisibilityChange: function onProbeVisibilityChange(isProbeOpen) {
+	    var _this2 = this;
+
+	    this.setState({
+	      showFieldValue: isProbeOpen
+	    });
+
+	    setImmediate(function () {
+	      if (_this2.props.imageBuilders) {
+	        for (var key in _this2.props.imageBuilders) {
+	          var builder = _this2.props.imageBuilders[key].builder;
+	          builder.setCrossHairEnable(isProbeOpen);
+	          builder.render();
+	        }
+	      }
+	      if (_this2.props.imageBuilder) {
+	        _this2.props.imageBuilder.setCrossHairEnable(isProbeOpen);
+	        _this2.props.imageBuilder.render();
+	      }
+	    });
+	  },
+	  render: function render() {
+	    var imageBuilder = this.getImageBuilder(this.props),
+	        value = this.state.field || imageBuilder.getFieldValueAtProbeLocation(),
+	        valueStr = '' + value;
+
+	    if (value === undefined) {
+	      valueStr = '';
+	    } else {
+	      if (valueStr && valueStr.length > 6) {
+	        valueStr = value.toFixed(5);
+	      }
+	      if (Math.abs(value) < 0.00001) {
+	        valueStr = '0';
+	      }
+	    }
+
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        _CollapsibleWidget2.default,
+	        { title: 'Render method', visible: imageBuilder.isRenderMethodMutable() },
+	        _react2.default.createElement(
+	          'select',
+	          {
+	            style: { width: '100%' },
+	            value: imageBuilder.getRenderMethod(),
+	            onChange: this.updateRenderMethod
+	          },
+	          imageBuilder.getRenderMethods().map(function (v) {
+	            return _react2.default.createElement(
+	              'option',
+	              { key: v, value: v },
+	              v
+	            );
+	          })
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _CollapsibleWidget2.default,
+	        {
+	          title: 'Probe',
+	          subtitle: this.state.showFieldValue ? valueStr : '',
+	          ref: 'ProbeInput',
+	          onChange: this.onProbeVisibilityChange,
+	          open: imageBuilder.isCrossHairEnabled()
+	        },
+	        _react2.default.createElement(_NumberSliderWidget2.default, { name: '0',
+	          min: '0', max: imageBuilder.metadata.dimensions[0] - 1,
+	          key: 'slider-x',
+	          value: this.state.probe[0],
+	          onChange: this.probeChange
+	        }),
+	        _react2.default.createElement(_NumberSliderWidget2.default, { name: '1',
+	          min: '0', max: imageBuilder.metadata.dimensions[1] - 1,
+	          key: 'slider-Y',
+	          value: this.state.probe[1],
+	          onChange: this.probeChange
+	        }),
+	        _react2.default.createElement(_NumberSliderWidget2.default, { name: '2',
+	          min: '0', max: imageBuilder.metadata.dimensions[2] - 1,
+	          key: 'slider-Z',
+	          value: this.state.probe[2],
+	          onChange: this.probeChange
+	        })
+	      )
+	    );
+	  }
 	});
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(160).setImmediate))
 
@@ -20076,7 +20090,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _react = __webpack_require__(1);
@@ -20091,69 +20105,73 @@
 
 	exports.default = _react2.default.createClass({
 
-	    displayName: 'NumberSliderWidget',
+	  displayName: 'NumberSliderWidget',
 
-	    propTypes: {
-	        max: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.string]),
-	        min: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.string]),
-	        name: _react2.default.PropTypes.string,
-	        onChange: _react2.default.PropTypes.func,
-	        step: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.string]),
-	        value: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.string])
-	    },
+	  propTypes: {
+	    max: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.string]),
+	    min: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.string]),
+	    name: _react2.default.PropTypes.string,
+	    onChange: _react2.default.PropTypes.func,
+	    step: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.string]),
+	    value: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.string])
+	  },
 
-	    getDefaultProps: function getDefaultProps() {
-	        return {
-	            max: 100,
-	            min: 0,
-	            step: 1,
-	            value: 50
-	        };
-	    },
-	    getInitialState: function getInitialState() {
-	        return {
-	            max: this.props.max,
-	            min: this.props.min,
-	            step: this.props.step,
-	            value: this.props.value
-	        };
-	    },
-	    valInput: function valInput(e) {
-	        this.setState({ value: e.target.value });
-	        if (this.props.onChange) {
-	            if (this.props.name) {
-	                e.target.name = this.props.name;
-	            }
-	            this.props.onChange(e);
-	        }
-	    },
-	    value: function value(newVal) {
-	        if (arguments.length === 0) {
-	            return this.state.value;
-	        }
-
-	        newVal = Math.max(this.state.min, Math.min(newVal, this.state.max));
-	        this.setState({ value: newVal });
-	    },
-	    render: function render() {
-	        var min = this.props.min;
-	        var max = this.props.max;
-
-	        return _react2.default.createElement(
-	            'div',
-	            { className: _NumberSliderWidget2.default.container },
-	            _react2.default.createElement('input', { type: 'range',
-	                className: _NumberSliderWidget2.default.range,
-	                value: this.props.value,
-	                onChange: this.valInput,
-	                max: max, min: min }),
-	            _react2.default.createElement('input', { type: 'number',
-	                className: _NumberSliderWidget2.default.text,
-	                value: this.props.value,
-	                onChange: this.valInput,
-	                max: max, min: min })
-	        );
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      max: 100,
+	      min: 0,
+	      step: 1,
+	      value: 50
+	    };
+	  },
+	  getInitialState: function getInitialState() {
+	    return {
+	      max: this.props.max,
+	      min: this.props.min,
+	      step: this.props.step,
+	      value: this.props.value
+	    };
+	  },
+	  valInput: function valInput(e) {
+	    this.setState({ value: e.target.value });
+	    if (this.props.onChange) {
+	      if (this.props.name) {
+	        e.target.name = this.props.name;
+	      }
+	      this.props.onChange(e);
 	    }
+	  },
+	  value: function value(newVal) {
+	    if (newVal === null || newVal === undefined) {
+	      return this.state.value;
+	    }
+
+	    newVal = Math.max(this.state.min, Math.min(newVal, this.state.max));
+	    this.setState({ value: newVal });
+	    return newVal;
+	  },
+	  render: function render() {
+	    var min = this.props.min;
+	    var max = this.props.max;
+
+
+	    return _react2.default.createElement(
+	      'div',
+	      { className: _NumberSliderWidget2.default.container },
+	      _react2.default.createElement('input', { type: 'range',
+	        className: _NumberSliderWidget2.default.range,
+	        value: this.props.value,
+	        onChange: this.valInput,
+	        max: max, min: min
+	      }),
+	      _react2.default.createElement('input', { type: 'number',
+	        className: _NumberSliderWidget2.default.text,
+	        value: this.props.value,
+	        onChange: this.valInput,
+	        max: max, min: min
+	      })
+	    );
+	  }
 	});
 
 /***/ },

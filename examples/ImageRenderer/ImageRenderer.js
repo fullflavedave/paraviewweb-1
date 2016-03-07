@@ -19798,7 +19798,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _react = __webpack_require__(1);
@@ -19832,98 +19832,98 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function onImageLoaded() {
-	    var image = this;
+	  var image = this;
 
-	    if (image.drawToCanvas) {
-	        if (image.firstRender) {
-	            image.firstRender = false;
-	            image.component.resetCamera();
-	        } else {
-	            image.drawToCanvas();
-	        }
+	  if (image.drawToCanvas) {
+	    if (image.firstRender) {
+	      image.firstRender = false;
+	      image.component.resetCamera();
+	    } else {
+	      image.drawToCanvas();
 	    }
+	  }
 	}
 
 	function drawToCanvasAsImage() {
-	    var image = this,
-	        component = this.component,
-	        canvas = _reactDom2.default.findDOMNode(component.refs.canvasRenderer),
-	        ctx = canvas.getContext('2d'),
-	        w = component.state.width,
-	        h = component.state.height,
-	        iw = image ? image.width : 500,
-	        ih = image ? image.height : 500,
-	        zoomLevel = component.zoom,
-	        drawingCenter = component.center;
+	  var image = this,
+	      component = this.component,
+	      canvas = _reactDom2.default.findDOMNode(component.refs.canvasRenderer),
+	      ctx = canvas.getContext('2d'),
+	      w = component.state.width,
+	      h = component.state.height,
+	      iw = image ? image.width : 500,
+	      ih = image ? image.height : 500,
+	      zoomLevel = component.zoom,
+	      drawingCenter = component.center;
 
-	    ctx.clearRect(0, 0, w, h);
+	  ctx.clearRect(0, 0, w, h);
 
-	    var tw = Math.floor(iw * zoomLevel),
-	        th = Math.floor(ih * zoomLevel),
-	        tx = w * drawingCenter[0] - tw / 2,
-	        ty = h * drawingCenter[1] - th / 2;
+	  var tw = Math.floor(iw * zoomLevel),
+	      th = Math.floor(ih * zoomLevel),
+	      tx = w * drawingCenter[0] - tw / 2,
+	      ty = h * drawingCenter[1] - th / 2;
 
-	    image.activeArea = [tx, ty, tw, th];
+	  image.activeArea = [tx, ty, tw, th];
 
-	    try {
-	        ctx.drawImage(image, 0, 0, iw, ih, // Source image   [Location,Size]
-	        tx, ty, tw, th); // Target drawing [Location,Size]
-	    } catch (err) {
-	        console.log('Error in ImageRenderer::drawToCanvasAsImage', err);
-	    }
+	  try {
+	    ctx.drawImage(image, 0, 0, iw, ih, // Source image   [Location,Size]
+	    tx, ty, tw, th); // Target drawing [Location,Size]
+	  } catch (err) {
+	    console.log('Error in ImageRenderer::drawToCanvasAsImage', err);
+	  }
 	}
 
 	function drawToCanvasAsBuffer() {
-	    // canvas: this.bgCanvas.el,
-	    // area: [0, 0, width, height],
-	    // outputSize: [destWidth, destHeight],
-	    // crosshair: [lineX * scaleX, lineY * scaleY],
-	    // type: this.renderMethod
+	  // canvas: this.bgCanvas.el,
+	  // area: [0, 0, width, height],
+	  // outputSize: [destWidth, destHeight],
+	  // crosshair: [lineX * scaleX, lineY * scaleY],
+	  // type: this.renderMethod
 
-	    var image = this,
-	        data = this.data,
-	        component = this.component,
-	        destCanvas = _reactDom2.default.findDOMNode(component.refs.canvasRenderer),
-	        ctx = destCanvas.getContext('2d'),
-	        w = component.state.width,
-	        h = component.state.height,
-	        iw = data.outputSize[0],
-	        ih = data.outputSize[1],
-	        zoomLevel = component.zoom,
-	        drawingCenter = component.center;
+	  var image = this,
+	      data = this.data,
+	      component = this.component,
+	      destCanvas = _reactDom2.default.findDOMNode(component.refs.canvasRenderer),
+	      ctx = destCanvas.getContext('2d'),
+	      w = component.state.width,
+	      h = component.state.height,
+	      iw = data.outputSize[0],
+	      ih = data.outputSize[1],
+	      zoomLevel = component.zoom,
+	      drawingCenter = component.center;
 
-	    ctx.clearRect(0, 0, w, h);
+	  ctx.clearRect(0, 0, w, h);
 
-	    var tw = Math.floor(iw * zoomLevel),
-	        th = Math.floor(ih * zoomLevel),
-	        tx = w * drawingCenter[0] - tw / 2,
-	        ty = h * drawingCenter[1] - th / 2;
+	  var tw = Math.floor(iw * zoomLevel),
+	      th = Math.floor(ih * zoomLevel),
+	      tx = w * drawingCenter[0] - tw / 2,
+	      ty = h * drawingCenter[1] - th / 2;
 
-	    try {
-	        ctx.drawImage(data.canvas, data.area[0], data.area[1], data.area[2], data.area[3], // Source image   [Location,Size]
-	        tx, ty, tw, th); // Target drawing [Location,Size]
+	  try {
+	    ctx.drawImage(data.canvas, data.area[0], data.area[1], data.area[2], data.area[3], // Source image   [Location,Size]
+	    tx, ty, tw, th); // Target drawing [Location,Size]
 
-	        image.activeArea = [tx, ty, tw, th];
+	    image.activeArea = [tx, ty, tw, th];
 
-	        var scale = [tw / data.area[2], th / data.area[3]],
-	            translate = [tx, ty];
+	    var scale = [tw / data.area[2], th / data.area[3]],
+	        translate = [tx, ty];
 
-	        if (data.crosshair) {
-	            ctx.beginPath();
+	    if (data.crosshair) {
+	      ctx.beginPath();
 
-	            ctx.moveTo(translate[0] + scale[0] * data.crosshair[0], 0);
-	            ctx.lineTo(translate[0] + scale[0] * data.crosshair[0], h);
+	      ctx.moveTo(translate[0] + scale[0] * data.crosshair[0], 0);
+	      ctx.lineTo(translate[0] + scale[0] * data.crosshair[0], h);
 
-	            ctx.moveTo(0, translate[1] + scale[1] * data.crosshair[1]);
-	            ctx.lineTo(w, translate[1] + scale[1] * data.crosshair[1]);
+	      ctx.moveTo(0, translate[1] + scale[1] * data.crosshair[1]);
+	      ctx.lineTo(w, translate[1] + scale[1] * data.crosshair[1]);
 
-	            ctx.strokeStyle = component.props.crosshairColor;
-	            ctx.lineWidth = 1;
-	            ctx.stroke();
-	        }
-	    } catch (err) {
-	        console.log('Error in ImageRenderer::drawToCanvasAsBuffer', err);
+	      ctx.strokeStyle = component.props.crosshairColor;
+	      ctx.lineWidth = 1;
+	      ctx.stroke();
 	    }
+	  } catch (err) {
+	    console.log('Error in ImageRenderer::drawToCanvasAsBuffer', err);
+	  }
 	}
 
 	/**
@@ -19942,374 +19942,396 @@
 	 */
 	exports.default = _react2.default.createClass({
 
-	    displayName: 'ImageRenderer',
+	  displayName: 'ImageRenderer',
 
-	    propTypes: {
-	        crosshairColor: _react2.default.PropTypes.string,
-	        imageBuilder: _react2.default.PropTypes.object,
-	        listener: _react2.default.PropTypes.object,
-	        maxZoom: _react2.default.PropTypes.number,
-	        minZoom: _react2.default.PropTypes.number,
-	        modifiers: _react2.default.PropTypes.array,
-	        pressRadius: _react2.default.PropTypes.number
-	    },
+	  propTypes: {
+	    crosshairColor: _react2.default.PropTypes.string,
+	    imageBuilder: _react2.default.PropTypes.object,
+	    listener: _react2.default.PropTypes.object,
+	    maxZoom: _react2.default.PropTypes.number,
+	    minZoom: _react2.default.PropTypes.number,
+	    modifiers: _react2.default.PropTypes.array,
+	    pressRadius: _react2.default.PropTypes.number
+	  },
 
-	    getDefaultProps: function getDefaultProps() {
-	        return { minZoom: 0.1, maxZoom: 10, crosshairColor: '#000', modifiers: [0, 2], pressRadius: 50 };
-	    },
-	    getInitialState: function getInitialState() {
-	        var metadata = this.props.imageBuilder ? this.props.imageBuilder.queryDataModel.originalData.metadata || {} : {},
-	            title = metadata.title || 'No title',
-	            description = metadata.description || 'No description';
-	        return { width: 200, height: 200, dialog: false, title: title, description: description };
-	    },
-	    componentWillMount: function componentWillMount() {
-	        var _this = this;
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      minZoom: 0.1,
+	      maxZoom: 10,
+	      crosshairColor: '#000',
+	      modifiers: [0, 2],
+	      pressRadius: 50
+	    };
+	  },
+	  getInitialState: function getInitialState() {
+	    var metadata = this.props.imageBuilder ? this.props.imageBuilder.queryDataModel.originalData.metadata || {} : {},
+	        title = metadata.title || 'No title',
+	        description = metadata.description || 'No description';
+	    return {
+	      width: 200,
+	      height: 200,
+	      dialog: false,
+	      title: title,
+	      description: description
+	    };
+	  },
+	  componentWillMount: function componentWillMount() {
+	    var _this = this;
 
-	        this.imageToDraw = new Image();
+	    this.imageToDraw = new Image();
 
-	        // Monitor image builder
-	        if (this.props.imageBuilder) {
-	            this.imageBuilderSubscription = this.props.imageBuilder.onImageReady(function (data, envelope) {
-	                if (data.url) {
-	                    _this.renderImage(data);
-	                } else {
-	                    _this.renderCanvas(data);
-	                }
-	            });
-	        }
-
-	        // Shared properties
-	        this.zoom = 1;
-	        this.baseZoom = 1;
-	        this.center = [0.5, 0.5];
-	        this.baseCenter = [0.5, 0.5];
-
-	        // Attach context to image
-	        this.imageToDraw.component = this;
-	        this.imageToDraw.onload = onImageLoaded;
-	        this.imageToDraw.firstRender = true;
-
-	        // Listen to window resize
-	        this.sizeSubscription = _SizeHelper2.default.onSizeChange(this.updateDimensions);
-
-	        // Make sure we monitor window size if it is not already the case
-	        _SizeHelper2.default.startListening();
-
-	        // Listen to keyDown
-	        document.addEventListener('keydown', this.handleKeyDown);
-
-	        // Add image exporter
-	        this.sendToServer = false;
-	        this.imageExporter = new _ImageExporter2.default();
-	    },
-	    componentDidMount: function componentDidMount() {
-	        var _this2 = this;
-
-	        this.updateDimensions();
-	        if (this.imageToDraw.drawToCanvas) {
-	            this.imageToDraw.drawToCanvas();
-	        }
-
-	        // Attach mouse listener
-	        this.mouseHandler = new _MouseHandler2.default(_reactDom2.default.findDOMNode(this.refs.canvasRenderer));
-
-	        // Allow modifier via press action
-	        if (this.props.modifiers) {
-	            this.mouseHandler.toggleModifierOnPress(true, this.props.modifiers);
-	        }
-
-	        this.mouseHandler.attach({
-	            'drag': this.dragCallback,
-	            'zoom': this.zoomCallback,
-	            'click': this.clickCallback
-	        });
-
-	        this.mouseHandler.on('modifier.change', function (change, envelope) {
-	            var image = _this2.imageToDraw,
-	                ctx = _reactDom2.default.findDOMNode(_this2.refs.canvasRenderer).getContext('2d');
-
-	            ctx.beginPath();
-	            ctx.fillStyle = "#ffffff";
-	            ctx.lineWidth = 5;
-	            ctx.strokeStyle = "#000000";
-	            ctx.arc(change.event.relative.x, change.event.relative.y, _this2.props.pressRadius, 0, 2 * Math.PI, false);
-	            ctx.fill();
-	            ctx.stroke();
-
-	            setTimeout(function () {
-	                image.drawToCanvas();
-	            }, 300);
-	        });
-	    },
-	    componentDidUpdate: function componentDidUpdate(nextProps, nextState) {
-	        this.updateDimensions();
-	        if (this.imageToDraw.drawToCanvas) {
-	            this.imageToDraw.drawToCanvas();
-	        }
-	    },
-	    componentWillUnmount: function componentWillUnmount() {
-	        // Remove key listener
-	        document.removeEventListener('keydown', this.handleKeyDown);
-
-	        // Remove listener
-	        if (this.imageBuilderSubscription) {
-	            this.imageBuilderSubscription.unsubscribe();
-	            this.imageBuilderSubscription = null;
-	        }
-
-	        // Clean image
-	        this.imageToDraw.onload = null;
-	        this.imageToDraw.drawToCanvas = null;
-	        this.imageToDraw.component = null;
-	        this.imageToDraw.data = null;
-	        this.imageToDraw = null;
-
-	        // Free mouseHandler
-	        this.mouseHandler.destroy();
-	        this.mouseHandler = null;
-
-	        // Remove window listener
-	        if (this.sizeSubscription) {
-	            this.sizeSubscription.unsubscribe();
-	            this.sizeSubscription = null;
-	        }
-	    },
-	    updateDimensions: function updateDimensions() {
-	        var el = _reactDom2.default.findDOMNode(this).parentNode,
-	            elSize = _SizeHelper2.default.getSize(el);
-
-	        if (el && (this.state.width !== elSize.clientWidth || this.state.height !== elSize.clientHeight)) {
-	            this.setState({ width: elSize.clientWidth, height: elSize.clientHeight });
-	            return true;
-	        }
-	        return false;
-	    },
-	    zoomCallback: function zoomCallback(event, envelope) {
-	        var eventManaged = false;
-
-	        // Extend event with active area
-	        event.activeArea = this.imageToDraw.activeArea;
-
-	        // Handle mouse listener if any
-	        if (this.props.listener && this.props.listener.zoom) {
-	            eventManaged = this.props.listener.zoom(event, envelope);
-	        }
-
-	        // Handle local zoom
-	        if (!eventManaged) {
-	            if (event.isFirst) {
-	                this.baseZoom = this.zoom;
-	            }
-	            var zoom = this.baseZoom * event.scale;
-
-	            if (zoom < this.props.minZoom) {
-	                zoom = this.props.minZoom;
-	            }
-	            if (zoom > this.props.maxZoom) {
-	                zoom = this.props.maxZoom;
-	            }
-
-	            if (this.zoom !== zoom) {
-	                // Update center to keep the location of the pointer the same
-	                var x = this.center[0],
-	                    y = this.center[1],
-	                    deltaZoom = zoom / this.zoom,
-	                    fixedX = event.relative.x / this.state.width,
-	                    fixedY = event.relative.y / this.state.height;
-
-	                this.zoom = zoom;
-	                this.center[0] = fixedX + deltaZoom * (x - fixedX);
-	                this.center[1] = fixedY + deltaZoom * (y - fixedY);
-
-	                if (this.imageToDraw.drawToCanvas) {
-	                    this.imageToDraw.drawToCanvas();
-	                }
-	            }
-
-	            if (event.isFinal) {
-	                this.baseZoom = this.zoom;
-	            }
-	        }
-
-	        // Store center
-	        this.baseCenter = [this.center[0], this.center[1]];
-	    },
-	    dragCallback: function dragCallback(event, envelope) {
-	        var eventManaged = false;
-
-	        // Extend event with active area
-	        event.activeArea = this.imageToDraw.activeArea;
-
-	        // Store zoom
-	        this.baseZoom = this.zoom;
-
-	        // Handle mouse listener if any
-	        if (this.props.listener && this.props.listener.drag) {
-	            eventManaged = this.props.listener.drag(event, envelope);
-	        }
-
-	        // Handle drag to pan
-	        if (!eventManaged) {
-	            if (event.isFirst) {
-	                this.baseCenter = [this.center[0], this.center[1]];
-	            }
-
-	            var deltaX = event.deltaX / this.state.width,
-	                deltaY = event.deltaY / this.state.height;
-
-	            this.center[0] = this.baseCenter[0] + deltaX;
-	            this.center[1] = this.baseCenter[1] + deltaY;
-
-	            if (event.isFinal) {
-	                this.baseCenter = [this.center[0], this.center[1]];
-	            }
-
-	            if (this.imageToDraw.drawToCanvas) {
-	                this.imageToDraw.drawToCanvas();
-	            }
-	        }
-	    },
-	    clickCallback: function clickCallback(event, envelope) {
-	        // Extend event with active area
-	        event.activeArea = this.imageToDraw.activeArea;
-
-	        // Handle mouse listener if any
-	        if (this.props.listener && this.props.listener.click) {
-	            this.props.listener.click(event, envelope);
-	        }
-	    },
-	    renderImage: function renderImage(data) {
-	        this.imageToDraw.drawToCanvas = drawToCanvasAsImage;
-	        this.imageToDraw.src = data.url;
-	    },
-	    renderCanvas: function renderCanvas(data) {
-	        this.imageToDraw.drawToCanvas = drawToCanvasAsBuffer;
-	        this.imageToDraw.data = data;
-	        this.imageToDraw.width = data.outputSize[0];
-	        this.imageToDraw.height = data.outputSize[1];
-
-	        // Send data to server for export
-	        if (this.sendToServer) {
-	            this.imageExporter.exportImage(data);
-	        }
-
-	        // No need to wait to render it
-	        if (this.imageToDraw.firstRender) {
-	            this.imageToDraw.firstRender = false;
-	            this.resetCamera();
+	    // Monitor image builder
+	    if (this.props.imageBuilder) {
+	      this.imageBuilderSubscription = this.props.imageBuilder.onImageReady(function (data, envelope) {
+	        if (data.url) {
+	          _this.renderImage(data);
 	        } else {
-	            this.imageToDraw.drawToCanvas();
+	          _this.renderCanvas(data);
 	        }
-	    },
-	    resetCamera: function resetCamera() {
-	        var w = this.state.width,
-	            h = this.state.height,
-	            image = this.imageToDraw,
-	            iw = image ? image.width : 500,
-	            ih = image ? image.height : 500;
-
-	        this.zoom = Math.min(w / iw, h / ih);
-	        this.baseZoom = Math.min(w / iw, h / ih);
-	        this.baseCenter = [0.5, 0.5];
-	        this.center = [0.5, 0.5];
-
-	        image.drawToCanvas();
-	    },
-	    recordImages: function recordImages(record) {
-	        this.sendToServer = record;
-	    },
-	    handleKeyDown: function handleKeyDown(event) {
-	        if (event.keyCode === 82) {
-	            // r => reset camera
-	            this.resetCamera();
-	        } else if (event.keyCode === 85 && !this.state.dialog) {
-	            // u => Update dataset metadata
-	            var thumbnailImage = _reactDom2.default.findDOMNode(this.refs.thumbnail);
-
-	            if (this.imageToDraw.data.canvas.nodeName === 'CANVAS') {
-	                if (this.imageToDraw.data.canvas.width === this.imageToDraw.data.area[2] && this.imageToDraw.data.canvas.height === this.imageToDraw.data.area[3]) {
-	                    thumbnailImage.src = this.imageToDraw.data.canvas.toDataURL('image/png');
-	                } else {
-	                    // Need to extract region
-	                    thumbnailImage.src = this.imageExporter.extractCanvasRegion(this.imageToDraw.data.canvas, this.imageToDraw.data.area, this.imageToDraw.data.outputSize);
-	                }
-	            } else {
-	                // Use image URL
-	                thumbnailImage.src = this.imageToDraw.data.canvas.src;
-	            }
-
-	            this.setState({ dialog: !this.state.dialog });
-	        }
-	    },
-	    updateTitle: function updateTitle(event) {
-	        var title = event.target.value;
-	        this.setState({ title: title });
-	    },
-	    updateDescription: function updateDescription(event) {
-	        var description = event.target.value;
-	        this.setState({ description: description });
-	    },
-	    toggleDialog: function toggleDialog() {
-	        this.setState({ dialog: !this.state.dialog });
-	    },
-	    updateMetadata: function updateMetadata() {
-	        this.setState({ dialog: !this.state.dialog });
-	        this.imageExporter.updateMetadata({
-	            title: this.state.title,
-	            description: this.state.description,
-	            image: _reactDom2.default.findDOMNode(this.refs.thumbnail).src,
-	            path: this.props.imageBuilder.queryDataModel.basepath
-	        });
-	    },
-	    render: function render() {
-	        return _react2.default.createElement(
-	            'div',
-	            { className: _ImageRenderer2.default.container },
-	            _react2.default.createElement('canvas', {
-	                className: _ImageRenderer2.default.renderer,
-	                ref: 'canvasRenderer',
-	                width: this.state.width,
-	                height: this.state.height }),
-	            _react2.default.createElement(
-	                'div',
-	                { className: this.state.dialog ? _ImageRenderer2.default.dialog : _ImageRenderer2.default.hidden },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: _ImageRenderer2.default.inside },
-	                    _react2.default.createElement('img', { ref: 'thumbnail', className: _ImageRenderer2.default.thumbnail, height: Math.floor(this.state.height / 2) }),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: _ImageRenderer2.default.metadata, style: { height: Math.floor(this.state.height / 2) + 'px' } },
-	                        _react2.default.createElement(
-	                            'strong',
-	                            { className: _ImageRenderer2.default.title },
-	                            _react2.default.createElement(_ContentEditableWidget2.default, { html: this.state.title, onChange: this.updateTitle })
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: _ImageRenderer2.default.description },
-	                            _react2.default.createElement(_ContentEditableWidget2.default, { html: this.state.description, onChange: this.updateDescription })
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: _ImageRenderer2.default.buttons },
-	                        _react2.default.createElement(
-	                            'button',
-	                            { className: _ImageRenderer2.default.button, onClick: this.toggleDialog },
-	                            'Cancel'
-	                        ),
-	                        _react2.default.createElement(
-	                            'button',
-	                            { className: _ImageRenderer2.default.button, onClick: this.updateMetadata },
-	                            'Save'
-	                        )
-	                    )
-	                )
-	            )
-	        );
+	      });
 	    }
+
+	    // Shared properties
+	    this.zoom = 1;
+	    this.baseZoom = 1;
+	    this.center = [0.5, 0.5];
+	    this.baseCenter = [0.5, 0.5];
+
+	    // Attach context to image
+	    this.imageToDraw.component = this;
+	    this.imageToDraw.onload = onImageLoaded;
+	    this.imageToDraw.firstRender = true;
+
+	    // Listen to window resize
+	    this.sizeSubscription = _SizeHelper2.default.onSizeChange(this.updateDimensions);
+
+	    // Make sure we monitor window size if it is not already the case
+	    _SizeHelper2.default.startListening();
+
+	    // Listen to keyDown
+	    document.addEventListener('keydown', this.handleKeyDown);
+
+	    // Add image exporter
+	    this.sendToServer = false;
+	    this.imageExporter = new _ImageExporter2.default();
+	  },
+	  componentDidMount: function componentDidMount() {
+	    var _this2 = this;
+
+	    this.updateDimensions();
+	    if (this.imageToDraw.drawToCanvas) {
+	      this.imageToDraw.drawToCanvas();
+	    }
+
+	    // Attach mouse listener
+	    this.mouseHandler = new _MouseHandler2.default(_reactDom2.default.findDOMNode(this.refs.canvasRenderer));
+
+	    // Allow modifier via press action
+	    if (this.props.modifiers) {
+	      this.mouseHandler.toggleModifierOnPress(true, this.props.modifiers);
+	    }
+
+	    this.mouseHandler.attach({
+	      drag: this.dragCallback,
+	      zoom: this.zoomCallback,
+	      click: this.clickCallback
+	    });
+
+	    this.mouseHandler.on('modifier.change', function (change, envelope) {
+	      var image = _this2.imageToDraw,
+	          ctx = _reactDom2.default.findDOMNode(_this2.refs.canvasRenderer).getContext('2d');
+
+	      ctx.beginPath();
+	      ctx.fillStyle = '#ffffff';
+	      ctx.lineWidth = 5;
+	      ctx.strokeStyle = '#000000';
+	      ctx.arc(change.event.relative.x, change.event.relative.y, _this2.props.pressRadius, 0, 2 * Math.PI, false);
+	      ctx.fill();
+	      ctx.stroke();
+
+	      setTimeout(function () {
+	        image.drawToCanvas();
+	      }, 300);
+	    });
+	  },
+	  componentDidUpdate: function componentDidUpdate(nextProps, nextState) {
+	    this.updateDimensions();
+	    if (this.imageToDraw.drawToCanvas) {
+	      this.imageToDraw.drawToCanvas();
+	    }
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    // Remove key listener
+	    document.removeEventListener('keydown', this.handleKeyDown);
+
+	    // Remove listener
+	    if (this.imageBuilderSubscription) {
+	      this.imageBuilderSubscription.unsubscribe();
+	      this.imageBuilderSubscription = null;
+	    }
+
+	    // Clean image
+	    this.imageToDraw.onload = null;
+	    this.imageToDraw.drawToCanvas = null;
+	    this.imageToDraw.component = null;
+	    this.imageToDraw.data = null;
+	    this.imageToDraw = null;
+
+	    // Free mouseHandler
+	    this.mouseHandler.destroy();
+	    this.mouseHandler = null;
+
+	    // Remove window listener
+	    if (this.sizeSubscription) {
+	      this.sizeSubscription.unsubscribe();
+	      this.sizeSubscription = null;
+	    }
+	  },
+	  updateDimensions: function updateDimensions() {
+	    var el = _reactDom2.default.findDOMNode(this).parentNode,
+	        elSize = _SizeHelper2.default.getSize(el);
+
+	    if (el && (this.state.width !== elSize.clientWidth || this.state.height !== elSize.clientHeight)) {
+	      this.setState({
+	        width: elSize.clientWidth,
+	        height: elSize.clientHeight
+	      });
+	      return true;
+	    }
+	    return false;
+	  },
+	  zoomCallback: function zoomCallback(event, envelope) {
+	    var eventManaged = false;
+
+	    // Extend event with active area
+	    event.activeArea = this.imageToDraw.activeArea;
+
+	    // Handle mouse listener if any
+	    if (this.props.listener && this.props.listener.zoom) {
+	      eventManaged = this.props.listener.zoom(event, envelope);
+	    }
+
+	    // Handle local zoom
+	    if (!eventManaged) {
+	      if (event.isFirst) {
+	        this.baseZoom = this.zoom;
+	      }
+	      var zoom = this.baseZoom * event.scale;
+
+	      if (zoom < this.props.minZoom) {
+	        zoom = this.props.minZoom;
+	      }
+	      if (zoom > this.props.maxZoom) {
+	        zoom = this.props.maxZoom;
+	      }
+
+	      if (this.zoom !== zoom) {
+	        // Update center to keep the location of the pointer the same
+	        var x = this.center[0],
+	            y = this.center[1],
+	            deltaZoom = zoom / this.zoom,
+	            fixedX = event.relative.x / this.state.width,
+	            fixedY = event.relative.y / this.state.height;
+
+	        this.zoom = zoom;
+	        this.center[0] = fixedX + deltaZoom * (x - fixedX);
+	        this.center[1] = fixedY + deltaZoom * (y - fixedY);
+
+	        if (this.imageToDraw.drawToCanvas) {
+	          this.imageToDraw.drawToCanvas();
+	        }
+	      }
+
+	      if (event.isFinal) {
+	        this.baseZoom = this.zoom;
+	      }
+	    }
+
+	    // Store center
+	    this.baseCenter = [this.center[0], this.center[1]];
+	  },
+	  dragCallback: function dragCallback(event, envelope) {
+	    var eventManaged = false;
+
+	    // Extend event with active area
+	    event.activeArea = this.imageToDraw.activeArea;
+
+	    // Store zoom
+	    this.baseZoom = this.zoom;
+
+	    // Handle mouse listener if any
+	    if (this.props.listener && this.props.listener.drag) {
+	      eventManaged = this.props.listener.drag(event, envelope);
+	    }
+
+	    // Handle drag to pan
+	    if (!eventManaged) {
+	      if (event.isFirst) {
+	        this.baseCenter = [this.center[0], this.center[1]];
+	      }
+
+	      var deltaX = event.deltaX / this.state.width,
+	          deltaY = event.deltaY / this.state.height;
+
+	      this.center[0] = this.baseCenter[0] + deltaX;
+	      this.center[1] = this.baseCenter[1] + deltaY;
+
+	      if (event.isFinal) {
+	        this.baseCenter = [this.center[0], this.center[1]];
+	      }
+
+	      if (this.imageToDraw.drawToCanvas) {
+	        this.imageToDraw.drawToCanvas();
+	      }
+	    }
+	  },
+	  clickCallback: function clickCallback(event, envelope) {
+	    // Extend event with active area
+	    event.activeArea = this.imageToDraw.activeArea;
+
+	    // Handle mouse listener if any
+	    if (this.props.listener && this.props.listener.click) {
+	      this.props.listener.click(event, envelope);
+	    }
+	  },
+	  renderImage: function renderImage(data) {
+	    this.imageToDraw.drawToCanvas = drawToCanvasAsImage;
+	    this.imageToDraw.src = data.url;
+	  },
+	  renderCanvas: function renderCanvas(data) {
+	    this.imageToDraw.drawToCanvas = drawToCanvasAsBuffer;
+	    this.imageToDraw.data = data;
+	    this.imageToDraw.width = data.outputSize[0];
+	    this.imageToDraw.height = data.outputSize[1];
+
+	    // Send data to server for export
+	    if (this.sendToServer) {
+	      this.imageExporter.exportImage(data);
+	    }
+
+	    // No need to wait to render it
+	    if (this.imageToDraw.firstRender) {
+	      this.imageToDraw.firstRender = false;
+	      this.resetCamera();
+	    } else {
+	      this.imageToDraw.drawToCanvas();
+	    }
+	  },
+	  resetCamera: function resetCamera() {
+	    var w = this.state.width,
+	        h = this.state.height,
+	        image = this.imageToDraw,
+	        iw = image ? image.width : 500,
+	        ih = image ? image.height : 500;
+
+	    this.zoom = Math.min(w / iw, h / ih);
+	    this.baseZoom = Math.min(w / iw, h / ih);
+	    this.baseCenter = [0.5, 0.5];
+	    this.center = [0.5, 0.5];
+
+	    image.drawToCanvas();
+	  },
+	  recordImages: function recordImages(record) {
+	    this.sendToServer = record;
+	  },
+	  handleKeyDown: function handleKeyDown(event) {
+	    if (event.keyCode === 82) {
+	      // r => reset camera
+	      this.resetCamera();
+	    } else if (event.keyCode === 85 && !this.state.dialog) {
+	      // u => Update dataset metadata
+	      var thumbnailImage = _reactDom2.default.findDOMNode(this.refs.thumbnail);
+
+	      if (this.imageToDraw.data.canvas.nodeName === 'CANVAS') {
+	        if (this.imageToDraw.data.canvas.width === this.imageToDraw.data.area[2] && this.imageToDraw.data.canvas.height === this.imageToDraw.data.area[3]) {
+	          thumbnailImage.src = this.imageToDraw.data.canvas.toDataURL('image/png');
+	        } else {
+	          // Need to extract region
+	          thumbnailImage.src = this.imageExporter.extractCanvasRegion(this.imageToDraw.data.canvas, this.imageToDraw.data.area, this.imageToDraw.data.outputSize);
+	        }
+	      } else {
+	        // Use image URL
+	        thumbnailImage.src = this.imageToDraw.data.canvas.src;
+	      }
+
+	      this.setState({
+	        dialog: !this.state.dialog
+	      });
+	    }
+	  },
+	  updateTitle: function updateTitle(event) {
+	    var title = event.target.value;
+	    this.setState({ title: title });
+	  },
+	  updateDescription: function updateDescription(event) {
+	    var description = event.target.value;
+	    this.setState({ description: description });
+	  },
+	  toggleDialog: function toggleDialog() {
+	    this.setState({
+	      dialog: !this.state.dialog
+	    });
+	  },
+	  updateMetadata: function updateMetadata() {
+	    this.setState({
+	      dialog: !this.state.dialog
+	    });
+	    this.imageExporter.updateMetadata({
+	      title: this.state.title,
+	      description: this.state.description,
+	      image: _reactDom2.default.findDOMNode(this.refs.thumbnail).src,
+	      path: this.props.imageBuilder.queryDataModel.basepath
+	    });
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { className: _ImageRenderer2.default.container },
+	      _react2.default.createElement('canvas', {
+	        className: _ImageRenderer2.default.renderer,
+	        ref: 'canvasRenderer',
+	        width: this.state.width,
+	        height: this.state.height
+	      }),
+	      _react2.default.createElement(
+	        'div',
+	        { className: this.state.dialog ? _ImageRenderer2.default.dialog : _ImageRenderer2.default.hidden },
+	        _react2.default.createElement(
+	          'div',
+	          { className: _ImageRenderer2.default.inside },
+	          _react2.default.createElement('img', { ref: 'thumbnail', className: _ImageRenderer2.default.thumbnail, height: Math.floor(this.state.height / 2) }),
+	          _react2.default.createElement(
+	            'div',
+	            { className: _ImageRenderer2.default.metadata, style: { height: Math.floor(this.state.height / 2) + 'px' } },
+	            _react2.default.createElement(
+	              'strong',
+	              { className: _ImageRenderer2.default.title },
+	              _react2.default.createElement(_ContentEditableWidget2.default, { html: this.state.title, onChange: this.updateTitle })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: _ImageRenderer2.default.description },
+	              _react2.default.createElement(_ContentEditableWidget2.default, { html: this.state.description, onChange: this.updateDescription })
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: _ImageRenderer2.default.buttons },
+	            _react2.default.createElement(
+	              'button',
+	              { className: _ImageRenderer2.default.button, onClick: this.toggleDialog },
+	              'Cancel'
+	            ),
+	            _react2.default.createElement(
+	              'button',
+	              { className: _ImageRenderer2.default.button, onClick: this.updateMetadata },
+	              'Save'
+	            )
+	          )
+	        )
+	      )
+	    );
+	  }
 	});
 
 /***/ },
@@ -20319,7 +20341,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _react = __webpack_require__(1);
@@ -20332,70 +20354,76 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var noOp = function noOp() {};
+
 	exports.default = _react2.default.createClass({
 
-	    displayName: 'ContentEditableWidget',
+	  displayName: 'ContentEditableWidget',
 
-	    propTypes: {
-	        blurOnEnter: _react2.default.PropTypes.bool,
-	        className: _react2.default.PropTypes.string,
-	        html: _react2.default.PropTypes.string,
-	        onBlur: _react2.default.PropTypes.func,
-	        onChange: _react2.default.PropTypes.func
-	    },
+	  propTypes: {
+	    blurOnEnter: _react2.default.PropTypes.bool,
+	    className: _react2.default.PropTypes.string,
+	    html: _react2.default.PropTypes.string,
+	    onBlur: _react2.default.PropTypes.func,
+	    onChange: _react2.default.PropTypes.func
+	  },
 
-	    getDefaultProps: function getDefaultProps() {
-	        return {
-	            blurOnEnter: false,
-	            className: ''
-	        };
-	    },
-	    shouldComponentUpdate: function shouldComponentUpdate(nextProps) {
-	        return nextProps.html !== _reactDom2.default.findDOMNode(this).innerHTML;
-	    },
-	    componentDidUpdate: function componentDidUpdate() {
-	        if (this.props.html !== _reactDom2.default.findDOMNode(this).innerHTML) {
-	            _reactDom2.default.findDOMNode(this).innerHTML = this.props.html;
-	        }
-	    },
-	    setFocus: function setFocus() {
-	        var range = document.createRange();
-	        range.selectNodeContents(_reactDom2.default.findDOMNode(this));
-	        var sel = window.getSelection();
-	        sel.removeAllRanges();
-	        sel.addRange(range);
-	    },
-	    blurEditable: function blurEditable(event) {
-	        if (event.charCode === 13) {
-	            _reactDom2.default.findDOMNode(this).blur();
-	            window.getSelection().removeAllRanges();
-	            if (this.props.onBlur) {
-	                this.props.onBlur();
-	            }
-	        }
-	    },
-	    emitChange: function emitChange(evt) {
-	        var html = _reactDom2.default.findDOMNode(this).innerHTML;
-	        if (this.props.onChange && html !== this.lastHtml) {
-	            evt.target = { value: html };
-	            this.props.onChange(evt);
-	        }
-	        this.lastHtml = html;
-	        if (evt.type === 'blur' && this.props.onBlur) {
-	            this.props.onBlur();
-	        }
-	    },
-
-
-	    /* eslint-disable react/no-danger */
-	    render: function render() {
-	        return _react2.default.createElement('div', { className: this.props.className,
-	            onInput: this.emitChange,
-	            onBlur: this.emitChange,
-	            onKeyPress: this.props.blurOnEnter ? this.blurEditable : function () {},
-	            contentEditable: true,
-	            dangerouslySetInnerHTML: { __html: this.props.html } });
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      blurOnEnter: false,
+	      className: ''
+	    };
+	  },
+	  shouldComponentUpdate: function shouldComponentUpdate(nextProps) {
+	    return nextProps.html !== _reactDom2.default.findDOMNode(this).innerHTML;
+	  },
+	  componentDidUpdate: function componentDidUpdate() {
+	    if (this.props.html !== _reactDom2.default.findDOMNode(this).innerHTML) {
+	      _reactDom2.default.findDOMNode(this).innerHTML = this.props.html;
 	    }
+	  },
+	  setFocus: function setFocus() {
+	    var range = document.createRange();
+	    range.selectNodeContents(_reactDom2.default.findDOMNode(this));
+	    var sel = window.getSelection();
+	    sel.removeAllRanges();
+	    sel.addRange(range);
+	  },
+	  blurEditable: function blurEditable(event) {
+	    if (event.charCode === 13) {
+	      _reactDom2.default.findDOMNode(this).blur();
+	      window.getSelection().removeAllRanges();
+	      if (this.props.onBlur) {
+	        this.props.onBlur();
+	      }
+	    }
+	  },
+	  emitChange: function emitChange(evt) {
+	    var html = _reactDom2.default.findDOMNode(this).innerHTML;
+	    if (this.props.onChange && html !== this.lastHtml) {
+	      evt.target = {
+	        value: html
+	      };
+	      this.props.onChange(evt);
+	    }
+	    this.lastHtml = html;
+	    if (evt.type === 'blur' && this.props.onBlur) {
+	      this.props.onBlur();
+	    }
+	  },
+
+
+	  /* eslint-disable react/no-danger */
+	  render: function render() {
+	    return _react2.default.createElement('div', {
+	      className: this.props.className,
+	      onInput: this.emitChange,
+	      onBlur: this.emitChange,
+	      onKeyPress: this.props.blurOnEnter ? this.blurEditable : noOp,
+	      contentEditable: true,
+	      dangerouslySetInnerHTML: { __html: this.props.html }
+	    });
+	  }
 	});
 
 /***/ },
@@ -20405,7 +20433,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -20419,108 +20447,108 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var ImageExporter = function () {
-	    function ImageExporter() {
-	        var format = arguments.length <= 0 || arguments[0] === undefined ? 'image/jpeg' : arguments[0];
-	        var padding = arguments.length <= 1 || arguments[1] === undefined ? 3 : arguments[1];
+	  function ImageExporter() {
+	    var format = arguments.length <= 0 || arguments[0] === undefined ? 'image/jpeg' : arguments[0];
+	    var padding = arguments.length <= 1 || arguments[1] === undefined ? 3 : arguments[1];
 
-	        _classCallCheck(this, ImageExporter);
+	    _classCallCheck(this, ImageExporter);
 
-	        this.format = format;
-	        this.padding = padding;
-	        this.counter = 0;
-	        this.bgCanvas = null;
-	        this.imageToDecode = null;
+	    this.format = format;
+	    this.padding = padding;
+	    this.counter = 0;
+	    this.bgCanvas = null;
+	    this.imageToDecode = null;
+	  }
+
+	  _createClass(ImageExporter, [{
+	    key: 'exportImage',
+	    value: function exportImage(data) {
+	      var xhr = new XMLHttpRequest();
+	      var dataToSend = {};
+	      var ts = Number(this.counter++).toString();
+
+	      if (!data.canvas || !data.arguments) {
+	        return;
+	      }
+
+	      while (ts.length < this.padding) {
+	        ts = '0' + ts;
+	      }
+	      dataToSend.arguments = data.arguments;
+	      dataToSend.image = data.canvas.toDataURL(this.format);
+	      dataToSend.arguments.__ = ts;
+
+	      xhr.open('POST', '/export', true);
+	      xhr.responseType = 'text';
+	      xhr.setRequestHeader('Content-Type', 'application/json');
+
+	      xhr.onload = function (e) {
+	        if (xhr.status === 200) {
+	          return;
+	        }
+	      };
+
+	      xhr.onerror = function (e) {
+	        console.log('error export', data.arguments);
+	      };
+
+	      xhr.send(JSON.stringify(dataToSend));
 	    }
-
-	    _createClass(ImageExporter, [{
-	        key: 'exportImage',
-	        value: function exportImage(data) {
-	            var xhr = new XMLHttpRequest(),
-	                dataToSend = {},
-	                ts = Number(this.counter++).toString();
-
-	            if (!data.canvas || !data.arguments) {
-	                return;
-	            }
-
-	            while (ts.length < this.padding) {
-	                ts = '0' + ts;
-	            }
-	            dataToSend.arguments = data.arguments;
-	            dataToSend.image = data.canvas.toDataURL(this.format);
-	            dataToSend.arguments.__ = ts;
-
-	            xhr.open('POST', '/export', true);
-	            xhr.responseType = 'text';
-	            xhr.setRequestHeader('Content-Type', 'application/json');
-
-	            xhr.onload = function (e) {
-	                if (xhr.status === 200) {
-	                    return;
-	                }
-	            };
-
-	            xhr.onerror = function (e) {
-	                console.log('error export', data.arguments);
-	            };
-
-	            xhr.send(JSON.stringify(dataToSend));
+	  }, {
+	    key: 'updateMetadata',
+	    value: function updateMetadata(dataToSend) {
+	      // Validate image data and use a canvas to convert it if need be
+	      if (dataToSend.image.indexOf('blob:') !== -1) {
+	        if (!this.bgCanvas) {
+	          this.bgCanvas = new _CanvasOffscreenBuffer2.default(100, 100);
 	        }
-	    }, {
-	        key: 'updateMetadata',
-	        value: function updateMetadata(dataToSend) {
-	            // Validate image data and use a canvas to convert it if need be
-	            if (dataToSend.image.indexOf('blob:') !== -1) {
-	                if (!this.bgCanvas) {
-	                    this.bgCanvas = new _CanvasOffscreenBuffer2.default(100, 100);
-	                }
-	                if (!this.imageToDecode) {
-	                    this.imageToDecode = new Image();
-	                }
-
-	                // Decode image
-	                this.imageToDecode.src = dataToSend.image;
-
-	                // Resize canvas and draw image into it
-	                this.bgCanvas.size(this.imageToDecode.width, this.imageToDecode.height);
-	                this.bgCanvas.get2DContext().drawImage(this.imageToDecode, 0, 0);
-	                dataToSend.image = this.bgCanvas.toDataURL('image/png');
-	            }
-
-	            var xhr = new XMLHttpRequest();
-
-	            xhr.open('POST', '/update', true);
-	            xhr.responseType = 'text';
-	            xhr.setRequestHeader('Content-Type', 'application/json');
-
-	            xhr.onload = function (e) {
-	                if (xhr.status === 200) {
-	                    return;
-	                }
-	            };
-
-	            xhr.onerror = function (e) {
-	                console.log('error export', e);
-	            };
-
-	            xhr.send(JSON.stringify(dataToSend));
+	        if (!this.imageToDecode) {
+	          this.imageToDecode = new Image();
 	        }
-	    }, {
-	        key: 'extractCanvasRegion',
-	        value: function extractCanvasRegion(canvas, region, outputSize) {
-	            var format = arguments.length <= 3 || arguments[3] === undefined ? 'image/png' : arguments[3];
 
-	            if (!this.bgCanvas) {
-	                this.bgCanvas = new _CanvasOffscreenBuffer2.default(100, 100);
-	            }
+	        // Decode image
+	        this.imageToDecode.src = dataToSend.image;
 
-	            this.bgCanvas.size(outputSize[0], outputSize[1]);
-	            this.bgCanvas.get2DContext().drawImage(canvas, region[0], region[1], region[2], region[3], 0, 0, outputSize[0], outputSize[1]);
-	            return this.bgCanvas.toDataURL(format);
+	        // Resize canvas and draw image into it
+	        this.bgCanvas.size(this.imageToDecode.width, this.imageToDecode.height);
+	        this.bgCanvas.get2DContext().drawImage(this.imageToDecode, 0, 0);
+	        dataToSend.image = this.bgCanvas.toDataURL('image/png');
+	      }
+
+	      var xhr = new XMLHttpRequest();
+
+	      xhr.open('POST', '/update', true);
+	      xhr.responseType = 'text';
+	      xhr.setRequestHeader('Content-Type', 'application/json');
+
+	      xhr.onload = function (e) {
+	        if (xhr.status === 200) {
+	          return;
 	        }
-	    }]);
+	      };
 
-	    return ImageExporter;
+	      xhr.onerror = function (e) {
+	        console.log('error export', e);
+	      };
+
+	      xhr.send(JSON.stringify(dataToSend));
+	    }
+	  }, {
+	    key: 'extractCanvasRegion',
+	    value: function extractCanvasRegion(canvas, region, outputSize) {
+	      var format = arguments.length <= 3 || arguments[3] === undefined ? 'image/png' : arguments[3];
+
+	      if (!this.bgCanvas) {
+	        this.bgCanvas = new _CanvasOffscreenBuffer2.default(100, 100);
+	      }
+
+	      this.bgCanvas.size(outputSize[0], outputSize[1]);
+	      this.bgCanvas.get2DContext().drawImage(canvas, region[0], region[1], region[2], region[3], 0, 0, outputSize[0], outputSize[1]);
+	      return this.bgCanvas.toDataURL(format);
+	    }
+	  }]);
+
+	  return ImageExporter;
 	}();
 
 	exports.default = ImageExporter;
@@ -20532,7 +20560,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -20544,63 +20572,63 @@
 	// Create <canvas/> within the DOM
 
 	var CanvasOffscreenBuffer = function () {
-	    function CanvasOffscreenBuffer(width, height) {
-	        _classCallCheck(this, CanvasOffscreenBuffer);
+	  function CanvasOffscreenBuffer(width, height) {
+	    _classCallCheck(this, CanvasOffscreenBuffer);
 
-	        this.id = 'CanvasOffscreenBuffer_' + ++offscreenCanvasCount;
-	        this.el = document.createElement('canvas');
-	        this.width = width;
-	        this.height = height;
+	    this.id = 'CanvasOffscreenBuffer_' + ++offscreenCanvasCount;
+	    this.el = document.createElement('canvas');
+	    this.width = width;
+	    this.height = height;
 
-	        this.el.style.display = 'none';
-	        this.el.setAttribute('width', this.width);
-	        this.el.setAttribute('height', this.height);
+	    this.el.style.display = 'none';
+	    this.el.setAttribute('width', this.width);
+	    this.el.setAttribute('height', this.height);
 
-	        document.body.appendChild(this.el);
+	    document.body.appendChild(this.el);
+	  }
+
+	  _createClass(CanvasOffscreenBuffer, [{
+	    key: 'size',
+	    value: function size(width, height) {
+	      if (width) {
+	        this.el.setAttribute('width', this.width = width);
+	      }
+	      if (height) {
+	        this.el.setAttribute('height', this.height = height);
+	      }
+	      return [Number(this.width), Number(this.height)];
+	    }
+	  }, {
+	    key: 'get2DContext',
+	    value: function get2DContext() {
+	      return this.el.getContext('2d');
+	    }
+	  }, {
+	    key: 'get3DContext',
+	    value: function get3DContext() {
+	      var options = arguments.length <= 0 || arguments[0] === undefined ? { preserveDrawingBuffer: true, premultipliedAlpha: false } : arguments[0];
+
+	      return this.el.getContext('webgl', options) || this.el.getContext('experimental-webgl', options);
 	    }
 
-	    _createClass(CanvasOffscreenBuffer, [{
-	        key: 'size',
-	        value: function size(width, height) {
-	            if (width) {
-	                this.el.setAttribute('width', this.width = width);
-	            }
-	            if (height) {
-	                this.el.setAttribute('height', this.height = height);
-	            }
-	            return [Number(this.width), Number(this.height)];
-	        }
-	    }, {
-	        key: 'get2DContext',
-	        value: function get2DContext() {
-	            return this.el.getContext("2d");
-	        }
-	    }, {
-	        key: 'get3DContext',
-	        value: function get3DContext() {
-	            var options = arguments.length <= 0 || arguments[0] === undefined ? { preserveDrawingBuffer: true, premultipliedAlpha: false } : arguments[0];
+	    // Remove canvas from DOM
 
-	            return this.el.getContext("webgl", options) || this.el.getContext("experimental-webgl", options);
-	        }
+	  }, {
+	    key: 'destroy',
+	    value: function destroy() {
+	      this.el.parentNode.removeChild(this.el);
+	      this.el = null;
+	      this.width = null;
+	      this.height = null;
+	    }
+	  }, {
+	    key: 'toDataURL',
+	    value: function toDataURL(type, encoderOptions) {
+	      return this.el.toDataURL(type, encoderOptions);
+	    }
+	  }]);
 
-	        // Remove canvas from DOM
-
-	    }, {
-	        key: 'destroy',
-	        value: function destroy() {
-	            this.el.parentNode.removeChild(this.el);
-	            this.el = null;
-	            this.width = null;
-	            this.height = null;
-	        }
-	    }, {
-	        key: 'toDataURL',
-	        value: function toDataURL(type, encoderOptions) {
-	            return this.el.toDataURL(type, encoderOptions);
-	        }
-	    }]);
-
-	    return CanvasOffscreenBuffer;
+	  return CanvasOffscreenBuffer;
 	}();
 
 	exports.default = CanvasOffscreenBuffer;
@@ -20612,7 +20640,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	exports.getSize = getSize;
 	exports.onSizeChange = onSizeChange;
@@ -20629,80 +20657,82 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var observableInstance = new _Observable2.default(),
-	    TOPIC = 'window.size.change',
-	    domSizes = new WeakMap(),
-	    sizeProperties = ['scrollWidth', 'scrollHeight', 'clientWidth', 'clientHeight'],
-	    windowListener = (0, _Debounce.debounce)(invalidateSize, 250);
+	/* eslint-disable no-use-before-define */
 
-	var timestamp = 0,
-	    listenerAttached = false;
+	var observableInstance = new _Observable2.default();
+	var TOPIC = 'window.size.change';
+	var domSizes = new WeakMap();
+	var sizeProperties = ['scrollWidth', 'scrollHeight', 'clientWidth', 'clientHeight'];
+	var windowListener = (0, _Debounce.debounce)(invalidateSize, 250);
+
+	var timestamp = 0;
+	var listenerAttached = false;
 
 	// ------ internal functions ------
 
 	function updateSize(domElement, cacheObj) {
-	    if (cacheObj.timestamp < timestamp) {
-	        sizeProperties.forEach(function (prop) {
-	            cacheObj[prop] = domElement[prop];
-	        });
-	        cacheObj.clientRect = domElement.getClientRects()[0];
-	    }
+	  if (cacheObj.timestamp < timestamp) {
+	    sizeProperties.forEach(function (prop) {
+	      cacheObj[prop] = domElement[prop];
+	    });
+	    cacheObj.clientRect = domElement.getClientRects()[0];
+	  }
 	}
 
 	// ------ New API ------
 
 	function getSize(domElement) {
-	    var cachedSize = domSizes.get(domElement);
-	    if (!cachedSize) {
-	        cachedSize = { timestamp: -1 };
-	        domSizes.set(domElement, cachedSize);
-	    }
-	    updateSize(domElement, cachedSize);
+	  var cachedSize = domSizes.get(domElement);
+	  if (!cachedSize) {
+	    cachedSize = { timestamp: -1 };
+	    domSizes.set(domElement, cachedSize);
+	  }
+	  updateSize(domElement, cachedSize);
 
-	    return cachedSize;
+	  return cachedSize;
 	}
 
 	function onSizeChange(callback) {
-	    return observableInstance.on(TOPIC, callback);
+	  return observableInstance.on(TOPIC, callback);
 	}
 
 	function triggerChange() {
-	    observableInstance.emit(TOPIC);
+	  observableInstance.emit(TOPIC);
 	}
 
 	function isListening() {
-	    return listenerAttached;
+	  return listenerAttached;
 	}
 
 	function startListening() {
-	    if (!listenerAttached) {
-	        window.addEventListener("resize", windowListener);
-	        listenerAttached = true;
-	    }
+	  if (!listenerAttached) {
+	    window.addEventListener('resize', windowListener);
+	    listenerAttached = true;
+	  }
 	}
 
 	function stopListening() {
-	    if (listenerAttached) {
-	        window.removeEventListener("resize", windowListener);
-	        listenerAttached = false;
-	    }
+	  if (listenerAttached) {
+	    window.removeEventListener('resize', windowListener);
+	    listenerAttached = false;
+	  }
 	}
 
 	// ------ internal functions ------
 
 	function invalidateSize() {
-	    timestamp++;
-	    triggerChange();
+	  timestamp++;
+	  triggerChange();
 	}
 
 	// Export
 	exports.default = {
-	    getSize: getSize,
-	    isListening: isListening,
-	    onSizeChange: onSizeChange,
-	    startListening: startListening,
-	    stopListening: stopListening,
-	    triggerChange: triggerChange
+	  getSize: getSize,
+	  isListening: isListening,
+	  onSizeChange: onSizeChange,
+	  startListening: startListening,
+	  stopListening: stopListening,
+	  triggerChange: triggerChange
 	};
 
 /***/ },
@@ -20712,7 +20742,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -20726,18 +20756,18 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var Observable = function () {
-	    function Observable() {
-	        _classCallCheck(this, Observable);
+	  function Observable() {
+	    _classCallCheck(this, Observable);
+	  }
+
+	  _createClass(Observable, [{
+	    key: 'destroy',
+	    value: function destroy() {
+	      this.off();
 	    }
+	  }]);
 
-	    _createClass(Observable, [{
-	        key: 'destroy',
-	        value: function destroy() {
-	            this.off();
-	        }
-	    }]);
-
-	    return Observable;
+	  return Observable;
 	}();
 
 	// Add Observer pattern using Monologue.js
@@ -32058,7 +32088,7 @@
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	exports.debounce = debounce;
 	// Returns a function, that, as long as it continues to be invoked, will not
@@ -32067,27 +32097,32 @@
 	// leading edge, instead of the trailing.
 
 	function debounce(func, wait, immediate) {
-	    var timeout;
-	    return function () {
-	        var context = this,
-	            args = arguments;
-	        var later = function later() {
-	            timeout = null;
-	            if (!immediate) {
-	                func.apply(context, args);
-	            }
-	        };
-	        var callNow = immediate && !timeout;
-	        clearTimeout(timeout);
-	        timeout = setTimeout(later, wait);
-	        if (callNow) {
-	            func.apply(context, args);
-	        }
+	  var _this = this;
+
+	  var timeout;
+	  return function () {
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+
+	    var context = _this;
+	    var later = function later() {
+	      timeout = null;
+	      if (!immediate) {
+	        func.apply(context, args);
+	      }
 	    };
+	    var callNow = immediate && !timeout;
+	    clearTimeout(timeout);
+	    timeout = setTimeout(later, wait);
+	    if (callNow) {
+	      func.apply(context, args);
+	    }
+	  };
 	}
 
 	exports.default = {
-	    debounce: debounce
+	  debounce: debounce
 	};
 
 /***/ },
@@ -32097,7 +32132,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -32119,261 +32154,274 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	// Module dependencies and constants
-	var Modifier = { NONE: 0, ALT: 1, META: 2, SHIFT: 4, CTRL: 8 },
+	var Modifier = {
+	  NONE: 0,
+	  ALT: 1,
+	  META: 2,
+	  SHIFT: 4,
+	  CTRL: 8
+	},
 	    eventTypeMapping = {
-	    'contextmenu': 'contextmenu',
-	    'mousewheel': 'zoom',
-	    'DOMMouseScroll': 'zoom'
+	  contextmenu: 'contextmenu',
+	  mousewheel: 'zoom',
+	  DOMMouseScroll: 'zoom'
 	},
 	    TIMEOUT_BETWEEN_ZOOM = 300;
 
 	var handlerCount = 0;
 
 	function getModifier(e) {
-	    var modifier = 0;
-	    if (e.srcEvent) {
-	        modifier += e.srcEvent.altKey ? Modifier.ALT : 0;
-	        modifier += e.srcEvent.ctrlKey ? Modifier.CTRL : 0;
-	        modifier += e.srcEvent.metaKey ? Modifier.META : 0;
-	        modifier += e.srcEvent.shiftKey ? Modifier.SHIFT : 0;
-	    }
+	  var modifier = 0;
+	  if (e.srcEvent) {
+	    modifier += e.srcEvent.altKey ? Modifier.ALT : 0;
+	    modifier += e.srcEvent.ctrlKey ? Modifier.CTRL : 0;
+	    modifier += e.srcEvent.metaKey ? Modifier.META : 0;
+	    modifier += e.srcEvent.shiftKey ? Modifier.SHIFT : 0;
+	  }
 
-	    return modifier;
+	  return modifier;
 	}
 
 	function getRelative(el, event) {
-	    return {
-	        x: event.center.x - (el.getClientRects()[0].x || el.getClientRects()[0].left),
-	        y: event.center.y - (el.getClientRects()[0].y || el.getClientRects()[0].top)
-	    };
+	  return {
+	    x: event.center.x - (el.getClientRects()[0].x || el.getClientRects()[0].left),
+	    y: event.center.y - (el.getClientRects()[0].y || el.getClientRects()[0].top)
+	  };
 	}
 
 	function broadcast(ctx, topic, event) {
-	    event.preventDefault();
+	  event.preventDefault();
 
-	    event.button = 0;
-	    event.topic = topic;
-	    event.modifier = ctx.modifier ? ctx.modifier : getModifier(event);
-	    event.relative = getRelative(ctx.el, event);
+	  event.button = 0;
+	  event.topic = topic;
+	  event.modifier = ctx.modifier ? ctx.modifier : getModifier(event);
+	  event.relative = getRelative(ctx.el, event);
 
-	    ctx.emit(topic, event);
+	  ctx.emit(topic, event);
 	}
 
 	var MouseHandler = function () {
-	    function MouseHandler(domElement, options) {
-	        var _this = this;
+	  function MouseHandler(domElement, options) {
+	    var _this = this;
 
-	        _classCallCheck(this, MouseHandler);
+	    _classCallCheck(this, MouseHandler);
 
-	        var defaultOptions = {
-	            pan: {
-	                threshold: 0
-	            },
-	            pinch: {
-	                threshold: 0
-	            }
-	        };
-	        options = (0, _merge2.default)(defaultOptions, options);
+	    var defaultOptions = {
+	      pan: {
+	        threshold: 0
+	      },
+	      pinch: {
+	        threshold: 0
+	      }
+	    };
+	    options = (0, _merge2.default)(defaultOptions, options);
 
-	        this.Modifier = Modifier;
+	    this.Modifier = Modifier;
 
-	        handlerCount++;
-	        this.id = 'mouse_handler_' + handlerCount;
-	        this.el = domElement;
-	        this.modifier = 0;
-	        this.toggleModifiers = [0];
-	        this.toggleModifierIdx = 0;
-	        this.toggleModifierEnable = false;
-	        this.hammer = new _hammerjs2.default(domElement);
-	        this.scrollInternal = {
-	            ts: +new Date(),
-	            deltaX: 0,
-	            deltaY: 0
-	        };
-	        this.finalZoomEvent = null;
-	        this.finalZoomTimerId = 0;
-	        this.triggerFinalZoomEvent = function () {
-	            if (_this.finalZoomEvent) {
-	                _this.finalZoomEvent.isFirst = false;
-	                _this.finalZoomEvent.isFinal = true;
-	            }
-	            _this.emit(_this.finalZoomEvent.topic, _this.finalZoomEvent);
-	        };
+	    this.id = 'mouse_handler_' + ++handlerCount;
+	    this.el = domElement;
+	    this.modifier = 0;
+	    this.toggleModifiers = [0];
+	    this.toggleModifierIdx = 0;
+	    this.toggleModifierEnable = false;
+	    this.hammer = new _hammerjs2.default(domElement);
+	    this.scrollInternal = {
+	      ts: +new Date(),
+	      deltaX: 0,
+	      deltaY: 0
+	    };
+	    this.finalZoomEvent = null;
+	    this.finalZoomTimerId = 0;
+	    this.triggerFinalZoomEvent = function () {
+	      if (_this.finalZoomEvent) {
+	        _this.finalZoomEvent.isFirst = false;
+	        _this.finalZoomEvent.isFinal = true;
+	      }
+	      _this.emit(_this.finalZoomEvent.topic, _this.finalZoomEvent);
+	    };
 
-	        this.domEventHandler = function (e) {
-	            e.preventDefault();
-	            var event = {
-	                srcEvent: e,
-	                button: e.type === 'contextmenu' ? 2 : 0,
-	                topic: eventTypeMapping[e.type],
+	    this.domEventHandler = function (e) {
+	      e.preventDefault();
+	      var event = {
+	        srcEvent: e,
+	        button: e.type === 'contextmenu' ? 2 : 0,
+	        topic: eventTypeMapping[e.type],
 
-	                center: {
-	                    x: e.clientX,
-	                    y: e.clientY
-	                },
-	                relative: {
-	                    x: e.clientX - (_this.el.getClientRects()[0].x || _this.el.getClientRects()[0].left),
-	                    y: e.clientY - (_this.el.getClientRects()[0].y || _this.el.getClientRects()[0].top)
-	                },
+	        center: {
+	          x: e.clientX,
+	          y: e.clientY
+	        },
+	        relative: {
+	          x: e.clientX - (_this.el.getClientRects()[0].x || _this.el.getClientRects()[0].left),
+	          y: e.clientY - (_this.el.getClientRects()[0].y || _this.el.getClientRects()[0].top)
+	        },
 
-	                scale: 1,
+	        scale: 1,
 
-	                deltaX: 0,
-	                deltaY: 0,
-	                delta: 0,
-	                deltaTime: 0,
+	        deltaX: 0,
+	        deltaY: 0,
+	        delta: 0,
+	        deltaTime: 0,
 
-	                velocityX: 0,
-	                velocityY: 0,
-	                velocity: 0,
+	        velocityX: 0,
+	        velocityY: 0,
+	        velocity: 0,
 
-	                isFirst: false,
-	                isFinal: false
-	            };
-	            event.modifier = _this.modifier ? _this.modifier : getModifier(event);
+	        isFirst: false,
+	        isFinal: false
+	      };
+	      event.modifier = _this.modifier ? _this.modifier : getModifier(event);
 
-	            // Handle scroll/zoom if any
-	            if (event.topic === 'zoom') {
-	                // Register final zoom
-	                clearTimeout(_this.finalZoomTimerId);
-	                _this.finalZoomTimerId = setTimeout(_this.triggerFinalZoomEvent, TIMEOUT_BETWEEN_ZOOM);
+	      // Handle scroll/zoom if any
+	      if (event.topic === 'zoom') {
+	        // Register final zoom
+	        clearTimeout(_this.finalZoomTimerId);
+	        _this.finalZoomTimerId = setTimeout(_this.triggerFinalZoomEvent, TIMEOUT_BETWEEN_ZOOM);
 
-	                var currentTime = +new Date();
-	                if (currentTime - _this.scrollInternal.ts > TIMEOUT_BETWEEN_ZOOM) {
-	                    _this.scrollInternal.deltaX = 0;
-	                    _this.scrollInternal.deltaY = 0;
-	                    event.isFirst = true;
-	                    event.isFinal = false;
-	                } else {
-	                    event.isFinal = false;
-	                }
+	        var currentTime = +new Date();
+	        if (currentTime - _this.scrollInternal.ts > TIMEOUT_BETWEEN_ZOOM) {
+	          _this.scrollInternal.deltaX = 0;
+	          _this.scrollInternal.deltaY = 0;
+	          event.isFirst = true;
+	          event.isFinal = false;
+	        } else {
+	          event.isFinal = false;
+	        }
 
-	                if (e.wheelDeltaX === undefined) {
-	                    event.zoom = _this.lastScrollZoomFactor;
-	                    _this.scrollInternal.deltaY -= e.detail * 2.0;
-	                } else {
-	                    event.zoom = _this.lastScrollZoomFactor;
-	                    _this.scrollInternal.deltaX += e.wheelDeltaX;
-	                    _this.scrollInternal.deltaY += e.wheelDeltaY;
-	                }
+	        if (e.wheelDeltaX === undefined) {
+	          event.zoom = _this.lastScrollZoomFactor;
+	          _this.scrollInternal.deltaY -= e.detail * 2.0;
+	        } else {
+	          event.zoom = _this.lastScrollZoomFactor;
+	          _this.scrollInternal.deltaX += e.wheelDeltaX;
+	          _this.scrollInternal.deltaY += e.wheelDeltaY;
+	        }
 
-	                event.deltaX = _this.scrollInternal.deltaX;
-	                event.deltaY = _this.scrollInternal.deltaY;
-	                event.scale = 1.0 + event.deltaY / _this.el.getClientRects()[0].height;
-	                event.scale = event.scale < 0.1 ? 0.1 : event.scale;
-	                _this.scrollInternal.ts = currentTime;
+	        event.deltaX = _this.scrollInternal.deltaX;
+	        event.deltaY = _this.scrollInternal.deltaY;
+	        event.scale = 1.0 + event.deltaY / _this.el.getClientRects()[0].height;
+	        event.scale = event.scale < 0.1 ? 0.1 : event.scale;
+	        _this.scrollInternal.ts = currentTime;
 
-	                _this.finalZoomEvent = event;
-	            }
+	        _this.finalZoomEvent = event;
+	      }
 
-	            _this.emit(event.topic, event);
-	            return false;
-	        };
+	      _this.emit(event.topic, event);
+	      return false;
+	    };
 
-	        // set hammer options
-	        this.hammer.get('pan').set(options.pan);
-	        this.hammer.get('pinch').set(options.pinch);
+	    // set hammer options
+	    this.hammer.get('pan').set(options.pan);
+	    this.hammer.get('pinch').set(options.pinch);
 
-	        // Listen to hammer events
-	        this.hammer.on('tap', function (e) {
-	            broadcast(_this, 'click', e);
+	    // Listen to hammer events
+	    this.hammer.on('tap', function (e) {
+	      broadcast(_this, 'click', e);
+	    });
+
+	    this.hammer.on('doubletap', function (e) {
+	      broadcast(_this, 'dblclick', e);
+	    });
+
+	    this.hammer.on('pan', function (e) {
+	      broadcast(_this, 'drag', e);
+	    });
+
+	    this.hammer.on('panstart', function (e) {
+	      e.isFirst = true;
+	      broadcast(_this, 'drag', e);
+	    });
+
+	    this.hammer.on('panend', function (e) {
+	      e.isFinal = true;
+	      broadcast(_this, 'drag', e);
+	    });
+
+	    this.hammer.on('pinch', function (e) {
+	      broadcast(_this, 'zoom', e);
+	    });
+
+	    this.hammer.on('pinchstart', function (e) {
+	      console.log('zoom start');
+	      e.isFirst = true;
+	      broadcast(_this, 'zoom', e);
+	    });
+
+	    this.hammer.on('pinchend', function (e) {
+	      e.isFinal = true;
+	      console.log('zoom end');
+	      broadcast(_this, 'zoom', e);
+	    });
+
+	    this.hammer.get('pinch').set({
+	      enable: true
+	    });
+
+	    this.hammer.on('press', function (e) {
+	      if (_this.toggleModifierEnable) {
+	        _this.toggleModifierIdx = (_this.toggleModifierIdx + 1) % _this.toggleModifiers.length;
+	        _this.modifier = _this.toggleModifiers[_this.toggleModifierIdx];
+
+	        e.relative = getRelative(_this.el, e);
+
+	        _this.emit('modifier.change', {
+	          value: _this.modifier,
+	          list: Modifier,
+	          event: e
 	        });
+	      }
+	    });
 
-	        this.hammer.on('doubletap', function (e) {
-	            broadcast(_this, 'dblclick', e);
-	        });
+	    // Manage events that are not captured by hammer
+	    this.el.addEventListener('contextmenu', this.domEventHandler);
+	    this.el.addEventListener('mousewheel', this.domEventHandler);
+	    this.el.addEventListener('DOMMouseScroll', this.domEventHandler);
+	  }
 
-	        this.hammer.on('pan', function (e) {
-	            broadcast(_this, 'drag', e);
-	        });
-
-	        this.hammer.on('panstart', function (e) {
-	            e.isFirst = true;
-	            broadcast(_this, 'drag', e);
-	        });
-
-	        this.hammer.on('panend', function (e) {
-	            e.isFinal = true;
-	            broadcast(_this, 'drag', e);
-	        });
-
-	        this.hammer.on('pinch', function (e) {
-	            broadcast(_this, 'zoom', e);
-	        });
-
-	        this.hammer.on('pinchstart', function (e) {
-	            console.log('zoom start');
-	            e.isFirst = true;
-	            broadcast(_this, 'zoom', e);
-	        });
-
-	        this.hammer.on('pinchend', function (e) {
-	            e.isFinal = true;
-	            console.log('zoom end');
-	            broadcast(_this, 'zoom', e);
-	        });
-
-	        this.hammer.get('pinch').set({ enable: true });
-
-	        this.hammer.on('press', function (e) {
-	            if (_this.toggleModifierEnable) {
-	                _this.toggleModifierIdx = (_this.toggleModifierIdx + 1) % _this.toggleModifiers.length;
-	                _this.modifier = _this.toggleModifiers[_this.toggleModifierIdx];
-
-	                e.relative = getRelative(_this.el, e);
-
-	                _this.emit('modifier.change', { value: _this.modifier, list: Modifier, event: e });
-	            }
-	        });
-
-	        // Manage events that are not captured by hammer
-	        this.el.addEventListener('contextmenu', this.domEventHandler);
-	        this.el.addEventListener('mousewheel', this.domEventHandler);
-	        this.el.addEventListener('DOMMouseScroll', this.domEventHandler);
+	  _createClass(MouseHandler, [{
+	    key: 'enablePinch',
+	    value: function enablePinch(enable) {
+	      this.hammer.get('pinch').set({
+	        enable: enable
+	      });
 	    }
+	  }, {
+	    key: 'setModifier',
+	    value: function setModifier(modifier) {
+	      this.modifier = modifier;
+	    }
+	  }, {
+	    key: 'toggleModifierOnPress',
+	    value: function toggleModifierOnPress(enable, modifiers) {
+	      this.toggleModifiers = modifiers;
+	      this.toggleModifierEnable = enable;
+	    }
+	  }, {
+	    key: 'attach',
+	    value: function attach(listeners) {
+	      var subscriptions = {};
+	      for (var key in listeners) {
+	        subscriptions[key] = this.on(key, listeners[key]);
+	      }
+	      return subscriptions;
+	    }
+	  }, {
+	    key: 'destroy',
+	    value: function destroy() {
+	      // Remove all listeners is any
+	      this.off();
 
-	    _createClass(MouseHandler, [{
-	        key: 'enablePinch',
-	        value: function enablePinch(enable) {
-	            this.hammer.get('pinch').set({ enable: enable });
-	        }
-	    }, {
-	        key: 'setModifier',
-	        value: function setModifier(modifier) {
-	            this.modifier = modifier;
-	        }
-	    }, {
-	        key: 'toggleModifierOnPress',
-	        value: function toggleModifierOnPress(enable, modifiers) {
-	            this.toggleModifiers = modifiers;
-	            this.toggleModifierEnable = enable;
-	        }
-	    }, {
-	        key: 'attach',
-	        value: function attach(listeners) {
-	            var subscriptions = {};
-	            for (var key in listeners) {
-	                subscriptions[key] = this.on(key, listeners[key]);
-	            }
-	            return subscriptions;
-	        }
-	    }, {
-	        key: 'destroy',
-	        value: function destroy() {
-	            // Remove all listeners is any
-	            this.off();
+	      // Release hammer
+	      this.hammer.destroy();
 
-	            // Release hammer
-	            this.hammer.destroy();
+	      // Remove events that are not captured by hammer
+	      this.el.removeEventListener('contextmenu', this.domEventHandler);
+	      this.el.removeEventListener('mousewheel', this.domEventHandler);
+	      this.el.removeEventListener('DOMMouseScroll', this.domEventHandler);
+	    }
+	  }]);
 
-	            // Remove events that are not captured by hammer
-	            this.el.removeEventListener('contextmenu', this.domEventHandler);
-	            this.el.removeEventListener('mousewheel', this.domEventHandler);
-	            this.el.removeEventListener('DOMMouseScroll', this.domEventHandler);
-	        }
-	    }]);
-
-	    return MouseHandler;
+	  return MouseHandler;
 	}();
 
 	// Add Observer pattern using Monologue.js

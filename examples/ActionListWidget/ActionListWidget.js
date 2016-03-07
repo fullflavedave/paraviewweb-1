@@ -19783,7 +19783,8 @@
 	          'data-name': item.name,
 	          'data-action': item.action || 'default',
 	          'data-user': item.data || '',
-	          onClick: _this.processClick },
+	          onClick: _this.processClick
+	        },
 	        _react2.default.createElement('i', { className: item.icon }),
 	        item.name
 	      ));

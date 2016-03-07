@@ -222,39 +222,48 @@
 	        _react2.default.createElement('canvas', { className: _ColorPickerWidget2.default.colorCanvas,
 	          ref: 'canvas',
 	          width: '1',
-	          height: '1' }),
-	        _react2.default.createElement('input', { className: _ColorPickerWidget2.default.colorRGB,
+	          height: '1'
+	        }),
+	        _react2.default.createElement('input', {
+	          className: _ColorPickerWidget2.default.colorRGB,
 	          type: 'number',
 	          min: '0',
 	          max: '255',
 	          value: this.state.color[0],
 	          'data-color-idx': '0',
-	          onChange: this.rgbColorChange }),
-	        _react2.default.createElement('input', { className: _ColorPickerWidget2.default.colorRGB,
+	          onChange: this.rgbColorChange
+	        }),
+	        _react2.default.createElement('input', {
+	          className: _ColorPickerWidget2.default.colorRGB,
 	          type: 'number',
 	          min: '0',
 	          max: '255',
 	          value: this.state.color[1],
 	          'data-color-idx': '1',
-	          onChange: this.rgbColorChange }),
-	        _react2.default.createElement('input', { className: _ColorPickerWidget2.default.colorRGB,
+	          onChange: this.rgbColorChange
+	        }),
+	        _react2.default.createElement('input', {
+	          className: _ColorPickerWidget2.default.colorRGB,
 	          type: 'number',
 	          min: '0',
 	          max: '255',
 	          value: this.state.color[2],
 	          'data-color-idx': '2',
-	          onChange: this.rgbColorChange })
+	          onChange: this.rgbColorChange
+	        })
 	      ),
 	      _react2.default.createElement(
 	        'div',
 	        { className: _ColorPickerWidget2.default.swatch },
-	        _react2.default.createElement('img', { ref: 'swatch',
+	        _react2.default.createElement('img', {
+	          ref: 'swatch',
 	          className: _ColorPickerWidget2.default.swatchImage,
 	          width: '100%',
 	          src: this.state.swatch,
 	          onClick: this.showColor,
 	          onMouseMove: this.showColor,
-	          onMouseLeave: this.showColor })
+	          onMouseLeave: this.showColor
+	        })
 	      )
 	    );
 	  }

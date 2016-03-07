@@ -291,7 +291,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -319,772 +319,792 @@
 	    CROSSHAIR_VISIBILITY_CHANGE_TOPIC = 'ProbeImageBuilder.crosshair.visibility.change',
 	    RENDER_METHOD_CHANGE_TOPIC = 'ProbeImageBuilder.render.change',
 	    dataMapping = {
-	    XY: {
-	        idx: [0, 1, 2],
-	        hasChange: function hasChange(probe, x, y, z) {
-	            return probe[2] !== z;
-	        },
-	        updateProbeValue: function updateProbeValue(self, x, y, z) {
-	            var width = self.metadata.dimensions[0],
-	                idx = x + y * width,
-	                array = self.scalars[self.getField()];
-
-	            if (array) {
-	                self.probeValue = array[idx];
-	            }
-	        }
+	  XY: {
+	    idx: [0, 1, 2],
+	    hasChange: function hasChange(probe, x, y, z) {
+	      return probe[2] !== z;
 	    },
-	    XZ: {
-	        idx: [0, 2, 1],
-	        hasChange: function hasChange(probe, x, y, z) {
-	            return probe[1] !== y;
-	        },
-	        updateProbeValue: function updateProbeValue(self, x, y, z) {
-	            var width = self.metadata.dimensions[0],
-	                idx = x + z * width,
-	                array = self.scalars[self.getField()];
+	    updateProbeValue: function updateProbeValue(self, x, y, z) {
+	      var width = self.metadata.dimensions[0],
+	          idx = x + y * width,
+	          array = self.scalars[self.getField()];
 
-	            if (array) {
-	                self.probeValue = array[idx];
-	            }
-	        }
-	    },
-	    ZY: {
-	        idx: [2, 1, 0],
-	        hasChange: function hasChange(probe, x, y, z) {
-	            return probe[0] !== x;
-	        },
-	        updateProbeValue: function updateProbeValue(self, x, y, z) {
-	            var width = self.metadata.dimensions[2],
-	                idx = z + y * width,
-	                array = self.scalars[self.getField()];
-
-	            if (array) {
-	                self.probeValue = array[idx];
-	            }
-	        }
+	      if (array) {
+	        self.probeValue = array[idx];
+	      }
 	    }
+	  },
+	  XZ: {
+	    idx: [0, 2, 1],
+	    hasChange: function hasChange(probe, x, y, z) {
+	      return probe[1] !== y;
+	    },
+	    updateProbeValue: function updateProbeValue(self, x, y, z) {
+	      var width = self.metadata.dimensions[0],
+	          idx = x + z * width,
+	          array = self.scalars[self.getField()];
+
+	      if (array) {
+	        self.probeValue = array[idx];
+	      }
+	    }
+	  },
+	  ZY: {
+	    idx: [2, 1, 0],
+	    hasChange: function hasChange(probe, x, y, z) {
+	      return probe[0] !== x;
+	    },
+	    updateProbeValue: function updateProbeValue(self, x, y, z) {
+	      var width = self.metadata.dimensions[2],
+	          idx = z + y * width,
+	          array = self.scalars[self.getField()];
+
+	      if (array) {
+	        self.probeValue = array[idx];
+	      }
+	    }
+	  }
 	};
 
 	var DataProberImageBuilder = function (_AbstractImageBuilder) {
-	    _inherits(DataProberImageBuilder, _AbstractImageBuilder);
+	  _inherits(DataProberImageBuilder, _AbstractImageBuilder);
 
-	    // ------------------------------------------------------------------------
+	  // ------------------------------------------------------------------------
 
-	    function DataProberImageBuilder(queryDataModel, lookupTableManager) {
-	        _classCallCheck(this, DataProberImageBuilder);
+	  function DataProberImageBuilder(queryDataModel, lookupTableManager) {
+	    _classCallCheck(this, DataProberImageBuilder);
 
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(DataProberImageBuilder).call(this, { queryDataModel: queryDataModel, lookupTableManager: lookupTableManager }));
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(DataProberImageBuilder).call(this, {
+	      queryDataModel: queryDataModel, lookupTableManager: lookupTableManager
+	    }));
 
-	        _this.metadata = queryDataModel.originalData.InSituDataProber || queryDataModel.originalData.DataProber;
-	        _this.fieldIndex = 0;
-	        _this.renderMethodMutable = true;
-	        _this.renderMethod = 'XY';
-	        _this.lastImageStack = null;
-	        _this.workImage = new Image();
-	        _this.triggerProbeLines = false;
-	        _this.broadcastCrossHair = true;
-	        _this.scalars = {};
-	        _this.probeValue = 0;
-	        _this.probeXYZ = [Math.floor(_this.metadata.dimensions[0] / 2), Math.floor(_this.metadata.dimensions[1] / 2), Math.floor(_this.metadata.dimensions[2] / 2)];
-	        _this.setField(_this.metadata.fields[_this.fieldIndex]);
-	        _this.pushMethod = 'pushToFrontAsBuffer';
+	    _this.metadata = queryDataModel.originalData.InSituDataProber || queryDataModel.originalData.DataProber;
+	    _this.fieldIndex = 0;
+	    _this.renderMethodMutable = true;
+	    _this.renderMethod = 'XY';
+	    _this.lastImageStack = null;
+	    _this.workImage = new Image();
+	    _this.triggerProbeLines = false;
+	    _this.broadcastCrossHair = true;
+	    _this.scalars = {};
+	    _this.probeValue = 0;
+	    _this.probeXYZ = [Math.floor(_this.metadata.dimensions[0] / 2), Math.floor(_this.metadata.dimensions[1] / 2), Math.floor(_this.metadata.dimensions[2] / 2)];
+	    _this.setField(_this.metadata.fields[_this.fieldIndex]);
+	    _this.pushMethod = 'pushToFrontAsBuffer';
 
-	        // Update LookupTableManager with data range
-	        _this.lookupTableManager.addFields(_this.metadata.ranges, _this.queryDataModel.originalData.LookupTables);
-	        _this.registerSubscription(_this.lookupTableManager.onActiveLookupTableChange(function (data, envelope) {
-	            if (_this.getField() !== data) {
-	                _this.setField(data);
-	                _this.update();
-	            }
-	        }));
+	    // Update LookupTableManager with data range
+	    _this.lookupTableManager.addFields(_this.metadata.ranges, _this.queryDataModel.originalData.LookupTables);
+	    _this.registerSubscription(_this.lookupTableManager.onActiveLookupTableChange(function (data, envelope) {
+	      if (_this.getField() !== data) {
+	        _this.setField(data);
+	        _this.update();
+	      }
+	    }));
 
-	        var maxSize = 0;
-	        for (var i = 0; i < 3; ++i) {
-	            var currentSize = _this.metadata.dimensions[i];
-	            maxSize = maxSize < currentSize ? currentSize : maxSize;
+	    var maxSize = 0;
+	    for (var i = 0; i < 3; ++i) {
+	      var currentSize = _this.metadata.dimensions[i];
+	      maxSize = maxSize < currentSize ? currentSize : maxSize;
+	    }
+	    _this.bgCanvas = new _CanvasOffscreenBuffer2.default(maxSize, maxSize);
+	    _this.registerObjectToFree(_this.bgCanvas);
+
+	    _this.fgCanvas = null;
+
+	    // Handle events
+	    _this.registerSubscription(queryDataModel.onDataChange(function (data, envelope) {
+	      _this.lastImageStack = data;
+
+	      var renderCallback = function renderCallback() {
+	        _this.render();
+	      };
+	      var canRenderNow = true;
+
+	      for (var key in data) {
+	        var img = data[key].image;
+	        img.addEventListener('load', renderCallback);
+	        canRenderNow = canRenderNow && img.complete;
+	      }
+
+	      if (canRenderNow) {
+	        _this.render();
+	      }
+	    }));
+
+	    _this.registerSubscription(_this.lookupTableManager.onChange(function (data, envelope) {
+	      _this.update();
+	    }));
+
+	    // Event handler
+	    var self = _this;
+	    _this.mouseListener = {
+	      click: function click(event, envelope) {
+	        if (!event.activeArea) {
+	          return false;
 	        }
-	        _this.bgCanvas = new _CanvasOffscreenBuffer2.default(maxSize, maxSize);
-	        _this.registerObjectToFree(_this.bgCanvas);
+	        var probe = [self.probeXYZ[0], self.probeXYZ[1], self.probeXYZ[2]],
+	            axisMap = dataMapping[self.renderMethod].idx,
+	            dimensions = self.metadata.dimensions,
+	            activeArea = event.activeArea;
 
-	        _this.fgCanvas = null;
+	        var xRatio = (event.relative.x - activeArea[0]) / activeArea[2],
+	            yRatio = (event.relative.y - activeArea[1]) / activeArea[3];
 
-	        // Handle events
-	        _this.registerSubscription(queryDataModel.onDataChange(function (data, envelope) {
-	            _this.lastImageStack = data;
+	        if (event.modifier) {
+	          return false;
+	        }
 
-	            var renderCallback = function renderCallback() {
-	                _this.render();
-	            };
-	            var canRenderNow = true;
+	        // Clamp bounds
+	        xRatio = xRatio < 0 ? 0 : xRatio > 1 ? 1 : xRatio;
+	        yRatio = yRatio < 0 ? 0 : yRatio > 1 ? 1 : yRatio;
 
-	            for (var key in data) {
-	                var img = data[key].image;
-	                img.addEventListener('load', renderCallback);
-	                canRenderNow = canRenderNow && img.complete;
-	            }
+	        var xPos = Math.floor(xRatio * dimensions[axisMap[0]]),
+	            yPos = Math.floor(yRatio * dimensions[axisMap[1]]);
 
-	            if (canRenderNow) {
-	                _this.render();
-	            }
-	        }));
+	        probe[axisMap[0]] = xPos;
+	        probe[axisMap[1]] = yPos;
 
-	        _this.registerSubscription(_this.lookupTableManager.onChange(function (data, envelope) {
-	            _this.update();
-	        }));
+	        self.setProbe(probe[0], probe[1], probe[2]);
 
-	        // Event handler
-	        var self = _this;
-	        _this.mouseListener = {
-	            click: function click(event, envelope) {
-	                if (!event.activeArea) {
-	                    return false;
-	                }
-	                var probe = [self.probeXYZ[0], self.probeXYZ[1], self.probeXYZ[2]],
-	                    axisMap = dataMapping[self.renderMethod].idx,
-	                    dimensions = self.metadata.dimensions,
-	                    activeArea = event.activeArea;
+	        return true;
+	      },
+	      drag: function drag(event, envelope) {
+	        if (!event.activeArea) {
+	          return false;
+	        }
+	        var probe = [self.probeXYZ[0], self.probeXYZ[1], self.probeXYZ[2]],
+	            axisMap = dataMapping[self.renderMethod].idx,
+	            dimensions = self.metadata.dimensions,
+	            activeArea = event.activeArea;
 
-	                var xRatio = (event.relative.x - activeArea[0]) / activeArea[2],
-	                    yRatio = (event.relative.y - activeArea[1]) / activeArea[3];
+	        var xRatio = (event.relative.x - activeArea[0]) / activeArea[2],
+	            yRatio = (event.relative.y - activeArea[1]) / activeArea[3];
 
-	                if (event.modifier) {
-	                    return false;
-	                }
+	        if (event.modifier) {
+	          return false;
+	        }
 
-	                // Clamp bounds
-	                xRatio = xRatio < 0 ? 0 : xRatio > 1 ? 1 : xRatio;
-	                yRatio = yRatio < 0 ? 0 : yRatio > 1 ? 1 : yRatio;
+	        // Clamp bounds
+	        xRatio = xRatio < 0 ? 0 : xRatio > 1 ? 1 : xRatio;
+	        yRatio = yRatio < 0 ? 0 : yRatio > 1 ? 1 : yRatio;
 
-	                var xPos = Math.floor(xRatio * dimensions[axisMap[0]]),
-	                    yPos = Math.floor(yRatio * dimensions[axisMap[1]]);
+	        var xPos = Math.floor(xRatio * dimensions[axisMap[0]]),
+	            yPos = Math.floor(yRatio * dimensions[axisMap[1]]);
 
-	                probe[axisMap[0]] = xPos;
-	                probe[axisMap[1]] = yPos;
+	        probe[axisMap[0]] = xPos;
+	        probe[axisMap[1]] = yPos;
 
-	                self.setProbe(probe[0], probe[1], probe[2]);
+	        self.setProbe(probe[0], probe[1], probe[2]);
 
-	                return true;
-	            },
-	            drag: function drag(event, envelope) {
-	                if (!event.activeArea) {
-	                    return false;
-	                }
-	                var probe = [self.probeXYZ[0], self.probeXYZ[1], self.probeXYZ[2]],
-	                    axisMap = dataMapping[self.renderMethod].idx,
-	                    dimensions = self.metadata.dimensions,
-	                    activeArea = event.activeArea;
+	        return true;
+	      },
+	      zoom: function zoom(event, envelope) {
+	        var probe = [self.probeXYZ[0], self.probeXYZ[1], self.probeXYZ[2]],
+	            axisMap = dataMapping[self.renderMethod].idx,
+	            idx = axisMap[2];
 
-	                var xRatio = (event.relative.x - activeArea[0]) / activeArea[2],
-	                    yRatio = (event.relative.y - activeArea[1]) / activeArea[3];
+	        if (event.modifier) {
+	          return false;
+	        }
 
-	                if (event.modifier) {
-	                    return false;
-	                }
+	        probe[idx] += event.deltaY < 0 ? -1 : 1;
 
-	                // Clamp bounds
-	                xRatio = xRatio < 0 ? 0 : xRatio > 1 ? 1 : xRatio;
-	                yRatio = yRatio < 0 ? 0 : yRatio > 1 ? 1 : yRatio;
+	        if (probe[idx] < 0) {
+	          probe[idx] = 0;
+	          return true;
+	        }
 
-	                var xPos = Math.floor(xRatio * dimensions[axisMap[0]]),
-	                    yPos = Math.floor(yRatio * dimensions[axisMap[1]]);
+	        if (probe[idx] >= self.metadata.dimensions[idx]) {
+	          probe[idx] = self.metadata.dimensions[idx] - 1;
+	          return true;
+	        }
 
-	                probe[axisMap[0]] = xPos;
-	                probe[axisMap[1]] = yPos;
+	        self.setProbe(probe[0], probe[1], probe[2]);
 
-	                self.setProbe(probe[0], probe[1], probe[2]);
+	        return true;
+	      }
+	    };
+	    return _this;
+	  }
 
-	                return true;
-	            },
-	            zoom: function zoom(event, envelope) {
-	                var probe = [self.probeXYZ[0], self.probeXYZ[1], self.probeXYZ[2]],
-	                    axisMap = dataMapping[self.renderMethod].idx,
-	                    idx = axisMap[2];
+	  // ------------------------------------------------------------------------
 
-	                if (event.modifier) {
-	                    return false;
-	                }
-
-	                probe[idx] += event.deltaY < 0 ? -1 : 1;
-
-	                if (probe[idx] < 0) {
-	                    probe[idx] = 0;
-	                    return true;
-	                }
-
-	                if (probe[idx] >= self.metadata.dimensions[idx]) {
-	                    probe[idx] = self.metadata.dimensions[idx] - 1;
-	                    return true;
-	                }
-
-	                self.setProbe(probe[0], probe[1], probe[2]);
-
-	                return true;
-	            }
-	        };
-	        return _this;
+	  _createClass(DataProberImageBuilder, [{
+	    key: 'setProbeLineNotification',
+	    value: function setProbeLineNotification(trigger) {
+	      this.triggerProbeLines = trigger;
 	    }
 
 	    // ------------------------------------------------------------------------
 
-	    _createClass(DataProberImageBuilder, [{
-	        key: 'setProbeLineNotification',
-	        value: function setProbeLineNotification(trigger) {
-	            this.triggerProbeLines = trigger;
+	  }, {
+	    key: 'getYOffset',
+	    value: function getYOffset(slice) {
+	      if (slice === undefined) {
+	        slice = this.probeXYZ[2];
+	      }
+	      return this.metadata.sprite_size - slice % this.metadata.sprite_size - 1;
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'getImage',
+	    value: function getImage(slice, callback) {
+	      if (slice === undefined) {
+	        slice = this.probeXYZ[2];
+	      }
+
+	      // Use the pre-loaded image
+	      var max = this.metadata.slices.length - 1;
+
+	      var idx = Math.floor(slice / this.metadata.sprite_size);
+	      idx = idx < 0 ? 0 : idx > max ? max : idx;
+
+	      var data = this.lastImageStack[this.metadata.slices[idx]],
+	          img = data.image;
+
+	      if (img) {
+	        if (img.complete) {
+	          callback.call(img);
+	        } else {
+	          img.addEventListener('load', callback);
+	        }
+	      } else {
+	        this.workImage.addEventListener('load', callback);
+	        this.workImage.src = data.url;
+	      }
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'setProbe',
+	    value: function setProbe(x, y, z) {
+	      var fn = dataMapping[this.renderMethod].hasChange,
+	          idx = dataMapping[this.renderMethod].idx,
+	          previousValue = [].concat(this.probeXYZ);
+
+	      // Allow x to be [x,y,z]
+	      if (Array.isArray(x)) {
+	        z = x[2];
+	        y = x[1];
+	        x = x[0];
+	      }
+
+	      if (fn(this.probeXYZ, x, y, z)) {
+	        this.probeXYZ = [x, y, z];
+	        this.render();
+	      } else {
+	        this.probeXYZ = [x, y, z];
+	        var dimensions = this.metadata.dimensions,
+	            spacing = this.metadata.spacing;
+
+	        dataMapping[this.renderMethod].updateProbeValue(this, x, y, z);
+	        this.pushToFront(dimensions[idx[0]], dimensions[idx[1]], spacing[idx[0]], spacing[idx[1]], this.probeXYZ[idx[0]], this.probeXYZ[idx[1]]);
+	      }
+
+	      if (previousValue[0] === x && previousValue[1] === y && previousValue[2] === z) {
+	        return; // No change detected
+	      }
+
+	      // Let other know
+	      this.emit(PROBE_CHANGE_TOPIC, [x, y, z]);
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'getProbe',
+	    value: function getProbe() {
+	      return this.probeXYZ;
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'getFieldValueAtProbeLocation',
+	    value: function getFieldValueAtProbeLocation() {
+	      return this.probeValue;
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'getProbeLine',
+	    value: function getProbeLine(axisIdx) {
+	      var fieldData = {
+	        name: this.getField(),
+	        data: []
+	      },
+	          probeData = {
+	        xRange: [0, 100],
+	        fields: [fieldData]
+	      },
+	          axisToProbe = -1,
+	          axisMapping = dataMapping[this.renderMethod].idx;
+
+	      for (var i = 0; i < 2; i++) {
+	        if (axisIdx === axisMapping[i]) {
+	          axisToProbe = i;
+	        }
+	      }
+
+	      if (axisToProbe !== -1) {
+	        var scalarPlan = this.scalars[fieldData.name],
+	            dimensions = this.metadata.dimensions,
+	            width = dimensions[axisMapping[0]],
+	            height = dimensions[axisMapping[1]],
+	            deltaStep = axisToProbe === 0 ? 1 : width,
+	            offset = axisToProbe === 0 ? this.probeXYZ[axisMapping[1]] * width : this.probeXYZ[axisMapping[0]],
+	            size = axisToProbe === 0 ? width : height;
+
+	        if (this.metadata.origin && this.metadata.spacing) {
+	          probeData.xRange[0] = this.metadata.origin[axisIdx];
+	          probeData.xRange[1] = this.metadata.origin[axisIdx] + this.metadata.spacing[axisIdx] * dimensions[axisIdx];
 	        }
 
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'getYOffset',
-	        value: function getYOffset(slice) {
-	            if (slice === undefined) {
-	                slice = this.probeXYZ[2];
-	            }
-	            return this.metadata.sprite_size - slice % this.metadata.sprite_size - 1;
+	        if (scalarPlan) {
+	          for (var j = 0; j < size; j++) {
+	            fieldData.data.push(scalarPlan[offset + j * deltaStep]);
+	          }
 	        }
+	      }
 
-	        // ------------------------------------------------------------------------
+	      return probeData;
+	    }
 
-	    }, {
-	        key: 'getImage',
-	        value: function getImage(slice, callback) {
-	            if (slice === undefined) {
-	                slice = this.probeXYZ[2];
-	            }
+	    // ------------------------------------------------------------------------
 
-	            // Use the pre-loaded image
-	            var max = this.metadata.slices.length - 1;
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      if (!this.lastImageStack) {
+	        return;
+	      }
 
-	            var idx = Math.floor(slice / this.metadata.sprite_size);
-	            idx = idx < 0 ? 0 : idx > max ? max : idx;
+	      this['render' + this.renderMethod]();
 
-	            var data = this.lastImageStack[this.metadata.slices[idx]],
-	                img = data.image;
+	      // Update probe value
+	      dataMapping[this.renderMethod].updateProbeValue(this, this.probeXYZ[0], this.probeXYZ[1], this.probeXYZ[2]);
+	    }
 
-	            if (img) {
-	                if (img.complete) {
-	                    callback.call(img);
-	                } else {
-	                    img.addEventListener('load', callback);
-	                }
-	            } else {
-	                this.workImage.addEventListener('load', callback);
-	                this.workImage.src = data.url;
-	            }
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'pushToFront',
+	    value: function pushToFront(width, height, scaleX, scaleY, lineX, lineY) {
+	      this[this.pushMethod](width, height, scaleX, scaleY, lineX, lineY);
+
+	      if (this.triggerProbeLines) {
+	        this.emit(PROBE_LINE_READY_TOPIC, {
+	          x: this.getProbeLine(0),
+	          y: this.getProbeLine(1),
+	          z: this.getProbeLine(2)
+	        });
+	      }
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'pushToFrontAsImage',
+	    value: function pushToFrontAsImage(width, height, scaleX, scaleY, lineX, lineY) {
+	      var destWidth = Math.floor(width * scaleX),
+	          destHeight = Math.floor(height * scaleY),
+	          ctx = null;
+
+	      // Make sure we have a foreground buffer
+	      if (this.fgCanvas) {
+	        this.fgCanvas.size(destWidth, destHeight);
+	      } else {
+	        this.fgCanvas = new _CanvasOffscreenBuffer2.default(destWidth, destHeight);
+	      }
+
+	      ctx = this.fgCanvas.get2DContext();
+	      ctx.drawImage(this.bgCanvas.el, 0, 0, width, height, 0, 0, destWidth, destHeight);
+
+	      // Draw cross hair probe position
+	      ctx.beginPath();
+	      ctx.moveTo(lineX * scaleX, 0);
+	      ctx.lineTo(lineX * scaleX, destHeight);
+	      ctx.moveTo(0, lineY * scaleY);
+	      ctx.lineTo(destWidth, lineY * scaleY);
+	      ctx.strokeStyle = '#ffffff';
+	      ctx.lineWidth = 1;
+	      ctx.stroke();
+
+	      var readyImage = {
+	        url: this.fgCanvas.toDataURL(),
+	        type: this.renderMethod,
+	        builder: this
+	      };
+
+	      // Let everyone know the image is ready
+	      this.imageReady(readyImage);
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'pushToFrontAsBuffer',
+	    value: function pushToFrontAsBuffer(width, height, scaleX, scaleY, lineX, lineY) {
+	      var destWidth = Math.floor(width * scaleX),
+	          destHeight = Math.floor(height * scaleY);
+
+	      var readyImage = {
+	        canvas: this.bgCanvas.el,
+	        imageData: this.bgCanvas.el.getContext('2d').getImageData(0, 0, width, height),
+	        area: [0, 0, width, height],
+	        outputSize: [destWidth, destHeight],
+	        type: this.renderMethod,
+	        builder: this
+	      };
+
+	      if (this.broadcastCrossHair) {
+	        readyImage.crosshair = [lineX, lineY];
+	      }
+
+	      // Let everyone know the image is ready
+	      this.imageReady(readyImage);
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'renderXY',
+	    value: function renderXY() {
+	      var _this2 = this;
+
+	      var self = this,
+	          ctx = this.bgCanvas.get2DContext(),
+	          offset = this.getYOffset(),
+	          xyz = this.probeXYZ,
+	          dimensions = this.metadata.dimensions,
+	          spacing = this.metadata.spacing;
+
+	      this.getImage(this.probeXYZ[2], function () {
+	        var image = _this2;
+	        ctx.drawImage(image, 0, dimensions[1] * offset, dimensions[0], dimensions[1], 0, 0, dimensions[0], dimensions[1]);
+
+	        self.extractNumericalValues(dimensions[0], dimensions[1]);
+	        self.applyLookupTable(dimensions[0], dimensions[1]);
+	        self.pushToFront(dimensions[0], dimensions[1], spacing[0], spacing[1], xyz[0], xyz[1]);
+	      });
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'renderZY',
+	    value: function renderZY() {
+	      var self = this,
+	          ctx = this.bgCanvas.get2DContext(),
+	          xyz = this.probeXYZ,
+	          dimensions = this.metadata.dimensions,
+	          activeColumn = dimensions[2],
+	          spacing = this.metadata.spacing;
+
+	      function processLine() {
+	        var offset = self.getYOffset(activeColumn),
+	            image = this;
+
+	        ctx.drawImage(image, xyz[0], dimensions[1] * offset, 1, dimensions[1], activeColumn, 0, 1, dimensions[1]);
+
+	        if (activeColumn--) {
+	          self.getImage(activeColumn, processLine);
+	        } else {
+	          // Rendering is done
+	          self.extractNumericalValues(dimensions[2], dimensions[1]);
+	          self.applyLookupTable(dimensions[2], dimensions[1]);
+	          self.pushToFront(dimensions[2], dimensions[1], spacing[2], spacing[1], xyz[2], xyz[1]);
 	        }
+	      }
 
-	        // ------------------------------------------------------------------------
+	      if (activeColumn--) {
+	        self.getImage(activeColumn, processLine);
+	      }
+	    }
 
-	    }, {
-	        key: 'setProbe',
-	        value: function setProbe(x, y, z) {
-	            var fn = dataMapping[this.renderMethod].hasChange,
-	                idx = dataMapping[this.renderMethod].idx,
-	                previousValue = [].concat(this.probeXYZ);
+	    // ------------------------------------------------------------------------
 
-	            // Allow x to be [x,y,z]
-	            if (Array.isArray(x)) {
-	                z = x[2];
-	                y = x[1];
-	                x = x[0];
-	            }
+	  }, {
+	    key: 'renderXZ',
+	    value: function renderXZ() {
+	      var self = this,
+	          ctx = this.bgCanvas.get2DContext(),
+	          xyz = this.probeXYZ,
+	          dimensions = this.metadata.dimensions,
+	          spacing = this.metadata.spacing,
+	          activeLine = dimensions[2];
 
-	            if (fn(this.probeXYZ, x, y, z)) {
-	                this.probeXYZ = [x, y, z];
-	                this.render();
-	            } else {
-	                this.probeXYZ = [x, y, z];
-	                var dimensions = this.metadata.dimensions,
-	                    spacing = this.metadata.spacing;
+	      function processLine() {
+	        var offset = self.getYOffset(activeLine),
+	            image = this;
 
-	                dataMapping[this.renderMethod].updateProbeValue(this, x, y, z);
-	                this.pushToFront(dimensions[idx[0]], dimensions[idx[1]], spacing[idx[0]], spacing[idx[1]], this.probeXYZ[idx[0]], this.probeXYZ[idx[1]]);
-	            }
+	        ctx.drawImage(image, 0, dimensions[1] * offset + xyz[1], dimensions[0], 1, 0, activeLine, dimensions[0], 1);
 
-	            if (previousValue[0] === x && previousValue[1] === y && previousValue[2] === z) {
-	                return; // No change detected
-	            }
-
-	            // Let other know
-	            this.emit(PROBE_CHANGE_TOPIC, [x, y, z]);
+	        if (activeLine--) {
+	          self.getImage(activeLine, processLine);
+	        } else {
+	          // Rendering is done
+	          self.extractNumericalValues(dimensions[0], dimensions[2]);
+	          self.applyLookupTable(dimensions[0], dimensions[2]);
+	          self.pushToFront(dimensions[0], dimensions[2], spacing[0], spacing[2], xyz[0], xyz[2]);
 	        }
+	      }
 
-	        // ------------------------------------------------------------------------
+	      if (activeLine--) {
+	        self.getImage(activeLine, processLine);
+	      }
+	    }
 
-	    }, {
-	        key: 'getProbe',
-	        value: function getProbe() {
-	            return this.probeXYZ;
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'isCrossHairEnabled',
+	    value: function isCrossHairEnabled() {
+	      return this.broadcastCrossHair;
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'setCrossHairEnable',
+	    value: function setCrossHairEnable(useCrossHair) {
+	      if (this.broadcastCrossHair !== useCrossHair) {
+	        this.broadcastCrossHair = useCrossHair;
+	        this.emit(CROSSHAIR_VISIBILITY_CHANGE_TOPIC, useCrossHair);
+	        this.setProbe(this.probeXYZ[0], this.probeXYZ[1], this.probeXYZ[2]);
+	      }
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'extractNumericalValues',
+	    value: function extractNumericalValues(width, height) {
+	      var ctx = this.bgCanvas.get2DContext(),
+	          fieldName = this.getField(),
+	          pixels = ctx.getImageData(0, 0, width, height),
+	          pixBuffer = pixels.data,
+	          size = pixBuffer.length,
+	          idx = 0,
+	          fieldRange = this.metadata.ranges[fieldName],
+	          delta = fieldRange[1] - fieldRange[0],
+	          arrayIdx = 0,
+	          array = new Float32Array(width * height);
+
+	      while (idx < size) {
+	        var value = (pixBuffer[idx] + 256 * pixBuffer[idx + 1] + 65536 * pixBuffer[idx + 2]) / 16777216 * delta + fieldRange[0];
+	        array[arrayIdx++] = value;
+
+	        // Move to next pixel
+	        idx += 4;
+	      }
+	      this.scalars[fieldName] = array;
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'applyLookupTable',
+	    value: function applyLookupTable(width, height) {
+	      var ctx = this.bgCanvas.get2DContext(),
+	          fieldName = this.getField(),
+	          lut = this.lookupTableManager.getLookupTable(fieldName),
+	          pixels = ctx.getImageData(0, 0, width, height),
+	          pixBuffer = pixels.data,
+	          size = pixBuffer.length,
+	          idx = 0,
+	          arrayIdx = 0,
+	          array = this.scalars[fieldName];
+
+	      if (lut) {
+	        while (idx < size) {
+	          var color = lut.getColor(array[arrayIdx++]);
+
+	          pixBuffer[idx] = Math.floor(255 * color[0]);
+	          pixBuffer[idx + 1] = Math.floor(255 * color[1]);
+	          pixBuffer[idx + 2] = Math.floor(255 * color[2]);
+
+	          // Move to next pixel
+	          idx += 4;
 	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'getFieldValueAtProbeLocation',
-	        value: function getFieldValueAtProbeLocation() {
-	            return this.probeValue;
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'getProbeLine',
-	        value: function getProbeLine(axisIdx) {
-	            var fieldData = { name: this.getField(), data: [] },
-	                probeData = { xRange: [0, 100], fields: [fieldData] },
-	                axisToProbe = -1,
-	                axisMapping = dataMapping[this.renderMethod].idx;
-
-	            for (var i = 0; i < 2; i++) {
-	                if (axisIdx === axisMapping[i]) {
-	                    axisToProbe = i;
-	                }
-	            }
-
-	            if (axisToProbe !== -1) {
-	                var scalarPlan = this.scalars[fieldData.name],
-	                    dimensions = this.metadata.dimensions,
-	                    width = dimensions[axisMapping[0]],
-	                    height = dimensions[axisMapping[1]],
-	                    deltaStep = axisToProbe === 0 ? 1 : width,
-	                    offset = axisToProbe === 0 ? this.probeXYZ[axisMapping[1]] * width : this.probeXYZ[axisMapping[0]],
-	                    size = axisToProbe === 0 ? width : height;
-
-	                if (this.metadata.origin && this.metadata.spacing) {
-	                    probeData.xRange[0] = this.metadata.origin[axisIdx];
-	                    probeData.xRange[1] = this.metadata.origin[axisIdx] + this.metadata.spacing[axisIdx] * dimensions[axisIdx];
-	                }
-
-	                if (scalarPlan) {
-	                    for (var j = 0; j < size; j++) {
-	                        fieldData.data.push(scalarPlan[offset + j * deltaStep]);
-	                    }
-	                }
-	            }
-
-	            return probeData;
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            if (!this.lastImageStack) {
-	                return;
-	            }
-
-	            this['render' + this.renderMethod]();
-
-	            // Update probe value
-	            dataMapping[this.renderMethod].updateProbeValue(this, this.probeXYZ[0], this.probeXYZ[1], this.probeXYZ[2]);
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'pushToFront',
-	        value: function pushToFront(width, height, scaleX, scaleY, lineX, lineY) {
-	            this[this.pushMethod](width, height, scaleX, scaleY, lineX, lineY);
-
-	            if (this.triggerProbeLines) {
-	                this.emit(PROBE_LINE_READY_TOPIC, { x: this.getProbeLine(0), y: this.getProbeLine(1), z: this.getProbeLine(2) });
-	            }
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'pushToFrontAsImage',
-	        value: function pushToFrontAsImage(width, height, scaleX, scaleY, lineX, lineY) {
-	            var destWidth = Math.floor(width * scaleX),
-	                destHeight = Math.floor(height * scaleY),
-	                ctx = null;
-
-	            // Make sure we have a foreground buffer
-	            if (this.fgCanvas) {
-	                this.fgCanvas.size(destWidth, destHeight);
-	            } else {
-	                this.fgCanvas = new _CanvasOffscreenBuffer2.default(destWidth, destHeight);
-	            }
-
-	            ctx = this.fgCanvas.get2DContext();
-	            ctx.drawImage(this.bgCanvas.el, 0, 0, width, height, 0, 0, destWidth, destHeight);
-
-	            // Draw cross hair probe position
-	            ctx.beginPath();
-	            ctx.moveTo(lineX * scaleX, 0);
-	            ctx.lineTo(lineX * scaleX, destHeight);
-	            ctx.moveTo(0, lineY * scaleY);
-	            ctx.lineTo(destWidth, lineY * scaleY);
-	            ctx.strokeStyle = '#ffffff';
-	            ctx.lineWidth = 1;
-	            ctx.stroke();
-
-	            var readyImage = { url: this.fgCanvas.toDataURL(), type: this.renderMethod, builder: this };
-
-	            // Let everyone know the image is ready
-	            this.imageReady(readyImage);
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'pushToFrontAsBuffer',
-	        value: function pushToFrontAsBuffer(width, height, scaleX, scaleY, lineX, lineY) {
-	            var destWidth = Math.floor(width * scaleX),
-	                destHeight = Math.floor(height * scaleY);
-
-	            var readyImage = {
-	                canvas: this.bgCanvas.el,
-	                imageData: this.bgCanvas.el.getContext('2d').getImageData(0, 0, width, height),
-	                area: [0, 0, width, height],
-	                outputSize: [destWidth, destHeight],
-	                type: this.renderMethod,
-	                builder: this
-	            };
-
-	            if (this.broadcastCrossHair) {
-	                readyImage.crosshair = [lineX, lineY];
-	            }
-
-	            // Let everyone know the image is ready
-	            this.imageReady(readyImage);
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'renderXY',
-	        value: function renderXY() {
-	            var self = this,
-	                ctx = this.bgCanvas.get2DContext(),
-	                offset = this.getYOffset(),
-	                xyz = this.probeXYZ,
-	                dimensions = this.metadata.dimensions,
-	                spacing = this.metadata.spacing;
-
-	            this.getImage(this.probeXYZ[2], function () {
-	                var image = this;
-	                ctx.drawImage(image, 0, dimensions[1] * offset, dimensions[0], dimensions[1], 0, 0, dimensions[0], dimensions[1]);
-
-	                self.extractNumericalValues(dimensions[0], dimensions[1]);
-	                self.applyLookupTable(dimensions[0], dimensions[1]);
-	                self.pushToFront(dimensions[0], dimensions[1], spacing[0], spacing[1], xyz[0], xyz[1]);
-	            });
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'renderZY',
-	        value: function renderZY() {
-	            var self = this,
-	                ctx = this.bgCanvas.get2DContext(),
-	                xyz = this.probeXYZ,
-	                dimensions = this.metadata.dimensions,
-	                activeColumn = dimensions[2],
-	                spacing = this.metadata.spacing;
-
-	            function processLine() {
-	                var offset = self.getYOffset(activeColumn),
-	                    image = this;
-
-	                ctx.drawImage(image, xyz[0], dimensions[1] * offset, 1, dimensions[1], activeColumn, 0, 1, dimensions[1]);
-
-	                if (activeColumn--) {
-	                    self.getImage(activeColumn, processLine);
-	                } else {
-	                    // Rendering is done
-	                    self.extractNumericalValues(dimensions[2], dimensions[1]);
-	                    self.applyLookupTable(dimensions[2], dimensions[1]);
-	                    self.pushToFront(dimensions[2], dimensions[1], spacing[2], spacing[1], xyz[2], xyz[1]);
-	                }
-	            }
-
-	            if (activeColumn--) {
-	                self.getImage(activeColumn, processLine);
-	            }
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'renderXZ',
-	        value: function renderXZ() {
-	            var self = this,
-	                ctx = this.bgCanvas.get2DContext(),
-	                xyz = this.probeXYZ,
-	                dimensions = this.metadata.dimensions,
-	                spacing = this.metadata.spacing,
-	                activeLine = dimensions[2];
-
-	            function processLine() {
-	                var offset = self.getYOffset(activeLine),
-	                    image = this;
-
-	                ctx.drawImage(image, 0, dimensions[1] * offset + xyz[1], dimensions[0], 1, 0, activeLine, dimensions[0], 1);
-
-	                if (activeLine--) {
-	                    self.getImage(activeLine, processLine);
-	                } else {
-	                    // Rendering is done
-	                    self.extractNumericalValues(dimensions[0], dimensions[2]);
-	                    self.applyLookupTable(dimensions[0], dimensions[2]);
-	                    self.pushToFront(dimensions[0], dimensions[2], spacing[0], spacing[2], xyz[0], xyz[2]);
-	                }
-	            }
-
-	            if (activeLine--) {
-	                self.getImage(activeLine, processLine);
-	            }
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'isCrossHairEnabled',
-	        value: function isCrossHairEnabled() {
-	            return this.broadcastCrossHair;
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'setCrossHairEnable',
-	        value: function setCrossHairEnable(useCrossHair) {
-	            if (this.broadcastCrossHair !== useCrossHair) {
-	                this.broadcastCrossHair = useCrossHair;
-	                this.emit(CROSSHAIR_VISIBILITY_CHANGE_TOPIC, useCrossHair);
-	                this.setProbe(this.probeXYZ[0], this.probeXYZ[1], this.probeXYZ[2]);
-	            }
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'extractNumericalValues',
-	        value: function extractNumericalValues(width, height) {
-	            var ctx = this.bgCanvas.get2DContext(),
-	                fieldName = this.getField(),
-	                pixels = ctx.getImageData(0, 0, width, height),
-	                pixBuffer = pixels.data,
-	                size = pixBuffer.length,
-	                idx = 0,
-	                fieldRange = this.metadata.ranges[fieldName],
-	                delta = fieldRange[1] - fieldRange[0],
-	                arrayIdx = 0,
-	                array = new Float32Array(width * height);
-
-	            while (idx < size) {
-	                var value = (pixBuffer[idx] + 256 * pixBuffer[idx + 1] + 65536 * pixBuffer[idx + 2]) / 16777216 * delta + fieldRange[0];
-	                array[arrayIdx++] = value;
-
-	                // Move to next pixel
-	                idx += 4;
-	            }
-	            this.scalars[fieldName] = array;
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'applyLookupTable',
-	        value: function applyLookupTable(width, height) {
-	            var ctx = this.bgCanvas.get2DContext(),
-	                fieldName = this.getField(),
-	                lut = this.lookupTableManager.getLookupTable(fieldName),
-	                pixels = ctx.getImageData(0, 0, width, height),
-	                pixBuffer = pixels.data,
-	                size = pixBuffer.length,
-	                idx = 0,
-	                arrayIdx = 0,
-	                array = this.scalars[fieldName];
-
-	            if (lut) {
-	                while (idx < size) {
-	                    var color = lut.getColor(array[arrayIdx++]);
-
-	                    pixBuffer[idx] = Math.floor(255 * color[0]);
-	                    pixBuffer[idx + 1] = Math.floor(255 * color[1]);
-	                    pixBuffer[idx + 2] = Math.floor(255 * color[2]);
-
-	                    // Move to next pixel
-	                    idx += 4;
-	                }
-	                ctx.putImageData(pixels, 0, 0);
-	            }
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'setField',
-	        value: function setField(fieldName) {
-	            this.queryDataModel.setValue('field', fieldName);
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'getField',
-	        value: function getField() {
-	            return this.queryDataModel.getValue('field');
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'getFields',
-	        value: function getFields() {
-	            return this.metadata.fields;
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'setRenderMethod',
-	        value: function setRenderMethod(renderMethod) {
-	            if (this.renderMethodMutable && this.renderMethod !== renderMethod) {
-	                this.renderMethod = renderMethod;
-	                this.render();
-	                this.emit(RENDER_METHOD_CHANGE_TOPIC, renderMethod);
-	            }
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'getRenderMethod',
-	        value: function getRenderMethod() {
-	            return this.renderMethod;
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'getRenderMethods',
-	        value: function getRenderMethods() {
-	            return ['XY', 'ZY', 'XZ'];
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'isRenderMethodMutable',
-	        value: function isRenderMethodMutable() {
-	            return this.renderMethodMutable;
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'setRenderMethodImutable',
-	        value: function setRenderMethodImutable() {
-	            this.renderMethodMutable = false;
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'setRenderMethodMutable',
-	        value: function setRenderMethodMutable() {
-	            this.renderMethodMutable = true;
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'getListeners',
-	        value: function getListeners() {
-	            return this.mouseListener;
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'onProbeLineReady',
-	        value: function onProbeLineReady(callback) {
-	            return this.on(PROBE_LINE_READY_TOPIC, callback);
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'onProbeChange',
-	        value: function onProbeChange(callback) {
-	            return this.on(PROBE_CHANGE_TOPIC, callback);
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'onRenderMethodChange',
-	        value: function onRenderMethodChange(callback) {
-	            return this.on(RENDER_METHOD_CHANGE_TOPIC, callback);
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'onCrosshairVisibilityChange',
-	        value: function onCrosshairVisibilityChange(callback) {
-	            return this.on(CROSSHAIR_VISIBILITY_CHANGE_TOPIC, callback);
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'destroy',
-	        value: function destroy() {
-	            _get(Object.getPrototypeOf(DataProberImageBuilder.prototype), 'destroy', this).call(this);
-
-	            this.off();
-
-	            this.bgCanvas = null;
-	            this.workImage = null;
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'getControlWidgets',
-	        value: function getControlWidgets() {
-	            var _getControlModels = this.getControlModels();
-
-	            var lookupTable = _getControlModels.lookupTable;
-	            var originalRange = _getControlModels.originalRange;
-	            var lookupTableManager = _getControlModels.lookupTableManager;
-	            var queryDataModel = _getControlModels.queryDataModel;
-	            var model = this;
-	            return [{
-	                name: "LookupTableManagerWidget",
-	                lookupTable: lookupTable, originalRange: originalRange, lookupTableManager: lookupTableManager
-	            }, {
-	                name: "ProbeControl",
-	                model: model
-	            }, {
-	                name: "QueryDataModelWidget",
-	                queryDataModel: queryDataModel
-	            }];
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'getControlModels',
-	        value: function getControlModels() {
-	            return {
-	                queryDataModel: this.queryDataModel,
-	                lookupTable: this.lookupTableManager.getLookupTable(this.getField()),
-	                originalRange: this.metadata.ranges[this.getField()],
-	                lookupTableManager: this.lookupTableManager
-	            };
-	        }
-	    }]);
-
-	    return DataProberImageBuilder;
+	        ctx.putImageData(pixels, 0, 0);
+	      }
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'setField',
+	    value: function setField(fieldName) {
+	      this.queryDataModel.setValue('field', fieldName);
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'getField',
+	    value: function getField() {
+	      return this.queryDataModel.getValue('field');
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'getFields',
+	    value: function getFields() {
+	      return this.metadata.fields;
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'setRenderMethod',
+	    value: function setRenderMethod(renderMethod) {
+	      if (this.renderMethodMutable && this.renderMethod !== renderMethod) {
+	        this.renderMethod = renderMethod;
+	        this.render();
+	        this.emit(RENDER_METHOD_CHANGE_TOPIC, renderMethod);
+	      }
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'getRenderMethod',
+	    value: function getRenderMethod() {
+	      return this.renderMethod;
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'getRenderMethods',
+	    value: function getRenderMethods() {
+	      return ['XY', 'ZY', 'XZ'];
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'isRenderMethodMutable',
+	    value: function isRenderMethodMutable() {
+	      return this.renderMethodMutable;
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'setRenderMethodImutable',
+	    value: function setRenderMethodImutable() {
+	      this.renderMethodMutable = false;
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'setRenderMethodMutable',
+	    value: function setRenderMethodMutable() {
+	      this.renderMethodMutable = true;
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'getListeners',
+	    value: function getListeners() {
+	      return this.mouseListener;
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'onProbeLineReady',
+	    value: function onProbeLineReady(callback) {
+	      return this.on(PROBE_LINE_READY_TOPIC, callback);
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'onProbeChange',
+	    value: function onProbeChange(callback) {
+	      return this.on(PROBE_CHANGE_TOPIC, callback);
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'onRenderMethodChange',
+	    value: function onRenderMethodChange(callback) {
+	      return this.on(RENDER_METHOD_CHANGE_TOPIC, callback);
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'onCrosshairVisibilityChange',
+	    value: function onCrosshairVisibilityChange(callback) {
+	      return this.on(CROSSHAIR_VISIBILITY_CHANGE_TOPIC, callback);
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'destroy',
+	    value: function destroy() {
+	      _get(Object.getPrototypeOf(DataProberImageBuilder.prototype), 'destroy', this).call(this);
+
+	      this.off();
+
+	      this.bgCanvas = null;
+	      this.workImage = null;
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'getControlWidgets',
+	    value: function getControlWidgets() {
+	      var _getControlModels = this.getControlModels();
+
+	      var lookupTable = _getControlModels.lookupTable;
+	      var originalRange = _getControlModels.originalRange;
+	      var lookupTableManager = _getControlModels.lookupTableManager;
+	      var queryDataModel = _getControlModels.queryDataModel;
+	      var model = this;
+	      return [{
+	        name: 'LookupTableManagerWidget',
+	        lookupTable: lookupTable,
+	        originalRange: originalRange,
+	        lookupTableManager: lookupTableManager
+	      }, {
+	        name: 'ProbeControl',
+	        model: model
+	      }, {
+	        name: 'QueryDataModelWidget',
+	        queryDataModel: queryDataModel
+	      }];
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'getControlModels',
+	    value: function getControlModels() {
+	      return {
+	        queryDataModel: this.queryDataModel,
+	        lookupTable: this.lookupTableManager.getLookupTable(this.getField()),
+	        originalRange: this.metadata.ranges[this.getField()],
+	        lookupTableManager: this.lookupTableManager
+	      };
+	    }
+	  }]);
+
+	  return DataProberImageBuilder;
 	}(_AbstractImageBuilder3.default);
 
 	exports.default = DataProberImageBuilder;
@@ -1096,7 +1116,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -1113,135 +1133,145 @@
 
 	var AbstractImageBuilder = function () {
 
-	    // ------------------------------------------------------------------------
+	  // ------------------------------------------------------------------------
 
-	    function AbstractImageBuilder(_ref) {
-	        var queryDataModel = _ref.queryDataModel;
-	        var pipelineModel = _ref.pipelineModel;
-	        var lookupTableManager = _ref.lookupTableManager;
-	        var _ref$handleRecord = _ref.handleRecord;
-	        var handleRecord = _ref$handleRecord === undefined ? false : _ref$handleRecord;
-	        var _ref$dimensions = _ref.dimensions;
-	        var dimensions = _ref$dimensions === undefined ? [500, 500] : _ref$dimensions;
+	  function AbstractImageBuilder(_ref) {
+	    var queryDataModel = _ref.queryDataModel;
+	    var pipelineModel = _ref.pipelineModel;
+	    var lookupTableManager = _ref.lookupTableManager;
+	    var _ref$handleRecord = _ref.handleRecord;
+	    var handleRecord = _ref$handleRecord === undefined ? false : _ref$handleRecord;
+	    var _ref$dimensions = _ref.dimensions;
+	    var dimensions = _ref$dimensions === undefined ? [500, 500] : _ref$dimensions;
 
-	        _classCallCheck(this, AbstractImageBuilder);
+	    _classCallCheck(this, AbstractImageBuilder);
 
-	        this.queryDataModel = queryDataModel;
-	        this.pipelineModel = pipelineModel;
-	        this.lookupTableManager = lookupTableManager;
-	        this.handleRecord = handleRecord;
-	        this.subscriptions = [];
-	        this.objectsToFree = [];
-	        this.dimensions = dimensions;
+	    this.queryDataModel = queryDataModel;
+	    this.pipelineModel = pipelineModel;
+	    this.lookupTableManager = lookupTableManager;
+	    this.handleRecord = handleRecord;
+	    this.subscriptions = [];
+	    this.objectsToFree = [];
+	    this.dimensions = dimensions;
 
-	        this.controlWidgets = [];
-	        if (this.lookupTableManager) {
-	            this.controlWidgets.push({ name: "LookupTableManagerWidget", lookupTableManager: lookupTableManager });
-	        }
-	        if (this.pipelineModel) {
-	            this.controlWidgets.push({ name: "CompositeControl", pipelineModel: pipelineModel });
-	        }
-	        if (this.queryDataModel) {
-	            this.controlWidgets.push({ name: "QueryDataModelWidget", queryDataModel: queryDataModel });
-	        }
+	    this.controlWidgets = [];
+	    if (this.lookupTableManager) {
+	      this.controlWidgets.push({
+	        name: 'LookupTableManagerWidget',
+	        lookupTableManager: lookupTableManager
+	      });
 	    }
+	    if (this.pipelineModel) {
+	      this.controlWidgets.push({
+	        name: 'CompositeControl',
+	        pipelineModel: pipelineModel
+	      });
+	    }
+	    if (this.queryDataModel) {
+	      this.controlWidgets.push({
+	        name: 'QueryDataModelWidget',
+	        queryDataModel: queryDataModel
+	      });
+	    }
+	  }
+
+	  // ------------------------------------------------------------------------
+
+	  _createClass(AbstractImageBuilder, [{
+	    key: 'update',
+	    value: function update() {
+	      if (this.queryDataModel) {
+	        this.queryDataModel.fetchData();
+	      }
+	    }
+
 	    // ------------------------------------------------------------------------
 
-	    _createClass(AbstractImageBuilder, [{
-	        key: 'update',
-	        value: function update() {
-	            if (this.queryDataModel) {
-	                this.queryDataModel.fetchData();
-	            }
-	        }
+	  }, {
+	    key: 'onImageReady',
+	    value: function onImageReady(callback) {
+	      return this.on(IMAGE_READY_TOPIC, callback);
+	    }
 
-	        // ------------------------------------------------------------------------
+	    // ------------------------------------------------------------------------
 
-	    }, {
-	        key: 'onImageReady',
-	        value: function onImageReady(callback) {
-	            return this.on(IMAGE_READY_TOPIC, callback);
-	        }
+	  }, {
+	    key: 'imageReady',
+	    value: function imageReady(readyImage) {
+	      this.emit(IMAGE_READY_TOPIC, readyImage);
+	    }
 
-	        // ------------------------------------------------------------------------
+	    // ------------------------------------------------------------------------
 
-	    }, {
-	        key: 'imageReady',
-	        value: function imageReady(readyImage) {
-	            this.emit(IMAGE_READY_TOPIC, readyImage);
-	        }
+	  }, {
+	    key: 'registerSubscription',
+	    value: function registerSubscription(subscription) {
+	      this.subscriptions.push(subscription);
+	    }
 
-	        // ------------------------------------------------------------------------
+	    // ------------------------------------------------------------------------
 
-	    }, {
-	        key: 'registerSubscription',
-	        value: function registerSubscription(subscription) {
-	            this.subscriptions.push(subscription);
-	        }
+	  }, {
+	    key: 'registerObjectToFree',
+	    value: function registerObjectToFree(obj) {
+	      this.objectsToFree.push(obj);
+	    }
 
-	        // ------------------------------------------------------------------------
+	    // ------------------------------------------------------------------------
 
-	    }, {
-	        key: 'registerObjectToFree',
-	        value: function registerObjectToFree(obj) {
-	            this.objectsToFree.push(obj);
-	        }
+	  }, {
+	    key: 'getListeners',
+	    value: function getListeners() {
+	      return this.queryDataModel ? this.queryDataModel.getMouseListener() : {};
+	    }
 
-	        // ------------------------------------------------------------------------
+	    // ------------------------------------------------------------------------
 
-	    }, {
-	        key: 'getListeners',
-	        value: function getListeners() {
-	            return this.queryDataModel ? this.queryDataModel.getMouseListener() : {};
-	        }
+	    // Method meant to be used with the WidgetFactory
 
-	        // ------------------------------------------------------------------------
+	  }, {
+	    key: 'getControlWidgets',
+	    value: function getControlWidgets() {
+	      return this.controlWidgets;
+	    }
 
-	        // Method meant to be used with the WidgetFactory
+	    // ------------------------------------------------------------------------
 
-	    }, {
-	        key: 'getControlWidgets',
-	        value: function getControlWidgets() {
-	            return this.controlWidgets;
-	        }
+	  }, {
+	    key: 'getControlModels',
+	    value: function getControlModels() {
+	      return {
+	        pipelineModel: this.pipelineModel,
+	        queryDataModel: this.queryDataModel,
+	        lookupTableManager: this.lookupTableManager,
+	        dimensions: this.dimensions
+	      };
+	    }
 
-	        // ------------------------------------------------------------------------
+	    // ------------------------------------------------------------------------
 
-	    }, {
-	        key: 'getControlModels',
-	        value: function getControlModels() {
-	            return {
-	                pipelineModel: this.pipelineModel,
-	                queryDataModel: this.queryDataModel,
-	                lookupTableManager: this.lookupTableManager,
-	                dimensions: this.dimensions
-	            };
-	        }
+	  }, {
+	    key: 'destroy',
+	    value: function destroy() {
+	      this.off();
 
-	        // ------------------------------------------------------------------------
+	      while (this.subscriptions.length) {
+	        this.subscriptions.pop().unsubscribe();
+	      }
 
-	    }, {
-	        key: 'destroy',
-	        value: function destroy() {
-	            this.off();
+	      while (this.objectsToFree.length) {
+	        this.objectsToFree.pop().destroy();
+	      }
 
-	            while (this.subscriptions.length) {
-	                this.subscriptions.pop().unsubscribe();
-	            }
+	      this.queryDataModel = null;
+	      this.pipelineModel = null;
+	      this.lookupTableManager = null;
+	      this.dimensions = null;
+	      this.controlWidgets = null;
+	    }
+	  }]);
 
-	            while (this.objectsToFree.length) {
-	                this.objectsToFree.pop().destroy();
-	            }
-
-	            this.queryDataModel = null;
-	            this.pipelineModel = null;
-	            this.lookupTableManager = null;
-	            this.dimensions = null;
-	            this.controlWidgets = null;
-	        }
-	    }]);
-
-	    return AbstractImageBuilder;
+	  return AbstractImageBuilder;
 	}();
 
 	// Add Observer pattern using Monologue.js
@@ -12562,7 +12592,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -12574,63 +12604,63 @@
 	// Create <canvas/> within the DOM
 
 	var CanvasOffscreenBuffer = function () {
-	    function CanvasOffscreenBuffer(width, height) {
-	        _classCallCheck(this, CanvasOffscreenBuffer);
+	  function CanvasOffscreenBuffer(width, height) {
+	    _classCallCheck(this, CanvasOffscreenBuffer);
 
-	        this.id = 'CanvasOffscreenBuffer_' + ++offscreenCanvasCount;
-	        this.el = document.createElement('canvas');
-	        this.width = width;
-	        this.height = height;
+	    this.id = 'CanvasOffscreenBuffer_' + ++offscreenCanvasCount;
+	    this.el = document.createElement('canvas');
+	    this.width = width;
+	    this.height = height;
 
-	        this.el.style.display = 'none';
-	        this.el.setAttribute('width', this.width);
-	        this.el.setAttribute('height', this.height);
+	    this.el.style.display = 'none';
+	    this.el.setAttribute('width', this.width);
+	    this.el.setAttribute('height', this.height);
 
-	        document.body.appendChild(this.el);
+	    document.body.appendChild(this.el);
+	  }
+
+	  _createClass(CanvasOffscreenBuffer, [{
+	    key: 'size',
+	    value: function size(width, height) {
+	      if (width) {
+	        this.el.setAttribute('width', this.width = width);
+	      }
+	      if (height) {
+	        this.el.setAttribute('height', this.height = height);
+	      }
+	      return [Number(this.width), Number(this.height)];
+	    }
+	  }, {
+	    key: 'get2DContext',
+	    value: function get2DContext() {
+	      return this.el.getContext('2d');
+	    }
+	  }, {
+	    key: 'get3DContext',
+	    value: function get3DContext() {
+	      var options = arguments.length <= 0 || arguments[0] === undefined ? { preserveDrawingBuffer: true, premultipliedAlpha: false } : arguments[0];
+
+	      return this.el.getContext('webgl', options) || this.el.getContext('experimental-webgl', options);
 	    }
 
-	    _createClass(CanvasOffscreenBuffer, [{
-	        key: 'size',
-	        value: function size(width, height) {
-	            if (width) {
-	                this.el.setAttribute('width', this.width = width);
-	            }
-	            if (height) {
-	                this.el.setAttribute('height', this.height = height);
-	            }
-	            return [Number(this.width), Number(this.height)];
-	        }
-	    }, {
-	        key: 'get2DContext',
-	        value: function get2DContext() {
-	            return this.el.getContext("2d");
-	        }
-	    }, {
-	        key: 'get3DContext',
-	        value: function get3DContext() {
-	            var options = arguments.length <= 0 || arguments[0] === undefined ? { preserveDrawingBuffer: true, premultipliedAlpha: false } : arguments[0];
+	    // Remove canvas from DOM
 
-	            return this.el.getContext("webgl", options) || this.el.getContext("experimental-webgl", options);
-	        }
+	  }, {
+	    key: 'destroy',
+	    value: function destroy() {
+	      this.el.parentNode.removeChild(this.el);
+	      this.el = null;
+	      this.width = null;
+	      this.height = null;
+	    }
+	  }, {
+	    key: 'toDataURL',
+	    value: function toDataURL(type, encoderOptions) {
+	      return this.el.toDataURL(type, encoderOptions);
+	    }
+	  }]);
 
-	        // Remove canvas from DOM
-
-	    }, {
-	        key: 'destroy',
-	        value: function destroy() {
-	            this.el.parentNode.removeChild(this.el);
-	            this.el = null;
-	            this.width = null;
-	            this.height = null;
-	        }
-	    }, {
-	        key: 'toDataURL',
-	        value: function toDataURL(type, encoderOptions) {
-	            return this.el.toDataURL(type, encoderOptions);
-	        }
-	    }]);
-
-	    return CanvasOffscreenBuffer;
+	  return CanvasOffscreenBuffer;
 	}();
 
 	exports.default = CanvasOffscreenBuffer;
@@ -12729,7 +12759,7 @@
 	/* WEBPACK VAR INJECTION */(function(setImmediate) {'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -12747,118 +12777,118 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var TOPIC = {
-	    CHANGE: 'LookupTable.change',
-	    ACTIVE_CHANGE: 'LookupTable.active.change',
-	    LIST_CHANGE: 'LookupTable.list.change'
+	  CHANGE: 'LookupTable.change',
+	  ACTIVE_CHANGE: 'LookupTable.active.change',
+	  LIST_CHANGE: 'LookupTable.list.change'
 	};
 
 	var LookupTableManager = function () {
-	    function LookupTableManager() {
-	        var _this = this;
+	  function LookupTableManager() {
+	    var _this = this;
 
-	        _classCallCheck(this, LookupTableManager);
+	    _classCallCheck(this, LookupTableManager);
 
-	        this.luts = {};
-	        this.lutSubscriptions = {};
+	    this.luts = {};
+	    this.lutSubscriptions = {};
 
-	        this.onChangeCallback = function (data, envelope) {
-	            _this.emit(TOPIC.CHANGE, data);
-	        };
+	    this.onChangeCallback = function (data, envelope) {
+	      _this.emit(TOPIC.CHANGE, data);
+	    };
+	  }
+
+	  _createClass(LookupTableManager, [{
+	    key: 'addLookupTable',
+	    value: function addLookupTable(name, range, preset) {
+	      if (!this.activeField) {
+	        this.activeField = name;
+	      }
+
+	      var lut = this.luts[name];
+	      if (lut === undefined) {
+	        lut = new _LookupTable2.default(name);
+
+	        this.luts[name] = lut;
+	        this.lutSubscriptions[name] = lut.onChange(this.onChangeCallback);
+	      }
+
+	      lut.setPreset(preset || 'spectralflip');
+	      lut.setScalarRange(range[0], range[1]);
+
+	      this.emit(TOPIC.LIST_CHANGE, this);
+
+	      return lut;
 	    }
+	  }, {
+	    key: 'removeLookupTable',
+	    value: function removeLookupTable(name) {
+	      if (this.luts.hasOwn(name)) {
+	        this.lutSubscriptions[name].unsubscribe();
+	        this.luts[name].destroy();
 
-	    _createClass(LookupTableManager, [{
-	        key: 'addLookupTable',
-	        value: function addLookupTable(name, range, preset) {
-	            if (!this.activeField) {
-	                this.activeField = name;
-	            }
+	        delete this.luts[name];
+	        delete this.lutSubscriptions[name];
 
-	            var lut = this.luts[name];
-	            if (lut === undefined) {
-	                lut = new _LookupTable2.default(name);
+	        this.emit(TOPIC.LIST_CHANGE, this);
+	      }
+	    }
+	  }, {
+	    key: 'updateActiveLookupTable',
+	    value: function updateActiveLookupTable(name) {
+	      var _this2 = this;
 
-	                this.luts[name] = lut;
-	                this.lutSubscriptions[name] = lut.onChange(this.onChangeCallback);
-	            }
-
-	            lut.setPreset(preset || 'spectralflip');
-	            lut.setScalarRange(range[0], range[1]);
-
-	            this.emit(TOPIC.LIST_CHANGE, this);
-
-	            return lut;
+	      setImmediate(function () {
+	        _this2.emit(TOPIC.ACTIVE_CHANGE, name);
+	      });
+	      this.activeField = name;
+	    }
+	  }, {
+	    key: 'getLookupTable',
+	    value: function getLookupTable(name) {
+	      return this.luts[name];
+	    }
+	  }, {
+	    key: 'addFields',
+	    value: function addFields(fieldsRange, lutConfigs) {
+	      for (var field in fieldsRange) {
+	        var lut = this.addLookupTable(field, fieldsRange[field]);
+	        if (lutConfigs && lutConfigs[field]) {
+	          if (lutConfigs[field].discrete !== undefined) {
+	            lut.discrete = lutConfigs[field].discrete;
+	          }
+	          if (lutConfigs[field].preset) {
+	            lut.setPreset(lutConfigs[field].preset);
+	          } else if (lutConfigs[field].controlpoints) {
+	            lut.updateControlPoints(lutConfigs[field].controlpoints);
+	          }
+	          if (lutConfigs[field].range) {
+	            lut.setScalarRange(lutConfigs[field].range[0], lutConfigs[field].range[1]);
+	          }
 	        }
-	    }, {
-	        key: 'removeLookupTable',
-	        value: function removeLookupTable(name) {
-	            if (this.luts.hasOwn(name)) {
-	                this.lutSubscriptions[name].unsubscribe();
-	                this.luts[name].destroy();
+	      }
+	    }
+	  }, {
+	    key: 'getActiveField',
+	    value: function getActiveField() {
+	      return this.activeField;
+	    }
+	  }, {
+	    key: 'onChange',
+	    value: function onChange(callback) {
+	      return this.on(TOPIC.CHANGE, callback);
+	    }
+	  }, {
+	    key: 'onFieldsChange',
+	    value: function onFieldsChange(callback) {
+	      return this.on(TOPIC.LIST_CHANGE, callback);
+	    }
+	  }, {
+	    key: 'onActiveLookupTableChange',
+	    value: function onActiveLookupTableChange(callback) {
+	      return this.on(TOPIC.ACTIVE_CHANGE, callback);
+	    }
+	  }]);
 
-	                delete this.luts[name];
-	                delete this.lutSubscriptions[name];
-
-	                this.emit(TOPIC.LIST_CHANGE, this);
-	            }
-	        }
-	    }, {
-	        key: 'updateActiveLookupTable',
-	        value: function updateActiveLookupTable(name) {
-	            var _this2 = this;
-
-	            setImmediate(function () {
-	                _this2.emit(TOPIC.ACTIVE_CHANGE, name);
-	            });
-	            this.activeField = name;
-	        }
-	    }, {
-	        key: 'getLookupTable',
-	        value: function getLookupTable(name) {
-	            return this.luts[name];
-	        }
-	    }, {
-	        key: 'addFields',
-	        value: function addFields(fieldsRange, lutConfigs) {
-	            for (var field in fieldsRange) {
-	                var lut = this.addLookupTable(field, fieldsRange[field]);
-	                if (lutConfigs && lutConfigs[field]) {
-	                    if (lutConfigs[field].discrete !== undefined) {
-	                        lut.discrete = lutConfigs[field].discrete;
-	                    }
-	                    if (lutConfigs[field].preset) {
-	                        lut.setPreset(lutConfigs[field].preset);
-	                    } else if (lutConfigs[field].controlpoints) {
-	                        lut.updateControlPoints(lutConfigs[field].controlpoints);
-	                    }
-	                    if (lutConfigs[field].range) {
-	                        lut.setScalarRange(lutConfigs[field].range[0], lutConfigs[field].range[1]);
-	                    }
-	                }
-	            }
-	        }
-	    }, {
-	        key: 'getActiveField',
-	        value: function getActiveField() {
-	            return this.activeField;
-	        }
-	    }, {
-	        key: 'onChange',
-	        value: function onChange(callback) {
-	            return this.on(TOPIC.CHANGE, callback);
-	        }
-	    }, {
-	        key: 'onFieldsChange',
-	        value: function onFieldsChange(callback) {
-	            return this.on(TOPIC.LIST_CHANGE, callback);
-	        }
-	    }, {
-	        key: 'onActiveLookupTableChange',
-	        value: function onActiveLookupTableChange(callback) {
-	            return this.on(TOPIC.ACTIVE_CHANGE, callback);
-	        }
-	    }]);
-
-	    return LookupTableManager;
+	  return LookupTableManager;
 	}();
 
 	// Add Observer pattern using Monologue.js
@@ -12875,7 +12905,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -12897,294 +12927,294 @@
 	// Initialize liste
 	var presetList = [];
 	for (var key in _Presets2.default.lookuptables) {
-	    presetList.push(key);
+	  presetList.push(key);
 	}
 
 	// Global helper methods ------------------------------------------------------
 
 	function applyRatio(a, b, ratio) {
-	    return (b - a) * ratio + a;
+	  return (b - a) * ratio + a;
 	}
 
 	function interpolateColor(pointA, pointB, scalar) {
-	    var ratio = (scalar - pointA[0]) / (pointB[0] - pointA[0]);
-	    return [applyRatio(pointA[1], pointB[1], ratio), applyRatio(pointA[2], pointB[2], ratio), applyRatio(pointA[3], pointB[3], ratio), 255];
+	  var ratio = (scalar - pointA[0]) / (pointB[0] - pointA[0]);
+	  return [applyRatio(pointA[1], pointB[1], ratio), applyRatio(pointA[2], pointB[2], ratio), applyRatio(pointA[3], pointB[3], ratio), 255];
 	}
 
 	function extractPoint(controlPoints, idx) {
-	    return [controlPoints[idx].x, controlPoints[idx].r, controlPoints[idx].g, controlPoints[idx].b];
+	  return [controlPoints[idx].x, controlPoints[idx].r, controlPoints[idx].g, controlPoints[idx].b];
 	}
 
 	function xrgbCompare(a, b) {
-	    return a.x - b.x;
+	  return a.x - b.x;
 	}
 
 	// ----------------------------------------------------------------------------
 
 	var LookupTable = function () {
-	    function LookupTable(name) {
-	        var discrete = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
+	  function LookupTable(name) {
+	    var discrete = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
 
-	        _classCallCheck(this, LookupTable);
+	    _classCallCheck(this, LookupTable);
 
-	        this.name = name;
-	        this.scalarRange = [0, 1];
-	        this.delta = 1;
-	        this.controlPoints = null;
-	        this.colorTableSize = 256;
-	        this.colorTable = null;
-	        this.colorNaN = [0, 0, 0, 0];
-	        this.setPreset('spectralflip');
-	        this.discrete = discrete;
-	        this.scale = 1;
+	    this.name = name;
+	    this.scalarRange = [0, 1];
+	    this.delta = 1;
+	    this.controlPoints = null;
+	    this.colorTableSize = 256;
+	    this.colorTable = null;
+	    this.colorNaN = [0, 0, 0, 0];
+	    this.setPreset('spectralflip');
+	    this.discrete = discrete;
+	    this.scale = 1;
 
-	        // Auto rebuild
-	        this.build();
+	    // Auto rebuild
+	    this.build();
+	  }
+
+	  _createClass(LookupTable, [{
+	    key: 'getName',
+	    value: function getName() {
+	      return this.name;
 	    }
+	  }, {
+	    key: 'getPresets',
+	    value: function getPresets() {
+	      return presetList;
+	    }
+	  }, {
+	    key: 'setPreset',
+	    value: function setPreset(name) {
+	      this.colorTable = null;
+	      this.controlPoints = [];
 
-	    _createClass(LookupTable, [{
-	        key: 'getName',
-	        value: function getName() {
-	            return this.name;
+	      var colors = _Presets2.default.lookuptables[name].controlpoints;
+	      var count = colors.length;
+
+	      for (var i = 0; i < count; i++) {
+	        this.controlPoints.push({
+	          x: colors[i].x,
+	          r: colors[i].r,
+	          g: colors[i].g,
+	          b: colors[i].b
+	        });
+	      }
+
+	      // Auto rebuild
+	      this.build();
+
+	      this.emit(CHANGE_TOPIC, { change: 'preset', lut: this });
+	    }
+	  }, {
+	    key: 'updateControlPoints',
+	    value: function updateControlPoints(controlPoints) {
+	      this.colorTable = null;
+	      this.controlPoints = [];
+
+	      var count = controlPoints.length;
+
+	      for (var i = 0; i < count; i++) {
+	        this.controlPoints.push({
+	          x: controlPoints[i].x,
+	          r: controlPoints[i].r,
+	          g: controlPoints[i].g,
+	          b: controlPoints[i].b
+	        });
+	      }
+
+	      // Auto rebuild
+	      this.build();
+
+	      this.emit(CHANGE_TOPIC, { change: 'controlPoints', lut: this });
+	    }
+	  }, {
+	    key: 'setColorForNaN',
+	    value: function setColorForNaN() {
+	      var r = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
+	      var g = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
+	      var b = arguments.length <= 2 || arguments[2] === undefined ? 0 : arguments[2];
+	      var a = arguments.length <= 3 || arguments[3] === undefined ? 0 : arguments[3];
+
+	      this.colorNaN = [r, g, b, a];
+	    }
+	  }, {
+	    key: 'getColorForNaN',
+	    value: function getColorForNaN() {
+	      return this.colorNaN;
+	    }
+	  }, {
+	    key: 'getScalarRange',
+	    value: function getScalarRange() {
+	      return [Number(this.scalarRange[0]), Number(this.scalarRange[1])];
+	    }
+	  }, {
+	    key: 'setScalarRange',
+	    value: function setScalarRange(min, max) {
+	      this.scalarRange = [min, max];
+	      this.delta = max - min;
+
+	      this.emit(CHANGE_TOPIC, { change: 'scalarRange', lut: this });
+	    }
+	  }, {
+	    key: 'build',
+	    value: function build(trigger) {
+	      var currentControlIdx = 0;
+
+	      if (this.colorTable) {
+	        return;
+	      }
+
+	      this.colorTable = [];
+	      if (this.discrete) {
+	        this.colorTableSize = this.controlPoints.length;
+	        this.scale = 50;
+	        for (var idx = 0; idx < this.colorTableSize; idx++) {
+	          var color = this.controlPoints[idx];
+	          this.colorTable.push([color.r, color.g, color.b, 255]);
 	        }
-	    }, {
-	        key: 'getPresets',
-	        value: function getPresets() {
-	            return presetList;
+	      } else {
+	        this.scale = 1;
+	        for (var _idx = 0; _idx < this.colorTableSize; _idx++) {
+	          var value = _idx / (this.colorTableSize - 1);
+	          var pointA = extractPoint(this.controlPoints, currentControlIdx);
+	          var pointB = extractPoint(this.controlPoints, currentControlIdx + 1);
+
+	          if (value > pointB[0]) {
+	            currentControlIdx += 1;
+	            pointA = extractPoint(this.controlPoints, currentControlIdx);
+	            pointB = extractPoint(this.controlPoints, currentControlIdx + 1);
+	          }
+
+	          this.colorTable.push(interpolateColor(pointA, pointB, value));
 	        }
-	    }, {
-	        key: 'setPreset',
-	        value: function setPreset(name) {
-	            this.colorTable = null;
-	            this.controlPoints = [];
+	      }
 
-	            var colors = _Presets2.default.lookuptables[name].controlpoints,
-	                count = colors.length;
+	      if (trigger) {
+	        this.emit(CHANGE_TOPIC, { change: 'controlPoints', lut: this });
+	      }
+	    }
+	  }, {
+	    key: 'setNumberOfColors',
+	    value: function setNumberOfColors(nbColors) {
+	      this.colorTableSize = nbColors;
+	      this.colorTable = null;
 
-	            for (var i = 0; i < count; i++) {
-	                this.controlPoints.push({
-	                    x: colors[i].x,
-	                    r: colors[i].r,
-	                    g: colors[i].g,
-	                    b: colors[i].b
-	                });
-	            }
+	      // Auto rebuild
+	      this.build();
 
-	            // Auto rebuild
-	            this.build();
+	      this.emit(CHANGE_TOPIC, { change: 'numberOfColors', lut: this });
+	    }
+	  }, {
+	    key: 'getNumberOfControlPoints',
+	    value: function getNumberOfControlPoints() {
+	      return this.controlPoints ? this.controlPoints.length : 0;
+	    }
+	  }, {
+	    key: 'removeControlPoint',
+	    value: function removeControlPoint(idx) {
+	      if (idx > 0 && idx < this.controlPoints.length - 1) {
+	        this.controlPoints.splice(idx, 1);
 
-	            this.emit(CHANGE_TOPIC, { change: 'preset', lut: this });
+	        // Auto rebuild and trigger change
+	        this.colorTable = null;
+	        this.build(true);
+
+	        return true;
+	      }
+	      return false;
+	    }
+	  }, {
+	    key: 'getControlPoint',
+	    value: function getControlPoint(idx) {
+	      return this.controlPoints[idx];
+	    }
+	  }, {
+	    key: 'updateControlPoint',
+	    value: function updateControlPoint(idx, xrgb) {
+	      this.controlPoints[idx] = xrgb;
+	      var xValue = xrgb.x;
+
+	      // Ensure order
+	      this.controlPoints.sort(xrgbCompare);
+
+	      // Auto rebuild and trigger change
+	      this.colorTable = null;
+	      this.build(true);
+
+	      // Return the modified index of current control point
+	      for (var i = 0; i < this.controlPoints.length; i++) {
+	        if (this.controlPoints[i].x === xValue) {
+	          return i;
 	        }
-	    }, {
-	        key: 'updateControlPoints',
-	        value: function updateControlPoints(controlPoints) {
-	            this.colorTable = null;
-	            this.controlPoints = [];
+	      }
+	      return 0;
+	    }
+	  }, {
+	    key: 'addControlPoint',
+	    value: function addControlPoint(xrgb) {
+	      this.controlPoints.push(xrgb);
+	      var xValue = xrgb.x;
 
-	            var count = controlPoints.length;
+	      // Ensure order
+	      this.controlPoints.sort(xrgbCompare);
 
-	            for (var i = 0; i < count; i++) {
-	                this.controlPoints.push({
-	                    x: controlPoints[i].x,
-	                    r: controlPoints[i].r,
-	                    g: controlPoints[i].g,
-	                    b: controlPoints[i].b
-	                });
-	            }
+	      // Auto rebuild and trigger change
+	      this.colorTable = null;
+	      this.build(true);
 
-	            // Auto rebuild
-	            this.build();
-
-	            this.emit(CHANGE_TOPIC, { change: 'controlPoints', lut: this });
+	      // Return the modified index of current control point
+	      for (var i = 0; i < this.controlPoints.length; i++) {
+	        if (this.controlPoints[i].x === xValue) {
+	          return i;
 	        }
-	    }, {
-	        key: 'setColorForNaN',
-	        value: function setColorForNaN() {
-	            var r = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
-	            var g = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
-	            var b = arguments.length <= 2 || arguments[2] === undefined ? 0 : arguments[2];
-	            var a = arguments.length <= 3 || arguments[3] === undefined ? 0 : arguments[3];
+	      }
+	      return -1;
+	    }
+	  }, {
+	    key: 'drawToCanvas',
+	    value: function drawToCanvas(canvas) {
+	      var colors = this.colorTable;
+	      var length = this.scale * colors.length;
+	      var ctx = canvas.getContext('2d');
+	      var canvasData = ctx.getImageData(0, 0, length, 1);
 
-	            this.colorNaN = [r, g, b, a];
-	        }
-	    }, {
-	        key: 'getColorForNaN',
-	        value: function getColorForNaN() {
-	            return this.colorNaN;
-	        }
-	    }, {
-	        key: 'getScalarRange',
-	        value: function getScalarRange() {
-	            return [Number(this.scalarRange[0]), Number(this.scalarRange[1])];
-	        }
-	    }, {
-	        key: 'setScalarRange',
-	        value: function setScalarRange(min, max) {
-	            this.scalarRange = [min, max];
-	            this.delta = max - min;
+	      for (var i = 0; i < length; i++) {
+	        var colorIdx = Math.floor(i / this.scale);
+	        canvasData.data[i * 4 + 0] = Math.floor(255 * colors[colorIdx][0]);
+	        canvasData.data[i * 4 + 1] = Math.floor(255 * colors[colorIdx][1]);
+	        canvasData.data[i * 4 + 2] = Math.floor(255 * colors[colorIdx][2]);
+	        canvasData.data[i * 4 + 3] = 255;
+	      }
+	      ctx.putImageData(canvasData, 0, 0);
+	    }
+	  }, {
+	    key: 'getColor',
+	    value: function getColor(scalar) {
+	      if (isNaN(scalar)) {
+	        return this.colorNaN;
+	      }
+	      var idxValue = Math.floor(this.colorTableSize * (scalar - this.scalarRange[0]) / this.delta);
+	      if (idxValue < 0) {
+	        return this.colorTable[0];
+	      }
+	      if (idxValue >= this.colorTableSize) {
+	        return this.colorTable[this.colorTable.length - 1];
+	      }
+	      return this.colorTable[idxValue];
+	    }
+	  }, {
+	    key: 'destroy',
+	    value: function destroy() {
+	      this.off();
+	    }
+	  }, {
+	    key: 'onChange',
+	    value: function onChange(callback) {
+	      return this.on(CHANGE_TOPIC, callback);
+	    }
+	  }]);
 
-	            this.emit(CHANGE_TOPIC, { change: 'scalarRange', lut: this });
-	        }
-	    }, {
-	        key: 'build',
-	        value: function build(trigger) {
-	            var currentControlIdx = 0;
-
-	            if (this.colorTable) {
-	                return;
-	            }
-
-	            this.colorTable = [];
-	            if (this.discrete) {
-	                this.colorTableSize = this.controlPoints.length;
-	                this.scale = 50;
-	                for (var idx = 0; idx < this.colorTableSize; idx++) {
-	                    var color = this.controlPoints[idx];
-	                    this.colorTable.push([color.r, color.g, color.b, 255]);
-	                }
-	            } else {
-	                this.scale = 1;
-	                for (var idx = 0; idx < this.colorTableSize; idx++) {
-	                    var value = idx / (this.colorTableSize - 1);
-	                    var pointA = extractPoint(this.controlPoints, currentControlIdx),
-	                        pointB = extractPoint(this.controlPoints, currentControlIdx + 1);
-
-	                    if (value > pointB[0]) {
-	                        currentControlIdx += 1;
-	                        pointA = extractPoint(this.controlPoints, currentControlIdx);
-	                        pointB = extractPoint(this.controlPoints, currentControlIdx + 1);
-	                    }
-
-	                    this.colorTable.push(interpolateColor(pointA, pointB, value));
-	                }
-	            }
-
-	            if (trigger) {
-	                this.emit(CHANGE_TOPIC, { change: 'controlPoints', lut: this });
-	            }
-	        }
-	    }, {
-	        key: 'setNumberOfColors',
-	        value: function setNumberOfColors(nbColors) {
-	            this.colorTableSize = nbColors;
-	            this.colorTable = null;
-
-	            // Auto rebuild
-	            this.build();
-
-	            this.emit(CHANGE_TOPIC, { change: 'numberOfColors', lut: this });
-	        }
-	    }, {
-	        key: 'getNumberOfControlPoints',
-	        value: function getNumberOfControlPoints() {
-	            return this.controlPoints ? this.controlPoints.length : 0;
-	        }
-	    }, {
-	        key: 'removeControlPoint',
-	        value: function removeControlPoint(idx) {
-	            if (idx > 0 && idx < this.controlPoints.length - 1) {
-	                this.controlPoints.splice(idx, 1);
-
-	                // Auto rebuild and trigger change
-	                this.colorTable = null;
-	                this.build(true);
-
-	                return true;
-	            }
-	            return false;
-	        }
-	    }, {
-	        key: 'getControlPoint',
-	        value: function getControlPoint(idx) {
-	            return this.controlPoints[idx];
-	        }
-	    }, {
-	        key: 'updateControlPoint',
-	        value: function updateControlPoint(idx, xrgb) {
-	            this.controlPoints[idx] = xrgb;
-	            var xValue = xrgb.x;
-
-	            // Ensure order
-	            this.controlPoints.sort(xrgbCompare);
-
-	            // Auto rebuild and trigger change
-	            this.colorTable = null;
-	            this.build(true);
-
-	            // Return the modified index of current control point
-	            for (var i = 0; i < this.controlPoints.length; i++) {
-	                if (this.controlPoints[i].x === xValue) {
-	                    return i;
-	                }
-	            }
-	            return 0;
-	        }
-	    }, {
-	        key: 'addControlPoint',
-	        value: function addControlPoint(xrgb) {
-	            this.controlPoints.push(xrgb);
-	            var xValue = xrgb.x;
-
-	            // Ensure order
-	            this.controlPoints.sort(xrgbCompare);
-
-	            // Auto rebuild and trigger change
-	            this.colorTable = null;
-	            this.build(true);
-
-	            // Return the modified index of current control point
-	            for (var i = 0; i < this.controlPoints.length; i++) {
-	                if (this.controlPoints[i].x === xValue) {
-	                    return i;
-	                }
-	            }
-	            return -1;
-	        }
-	    }, {
-	        key: 'drawToCanvas',
-	        value: function drawToCanvas(canvas) {
-	            var colors = this.colorTable,
-	                length = this.scale * colors.length,
-	                ctx = canvas.getContext("2d"),
-	                canvasData = ctx.getImageData(0, 0, length, 1);
-
-	            for (var i = 0; i < length; i++) {
-	                var colorIdx = Math.floor(i / this.scale);
-	                canvasData.data[i * 4 + 0] = Math.floor(255 * colors[colorIdx][0]);
-	                canvasData.data[i * 4 + 1] = Math.floor(255 * colors[colorIdx][1]);
-	                canvasData.data[i * 4 + 2] = Math.floor(255 * colors[colorIdx][2]);
-	                canvasData.data[i * 4 + 3] = 255;
-	            }
-	            ctx.putImageData(canvasData, 0, 0);
-	        }
-	    }, {
-	        key: 'getColor',
-	        value: function getColor(scalar) {
-	            if (isNaN(scalar)) {
-	                return this.colorNaN;
-	            }
-	            var idxValue = Math.floor(this.colorTableSize * (scalar - this.scalarRange[0]) / this.delta);
-	            if (idxValue < 0) {
-	                return this.colorTable[0];
-	            }
-	            if (idxValue >= this.colorTableSize) {
-	                return this.colorTable[this.colorTable.length - 1];
-	            }
-	            return this.colorTable[idxValue];
-	        }
-	    }, {
-	        key: 'destroy',
-	        value: function destroy() {
-	            this.off();
-	        }
-	    }, {
-	        key: 'onChange',
-	        value: function onChange(callback) {
-	            return this.on(CHANGE_TOPIC, callback);
-	        }
-	    }]);
-
-	    return LookupTable;
+	  return LookupTable;
 	}();
 
 	// Add Observer pattern using Monologue.js
@@ -13197,91 +13227,91 @@
 /* 15 */
 /***/ function(module, exports) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	exports.default = {
-	    "lookuptables": {
-	        "spectralflip": {
-	            "controlpoints": [{ "x": 0, "r": 0.3686274509803922, "g": 0.3098039215686275, "b": 0.6352941176470588 }, { "x": 0.1, "r": 0.196078431372549, "g": 0.5333333333333333, "b": 0.7411764705882353 }, { "x": 0.2, "r": 0.4, "g": 0.7607843137254902, "b": 0.6470588235294118 }, { "x": 0.3, "r": 0.6705882352941176, "g": 0.8666666666666667, "b": 0.6431372549019608 }, { "x": 0.4, "r": 0.9019607843137255, "g": 0.9607843137254902, "b": 0.596078431372549 }, { "x": 0.5, "r": 1, "g": 1, "b": 0.7490196078431373 }, { "x": 0.6, "r": 0.996078431372549, "g": 0.8784313725490196, "b": 0.5450980392156862 }, { "x": 0.7, "r": 0.9921568627450981, "g": 0.6823529411764706, "b": 0.3803921568627451 }, { "x": 0.8, "r": 0.9568627450980393, "g": 0.4274509803921568, "b": 0.2627450980392157 }, { "x": 0.9, "r": 0.8352941176470589, "g": 0.2431372549019608, "b": 0.3098039215686275 }, { "x": 1, "r": 0.6196078431372549, "g": 0.00392156862745098, "b": 0.2588235294117647 }],
-	            "range": [0.0, 1.0]
-	        },
-	        "cold2warm": {
-	            "controlpoints": [{ "x": 0.00, "r": 0.23137254902, "g": 0.298039215686, "b": 0.752941176471 }, { "x": 0.50, "r": 0.865, "g": 0.865, "b": 0.865 }, { "x": 1.00, "r": 0.705882352941, "g": 0.0156862745098, "b": 0.149019607843 }],
-	            "range": [0.0, 1.0]
-	        },
-	        "rainbow": {
-	            "controlpoints": [{ "x": 0.00, "r": 0.0, "g": 0.0, "b": 1.0 }, { "x": 0.25, "r": 0.0, "g": 1.0, "b": 1.0 }, { "x": 0.50, "r": 0.0, "g": 1.0, "b": 0.0 }, { "x": 0.75, "r": 1.0, "g": 1.0, "b": 0.0 }, { "x": 1.00, "r": 1.0, "g": 0.0, "b": 0.0 }],
-	            "range": [0.0, 1.0]
-	        },
-	        "gray scale": {
-	            "controlpoints": [{ "x": 0.0, "r": 0.0, "g": 0.0, "b": 0.0 }, { "x": 1.0, "r": 1.0, "g": 1.0, "b": 1.0 }],
-	            "range": [0.0, 1.0]
-	        },
-	        "gray scale flip": {
-	            "controlpoints": [{ "x": 0.0, "r": 1.0, "g": 1.0, "b": 1.0 }, { "x": 1.0, "r": 0.0, "g": 0.0, "b": 0.0 }],
-	            "range": [0.0, 1.0]
-	        },
-	        "spectral": {
-	            "controlpoints": [{ "x": 0, "r": 0.6196078431372549, "g": 0.00392156862745098, "b": 0.2588235294117647 }, { "x": 0.1, "r": 0.8352941176470589, "g": 0.2431372549019608, "b": 0.3098039215686275 }, { "x": 0.2, "r": 0.9568627450980393, "g": 0.4274509803921568, "b": 0.2627450980392157 }, { "x": 0.3, "r": 0.9921568627450981, "g": 0.6823529411764706, "b": 0.3803921568627451 }, { "x": 0.4, "r": 0.996078431372549, "g": 0.8784313725490196, "b": 0.5450980392156862 }, { "x": 0.5, "r": 1, "g": 1, "b": 0.7490196078431373 }, { "x": 0.6, "r": 0.9019607843137255, "g": 0.9607843137254902, "b": 0.596078431372549 }, { "x": 0.7, "r": 0.6705882352941176, "g": 0.8666666666666667, "b": 0.6431372549019608 }, { "x": 0.8, "r": 0.4, "g": 0.7607843137254902, "b": 0.6470588235294118 }, { "x": 0.9, "r": 0.196078431372549, "g": 0.5333333333333333, "b": 0.7411764705882353 }, { "x": 1, "r": 0.3686274509803922, "g": 0.3098039215686275, "b": 0.6352941176470588 }],
-	            "range": [0.0, 1.0]
-	        },
-	        "warm": {
-	            "controlpoints": [{ "x": 0.00, "r": 0.4745098039215686, "g": 0.09019607843137255, "b": 0.09019607843137255 }, { "x": 0.20, "r": 0.7098039215686275, "g": 0.00392156862745098, "b": 0.00392156862745098 }, { "x": 0.40, "r": 0.9372549019607843, "g": 0.2784313725490196, "b": 0.09803921568627451 }, { "x": 0.60, "r": 0.9764705882352941, "g": 0.5137254901960784, "b": 0.1411764705882353 }, { "x": 0.80, "r": 1.0, "g": 0.7058823529411765, "b": 0.0 }, { "x": 1.00, "r": 1.0, "g": 0.8980392156862745, "b": 0.02352941176470588 }],
-	            "range": [0.0, 1.0]
-	        },
-	        "cool": {
-	            "controlpoints": [{ "x": 0, "r": 0.4588235294117647, "g": 0.6941176470588235, "b": 0.00392156862745098 }, { "x": 0.1666666666666667, "r": 0.3450980392156863, "g": 0.5019607843137255, "b": 0.1607843137254902 }, { "x": 0.3333333333333333, "r": 0.3137254901960784, "g": 0.8431372549019608, "b": 0.7490196078431373 }, { "x": 0.5, "r": 0.1098039215686274, "g": 0.5843137254901961, "b": 0.803921568627451 }, { "x": 0.6666666666666666, "r": 0.2313725490196079, "g": 0.407843137254902, "b": 0.6705882352941176 }, { "x": 0.8333333333333334, "r": 0.6039215686274509, "g": 0.407843137254902, "b": 1 }, { "x": 1, "r": 0.3725490196078431, "g": 0.2, "b": 0.5019607843137255 }],
-	            "range": [0.0, 1.0]
-	        },
-	        "blues": {
-	            "controlpoints": [{ "x": 0, "r": 0.2313725490196079, "g": 0.407843137254902, "b": 0.6705882352941176 }, { "x": 0.1666666666666667, "r": 0.1098039215686274, "g": 0.5843137254901961, "b": 0.803921568627451 }, { "x": 0.3333333333333333, "r": 0.3058823529411765, "g": 0.8509803921568627, "b": 0.9176470588235294 }, { "x": 0.5, "r": 0.4509803921568628, "g": 0.6039215686274509, "b": 0.8352941176470589 }, { "x": 0.6666666666666666, "r": 0.2588235294117647, "g": 0.2392156862745098, "b": 0.6627450980392157 }, { "x": 0.8333333333333334, "r": 0.3137254901960784, "g": 0.3294117647058823, "b": 0.5294117647058824 }, { "x": 1, "r": 0.06274509803921569, "g": 0.1647058823529412, "b": 0.3215686274509804 }],
-	            "range": [0.0, 1.0]
-	        },
-	        "wildflower": {
-	            "controlpoints": [{ "x": 0, "r": 0.1098039215686274, "g": 0.5843137254901961, "b": 0.803921568627451 }, { "x": 0.1666666666666667, "r": 0.2313725490196079, "g": 0.407843137254902, "b": 0.6705882352941176 }, { "x": 0.3333333333333333, "r": 0.4, "g": 0.2431372549019608, "b": 0.7176470588235294 }, { "x": 0.5, "r": 0.6352941176470588, "g": 0.3294117647058823, "b": 0.8117647058823529 }, { "x": 0.6666666666666666, "r": 0.8705882352941177, "g": 0.3803921568627451, "b": 0.807843137254902 }, { "x": 0.8333333333333334, "r": 0.8627450980392157, "g": 0.3803921568627451, "b": 0.5843137254901961 }, { "x": 1, "r": 0.2392156862745098, "g": 0.06274509803921569, "b": 0.3215686274509804 }],
-	            "range": [0.0, 1.0]
-	        },
-	        "citrus": {
-	            "controlpoints": [{ "x": 0, "r": 0.396078431372549, "g": 0.4862745098039216, "b": 0.2156862745098039 }, { "x": 0.2, "r": 0.4588235294117647, "g": 0.6941176470588235, "b": 0.00392156862745098 }, { "x": 0.4, "r": 0.6980392156862745, "g": 0.7294117647058823, "b": 0.1882352941176471 }, { "x": 0.6, "r": 1, "g": 0.8980392156862745, "b": 0.02352941176470588 }, { "x": 0.8, "r": 1, "g": 0.7058823529411765, "b": 0 }, { "x": 1, "r": 0.9764705882352941, "g": 0.5137254901960784, "b": 0.1411764705882353 }],
-	            "range": [0.0, 1.0]
-	        },
-	        "organge2purple": {
-	            "controlpoints": [{ "x": 0, "r": 0.4980392156862745, "g": 0.2313725490196079, "b": 0.03137254901960784 }, { "x": 0.1, "r": 0.7019607843137254, "g": 0.3450980392156863, "b": 0.02352941176470588 }, { "x": 0.2, "r": 0.8784313725490196, "g": 0.5098039215686274, "b": 0.07843137254901961 }, { "x": 0.3, "r": 0.9921568627450981, "g": 0.7215686274509804, "b": 0.3882352941176471 }, { "x": 0.4, "r": 0.996078431372549, "g": 0.8784313725490196, "b": 0.7137254901960784 }, { "x": 0.5, "r": 0.9686274509803922, "g": 0.9686274509803922, "b": 0.9686274509803922 }, { "x": 0.6, "r": 0.8470588235294118, "g": 0.8549019607843137, "b": 0.9215686274509803 }, { "x": 0.7, "r": 0.6980392156862745, "g": 0.6705882352941176, "b": 0.8235294117647058 }, { "x": 0.8, "r": 0.5019607843137255, "g": 0.4509803921568628, "b": 0.6745098039215687 }, { "x": 0.9, "r": 0.3294117647058823, "g": 0.1529411764705882, "b": 0.5333333333333333 }, { "x": 1, "r": 0.1764705882352941, "g": 0, "b": 0.2941176470588235 }],
-	            "range": [0.0, 1.0]
-	        },
-	        "brown2green": {
-	            "controlpoints": [{ "x": 0, "r": 0.3294117647058823, "g": 0.1882352941176471, "b": 0.0196078431372549 }, { "x": 0.1, "r": 0.5490196078431373, "g": 0.3176470588235294, "b": 0.0392156862745098 }, { "x": 0.2, "r": 0.7490196078431373, "g": 0.5058823529411764, "b": 0.1764705882352941 }, { "x": 0.3, "r": 0.8745098039215686, "g": 0.7607843137254902, "b": 0.4901960784313725 }, { "x": 0.4, "r": 0.9647058823529412, "g": 0.9098039215686274, "b": 0.7647058823529411 }, { "x": 0.5, "r": 0.9607843137254902, "g": 0.9607843137254902, "b": 0.9607843137254902 }, { "x": 0.6, "r": 0.7803921568627451, "g": 0.9176470588235294, "b": 0.8980392156862745 }, { "x": 0.7, "r": 0.5019607843137255, "g": 0.803921568627451, "b": 0.7568627450980392 }, { "x": 0.8, "r": 0.207843137254902, "g": 0.592156862745098, "b": 0.5607843137254902 }, { "x": 0.9, "r": 0.00392156862745098, "g": 0.4, "b": 0.3686274509803922 }, { "x": 1, "r": 0, "g": 0.2352941176470588, "b": 0.1882352941176471 }],
-	            "range": [0.0, 1.0]
-	        },
-	        "blue2green": {
-	            "controlpoints": [{ "x": 0, "r": 0.9686274509803922, "g": 0.9882352941176471, "b": 0.9921568627450981 }, { "x": 0.125, "r": 0.8980392156862745, "g": 0.9607843137254902, "b": 0.9764705882352941 }, { "x": 0.25, "r": 0.8, "g": 0.9254901960784314, "b": 0.9019607843137255 }, { "x": 0.375, "r": 0.6, "g": 0.8470588235294118, "b": 0.788235294117647 }, { "x": 0.5, "r": 0.4, "g": 0.7607843137254902, "b": 0.6431372549019608 }, { "x": 0.625, "r": 0.2549019607843137, "g": 0.6823529411764706, "b": 0.4627450980392157 }, { "x": 0.75, "r": 0.1372549019607843, "g": 0.5450980392156862, "b": 0.2705882352941176 }, { "x": 0.875, "r": 0, "g": 0.4274509803921568, "b": 0.1725490196078431 }, { "x": 1, "r": 0, "g": 0.2666666666666667, "b": 0.1058823529411765 }],
-	            "range": [0.0, 1.0]
-	        },
-	        "yellow2brown": {
-	            "controlpoints": [{ "x": 0, "r": 1, "g": 1, "b": 0.8980392156862745 }, { "x": 0.125, "r": 1, "g": 0.9686274509803922, "b": 0.7372549019607844 }, { "x": 0.25, "r": 0.996078431372549, "g": 0.8901960784313725, "b": 0.5686274509803921 }, { "x": 0.375, "r": 0.996078431372549, "g": 0.7686274509803922, "b": 0.3098039215686275 }, { "x": 0.5, "r": 0.996078431372549, "g": 0.6, "b": 0.1607843137254902 }, { "x": 0.625, "r": 0.9254901960784314, "g": 0.4392156862745098, "b": 0.07843137254901961 }, { "x": 0.75, "r": 0.8, "g": 0.2980392156862745, "b": 0.007843137254901961 }, { "x": 0.875, "r": 0.6, "g": 0.203921568627451, "b": 0.01568627450980392 }, { "x": 1, "r": 0.4, "g": 0.1450980392156863, "b": 0.02352941176470588 }],
-	            "range": [0.0, 1.0]
-	        },
-	        "blue2purple": {
-	            "controlpoints": [{ "x": 0, "r": 0.9686274509803922, "g": 0.9882352941176471, "b": 0.9921568627450981 }, { "x": 0.125, "r": 0.8784313725490196, "g": 0.9254901960784314, "b": 0.9568627450980393 }, { "x": 0.25, "r": 0.7490196078431373, "g": 0.8274509803921568, "b": 0.9019607843137255 }, { "x": 0.375, "r": 0.6196078431372549, "g": 0.7372549019607844, "b": 0.8549019607843137 }, { "x": 0.5, "r": 0.5490196078431373, "g": 0.5882352941176471, "b": 0.7764705882352941 }, { "x": 0.625, "r": 0.5490196078431373, "g": 0.4196078431372549, "b": 0.6941176470588235 }, { "x": 0.75, "r": 0.5333333333333333, "g": 0.2549019607843137, "b": 0.615686274509804 }, { "x": 0.875, "r": 0.5058823529411764, "g": 0.05882352941176471, "b": 0.4862745098039216 }, { "x": 1, "r": 0.3019607843137255, "g": 0, "b": 0.2941176470588235 }],
-	            "range": [0.0, 1.0]
-	        },
-	        "ocean": {
-	            "controlpoints": [{ "x": 0.0, "r": 0.039215, "g": 0.090195, "b": 0.25098 }, { "x": 0.125, "r": 0.133333, "g": 0.364706, "b": 0.521569 }, { "x": 0.25, "r": 0.321569, "g": 0.760784, "b": 0.8 }, { "x": 0.375, "r": 0.690196, "g": 0.960784, "b": 0.894118 }, { "x": 0.5, "r": 0.552941, "g": 0.921569, "b": 0.552941 }, { "x": 0.625, "r": 0.329412, "g": 0.6, "b": 0.239216 }, { "x": 0.75, "r": 0.211765, "g": 0.349020, "b": 0.078435 }, { "x": 0.875, "r": 0.011765, "g": 0.207843, "b": 0.023525 }, { "x": 1.0, "r": 0.286275, "g": 0.294118, "b": 0.301961 }],
-	            "range": [0.0, 1.0]
-	        },
-	        "earth": {
-	            "controlpoints": [{ "x": 0.000000, "r": 0.392157, "g": 0.392157, "b": 0.392157 }, { "x": 0.586175, "r": 0.392157, "g": 0.392157, "b": 0.392157 }, { "x": 0.589041, "r": 0.141176, "g": 0.345098, "b": 0.478431 }, { "x": 0.589042, "r": 0.501961, "g": 0.694118, "b": 0.172549 }, { "x": 0.617699, "r": 0.74902, "g": 0.560784, "b": 0.188235 }, { "x": 0.789648, "r": 0.752941, "g": 0.741176, "b": 0.729412 }, { "x": 0.993079, "r": 0.796078, "g": 0.780392, "b": 0.772549 }, { "x": 1.000000, "r": 0.796078, "g": 0.780392, "b": 0.772549 }],
-	            "range": [0.0, 1.0]
-	        }
+	  lookuptables: {
+	    spectralflip: {
+	      controlpoints: [{ x: 0, r: 0.3686274509803922, g: 0.3098039215686275, b: 0.6352941176470588 }, { x: 0.1, r: 0.196078431372549, g: 0.5333333333333333, b: 0.7411764705882353 }, { x: 0.2, r: 0.4, g: 0.7607843137254902, b: 0.6470588235294118 }, { x: 0.3, r: 0.6705882352941176, g: 0.8666666666666667, b: 0.6431372549019608 }, { x: 0.4, r: 0.9019607843137255, g: 0.9607843137254902, b: 0.596078431372549 }, { x: 0.5, r: 1, g: 1, b: 0.7490196078431373 }, { x: 0.6, r: 0.996078431372549, g: 0.8784313725490196, b: 0.5450980392156862 }, { x: 0.7, r: 0.9921568627450981, g: 0.6823529411764706, b: 0.3803921568627451 }, { x: 0.8, r: 0.9568627450980393, g: 0.4274509803921568, b: 0.2627450980392157 }, { x: 0.9, r: 0.8352941176470589, g: 0.2431372549019608, b: 0.3098039215686275 }, { x: 1, r: 0.6196078431372549, g: 0.00392156862745098, b: 0.2588235294117647 }],
+	      range: [0.0, 1.0]
 	    },
-	    "swatches": {
-	        "colors": [{ "r": 255, "g": 255, "b": 255 }, { "r": 204, "g": 255, "b": 255 }, { "r": 204, "g": 204, "b": 255 }, { "r": 204, "g": 204, "b": 255 }, { "r": 204, "g": 204, "b": 255 }, { "r": 204, "g": 204, "b": 255 }, { "r": 204, "g": 204, "b": 255 }, { "r": 204, "g": 204, "b": 255 }, { "r": 204, "g": 204, "b": 255 }, { "r": 204, "g": 204, "b": 255 }, { "r": 204, "g": 204, "b": 255 }, { "r": 255, "g": 204, "b": 255 }, { "r": 255, "g": 204, "b": 204 }, { "r": 255, "g": 204, "b": 204 }, { "r": 255, "g": 204, "b": 204 }, { "r": 255, "g": 204, "b": 204 }, { "r": 255, "g": 204, "b": 204 }, { "r": 255, "g": 204, "b": 204 }, { "r": 255, "g": 204, "b": 204 }, { "r": 255, "g": 204, "b": 204 }, { "r": 255, "g": 204, "b": 204 }, { "r": 255, "g": 255, "b": 204 }, { "r": 204, "g": 255, "b": 204 }, { "r": 204, "g": 255, "b": 204 }, { "r": 204, "g": 255, "b": 204 }, { "r": 204, "g": 255, "b": 204 }, { "r": 204, "g": 255, "b": 204 }, { "r": 204, "g": 255, "b": 204 }, { "r": 204, "g": 255, "b": 204 }, { "r": 204, "g": 255, "b": 204 }, { "r": 204, "g": 255, "b": 204 }, { "r": 204, "g": 204, "b": 204 }, { "r": 153, "g": 255, "b": 255 }, { "r": 153, "g": 204, "b": 255 }, { "r": 153, "g": 153, "b": 255 }, { "r": 153, "g": 153, "b": 255 }, { "r": 153, "g": 153, "b": 255 }, { "r": 153, "g": 153, "b": 255 }, { "r": 153, "g": 153, "b": 255 }, { "r": 153, "g": 153, "b": 255 }, { "r": 153, "g": 153, "b": 255 }, { "r": 204, "g": 153, "b": 255 }, { "r": 255, "g": 153, "b": 255 }, { "r": 255, "g": 153, "b": 204 }, { "r": 255, "g": 153, "b": 153 }, { "r": 255, "g": 153, "b": 153 }, { "r": 255, "g": 153, "b": 153 }, { "r": 255, "g": 153, "b": 153 }, { "r": 255, "g": 153, "b": 153 }, { "r": 255, "g": 153, "b": 153 }, { "r": 255, "g": 153, "b": 153 }, { "r": 255, "g": 204, "b": 153 }, { "r": 255, "g": 255, "b": 153 }, { "r": 204, "g": 255, "b": 153 }, { "r": 153, "g": 255, "b": 153 }, { "r": 153, "g": 255, "b": 153 }, { "r": 153, "g": 255, "b": 153 }, { "r": 153, "g": 255, "b": 153 }, { "r": 153, "g": 255, "b": 153 }, { "r": 153, "g": 255, "b": 153 }, { "r": 153, "g": 255, "b": 153 }, { "r": 153, "g": 255, "b": 204 }, { "r": 204, "g": 204, "b": 204 }, { "r": 102, "g": 255, "b": 255 }, { "r": 102, "g": 204, "b": 255 }, { "r": 102, "g": 153, "b": 255 }, { "r": 102, "g": 102, "b": 255 }, { "r": 102, "g": 102, "b": 255 }, { "r": 102, "g": 102, "b": 255 }, { "r": 102, "g": 102, "b": 255 }, { "r": 102, "g": 102, "b": 255 }, { "r": 153, "g": 102, "b": 255 }, { "r": 204, "g": 102, "b": 255 }, { "r": 255, "g": 102, "b": 255 }, { "r": 255, "g": 102, "b": 204 }, { "r": 255, "g": 102, "b": 153 }, { "r": 255, "g": 102, "b": 102 }, { "r": 255, "g": 102, "b": 102 }, { "r": 255, "g": 102, "b": 102 }, { "r": 255, "g": 102, "b": 102 }, { "r": 255, "g": 102, "b": 102 }, { "r": 255, "g": 153, "b": 102 }, { "r": 255, "g": 204, "b": 102 }, { "r": 255, "g": 255, "b": 102 }, { "r": 204, "g": 255, "b": 102 }, { "r": 153, "g": 255, "b": 102 }, { "r": 102, "g": 255, "b": 102 }, { "r": 102, "g": 255, "b": 102 }, { "r": 102, "g": 255, "b": 102 }, { "r": 102, "g": 255, "b": 102 }, { "r": 102, "g": 255, "b": 102 }, { "r": 102, "g": 255, "b": 153 }, { "r": 102, "g": 255, "b": 204 }, { "r": 153, "g": 153, "b": 153 }, { "r": 51, "g": 255, "b": 255 }, { "r": 51, "g": 204, "b": 255 }, { "r": 51, "g": 153, "b": 255 }, { "r": 51, "g": 102, "b": 255 }, { "r": 51, "g": 51, "b": 255 }, { "r": 51, "g": 51, "b": 255 }, { "r": 51, "g": 51, "b": 255 }, { "r": 102, "g": 51, "b": 255 }, { "r": 153, "g": 51, "b": 255 }, { "r": 204, "g": 51, "b": 255 }, { "r": 255, "g": 51, "b": 255 }, { "r": 255, "g": 51, "b": 204 }, { "r": 255, "g": 51, "b": 153 }, { "r": 255, "g": 51, "b": 102 }, { "r": 255, "g": 51, "b": 51 }, { "r": 255, "g": 51, "b": 51 }, { "r": 255, "g": 51, "b": 51 }, { "r": 255, "g": 102, "b": 51 }, { "r": 255, "g": 153, "b": 51 }, { "r": 255, "g": 204, "b": 51 }, { "r": 255, "g": 255, "b": 51 }, { "r": 204, "g": 255, "b": 51 }, { "r": 153, "g": 255, "b": 51 }, { "r": 102, "g": 255, "b": 51 }, { "r": 51, "g": 255, "b": 51 }, { "r": 51, "g": 255, "b": 51 }, { "r": 51, "g": 255, "b": 51 }, { "r": 51, "g": 255, "b": 102 }, { "r": 51, "g": 255, "b": 153 }, { "r": 51, "g": 255, "b": 204 }, { "r": 153, "g": 153, "b": 153 }, { "r": 0, "g": 255, "b": 255 }, { "r": 0, "g": 204, "b": 255 }, { "r": 0, "g": 153, "b": 255 }, { "r": 0, "g": 102, "b": 255 }, { "r": 0, "g": 51, "b": 255 }, { "r": 0, "g": 0, "b": 255 }, { "r": 51, "g": 0, "b": 255 }, { "r": 102, "g": 0, "b": 255 }, { "r": 153, "g": 0, "b": 255 }, { "r": 204, "g": 0, "b": 255 }, { "r": 255, "g": 0, "b": 255 }, { "r": 255, "g": 0, "b": 204 }, { "r": 255, "g": 0, "b": 153 }, { "r": 255, "g": 0, "b": 102 }, { "r": 255, "g": 0, "b": 51 }, { "r": 255, "g": 0, "b": 0 }, { "r": 255, "g": 51, "b": 0 }, { "r": 255, "g": 102, "b": 0 }, { "r": 255, "g": 153, "b": 0 }, { "r": 255, "g": 204, "b": 0 }, { "r": 255, "g": 255, "b": 0 }, { "r": 204, "g": 255, "b": 0 }, { "r": 153, "g": 255, "b": 0 }, { "r": 102, "g": 255, "b": 0 }, { "r": 51, "g": 255, "b": 0 }, { "r": 0, "g": 255, "b": 0 }, { "r": 0, "g": 255, "b": 51 }, { "r": 0, "g": 255, "b": 102 }, { "r": 0, "g": 255, "b": 153 }, { "r": 0, "g": 255, "b": 204 }, { "r": 102, "g": 102, "b": 102 }, { "r": 0, "g": 204, "b": 204 }, { "r": 0, "g": 204, "b": 204 }, { "r": 0, "g": 153, "b": 204 }, { "r": 0, "g": 102, "b": 204 }, { "r": 0, "g": 51, "b": 204 }, { "r": 0, "g": 0, "b": 204 }, { "r": 51, "g": 0, "b": 204 }, { "r": 102, "g": 0, "b": 204 }, { "r": 153, "g": 0, "b": 204 }, { "r": 204, "g": 0, "b": 204 }, { "r": 204, "g": 0, "b": 204 }, { "r": 204, "g": 0, "b": 204 }, { "r": 204, "g": 0, "b": 153 }, { "r": 204, "g": 0, "b": 102 }, { "r": 204, "g": 0, "b": 51 }, { "r": 204, "g": 0, "b": 0 }, { "r": 204, "g": 51, "b": 0 }, { "r": 204, "g": 102, "b": 0 }, { "r": 204, "g": 153, "b": 0 }, { "r": 204, "g": 204, "b": 0 }, { "r": 204, "g": 204, "b": 0 }, { "r": 204, "g": 204, "b": 0 }, { "r": 153, "g": 204, "b": 0 }, { "r": 102, "g": 204, "b": 0 }, { "r": 51, "g": 204, "b": 0 }, { "r": 0, "g": 204, "b": 0 }, { "r": 0, "g": 204, "b": 51 }, { "r": 0, "g": 204, "b": 102 }, { "r": 0, "g": 204, "b": 153 }, { "r": 0, "g": 204, "b": 204 }, { "r": 102, "g": 102, "b": 102 }, { "r": 0, "g": 153, "b": 153 }, { "r": 0, "g": 153, "b": 153 }, { "r": 0, "g": 153, "b": 153 }, { "r": 0, "g": 102, "b": 153 }, { "r": 0, "g": 51, "b": 153 }, { "r": 0, "g": 0, "b": 153 }, { "r": 51, "g": 0, "b": 153 }, { "r": 102, "g": 0, "b": 153 }, { "r": 153, "g": 0, "b": 153 }, { "r": 153, "g": 0, "b": 153 }, { "r": 153, "g": 0, "b": 153 }, { "r": 153, "g": 0, "b": 153 }, { "r": 153, "g": 0, "b": 153 }, { "r": 153, "g": 0, "b": 102 }, { "r": 153, "g": 0, "b": 51 }, { "r": 153, "g": 0, "b": 0 }, { "r": 153, "g": 51, "b": 0 }, { "r": 153, "g": 102, "b": 0 }, { "r": 153, "g": 153, "b": 0 }, { "r": 153, "g": 153, "b": 0 }, { "r": 153, "g": 153, "b": 0 }, { "r": 153, "g": 153, "b": 0 }, { "r": 153, "g": 153, "b": 0 }, { "r": 102, "g": 153, "b": 0 }, { "r": 51, "g": 153, "b": 0 }, { "r": 0, "g": 153, "b": 0 }, { "r": 0, "g": 153, "b": 51 }, { "r": 0, "g": 153, "b": 102 }, { "r": 0, "g": 153, "b": 153 }, { "r": 0, "g": 153, "b": 153 }, { "r": 51, "g": 51, "b": 51 }, { "r": 0, "g": 102, "b": 102 }, { "r": 0, "g": 102, "b": 102 }, { "r": 0, "g": 102, "b": 102 }, { "r": 0, "g": 102, "b": 102 }, { "r": 0, "g": 51, "b": 102 }, { "r": 0, "g": 0, "b": 102 }, { "r": 51, "g": 0, "b": 102 }, { "r": 102, "g": 0, "b": 102 }, { "r": 102, "g": 0, "b": 102 }, { "r": 102, "g": 0, "b": 102 }, { "r": 102, "g": 0, "b": 102 }, { "r": 102, "g": 0, "b": 102 }, { "r": 102, "g": 0, "b": 102 }, { "r": 102, "g": 0, "b": 102 }, { "r": 102, "g": 0, "b": 51 }, { "r": 102, "g": 0, "b": 0 }, { "r": 102, "g": 51, "b": 0 }, { "r": 102, "g": 102, "b": 0 }, { "r": 102, "g": 102, "b": 0 }, { "r": 102, "g": 102, "b": 0 }, { "r": 102, "g": 102, "b": 0 }, { "r": 102, "g": 102, "b": 0 }, { "r": 102, "g": 102, "b": 0 }, { "r": 102, "g": 102, "b": 0 }, { "r": 51, "g": 102, "b": 0 }, { "r": 0, "g": 102, "b": 0 }, { "r": 0, "g": 102, "b": 51 }, { "r": 0, "g": 102, "b": 102 }, { "r": 0, "g": 102, "b": 102 }, { "r": 0, "g": 102, "b": 102 }, { "r": 0, "g": 0, "b": 0 }, { "r": 0, "g": 51, "b": 51 }, { "r": 0, "g": 51, "b": 51 }, { "r": 0, "g": 51, "b": 51 }, { "r": 0, "g": 51, "b": 51 }, { "r": 0, "g": 51, "b": 51 }, { "r": 0, "g": 0, "b": 51 }, { "r": 51, "g": 0, "b": 51 }, { "r": 51, "g": 0, "b": 51 }, { "r": 51, "g": 0, "b": 51 }, { "r": 51, "g": 0, "b": 51 }, { "r": 51, "g": 0, "b": 51 }, { "r": 51, "g": 0, "b": 51 }, { "r": 51, "g": 0, "b": 51 }, { "r": 51, "g": 0, "b": 51 }, { "r": 51, "g": 0, "b": 51 }, { "r": 51, "g": 0, "b": 0 }, { "r": 51, "g": 51, "b": 0 }, { "r": 51, "g": 51, "b": 0 }, { "r": 51, "g": 51, "b": 0 }, { "r": 51, "g": 51, "b": 0 }, { "r": 51, "g": 51, "b": 0 }, { "r": 51, "g": 51, "b": 0 }, { "r": 51, "g": 51, "b": 0 }, { "r": 51, "g": 51, "b": 0 }, { "r": 0, "g": 51, "b": 0 }, { "r": 0, "g": 51, "b": 51 }, { "r": 0, "g": 51, "b": 51 }, { "r": 0, "g": 51, "b": 51 }, { "r": 0, "g": 51, "b": 51 }, { "r": 51, "g": 51, "b": 51 }],
-	        "columns": 31,
-	        "rows": 9
+	    cold2warm: {
+	      controlpoints: [{ x: 0.00, r: 0.23137254902, g: 0.298039215686, b: 0.752941176471 }, { x: 0.50, r: 0.865, g: 0.865, b: 0.865 }, { x: 1.00, r: 0.705882352941, g: 0.0156862745098, b: 0.149019607843 }],
+	      range: [0.0, 1.0]
+	    },
+	    rainbow: {
+	      controlpoints: [{ x: 0.00, r: 0.0, g: 0.0, b: 1.0 }, { x: 0.25, r: 0.0, g: 1.0, b: 1.0 }, { x: 0.50, r: 0.0, g: 1.0, b: 0.0 }, { x: 0.75, r: 1.0, g: 1.0, b: 0.0 }, { x: 1.00, r: 1.0, g: 0.0, b: 0.0 }],
+	      range: [0.0, 1.0]
+	    },
+	    'gray scale': {
+	      controlpoints: [{ x: 0.0, r: 0.0, g: 0.0, b: 0.0 }, { x: 1.0, r: 1.0, g: 1.0, b: 1.0 }],
+	      range: [0.0, 1.0]
+	    },
+	    'gray scale flip': {
+	      controlpoints: [{ x: 0.0, r: 1.0, g: 1.0, b: 1.0 }, { x: 1.0, r: 0.0, g: 0.0, b: 0.0 }],
+	      range: [0.0, 1.0]
+	    },
+	    spectral: {
+	      controlpoints: [{ x: 0, r: 0.6196078431372549, g: 0.00392156862745098, b: 0.2588235294117647 }, { x: 0.1, r: 0.8352941176470589, g: 0.2431372549019608, b: 0.3098039215686275 }, { x: 0.2, r: 0.9568627450980393, g: 0.4274509803921568, b: 0.2627450980392157 }, { x: 0.3, r: 0.9921568627450981, g: 0.6823529411764706, b: 0.3803921568627451 }, { x: 0.4, r: 0.996078431372549, g: 0.8784313725490196, b: 0.5450980392156862 }, { x: 0.5, r: 1, g: 1, b: 0.7490196078431373 }, { x: 0.6, r: 0.9019607843137255, g: 0.9607843137254902, b: 0.596078431372549 }, { x: 0.7, r: 0.6705882352941176, g: 0.8666666666666667, b: 0.6431372549019608 }, { x: 0.8, r: 0.4, g: 0.7607843137254902, b: 0.6470588235294118 }, { x: 0.9, r: 0.196078431372549, g: 0.5333333333333333, b: 0.7411764705882353 }, { x: 1, r: 0.3686274509803922, g: 0.3098039215686275, b: 0.6352941176470588 }],
+	      range: [0.0, 1.0]
+	    },
+	    warm: {
+	      controlpoints: [{ x: 0.00, r: 0.4745098039215686, g: 0.09019607843137255, b: 0.09019607843137255 }, { x: 0.20, r: 0.7098039215686275, g: 0.00392156862745098, b: 0.00392156862745098 }, { x: 0.40, r: 0.9372549019607843, g: 0.2784313725490196, b: 0.09803921568627451 }, { x: 0.60, r: 0.9764705882352941, g: 0.5137254901960784, b: 0.1411764705882353 }, { x: 0.80, r: 1.0, g: 0.7058823529411765, b: 0.0 }, { x: 1.00, r: 1.0, g: 0.8980392156862745, b: 0.02352941176470588 }],
+	      range: [0.0, 1.0]
+	    },
+	    cool: {
+	      controlpoints: [{ x: 0, r: 0.4588235294117647, g: 0.6941176470588235, b: 0.00392156862745098 }, { x: 0.1666666666666667, r: 0.3450980392156863, g: 0.5019607843137255, b: 0.1607843137254902 }, { x: 0.3333333333333333, r: 0.3137254901960784, g: 0.8431372549019608, b: 0.7490196078431373 }, { x: 0.5, r: 0.1098039215686274, g: 0.5843137254901961, b: 0.803921568627451 }, { x: 0.6666666666666666, r: 0.2313725490196079, g: 0.407843137254902, b: 0.6705882352941176 }, { x: 0.8333333333333334, r: 0.6039215686274509, g: 0.407843137254902, b: 1 }, { x: 1, r: 0.3725490196078431, g: 0.2, b: 0.5019607843137255 }],
+	      range: [0.0, 1.0]
+	    },
+	    blues: {
+	      controlpoints: [{ x: 0, r: 0.2313725490196079, g: 0.407843137254902, b: 0.6705882352941176 }, { x: 0.1666666666666667, r: 0.1098039215686274, g: 0.5843137254901961, b: 0.803921568627451 }, { x: 0.3333333333333333, r: 0.3058823529411765, g: 0.8509803921568627, b: 0.9176470588235294 }, { x: 0.5, r: 0.4509803921568628, g: 0.6039215686274509, b: 0.8352941176470589 }, { x: 0.6666666666666666, r: 0.2588235294117647, g: 0.2392156862745098, b: 0.6627450980392157 }, { x: 0.8333333333333334, r: 0.3137254901960784, g: 0.3294117647058823, b: 0.5294117647058824 }, { x: 1, r: 0.06274509803921569, g: 0.1647058823529412, b: 0.3215686274509804 }],
+	      range: [0.0, 1.0]
+	    },
+	    wildflower: {
+	      controlpoints: [{ x: 0, r: 0.1098039215686274, g: 0.5843137254901961, b: 0.803921568627451 }, { x: 0.1666666666666667, r: 0.2313725490196079, g: 0.407843137254902, b: 0.6705882352941176 }, { x: 0.3333333333333333, r: 0.4, g: 0.2431372549019608, b: 0.7176470588235294 }, { x: 0.5, r: 0.6352941176470588, g: 0.3294117647058823, b: 0.8117647058823529 }, { x: 0.6666666666666666, r: 0.8705882352941177, g: 0.3803921568627451, b: 0.807843137254902 }, { x: 0.8333333333333334, r: 0.8627450980392157, g: 0.3803921568627451, b: 0.5843137254901961 }, { x: 1, r: 0.2392156862745098, g: 0.06274509803921569, b: 0.3215686274509804 }],
+	      range: [0.0, 1.0]
+	    },
+	    citrus: {
+	      controlpoints: [{ x: 0, r: 0.396078431372549, g: 0.4862745098039216, b: 0.2156862745098039 }, { x: 0.2, r: 0.4588235294117647, g: 0.6941176470588235, b: 0.00392156862745098 }, { x: 0.4, r: 0.6980392156862745, g: 0.7294117647058823, b: 0.1882352941176471 }, { x: 0.6, r: 1, g: 0.8980392156862745, b: 0.02352941176470588 }, { x: 0.8, r: 1, g: 0.7058823529411765, b: 0 }, { x: 1, r: 0.9764705882352941, g: 0.5137254901960784, b: 0.1411764705882353 }],
+	      range: [0.0, 1.0]
+	    },
+	    organge2purple: {
+	      controlpoints: [{ x: 0, r: 0.4980392156862745, g: 0.2313725490196079, b: 0.03137254901960784 }, { x: 0.1, r: 0.7019607843137254, g: 0.3450980392156863, b: 0.02352941176470588 }, { x: 0.2, r: 0.8784313725490196, g: 0.5098039215686274, b: 0.07843137254901961 }, { x: 0.3, r: 0.9921568627450981, g: 0.7215686274509804, b: 0.3882352941176471 }, { x: 0.4, r: 0.996078431372549, g: 0.8784313725490196, b: 0.7137254901960784 }, { x: 0.5, r: 0.9686274509803922, g: 0.9686274509803922, b: 0.9686274509803922 }, { x: 0.6, r: 0.8470588235294118, g: 0.8549019607843137, b: 0.9215686274509803 }, { x: 0.7, r: 0.6980392156862745, g: 0.6705882352941176, b: 0.8235294117647058 }, { x: 0.8, r: 0.5019607843137255, g: 0.4509803921568628, b: 0.6745098039215687 }, { x: 0.9, r: 0.3294117647058823, g: 0.1529411764705882, b: 0.5333333333333333 }, { x: 1, r: 0.1764705882352941, g: 0, b: 0.2941176470588235 }],
+	      range: [0.0, 1.0]
+	    },
+	    brown2green: {
+	      controlpoints: [{ x: 0, r: 0.3294117647058823, g: 0.1882352941176471, b: 0.0196078431372549 }, { x: 0.1, r: 0.5490196078431373, g: 0.3176470588235294, b: 0.0392156862745098 }, { x: 0.2, r: 0.7490196078431373, g: 0.5058823529411764, b: 0.1764705882352941 }, { x: 0.3, r: 0.8745098039215686, g: 0.7607843137254902, b: 0.4901960784313725 }, { x: 0.4, r: 0.9647058823529412, g: 0.9098039215686274, b: 0.7647058823529411 }, { x: 0.5, r: 0.9607843137254902, g: 0.9607843137254902, b: 0.9607843137254902 }, { x: 0.6, r: 0.7803921568627451, g: 0.9176470588235294, b: 0.8980392156862745 }, { x: 0.7, r: 0.5019607843137255, g: 0.803921568627451, b: 0.7568627450980392 }, { x: 0.8, r: 0.207843137254902, g: 0.592156862745098, b: 0.5607843137254902 }, { x: 0.9, r: 0.00392156862745098, g: 0.4, b: 0.3686274509803922 }, { x: 1, r: 0, g: 0.2352941176470588, b: 0.1882352941176471 }],
+	      range: [0.0, 1.0]
+	    },
+	    blue2green: {
+	      controlpoints: [{ x: 0, r: 0.9686274509803922, g: 0.9882352941176471, b: 0.9921568627450981 }, { x: 0.125, r: 0.8980392156862745, g: 0.9607843137254902, b: 0.9764705882352941 }, { x: 0.25, r: 0.8, g: 0.9254901960784314, b: 0.9019607843137255 }, { x: 0.375, r: 0.6, g: 0.8470588235294118, b: 0.788235294117647 }, { x: 0.5, r: 0.4, g: 0.7607843137254902, b: 0.6431372549019608 }, { x: 0.625, r: 0.2549019607843137, g: 0.6823529411764706, b: 0.4627450980392157 }, { x: 0.75, r: 0.1372549019607843, g: 0.5450980392156862, b: 0.2705882352941176 }, { x: 0.875, r: 0, g: 0.4274509803921568, b: 0.1725490196078431 }, { x: 1, r: 0, g: 0.2666666666666667, b: 0.1058823529411765 }],
+	      range: [0.0, 1.0]
+	    },
+	    yellow2brown: {
+	      controlpoints: [{ x: 0, r: 1, g: 1, b: 0.8980392156862745 }, { x: 0.125, r: 1, g: 0.9686274509803922, b: 0.7372549019607844 }, { x: 0.25, r: 0.996078431372549, g: 0.8901960784313725, b: 0.5686274509803921 }, { x: 0.375, r: 0.996078431372549, g: 0.7686274509803922, b: 0.3098039215686275 }, { x: 0.5, r: 0.996078431372549, g: 0.6, b: 0.1607843137254902 }, { x: 0.625, r: 0.9254901960784314, g: 0.4392156862745098, b: 0.07843137254901961 }, { x: 0.75, r: 0.8, g: 0.2980392156862745, b: 0.007843137254901961 }, { x: 0.875, r: 0.6, g: 0.203921568627451, b: 0.01568627450980392 }, { x: 1, r: 0.4, g: 0.1450980392156863, b: 0.02352941176470588 }],
+	      range: [0.0, 1.0]
+	    },
+	    blue2purple: {
+	      controlpoints: [{ x: 0, r: 0.9686274509803922, g: 0.9882352941176471, b: 0.9921568627450981 }, { x: 0.125, r: 0.8784313725490196, g: 0.9254901960784314, b: 0.9568627450980393 }, { x: 0.25, r: 0.7490196078431373, g: 0.8274509803921568, b: 0.9019607843137255 }, { x: 0.375, r: 0.6196078431372549, g: 0.7372549019607844, b: 0.8549019607843137 }, { x: 0.5, r: 0.5490196078431373, g: 0.5882352941176471, b: 0.7764705882352941 }, { x: 0.625, r: 0.5490196078431373, g: 0.4196078431372549, b: 0.6941176470588235 }, { x: 0.75, r: 0.5333333333333333, g: 0.2549019607843137, b: 0.615686274509804 }, { x: 0.875, r: 0.5058823529411764, g: 0.05882352941176471, b: 0.4862745098039216 }, { x: 1, r: 0.3019607843137255, g: 0, b: 0.2941176470588235 }],
+	      range: [0.0, 1.0]
+	    },
+	    ocean: {
+	      controlpoints: [{ x: 0.0, r: 0.039215, g: 0.090195, b: 0.25098 }, { x: 0.125, r: 0.133333, g: 0.364706, b: 0.521569 }, { x: 0.25, r: 0.321569, g: 0.760784, b: 0.8 }, { x: 0.375, r: 0.690196, g: 0.960784, b: 0.894118 }, { x: 0.5, r: 0.552941, g: 0.921569, b: 0.552941 }, { x: 0.625, r: 0.329412, g: 0.6, b: 0.239216 }, { x: 0.75, r: 0.211765, g: 0.349020, b: 0.078435 }, { x: 0.875, r: 0.011765, g: 0.207843, b: 0.023525 }, { x: 1.0, r: 0.286275, g: 0.294118, b: 0.301961 }],
+	      range: [0.0, 1.0]
+	    },
+	    earth: {
+	      controlpoints: [{ x: 0.000000, r: 0.392157, g: 0.392157, b: 0.392157 }, { x: 0.586175, r: 0.392157, g: 0.392157, b: 0.392157 }, { x: 0.589041, r: 0.141176, g: 0.345098, b: 0.478431 }, { x: 0.589042, r: 0.501961, g: 0.694118, b: 0.172549 }, { x: 0.617699, r: 0.74902, g: 0.560784, b: 0.188235 }, { x: 0.789648, r: 0.752941, g: 0.741176, b: 0.729412 }, { x: 0.993079, r: 0.796078, g: 0.780392, b: 0.772549 }, { x: 1.000000, r: 0.796078, g: 0.780392, b: 0.772549 }],
+	      range: [0.0, 1.0]
 	    }
+	  },
+	  swatches: {
+	    colors: [{ r: 255, g: 255, b: 255 }, { r: 204, g: 255, b: 255 }, { r: 204, g: 204, b: 255 }, { r: 204, g: 204, b: 255 }, { r: 204, g: 204, b: 255 }, { r: 204, g: 204, b: 255 }, { r: 204, g: 204, b: 255 }, { r: 204, g: 204, b: 255 }, { r: 204, g: 204, b: 255 }, { r: 204, g: 204, b: 255 }, { r: 204, g: 204, b: 255 }, { r: 255, g: 204, b: 255 }, { r: 255, g: 204, b: 204 }, { r: 255, g: 204, b: 204 }, { r: 255, g: 204, b: 204 }, { r: 255, g: 204, b: 204 }, { r: 255, g: 204, b: 204 }, { r: 255, g: 204, b: 204 }, { r: 255, g: 204, b: 204 }, { r: 255, g: 204, b: 204 }, { r: 255, g: 204, b: 204 }, { r: 255, g: 255, b: 204 }, { r: 204, g: 255, b: 204 }, { r: 204, g: 255, b: 204 }, { r: 204, g: 255, b: 204 }, { r: 204, g: 255, b: 204 }, { r: 204, g: 255, b: 204 }, { r: 204, g: 255, b: 204 }, { r: 204, g: 255, b: 204 }, { r: 204, g: 255, b: 204 }, { r: 204, g: 255, b: 204 }, { r: 204, g: 204, b: 204 }, { r: 153, g: 255, b: 255 }, { r: 153, g: 204, b: 255 }, { r: 153, g: 153, b: 255 }, { r: 153, g: 153, b: 255 }, { r: 153, g: 153, b: 255 }, { r: 153, g: 153, b: 255 }, { r: 153, g: 153, b: 255 }, { r: 153, g: 153, b: 255 }, { r: 153, g: 153, b: 255 }, { r: 204, g: 153, b: 255 }, { r: 255, g: 153, b: 255 }, { r: 255, g: 153, b: 204 }, { r: 255, g: 153, b: 153 }, { r: 255, g: 153, b: 153 }, { r: 255, g: 153, b: 153 }, { r: 255, g: 153, b: 153 }, { r: 255, g: 153, b: 153 }, { r: 255, g: 153, b: 153 }, { r: 255, g: 153, b: 153 }, { r: 255, g: 204, b: 153 }, { r: 255, g: 255, b: 153 }, { r: 204, g: 255, b: 153 }, { r: 153, g: 255, b: 153 }, { r: 153, g: 255, b: 153 }, { r: 153, g: 255, b: 153 }, { r: 153, g: 255, b: 153 }, { r: 153, g: 255, b: 153 }, { r: 153, g: 255, b: 153 }, { r: 153, g: 255, b: 153 }, { r: 153, g: 255, b: 204 }, { r: 204, g: 204, b: 204 }, { r: 102, g: 255, b: 255 }, { r: 102, g: 204, b: 255 }, { r: 102, g: 153, b: 255 }, { r: 102, g: 102, b: 255 }, { r: 102, g: 102, b: 255 }, { r: 102, g: 102, b: 255 }, { r: 102, g: 102, b: 255 }, { r: 102, g: 102, b: 255 }, { r: 153, g: 102, b: 255 }, { r: 204, g: 102, b: 255 }, { r: 255, g: 102, b: 255 }, { r: 255, g: 102, b: 204 }, { r: 255, g: 102, b: 153 }, { r: 255, g: 102, b: 102 }, { r: 255, g: 102, b: 102 }, { r: 255, g: 102, b: 102 }, { r: 255, g: 102, b: 102 }, { r: 255, g: 102, b: 102 }, { r: 255, g: 153, b: 102 }, { r: 255, g: 204, b: 102 }, { r: 255, g: 255, b: 102 }, { r: 204, g: 255, b: 102 }, { r: 153, g: 255, b: 102 }, { r: 102, g: 255, b: 102 }, { r: 102, g: 255, b: 102 }, { r: 102, g: 255, b: 102 }, { r: 102, g: 255, b: 102 }, { r: 102, g: 255, b: 102 }, { r: 102, g: 255, b: 153 }, { r: 102, g: 255, b: 204 }, { r: 153, g: 153, b: 153 }, { r: 51, g: 255, b: 255 }, { r: 51, g: 204, b: 255 }, { r: 51, g: 153, b: 255 }, { r: 51, g: 102, b: 255 }, { r: 51, g: 51, b: 255 }, { r: 51, g: 51, b: 255 }, { r: 51, g: 51, b: 255 }, { r: 102, g: 51, b: 255 }, { r: 153, g: 51, b: 255 }, { r: 204, g: 51, b: 255 }, { r: 255, g: 51, b: 255 }, { r: 255, g: 51, b: 204 }, { r: 255, g: 51, b: 153 }, { r: 255, g: 51, b: 102 }, { r: 255, g: 51, b: 51 }, { r: 255, g: 51, b: 51 }, { r: 255, g: 51, b: 51 }, { r: 255, g: 102, b: 51 }, { r: 255, g: 153, b: 51 }, { r: 255, g: 204, b: 51 }, { r: 255, g: 255, b: 51 }, { r: 204, g: 255, b: 51 }, { r: 153, g: 255, b: 51 }, { r: 102, g: 255, b: 51 }, { r: 51, g: 255, b: 51 }, { r: 51, g: 255, b: 51 }, { r: 51, g: 255, b: 51 }, { r: 51, g: 255, b: 102 }, { r: 51, g: 255, b: 153 }, { r: 51, g: 255, b: 204 }, { r: 153, g: 153, b: 153 }, { r: 0, g: 255, b: 255 }, { r: 0, g: 204, b: 255 }, { r: 0, g: 153, b: 255 }, { r: 0, g: 102, b: 255 }, { r: 0, g: 51, b: 255 }, { r: 0, g: 0, b: 255 }, { r: 51, g: 0, b: 255 }, { r: 102, g: 0, b: 255 }, { r: 153, g: 0, b: 255 }, { r: 204, g: 0, b: 255 }, { r: 255, g: 0, b: 255 }, { r: 255, g: 0, b: 204 }, { r: 255, g: 0, b: 153 }, { r: 255, g: 0, b: 102 }, { r: 255, g: 0, b: 51 }, { r: 255, g: 0, b: 0 }, { r: 255, g: 51, b: 0 }, { r: 255, g: 102, b: 0 }, { r: 255, g: 153, b: 0 }, { r: 255, g: 204, b: 0 }, { r: 255, g: 255, b: 0 }, { r: 204, g: 255, b: 0 }, { r: 153, g: 255, b: 0 }, { r: 102, g: 255, b: 0 }, { r: 51, g: 255, b: 0 }, { r: 0, g: 255, b: 0 }, { r: 0, g: 255, b: 51 }, { r: 0, g: 255, b: 102 }, { r: 0, g: 255, b: 153 }, { r: 0, g: 255, b: 204 }, { r: 102, g: 102, b: 102 }, { r: 0, g: 204, b: 204 }, { r: 0, g: 204, b: 204 }, { r: 0, g: 153, b: 204 }, { r: 0, g: 102, b: 204 }, { r: 0, g: 51, b: 204 }, { r: 0, g: 0, b: 204 }, { r: 51, g: 0, b: 204 }, { r: 102, g: 0, b: 204 }, { r: 153, g: 0, b: 204 }, { r: 204, g: 0, b: 204 }, { r: 204, g: 0, b: 204 }, { r: 204, g: 0, b: 204 }, { r: 204, g: 0, b: 153 }, { r: 204, g: 0, b: 102 }, { r: 204, g: 0, b: 51 }, { r: 204, g: 0, b: 0 }, { r: 204, g: 51, b: 0 }, { r: 204, g: 102, b: 0 }, { r: 204, g: 153, b: 0 }, { r: 204, g: 204, b: 0 }, { r: 204, g: 204, b: 0 }, { r: 204, g: 204, b: 0 }, { r: 153, g: 204, b: 0 }, { r: 102, g: 204, b: 0 }, { r: 51, g: 204, b: 0 }, { r: 0, g: 204, b: 0 }, { r: 0, g: 204, b: 51 }, { r: 0, g: 204, b: 102 }, { r: 0, g: 204, b: 153 }, { r: 0, g: 204, b: 204 }, { r: 102, g: 102, b: 102 }, { r: 0, g: 153, b: 153 }, { r: 0, g: 153, b: 153 }, { r: 0, g: 153, b: 153 }, { r: 0, g: 102, b: 153 }, { r: 0, g: 51, b: 153 }, { r: 0, g: 0, b: 153 }, { r: 51, g: 0, b: 153 }, { r: 102, g: 0, b: 153 }, { r: 153, g: 0, b: 153 }, { r: 153, g: 0, b: 153 }, { r: 153, g: 0, b: 153 }, { r: 153, g: 0, b: 153 }, { r: 153, g: 0, b: 153 }, { r: 153, g: 0, b: 102 }, { r: 153, g: 0, b: 51 }, { r: 153, g: 0, b: 0 }, { r: 153, g: 51, b: 0 }, { r: 153, g: 102, b: 0 }, { r: 153, g: 153, b: 0 }, { r: 153, g: 153, b: 0 }, { r: 153, g: 153, b: 0 }, { r: 153, g: 153, b: 0 }, { r: 153, g: 153, b: 0 }, { r: 102, g: 153, b: 0 }, { r: 51, g: 153, b: 0 }, { r: 0, g: 153, b: 0 }, { r: 0, g: 153, b: 51 }, { r: 0, g: 153, b: 102 }, { r: 0, g: 153, b: 153 }, { r: 0, g: 153, b: 153 }, { r: 51, g: 51, b: 51 }, { r: 0, g: 102, b: 102 }, { r: 0, g: 102, b: 102 }, { r: 0, g: 102, b: 102 }, { r: 0, g: 102, b: 102 }, { r: 0, g: 51, b: 102 }, { r: 0, g: 0, b: 102 }, { r: 51, g: 0, b: 102 }, { r: 102, g: 0, b: 102 }, { r: 102, g: 0, b: 102 }, { r: 102, g: 0, b: 102 }, { r: 102, g: 0, b: 102 }, { r: 102, g: 0, b: 102 }, { r: 102, g: 0, b: 102 }, { r: 102, g: 0, b: 102 }, { r: 102, g: 0, b: 51 }, { r: 102, g: 0, b: 0 }, { r: 102, g: 51, b: 0 }, { r: 102, g: 102, b: 0 }, { r: 102, g: 102, b: 0 }, { r: 102, g: 102, b: 0 }, { r: 102, g: 102, b: 0 }, { r: 102, g: 102, b: 0 }, { r: 102, g: 102, b: 0 }, { r: 102, g: 102, b: 0 }, { r: 51, g: 102, b: 0 }, { r: 0, g: 102, b: 0 }, { r: 0, g: 102, b: 51 }, { r: 0, g: 102, b: 102 }, { r: 0, g: 102, b: 102 }, { r: 0, g: 102, b: 102 }, { r: 0, g: 0, b: 0 }, { r: 0, g: 51, b: 51 }, { r: 0, g: 51, b: 51 }, { r: 0, g: 51, b: 51 }, { r: 0, g: 51, b: 51 }, { r: 0, g: 51, b: 51 }, { r: 0, g: 0, b: 51 }, { r: 51, g: 0, b: 51 }, { r: 51, g: 0, b: 51 }, { r: 51, g: 0, b: 51 }, { r: 51, g: 0, b: 51 }, { r: 51, g: 0, b: 51 }, { r: 51, g: 0, b: 51 }, { r: 51, g: 0, b: 51 }, { r: 51, g: 0, b: 51 }, { r: 51, g: 0, b: 51 }, { r: 51, g: 0, b: 0 }, { r: 51, g: 51, b: 0 }, { r: 51, g: 51, b: 0 }, { r: 51, g: 51, b: 0 }, { r: 51, g: 51, b: 0 }, { r: 51, g: 51, b: 0 }, { r: 51, g: 51, b: 0 }, { r: 51, g: 51, b: 0 }, { r: 51, g: 51, b: 0 }, { r: 0, g: 51, b: 0 }, { r: 0, g: 51, b: 51 }, { r: 0, g: 51, b: 51 }, { r: 0, g: 51, b: 51 }, { r: 0, g: 51, b: 51 }, { r: 51, g: 51, b: 51 }],
+	    columns: 31,
+	    rows: 9
+	  }
 	};
 
 /***/ },
@@ -13291,7 +13321,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _react = __webpack_require__(17);
@@ -13333,240 +13363,261 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var renderAxisMap = {
-	    'XY': [0, 1, 2],
-	    'ZY': [2, 1, 0],
-	    'XZ': [0, 2, 1]
+	  XY: [0, 1, 2],
+	  ZY: [2, 1, 0],
+	  XZ: [0, 2, 1]
 	},
 	    chartAxisNames = ['x', 'y', 'z'];
 
 	exports.default = _react2.default.createClass({
 
-	    displayName: 'Probe3DViewer',
+	  displayName: 'Probe3DViewer',
 
-	    propTypes: {
-	        imageBuilder: _react2.default.PropTypes.object.isRequired,
-	        probe: _react2.default.PropTypes.bool,
-	        queryDataModel: _react2.default.PropTypes.object.isRequired
-	    },
+	  propTypes: {
+	    imageBuilder: _react2.default.PropTypes.object.isRequired,
+	    probe: _react2.default.PropTypes.bool,
+	    queryDataModel: _react2.default.PropTypes.object.isRequired
+	  },
 
-	    getDefaultProps: function getDefaultProps() {
-	        return {
-	            probe: true
-	        };
-	    },
-	    getInitialState: function getInitialState() {
-	        return {
-	            probe: [this.props.imageBuilder.getProbe()[0], this.props.imageBuilder.getProbe()[1], this.props.imageBuilder.getProbe()[2]],
-	            chartVisible: false,
-	            chartSize: { width: 300, height: 300 },
-	            chartData: { xRange: [0, 1], fields: [] },
-	            chartAxis: 0
-	        };
-	    },
-
-
-	    // Auto mount listener unless notified otherwise
-	    componentWillMount: function componentWillMount() {
-	        var _this = this;
-
-	        var queryDataModel = this.props.queryDataModel,
-	            imageBuilder = this.props.imageBuilder;
-
-	        this.dragChartFlag = false;
-
-	        // Update probe chart data if data change
-	        this.queryDataModelDataSubscription = queryDataModel.onDataChange(function (data, envelope) {
-	            _this.setState({ chartData: imageBuilder.getProbeLine(_this.liveChartAxis) });
-	        });
-
-	        // Render method change
-	        imageBuilder.setRenderMethodMutable();
-	        this.renderMethodChangeSubscription = imageBuilder.onRenderMethodChange(function (data, envelope) {
-	            if (_this.state.chartVisible) {
-	                _this.validateChartAxis();
-	            }
-	        });
-
-	        // Chart management
-	        imageBuilder.setProbeLineNotification(true);
-	        this.chartListenerSubscription = imageBuilder.onProbeLineReady(function (data, envelope) {
-	            var chartData = data[chartAxisNames[_this.liveChartAxis]];
-	            _this.setState({ chartData: chartData });
-	        });
-
-	        this.probeListenerSubscription = imageBuilder.onProbeChange(function (probe, envelope) {
-	            _this.setState({ probe: probe });
-	        });
-	    },
-	    componentDidUpdate: function componentDidUpdate() {
-	        if (this.state.chartVisible) {
-	            this.refs.chartViewer.updateDimensions();
-	        }
-	    },
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      probe: true
+	    };
+	  },
+	  getInitialState: function getInitialState() {
+	    return {
+	      probe: [this.props.imageBuilder.getProbe()[0], this.props.imageBuilder.getProbe()[1], this.props.imageBuilder.getProbe()[2]],
+	      chartVisible: false,
+	      chartSize: {
+	        width: 300,
+	        height: 300
+	      },
+	      chartData: {
+	        xRange: [0, 1],
+	        fields: []
+	      },
+	      chartAxis: 0
+	    };
+	  },
 
 
-	    // Auto unmount listener
-	    componentWillUnmount: function componentWillUnmount() {
-	        if (this.queryDataModelDataSubscription) {
-	            this.queryDataModelDataSubscription.unsubscribe();
-	            this.queryDataModelDataSubscription = null;
-	        }
-	        if (this.renderMethodChangeSubscription) {
-	            this.renderMethodChangeSubscription.unsubscribe();
-	            this.renderMethodChangeSubscription = null;
-	        }
-	        if (this.chartListenerSubscription) {
-	            this.chartListenerSubscription.unsubscribe();
-	            this.chartListenerSubscription = null;
-	        }
-	        if (this.probeListenerSubscription) {
-	            this.probeListenerSubscription.unsubscribe();
-	            this.probeListenerSubscription = null;
-	        }
-	    },
-	    validateChartAxis: function validateChartAxis() {
-	        var renderCoords = this.props.imageBuilder.getRenderMethod(),
-	            chartAxis = 'XYZ'[this.liveChartAxis];
+	  // Auto mount listener unless notified otherwise
+	  componentWillMount: function componentWillMount() {
+	    var _this = this;
 
-	        if (renderCoords.indexOf(chartAxis) === -1) {
-	            var chartData = this.props.imageBuilder.getProbeLine(chartAxis);
+	    var queryDataModel = this.props.queryDataModel,
+	        imageBuilder = this.props.imageBuilder;
 
-	            chartAxis = 'XYZ'.indexOf(renderCoords[0]);
+	    this.dragChartFlag = false;
 
-	            this.liveChartAxis = chartAxis;
-	            this.setState({ chartAxis: chartAxis, chartData: chartData });
-	        }
-	    },
-	    onChartVisibilityChange: function onChartVisibilityChange(isOpen) {
-	        if (isOpen) {
-	            this.validateChartAxis();
-	        }
-	        this.setState({ chartVisible: isOpen });
-	    },
-	    updateChart: function updateChart(event) {
-	        var idx = Number(event.target.getAttribute('data-index')),
-	            imageBuilder = this.props.imageBuilder,
-	            chartData = imageBuilder.getProbeLine(idx);
+	    // Update probe chart data if data change
+	    this.queryDataModelDataSubscription = queryDataModel.onDataChange(function (data, envelope) {
+	      _this.setState({ chartData: imageBuilder.getProbeLine(_this.liveChartAxis) });
+	    });
 
-	        this.liveChartAxis = idx;
-	        this.setState({ chartData: chartData, chartAxis: idx });
-	    },
-	    dragOn: function dragOn(event) {
-	        var el = _reactDom2.default.findDOMNode(this.refs.chartContainer),
-	            top = Number(el.style.top.replace('px', '')),
-	            left = Number(el.style.left.replace('px', ''));
+	    // Render method change
+	    imageBuilder.setRenderMethodMutable();
+	    this.renderMethodChangeSubscription = imageBuilder.onRenderMethodChange(function (data, envelope) {
+	      if (_this.state.chartVisible) {
+	        _this.validateChartAxis();
+	      }
+	    });
 
-	        this.dragChartFlag = true;
-	        this.dragPosition = [event.clientX - left, event.clientY - top];
-	    },
-	    dragOff: function dragOff() {
-	        this.dragChartFlag = false;
-	    },
-	    dragChart: function dragChart(event) {
-	        if (this.dragChartFlag) {
-	            var el = _reactDom2.default.findDOMNode(this.refs.chartContainer);
-	            el.style.left = event.clientX - this.dragPosition[0] + 'px';
-	            el.style.top = event.clientY - this.dragPosition[1] + 'px';
-	        }
-	    },
-	    render: function render() {
-	        var _this2 = this;
+	    // Chart management
+	    imageBuilder.setProbeLineNotification(true);
+	    this.chartListenerSubscription = imageBuilder.onProbeLineReady(function (data, envelope) {
+	      var chartData = data[chartAxisNames[_this.liveChartAxis]];
+	      _this.setState({ chartData: chartData });
+	    });
 
-	        var queryDataModel = this.props.queryDataModel,
-	            imageBuilder = this.props.imageBuilder,
-	            dimensions = imageBuilder.metadata.dimensions,
-	            axisMap = renderAxisMap[this.props.imageBuilder.getRenderMethod()];
+	    this.probeListenerSubscription = imageBuilder.onProbeChange(function (probe, envelope) {
+	      _this.setState({ probe: probe });
+	    });
+	  },
+	  componentDidUpdate: function componentDidUpdate() {
+	    if (this.state.chartVisible) {
+	      this.refs.chartViewer.updateDimensions();
+	    }
+	  },
 
-	        var buttonClasses = [];
-	        [0, 1, 2].forEach(function (el) {
-	            var classes = [];
-	            if (axisMap[2] === el) {
-	                classes.push(_Probe3DViewer2.default.hidden);
-	            } else if (_this2.state.chartAxis === el) {
-	                classes.push(_Probe3DViewer2.default.selectedButton);
-	            } else {
-	                classes.push(_Probe3DViewer2.default.button);
-	            }
-	            buttonClasses.push(classes.join(' '));
-	        });
-	        return _react2.default.createElement(
+
+	  // Auto unmount listener
+	  componentWillUnmount: function componentWillUnmount() {
+	    if (this.queryDataModelDataSubscription) {
+	      this.queryDataModelDataSubscription.unsubscribe();
+	      this.queryDataModelDataSubscription = null;
+	    }
+	    if (this.renderMethodChangeSubscription) {
+	      this.renderMethodChangeSubscription.unsubscribe();
+	      this.renderMethodChangeSubscription = null;
+	    }
+	    if (this.chartListenerSubscription) {
+	      this.chartListenerSubscription.unsubscribe();
+	      this.chartListenerSubscription = null;
+	    }
+	    if (this.probeListenerSubscription) {
+	      this.probeListenerSubscription.unsubscribe();
+	      this.probeListenerSubscription = null;
+	    }
+	  },
+	  validateChartAxis: function validateChartAxis() {
+	    var renderCoords = this.props.imageBuilder.getRenderMethod(),
+	        chartAxis = 'XYZ'[this.liveChartAxis];
+
+	    if (renderCoords.indexOf(chartAxis) === -1) {
+	      var chartData = this.props.imageBuilder.getProbeLine(chartAxis);
+
+	      chartAxis = 'XYZ'.indexOf(renderCoords[0]);
+
+	      this.liveChartAxis = chartAxis;
+	      this.setState({ chartAxis: chartAxis, chartData: chartData });
+	    }
+	  },
+	  onChartVisibilityChange: function onChartVisibilityChange(isOpen) {
+	    if (isOpen) {
+	      this.validateChartAxis();
+	    }
+	    this.setState({ chartVisible: isOpen });
+	  },
+	  updateChart: function updateChart(event) {
+	    var idx = Number(event.target.getAttribute('data-index')),
+	        imageBuilder = this.props.imageBuilder,
+	        chartData = imageBuilder.getProbeLine(idx);
+
+	    this.liveChartAxis = idx;
+	    this.setState({ chartData: chartData, chartAxis: idx });
+	  },
+	  dragOn: function dragOn(event) {
+	    var el = _reactDom2.default.findDOMNode(this.refs.chartContainer),
+	        top = Number(el.style.top.replace('px', '')),
+	        left = Number(el.style.left.replace('px', ''));
+
+	    this.dragChartFlag = true;
+	    this.dragPosition = [event.clientX - left, event.clientY - top];
+	  },
+	  dragOff: function dragOff() {
+	    this.dragChartFlag = false;
+	  },
+	  dragChart: function dragChart(event) {
+	    if (this.dragChartFlag) {
+	      var el = _reactDom2.default.findDOMNode(this.refs.chartContainer);
+	      el.style.left = event.clientX - this.dragPosition[0] + 'px';
+	      el.style.top = event.clientY - this.dragPosition[1] + 'px';
+	    }
+	  },
+	  render: function render() {
+	    var _this2 = this;
+
+	    var queryDataModel = this.props.queryDataModel,
+	        imageBuilder = this.props.imageBuilder,
+	        dimensions = imageBuilder.metadata.dimensions,
+	        axisMap = renderAxisMap[this.props.imageBuilder.getRenderMethod()];
+
+	    var buttonClasses = [];
+	    [0, 1, 2].forEach(function (el) {
+	      var classes = [];
+	      if (axisMap[2] === el) {
+	        classes.push(_Probe3DViewer2.default.hidden);
+	      } else if (_this2.state.chartAxis === el) {
+	        classes.push(_Probe3DViewer2.default.selectedButton);
+	      } else {
+	        classes.push(_Probe3DViewer2.default.button);
+	      }
+	      buttonClasses.push(classes.join(' '));
+	    });
+
+	    return _react2.default.createElement(
+	      'div',
+	      { className: _Probe3DViewer2.default.container },
+	      _react2.default.createElement(
+	        _AbstractViewerMenu2.default,
+	        { queryDataModel: queryDataModel, imageBuilder: imageBuilder, mouseListener: imageBuilder.getListeners() },
+	        _react2.default.createElement(_LookupTableManagerControl2.default, {
+	          key: 'LookupTableManagerWidget',
+	          ref: 'LookupTableManagerWidget',
+	          lookupTableManager: imageBuilder.lookupTableManager,
+	          field: imageBuilder.getField()
+	        }),
+	        _react2.default.createElement(_ProbeControl2.default, {
+	          ref: 'ProbeControl',
+	          imageBuilder: imageBuilder
+	        }),
+	        _react2.default.createElement(
+	          _CollapsibleWidget2.default,
+	          {
+	            ref: 'chartCollapsable',
+	            title: 'Chart',
+	            visible: this.props.probe && imageBuilder.isCrossHairEnabled(),
+	            onChange: this.onChartVisibilityChange,
+	            open: this.state.chartVisible
+	          },
+	          _react2.default.createElement(
 	            'div',
-	            { className: _Probe3DViewer2.default.container },
+	            {
+	              ref: 'chartButtons',
+	              className: _Probe3DViewer2.default.row
+	            },
 	            _react2.default.createElement(
-	                _AbstractViewerMenu2.default,
-	                { queryDataModel: queryDataModel, imageBuilder: imageBuilder, mouseListener: imageBuilder.getListeners() },
-	                _react2.default.createElement(_LookupTableManagerControl2.default, {
-	                    key: 'LookupTableManagerWidget',
-	                    ref: 'LookupTableManagerWidget',
-	                    lookupTableManager: imageBuilder.lookupTableManager,
-	                    field: imageBuilder.getField()
-	                }),
-	                _react2.default.createElement(_ProbeControl2.default, {
-	                    ref: 'ProbeControl',
-	                    imageBuilder: imageBuilder }),
-	                _react2.default.createElement(
-	                    _CollapsibleWidget2.default,
-	                    {
-	                        ref: 'chartCollapsable',
-	                        title: 'Chart',
-	                        visible: this.props.probe && imageBuilder.isCrossHairEnabled(),
-	                        onChange: this.onChartVisibilityChange,
-	                        open: this.state.chartVisible },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { ref: 'chartButtons',
-	                            className: _Probe3DViewer2.default.row },
-	                        _react2.default.createElement(
-	                            'button',
-	                            {
-	                                className: buttonClasses[0],
-	                                type: 'button', 'data-index': '0',
-	                                onClick: this.updateChart },
-	                            'X'
-	                        ),
-	                        _react2.default.createElement(
-	                            'button',
-	                            {
-	                                className: buttonClasses[1],
-	                                type: 'button', 'data-index': '1',
-	                                onClick: this.updateChart },
-	                            'Y'
-	                        ),
-	                        _react2.default.createElement(
-	                            'button',
-	                            {
-	                                className: buttonClasses[2],
-	                                type: 'button', 'data-index': '2',
-	                                onClick: this.updateChart },
-	                            'Z'
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    _CollapsibleWidget2.default,
-	                    {
-	                        ref: 'queryDataModelParameters',
-	                        title: 'Parameters',
-	                        visible: queryDataModel.originalData.arguments_order.length > 0 },
-	                    _react2.default.createElement(_QueryDataModelWidget2.default, { model: queryDataModel })
-	                )
+	              'button',
+	              {
+	                className: buttonClasses[0],
+	                type: 'button',
+	                'data-index': '0',
+	                onClick: this.updateChart
+	              },
+	              'X'
 	            ),
 	            _react2.default.createElement(
-	                'div',
-	                { ref: 'chartContainer',
-	                    className: this.state.chartVisible && imageBuilder.isCrossHairEnabled() ? _Probe3DViewer2.default.chartContainer : _Probe3DViewer2.default.hidden,
-	                    onMouseMove: this.dragChart,
-	                    onMouseUp: this.dragOff,
-	                    onMouseDown: this.dragOn },
-	                _react2.default.createElement(_LineChartViewer2.default, {
-	                    ref: 'chartViewer',
-	                    cursor: this.state.probe[this.state.chartAxis] / dimensions[this.state.chartAxis],
-	                    data: this.state.chartData,
-	                    width: this.state.chartSize.width,
-	                    height: this.state.chartSize.height })
+	              'button',
+	              {
+	                className: buttonClasses[1],
+	                type: 'button',
+	                'data-index': '1',
+	                onClick: this.updateChart
+	              },
+	              'Y'
+	            ),
+	            _react2.default.createElement(
+	              'button',
+	              {
+	                className: buttonClasses[2],
+	                type: 'button',
+	                'data-index': '2',
+	                onClick: this.updateChart
+	              },
+	              'Z'
 	            )
-	        );
-	    }
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _CollapsibleWidget2.default,
+	          {
+	            ref: 'queryDataModelParameters',
+	            title: 'Parameters',
+	            visible: queryDataModel.originalData.arguments_order.length > 0
+	          },
+	          _react2.default.createElement(_QueryDataModelWidget2.default, { model: queryDataModel })
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        {
+	          ref: 'chartContainer',
+	          className: this.state.chartVisible && imageBuilder.isCrossHairEnabled() ? _Probe3DViewer2.default.chartContainer : _Probe3DViewer2.default.hidden,
+	          onMouseMove: this.dragChart,
+	          onMouseUp: this.dragOff,
+	          onMouseDown: this.dragOn
+	        },
+	        _react2.default.createElement(_LineChartViewer2.default, {
+	          ref: 'chartViewer',
+	          cursor: this.state.probe[this.state.chartAxis] / dimensions[this.state.chartAxis],
+	          data: this.state.chartData,
+	          width: this.state.chartSize.width,
+	          height: this.state.chartSize.height
+	        })
+	      )
+	    );
+	  }
 	});
 
 /***/ },
@@ -33128,7 +33179,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _react = __webpack_require__(17);
@@ -33155,188 +33206,205 @@
 
 	exports.default = _react2.default.createClass({
 
-	    displayName: 'AbstractViewerMenu',
+	  displayName: 'AbstractViewerMenu',
 
-	    propTypes: {
-	        children: _react2.default.PropTypes.array,
-	        config: _react2.default.PropTypes.object,
-	        geometryBuilder: _react2.default.PropTypes.object,
-	        imageBuilder: _react2.default.PropTypes.object,
-	        layout: _react2.default.PropTypes.string,
-	        magicLensController: _react2.default.PropTypes.object,
-	        mouseListener: _react2.default.PropTypes.object,
-	        queryDataModel: _react2.default.PropTypes.object,
-	        renderer: _react2.default.PropTypes.string,
-	        renderers: _react2.default.PropTypes.object
-	    },
+	  propTypes: {
+	    children: _react2.default.PropTypes.array,
+	    config: _react2.default.PropTypes.object,
+	    geometryBuilder: _react2.default.PropTypes.object,
+	    imageBuilder: _react2.default.PropTypes.object,
+	    layout: _react2.default.PropTypes.string,
+	    magicLensController: _react2.default.PropTypes.object,
+	    mouseListener: _react2.default.PropTypes.object,
+	    queryDataModel: _react2.default.PropTypes.object,
+	    renderer: _react2.default.PropTypes.string,
+	    renderers: _react2.default.PropTypes.object
+	  },
 
-	    getDefaultProps: function getDefaultProps() {
-	        return {
-	            config: {},
-	            renderer: 'ImageRenderer'
-	        };
-	    },
-	    getInitialState: function getInitialState() {
-	        return {
-	            collapsed: true,
-	            speedIdx: 0,
-	            speeds: [20, 50, 100, 200, 500],
-	            record: false
-	        };
-	    },
-
-
-	    // Auto mount listener unless notified otherwise
-	    componentWillMount: function componentWillMount() {
-	        this.attachListener(this.props.queryDataModel);
-	    },
-	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	        var previousDataModel = this.props.queryDataModel,
-	            nextDataModel = nextProps.queryDataModel;
-
-	        if (previousDataModel !== nextDataModel) {
-	            this.detachListener();
-	            this.attachListener(nextDataModel);
-	        }
-	    },
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      config: {},
+	      renderer: 'ImageRenderer'
+	    };
+	  },
+	  getInitialState: function getInitialState() {
+	    return {
+	      collapsed: true,
+	      speedIdx: 0,
+	      speeds: [20, 50, 100, 200, 500],
+	      record: false
+	    };
+	  },
 
 
-	    // Auto unmount listener
-	    componentWillUnmount: function componentWillUnmount() {
-	        this.detachListener();
-	    },
-	    attachListener: function attachListener(dataModel) {
-	        var _this = this;
+	  // Auto mount listener unless notified otherwise
+	  componentWillMount: function componentWillMount() {
+	    this.attachListener(this.props.queryDataModel);
+	  },
+	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    var previousDataModel = this.props.queryDataModel,
+	        nextDataModel = nextProps.queryDataModel;
 
-	        this.detachListener();
-	        this.queryDataModelChangeSubscription = dataModel.onStateChange(function (data, envelope) {
-	            _this.forceUpdate();
-	        });
-	    },
-	    detachListener: function detachListener() {
-	        if (this.queryDataModelChangeSubscription) {
-	            this.queryDataModelChangeSubscription.unsubscribe();
-	            this.queryDataModelChangeSubscription = null;
-	        }
-	    },
-	    toggleRecord: function toggleRecord() {
-	        var record = !this.state.record;
-	        this.setState({ record: record });
-	        this.getRenderer().recordImages(record);
-	    },
-	    togglePanel: function togglePanel() {
-	        this.setState({ collapsed: !this.state.collapsed });
-	        this.props.queryDataModel.fetchData();
-	    },
-	    toggleLens: function toggleLens() {
-	        var magicLensController = this.props.magicLensController;
-	        if (magicLensController) {
-	            magicLensController.toggleLens();
-	            this.forceUpdate();
-	        }
-	    },
-	    resetCamera: function resetCamera() {
-	        if (this.isMounted() && (this.props.renderer === 'ImageRenderer' || this.props.renderer === 'GeometryRenderer')) {
-	            this.refs.imageRenderer.resetCamera();
-	        }
-	    },
-	    play: function play() {
-	        this.props.queryDataModel.animate(true, this.state.speeds[this.state.speedIdx]);
-	    },
-	    stop: function stop() {
-	        this.props.queryDataModel.animate(false);
-	    },
-	    updateSpeed: function updateSpeed() {
-	        var newIdx = (this.state.speedIdx + 1) % this.state.speeds.length,
-	            queryDataModel = this.props.queryDataModel;
-
-	        this.setState({ speedIdx: newIdx });
-	        if (queryDataModel.isAnimating()) {
-	            queryDataModel.animate(true, this.state.speeds[newIdx]);
-	        }
-	    },
-	    getRenderer: function getRenderer() {
-	        return this.refs.imageRenderer;
-	    },
-
-
-	    /* eslint-disable complexity */
-	    render: function render() {
-	        var queryDataModel = this.props.queryDataModel,
-	            magicLensController = this.props.magicLensController,
-	            rootImageBuilder = magicLensController || this.props.imageBuilder,
-	            renderer = null,
-	            serverRecording = !!this.props.config.Recording,
-	            isImageRenderer = this.props.renderer === 'ImageRenderer',
-	            isMultiViewer = this.props.renderer === 'MultiViewRenderer',
-	            isGeometryViewer = this.props.renderer === 'GeometryRenderer';
-
-	        if (isImageRenderer) {
-	            renderer = _react2.default.createElement(_ImageRenderer2.default, {
-	                ref: 'imageRenderer',
-	                className: _AbstractViewerMenu2.default.renderer,
-	                imageBuilder: rootImageBuilder,
-	                listener: this.props.mouseListener || rootImageBuilder.getListeners()
-	            });
-	        }
-
-	        if (isMultiViewer) {
-	            renderer = _react2.default.createElement(_MultiLayoutRenderer2.default, {
-	                ref: 'imageRenderer',
-	                className: _AbstractViewerMenu2.default.renderer,
-	                renderers: this.props.renderers,
-	                layout: this.props.layout
-	            });
-	        }
-
-	        if (isGeometryViewer) {
-	            renderer = _react2.default.createElement(_GeometryRenderer2.default, {
-	                ref: 'imageRenderer',
-	                className: _AbstractViewerMenu2.default.renderer,
-	                geometryBuilder: this.props.geometryBuilder
-	            });
-	        }
-
-	        return _react2.default.createElement(
-	            'div',
-	            { className: _AbstractViewerMenu2.default.container },
-	            _react2.default.createElement(
-	                'div',
-	                {
-	                    className: this.state.collapsed ? _AbstractViewerMenu2.default.collapsedControl : _AbstractViewerMenu2.default.control },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: _AbstractViewerMenu2.default.controlBar },
-	                    _react2.default.createElement('i', { className: magicLensController ? magicLensController.isFront() ? _AbstractViewerMenu2.default.magicLensButtonIn : _AbstractViewerMenu2.default.magicLensButtonOut : _AbstractViewerMenu2.default.hidden,
-	                        onClick: this.toggleLens }),
-	                    _react2.default.createElement('i', { className: serverRecording && isImageRenderer && this.props.imageBuilder.handleRecord ? this.state.record ? _AbstractViewerMenu2.default.recordButtonOn : _AbstractViewerMenu2.default.recordButtonOff : _AbstractViewerMenu2.default.hidden,
-	                        onClick: this.toggleRecord }),
-	                    _react2.default.createElement('i', { className: isImageRenderer || isGeometryViewer ? _AbstractViewerMenu2.default.resetCameraButton : _AbstractViewerMenu2.default.hidden,
-	                        onClick: this.resetCamera }),
-	                    _react2.default.createElement('i', { className: queryDataModel.hasAnimationFlag() && !queryDataModel.isAnimating() ? _AbstractViewerMenu2.default.playButton : _AbstractViewerMenu2.default.hidden,
-	                        onClick: this.play }),
-	                    _react2.default.createElement('i', { className: queryDataModel.isAnimating() ? _AbstractViewerMenu2.default.stopButton : _AbstractViewerMenu2.default.hidden,
-	                        onClick: this.stop }),
-	                    _react2.default.createElement('i', { className: queryDataModel.hasAnimationFlag() ? _AbstractViewerMenu2.default.speedButton : _AbstractViewerMenu2.default.hidden,
-	                        onClick: this.updateSpeed }),
-	                    _react2.default.createElement(
-	                        'i',
-	                        { className: queryDataModel.hasAnimationFlag() ? _AbstractViewerMenu2.default.animationSpeed : _AbstractViewerMenu2.default.hidden,
-	                            onClick: this.updateSpeed },
-	                        this.state.speeds[this.state.speedIdx] + 'ms'
-	                    ),
-	                    _react2.default.createElement('i', { className: this.state.collapsed ? _AbstractViewerMenu2.default.collapsedMenuButton : _AbstractViewerMenu2.default.menuButton,
-	                        onClick: this.togglePanel })
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: _AbstractViewerMenu2.default.controlContent },
-	                    this.props.children
-	                )
-	            ),
-	            renderer
-	        );
+	    if (previousDataModel !== nextDataModel) {
+	      this.detachListener();
+	      this.attachListener(nextDataModel);
 	    }
+	  },
+
+
+	  // Auto unmount listener
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.detachListener();
+	  },
+	  attachListener: function attachListener(dataModel) {
+	    var _this = this;
+
+	    this.detachListener();
+	    this.queryDataModelChangeSubscription = dataModel.onStateChange(function (data, envelope) {
+	      _this.forceUpdate();
+	    });
+	  },
+	  detachListener: function detachListener() {
+	    if (this.queryDataModelChangeSubscription) {
+	      this.queryDataModelChangeSubscription.unsubscribe();
+	      this.queryDataModelChangeSubscription = null;
+	    }
+	  },
+	  toggleRecord: function toggleRecord() {
+	    var record = !this.state.record;
+	    this.setState({ record: record });
+	    this.getRenderer().recordImages(record);
+	  },
+	  togglePanel: function togglePanel() {
+	    this.setState({ collapsed: !this.state.collapsed });
+	    this.props.queryDataModel.fetchData();
+	  },
+	  toggleLens: function toggleLens() {
+	    var magicLensController = this.props.magicLensController;
+	    if (magicLensController) {
+	      magicLensController.toggleLens();
+	      this.forceUpdate();
+	    }
+	  },
+	  resetCamera: function resetCamera() {
+	    if (this.isMounted() && (this.props.renderer === 'ImageRenderer' || this.props.renderer === 'GeometryRenderer')) {
+	      this.refs.imageRenderer.resetCamera();
+	    }
+	  },
+	  play: function play() {
+	    this.props.queryDataModel.animate(true, this.state.speeds[this.state.speedIdx]);
+	  },
+	  stop: function stop() {
+	    this.props.queryDataModel.animate(false);
+	  },
+	  updateSpeed: function updateSpeed() {
+	    var newIdx = (this.state.speedIdx + 1) % this.state.speeds.length,
+	        queryDataModel = this.props.queryDataModel;
+
+	    this.setState({ speedIdx: newIdx });
+	    if (queryDataModel.isAnimating()) {
+	      queryDataModel.animate(true, this.state.speeds[newIdx]);
+	    }
+	  },
+	  getRenderer: function getRenderer() {
+	    return this.refs.imageRenderer;
+	  },
+
+
+	  /* eslint-disable complexity */
+	  render: function render() {
+	    var queryDataModel = this.props.queryDataModel,
+	        magicLensController = this.props.magicLensController,
+	        rootImageBuilder = magicLensController || this.props.imageBuilder,
+	        renderer = null,
+	        serverRecording = !!this.props.config.Recording,
+	        isImageRenderer = this.props.renderer === 'ImageRenderer',
+	        isMultiViewer = this.props.renderer === 'MultiViewRenderer',
+	        isGeometryViewer = this.props.renderer === 'GeometryRenderer';
+
+	    if (isImageRenderer) {
+	      renderer = _react2.default.createElement(_ImageRenderer2.default, {
+	        ref: 'imageRenderer',
+	        className: _AbstractViewerMenu2.default.renderer,
+	        imageBuilder: rootImageBuilder,
+	        listener: this.props.mouseListener || rootImageBuilder.getListeners()
+	      });
+	    }
+
+	    if (isMultiViewer) {
+	      renderer = _react2.default.createElement(_MultiLayoutRenderer2.default, {
+	        ref: 'imageRenderer',
+	        className: _AbstractViewerMenu2.default.renderer,
+	        renderers: this.props.renderers,
+	        layout: this.props.layout
+	      });
+	    }
+
+	    if (isGeometryViewer) {
+	      renderer = _react2.default.createElement(_GeometryRenderer2.default, {
+	        ref: 'imageRenderer',
+	        className: _AbstractViewerMenu2.default.renderer,
+	        geometryBuilder: this.props.geometryBuilder
+	      });
+	    }
+
+	    return _react2.default.createElement(
+	      'div',
+	      { className: _AbstractViewerMenu2.default.container },
+	      _react2.default.createElement(
+	        'div',
+	        {
+	          className: this.state.collapsed ? _AbstractViewerMenu2.default.collapsedControl : _AbstractViewerMenu2.default.control
+	        },
+	        _react2.default.createElement(
+	          'div',
+	          { className: _AbstractViewerMenu2.default.controlBar },
+	          _react2.default.createElement('i', {
+	            className: magicLensController ? magicLensController.isFront() ? _AbstractViewerMenu2.default.magicLensButtonIn : _AbstractViewerMenu2.default.magicLensButtonOut : _AbstractViewerMenu2.default.hidden,
+	            onClick: this.toggleLens
+	          }),
+	          _react2.default.createElement('i', {
+	            className: serverRecording && isImageRenderer && this.props.imageBuilder.handleRecord ? this.state.record ? _AbstractViewerMenu2.default.recordButtonOn : _AbstractViewerMenu2.default.recordButtonOff : _AbstractViewerMenu2.default.hidden,
+	            onClick: this.toggleRecord
+	          }),
+	          _react2.default.createElement('i', {
+	            className: isImageRenderer || isGeometryViewer ? _AbstractViewerMenu2.default.resetCameraButton : _AbstractViewerMenu2.default.hidden,
+	            onClick: this.resetCamera
+	          }),
+	          _react2.default.createElement('i', {
+	            className: queryDataModel.hasAnimationFlag() && !queryDataModel.isAnimating() ? _AbstractViewerMenu2.default.playButton : _AbstractViewerMenu2.default.hidden,
+	            onClick: this.play
+	          }),
+	          _react2.default.createElement('i', {
+	            className: queryDataModel.isAnimating() ? _AbstractViewerMenu2.default.stopButton : _AbstractViewerMenu2.default.hidden,
+	            onClick: this.stop
+	          }),
+	          _react2.default.createElement('i', {
+	            className: queryDataModel.hasAnimationFlag() ? _AbstractViewerMenu2.default.speedButton : _AbstractViewerMenu2.default.hidden,
+	            onClick: this.updateSpeed
+	          }),
+	          _react2.default.createElement(
+	            'i',
+	            {
+	              className: queryDataModel.hasAnimationFlag() ? _AbstractViewerMenu2.default.animationSpeed : _AbstractViewerMenu2.default.hidden,
+	              onClick: this.updateSpeed
+	            },
+	            this.state.speeds[this.state.speedIdx] + 'ms'
+	          ),
+	          _react2.default.createElement('i', {
+	            className: this.state.collapsed ? _AbstractViewerMenu2.default.collapsedMenuButton : _AbstractViewerMenu2.default.menuButton,
+	            onClick: this.togglePanel
+	          })
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: _AbstractViewerMenu2.default.controlContent },
+	          this.props.children
+	        )
+	      ),
+	      renderer
+	    );
+	  }
 	});
 
 /***/ },
@@ -33346,7 +33414,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _react = __webpack_require__(17);
@@ -33365,68 +33433,75 @@
 
 	exports.default = _react2.default.createClass({
 
-	    displayName: 'GeometryRenderer',
+	  displayName: 'GeometryRenderer',
 
-	    propTypes: {
-	        geometryBuilder: _react2.default.PropTypes.object
-	    },
+	  propTypes: {
+	    geometryBuilder: _react2.default.PropTypes.object
+	  },
 
-	    getDefaultProps: function getDefaultProps() {
-	        return {};
-	    },
-	    getInitialState: function getInitialState() {
-	        return { width: 200, height: 200 };
-	    },
-	    componentWillMount: function componentWillMount() {
-	        // Listen to window resize
-	        this.sizeSubscription = _SizeHelper2.default.onSizeChange(this.updateDimensions);
+	  getDefaultProps: function getDefaultProps() {
+	    return {};
+	  },
+	  getInitialState: function getInitialState() {
+	    return {
+	      width: 200,
+	      height: 200
+	    };
+	  },
+	  componentWillMount: function componentWillMount() {
+	    // Listen to window resize
+	    this.sizeSubscription = _SizeHelper2.default.onSizeChange(this.updateDimensions);
 
-	        // Make sure we monitor window size if it is not already the case
-	        _SizeHelper2.default.startListening();
-	    },
-	    componentDidMount: function componentDidMount() {
-	        if (this.props.geometryBuilder) {
-	            this.props.geometryBuilder.configureRenderer(_reactDom2.default.findDOMNode(this.refs.canvasRenderer));
-	            this.props.geometryBuilder.render();
-	        }
-	        this.updateDimensions();
-	    },
-	    componentDidUpdate: function componentDidUpdate(nextProps, nextState) {
-	        this.updateDimensions();
-	    },
-	    componentWillUnmount: function componentWillUnmount() {
-	        // Remove window listener
-	        if (this.sizeSubscription) {
-	            this.sizeSubscription.unsubscribe();
-	            this.sizeSubscription = null;
-	        }
-	    },
-	    updateDimensions: function updateDimensions() {
-	        var el = _reactDom2.default.findDOMNode(this).parentNode,
-	            elSize = _SizeHelper2.default.getSize(el);
-
-	        if (el && (this.state.width !== elSize.clientWidth || this.state.height !== elSize.clientHeight)) {
-	            this.setState({ width: elSize.clientWidth, height: elSize.clientHeight });
-
-	            if (this.props.geometryBuilder) {
-	                this.props.geometryBuilder.updateSize(innerWidth, innerHeight);
-	            }
-	            return true;
-	        }
-	        return false;
-	    },
-	    resetCamera: function resetCamera() {
-	        if (this.props.geometryBuilder) {
-	            this.props.geometryBuilder.resetCamera();
-	        }
-	    },
-	    render: function render() {
-	        return _react2.default.createElement('canvas', {
-	            className: 'CanvasImageRenderer',
-	            ref: 'canvasRenderer',
-	            width: this.state.width,
-	            height: this.state.height });
+	    // Make sure we monitor window size if it is not already the case
+	    _SizeHelper2.default.startListening();
+	  },
+	  componentDidMount: function componentDidMount() {
+	    if (this.props.geometryBuilder) {
+	      this.props.geometryBuilder.configureRenderer(_reactDom2.default.findDOMNode(this.refs.canvasRenderer));
+	      this.props.geometryBuilder.render();
 	    }
+	    this.updateDimensions();
+	  },
+	  componentDidUpdate: function componentDidUpdate(nextProps, nextState) {
+	    this.updateDimensions();
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    // Remove window listener
+	    if (this.sizeSubscription) {
+	      this.sizeSubscription.unsubscribe();
+	      this.sizeSubscription = null;
+	    }
+	  },
+	  updateDimensions: function updateDimensions() {
+	    var el = _reactDom2.default.findDOMNode(this).parentNode,
+	        elSize = _SizeHelper2.default.getSize(el);
+
+	    if (el && (this.state.width !== elSize.clientWidth || this.state.height !== elSize.clientHeight)) {
+	      this.setState({
+	        width: elSize.clientWidth,
+	        height: elSize.clientHeight
+	      });
+
+	      if (this.props.geometryBuilder) {
+	        this.props.geometryBuilder.updateSize(innerWidth, innerHeight);
+	      }
+	      return true;
+	    }
+	    return false;
+	  },
+	  resetCamera: function resetCamera() {
+	    if (this.props.geometryBuilder) {
+	      this.props.geometryBuilder.resetCamera();
+	    }
+	  },
+	  render: function render() {
+	    return _react2.default.createElement('canvas', {
+	      className: 'CanvasImageRenderer',
+	      ref: 'canvasRenderer',
+	      width: this.state.width,
+	      height: this.state.height
+	    });
+	  }
 	});
 
 /***/ },
@@ -33436,7 +33511,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	exports.getSize = getSize;
 	exports.onSizeChange = onSizeChange;
@@ -33453,80 +33528,82 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var observableInstance = new _Observable2.default(),
-	    TOPIC = 'window.size.change',
-	    domSizes = new WeakMap(),
-	    sizeProperties = ['scrollWidth', 'scrollHeight', 'clientWidth', 'clientHeight'],
-	    windowListener = (0, _Debounce.debounce)(invalidateSize, 250);
+	/* eslint-disable no-use-before-define */
 
-	var timestamp = 0,
-	    listenerAttached = false;
+	var observableInstance = new _Observable2.default();
+	var TOPIC = 'window.size.change';
+	var domSizes = new WeakMap();
+	var sizeProperties = ['scrollWidth', 'scrollHeight', 'clientWidth', 'clientHeight'];
+	var windowListener = (0, _Debounce.debounce)(invalidateSize, 250);
+
+	var timestamp = 0;
+	var listenerAttached = false;
 
 	// ------ internal functions ------
 
 	function updateSize(domElement, cacheObj) {
-	    if (cacheObj.timestamp < timestamp) {
-	        sizeProperties.forEach(function (prop) {
-	            cacheObj[prop] = domElement[prop];
-	        });
-	        cacheObj.clientRect = domElement.getClientRects()[0];
-	    }
+	  if (cacheObj.timestamp < timestamp) {
+	    sizeProperties.forEach(function (prop) {
+	      cacheObj[prop] = domElement[prop];
+	    });
+	    cacheObj.clientRect = domElement.getClientRects()[0];
+	  }
 	}
 
 	// ------ New API ------
 
 	function getSize(domElement) {
-	    var cachedSize = domSizes.get(domElement);
-	    if (!cachedSize) {
-	        cachedSize = { timestamp: -1 };
-	        domSizes.set(domElement, cachedSize);
-	    }
-	    updateSize(domElement, cachedSize);
+	  var cachedSize = domSizes.get(domElement);
+	  if (!cachedSize) {
+	    cachedSize = { timestamp: -1 };
+	    domSizes.set(domElement, cachedSize);
+	  }
+	  updateSize(domElement, cachedSize);
 
-	    return cachedSize;
+	  return cachedSize;
 	}
 
 	function onSizeChange(callback) {
-	    return observableInstance.on(TOPIC, callback);
+	  return observableInstance.on(TOPIC, callback);
 	}
 
 	function triggerChange() {
-	    observableInstance.emit(TOPIC);
+	  observableInstance.emit(TOPIC);
 	}
 
 	function isListening() {
-	    return listenerAttached;
+	  return listenerAttached;
 	}
 
 	function startListening() {
-	    if (!listenerAttached) {
-	        window.addEventListener("resize", windowListener);
-	        listenerAttached = true;
-	    }
+	  if (!listenerAttached) {
+	    window.addEventListener('resize', windowListener);
+	    listenerAttached = true;
+	  }
 	}
 
 	function stopListening() {
-	    if (listenerAttached) {
-	        window.removeEventListener("resize", windowListener);
-	        listenerAttached = false;
-	    }
+	  if (listenerAttached) {
+	    window.removeEventListener('resize', windowListener);
+	    listenerAttached = false;
+	  }
 	}
 
 	// ------ internal functions ------
 
 	function invalidateSize() {
-	    timestamp++;
-	    triggerChange();
+	  timestamp++;
+	  triggerChange();
 	}
 
 	// Export
 	exports.default = {
-	    getSize: getSize,
-	    isListening: isListening,
-	    onSizeChange: onSizeChange,
-	    startListening: startListening,
-	    stopListening: stopListening,
-	    triggerChange: triggerChange
+	  getSize: getSize,
+	  isListening: isListening,
+	  onSizeChange: onSizeChange,
+	  startListening: startListening,
+	  stopListening: stopListening,
+	  triggerChange: triggerChange
 	};
 
 /***/ },
@@ -33536,7 +33613,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -33550,18 +33627,18 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var Observable = function () {
-	    function Observable() {
-	        _classCallCheck(this, Observable);
+	  function Observable() {
+	    _classCallCheck(this, Observable);
+	  }
+
+	  _createClass(Observable, [{
+	    key: 'destroy',
+	    value: function destroy() {
+	      this.off();
 	    }
+	  }]);
 
-	    _createClass(Observable, [{
-	        key: 'destroy',
-	        value: function destroy() {
-	            this.off();
-	        }
-	    }]);
-
-	    return Observable;
+	  return Observable;
 	}();
 
 	// Add Observer pattern using Monologue.js
@@ -33577,7 +33654,7 @@
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	exports.debounce = debounce;
 	// Returns a function, that, as long as it continues to be invoked, will not
@@ -33586,27 +33663,32 @@
 	// leading edge, instead of the trailing.
 
 	function debounce(func, wait, immediate) {
-	    var timeout;
-	    return function () {
-	        var context = this,
-	            args = arguments;
-	        var later = function later() {
-	            timeout = null;
-	            if (!immediate) {
-	                func.apply(context, args);
-	            }
-	        };
-	        var callNow = immediate && !timeout;
-	        clearTimeout(timeout);
-	        timeout = setTimeout(later, wait);
-	        if (callNow) {
-	            func.apply(context, args);
-	        }
+	  var _this = this;
+
+	  var timeout;
+	  return function () {
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+
+	    var context = _this;
+	    var later = function later() {
+	      timeout = null;
+	      if (!immediate) {
+	        func.apply(context, args);
+	      }
 	    };
+	    var callNow = immediate && !timeout;
+	    clearTimeout(timeout);
+	    timeout = setTimeout(later, wait);
+	    if (callNow) {
+	      func.apply(context, args);
+	    }
+	  };
 	}
 
 	exports.default = {
-	    debounce: debounce
+	  debounce: debounce
 	};
 
 /***/ },
@@ -33616,7 +33698,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _react = __webpack_require__(17);
@@ -33650,98 +33732,98 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function onImageLoaded() {
-	    var image = this;
+	  var image = this;
 
-	    if (image.drawToCanvas) {
-	        if (image.firstRender) {
-	            image.firstRender = false;
-	            image.component.resetCamera();
-	        } else {
-	            image.drawToCanvas();
-	        }
+	  if (image.drawToCanvas) {
+	    if (image.firstRender) {
+	      image.firstRender = false;
+	      image.component.resetCamera();
+	    } else {
+	      image.drawToCanvas();
 	    }
+	  }
 	}
 
 	function drawToCanvasAsImage() {
-	    var image = this,
-	        component = this.component,
-	        canvas = _reactDom2.default.findDOMNode(component.refs.canvasRenderer),
-	        ctx = canvas.getContext('2d'),
-	        w = component.state.width,
-	        h = component.state.height,
-	        iw = image ? image.width : 500,
-	        ih = image ? image.height : 500,
-	        zoomLevel = component.zoom,
-	        drawingCenter = component.center;
+	  var image = this,
+	      component = this.component,
+	      canvas = _reactDom2.default.findDOMNode(component.refs.canvasRenderer),
+	      ctx = canvas.getContext('2d'),
+	      w = component.state.width,
+	      h = component.state.height,
+	      iw = image ? image.width : 500,
+	      ih = image ? image.height : 500,
+	      zoomLevel = component.zoom,
+	      drawingCenter = component.center;
 
-	    ctx.clearRect(0, 0, w, h);
+	  ctx.clearRect(0, 0, w, h);
 
-	    var tw = Math.floor(iw * zoomLevel),
-	        th = Math.floor(ih * zoomLevel),
-	        tx = w * drawingCenter[0] - tw / 2,
-	        ty = h * drawingCenter[1] - th / 2;
+	  var tw = Math.floor(iw * zoomLevel),
+	      th = Math.floor(ih * zoomLevel),
+	      tx = w * drawingCenter[0] - tw / 2,
+	      ty = h * drawingCenter[1] - th / 2;
 
-	    image.activeArea = [tx, ty, tw, th];
+	  image.activeArea = [tx, ty, tw, th];
 
-	    try {
-	        ctx.drawImage(image, 0, 0, iw, ih, // Source image   [Location,Size]
-	        tx, ty, tw, th); // Target drawing [Location,Size]
-	    } catch (err) {
-	        console.log('Error in ImageRenderer::drawToCanvasAsImage', err);
-	    }
+	  try {
+	    ctx.drawImage(image, 0, 0, iw, ih, // Source image   [Location,Size]
+	    tx, ty, tw, th); // Target drawing [Location,Size]
+	  } catch (err) {
+	    console.log('Error in ImageRenderer::drawToCanvasAsImage', err);
+	  }
 	}
 
 	function drawToCanvasAsBuffer() {
-	    // canvas: this.bgCanvas.el,
-	    // area: [0, 0, width, height],
-	    // outputSize: [destWidth, destHeight],
-	    // crosshair: [lineX * scaleX, lineY * scaleY],
-	    // type: this.renderMethod
+	  // canvas: this.bgCanvas.el,
+	  // area: [0, 0, width, height],
+	  // outputSize: [destWidth, destHeight],
+	  // crosshair: [lineX * scaleX, lineY * scaleY],
+	  // type: this.renderMethod
 
-	    var image = this,
-	        data = this.data,
-	        component = this.component,
-	        destCanvas = _reactDom2.default.findDOMNode(component.refs.canvasRenderer),
-	        ctx = destCanvas.getContext('2d'),
-	        w = component.state.width,
-	        h = component.state.height,
-	        iw = data.outputSize[0],
-	        ih = data.outputSize[1],
-	        zoomLevel = component.zoom,
-	        drawingCenter = component.center;
+	  var image = this,
+	      data = this.data,
+	      component = this.component,
+	      destCanvas = _reactDom2.default.findDOMNode(component.refs.canvasRenderer),
+	      ctx = destCanvas.getContext('2d'),
+	      w = component.state.width,
+	      h = component.state.height,
+	      iw = data.outputSize[0],
+	      ih = data.outputSize[1],
+	      zoomLevel = component.zoom,
+	      drawingCenter = component.center;
 
-	    ctx.clearRect(0, 0, w, h);
+	  ctx.clearRect(0, 0, w, h);
 
-	    var tw = Math.floor(iw * zoomLevel),
-	        th = Math.floor(ih * zoomLevel),
-	        tx = w * drawingCenter[0] - tw / 2,
-	        ty = h * drawingCenter[1] - th / 2;
+	  var tw = Math.floor(iw * zoomLevel),
+	      th = Math.floor(ih * zoomLevel),
+	      tx = w * drawingCenter[0] - tw / 2,
+	      ty = h * drawingCenter[1] - th / 2;
 
-	    try {
-	        ctx.drawImage(data.canvas, data.area[0], data.area[1], data.area[2], data.area[3], // Source image   [Location,Size]
-	        tx, ty, tw, th); // Target drawing [Location,Size]
+	  try {
+	    ctx.drawImage(data.canvas, data.area[0], data.area[1], data.area[2], data.area[3], // Source image   [Location,Size]
+	    tx, ty, tw, th); // Target drawing [Location,Size]
 
-	        image.activeArea = [tx, ty, tw, th];
+	    image.activeArea = [tx, ty, tw, th];
 
-	        var scale = [tw / data.area[2], th / data.area[3]],
-	            translate = [tx, ty];
+	    var scale = [tw / data.area[2], th / data.area[3]],
+	        translate = [tx, ty];
 
-	        if (data.crosshair) {
-	            ctx.beginPath();
+	    if (data.crosshair) {
+	      ctx.beginPath();
 
-	            ctx.moveTo(translate[0] + scale[0] * data.crosshair[0], 0);
-	            ctx.lineTo(translate[0] + scale[0] * data.crosshair[0], h);
+	      ctx.moveTo(translate[0] + scale[0] * data.crosshair[0], 0);
+	      ctx.lineTo(translate[0] + scale[0] * data.crosshair[0], h);
 
-	            ctx.moveTo(0, translate[1] + scale[1] * data.crosshair[1]);
-	            ctx.lineTo(w, translate[1] + scale[1] * data.crosshair[1]);
+	      ctx.moveTo(0, translate[1] + scale[1] * data.crosshair[1]);
+	      ctx.lineTo(w, translate[1] + scale[1] * data.crosshair[1]);
 
-	            ctx.strokeStyle = component.props.crosshairColor;
-	            ctx.lineWidth = 1;
-	            ctx.stroke();
-	        }
-	    } catch (err) {
-	        console.log('Error in ImageRenderer::drawToCanvasAsBuffer', err);
+	      ctx.strokeStyle = component.props.crosshairColor;
+	      ctx.lineWidth = 1;
+	      ctx.stroke();
 	    }
+	  } catch (err) {
+	    console.log('Error in ImageRenderer::drawToCanvasAsBuffer', err);
+	  }
 	}
 
 	/**
@@ -33760,374 +33842,396 @@
 	 */
 	exports.default = _react2.default.createClass({
 
-	    displayName: 'ImageRenderer',
+	  displayName: 'ImageRenderer',
 
-	    propTypes: {
-	        crosshairColor: _react2.default.PropTypes.string,
-	        imageBuilder: _react2.default.PropTypes.object,
-	        listener: _react2.default.PropTypes.object,
-	        maxZoom: _react2.default.PropTypes.number,
-	        minZoom: _react2.default.PropTypes.number,
-	        modifiers: _react2.default.PropTypes.array,
-	        pressRadius: _react2.default.PropTypes.number
-	    },
+	  propTypes: {
+	    crosshairColor: _react2.default.PropTypes.string,
+	    imageBuilder: _react2.default.PropTypes.object,
+	    listener: _react2.default.PropTypes.object,
+	    maxZoom: _react2.default.PropTypes.number,
+	    minZoom: _react2.default.PropTypes.number,
+	    modifiers: _react2.default.PropTypes.array,
+	    pressRadius: _react2.default.PropTypes.number
+	  },
 
-	    getDefaultProps: function getDefaultProps() {
-	        return { minZoom: 0.1, maxZoom: 10, crosshairColor: '#000', modifiers: [0, 2], pressRadius: 50 };
-	    },
-	    getInitialState: function getInitialState() {
-	        var metadata = this.props.imageBuilder ? this.props.imageBuilder.queryDataModel.originalData.metadata || {} : {},
-	            title = metadata.title || 'No title',
-	            description = metadata.description || 'No description';
-	        return { width: 200, height: 200, dialog: false, title: title, description: description };
-	    },
-	    componentWillMount: function componentWillMount() {
-	        var _this = this;
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      minZoom: 0.1,
+	      maxZoom: 10,
+	      crosshairColor: '#000',
+	      modifiers: [0, 2],
+	      pressRadius: 50
+	    };
+	  },
+	  getInitialState: function getInitialState() {
+	    var metadata = this.props.imageBuilder ? this.props.imageBuilder.queryDataModel.originalData.metadata || {} : {},
+	        title = metadata.title || 'No title',
+	        description = metadata.description || 'No description';
+	    return {
+	      width: 200,
+	      height: 200,
+	      dialog: false,
+	      title: title,
+	      description: description
+	    };
+	  },
+	  componentWillMount: function componentWillMount() {
+	    var _this = this;
 
-	        this.imageToDraw = new Image();
+	    this.imageToDraw = new Image();
 
-	        // Monitor image builder
-	        if (this.props.imageBuilder) {
-	            this.imageBuilderSubscription = this.props.imageBuilder.onImageReady(function (data, envelope) {
-	                if (data.url) {
-	                    _this.renderImage(data);
-	                } else {
-	                    _this.renderCanvas(data);
-	                }
-	            });
-	        }
-
-	        // Shared properties
-	        this.zoom = 1;
-	        this.baseZoom = 1;
-	        this.center = [0.5, 0.5];
-	        this.baseCenter = [0.5, 0.5];
-
-	        // Attach context to image
-	        this.imageToDraw.component = this;
-	        this.imageToDraw.onload = onImageLoaded;
-	        this.imageToDraw.firstRender = true;
-
-	        // Listen to window resize
-	        this.sizeSubscription = _SizeHelper2.default.onSizeChange(this.updateDimensions);
-
-	        // Make sure we monitor window size if it is not already the case
-	        _SizeHelper2.default.startListening();
-
-	        // Listen to keyDown
-	        document.addEventListener('keydown', this.handleKeyDown);
-
-	        // Add image exporter
-	        this.sendToServer = false;
-	        this.imageExporter = new _ImageExporter2.default();
-	    },
-	    componentDidMount: function componentDidMount() {
-	        var _this2 = this;
-
-	        this.updateDimensions();
-	        if (this.imageToDraw.drawToCanvas) {
-	            this.imageToDraw.drawToCanvas();
-	        }
-
-	        // Attach mouse listener
-	        this.mouseHandler = new _MouseHandler2.default(_reactDom2.default.findDOMNode(this.refs.canvasRenderer));
-
-	        // Allow modifier via press action
-	        if (this.props.modifiers) {
-	            this.mouseHandler.toggleModifierOnPress(true, this.props.modifiers);
-	        }
-
-	        this.mouseHandler.attach({
-	            'drag': this.dragCallback,
-	            'zoom': this.zoomCallback,
-	            'click': this.clickCallback
-	        });
-
-	        this.mouseHandler.on('modifier.change', function (change, envelope) {
-	            var image = _this2.imageToDraw,
-	                ctx = _reactDom2.default.findDOMNode(_this2.refs.canvasRenderer).getContext('2d');
-
-	            ctx.beginPath();
-	            ctx.fillStyle = "#ffffff";
-	            ctx.lineWidth = 5;
-	            ctx.strokeStyle = "#000000";
-	            ctx.arc(change.event.relative.x, change.event.relative.y, _this2.props.pressRadius, 0, 2 * Math.PI, false);
-	            ctx.fill();
-	            ctx.stroke();
-
-	            setTimeout(function () {
-	                image.drawToCanvas();
-	            }, 300);
-	        });
-	    },
-	    componentDidUpdate: function componentDidUpdate(nextProps, nextState) {
-	        this.updateDimensions();
-	        if (this.imageToDraw.drawToCanvas) {
-	            this.imageToDraw.drawToCanvas();
-	        }
-	    },
-	    componentWillUnmount: function componentWillUnmount() {
-	        // Remove key listener
-	        document.removeEventListener('keydown', this.handleKeyDown);
-
-	        // Remove listener
-	        if (this.imageBuilderSubscription) {
-	            this.imageBuilderSubscription.unsubscribe();
-	            this.imageBuilderSubscription = null;
-	        }
-
-	        // Clean image
-	        this.imageToDraw.onload = null;
-	        this.imageToDraw.drawToCanvas = null;
-	        this.imageToDraw.component = null;
-	        this.imageToDraw.data = null;
-	        this.imageToDraw = null;
-
-	        // Free mouseHandler
-	        this.mouseHandler.destroy();
-	        this.mouseHandler = null;
-
-	        // Remove window listener
-	        if (this.sizeSubscription) {
-	            this.sizeSubscription.unsubscribe();
-	            this.sizeSubscription = null;
-	        }
-	    },
-	    updateDimensions: function updateDimensions() {
-	        var el = _reactDom2.default.findDOMNode(this).parentNode,
-	            elSize = _SizeHelper2.default.getSize(el);
-
-	        if (el && (this.state.width !== elSize.clientWidth || this.state.height !== elSize.clientHeight)) {
-	            this.setState({ width: elSize.clientWidth, height: elSize.clientHeight });
-	            return true;
-	        }
-	        return false;
-	    },
-	    zoomCallback: function zoomCallback(event, envelope) {
-	        var eventManaged = false;
-
-	        // Extend event with active area
-	        event.activeArea = this.imageToDraw.activeArea;
-
-	        // Handle mouse listener if any
-	        if (this.props.listener && this.props.listener.zoom) {
-	            eventManaged = this.props.listener.zoom(event, envelope);
-	        }
-
-	        // Handle local zoom
-	        if (!eventManaged) {
-	            if (event.isFirst) {
-	                this.baseZoom = this.zoom;
-	            }
-	            var zoom = this.baseZoom * event.scale;
-
-	            if (zoom < this.props.minZoom) {
-	                zoom = this.props.minZoom;
-	            }
-	            if (zoom > this.props.maxZoom) {
-	                zoom = this.props.maxZoom;
-	            }
-
-	            if (this.zoom !== zoom) {
-	                // Update center to keep the location of the pointer the same
-	                var x = this.center[0],
-	                    y = this.center[1],
-	                    deltaZoom = zoom / this.zoom,
-	                    fixedX = event.relative.x / this.state.width,
-	                    fixedY = event.relative.y / this.state.height;
-
-	                this.zoom = zoom;
-	                this.center[0] = fixedX + deltaZoom * (x - fixedX);
-	                this.center[1] = fixedY + deltaZoom * (y - fixedY);
-
-	                if (this.imageToDraw.drawToCanvas) {
-	                    this.imageToDraw.drawToCanvas();
-	                }
-	            }
-
-	            if (event.isFinal) {
-	                this.baseZoom = this.zoom;
-	            }
-	        }
-
-	        // Store center
-	        this.baseCenter = [this.center[0], this.center[1]];
-	    },
-	    dragCallback: function dragCallback(event, envelope) {
-	        var eventManaged = false;
-
-	        // Extend event with active area
-	        event.activeArea = this.imageToDraw.activeArea;
-
-	        // Store zoom
-	        this.baseZoom = this.zoom;
-
-	        // Handle mouse listener if any
-	        if (this.props.listener && this.props.listener.drag) {
-	            eventManaged = this.props.listener.drag(event, envelope);
-	        }
-
-	        // Handle drag to pan
-	        if (!eventManaged) {
-	            if (event.isFirst) {
-	                this.baseCenter = [this.center[0], this.center[1]];
-	            }
-
-	            var deltaX = event.deltaX / this.state.width,
-	                deltaY = event.deltaY / this.state.height;
-
-	            this.center[0] = this.baseCenter[0] + deltaX;
-	            this.center[1] = this.baseCenter[1] + deltaY;
-
-	            if (event.isFinal) {
-	                this.baseCenter = [this.center[0], this.center[1]];
-	            }
-
-	            if (this.imageToDraw.drawToCanvas) {
-	                this.imageToDraw.drawToCanvas();
-	            }
-	        }
-	    },
-	    clickCallback: function clickCallback(event, envelope) {
-	        // Extend event with active area
-	        event.activeArea = this.imageToDraw.activeArea;
-
-	        // Handle mouse listener if any
-	        if (this.props.listener && this.props.listener.click) {
-	            this.props.listener.click(event, envelope);
-	        }
-	    },
-	    renderImage: function renderImage(data) {
-	        this.imageToDraw.drawToCanvas = drawToCanvasAsImage;
-	        this.imageToDraw.src = data.url;
-	    },
-	    renderCanvas: function renderCanvas(data) {
-	        this.imageToDraw.drawToCanvas = drawToCanvasAsBuffer;
-	        this.imageToDraw.data = data;
-	        this.imageToDraw.width = data.outputSize[0];
-	        this.imageToDraw.height = data.outputSize[1];
-
-	        // Send data to server for export
-	        if (this.sendToServer) {
-	            this.imageExporter.exportImage(data);
-	        }
-
-	        // No need to wait to render it
-	        if (this.imageToDraw.firstRender) {
-	            this.imageToDraw.firstRender = false;
-	            this.resetCamera();
+	    // Monitor image builder
+	    if (this.props.imageBuilder) {
+	      this.imageBuilderSubscription = this.props.imageBuilder.onImageReady(function (data, envelope) {
+	        if (data.url) {
+	          _this.renderImage(data);
 	        } else {
-	            this.imageToDraw.drawToCanvas();
+	          _this.renderCanvas(data);
 	        }
-	    },
-	    resetCamera: function resetCamera() {
-	        var w = this.state.width,
-	            h = this.state.height,
-	            image = this.imageToDraw,
-	            iw = image ? image.width : 500,
-	            ih = image ? image.height : 500;
-
-	        this.zoom = Math.min(w / iw, h / ih);
-	        this.baseZoom = Math.min(w / iw, h / ih);
-	        this.baseCenter = [0.5, 0.5];
-	        this.center = [0.5, 0.5];
-
-	        image.drawToCanvas();
-	    },
-	    recordImages: function recordImages(record) {
-	        this.sendToServer = record;
-	    },
-	    handleKeyDown: function handleKeyDown(event) {
-	        if (event.keyCode === 82) {
-	            // r => reset camera
-	            this.resetCamera();
-	        } else if (event.keyCode === 85 && !this.state.dialog) {
-	            // u => Update dataset metadata
-	            var thumbnailImage = _reactDom2.default.findDOMNode(this.refs.thumbnail);
-
-	            if (this.imageToDraw.data.canvas.nodeName === 'CANVAS') {
-	                if (this.imageToDraw.data.canvas.width === this.imageToDraw.data.area[2] && this.imageToDraw.data.canvas.height === this.imageToDraw.data.area[3]) {
-	                    thumbnailImage.src = this.imageToDraw.data.canvas.toDataURL('image/png');
-	                } else {
-	                    // Need to extract region
-	                    thumbnailImage.src = this.imageExporter.extractCanvasRegion(this.imageToDraw.data.canvas, this.imageToDraw.data.area, this.imageToDraw.data.outputSize);
-	                }
-	            } else {
-	                // Use image URL
-	                thumbnailImage.src = this.imageToDraw.data.canvas.src;
-	            }
-
-	            this.setState({ dialog: !this.state.dialog });
-	        }
-	    },
-	    updateTitle: function updateTitle(event) {
-	        var title = event.target.value;
-	        this.setState({ title: title });
-	    },
-	    updateDescription: function updateDescription(event) {
-	        var description = event.target.value;
-	        this.setState({ description: description });
-	    },
-	    toggleDialog: function toggleDialog() {
-	        this.setState({ dialog: !this.state.dialog });
-	    },
-	    updateMetadata: function updateMetadata() {
-	        this.setState({ dialog: !this.state.dialog });
-	        this.imageExporter.updateMetadata({
-	            title: this.state.title,
-	            description: this.state.description,
-	            image: _reactDom2.default.findDOMNode(this.refs.thumbnail).src,
-	            path: this.props.imageBuilder.queryDataModel.basepath
-	        });
-	    },
-	    render: function render() {
-	        return _react2.default.createElement(
-	            'div',
-	            { className: _ImageRenderer2.default.container },
-	            _react2.default.createElement('canvas', {
-	                className: _ImageRenderer2.default.renderer,
-	                ref: 'canvasRenderer',
-	                width: this.state.width,
-	                height: this.state.height }),
-	            _react2.default.createElement(
-	                'div',
-	                { className: this.state.dialog ? _ImageRenderer2.default.dialog : _ImageRenderer2.default.hidden },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: _ImageRenderer2.default.inside },
-	                    _react2.default.createElement('img', { ref: 'thumbnail', className: _ImageRenderer2.default.thumbnail, height: Math.floor(this.state.height / 2) }),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: _ImageRenderer2.default.metadata, style: { height: Math.floor(this.state.height / 2) + 'px' } },
-	                        _react2.default.createElement(
-	                            'strong',
-	                            { className: _ImageRenderer2.default.title },
-	                            _react2.default.createElement(_ContentEditableWidget2.default, { html: this.state.title, onChange: this.updateTitle })
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: _ImageRenderer2.default.description },
-	                            _react2.default.createElement(_ContentEditableWidget2.default, { html: this.state.description, onChange: this.updateDescription })
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: _ImageRenderer2.default.buttons },
-	                        _react2.default.createElement(
-	                            'button',
-	                            { className: _ImageRenderer2.default.button, onClick: this.toggleDialog },
-	                            'Cancel'
-	                        ),
-	                        _react2.default.createElement(
-	                            'button',
-	                            { className: _ImageRenderer2.default.button, onClick: this.updateMetadata },
-	                            'Save'
-	                        )
-	                    )
-	                )
-	            )
-	        );
+	      });
 	    }
+
+	    // Shared properties
+	    this.zoom = 1;
+	    this.baseZoom = 1;
+	    this.center = [0.5, 0.5];
+	    this.baseCenter = [0.5, 0.5];
+
+	    // Attach context to image
+	    this.imageToDraw.component = this;
+	    this.imageToDraw.onload = onImageLoaded;
+	    this.imageToDraw.firstRender = true;
+
+	    // Listen to window resize
+	    this.sizeSubscription = _SizeHelper2.default.onSizeChange(this.updateDimensions);
+
+	    // Make sure we monitor window size if it is not already the case
+	    _SizeHelper2.default.startListening();
+
+	    // Listen to keyDown
+	    document.addEventListener('keydown', this.handleKeyDown);
+
+	    // Add image exporter
+	    this.sendToServer = false;
+	    this.imageExporter = new _ImageExporter2.default();
+	  },
+	  componentDidMount: function componentDidMount() {
+	    var _this2 = this;
+
+	    this.updateDimensions();
+	    if (this.imageToDraw.drawToCanvas) {
+	      this.imageToDraw.drawToCanvas();
+	    }
+
+	    // Attach mouse listener
+	    this.mouseHandler = new _MouseHandler2.default(_reactDom2.default.findDOMNode(this.refs.canvasRenderer));
+
+	    // Allow modifier via press action
+	    if (this.props.modifiers) {
+	      this.mouseHandler.toggleModifierOnPress(true, this.props.modifiers);
+	    }
+
+	    this.mouseHandler.attach({
+	      drag: this.dragCallback,
+	      zoom: this.zoomCallback,
+	      click: this.clickCallback
+	    });
+
+	    this.mouseHandler.on('modifier.change', function (change, envelope) {
+	      var image = _this2.imageToDraw,
+	          ctx = _reactDom2.default.findDOMNode(_this2.refs.canvasRenderer).getContext('2d');
+
+	      ctx.beginPath();
+	      ctx.fillStyle = '#ffffff';
+	      ctx.lineWidth = 5;
+	      ctx.strokeStyle = '#000000';
+	      ctx.arc(change.event.relative.x, change.event.relative.y, _this2.props.pressRadius, 0, 2 * Math.PI, false);
+	      ctx.fill();
+	      ctx.stroke();
+
+	      setTimeout(function () {
+	        image.drawToCanvas();
+	      }, 300);
+	    });
+	  },
+	  componentDidUpdate: function componentDidUpdate(nextProps, nextState) {
+	    this.updateDimensions();
+	    if (this.imageToDraw.drawToCanvas) {
+	      this.imageToDraw.drawToCanvas();
+	    }
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    // Remove key listener
+	    document.removeEventListener('keydown', this.handleKeyDown);
+
+	    // Remove listener
+	    if (this.imageBuilderSubscription) {
+	      this.imageBuilderSubscription.unsubscribe();
+	      this.imageBuilderSubscription = null;
+	    }
+
+	    // Clean image
+	    this.imageToDraw.onload = null;
+	    this.imageToDraw.drawToCanvas = null;
+	    this.imageToDraw.component = null;
+	    this.imageToDraw.data = null;
+	    this.imageToDraw = null;
+
+	    // Free mouseHandler
+	    this.mouseHandler.destroy();
+	    this.mouseHandler = null;
+
+	    // Remove window listener
+	    if (this.sizeSubscription) {
+	      this.sizeSubscription.unsubscribe();
+	      this.sizeSubscription = null;
+	    }
+	  },
+	  updateDimensions: function updateDimensions() {
+	    var el = _reactDom2.default.findDOMNode(this).parentNode,
+	        elSize = _SizeHelper2.default.getSize(el);
+
+	    if (el && (this.state.width !== elSize.clientWidth || this.state.height !== elSize.clientHeight)) {
+	      this.setState({
+	        width: elSize.clientWidth,
+	        height: elSize.clientHeight
+	      });
+	      return true;
+	    }
+	    return false;
+	  },
+	  zoomCallback: function zoomCallback(event, envelope) {
+	    var eventManaged = false;
+
+	    // Extend event with active area
+	    event.activeArea = this.imageToDraw.activeArea;
+
+	    // Handle mouse listener if any
+	    if (this.props.listener && this.props.listener.zoom) {
+	      eventManaged = this.props.listener.zoom(event, envelope);
+	    }
+
+	    // Handle local zoom
+	    if (!eventManaged) {
+	      if (event.isFirst) {
+	        this.baseZoom = this.zoom;
+	      }
+	      var zoom = this.baseZoom * event.scale;
+
+	      if (zoom < this.props.minZoom) {
+	        zoom = this.props.minZoom;
+	      }
+	      if (zoom > this.props.maxZoom) {
+	        zoom = this.props.maxZoom;
+	      }
+
+	      if (this.zoom !== zoom) {
+	        // Update center to keep the location of the pointer the same
+	        var x = this.center[0],
+	            y = this.center[1],
+	            deltaZoom = zoom / this.zoom,
+	            fixedX = event.relative.x / this.state.width,
+	            fixedY = event.relative.y / this.state.height;
+
+	        this.zoom = zoom;
+	        this.center[0] = fixedX + deltaZoom * (x - fixedX);
+	        this.center[1] = fixedY + deltaZoom * (y - fixedY);
+
+	        if (this.imageToDraw.drawToCanvas) {
+	          this.imageToDraw.drawToCanvas();
+	        }
+	      }
+
+	      if (event.isFinal) {
+	        this.baseZoom = this.zoom;
+	      }
+	    }
+
+	    // Store center
+	    this.baseCenter = [this.center[0], this.center[1]];
+	  },
+	  dragCallback: function dragCallback(event, envelope) {
+	    var eventManaged = false;
+
+	    // Extend event with active area
+	    event.activeArea = this.imageToDraw.activeArea;
+
+	    // Store zoom
+	    this.baseZoom = this.zoom;
+
+	    // Handle mouse listener if any
+	    if (this.props.listener && this.props.listener.drag) {
+	      eventManaged = this.props.listener.drag(event, envelope);
+	    }
+
+	    // Handle drag to pan
+	    if (!eventManaged) {
+	      if (event.isFirst) {
+	        this.baseCenter = [this.center[0], this.center[1]];
+	      }
+
+	      var deltaX = event.deltaX / this.state.width,
+	          deltaY = event.deltaY / this.state.height;
+
+	      this.center[0] = this.baseCenter[0] + deltaX;
+	      this.center[1] = this.baseCenter[1] + deltaY;
+
+	      if (event.isFinal) {
+	        this.baseCenter = [this.center[0], this.center[1]];
+	      }
+
+	      if (this.imageToDraw.drawToCanvas) {
+	        this.imageToDraw.drawToCanvas();
+	      }
+	    }
+	  },
+	  clickCallback: function clickCallback(event, envelope) {
+	    // Extend event with active area
+	    event.activeArea = this.imageToDraw.activeArea;
+
+	    // Handle mouse listener if any
+	    if (this.props.listener && this.props.listener.click) {
+	      this.props.listener.click(event, envelope);
+	    }
+	  },
+	  renderImage: function renderImage(data) {
+	    this.imageToDraw.drawToCanvas = drawToCanvasAsImage;
+	    this.imageToDraw.src = data.url;
+	  },
+	  renderCanvas: function renderCanvas(data) {
+	    this.imageToDraw.drawToCanvas = drawToCanvasAsBuffer;
+	    this.imageToDraw.data = data;
+	    this.imageToDraw.width = data.outputSize[0];
+	    this.imageToDraw.height = data.outputSize[1];
+
+	    // Send data to server for export
+	    if (this.sendToServer) {
+	      this.imageExporter.exportImage(data);
+	    }
+
+	    // No need to wait to render it
+	    if (this.imageToDraw.firstRender) {
+	      this.imageToDraw.firstRender = false;
+	      this.resetCamera();
+	    } else {
+	      this.imageToDraw.drawToCanvas();
+	    }
+	  },
+	  resetCamera: function resetCamera() {
+	    var w = this.state.width,
+	        h = this.state.height,
+	        image = this.imageToDraw,
+	        iw = image ? image.width : 500,
+	        ih = image ? image.height : 500;
+
+	    this.zoom = Math.min(w / iw, h / ih);
+	    this.baseZoom = Math.min(w / iw, h / ih);
+	    this.baseCenter = [0.5, 0.5];
+	    this.center = [0.5, 0.5];
+
+	    image.drawToCanvas();
+	  },
+	  recordImages: function recordImages(record) {
+	    this.sendToServer = record;
+	  },
+	  handleKeyDown: function handleKeyDown(event) {
+	    if (event.keyCode === 82) {
+	      // r => reset camera
+	      this.resetCamera();
+	    } else if (event.keyCode === 85 && !this.state.dialog) {
+	      // u => Update dataset metadata
+	      var thumbnailImage = _reactDom2.default.findDOMNode(this.refs.thumbnail);
+
+	      if (this.imageToDraw.data.canvas.nodeName === 'CANVAS') {
+	        if (this.imageToDraw.data.canvas.width === this.imageToDraw.data.area[2] && this.imageToDraw.data.canvas.height === this.imageToDraw.data.area[3]) {
+	          thumbnailImage.src = this.imageToDraw.data.canvas.toDataURL('image/png');
+	        } else {
+	          // Need to extract region
+	          thumbnailImage.src = this.imageExporter.extractCanvasRegion(this.imageToDraw.data.canvas, this.imageToDraw.data.area, this.imageToDraw.data.outputSize);
+	        }
+	      } else {
+	        // Use image URL
+	        thumbnailImage.src = this.imageToDraw.data.canvas.src;
+	      }
+
+	      this.setState({
+	        dialog: !this.state.dialog
+	      });
+	    }
+	  },
+	  updateTitle: function updateTitle(event) {
+	    var title = event.target.value;
+	    this.setState({ title: title });
+	  },
+	  updateDescription: function updateDescription(event) {
+	    var description = event.target.value;
+	    this.setState({ description: description });
+	  },
+	  toggleDialog: function toggleDialog() {
+	    this.setState({
+	      dialog: !this.state.dialog
+	    });
+	  },
+	  updateMetadata: function updateMetadata() {
+	    this.setState({
+	      dialog: !this.state.dialog
+	    });
+	    this.imageExporter.updateMetadata({
+	      title: this.state.title,
+	      description: this.state.description,
+	      image: _reactDom2.default.findDOMNode(this.refs.thumbnail).src,
+	      path: this.props.imageBuilder.queryDataModel.basepath
+	    });
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { className: _ImageRenderer2.default.container },
+	      _react2.default.createElement('canvas', {
+	        className: _ImageRenderer2.default.renderer,
+	        ref: 'canvasRenderer',
+	        width: this.state.width,
+	        height: this.state.height
+	      }),
+	      _react2.default.createElement(
+	        'div',
+	        { className: this.state.dialog ? _ImageRenderer2.default.dialog : _ImageRenderer2.default.hidden },
+	        _react2.default.createElement(
+	          'div',
+	          { className: _ImageRenderer2.default.inside },
+	          _react2.default.createElement('img', { ref: 'thumbnail', className: _ImageRenderer2.default.thumbnail, height: Math.floor(this.state.height / 2) }),
+	          _react2.default.createElement(
+	            'div',
+	            { className: _ImageRenderer2.default.metadata, style: { height: Math.floor(this.state.height / 2) + 'px' } },
+	            _react2.default.createElement(
+	              'strong',
+	              { className: _ImageRenderer2.default.title },
+	              _react2.default.createElement(_ContentEditableWidget2.default, { html: this.state.title, onChange: this.updateTitle })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: _ImageRenderer2.default.description },
+	              _react2.default.createElement(_ContentEditableWidget2.default, { html: this.state.description, onChange: this.updateDescription })
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: _ImageRenderer2.default.buttons },
+	            _react2.default.createElement(
+	              'button',
+	              { className: _ImageRenderer2.default.button, onClick: this.toggleDialog },
+	              'Cancel'
+	            ),
+	            _react2.default.createElement(
+	              'button',
+	              { className: _ImageRenderer2.default.button, onClick: this.updateMetadata },
+	              'Save'
+	            )
+	          )
+	        )
+	      )
+	    );
+	  }
 	});
 
 /***/ },
@@ -34137,7 +34241,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _react = __webpack_require__(17);
@@ -34150,70 +34254,76 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var noOp = function noOp() {};
+
 	exports.default = _react2.default.createClass({
 
-	    displayName: 'ContentEditableWidget',
+	  displayName: 'ContentEditableWidget',
 
-	    propTypes: {
-	        blurOnEnter: _react2.default.PropTypes.bool,
-	        className: _react2.default.PropTypes.string,
-	        html: _react2.default.PropTypes.string,
-	        onBlur: _react2.default.PropTypes.func,
-	        onChange: _react2.default.PropTypes.func
-	    },
+	  propTypes: {
+	    blurOnEnter: _react2.default.PropTypes.bool,
+	    className: _react2.default.PropTypes.string,
+	    html: _react2.default.PropTypes.string,
+	    onBlur: _react2.default.PropTypes.func,
+	    onChange: _react2.default.PropTypes.func
+	  },
 
-	    getDefaultProps: function getDefaultProps() {
-	        return {
-	            blurOnEnter: false,
-	            className: ''
-	        };
-	    },
-	    shouldComponentUpdate: function shouldComponentUpdate(nextProps) {
-	        return nextProps.html !== _reactDom2.default.findDOMNode(this).innerHTML;
-	    },
-	    componentDidUpdate: function componentDidUpdate() {
-	        if (this.props.html !== _reactDom2.default.findDOMNode(this).innerHTML) {
-	            _reactDom2.default.findDOMNode(this).innerHTML = this.props.html;
-	        }
-	    },
-	    setFocus: function setFocus() {
-	        var range = document.createRange();
-	        range.selectNodeContents(_reactDom2.default.findDOMNode(this));
-	        var sel = window.getSelection();
-	        sel.removeAllRanges();
-	        sel.addRange(range);
-	    },
-	    blurEditable: function blurEditable(event) {
-	        if (event.charCode === 13) {
-	            _reactDom2.default.findDOMNode(this).blur();
-	            window.getSelection().removeAllRanges();
-	            if (this.props.onBlur) {
-	                this.props.onBlur();
-	            }
-	        }
-	    },
-	    emitChange: function emitChange(evt) {
-	        var html = _reactDom2.default.findDOMNode(this).innerHTML;
-	        if (this.props.onChange && html !== this.lastHtml) {
-	            evt.target = { value: html };
-	            this.props.onChange(evt);
-	        }
-	        this.lastHtml = html;
-	        if (evt.type === 'blur' && this.props.onBlur) {
-	            this.props.onBlur();
-	        }
-	    },
-
-
-	    /* eslint-disable react/no-danger */
-	    render: function render() {
-	        return _react2.default.createElement('div', { className: this.props.className,
-	            onInput: this.emitChange,
-	            onBlur: this.emitChange,
-	            onKeyPress: this.props.blurOnEnter ? this.blurEditable : function () {},
-	            contentEditable: true,
-	            dangerouslySetInnerHTML: { __html: this.props.html } });
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      blurOnEnter: false,
+	      className: ''
+	    };
+	  },
+	  shouldComponentUpdate: function shouldComponentUpdate(nextProps) {
+	    return nextProps.html !== _reactDom2.default.findDOMNode(this).innerHTML;
+	  },
+	  componentDidUpdate: function componentDidUpdate() {
+	    if (this.props.html !== _reactDom2.default.findDOMNode(this).innerHTML) {
+	      _reactDom2.default.findDOMNode(this).innerHTML = this.props.html;
 	    }
+	  },
+	  setFocus: function setFocus() {
+	    var range = document.createRange();
+	    range.selectNodeContents(_reactDom2.default.findDOMNode(this));
+	    var sel = window.getSelection();
+	    sel.removeAllRanges();
+	    sel.addRange(range);
+	  },
+	  blurEditable: function blurEditable(event) {
+	    if (event.charCode === 13) {
+	      _reactDom2.default.findDOMNode(this).blur();
+	      window.getSelection().removeAllRanges();
+	      if (this.props.onBlur) {
+	        this.props.onBlur();
+	      }
+	    }
+	  },
+	  emitChange: function emitChange(evt) {
+	    var html = _reactDom2.default.findDOMNode(this).innerHTML;
+	    if (this.props.onChange && html !== this.lastHtml) {
+	      evt.target = {
+	        value: html
+	      };
+	      this.props.onChange(evt);
+	    }
+	    this.lastHtml = html;
+	    if (evt.type === 'blur' && this.props.onBlur) {
+	      this.props.onBlur();
+	    }
+	  },
+
+
+	  /* eslint-disable react/no-danger */
+	  render: function render() {
+	    return _react2.default.createElement('div', {
+	      className: this.props.className,
+	      onInput: this.emitChange,
+	      onBlur: this.emitChange,
+	      onKeyPress: this.props.blurOnEnter ? this.blurEditable : noOp,
+	      contentEditable: true,
+	      dangerouslySetInnerHTML: { __html: this.props.html }
+	    });
+	  }
 	});
 
 /***/ },
@@ -34223,7 +34333,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -34237,108 +34347,108 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var ImageExporter = function () {
-	    function ImageExporter() {
-	        var format = arguments.length <= 0 || arguments[0] === undefined ? 'image/jpeg' : arguments[0];
-	        var padding = arguments.length <= 1 || arguments[1] === undefined ? 3 : arguments[1];
+	  function ImageExporter() {
+	    var format = arguments.length <= 0 || arguments[0] === undefined ? 'image/jpeg' : arguments[0];
+	    var padding = arguments.length <= 1 || arguments[1] === undefined ? 3 : arguments[1];
 
-	        _classCallCheck(this, ImageExporter);
+	    _classCallCheck(this, ImageExporter);
 
-	        this.format = format;
-	        this.padding = padding;
-	        this.counter = 0;
-	        this.bgCanvas = null;
-	        this.imageToDecode = null;
+	    this.format = format;
+	    this.padding = padding;
+	    this.counter = 0;
+	    this.bgCanvas = null;
+	    this.imageToDecode = null;
+	  }
+
+	  _createClass(ImageExporter, [{
+	    key: 'exportImage',
+	    value: function exportImage(data) {
+	      var xhr = new XMLHttpRequest();
+	      var dataToSend = {};
+	      var ts = Number(this.counter++).toString();
+
+	      if (!data.canvas || !data.arguments) {
+	        return;
+	      }
+
+	      while (ts.length < this.padding) {
+	        ts = '0' + ts;
+	      }
+	      dataToSend.arguments = data.arguments;
+	      dataToSend.image = data.canvas.toDataURL(this.format);
+	      dataToSend.arguments.__ = ts;
+
+	      xhr.open('POST', '/export', true);
+	      xhr.responseType = 'text';
+	      xhr.setRequestHeader('Content-Type', 'application/json');
+
+	      xhr.onload = function (e) {
+	        if (xhr.status === 200) {
+	          return;
+	        }
+	      };
+
+	      xhr.onerror = function (e) {
+	        console.log('error export', data.arguments);
+	      };
+
+	      xhr.send(JSON.stringify(dataToSend));
 	    }
-
-	    _createClass(ImageExporter, [{
-	        key: 'exportImage',
-	        value: function exportImage(data) {
-	            var xhr = new XMLHttpRequest(),
-	                dataToSend = {},
-	                ts = Number(this.counter++).toString();
-
-	            if (!data.canvas || !data.arguments) {
-	                return;
-	            }
-
-	            while (ts.length < this.padding) {
-	                ts = '0' + ts;
-	            }
-	            dataToSend.arguments = data.arguments;
-	            dataToSend.image = data.canvas.toDataURL(this.format);
-	            dataToSend.arguments.__ = ts;
-
-	            xhr.open('POST', '/export', true);
-	            xhr.responseType = 'text';
-	            xhr.setRequestHeader('Content-Type', 'application/json');
-
-	            xhr.onload = function (e) {
-	                if (xhr.status === 200) {
-	                    return;
-	                }
-	            };
-
-	            xhr.onerror = function (e) {
-	                console.log('error export', data.arguments);
-	            };
-
-	            xhr.send(JSON.stringify(dataToSend));
+	  }, {
+	    key: 'updateMetadata',
+	    value: function updateMetadata(dataToSend) {
+	      // Validate image data and use a canvas to convert it if need be
+	      if (dataToSend.image.indexOf('blob:') !== -1) {
+	        if (!this.bgCanvas) {
+	          this.bgCanvas = new _CanvasOffscreenBuffer2.default(100, 100);
 	        }
-	    }, {
-	        key: 'updateMetadata',
-	        value: function updateMetadata(dataToSend) {
-	            // Validate image data and use a canvas to convert it if need be
-	            if (dataToSend.image.indexOf('blob:') !== -1) {
-	                if (!this.bgCanvas) {
-	                    this.bgCanvas = new _CanvasOffscreenBuffer2.default(100, 100);
-	                }
-	                if (!this.imageToDecode) {
-	                    this.imageToDecode = new Image();
-	                }
-
-	                // Decode image
-	                this.imageToDecode.src = dataToSend.image;
-
-	                // Resize canvas and draw image into it
-	                this.bgCanvas.size(this.imageToDecode.width, this.imageToDecode.height);
-	                this.bgCanvas.get2DContext().drawImage(this.imageToDecode, 0, 0);
-	                dataToSend.image = this.bgCanvas.toDataURL('image/png');
-	            }
-
-	            var xhr = new XMLHttpRequest();
-
-	            xhr.open('POST', '/update', true);
-	            xhr.responseType = 'text';
-	            xhr.setRequestHeader('Content-Type', 'application/json');
-
-	            xhr.onload = function (e) {
-	                if (xhr.status === 200) {
-	                    return;
-	                }
-	            };
-
-	            xhr.onerror = function (e) {
-	                console.log('error export', e);
-	            };
-
-	            xhr.send(JSON.stringify(dataToSend));
+	        if (!this.imageToDecode) {
+	          this.imageToDecode = new Image();
 	        }
-	    }, {
-	        key: 'extractCanvasRegion',
-	        value: function extractCanvasRegion(canvas, region, outputSize) {
-	            var format = arguments.length <= 3 || arguments[3] === undefined ? 'image/png' : arguments[3];
 
-	            if (!this.bgCanvas) {
-	                this.bgCanvas = new _CanvasOffscreenBuffer2.default(100, 100);
-	            }
+	        // Decode image
+	        this.imageToDecode.src = dataToSend.image;
 
-	            this.bgCanvas.size(outputSize[0], outputSize[1]);
-	            this.bgCanvas.get2DContext().drawImage(canvas, region[0], region[1], region[2], region[3], 0, 0, outputSize[0], outputSize[1]);
-	            return this.bgCanvas.toDataURL(format);
+	        // Resize canvas and draw image into it
+	        this.bgCanvas.size(this.imageToDecode.width, this.imageToDecode.height);
+	        this.bgCanvas.get2DContext().drawImage(this.imageToDecode, 0, 0);
+	        dataToSend.image = this.bgCanvas.toDataURL('image/png');
+	      }
+
+	      var xhr = new XMLHttpRequest();
+
+	      xhr.open('POST', '/update', true);
+	      xhr.responseType = 'text';
+	      xhr.setRequestHeader('Content-Type', 'application/json');
+
+	      xhr.onload = function (e) {
+	        if (xhr.status === 200) {
+	          return;
 	        }
-	    }]);
+	      };
 
-	    return ImageExporter;
+	      xhr.onerror = function (e) {
+	        console.log('error export', e);
+	      };
+
+	      xhr.send(JSON.stringify(dataToSend));
+	    }
+	  }, {
+	    key: 'extractCanvasRegion',
+	    value: function extractCanvasRegion(canvas, region, outputSize) {
+	      var format = arguments.length <= 3 || arguments[3] === undefined ? 'image/png' : arguments[3];
+
+	      if (!this.bgCanvas) {
+	        this.bgCanvas = new _CanvasOffscreenBuffer2.default(100, 100);
+	      }
+
+	      this.bgCanvas.size(outputSize[0], outputSize[1]);
+	      this.bgCanvas.get2DContext().drawImage(canvas, region[0], region[1], region[2], region[3], 0, 0, outputSize[0], outputSize[1]);
+	      return this.bgCanvas.toDataURL(format);
+	    }
+	  }]);
+
+	  return ImageExporter;
 	}();
 
 	exports.default = ImageExporter;
@@ -34350,7 +34460,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -34372,261 +34482,274 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	// Module dependencies and constants
-	var Modifier = { NONE: 0, ALT: 1, META: 2, SHIFT: 4, CTRL: 8 },
+	var Modifier = {
+	  NONE: 0,
+	  ALT: 1,
+	  META: 2,
+	  SHIFT: 4,
+	  CTRL: 8
+	},
 	    eventTypeMapping = {
-	    'contextmenu': 'contextmenu',
-	    'mousewheel': 'zoom',
-	    'DOMMouseScroll': 'zoom'
+	  contextmenu: 'contextmenu',
+	  mousewheel: 'zoom',
+	  DOMMouseScroll: 'zoom'
 	},
 	    TIMEOUT_BETWEEN_ZOOM = 300;
 
 	var handlerCount = 0;
 
 	function getModifier(e) {
-	    var modifier = 0;
-	    if (e.srcEvent) {
-	        modifier += e.srcEvent.altKey ? Modifier.ALT : 0;
-	        modifier += e.srcEvent.ctrlKey ? Modifier.CTRL : 0;
-	        modifier += e.srcEvent.metaKey ? Modifier.META : 0;
-	        modifier += e.srcEvent.shiftKey ? Modifier.SHIFT : 0;
-	    }
+	  var modifier = 0;
+	  if (e.srcEvent) {
+	    modifier += e.srcEvent.altKey ? Modifier.ALT : 0;
+	    modifier += e.srcEvent.ctrlKey ? Modifier.CTRL : 0;
+	    modifier += e.srcEvent.metaKey ? Modifier.META : 0;
+	    modifier += e.srcEvent.shiftKey ? Modifier.SHIFT : 0;
+	  }
 
-	    return modifier;
+	  return modifier;
 	}
 
 	function getRelative(el, event) {
-	    return {
-	        x: event.center.x - (el.getClientRects()[0].x || el.getClientRects()[0].left),
-	        y: event.center.y - (el.getClientRects()[0].y || el.getClientRects()[0].top)
-	    };
+	  return {
+	    x: event.center.x - (el.getClientRects()[0].x || el.getClientRects()[0].left),
+	    y: event.center.y - (el.getClientRects()[0].y || el.getClientRects()[0].top)
+	  };
 	}
 
 	function broadcast(ctx, topic, event) {
-	    event.preventDefault();
+	  event.preventDefault();
 
-	    event.button = 0;
-	    event.topic = topic;
-	    event.modifier = ctx.modifier ? ctx.modifier : getModifier(event);
-	    event.relative = getRelative(ctx.el, event);
+	  event.button = 0;
+	  event.topic = topic;
+	  event.modifier = ctx.modifier ? ctx.modifier : getModifier(event);
+	  event.relative = getRelative(ctx.el, event);
 
-	    ctx.emit(topic, event);
+	  ctx.emit(topic, event);
 	}
 
 	var MouseHandler = function () {
-	    function MouseHandler(domElement, options) {
-	        var _this = this;
+	  function MouseHandler(domElement, options) {
+	    var _this = this;
 
-	        _classCallCheck(this, MouseHandler);
+	    _classCallCheck(this, MouseHandler);
 
-	        var defaultOptions = {
-	            pan: {
-	                threshold: 0
-	            },
-	            pinch: {
-	                threshold: 0
-	            }
-	        };
-	        options = (0, _merge2.default)(defaultOptions, options);
+	    var defaultOptions = {
+	      pan: {
+	        threshold: 0
+	      },
+	      pinch: {
+	        threshold: 0
+	      }
+	    };
+	    options = (0, _merge2.default)(defaultOptions, options);
 
-	        this.Modifier = Modifier;
+	    this.Modifier = Modifier;
 
-	        handlerCount++;
-	        this.id = 'mouse_handler_' + handlerCount;
-	        this.el = domElement;
-	        this.modifier = 0;
-	        this.toggleModifiers = [0];
-	        this.toggleModifierIdx = 0;
-	        this.toggleModifierEnable = false;
-	        this.hammer = new _hammerjs2.default(domElement);
-	        this.scrollInternal = {
-	            ts: +new Date(),
-	            deltaX: 0,
-	            deltaY: 0
-	        };
-	        this.finalZoomEvent = null;
-	        this.finalZoomTimerId = 0;
-	        this.triggerFinalZoomEvent = function () {
-	            if (_this.finalZoomEvent) {
-	                _this.finalZoomEvent.isFirst = false;
-	                _this.finalZoomEvent.isFinal = true;
-	            }
-	            _this.emit(_this.finalZoomEvent.topic, _this.finalZoomEvent);
-	        };
+	    this.id = 'mouse_handler_' + ++handlerCount;
+	    this.el = domElement;
+	    this.modifier = 0;
+	    this.toggleModifiers = [0];
+	    this.toggleModifierIdx = 0;
+	    this.toggleModifierEnable = false;
+	    this.hammer = new _hammerjs2.default(domElement);
+	    this.scrollInternal = {
+	      ts: +new Date(),
+	      deltaX: 0,
+	      deltaY: 0
+	    };
+	    this.finalZoomEvent = null;
+	    this.finalZoomTimerId = 0;
+	    this.triggerFinalZoomEvent = function () {
+	      if (_this.finalZoomEvent) {
+	        _this.finalZoomEvent.isFirst = false;
+	        _this.finalZoomEvent.isFinal = true;
+	      }
+	      _this.emit(_this.finalZoomEvent.topic, _this.finalZoomEvent);
+	    };
 
-	        this.domEventHandler = function (e) {
-	            e.preventDefault();
-	            var event = {
-	                srcEvent: e,
-	                button: e.type === 'contextmenu' ? 2 : 0,
-	                topic: eventTypeMapping[e.type],
+	    this.domEventHandler = function (e) {
+	      e.preventDefault();
+	      var event = {
+	        srcEvent: e,
+	        button: e.type === 'contextmenu' ? 2 : 0,
+	        topic: eventTypeMapping[e.type],
 
-	                center: {
-	                    x: e.clientX,
-	                    y: e.clientY
-	                },
-	                relative: {
-	                    x: e.clientX - (_this.el.getClientRects()[0].x || _this.el.getClientRects()[0].left),
-	                    y: e.clientY - (_this.el.getClientRects()[0].y || _this.el.getClientRects()[0].top)
-	                },
+	        center: {
+	          x: e.clientX,
+	          y: e.clientY
+	        },
+	        relative: {
+	          x: e.clientX - (_this.el.getClientRects()[0].x || _this.el.getClientRects()[0].left),
+	          y: e.clientY - (_this.el.getClientRects()[0].y || _this.el.getClientRects()[0].top)
+	        },
 
-	                scale: 1,
+	        scale: 1,
 
-	                deltaX: 0,
-	                deltaY: 0,
-	                delta: 0,
-	                deltaTime: 0,
+	        deltaX: 0,
+	        deltaY: 0,
+	        delta: 0,
+	        deltaTime: 0,
 
-	                velocityX: 0,
-	                velocityY: 0,
-	                velocity: 0,
+	        velocityX: 0,
+	        velocityY: 0,
+	        velocity: 0,
 
-	                isFirst: false,
-	                isFinal: false
-	            };
-	            event.modifier = _this.modifier ? _this.modifier : getModifier(event);
+	        isFirst: false,
+	        isFinal: false
+	      };
+	      event.modifier = _this.modifier ? _this.modifier : getModifier(event);
 
-	            // Handle scroll/zoom if any
-	            if (event.topic === 'zoom') {
-	                // Register final zoom
-	                clearTimeout(_this.finalZoomTimerId);
-	                _this.finalZoomTimerId = setTimeout(_this.triggerFinalZoomEvent, TIMEOUT_BETWEEN_ZOOM);
+	      // Handle scroll/zoom if any
+	      if (event.topic === 'zoom') {
+	        // Register final zoom
+	        clearTimeout(_this.finalZoomTimerId);
+	        _this.finalZoomTimerId = setTimeout(_this.triggerFinalZoomEvent, TIMEOUT_BETWEEN_ZOOM);
 
-	                var currentTime = +new Date();
-	                if (currentTime - _this.scrollInternal.ts > TIMEOUT_BETWEEN_ZOOM) {
-	                    _this.scrollInternal.deltaX = 0;
-	                    _this.scrollInternal.deltaY = 0;
-	                    event.isFirst = true;
-	                    event.isFinal = false;
-	                } else {
-	                    event.isFinal = false;
-	                }
+	        var currentTime = +new Date();
+	        if (currentTime - _this.scrollInternal.ts > TIMEOUT_BETWEEN_ZOOM) {
+	          _this.scrollInternal.deltaX = 0;
+	          _this.scrollInternal.deltaY = 0;
+	          event.isFirst = true;
+	          event.isFinal = false;
+	        } else {
+	          event.isFinal = false;
+	        }
 
-	                if (e.wheelDeltaX === undefined) {
-	                    event.zoom = _this.lastScrollZoomFactor;
-	                    _this.scrollInternal.deltaY -= e.detail * 2.0;
-	                } else {
-	                    event.zoom = _this.lastScrollZoomFactor;
-	                    _this.scrollInternal.deltaX += e.wheelDeltaX;
-	                    _this.scrollInternal.deltaY += e.wheelDeltaY;
-	                }
+	        if (e.wheelDeltaX === undefined) {
+	          event.zoom = _this.lastScrollZoomFactor;
+	          _this.scrollInternal.deltaY -= e.detail * 2.0;
+	        } else {
+	          event.zoom = _this.lastScrollZoomFactor;
+	          _this.scrollInternal.deltaX += e.wheelDeltaX;
+	          _this.scrollInternal.deltaY += e.wheelDeltaY;
+	        }
 
-	                event.deltaX = _this.scrollInternal.deltaX;
-	                event.deltaY = _this.scrollInternal.deltaY;
-	                event.scale = 1.0 + event.deltaY / _this.el.getClientRects()[0].height;
-	                event.scale = event.scale < 0.1 ? 0.1 : event.scale;
-	                _this.scrollInternal.ts = currentTime;
+	        event.deltaX = _this.scrollInternal.deltaX;
+	        event.deltaY = _this.scrollInternal.deltaY;
+	        event.scale = 1.0 + event.deltaY / _this.el.getClientRects()[0].height;
+	        event.scale = event.scale < 0.1 ? 0.1 : event.scale;
+	        _this.scrollInternal.ts = currentTime;
 
-	                _this.finalZoomEvent = event;
-	            }
+	        _this.finalZoomEvent = event;
+	      }
 
-	            _this.emit(event.topic, event);
-	            return false;
-	        };
+	      _this.emit(event.topic, event);
+	      return false;
+	    };
 
-	        // set hammer options
-	        this.hammer.get('pan').set(options.pan);
-	        this.hammer.get('pinch').set(options.pinch);
+	    // set hammer options
+	    this.hammer.get('pan').set(options.pan);
+	    this.hammer.get('pinch').set(options.pinch);
 
-	        // Listen to hammer events
-	        this.hammer.on('tap', function (e) {
-	            broadcast(_this, 'click', e);
+	    // Listen to hammer events
+	    this.hammer.on('tap', function (e) {
+	      broadcast(_this, 'click', e);
+	    });
+
+	    this.hammer.on('doubletap', function (e) {
+	      broadcast(_this, 'dblclick', e);
+	    });
+
+	    this.hammer.on('pan', function (e) {
+	      broadcast(_this, 'drag', e);
+	    });
+
+	    this.hammer.on('panstart', function (e) {
+	      e.isFirst = true;
+	      broadcast(_this, 'drag', e);
+	    });
+
+	    this.hammer.on('panend', function (e) {
+	      e.isFinal = true;
+	      broadcast(_this, 'drag', e);
+	    });
+
+	    this.hammer.on('pinch', function (e) {
+	      broadcast(_this, 'zoom', e);
+	    });
+
+	    this.hammer.on('pinchstart', function (e) {
+	      console.log('zoom start');
+	      e.isFirst = true;
+	      broadcast(_this, 'zoom', e);
+	    });
+
+	    this.hammer.on('pinchend', function (e) {
+	      e.isFinal = true;
+	      console.log('zoom end');
+	      broadcast(_this, 'zoom', e);
+	    });
+
+	    this.hammer.get('pinch').set({
+	      enable: true
+	    });
+
+	    this.hammer.on('press', function (e) {
+	      if (_this.toggleModifierEnable) {
+	        _this.toggleModifierIdx = (_this.toggleModifierIdx + 1) % _this.toggleModifiers.length;
+	        _this.modifier = _this.toggleModifiers[_this.toggleModifierIdx];
+
+	        e.relative = getRelative(_this.el, e);
+
+	        _this.emit('modifier.change', {
+	          value: _this.modifier,
+	          list: Modifier,
+	          event: e
 	        });
+	      }
+	    });
 
-	        this.hammer.on('doubletap', function (e) {
-	            broadcast(_this, 'dblclick', e);
-	        });
+	    // Manage events that are not captured by hammer
+	    this.el.addEventListener('contextmenu', this.domEventHandler);
+	    this.el.addEventListener('mousewheel', this.domEventHandler);
+	    this.el.addEventListener('DOMMouseScroll', this.domEventHandler);
+	  }
 
-	        this.hammer.on('pan', function (e) {
-	            broadcast(_this, 'drag', e);
-	        });
-
-	        this.hammer.on('panstart', function (e) {
-	            e.isFirst = true;
-	            broadcast(_this, 'drag', e);
-	        });
-
-	        this.hammer.on('panend', function (e) {
-	            e.isFinal = true;
-	            broadcast(_this, 'drag', e);
-	        });
-
-	        this.hammer.on('pinch', function (e) {
-	            broadcast(_this, 'zoom', e);
-	        });
-
-	        this.hammer.on('pinchstart', function (e) {
-	            console.log('zoom start');
-	            e.isFirst = true;
-	            broadcast(_this, 'zoom', e);
-	        });
-
-	        this.hammer.on('pinchend', function (e) {
-	            e.isFinal = true;
-	            console.log('zoom end');
-	            broadcast(_this, 'zoom', e);
-	        });
-
-	        this.hammer.get('pinch').set({ enable: true });
-
-	        this.hammer.on('press', function (e) {
-	            if (_this.toggleModifierEnable) {
-	                _this.toggleModifierIdx = (_this.toggleModifierIdx + 1) % _this.toggleModifiers.length;
-	                _this.modifier = _this.toggleModifiers[_this.toggleModifierIdx];
-
-	                e.relative = getRelative(_this.el, e);
-
-	                _this.emit('modifier.change', { value: _this.modifier, list: Modifier, event: e });
-	            }
-	        });
-
-	        // Manage events that are not captured by hammer
-	        this.el.addEventListener('contextmenu', this.domEventHandler);
-	        this.el.addEventListener('mousewheel', this.domEventHandler);
-	        this.el.addEventListener('DOMMouseScroll', this.domEventHandler);
+	  _createClass(MouseHandler, [{
+	    key: 'enablePinch',
+	    value: function enablePinch(enable) {
+	      this.hammer.get('pinch').set({
+	        enable: enable
+	      });
 	    }
+	  }, {
+	    key: 'setModifier',
+	    value: function setModifier(modifier) {
+	      this.modifier = modifier;
+	    }
+	  }, {
+	    key: 'toggleModifierOnPress',
+	    value: function toggleModifierOnPress(enable, modifiers) {
+	      this.toggleModifiers = modifiers;
+	      this.toggleModifierEnable = enable;
+	    }
+	  }, {
+	    key: 'attach',
+	    value: function attach(listeners) {
+	      var subscriptions = {};
+	      for (var key in listeners) {
+	        subscriptions[key] = this.on(key, listeners[key]);
+	      }
+	      return subscriptions;
+	    }
+	  }, {
+	    key: 'destroy',
+	    value: function destroy() {
+	      // Remove all listeners is any
+	      this.off();
 
-	    _createClass(MouseHandler, [{
-	        key: 'enablePinch',
-	        value: function enablePinch(enable) {
-	            this.hammer.get('pinch').set({ enable: enable });
-	        }
-	    }, {
-	        key: 'setModifier',
-	        value: function setModifier(modifier) {
-	            this.modifier = modifier;
-	        }
-	    }, {
-	        key: 'toggleModifierOnPress',
-	        value: function toggleModifierOnPress(enable, modifiers) {
-	            this.toggleModifiers = modifiers;
-	            this.toggleModifierEnable = enable;
-	        }
-	    }, {
-	        key: 'attach',
-	        value: function attach(listeners) {
-	            var subscriptions = {};
-	            for (var key in listeners) {
-	                subscriptions[key] = this.on(key, listeners[key]);
-	            }
-	            return subscriptions;
-	        }
-	    }, {
-	        key: 'destroy',
-	        value: function destroy() {
-	            // Remove all listeners is any
-	            this.off();
+	      // Release hammer
+	      this.hammer.destroy();
 
-	            // Release hammer
-	            this.hammer.destroy();
+	      // Remove events that are not captured by hammer
+	      this.el.removeEventListener('contextmenu', this.domEventHandler);
+	      this.el.removeEventListener('mousewheel', this.domEventHandler);
+	      this.el.removeEventListener('DOMMouseScroll', this.domEventHandler);
+	    }
+	  }]);
 
-	            // Remove events that are not captured by hammer
-	            this.el.removeEventListener('contextmenu', this.domEventHandler);
-	            this.el.removeEventListener('mousewheel', this.domEventHandler);
-	            this.el.removeEventListener('DOMMouseScroll', this.domEventHandler);
-	        }
-	    }]);
-
-	    return MouseHandler;
+	  return MouseHandler;
 	}();
 
 	// Add Observer pattern using Monologue.js
@@ -37936,7 +38059,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _react = __webpack_require__(17);
@@ -37965,369 +38088,384 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var layoutNames = Object.keys(_Layouts2.default),
-	    ACTIVE_VIEWPORT_CHANGE = 'multiview-viewport-active-change',
-	    LAYOUT_CHANGE = 'multiview-layout-change';
+	var layoutNames = Object.keys(_Layouts2.default);
+	var ACTIVE_VIEWPORT_CHANGE = 'multiview-viewport-active-change';
+	var LAYOUT_CHANGE = 'multiview-layout-change';
 
 	/**
 	 * This React component expect the following input properties:
 	 */
 	var MultiViewRenderer = _react2.default.createClass({
 
-	    displayName: 'MultiViewRenderer',
+	  displayName: 'MultiViewRenderer',
 
-	    propTypes: {
-	        activeColor: _react2.default.PropTypes.string,
-	        borderColor: _react2.default.PropTypes.string,
-	        crosshairColor: _react2.default.PropTypes.string,
-	        layout: _react2.default.PropTypes.string,
-	        renderers: _react2.default.PropTypes.object,
-	        spacing: _react2.default.PropTypes.number
-	    },
+	  propTypes: {
+	    activeColor: _react2.default.PropTypes.string,
+	    borderColor: _react2.default.PropTypes.string,
+	    crosshairColor: _react2.default.PropTypes.string,
+	    layout: _react2.default.PropTypes.string,
+	    renderers: _react2.default.PropTypes.object,
+	    spacing: _react2.default.PropTypes.number
+	  },
 
-	    getDefaultProps: function getDefaultProps() {
-	        return {
-	            spacing: 10,
-	            borderColor: '#000000',
-	            activeColor: '#0000FF',
-	            crosshairColor: '#000000',
-	            renderers: {}
-	        };
-	    },
-	    getInitialState: function getInitialState() {
-	        return { width: 200, height: 200 };
-	    },
-	    componentWillMount: function componentWillMount() {
-	        var drawViewportByName = this.drawViewportByName;
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      spacing: 10,
+	      borderColor: '#000000',
+	      activeColor: '#0000FF',
+	      crosshairColor: '#000000',
+	      renderers: {}
+	    };
+	  },
+	  getInitialState: function getInitialState() {
+	    return {
+	      width: 200,
+	      height: 200
+	    };
+	  },
+	  componentWillMount: function componentWillMount() {
+	    var drawViewportByName = this.drawViewportByName;
 
-	        this.dragCenter = false;
-	        this.dragInViewport = null;
-	        this.center = [0.5, 0.5];
-	        this.layout = this.props.layout || '3xT';
-	        this.viewports = [];
+	    this.dragCenter = false;
+	    this.dragInViewport = null;
+	    this.center = [0.5, 0.5];
+	    this.layout = this.props.layout || '3xT';
+	    this.viewports = [];
 
-	        function drawCallback(data, envelope) {
-	            this.dataToDraw = data;
-	            drawViewportByName(this.name);
-	        }
-
-	        // Init viewports from props
-	        for (var name in this.props.renderers) {
-	            var item = this.props.renderers[name],
-	                imageBuilder = item.builder,
-	                painter = item.painter;
-
-	            // Renderer is an ImageBuilder
-	            if (imageBuilder) {
-	                imageBuilder.onImageReady(drawCallback).context(item);
-	            }
-	            // Renderer is a Painter
-	            if (painter) {
-	                painter.onPainterReady(drawCallback).context(item);
-	            }
-
-	            this.viewports.push({ name: name, active: false });
-	        }
-
-	        // Listen to window resize
-	        this.sizeSubscription = _SizeHelper2.default.onSizeChange(this.updateDimensions);
-
-	        // Make sure we monitor window size if it is not already the case
-	        _SizeHelper2.default.startListening();
-	    },
-	    componentDidMount: function componentDidMount() {
-	        this.updateDimensions();
-
-	        // Attach mouse listener
-	        this.mouseHandler = new _MouseHandler2.default(_reactDom2.default.findDOMNode(this.refs.canvasRenderer));
-
-	        this.mouseHandler.attach({
-	            'drag': this.dragCallback,
-	            'click': this.clickCallback,
-	            'zoom': this.zoomCallback
-	        });
-	    },
-	    componentDidUpdate: function componentDidUpdate(nextProps, nextState) {
-	        this.drawLayout();
-	    },
-	    componentWillUnmount: function componentWillUnmount() {
-	        this.off();
-
-	        // Free mouseHandler
-	        if (this.mouseHandler) {
-	            this.mouseHandler.destroy();
-	            this.mouseHandler = null;
-	        }
-
-	        // Remove window listener
-	        if (this.sizeSubscription) {
-	            this.sizeSubscription.unsubscribe();
-	            this.sizeSubscription = null;
-	        }
-	    },
-	    setLayout: function setLayout(name) {
-	        this.layout = name;
-	        this.drawLayout();
-	        this.emit(LAYOUT_CHANGE, name);
-	    },
-	    getLayouts: function getLayouts() {
-	        return layoutNames;
-	    },
-	    getActiveLayout: function getActiveLayout() {
-	        return this.layout;
-	    },
-	    setRenderMethod: function setRenderMethod(name) {
-	        var _this = this;
-
-	        this.viewports.forEach(function (viewport) {
-	            if (viewport.active) {
-	                viewport.name = name;
-	                _this.emit(ACTIVE_VIEWPORT_CHANGE, viewport);
-	            }
-	        });
-	        this.drawViewportByName(null);
-	    },
-	    getRenderMethods: function getRenderMethods() {
-	        return Object.keys(this.props.renderers);
-	    },
-	    getActiveRenderMethod: function getActiveRenderMethod() {
-	        this.viewports.forEach(function (viewport) {
-	            if (viewport.active) {
-	                return viewport.name;
-	            }
-	        });
-	        return "No render method";
-	    },
-	    updateDimensions: function updateDimensions() {
-	        var el = _reactDom2.default.findDOMNode(this).parentNode,
-	            elSize = _SizeHelper2.default.getSize(el);
-
-	        if (el && (this.state.width !== elSize.clientWidth || this.state.height !== elSize.clientHeight)) {
-	            this.setState({ width: elSize.clientWidth, height: elSize.clientHeight });
-	            return true;
-	        }
-	        return false;
-	    },
-	    dragCallback: function dragCallback(event, envelope) {
-	        var viewport = this.getViewPort(event);
-
-	        if ((viewport || this.dragInViewport) && !this.dragCenter) {
-	            this.dragInViewport = this.dragInViewport || viewport;
-
-	            // Forward event to viewport event handler
-	            var renderer = this.props.renderers[this.dragInViewport.name],
-	                imageBuilder = renderer.builder,
-	                listeners = imageBuilder ? imageBuilder.getListeners() : null; // FIXME ?
-
-	            if (listeners && listeners.drag) {
-	                // Update relative information
-	                event.activeArea = this.dragInViewport.activeArea;
-
-	                // Forward event
-	                listeners.drag(event, envelope);
-	            }
-	        } else {
-	            this.dragCenter = true;
-
-	            // Update center and redraw
-	            this.center[0] = event.relative.x / this.state.width;
-	            this.center[1] = event.relative.y / this.state.height;
-	            this.drawLayout();
-	        }
-
-	        if (event.isFinal) {
-	            this.dragCenter = false;
-	            this.dragInViewport = null;
-	        }
-	    },
-	    clickCallback: function clickCallback(event, envelope) {
-	        // Reset any previous drag state
-	        this.dragCenter = false;
-	        this.dragInViewport = null;
-
-	        var viewport = this.getViewPort(event);
-
-	        if (viewport) {
-	            this.viewports.forEach(function (item) {
-	                item.active = false;
-	            });
-	            viewport.active = true;
-
-	            // Forward event to viewport event handler
-	            var renderer = this.props.renderers[viewport.name],
-	                imageBuilder = renderer.builder,
-	                listeners = imageBuilder ? imageBuilder.getListeners() : null; // FIXME ?
-
-	            if (listeners && listeners.click) {
-	                // Update relative information
-	                event.activeArea = viewport.activeArea;
-
-	                // Forward event
-	                listeners.click(event, envelope);
-	            }
-
-	            // Let's other know that the active viewport has changed
-	            this.emit(ACTIVE_VIEWPORT_CHANGE, viewport);
-	        }
-
-	        // Redraw the outline with the appropriate color for active
-	        this.drawLayout();
-	    },
-	    zoomCallback: function zoomCallback(event, envelope) {
-	        var viewport = this.getViewPort(event);
-
-	        if (viewport) {
-	            // Forward event to viewport event handler
-	            var renderer = this.props.renderers[viewport.name],
-	                imageBuilder = renderer.builder,
-	                listeners = imageBuilder ? imageBuilder.getListeners() : null;
-
-	            if (listeners && listeners.zoom) {
-	                // Update relative information
-	                event.activeArea = viewport.activeArea;
-
-	                // Forward event
-	                listeners.zoom(event, envelope);
-	            }
-	        }
-	    },
-	    getViewPort: function getViewPort(event) {
-	        var count = this.viewports.length,
-	            x = event.relative.x,
-	            y = event.relative.y;
-
-	        while (count--) {
-	            var area = this.viewports[count].activeArea || this.viewports[count].region;
-	            if (x >= area[0] && y >= area[1] && x <= area[0] + area[2] && y <= area[1] + area[3]) {
-	                return this.viewports[count];
-	            }
-	        }
-	        return null;
-	    },
-	    drawViewport: function drawViewport(viewport) {
-	        var renderer = this.props.renderers[viewport.name],
-	            region = viewport.region,
-	            ctx = _reactDom2.default.findDOMNode(this.refs.canvasRenderer).getContext('2d');
-
-	        if (!renderer || renderer.builder && !renderer.dataToDraw || renderer.painter && !renderer.painter.isReady()) {
-	            return;
-	        }
-
-	        if (renderer.painter) {
-	            var location = {
-	                x: region[0] + 2,
-	                y: region[1] + 2,
-	                width: region[2] - 4,
-	                height: region[3] - 4
-	            };
-	            viewport.activeArea = [].concat(viewport.region);
-	            renderer.painter.paint(ctx, location);
-	        } else {
-	            // Assume Image builder
-	            var dataToDraw = this.props.renderers[viewport.name].dataToDraw,
-	                w = region[2] - 2,
-	                h = region[3] - 2,
-	                iw = dataToDraw.outputSize[0],
-	                ih = dataToDraw.outputSize[1],
-	                zoomLevel = Math.min(w / iw, h / ih);
-
-	            ctx.clearRect(region[0] + 1, region[1] + 1, region[2] - 2, region[3] - 2);
-
-	            var tw = Math.floor(iw * zoomLevel) - 2,
-	                th = Math.floor(ih * zoomLevel) - 2,
-	                tx = 1 + region[0] + w * 0.5 - tw / 2,
-	                ty = 1 + region[1] + h * 0.5 - th / 2;
-
-	            try {
-	                ctx.drawImage(dataToDraw.canvas, dataToDraw.area[0], dataToDraw.area[1], dataToDraw.area[2], dataToDraw.area[3], // Source image   [Location,Size]
-	                tx, ty, tw, th); // Target drawing [Location,Size]
-
-	                // Draw cross hair if any
-	                if (dataToDraw.crosshair) {
-	                    var scale = [tw / dataToDraw.area[2], th / dataToDraw.area[3]],
-	                        translate = [tx, ty];
-
-	                    ctx.beginPath();
-
-	                    ctx.moveTo(translate[0] + scale[0] * dataToDraw.crosshair[0], ty);
-	                    ctx.lineTo(translate[0] + scale[0] * dataToDraw.crosshair[0], ty + th);
-
-	                    ctx.moveTo(tx, translate[1] + scale[1] * dataToDraw.crosshair[1]);
-	                    ctx.lineTo(tx + tw, translate[1] + scale[1] * dataToDraw.crosshair[1]);
-
-	                    ctx.strokeStyle = this.props.crosshairColor;
-	                    ctx.lineWidth = 1;
-	                    ctx.stroke();
-	                }
-
-	                viewport.activeArea = [tx, ty, tw, th];
-	            } catch (err) {
-	                console.log('Error in MultiLayoutRenderer::drawViewport', err);
-	            }
-	        }
-	    },
-	    drawViewportByName: function drawViewportByName(name) {
-	        var _this2 = this;
-
-	        var renderer = name ? this.props.renderers[name] : null;
-
-	        // Update image builder if any
-	        if (renderer && renderer.builder && !renderer.dataToDraw) {
-	            renderer.builder.update();
-	            return;
-	        }
-
-	        this.viewports.forEach(function (viewport) {
-	            if (viewport.name === name || name === null) {
-	                _this2.drawViewport(viewport);
-	            }
-	        });
-	    },
-	    drawLayout: function drawLayout() {
-	        var ctx = _reactDom2.default.findDOMNode(this.refs.canvasRenderer).getContext('2d'),
-	            width = ctx.canvas.width = this.state.width,
-	            height = ctx.canvas.height = this.state.height,
-	            centerPx = [this.center[0] * width, this.center[1] * height],
-	            spacing = this.props.spacing,
-	            regions = _Layouts2.default[this.layout](centerPx, spacing, width, height),
-	            viewports = this.viewports,
-	            numberOfRegions = regions.length;
-
-	        ctx.clearRect(0, 0, width, height);
-
-	        for (var i = 0; i < numberOfRegions; ++i) {
-	            var region = regions.shift();
-	            if (i < viewports.length) {
-	                viewports[i].region = region;
-	            } else {
-	                viewports.push({ name: this.getRenderMethods()[0], region: region, active: false });
-	            }
-	            ctx.beginPath();
-	            ctx.strokeStyle = viewports[i].active ? this.props.activeColor : this.props.borderColor;
-	            ctx.rect.apply(ctx, region);
-	            ctx.stroke();
-	        }
-
-	        // Remove the unused viewports
-	        while (viewports.length > numberOfRegions) {
-	            viewports.pop();
-	        }
-
-	        this.drawViewportByName(null);
-	    },
-	    onActiveViewportChange: function onActiveViewportChange(callback) {
-	        return this.on(ACTIVE_VIEWPORT_CHANGE, callback);
-	    },
-	    onLayoutChange: function onLayoutChange(callback) {
-	        return this.on(LAYOUT_CHANGE, callback);
-	    },
-	    render: function render() {
-	        return _react2.default.createElement('canvas', {
-	            className: 'CanvasMultiImageRenderer',
-	            ref: 'canvasRenderer',
-	            width: this.state.width,
-	            height: this.state.height });
+	    function drawCallback(data, envelope) {
+	      this.dataToDraw = data;
+	      drawViewportByName(this.name);
 	    }
+
+	    // Init viewports from props
+	    for (var name in this.props.renderers) {
+	      var item = this.props.renderers[name],
+	          imageBuilder = item.builder,
+	          painter = item.painter;
+
+	      // Renderer is an ImageBuilder
+	      if (imageBuilder) {
+	        imageBuilder.onImageReady(drawCallback).context(item);
+	      }
+	      // Renderer is a Painter
+	      if (painter) {
+	        painter.onPainterReady(drawCallback).context(item);
+	      }
+
+	      this.viewports.push({
+	        name: name,
+	        active: false
+	      });
+	    }
+
+	    // Listen to window resize
+	    this.sizeSubscription = _SizeHelper2.default.onSizeChange(this.updateDimensions);
+
+	    // Make sure we monitor window size if it is not already the case
+	    _SizeHelper2.default.startListening();
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.updateDimensions();
+
+	    // Attach mouse listener
+	    this.mouseHandler = new _MouseHandler2.default(_reactDom2.default.findDOMNode(this.refs.canvasRenderer));
+
+	    this.mouseHandler.attach({
+	      drag: this.dragCallback,
+	      click: this.clickCallback,
+	      zoom: this.zoomCallback
+	    });
+	  },
+	  componentDidUpdate: function componentDidUpdate(nextProps, nextState) {
+	    this.drawLayout();
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.off();
+
+	    // Free mouseHandler
+	    if (this.mouseHandler) {
+	      this.mouseHandler.destroy();
+	      this.mouseHandler = null;
+	    }
+
+	    // Remove window listener
+	    if (this.sizeSubscription) {
+	      this.sizeSubscription.unsubscribe();
+	      this.sizeSubscription = null;
+	    }
+	  },
+	  setLayout: function setLayout(name) {
+	    this.layout = name;
+	    this.drawLayout();
+	    this.emit(LAYOUT_CHANGE, name);
+	  },
+	  getLayouts: function getLayouts() {
+	    return layoutNames;
+	  },
+	  getActiveLayout: function getActiveLayout() {
+	    return this.layout;
+	  },
+	  setRenderMethod: function setRenderMethod(name) {
+	    var _this = this;
+
+	    this.viewports.forEach(function (viewport) {
+	      if (viewport.active) {
+	        viewport.name = name;
+	        _this.emit(ACTIVE_VIEWPORT_CHANGE, viewport);
+	      }
+	    });
+	    this.drawViewportByName(null);
+	  },
+	  getRenderMethods: function getRenderMethods() {
+	    return Object.keys(this.props.renderers);
+	  },
+	  getActiveRenderMethod: function getActiveRenderMethod() {
+	    var name = 'No render method';
+	    this.viewports.forEach(function (viewport) {
+	      if (viewport.active) {
+	        name = viewport.name;
+	      }
+	    });
+	    return name;
+	  },
+	  updateDimensions: function updateDimensions() {
+	    var el = _reactDom2.default.findDOMNode(this).parentNode,
+	        elSize = _SizeHelper2.default.getSize(el);
+
+	    if (el && (this.state.width !== elSize.clientWidth || this.state.height !== elSize.clientHeight)) {
+	      this.setState({
+	        width: elSize.clientWidth,
+	        height: elSize.clientHeight
+	      });
+	      return true;
+	    }
+	    return false;
+	  },
+	  dragCallback: function dragCallback(event, envelope) {
+	    var viewport = this.getViewPort(event);
+
+	    if ((viewport || this.dragInViewport) && !this.dragCenter) {
+	      this.dragInViewport = this.dragInViewport || viewport;
+
+	      // Forward event to viewport event handler
+	      var renderer = this.props.renderers[this.dragInViewport.name],
+	          imageBuilder = renderer.builder,
+	          listeners = imageBuilder ? imageBuilder.getListeners() : null; // FIXME ?
+
+	      if (listeners && listeners.drag) {
+	        // Update relative information
+	        event.activeArea = this.dragInViewport.activeArea;
+
+	        // Forward event
+	        listeners.drag(event, envelope);
+	      }
+	    } else {
+	      this.dragCenter = true;
+
+	      // Update center and redraw
+	      this.center[0] = event.relative.x / this.state.width;
+	      this.center[1] = event.relative.y / this.state.height;
+	      this.drawLayout();
+	    }
+
+	    if (event.isFinal) {
+	      this.dragCenter = false;
+	      this.dragInViewport = null;
+	    }
+	  },
+	  clickCallback: function clickCallback(event, envelope) {
+	    // Reset any previous drag state
+	    this.dragCenter = false;
+	    this.dragInViewport = null;
+
+	    var viewport = this.getViewPort(event);
+
+	    if (viewport) {
+	      this.viewports.forEach(function (item) {
+	        item.active = false;
+	      });
+	      viewport.active = true;
+
+	      // Forward event to viewport event handler
+	      var renderer = this.props.renderers[viewport.name],
+	          imageBuilder = renderer.builder,
+	          listeners = imageBuilder ? imageBuilder.getListeners() : null; // FIXME ?
+
+	      if (listeners && listeners.click) {
+	        // Update relative information
+	        event.activeArea = viewport.activeArea;
+
+	        // Forward event
+	        listeners.click(event, envelope);
+	      }
+
+	      // Let's other know that the active viewport has changed
+	      this.emit(ACTIVE_VIEWPORT_CHANGE, viewport);
+	    }
+
+	    // Redraw the outline with the appropriate color for active
+	    this.drawLayout();
+	  },
+	  zoomCallback: function zoomCallback(event, envelope) {
+	    var viewport = this.getViewPort(event);
+
+	    if (viewport) {
+	      // Forward event to viewport event handler
+	      var renderer = this.props.renderers[viewport.name],
+	          imageBuilder = renderer.builder,
+	          listeners = imageBuilder ? imageBuilder.getListeners() : null;
+
+	      if (listeners && listeners.zoom) {
+	        // Update relative information
+	        event.activeArea = viewport.activeArea;
+
+	        // Forward event
+	        listeners.zoom(event, envelope);
+	      }
+	    }
+	  },
+	  getViewPort: function getViewPort(event) {
+	    var count = this.viewports.length,
+	        x = event.relative.x,
+	        y = event.relative.y;
+
+	    while (count--) {
+	      var area = this.viewports[count].activeArea || this.viewports[count].region;
+	      if (x >= area[0] && y >= area[1] && x <= area[0] + area[2] && y <= area[1] + area[3]) {
+	        return this.viewports[count];
+	      }
+	    }
+	    return null;
+	  },
+	  drawViewport: function drawViewport(viewport) {
+	    var renderer = this.props.renderers[viewport.name],
+	        region = viewport.region,
+	        ctx = _reactDom2.default.findDOMNode(this.refs.canvasRenderer).getContext('2d');
+
+	    if (!renderer || renderer.builder && !renderer.dataToDraw || renderer.painter && !renderer.painter.isReady()) {
+	      return;
+	    }
+
+	    if (renderer.painter) {
+	      var location = {
+	        x: region[0] + 2,
+	        y: region[1] + 2,
+	        width: region[2] - 4,
+	        height: region[3] - 4
+	      };
+	      viewport.activeArea = [].concat(viewport.region);
+	      renderer.painter.paint(ctx, location);
+	    } else {
+	      // Assume Image builder
+	      var dataToDraw = this.props.renderers[viewport.name].dataToDraw,
+	          w = region[2] - 2,
+	          h = region[3] - 2,
+	          iw = dataToDraw.outputSize[0],
+	          ih = dataToDraw.outputSize[1],
+	          zoomLevel = Math.min(w / iw, h / ih);
+
+	      ctx.clearRect(region[0] + 1, region[1] + 1, region[2] - 2, region[3] - 2);
+
+	      var tw = Math.floor(iw * zoomLevel) - 2,
+	          th = Math.floor(ih * zoomLevel) - 2,
+	          tx = 1 + region[0] + w * 0.5 - tw / 2,
+	          ty = 1 + region[1] + h * 0.5 - th / 2;
+
+	      try {
+	        ctx.drawImage(dataToDraw.canvas, dataToDraw.area[0], dataToDraw.area[1], dataToDraw.area[2], dataToDraw.area[3], // Source image   [Location,Size]
+	        tx, ty, tw, th); // Target drawing [Location,Size]
+
+	        // Draw cross hair if any
+	        if (dataToDraw.crosshair) {
+	          var scale = [tw / dataToDraw.area[2], th / dataToDraw.area[3]],
+	              translate = [tx, ty];
+
+	          ctx.beginPath();
+
+	          ctx.moveTo(translate[0] + scale[0] * dataToDraw.crosshair[0], ty);
+	          ctx.lineTo(translate[0] + scale[0] * dataToDraw.crosshair[0], ty + th);
+
+	          ctx.moveTo(tx, translate[1] + scale[1] * dataToDraw.crosshair[1]);
+	          ctx.lineTo(tx + tw, translate[1] + scale[1] * dataToDraw.crosshair[1]);
+
+	          ctx.strokeStyle = this.props.crosshairColor;
+	          ctx.lineWidth = 1;
+	          ctx.stroke();
+	        }
+
+	        viewport.activeArea = [tx, ty, tw, th];
+	      } catch (err) {
+	        console.log('Error in MultiLayoutRenderer::drawViewport', err);
+	      }
+	    }
+	  },
+	  drawViewportByName: function drawViewportByName(name) {
+	    var _this2 = this;
+
+	    var renderer = name ? this.props.renderers[name] : null;
+
+	    // Update image builder if any
+	    if (renderer && renderer.builder && !renderer.dataToDraw) {
+	      renderer.builder.update();
+	      return;
+	    }
+
+	    this.viewports.forEach(function (viewport) {
+	      if (viewport.name === name || name === null) {
+	        _this2.drawViewport(viewport);
+	      }
+	    });
+	  },
+	  drawLayout: function drawLayout() {
+	    var ctx = _reactDom2.default.findDOMNode(this.refs.canvasRenderer).getContext('2d'),
+	        width = ctx.canvas.width = this.state.width,
+	        height = ctx.canvas.height = this.state.height,
+	        centerPx = [this.center[0] * width, this.center[1] * height],
+	        spacing = this.props.spacing,
+	        regions = _Layouts2.default[this.layout](centerPx, spacing, width, height),
+	        viewports = this.viewports,
+	        numberOfRegions = regions.length;
+
+	    ctx.clearRect(0, 0, width, height);
+
+	    for (var i = 0; i < numberOfRegions; ++i) {
+	      var region = regions.shift();
+	      if (i < viewports.length) {
+	        viewports[i].region = region;
+	      } else {
+	        viewports.push({
+	          name: this.getRenderMethods()[0],
+	          region: region,
+	          active: false
+	        });
+	      }
+	      ctx.beginPath();
+	      ctx.strokeStyle = viewports[i].active ? this.props.activeColor : this.props.borderColor;
+	      ctx.rect.apply(ctx, region);
+	      ctx.stroke();
+	    }
+
+	    // Remove the unused viewports
+	    while (viewports.length > numberOfRegions) {
+	      viewports.pop();
+	    }
+
+	    this.drawViewportByName(null);
+	  },
+	  onActiveViewportChange: function onActiveViewportChange(callback) {
+	    return this.on(ACTIVE_VIEWPORT_CHANGE, callback);
+	  },
+	  onLayoutChange: function onLayoutChange(callback) {
+	    return this.on(LAYOUT_CHANGE, callback);
+	  },
+	  render: function render() {
+	    return _react2.default.createElement('canvas', {
+	      className: 'CanvasMultiImageRenderer',
+	      ref: 'canvasRenderer',
+	      width: this.state.width,
+	      height: this.state.height
+	    });
+	  }
 	});
 
 	// Add Observer pattern to the class using Monologue.js
@@ -38345,7 +38483,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	   value: true
 	});
-	/* eslint-disable babel/object-shorthand */
+	/* eslint-disable */
 	exports.default = {
 	   "2x2": function x2(center, spacing, width, height) {
 	      return [[spacing, spacing, center[0] - 1.5 * spacing, center[1] - 1.5 * spacing], [center[0] + 0.5 * spacing, spacing, width - center[0] - 1.5 * spacing, center[1] - 1.5 * spacing], [spacing, center[1] + 0.5 * spacing, center[0] - 1.5 * spacing, height - center[1] - 1.5 * spacing], [center[0] + 0.5 * spacing, center[1] + 0.5 * spacing, width - center[0] - 1.5 * spacing, height - center[1] - 1.5 * spacing]];
@@ -38372,7 +38510,7 @@
 	      return [[spacing, spacing, center[0] - 1.5 * spacing, center[1] - 1.5 * spacing], [center[0] + 0.5 * spacing, spacing, width - center[0] - 1.5 * spacing, center[1] - 1.5 * spacing], [spacing, center[1] + 0.5 * spacing, width - 2 * spacing, height - center[1] - 1.5 * spacing]];
 	   }
 	};
-	/* eslint-enable babel/object-shorthand */
+	/* eslint-enable */
 
 /***/ },
 /* 201 */
@@ -39222,7 +39360,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _equals = __webpack_require__(212);
@@ -39248,12 +39386,12 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function interpolate(values, xRatio) {
-	    var size = values.length,
-	        idx = size * xRatio,
-	        a = values[Math.floor(idx)],
-	        b = values[Math.ceil(idx)],
-	        ratio = idx - Math.floor(idx);
-	    return ((b - a) * ratio + a).toFixed(5);
+	  var size = values.length,
+	      idx = size * xRatio,
+	      a = values[Math.floor(idx)],
+	      b = values[Math.ceil(idx)],
+	      ratio = idx - Math.floor(idx);
+	  return ((b - a) * ratio + a).toFixed(5);
 	}
 
 	/**
@@ -39261,228 +39399,233 @@
 	 */
 	exports.default = _react2.default.createClass({
 
-	    displayName: 'LineChartViewer',
+	  displayName: 'LineChartViewer',
 
-	    propTypes: {
-	        colors: _react2.default.PropTypes.array,
-	        cursor: _react2.default.PropTypes.number,
-	        data: _react2.default.PropTypes.any.isRequired,
-	        height: _react2.default.PropTypes.number,
-	        legend: _react2.default.PropTypes.bool,
-	        width: _react2.default.PropTypes.number
-	    },
+	  propTypes: {
+	    colors: _react2.default.PropTypes.array,
+	    cursor: _react2.default.PropTypes.number,
+	    data: _react2.default.PropTypes.any.isRequired,
+	    height: _react2.default.PropTypes.number,
+	    legend: _react2.default.PropTypes.bool,
+	    width: _react2.default.PropTypes.number
+	  },
 
-	    getDefaultProps: function getDefaultProps() {
-	        return {
-	            colors: ["#e1002a", "#417dc0", "#1d9a57", "#e9bc2f", "#9b3880"],
-	            height: 200,
-	            legend: false,
-	            width: 200
-	        };
-	    },
-	    getInitialState: function getInitialState() {
-	        return {
-	            fieldsColors: {},
-	            height: this.props.height / 2,
-	            legend: this.props.legend,
-	            width: this.props.width / 2
-	        };
-	    },
-	    componentWillMount: function componentWillMount() {
-	        this.xPosition = 0;
-	        // Listen to window resize
-	        this.sizeSubscription = _SizeHelper2.default.onSizeChange(this.updateDimensions);
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      colors: ['#e1002a', '#417dc0', '#1d9a57', '#e9bc2f', '#9b3880'],
+	      height: 200,
+	      legend: false,
+	      width: 200
+	    };
+	  },
+	  getInitialState: function getInitialState() {
+	    return {
+	      fieldsColors: {},
+	      height: this.props.height / 2,
+	      legend: this.props.legend,
+	      width: this.props.width / 2
+	    };
+	  },
+	  componentWillMount: function componentWillMount() {
+	    this.xPosition = 0;
+	    // Listen to window resize
+	    this.sizeSubscription = _SizeHelper2.default.onSizeChange(this.updateDimensions);
 
-	        // Make sure we monitor window size if it is not already the case
-	        _SizeHelper2.default.startListening();
-	    },
-	    componentDidMount: function componentDidMount() {
-	        this.updateDimensions();
-	        // this.drawChart();
-	    },
-	    componentDidUpdate: function componentDidUpdate(prevProps, prevState) {
-	        this.drawChart();
-	    },
-	    componentWillUnmount: function componentWillUnmount() {
-	        // Remove window listener
-	        if (this.sizeSubscription) {
-	            this.sizeSubscription.unsubscribe();
-	            this.sizeSubscription = null;
-	        }
-	    },
-	    toggleLegend: function toggleLegend() {
-	        this.setState({ legend: !this.state.legend });
-	    },
-	    updateDimensions: function updateDimensions() {
-	        this.xPosition = 0;
-
-	        var el = _reactDom2.default.findDOMNode(this).parentNode,
-	            elSize = _SizeHelper2.default.getSize(el);
-
-	        if (el && (this.state.width !== elSize.clientWidth || this.state.height !== elSize.clientHeight)) {
-	            this.setState({ width: elSize.clientWidth, height: elSize.clientHeight });
-	            return true;
-	        }
-	        return false;
-	    },
-	    onMove: function onMove(event) {
-	        this.xPosition = event.clientX - (event.target.getClientRects()[0].x || event.target.getClientRects()[0].left);
-
-	        // Update fields values
-
-	        if (this.isMounted() && this.state.legend) {
-	            this.drawChart();
-	        }
-	    },
-	    drawChart: function drawChart() {
-	        if (!this.props.data) {
-	            return;
-	        }
-
-	        var ctx = _reactDom2.default.findDOMNode(this.refs.canvas).getContext('2d'),
-	            fields = this.props.data.fields,
-	            size = fields.length,
-	            fieldsColors = {},
-	            ratio = this.xPosition / ctx.canvas.width;
-
-	        ctx.canvas.width = this.state.width;
-	        ctx.canvas.height = this.state.height;
-
-	        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-	        for (var idx = 0; idx < size; ++idx) {
-	            this.drawField(ctx, idx, fields[idx].data, fields[idx].range);
-	            fieldsColors[fields[idx].name] = this.props.colors[idx];
-	            if (this.refs.hasOwnProperty(fields[idx].name)) {
-	                _reactDom2.default.findDOMNode(this.refs[fields[idx].name]).innerHTML = interpolate(fields[idx].data, ratio);
-	            }
-	        }
-
-	        if (!(0, _equals2.default)(this.state.fieldsColors, fieldsColors)) {
-	            this.setState({ fieldsColors: fieldsColors });
-	        }
-
-	        // Draw cursor
-	        if (this.state.legend) {
-	            _reactDom2.default.findDOMNode(this.refs.xValueLabel).innerHTML = ((this.props.data.xRange[1] - this.props.data.xRange[0]) * ratio + this.props.data.xRange[0]).toFixed(5);
-
-	            ctx.beginPath();
-	            ctx.lineWidth = 1;
-	            ctx.strokeStyle = '#000000';
-	            ctx.moveTo(this.xPosition, 0);
-	            ctx.lineTo(this.xPosition, ctx.canvas.height);
-	            ctx.stroke();
-	        }
-
-	        if (this.props.cursor !== undefined) {
-	            ctx.beginPath();
-	            ctx.lineWidth = 1;
-	            ctx.strokeStyle = '#0000FF';
-	            ctx.moveTo(this.props.cursor * ctx.canvas.width, 0);
-	            ctx.lineTo(this.props.cursor * ctx.canvas.width, ctx.canvas.height);
-	            ctx.stroke();
-	        }
-	    },
-	    drawField: function drawField(ctx, fieldIndex, values, range) {
-	        var min = Number.MAX_VALUE,
-	            max = Number.MIN_VALUE,
-	            width = ctx.canvas.width,
-	            height = ctx.canvas.height,
-	            size = values.length,
-	            count = values.length,
-	            xValues = new Uint16Array(count);
-
-	        // Compute xValues and min/max
-	        while (count--) {
-	            var value = values[count];
-	            min = Math.min(min, value);
-	            max = Math.max(max, value);
-	            xValues[count] = Math.floor(width * (count / size));
-	        }
-
-	        // Update range if any provided
-	        if (range) {
-	            min = range[0];
-	            max = range[1];
-	        }
-
-	        var scaleY = height / (max - min);
-	        function getY(idx) {
-	            var value = values[idx];
-	            value = value > min ? value < max ? value : max : min;
-	            return height - Math.floor((value - min) * scaleY);
-	        }
-
-	        // Draw line
-	        ctx.beginPath();
-	        ctx.lineWidth = 1;
-	        ctx.strokeStyle = this.props.colors[fieldIndex];
-	        ctx.moveTo(xValues[0], getY(0));
-	        for (var idx = 1; idx < size; idx++) {
-	            if (isNaN(values[idx])) {
-	                if (idx + 1 < size && !isNaN(values[idx + 1])) {
-	                    ctx.moveTo(xValues[idx + 1], getY(idx + 1));
-	                }
-	            } else {
-	                ctx.lineTo(xValues[idx], getY(idx));
-	            }
-	        }
-	        ctx.stroke();
-
-	        return [min, max];
-	    },
-	    render: function render() {
-	        var legend = [];
-
-	        for (var name in this.state.fieldsColors) {
-	            var color = this.state.fieldsColors[name];
-	            legend.push(_react2.default.createElement(
-	                'li',
-	                { className: _LineChartViewer2.default.legendItem, key: name },
-	                _react2.default.createElement('i', { className: _LineChartViewer2.default.legendItemColor, style: { color: color } }),
-	                _react2.default.createElement(
-	                    'b',
-	                    null,
-	                    name
-	                ),
-	                _react2.default.createElement('span', { className: _LineChartViewer2.default.legendItemValue, ref: name })
-	            ));
-	        }
-
-	        return _react2.default.createElement(
-	            'div',
-	            { className: _LineChartViewer2.default.container },
-	            _react2.default.createElement('canvas', {
-	                className: _LineChartViewer2.default.canvas,
-	                ref: 'canvas',
-	                onMouseMove: this.onMove,
-	                width: this.state.width,
-	                height: this.state.height }),
-	            _react2.default.createElement(
-	                'div',
-	                { className: this.state.legend ? _LineChartViewer2.default.legend : _LineChartViewer2.default.hidden },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: _LineChartViewer2.default.legendBar },
-	                    _react2.default.createElement('span', { className: _LineChartViewer2.default.legendText, ref: 'xValueLabel' }),
-	                    _react2.default.createElement('i', { className: _LineChartViewer2.default.toggleLegendButton, onClick: this.toggleLegend })
-	                ),
-	                _react2.default.createElement(
-	                    'ul',
-	                    { className: _LineChartViewer2.default.legendContent },
-	                    legend
-	                )
-	            ),
-	            _react2.default.createElement(
-	                'div',
-	                { className: this.state.legend ? _LineChartViewer2.default.hidden : _LineChartViewer2.default.legend, onClick: this.toggleLegend },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: _LineChartViewer2.default.legendButtons },
-	                    _react2.default.createElement('i', { className: _LineChartViewer2.default.toggleLegendButton })
-	                )
-	            )
-	        );
+	    // Make sure we monitor window size if it is not already the case
+	    _SizeHelper2.default.startListening();
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.updateDimensions();
+	    // this.drawChart();
+	  },
+	  componentDidUpdate: function componentDidUpdate(prevProps, prevState) {
+	    this.drawChart();
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    // Remove window listener
+	    if (this.sizeSubscription) {
+	      this.sizeSubscription.unsubscribe();
+	      this.sizeSubscription = null;
 	    }
+	  },
+	  toggleLegend: function toggleLegend() {
+	    this.setState({ legend: !this.state.legend });
+	  },
+	  updateDimensions: function updateDimensions() {
+	    this.xPosition = 0;
+
+	    var el = _reactDom2.default.findDOMNode(this).parentNode,
+	        elSize = _SizeHelper2.default.getSize(el);
+
+	    if (el && (this.state.width !== elSize.clientWidth || this.state.height !== elSize.clientHeight)) {
+	      this.setState({
+	        width: elSize.clientWidth,
+	        height: elSize.clientHeight
+	      });
+	      return true;
+	    }
+	    return false;
+	  },
+	  onMove: function onMove(event) {
+	    this.xPosition = event.clientX - (event.target.getClientRects()[0].x || event.target.getClientRects()[0].left);
+
+	    // Update fields values
+
+	    if (this.isMounted() && this.state.legend) {
+	      this.drawChart();
+	    }
+	  },
+	  drawChart: function drawChart() {
+	    if (!this.props.data) {
+	      return;
+	    }
+
+	    var ctx = _reactDom2.default.findDOMNode(this.refs.canvas).getContext('2d'),
+	        fields = this.props.data.fields,
+	        size = fields.length,
+	        fieldsColors = {},
+	        ratio = this.xPosition / ctx.canvas.width;
+
+	    ctx.canvas.width = this.state.width;
+	    ctx.canvas.height = this.state.height;
+
+	    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+	    for (var idx = 0; idx < size; ++idx) {
+	      this.drawField(ctx, idx, fields[idx].data, fields[idx].range);
+	      fieldsColors[fields[idx].name] = this.props.colors[idx];
+	      if (this.refs.hasOwnProperty(fields[idx].name)) {
+	        _reactDom2.default.findDOMNode(this.refs[fields[idx].name]).innerHTML = interpolate(fields[idx].data, ratio);
+	      }
+	    }
+
+	    if (!(0, _equals2.default)(this.state.fieldsColors, fieldsColors)) {
+	      this.setState({ fieldsColors: fieldsColors });
+	    }
+
+	    // Draw cursor
+	    if (this.state.legend) {
+	      _reactDom2.default.findDOMNode(this.refs.xValueLabel).innerHTML = ((this.props.data.xRange[1] - this.props.data.xRange[0]) * ratio + this.props.data.xRange[0]).toFixed(5);
+
+	      ctx.beginPath();
+	      ctx.lineWidth = 1;
+	      ctx.strokeStyle = '#000000';
+	      ctx.moveTo(this.xPosition, 0);
+	      ctx.lineTo(this.xPosition, ctx.canvas.height);
+	      ctx.stroke();
+	    }
+
+	    if (this.props.cursor !== undefined) {
+	      ctx.beginPath();
+	      ctx.lineWidth = 1;
+	      ctx.strokeStyle = '#0000FF';
+	      ctx.moveTo(this.props.cursor * ctx.canvas.width, 0);
+	      ctx.lineTo(this.props.cursor * ctx.canvas.width, ctx.canvas.height);
+	      ctx.stroke();
+	    }
+	  },
+	  drawField: function drawField(ctx, fieldIndex, values, range) {
+	    var min = Number.MAX_VALUE,
+	        max = Number.MIN_VALUE,
+	        width = ctx.canvas.width,
+	        height = ctx.canvas.height,
+	        size = values.length,
+	        count = values.length,
+	        xValues = new Uint16Array(count);
+
+	    // Compute xValues and min/max
+	    while (count--) {
+	      var value = values[count];
+	      min = Math.min(min, value);
+	      max = Math.max(max, value);
+	      xValues[count] = Math.floor(width * (count / size));
+	    }
+
+	    // Update range if any provided
+	    if (range) {
+	      min = range[0];
+	      max = range[1];
+	    }
+
+	    var scaleY = height / (max - min);
+
+	    function getY(idx) {
+	      var value = values[idx];
+	      value = value > min ? value < max ? value : max : min;
+	      return height - Math.floor((value - min) * scaleY);
+	    }
+
+	    // Draw line
+	    ctx.beginPath();
+	    ctx.lineWidth = 1;
+	    ctx.strokeStyle = this.props.colors[fieldIndex];
+	    ctx.moveTo(xValues[0], getY(0));
+	    for (var idx = 1; idx < size; idx++) {
+	      if (isNaN(values[idx])) {
+	        if (idx + 1 < size && !isNaN(values[idx + 1])) {
+	          ctx.moveTo(xValues[idx + 1], getY(idx + 1));
+	        }
+	      } else {
+	        ctx.lineTo(xValues[idx], getY(idx));
+	      }
+	    }
+	    ctx.stroke();
+
+	    return [min, max];
+	  },
+	  render: function render() {
+	    var legend = [];
+
+	    for (var name in this.state.fieldsColors) {
+	      var color = this.state.fieldsColors[name];
+	      legend.push(_react2.default.createElement(
+	        'li',
+	        { className: _LineChartViewer2.default.legendItem, key: name },
+	        _react2.default.createElement('i', { className: _LineChartViewer2.default.legendItemColor, style: { color: color } }),
+	        _react2.default.createElement(
+	          'b',
+	          null,
+	          name
+	        ),
+	        _react2.default.createElement('span', { className: _LineChartViewer2.default.legendItemValue, ref: name })
+	      ));
+	    }
+
+	    return _react2.default.createElement(
+	      'div',
+	      { className: _LineChartViewer2.default.container },
+	      _react2.default.createElement('canvas', {
+	        className: _LineChartViewer2.default.canvas,
+	        ref: 'canvas',
+	        onMouseMove: this.onMove,
+	        width: this.state.width,
+	        height: this.state.height
+	      }),
+	      _react2.default.createElement(
+	        'div',
+	        { className: this.state.legend ? _LineChartViewer2.default.legend : _LineChartViewer2.default.hidden },
+	        _react2.default.createElement(
+	          'div',
+	          { className: _LineChartViewer2.default.legendBar },
+	          _react2.default.createElement('span', { className: _LineChartViewer2.default.legendText, ref: 'xValueLabel' }),
+	          _react2.default.createElement('i', { className: _LineChartViewer2.default.toggleLegendButton, onClick: this.toggleLegend })
+	        ),
+	        _react2.default.createElement(
+	          'ul',
+	          { className: _LineChartViewer2.default.legendContent },
+	          legend
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: this.state.legend ? _LineChartViewer2.default.hidden : _LineChartViewer2.default.legend, onClick: this.toggleLegend },
+	        _react2.default.createElement(
+	          'div',
+	          { className: _LineChartViewer2.default.legendButtons },
+	          _react2.default.createElement('i', { className: _LineChartViewer2.default.toggleLegendButton })
+	        )
+	      )
+	    );
+	  }
 	});
 
 /***/ },
@@ -39795,7 +39938,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _CollapsibleWidget = __webpack_require__(223);
@@ -39818,57 +39961,65 @@
 
 	exports.default = _react2.default.createClass({
 
-	    displayName: 'lookupTableManagerControl',
+	  displayName: 'lookupTableManagerControl',
 
-	    propTypes: {
-	        field: _react2.default.PropTypes.string,
-	        lookupTableManager: _react2.default.PropTypes.object.isRequired
-	    },
+	  propTypes: {
+	    field: _react2.default.PropTypes.string,
+	    lookupTableManager: _react2.default.PropTypes.object.isRequired
+	  },
 
-	    getInitialState: function getInitialState() {
-	        var luts = this.props.lookupTableManager.luts,
-	            fields = Object.keys(luts),
-	            field = this.props.field || fields[0];
-	        return { field: field, fields: fields };
-	    },
-	    componentWillMount: function componentWillMount() {
-	        var _this = this;
+	  getInitialState: function getInitialState() {
+	    var luts = this.props.lookupTableManager.luts,
+	        fields = Object.keys(luts),
+	        field = this.props.field || fields[0];
+	    return {
+	      field: field, fields: fields
+	    };
+	  },
+	  componentWillMount: function componentWillMount() {
+	    var _this = this;
 
-	        this.changeSubscription = this.props.lookupTableManager.onFieldsChange(function (data, enevelope) {
-	            var fields = Object.keys(_this.props.lookupTableManager.luts);
-	            _this.setState({ fields: fields });
-	        });
-	    },
-	    componentWillUnmount: function componentWillUnmount() {
-	        if (this.changeSubscription) {
-	            this.changeSubscription.unsubscribe();
-	            this.changeSubscription = null;
-	        }
-	    },
-	    onFieldsChange: function onFieldsChange(newVal) {
-	        this.props.lookupTableManager.updateActiveLookupTable(newVal);
-	        this.setState({ field: newVal });
-	    },
-	    render: function render() {
-	        var lutManager = this.props.lookupTableManager,
-	            lut = lutManager.getLookupTable(this.state.field),
-	            originalRange = lut.getScalarRange();
-
-	        return _react2.default.createElement(
-	            _CollapsibleWidget2.default,
-	            {
-	                title: 'Lookup Table',
-	                subtitle: _react2.default.createElement(_DropDownWidget2.default, {
-	                    field: this.state.field,
-	                    fields: this.state.fields,
-	                    onChange: this.onFieldsChange }) },
-	            _react2.default.createElement(_LookupTableWidget2.default, {
-	                lookupTableManager: lutManager,
-	                lookupTable: lut,
-	                originalRange: originalRange
-	            })
-	        );
+	    this.changeSubscription = this.props.lookupTableManager.onFieldsChange(function (data, enevelope) {
+	      var fields = Object.keys(_this.props.lookupTableManager.luts);
+	      _this.setState({
+	        fields: fields
+	      });
+	    });
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    if (this.changeSubscription) {
+	      this.changeSubscription.unsubscribe();
+	      this.changeSubscription = null;
 	    }
+	  },
+	  onFieldsChange: function onFieldsChange(newVal) {
+	    this.props.lookupTableManager.updateActiveLookupTable(newVal);
+	    this.setState({
+	      field: newVal
+	    });
+	  },
+	  render: function render() {
+	    var lutManager = this.props.lookupTableManager,
+	        lut = lutManager.getLookupTable(this.state.field),
+	        originalRange = lut.getScalarRange();
+
+	    return _react2.default.createElement(
+	      _CollapsibleWidget2.default,
+	      {
+	        title: 'Lookup Table',
+	        subtitle: _react2.default.createElement(_DropDownWidget2.default, {
+	          field: this.state.field,
+	          fields: this.state.fields,
+	          onChange: this.onFieldsChange
+	        })
+	      },
+	      _react2.default.createElement(_LookupTableWidget2.default, {
+	        lookupTableManager: lutManager,
+	        lookupTable: lut,
+	        originalRange: originalRange
+	      })
+	    );
+	  }
 	});
 
 /***/ },
@@ -40023,7 +40174,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _ColorPickerWidget = __webpack_require__(227);
@@ -40049,39 +40200,39 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var STYLE = {
-	    range: {
-	        none: {
-	            display: 'flex'
-	        },
-	        edit: {
-	            display: 'flex'
-	        },
-	        preset: {
-	            display: 'none'
-	        }
+	  range: {
+	    none: {
+	      display: 'flex'
 	    },
-	    editContent: {
-	        none: {
-	            display: 'none'
-	        },
-	        edit: {
-	            display: 'flex'
-	        },
-	        preset: {
-	            display: 'none'
-	        }
+	    edit: {
+	      display: 'flex'
 	    },
-	    presets: {
-	        none: {
-	            display: 'none'
-	        },
-	        edit: {
-	            display: 'none'
-	        },
-	        preset: {
-	            display: 'flex'
-	        }
+	    preset: {
+	      display: 'none'
 	    }
+	  },
+	  editContent: {
+	    none: {
+	      display: 'none'
+	    },
+	    edit: {
+	      display: 'flex'
+	    },
+	    preset: {
+	      display: 'none'
+	    }
+	  },
+	  presets: {
+	    none: {
+	      display: 'none'
+	    },
+	    edit: {
+	      display: 'none'
+	    },
+	    preset: {
+	      display: 'flex'
+	    }
+	  }
 	};
 
 	/**
@@ -40103,249 +40254,277 @@
 	 */
 	exports.default = _react2.default.createClass({
 
-	    displayName: 'LookupTableWidget',
+	  displayName: 'LookupTableWidget',
 
-	    propTypes: {
-	        inverse: _react2.default.PropTypes.bool,
-	        lookupTable: _react2.default.PropTypes.object.isRequired,
-	        lookupTableManager: _react2.default.PropTypes.object,
-	        originalRange: _react2.default.PropTypes.array
-	    },
+	  propTypes: {
+	    inverse: _react2.default.PropTypes.bool,
+	    lookupTable: _react2.default.PropTypes.object.isRequired,
+	    lookupTableManager: _react2.default.PropTypes.object,
+	    originalRange: _react2.default.PropTypes.array
+	  },
 
-	    getInitialState: function getInitialState() {
-	        return {
-	            mode: 'none',
-	            activePreset: this.props.lookupTable.getPresets()[0],
-	            currentControlPointIndex: 0,
-	            internal_lut: false
-	        };
-	    },
-	    componentDidMount: function componentDidMount() {
-	        var canvas = _reactDom2.default.findDOMNode(this.refs.canvas);
-	        this.props.lookupTable.drawToCanvas(canvas);
-	    },
-	    componentDidUpdate: function componentDidUpdate(prevProps, prevState) {
-	        if (!this.state.internal_lut) {
-	            var canvas = _reactDom2.default.findDOMNode(this.refs.canvas);
-	            this.props.lookupTable.drawToCanvas(canvas);
+	  getInitialState: function getInitialState() {
+	    return {
+	      mode: 'none',
+	      activePreset: this.props.lookupTable.getPresets()[0],
+	      currentControlPointIndex: 0,
+	      internal_lut: false
+	    };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    var canvas = _reactDom2.default.findDOMNode(this.refs.canvas);
+	    this.props.lookupTable.drawToCanvas(canvas);
+	  },
+	  componentDidUpdate: function componentDidUpdate(prevProps, prevState) {
+	    if (!this.state.internal_lut) {
+	      var canvas = _reactDom2.default.findDOMNode(this.refs.canvas);
+	      this.props.lookupTable.drawToCanvas(canvas);
 
-	            if (this.state.mode === 'edit') {
-	                // Draw control point
-	                var ctx = canvas.getContext('2d'),
-	                    x = Math.floor(this.props.lookupTable.getControlPoint(this.state.currentControlPointIndex).x * this.props.lookupTable.colorTableSize),
-	                    imageData = ctx.getImageData(0, 0, this.props.lookupTable.colorTableSize, 1);
+	      if (this.state.mode === 'edit') {
+	        // Draw control point
+	        var ctx = canvas.getContext('2d'),
+	            x = Math.floor(this.props.lookupTable.getControlPoint(this.state.currentControlPointIndex).x * this.props.lookupTable.colorTableSize),
+	            imageData = ctx.getImageData(0, 0, this.props.lookupTable.colorTableSize, 1);
 
-	                var color = imageData.data[x * 4] + imageData.data[x * 4 + 1] + imageData.data[x * 4 + 2] > 3 * 255 / 2 ? 0 : 255;
-	                imageData.data[x * 4 + 0] = this.props.inverse ? (imageData.data[x * 4 + 0] + 128) % 256 : color;
-	                imageData.data[x * 4 + 1] = this.props.inverse ? (imageData.data[x * 4 + 1] + 128) % 256 : color;
-	                imageData.data[x * 4 + 2] = this.props.inverse ? (imageData.data[x * 4 + 2] + 128) % 256 : color;
+	        var color = imageData.data[x * 4] + imageData.data[x * 4 + 1] + imageData.data[x * 4 + 2] > 3 * 255 / 2 ? 0 : 255;
+	        imageData.data[x * 4 + 0] = this.props.inverse ? (imageData.data[x * 4 + 0] + 128) % 256 : color;
+	        imageData.data[x * 4 + 1] = this.props.inverse ? (imageData.data[x * 4 + 1] + 128) % 256 : color;
+	        imageData.data[x * 4 + 2] = this.props.inverse ? (imageData.data[x * 4 + 2] + 128) % 256 : color;
 
-	                ctx.putImageData(imageData, 0, 0);
-	            }
-	        }
-	    },
-	    toggleEditMode: function toggleEditMode() {
-	        if (this.state.mode === 'none' || this.state.mode !== 'edit') {
-	            this.setState({ mode: 'edit', internal_lut: false });
-	        } else {
-	            this.setState({ mode: 'none', internal_lut: false });
-	        }
-	    },
-	    togglePresetMode: function togglePresetMode() {
-	        if (this.state.mode === 'none' || this.state.mode !== 'preset') {
-	            this.deltaPreset(0); // Render preset
-	            this.setState({ mode: 'preset', internal_lut: true });
-	        } else {
-	            this.setState({ mode: 'none', internal_lut: false });
-	        }
-	    },
-	    updateScalarRange: function updateScalarRange() {
-	        var minValue = _reactDom2.default.findDOMNode(this.refs.min).value,
-	            maxValue = _reactDom2.default.findDOMNode(this.refs.max).value;
-	        this.props.lookupTable.setScalarRange(minValue, minValue === maxValue ? maxValue + 1 : maxValue);
-	        this.forceUpdate();
-	    },
-	    addControlPoint: function addControlPoint() {
-	        var newIdx = this.props.lookupTable.addControlPoint({
-	            x: 0.5,
-	            r: 0,
-	            g: 0,
-	            b: 0
-	        });
-	        this.setState({ currentControlPointIndex: newIdx });
-	    },
-	    deleteControlPoint: function deleteControlPoint() {
-	        if (this.props.lookupTable.removeControlPoint(this.state.currentControlPointIndex)) {
-	            this.forceUpdate();
-	        }
-	    },
-	    nextControlPoint: function nextControlPoint() {
-	        var newIdx = this.state.currentControlPointIndex + 1;
-
-	        if (newIdx < this.props.lookupTable.getNumberOfControlPoints()) {
-	            this.setState({ currentControlPointIndex: newIdx });
-	        }
-	    },
-	    previousControlPoint: function previousControlPoint() {
-	        var newIdx = this.state.currentControlPointIndex - 1;
-
-	        if (newIdx > -1) {
-	            this.setState({ currentControlPointIndex: newIdx });
-	        }
-	    },
-	    updateScalar: function updateScalar(newVal) {
-	        var scalarRange = this.props.lookupTable.getScalarRange(),
-	            xValue = (newVal - scalarRange[0]) / (scalarRange[1] - scalarRange[0]),
-	            controlPoint = this.props.lookupTable.getControlPoint(this.state.currentControlPointIndex);
-
-	        var newIdx = this.props.lookupTable.updateControlPoint(this.state.currentControlPointIndex, {
-	            x: xValue,
-	            r: controlPoint.r,
-	            g: controlPoint.g,
-	            b: controlPoint.b
-	        });
-	        this.setState({ currentControlPointIndex: newIdx });
-	        this.forceUpdate();
-	    },
-	    updateRGB: function updateRGB(rgb) {
-	        var controlPoint = this.props.lookupTable.getControlPoint(this.state.currentControlPointIndex);
-
-	        var newIdx = this.props.lookupTable.updateControlPoint(this.state.currentControlPointIndex, {
-	            x: controlPoint.x,
-	            r: rgb[0] / 255,
-	            g: rgb[1] / 255,
-	            b: rgb[2] / 255
-	        });
-	        this.setState({ currentControlPointIndex: newIdx });
-	    },
-	    setPreset: function setPreset(event) {
-	        this.props.lookupTable.setPreset(event.target.dataset.name);
-	        this.togglePresetMode();
-	    },
-	    resetRange: function resetRange() {
-	        var range = this.props.originalRange;
-	        this.props.lookupTable.setScalarRange(range[0], range[1]);
-	    },
-	    changePreset: function changePreset(event) {
-	        var delta = event.detail || event.deltaY || event.deltaX;
-	        event.preventDefault();
-	        this.deltaPreset(delta);
-	    },
-	    nextPreset: function nextPreset() {
-	        this.deltaPreset(1);
-	    },
-	    previousPreset: function previousPreset() {
-	        this.deltaPreset(-1);
-	    },
-	    deltaPreset: function deltaPreset(delta) {
-	        var presets = this.props.lookupTable.getPresets(),
-	            currentIdx = presets.indexOf(this.state.activePreset),
-	            newPreset = null;
-
-	        currentIdx += delta === 0 ? 0 : delta < 0 ? -1 : 1;
-	        if (currentIdx < 0 || currentIdx === presets.length) {
-	            return;
-	        }
-
-	        newPreset = presets[currentIdx];
-	        if (this.props.lookupTableManager) {
-	            var lut = this.props.lookupTableManager.getLookupTable('__internal');
-	            if (!lut) {
-	                lut = this.props.lookupTableManager.addLookupTable('__internal', [0, 1], newPreset);
-	            } else {
-	                lut.setPreset(newPreset);
-	            }
-	            lut.drawToCanvas(_reactDom2.default.findDOMNode(this.refs.canvas));
-	        }
-	        this.setState({ activePreset: newPreset });
-	    },
-	    render: function render() {
-	        var _this = this;
-
-	        var scalarRange = this.props.lookupTable.getScalarRange(),
-	            controlPoint = this.props.lookupTable.getControlPoint(this.state.currentControlPointIndex),
-	            controlPointValue = controlPoint.x * (scalarRange[1] - scalarRange[0]) + scalarRange[0],
-	            color = [Math.floor(255 * controlPoint.r), Math.floor(255 * controlPoint.g), Math.floor(255 * controlPoint.b)];
-
-	        return _react2.default.createElement(
-	            'div',
-	            { className: _LookupTableWidget2.default.container },
-	            _react2.default.createElement(
-	                'div',
-	                { className: _LookupTableWidget2.default.line },
-	                _react2.default.createElement('i', { className: _LookupTableWidget2.default.editButton,
-	                    onClick: this.toggleEditMode }),
-	                _react2.default.createElement('canvas', { ref: 'canvas',
-	                    className: _LookupTableWidget2.default.canvas,
-	                    width: this.props.lookupTable.colorTableSize * this.props.lookupTable.scale,
-	                    height: '1' }),
-	                _react2.default.createElement('i', { className: _LookupTableWidget2.default.presetButton,
-	                    onClick: this.togglePresetMode })
-	            ),
-	            _react2.default.createElement(
-	                'div',
-	                { className: _LookupTableWidget2.default.range, style: STYLE.range[this.state.mode] },
-	                _react2.default.createElement(_NumberInputWidget2.default, { ref: 'min',
-	                    className: _LookupTableWidget2.default.input,
-	                    value: this.props.lookupTable.getScalarRange()[0],
-	                    onChange: this.updateScalarRange }),
-	                _react2.default.createElement('i', { onClick: this.resetRange,
-	                    className: _LookupTableWidget2.default.resetRangeButton }),
-	                _react2.default.createElement(_NumberInputWidget2.default, { ref: 'max',
-	                    className: _LookupTableWidget2.default.inputRight,
-	                    value: this.props.lookupTable.getScalarRange()[1],
-	                    onChange: this.updateScalarRange })
-	            ),
-	            _react2.default.createElement(
-	                'div',
-	                { className: _LookupTableWidget2.default.editContent, style: STYLE.editContent[this.state.mode] },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: _LookupTableWidget2.default.line },
-	                    _react2.default.createElement('i', { onClick: this.previousControlPoint,
-	                        className: _LookupTableWidget2.default.previousButton }),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: _LookupTableWidget2.default.label },
-	                        this.state.currentControlPointIndex + 1,
-	                        ' / ',
-	                        this.props.lookupTable.getNumberOfControlPoints()
-	                    ),
-	                    _react2.default.createElement('i', { onClick: this.nextControlPoint,
-	                        className: _LookupTableWidget2.default.nextButton }),
-	                    _react2.default.createElement('i', { onClick: this.addControlPoint,
-	                        className: _LookupTableWidget2.default.addButton }),
-	                    _react2.default.createElement(_NumberInputWidget2.default, { ref: 'x',
-	                        className: _LookupTableWidget2.default.inputRight,
-	                        value: controlPointValue,
-	                        onChange: this.updateScalar }),
-	                    _react2.default.createElement('i', { onClick: this.deleteControlPoint,
-	                        className: _LookupTableWidget2.default.deleteButton })
-	                ),
-	                _react2.default.createElement(_ColorPickerWidget2.default, { color: color, onChange: this.updateRGB })
-	            ),
-	            _react2.default.createElement(
-	                'div',
-	                { className: _LookupTableWidget2.default.presets, style: STYLE.presets[this.state.mode] },
-	                _react2.default.createElement('i', { onClick: this.previousPreset,
-	                    className: this.state.activePreset === this.props.lookupTable.getPresets()[0] ? _LookupTableWidget2.default.disablePreviousButton : _LookupTableWidget2.default.previousButton }),
-	                this.props.lookupTable.getPresets().map(function (preset) {
-	                    return _react2.default.createElement(
-	                        'div',
-	                        { onClick: _this.setPreset,
-	                            onScroll: _this.changePreset,
-	                            onWheel: _this.changePreset,
-	                            className: _this.state.activePreset === preset ? _LookupTableWidget2.default.preset : _LookupTableWidget2.default.hiddenPreset,
-	                            'data-name': preset,
-	                            key: preset },
-	                        preset
-	                    );
-	                }),
-	                _react2.default.createElement('i', { onClick: this.nextPreset,
-	                    className: this.state.activePreset === this.props.lookupTable.getPresets()[this.props.lookupTable.getPresets().length - 1] ? _LookupTableWidget2.default.disableNextButton : _LookupTableWidget2.default.nextButton })
-	            )
-	        );
+	        ctx.putImageData(imageData, 0, 0);
+	      }
 	    }
+	  },
+	  toggleEditMode: function toggleEditMode() {
+	    if (this.state.mode === 'none' || this.state.mode !== 'edit') {
+	      this.setState({ mode: 'edit', internal_lut: false });
+	    } else {
+	      this.setState({ mode: 'none', internal_lut: false });
+	    }
+	  },
+	  togglePresetMode: function togglePresetMode() {
+	    if (this.state.mode === 'none' || this.state.mode !== 'preset') {
+	      this.deltaPreset(0); // Render preset
+	      this.setState({ mode: 'preset', internal_lut: true });
+	    } else {
+	      this.setState({ mode: 'none', internal_lut: false });
+	    }
+	  },
+	  updateScalarRange: function updateScalarRange() {
+	    var minValue = _reactDom2.default.findDOMNode(this.refs.min).value,
+	        maxValue = _reactDom2.default.findDOMNode(this.refs.max).value;
+	    this.props.lookupTable.setScalarRange(minValue, minValue === maxValue ? maxValue + 1 : maxValue);
+	    this.forceUpdate();
+	  },
+	  addControlPoint: function addControlPoint() {
+	    var newIdx = this.props.lookupTable.addControlPoint({
+	      x: 0.5,
+	      r: 0,
+	      g: 0,
+	      b: 0
+	    });
+	    this.setState({ currentControlPointIndex: newIdx });
+	  },
+	  deleteControlPoint: function deleteControlPoint() {
+	    if (this.props.lookupTable.removeControlPoint(this.state.currentControlPointIndex)) {
+	      this.forceUpdate();
+	    }
+	  },
+	  nextControlPoint: function nextControlPoint() {
+	    var newIdx = this.state.currentControlPointIndex + 1;
+
+	    if (newIdx < this.props.lookupTable.getNumberOfControlPoints()) {
+	      this.setState({ currentControlPointIndex: newIdx });
+	    }
+	  },
+	  previousControlPoint: function previousControlPoint() {
+	    var newIdx = this.state.currentControlPointIndex - 1;
+
+	    if (newIdx > -1) {
+	      this.setState({ currentControlPointIndex: newIdx });
+	    }
+	  },
+	  updateScalar: function updateScalar(newVal) {
+	    var scalarRange = this.props.lookupTable.getScalarRange(),
+	        xValue = (newVal - scalarRange[0]) / (scalarRange[1] - scalarRange[0]),
+	        controlPoint = this.props.lookupTable.getControlPoint(this.state.currentControlPointIndex);
+
+	    var newIdx = this.props.lookupTable.updateControlPoint(this.state.currentControlPointIndex, {
+	      x: xValue,
+	      r: controlPoint.r,
+	      g: controlPoint.g,
+	      b: controlPoint.b
+	    });
+	    this.setState({ currentControlPointIndex: newIdx });
+	    this.forceUpdate();
+	  },
+	  updateRGB: function updateRGB(rgb) {
+	    var controlPoint = this.props.lookupTable.getControlPoint(this.state.currentControlPointIndex);
+
+	    var newIdx = this.props.lookupTable.updateControlPoint(this.state.currentControlPointIndex, {
+	      x: controlPoint.x,
+	      r: rgb[0] / 255,
+	      g: rgb[1] / 255,
+	      b: rgb[2] / 255
+	    });
+	    this.setState({ currentControlPointIndex: newIdx });
+	  },
+	  setPreset: function setPreset(event) {
+	    this.props.lookupTable.setPreset(event.target.dataset.name);
+	    this.togglePresetMode();
+	  },
+	  resetRange: function resetRange() {
+	    var range = this.props.originalRange;
+	    this.props.lookupTable.setScalarRange(range[0], range[1]);
+	  },
+	  changePreset: function changePreset(event) {
+	    var delta = event.detail || event.deltaY || event.deltaX;
+	    event.preventDefault();
+	    this.deltaPreset(delta);
+	  },
+	  nextPreset: function nextPreset() {
+	    this.deltaPreset(1);
+	  },
+	  previousPreset: function previousPreset() {
+	    this.deltaPreset(-1);
+	  },
+	  deltaPreset: function deltaPreset(delta) {
+	    var presets = this.props.lookupTable.getPresets(),
+	        currentIdx = presets.indexOf(this.state.activePreset),
+	        newPreset = null;
+
+	    currentIdx += delta === 0 ? 0 : delta < 0 ? -1 : 1;
+	    if (currentIdx < 0 || currentIdx === presets.length) {
+	      return;
+	    }
+
+	    newPreset = presets[currentIdx];
+	    if (this.props.lookupTableManager) {
+	      var lut = this.props.lookupTableManager.getLookupTable('__internal');
+	      if (!lut) {
+	        lut = this.props.lookupTableManager.addLookupTable('__internal', [0, 1], newPreset);
+	      } else {
+	        lut.setPreset(newPreset);
+	      }
+	      lut.drawToCanvas(_reactDom2.default.findDOMNode(this.refs.canvas));
+	    }
+	    this.setState({ activePreset: newPreset });
+	  },
+	  render: function render() {
+	    var _this = this;
+
+	    var scalarRange = this.props.lookupTable.getScalarRange(),
+	        controlPoint = this.props.lookupTable.getControlPoint(this.state.currentControlPointIndex),
+	        controlPointValue = controlPoint.x * (scalarRange[1] - scalarRange[0]) + scalarRange[0],
+	        color = [Math.floor(255 * controlPoint.r), Math.floor(255 * controlPoint.g), Math.floor(255 * controlPoint.b)];
+
+	    return _react2.default.createElement(
+	      'div',
+	      { className: _LookupTableWidget2.default.container },
+	      _react2.default.createElement(
+	        'div',
+	        { className: _LookupTableWidget2.default.line },
+	        _react2.default.createElement('i', {
+	          className: _LookupTableWidget2.default.editButton,
+	          onClick: this.toggleEditMode
+	        }),
+	        _react2.default.createElement('canvas', {
+	          ref: 'canvas',
+	          className: _LookupTableWidget2.default.canvas,
+	          width: this.props.lookupTable.colorTableSize * this.props.lookupTable.scale,
+	          height: '1'
+	        }),
+	        _react2.default.createElement('i', {
+	          className: _LookupTableWidget2.default.presetButton,
+	          onClick: this.togglePresetMode
+	        })
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: _LookupTableWidget2.default.range, style: STYLE.range[this.state.mode] },
+	        _react2.default.createElement(_NumberInputWidget2.default, {
+	          ref: 'min',
+	          className: _LookupTableWidget2.default.input,
+	          value: this.props.lookupTable.getScalarRange()[0],
+	          onChange: this.updateScalarRange
+	        }),
+	        _react2.default.createElement('i', {
+	          onClick: this.resetRange,
+	          className: _LookupTableWidget2.default.resetRangeButton
+	        }),
+	        _react2.default.createElement(_NumberInputWidget2.default, {
+	          ref: 'max',
+	          className: _LookupTableWidget2.default.inputRight,
+	          value: this.props.lookupTable.getScalarRange()[1],
+	          onChange: this.updateScalarRange
+	        })
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: _LookupTableWidget2.default.editContent, style: STYLE.editContent[this.state.mode] },
+	        _react2.default.createElement(
+	          'div',
+	          { className: _LookupTableWidget2.default.line },
+	          _react2.default.createElement('i', {
+	            onClick: this.previousControlPoint,
+	            className: _LookupTableWidget2.default.previousButton
+	          }),
+	          _react2.default.createElement(
+	            'div',
+	            { className: _LookupTableWidget2.default.label },
+	            this.state.currentControlPointIndex + 1,
+	            ' / ',
+	            this.props.lookupTable.getNumberOfControlPoints()
+	          ),
+	          _react2.default.createElement('i', {
+	            onClick: this.nextControlPoint,
+	            className: _LookupTableWidget2.default.nextButton
+	          }),
+	          _react2.default.createElement('i', {
+	            onClick: this.addControlPoint,
+	            className: _LookupTableWidget2.default.addButton
+	          }),
+	          _react2.default.createElement(_NumberInputWidget2.default, {
+	            ref: 'x',
+	            className: _LookupTableWidget2.default.inputRight,
+	            value: controlPointValue,
+	            onChange: this.updateScalar
+	          }),
+	          _react2.default.createElement('i', {
+	            onClick: this.deleteControlPoint,
+	            className: _LookupTableWidget2.default.deleteButton
+	          })
+	        ),
+	        _react2.default.createElement(_ColorPickerWidget2.default, { color: color, onChange: this.updateRGB })
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: _LookupTableWidget2.default.presets, style: STYLE.presets[this.state.mode] },
+	        _react2.default.createElement('i', {
+	          onClick: this.previousPreset,
+	          className: this.state.activePreset === this.props.lookupTable.getPresets()[0] ? _LookupTableWidget2.default.disablePreviousButton : _LookupTableWidget2.default.previousButton
+	        }),
+	        this.props.lookupTable.getPresets().map(function (preset) {
+	          return _react2.default.createElement(
+	            'div',
+	            {
+	              onClick: _this.setPreset,
+	              onScroll: _this.changePreset,
+	              onWheel: _this.changePreset,
+	              className: _this.state.activePreset === preset ? _LookupTableWidget2.default.preset : _LookupTableWidget2.default.hiddenPreset,
+	              'data-name': preset,
+	              key: preset
+	            },
+	            preset
+	          );
+	        }),
+	        _react2.default.createElement('i', {
+	          onClick: this.nextPreset,
+	          className: this.state.activePreset === this.props.lookupTable.getPresets()[this.props.lookupTable.getPresets().length - 1] ? _LookupTableWidget2.default.disableNextButton : _LookupTableWidget2.default.nextButton
+	        })
+	      )
+	    );
+	  }
 	});
 
 /***/ },
@@ -40501,39 +40680,48 @@
 	        _react2.default.createElement('canvas', { className: _ColorPickerWidget2.default.colorCanvas,
 	          ref: 'canvas',
 	          width: '1',
-	          height: '1' }),
-	        _react2.default.createElement('input', { className: _ColorPickerWidget2.default.colorRGB,
+	          height: '1'
+	        }),
+	        _react2.default.createElement('input', {
+	          className: _ColorPickerWidget2.default.colorRGB,
 	          type: 'number',
 	          min: '0',
 	          max: '255',
 	          value: this.state.color[0],
 	          'data-color-idx': '0',
-	          onChange: this.rgbColorChange }),
-	        _react2.default.createElement('input', { className: _ColorPickerWidget2.default.colorRGB,
+	          onChange: this.rgbColorChange
+	        }),
+	        _react2.default.createElement('input', {
+	          className: _ColorPickerWidget2.default.colorRGB,
 	          type: 'number',
 	          min: '0',
 	          max: '255',
 	          value: this.state.color[1],
 	          'data-color-idx': '1',
-	          onChange: this.rgbColorChange }),
-	        _react2.default.createElement('input', { className: _ColorPickerWidget2.default.colorRGB,
+	          onChange: this.rgbColorChange
+	        }),
+	        _react2.default.createElement('input', {
+	          className: _ColorPickerWidget2.default.colorRGB,
 	          type: 'number',
 	          min: '0',
 	          max: '255',
 	          value: this.state.color[2],
 	          'data-color-idx': '2',
-	          onChange: this.rgbColorChange })
+	          onChange: this.rgbColorChange
+	        })
 	      ),
 	      _react2.default.createElement(
 	        'div',
 	        { className: _ColorPickerWidget2.default.swatch },
-	        _react2.default.createElement('img', { ref: 'swatch',
+	        _react2.default.createElement('img', {
+	          ref: 'swatch',
 	          className: _ColorPickerWidget2.default.swatchImage,
 	          width: '100%',
 	          src: this.state.swatch,
 	          onClick: this.showColor,
 	          onMouseMove: this.showColor,
-	          onMouseLeave: this.showColor })
+	          onMouseLeave: this.showColor
+	        })
 	      )
 	    );
 	  }
@@ -40661,7 +40849,8 @@
 	      step: this.props.step,
 	      value: this.state.editing ? this.state.valueRep : this.props.value,
 	      onChange: this.valueChange,
-	      onBlur: this.endEditing });
+	      onBlur: this.endEditing
+	    });
 	  }
 	});
 
@@ -40784,8 +40973,8 @@
 	        'ul',
 	        { className: this.state.open ? _DropDownWidget2.default.list : _DropDownWidget2.default.hidden },
 	        this.props.fields.map(function (v) {
+	          // this pops up in there for some reason.
 	          if (v === '__internal') {
-	            //this pops up in there for some reason.
 	            return null;
 	          }
 
@@ -40861,7 +41050,7 @@
 	/* WEBPACK VAR INJECTION */(function(setImmediate) {'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _react = __webpack_require__(17);
@@ -40880,183 +41069,197 @@
 
 	exports.default = _react2.default.createClass({
 
-	    displayName: 'ProbeControl',
+	  displayName: 'ProbeControl',
 
-	    propTypes: {
-	        imageBuilder: _react2.default.PropTypes.object.isRequired,
-	        imageBuilders: _react2.default.PropTypes.object
-	    },
+	  propTypes: {
+	    imageBuilder: _react2.default.PropTypes.object.isRequired,
+	    imageBuilders: _react2.default.PropTypes.object
+	  },
 
-	    getDefaultProps: function getDefaultProps() {
-	        return {
-	            imageBuilders: {}
-	        };
-	    },
-	    getInitialState: function getInitialState() {
-	        var imageBuilder = this.getImageBuilder(this.props);
-	        return {
-	            probe: [imageBuilder.getProbe()[0], imageBuilder.getProbe()[1], imageBuilder.getProbe()[2]],
-	            showFieldValue: true
-	        };
-	    },
-	    componentWillMount: function componentWillMount() {
-	        this.attachImageBuilderListeners(this.getImageBuilder(this.props));
-	    },
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      imageBuilders: {}
+	    };
+	  },
+	  getInitialState: function getInitialState() {
+	    var imageBuilder = this.getImageBuilder(this.props);
+	    return {
+	      probe: [imageBuilder.getProbe()[0], imageBuilder.getProbe()[1], imageBuilder.getProbe()[2]],
+	      showFieldValue: true
+	    };
+	  },
+	  componentWillMount: function componentWillMount() {
+	    this.attachImageBuilderListeners(this.getImageBuilder(this.props));
+	  },
 
 
-	    /* eslint-disable react/no-did-mount-set-state */
-	    componentDidMount: function componentDidMount() {
-	        this.setState({ showFieldValue: this.refs.ProbeInput.isExpanded() });
-	    },
+	  /* eslint-disable react/no-did-mount-set-state */
+	  componentDidMount: function componentDidMount() {
+	    this.setState({
+	      showFieldValue: this.refs.ProbeInput.isExpanded()
+	    });
+	  },
 
-	    /* eslint-enable react/no-did-mount-set-state */
+	  /* eslint-enable react/no-did-mount-set-state */
 
-	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	        var previousImageBuilder = this.getImageBuilder(this.props),
-	            nextImageBuilder = this.getImageBuilder(nextProps);
+	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    var previousImageBuilder = this.getImageBuilder(this.props),
+	        nextImageBuilder = this.getImageBuilder(nextProps);
 
-	        if (previousImageBuilder !== nextImageBuilder) {
-	            this.attachImageBuilderListeners(nextImageBuilder);
-	        }
-	    },
-	    componentWillUnmount: function componentWillUnmount() {
-	        this.detachImageBuilderListeners();
-	    },
-	    getImageBuilder: function getImageBuilder(props) {
-	        var imageBuilder = props.imageBuilder;
-
-	        if (!imageBuilder) {
-	            var key = Object.keys(props.imageBuilders)[0];
-	            imageBuilder = props.imageBuilders[key].builder;
-	        }
-
-	        return imageBuilder;
-	    },
-	    attachImageBuilderListeners: function attachImageBuilderListeners(imageBuilder) {
-	        var _this = this;
-
-	        this.detachImageBuilderListeners();
-	        this.probeListenerSubscription = imageBuilder.onProbeChange(function (probe, envelope) {
-	            var field = imageBuilder.getFieldValueAtProbeLocation();
-	            if (_this.isMounted()) {
-	                _this.setState({ probe: probe, field: field });
-	            }
-	        });
-
-	        this.probeDataListenerSubscription = imageBuilder.onProbeLineReady(function (data, envelope) {
-	            var field = imageBuilder.getFieldValueAtProbeLocation();
-	            if (_this.isMounted() && field !== _this.state.field) {
-	                _this.setState({ field: field });
-	            }
-	        });
-	    },
-	    detachImageBuilderListeners: function detachImageBuilderListeners() {
-	        if (this.probeListenerSubscription) {
-	            this.probeListenerSubscription.unsubscribe();
-	            this.probeListenerSubscription = null;
-	        }
-	        if (this.probeDataListenerSubscription) {
-	            this.probeDataListenerSubscription.unsubscribe();
-	            this.probeDataListenerSubscription = null;
-	        }
-	    },
-	    updateRenderMethod: function updateRenderMethod(event) {
-	        if (this.props.imageBuilder) {
-	            this.props.imageBuilder.setRenderMethod(event.target.value);
-	            this.props.imageBuilder.render();
-	            this.forceUpdate();
-	        }
-	    },
-	    probeChange: function probeChange(event) {
-	        var value = Number(event.target.value),
-	            probe = this.state.probe,
-	            idx = Number(event.target.name);
-
-	        probe[idx] = value;
-
-	        this.getImageBuilder(this.props).setProbe(probe[0], probe[1], probe[2]);
-	    },
-	    onProbeVisibilityChange: function onProbeVisibilityChange(isProbeOpen) {
-	        var _this2 = this;
-
-	        this.setState({ showFieldValue: isProbeOpen });
-
-	        setImmediate(function () {
-	            if (_this2.props.imageBuilders) {
-	                for (var key in _this2.props.imageBuilders) {
-	                    var builder = _this2.props.imageBuilders[key].builder;
-	                    builder.setCrossHairEnable(isProbeOpen);
-	                    builder.render();
-	                }
-	            }
-	            if (_this2.props.imageBuilder) {
-	                _this2.props.imageBuilder.setCrossHairEnable(isProbeOpen);
-	                _this2.props.imageBuilder.render();
-	            }
-	        });
-	    },
-	    render: function render() {
-	        var imageBuilder = this.getImageBuilder(this.props),
-	            value = this.state.field || imageBuilder.getFieldValueAtProbeLocation(),
-	            valueStr = '' + value;
-
-	        if (value === undefined) {
-	            valueStr = '';
-	        } else {
-	            if (valueStr && valueStr.length > 6) {
-	                valueStr = value.toFixed(5);
-	            }
-	            if (Math.abs(value) < 0.00001) {
-	                valueStr = '0';
-	            }
-	        }
-
-	        return _react2.default.createElement(
-	            'div',
-	            null,
-	            _react2.default.createElement(
-	                _CollapsibleWidget2.default,
-	                { title: 'Render method', visible: imageBuilder.isRenderMethodMutable() },
-	                _react2.default.createElement(
-	                    'select',
-	                    { style: { width: '100%' },
-	                        value: imageBuilder.getRenderMethod(),
-	                        onChange: this.updateRenderMethod },
-	                    imageBuilder.getRenderMethods().map(function (v) {
-	                        return _react2.default.createElement(
-	                            'option',
-	                            { key: v, value: v },
-	                            v
-	                        );
-	                    })
-	                )
-	            ),
-	            _react2.default.createElement(
-	                _CollapsibleWidget2.default,
-	                {
-	                    title: 'Probe',
-	                    subtitle: this.state.showFieldValue ? valueStr : '',
-	                    ref: 'ProbeInput',
-	                    onChange: this.onProbeVisibilityChange,
-	                    open: imageBuilder.isCrossHairEnabled() },
-	                _react2.default.createElement(_NumberSliderWidget2.default, { name: '0',
-	                    min: '0', max: imageBuilder.metadata.dimensions[0] - 1,
-	                    key: 'slider-x',
-	                    value: this.state.probe[0],
-	                    onChange: this.probeChange }),
-	                _react2.default.createElement(_NumberSliderWidget2.default, { name: '1',
-	                    min: '0', max: imageBuilder.metadata.dimensions[1] - 1,
-	                    key: 'slider-Y',
-	                    value: this.state.probe[1],
-	                    onChange: this.probeChange }),
-	                _react2.default.createElement(_NumberSliderWidget2.default, { name: '2',
-	                    min: '0', max: imageBuilder.metadata.dimensions[2] - 1,
-	                    key: 'slider-Z',
-	                    value: this.state.probe[2],
-	                    onChange: this.probeChange })
-	            )
-	        );
+	    if (previousImageBuilder !== nextImageBuilder) {
+	      this.attachImageBuilderListeners(nextImageBuilder);
 	    }
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.detachImageBuilderListeners();
+	  },
+	  getImageBuilder: function getImageBuilder(props) {
+	    var imageBuilder = props.imageBuilder;
+
+	    if (!imageBuilder) {
+	      var key = Object.keys(props.imageBuilders)[0];
+	      imageBuilder = props.imageBuilders[key].builder;
+	    }
+
+	    return imageBuilder;
+	  },
+	  attachImageBuilderListeners: function attachImageBuilderListeners(imageBuilder) {
+	    var _this = this;
+
+	    this.detachImageBuilderListeners();
+	    this.probeListenerSubscription = imageBuilder.onProbeChange(function (probe, envelope) {
+	      var field = imageBuilder.getFieldValueAtProbeLocation();
+	      if (_this.isMounted()) {
+	        _this.setState({
+	          probe: probe, field: field
+	        });
+	      }
+	    });
+
+	    this.probeDataListenerSubscription = imageBuilder.onProbeLineReady(function (data, envelope) {
+	      var field = imageBuilder.getFieldValueAtProbeLocation();
+	      if (_this.isMounted() && field !== _this.state.field) {
+	        _this.setState({
+	          field: field
+	        });
+	      }
+	    });
+	  },
+	  detachImageBuilderListeners: function detachImageBuilderListeners() {
+	    if (this.probeListenerSubscription) {
+	      this.probeListenerSubscription.unsubscribe();
+	      this.probeListenerSubscription = null;
+	    }
+	    if (this.probeDataListenerSubscription) {
+	      this.probeDataListenerSubscription.unsubscribe();
+	      this.probeDataListenerSubscription = null;
+	    }
+	  },
+	  updateRenderMethod: function updateRenderMethod(event) {
+	    if (this.props.imageBuilder) {
+	      this.props.imageBuilder.setRenderMethod(event.target.value);
+	      this.props.imageBuilder.render();
+	      this.forceUpdate();
+	    }
+	  },
+	  probeChange: function probeChange(event) {
+	    var value = Number(event.target.value),
+	        probe = this.state.probe,
+	        idx = Number(event.target.name);
+
+	    probe[idx] = value;
+
+	    this.getImageBuilder(this.props).setProbe(probe[0], probe[1], probe[2]);
+	  },
+	  onProbeVisibilityChange: function onProbeVisibilityChange(isProbeOpen) {
+	    var _this2 = this;
+
+	    this.setState({
+	      showFieldValue: isProbeOpen
+	    });
+
+	    setImmediate(function () {
+	      if (_this2.props.imageBuilders) {
+	        for (var key in _this2.props.imageBuilders) {
+	          var builder = _this2.props.imageBuilders[key].builder;
+	          builder.setCrossHairEnable(isProbeOpen);
+	          builder.render();
+	        }
+	      }
+	      if (_this2.props.imageBuilder) {
+	        _this2.props.imageBuilder.setCrossHairEnable(isProbeOpen);
+	        _this2.props.imageBuilder.render();
+	      }
+	    });
+	  },
+	  render: function render() {
+	    var imageBuilder = this.getImageBuilder(this.props),
+	        value = this.state.field || imageBuilder.getFieldValueAtProbeLocation(),
+	        valueStr = '' + value;
+
+	    if (value === undefined) {
+	      valueStr = '';
+	    } else {
+	      if (valueStr && valueStr.length > 6) {
+	        valueStr = value.toFixed(5);
+	      }
+	      if (Math.abs(value) < 0.00001) {
+	        valueStr = '0';
+	      }
+	    }
+
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        _CollapsibleWidget2.default,
+	        { title: 'Render method', visible: imageBuilder.isRenderMethodMutable() },
+	        _react2.default.createElement(
+	          'select',
+	          {
+	            style: { width: '100%' },
+	            value: imageBuilder.getRenderMethod(),
+	            onChange: this.updateRenderMethod
+	          },
+	          imageBuilder.getRenderMethods().map(function (v) {
+	            return _react2.default.createElement(
+	              'option',
+	              { key: v, value: v },
+	              v
+	            );
+	          })
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _CollapsibleWidget2.default,
+	        {
+	          title: 'Probe',
+	          subtitle: this.state.showFieldValue ? valueStr : '',
+	          ref: 'ProbeInput',
+	          onChange: this.onProbeVisibilityChange,
+	          open: imageBuilder.isCrossHairEnabled()
+	        },
+	        _react2.default.createElement(_NumberSliderWidget2.default, { name: '0',
+	          min: '0', max: imageBuilder.metadata.dimensions[0] - 1,
+	          key: 'slider-x',
+	          value: this.state.probe[0],
+	          onChange: this.probeChange
+	        }),
+	        _react2.default.createElement(_NumberSliderWidget2.default, { name: '1',
+	          min: '0', max: imageBuilder.metadata.dimensions[1] - 1,
+	          key: 'slider-Y',
+	          value: this.state.probe[1],
+	          onChange: this.probeChange
+	        }),
+	        _react2.default.createElement(_NumberSliderWidget2.default, { name: '2',
+	          min: '0', max: imageBuilder.metadata.dimensions[2] - 1,
+	          key: 'slider-Z',
+	          value: this.state.probe[2],
+	          onChange: this.probeChange
+	        })
+	      )
+	    );
+	  }
 	});
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1).setImmediate))
 
@@ -41067,7 +41270,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _react = __webpack_require__(17);
@@ -41082,69 +41285,73 @@
 
 	exports.default = _react2.default.createClass({
 
-	    displayName: 'NumberSliderWidget',
+	  displayName: 'NumberSliderWidget',
 
-	    propTypes: {
-	        max: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.string]),
-	        min: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.string]),
-	        name: _react2.default.PropTypes.string,
-	        onChange: _react2.default.PropTypes.func,
-	        step: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.string]),
-	        value: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.string])
-	    },
+	  propTypes: {
+	    max: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.string]),
+	    min: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.string]),
+	    name: _react2.default.PropTypes.string,
+	    onChange: _react2.default.PropTypes.func,
+	    step: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.string]),
+	    value: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.string])
+	  },
 
-	    getDefaultProps: function getDefaultProps() {
-	        return {
-	            max: 100,
-	            min: 0,
-	            step: 1,
-	            value: 50
-	        };
-	    },
-	    getInitialState: function getInitialState() {
-	        return {
-	            max: this.props.max,
-	            min: this.props.min,
-	            step: this.props.step,
-	            value: this.props.value
-	        };
-	    },
-	    valInput: function valInput(e) {
-	        this.setState({ value: e.target.value });
-	        if (this.props.onChange) {
-	            if (this.props.name) {
-	                e.target.name = this.props.name;
-	            }
-	            this.props.onChange(e);
-	        }
-	    },
-	    value: function value(newVal) {
-	        if (arguments.length === 0) {
-	            return this.state.value;
-	        }
-
-	        newVal = Math.max(this.state.min, Math.min(newVal, this.state.max));
-	        this.setState({ value: newVal });
-	    },
-	    render: function render() {
-	        var min = this.props.min;
-	        var max = this.props.max;
-
-	        return _react2.default.createElement(
-	            'div',
-	            { className: _NumberSliderWidget2.default.container },
-	            _react2.default.createElement('input', { type: 'range',
-	                className: _NumberSliderWidget2.default.range,
-	                value: this.props.value,
-	                onChange: this.valInput,
-	                max: max, min: min }),
-	            _react2.default.createElement('input', { type: 'number',
-	                className: _NumberSliderWidget2.default.text,
-	                value: this.props.value,
-	                onChange: this.valInput,
-	                max: max, min: min })
-	        );
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      max: 100,
+	      min: 0,
+	      step: 1,
+	      value: 50
+	    };
+	  },
+	  getInitialState: function getInitialState() {
+	    return {
+	      max: this.props.max,
+	      min: this.props.min,
+	      step: this.props.step,
+	      value: this.props.value
+	    };
+	  },
+	  valInput: function valInput(e) {
+	    this.setState({ value: e.target.value });
+	    if (this.props.onChange) {
+	      if (this.props.name) {
+	        e.target.name = this.props.name;
+	      }
+	      this.props.onChange(e);
 	    }
+	  },
+	  value: function value(newVal) {
+	    if (newVal === null || newVal === undefined) {
+	      return this.state.value;
+	    }
+
+	    newVal = Math.max(this.state.min, Math.min(newVal, this.state.max));
+	    this.setState({ value: newVal });
+	    return newVal;
+	  },
+	  render: function render() {
+	    var min = this.props.min;
+	    var max = this.props.max;
+
+
+	    return _react2.default.createElement(
+	      'div',
+	      { className: _NumberSliderWidget2.default.container },
+	      _react2.default.createElement('input', { type: 'range',
+	        className: _NumberSliderWidget2.default.range,
+	        value: this.props.value,
+	        onChange: this.valInput,
+	        max: max, min: min
+	      }),
+	      _react2.default.createElement('input', { type: 'number',
+	        className: _NumberSliderWidget2.default.text,
+	        value: this.props.value,
+	        onChange: this.valInput,
+	        max: max, min: min
+	      })
+	    );
+	  }
 	});
 
 /***/ },
@@ -41198,7 +41405,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _String = __webpack_require__(242);
@@ -41237,37 +41444,41 @@
 	 */
 	exports.default = _react2.default.createClass({
 
-	    displayName: 'QueryDataModelWidget',
+	  displayName: 'QueryDataModelWidget',
 
-	    propTypes: {
-	        model: _react2.default.PropTypes.object
-	    },
+	  propTypes: {
+	    model: _react2.default.PropTypes.object
+	  },
 
-	    mixins: [_DataListenerMixin2.default, _DataListenerUpdateMixin2.default],
+	  mixins: [_DataListenerMixin2.default, _DataListenerUpdateMixin2.default],
 
-	    render: function render() {
-	        var model = this.props.model,
-	            orderList = model.originalData.arguments_order;
-	        return _react2.default.createElement(
-	            'div',
-	            { className: _QueryDataModelWidget2.default.container },
-	            orderList.map(function (name) {
-	                if (model.getUiType(name) === 'list') {
-	                    return _react2.default.createElement(_String2.default, {
-	                        key: name,
-	                        model: model,
-	                        arg: name,
-	                        listener: false });
-	                } else if (model.getUiType(name) === 'slider') {
-	                    return _react2.default.createElement(_Number2.default, {
-	                        key: name,
-	                        model: model,
-	                        arg: name,
-	                        listener: false });
-	                }
-	            })
-	        );
-	    }
+	  render: function render() {
+	    var model = this.props.model,
+	        orderList = model.originalData.arguments_order;
+
+	    return _react2.default.createElement(
+	      'div',
+	      { className: _QueryDataModelWidget2.default.container },
+	      orderList.map(function (name) {
+	        if (model.getUiType(name) === 'list') {
+	          return _react2.default.createElement(_String2.default, {
+	            key: name,
+	            model: model,
+	            arg: name,
+	            listener: false
+	          });
+	        } else if (model.getUiType(name) === 'slider') {
+	          return _react2.default.createElement(_Number2.default, {
+	            key: name,
+	            model: model,
+	            arg: name,
+	            listener: false
+	          });
+	        }
+	        return null;
+	      })
+	    );
+	  }
 	});
 
 /***/ },
@@ -41353,7 +41564,8 @@
 	            className: _QueryDataModelWidget2.default.input,
 	            ref: 'select',
 	            value: this.props.model.getValue(this.props.arg),
-	            onChange: this.handleChange },
+	            onChange: this.handleChange
+	          },
 	          this.props.model.getValues(this.props.arg).map(function (v) {
 	            return _react2.default.createElement(
 	              'option',
@@ -41374,45 +41586,46 @@
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	exports.default = {
+	  // Attach listener by default
 
-	    // Attach listener by default
-
-	    getDefaultProps: function getDefaultProps() {
-	        return { listener: true };
-	    },
-	    attachListener: function attachListener(dataModel) {
-	        this.dataSubscription = dataModel.onStateChange(this.dataListenerCallback);
-	    },
-	    detachListener: function detachListener() {
-	        if (this.dataSubscription) {
-	            this.dataSubscription.unsubscribe();
-	            this.dataSubscription = null;
-	        }
-	    },
-
-
-	    // Auto mount listener unless notified otherwise
-	    componentWillMount: function componentWillMount() {
-	        this.detachListener();
-	        if (this.props.listener) {
-	            this.attachListener(this.props.model);
-	        }
-	    },
-	    componentWillUnmount: function componentWillUnmount() {
-	        this.detachListener();
-	    },
-	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	        var previousDataModel = this.props.model,
-	            nextDataModel = nextProps.model;
-
-	        if (previousDataModel !== nextDataModel) {
-	            this.detachListener();
-	            this.attachListener(nextDataModel);
-	        }
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      listener: true
+	    };
+	  },
+	  attachListener: function attachListener(dataModel) {
+	    this.dataSubscription = dataModel.onStateChange(this.dataListenerCallback);
+	  },
+	  detachListener: function detachListener() {
+	    if (this.dataSubscription) {
+	      this.dataSubscription.unsubscribe();
+	      this.dataSubscription = null;
 	    }
+	  },
+
+
+	  // Auto mount listener unless notified otherwise
+	  componentWillMount: function componentWillMount() {
+	    this.detachListener();
+	    if (this.props.listener) {
+	      this.attachListener(this.props.model);
+	    }
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.detachListener();
+	  },
+	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    var previousDataModel = this.props.model,
+	        nextDataModel = nextProps.model;
+
+	    if (previousDataModel !== nextDataModel) {
+	      this.detachListener();
+	      this.attachListener(nextDataModel);
+	    }
+	  }
 	};
 
 /***/ },
@@ -41422,14 +41635,14 @@
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	exports.default = {
-	    // Callback for data handler
+	  // Callback for data handler
 
-	    dataListenerCallback: function dataListenerCallback(data, envelope) {
-	        this.forceUpdate();
-	    }
+	  dataListenerCallback: function dataListenerCallback(data, envelope) {
+	    this.forceUpdate();
+	  }
 	};
 
 /***/ },
@@ -41608,7 +41821,8 @@
 	        className: this.props.model.getAnimationFlag(this.props.arg) ? _QueryDataModelWidget2.default.itemActive : _QueryDataModelWidget2.default.item,
 	        onKeyDown: this.updateMode,
 	        onKeyUp: this.resetState,
-	        onMouseLeave: this.disableButtons },
+	        onMouseLeave: this.disableButtons
+	      },
 	      _react2.default.createElement(
 	        'div',
 	        { className: _QueryDataModelWidget2.default.row },
@@ -41626,7 +41840,8 @@
 	          'div',
 	          { className: [_QueryDataModelWidget2.default.itemControl, _QueryDataModelWidget2.default.noMobile].join(' '),
 	            onMouseEnter: this.enableButtons,
-	            onMouseLeave: this.disableButtons },
+	            onMouseLeave: this.disableButtons
+	          },
 	          _react2.default.createElement(
 	            'div',
 	            { className: this.state.button ? _QueryDataModelWidget2.default.hidden : _QueryDataModelWidget2.default.itemControlValue },
@@ -41634,10 +41849,12 @@
 	          ),
 	          _react2.default.createElement('i', {
 	            className: this.state.button ? this.state.advanced ? _QueryDataModelWidget2.default.firstButton : _QueryDataModelWidget2.default.previousButton : _QueryDataModelWidget2.default.hidden,
-	            onClick: this.state.advanced ? this.first : this.previous }),
+	            onClick: this.state.advanced ? this.first : this.previous
+	          }),
 	          _react2.default.createElement('i', {
 	            className: this.state.button ? this.state.advanced ? _QueryDataModelWidget2.default.lastButton : _QueryDataModelWidget2.default.nextButton : _QueryDataModelWidget2.default.hidden,
-	            onClick: this.state.advanced ? this.last : this.next })
+	            onClick: this.state.advanced ? this.last : this.next
+	          })
 	        )
 	      ),
 	      _react2.default.createElement(
@@ -41649,16 +41866,20 @@
 	          _react2.default.createElement('br', null),
 	          _react2.default.createElement('i', {
 	            className: _QueryDataModelWidget2.default.firstButton,
-	            onClick: this.first }),
+	            onClick: this.first
+	          }),
 	          _react2.default.createElement('i', {
 	            className: _QueryDataModelWidget2.default.lastButton,
-	            onClick: this.last }),
+	            onClick: this.last
+	          }),
 	          _react2.default.createElement('i', {
 	            className: _QueryDataModelWidget2.default.previousButton,
-	            onClick: this.previous }),
+	            onClick: this.previous
+	          }),
 	          _react2.default.createElement('i', {
 	            className: _QueryDataModelWidget2.default.nextButton,
-	            onClick: this.next })
+	            onClick: this.next
+	          })
 	        )
 	      ),
 	      _react2.default.createElement(
@@ -41674,7 +41895,8 @@
 	            min: '0',
 	            max: this.props.model.getSize(this.props.arg) - 1,
 	            value: this.props.model.getIndex(this.props.arg),
-	            onChange: this.onIndexChange })
+	            onChange: this.onIndexChange
+	          })
 	        )
 	      )
 	    );
@@ -41735,7 +41957,7 @@
 	/* WEBPACK VAR INJECTION */(function(setImmediate) {'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -41785,770 +42007,828 @@
 
 	// Helper function used to handle next/previous when the loop function is 'reverse'
 	function deltaReverse(arg, increment) {
-	    var newIdx = arg.idx + arg.direction * increment;
-	    if (newIdx >= arg.values.length) {
-	        arg.direction *= -1; // Reverse direction
-	        newIdx = arg.values.length - 2;
-	    }
+	  var newIdx = arg.idx + arg.direction * increment;
+	  if (newIdx >= arg.values.length) {
+	    arg.direction *= -1; // Reverse direction
+	    newIdx = arg.values.length - 2;
+	  }
 
-	    if (newIdx < 0) {
-	        arg.direction *= -1; // Reverse direction
-	        newIdx = 1;
-	    }
+	  if (newIdx < 0) {
+	    arg.direction *= -1; // Reverse direction
+	    newIdx = 1;
+	  }
 
-	    if (newIdx >= 0 && newIdx < arg.values.length) {
-	        arg.idx = newIdx;
-	    }
+	  if (newIdx >= 0 && newIdx < arg.values.length) {
+	    arg.idx = newIdx;
+	  }
 
-	    return true;
+	  return true;
 	}
 
 	// Helper function used to handle next/previous when the loop function is 'modulo'
 	function deltaModulo(arg, increment) {
-	    arg.idx = (arg.values.length + arg.idx + increment) % arg.values.length;
-	    return true;
+	  arg.idx = (arg.values.length + arg.idx + increment) % arg.values.length;
+	  return true;
 	}
 
 	// Helper function used to handle next/previous when the loop function is 'none'
 	function deltaNone(arg, increment) {
-	    var newIdx = arg.idx + increment;
+	  var newIdx = arg.idx + increment;
 
-	    if (newIdx >= arg.values.length) {
-	        newIdx = arg.values.length - 1;
-	    }
+	  if (newIdx >= arg.values.length) {
+	    newIdx = arg.values.length - 1;
+	  }
 
-	    if (newIdx < 0) {
-	        newIdx = 0;
-	    }
+	  if (newIdx < 0) {
+	    newIdx = 0;
+	  }
 
-	    if (arg.idx !== newIdx) {
-	        arg.idx = newIdx;
-	        return true;
-	    }
+	  if (arg.idx !== newIdx) {
+	    arg.idx = newIdx;
+	    return true;
+	  }
 
-	    return false;
+	  return false;
 	}
 
 	// QueryDataModel class definition
 
 	var QueryDataModel = function () {
-	    function QueryDataModel(jsonData, basepath) {
-	        var _this = this;
+	  function QueryDataModel(jsonData, basepath) {
+	    var _this = this;
 
-	        _classCallCheck(this, QueryDataModel);
+	    _classCallCheck(this, QueryDataModel);
 
-	        this.originalData = jsonData;
-	        this.basepath = basepath; // Needed for cloning
-	        this.id = 'QueryDataModel_' + ++queryDataModelCounter + ':';
-	        this.args = {};
-	        this.externalArgs = {};
-	        this.dataCount = {};
-	        this.categories = {};
-	        this.requests = [];
-	        this.keepAnimating = false;
-	        this.animationTimerId = 0;
-	        this.mouseListener = null;
-	        this.dataMetadata = {};
-	        this.lazyFetchRequest = null;
+	    this.originalData = jsonData;
+	    this.basepath = basepath; // Needed for cloning
+	    this.id = 'QueryDataModel_' + ++queryDataModelCounter + ' :';
+	    this.args = {};
+	    this.externalArgs = {};
+	    this.dataCount = {};
+	    this.categories = {};
+	    this.requests = [];
+	    this.keepAnimating = false;
+	    this.animationTimerId = 0;
+	    this.mouseListener = null;
+	    this.dataMetadata = {};
+	    this.lazyFetchRequest = null;
 
-	        this.playNext = function () {
-	            if (_this.keepAnimating) {
-	                var changeDetected = false;
-	                _this.lastPlay = +new Date();
+	    this.playNext = function () {
+	      if (_this.keepAnimating) {
+	        var changeDetected = false;
+	        _this.lastPlay = +new Date();
 
-	                // Move all flagged arg to next()
-	                for (var argName in _this.args) {
-	                    if (_this.args[argName].anime) {
-	                        changeDetected = _this.next(argName) || changeDetected;
-	                    }
-	                }
-
-	                // Keep moving if change detected
-	                if (changeDetected) {
-	                    // Get new data
-	                    _this.lazyFetchData(); // FIXME may need a category
-	                } else {
-	                        // Auto stop as nothing change
-	                        _this.keepAnimating = false;
-	                        _this.emit('state.change.play', { instance: _this });
-	                    }
-	            } else {
-	                _this.emit('state.change.play', { instance: _this });
-	            }
-	        };
-
-	        var processRequest = function processRequest(request) {
-	            var dataToBroadcast = {},
-	                count = request.urls.length,
-	                hasPending = false,
-	                hasError = false;
-
-	            if (_this.animationTimerId !== 0) {
-	                clearTimeout(_this.animationTimerId);
-	                _this.animationTimerId = 0;
-	            }
-
-	            while (count--) {
-	                var item = request.urls[count];
-	                dataToBroadcast[item.key] = dataManager.get(item.url);
-	                if (dataToBroadcast[item.key]) {
-	                    hasPending = hasPending || dataToBroadcast[item.key].pending;
-	                } else {
-	                    hasError = true;
-	                }
-	            }
-
-	            if (hasPending) {
-	                // put the request back in the queue
-	                setImmediate(function () {
-	                    _this.requests.push(request);
-	                });
-	            } else if (!hasError) {
-	                // We are good to go
-	                // Broadcast data to the category
-	                _this.emit(request.category, dataToBroadcast);
-
-	                // Trigger new fetch data if any lazyFetchData is pending
-	                if (_this.requests.length === 0 && _this.lazyFetchRequest) {
-	                    _this.fetchData(_this.lazyFetchRequest);
-	                    _this.lazyFetchRequest = null;
-	                }
-	            }
-
-	            // Handle animation if any
-	            if (_this.keepAnimating) {
-	                var ts = +new Date();
-	                _this.animationTimerId = setTimeout(_this.playNext, ts - _this.lastPlay > _this.deltaT ? 0 : _this.deltaT);
-	            }
-	        };
-
-	        var dataHandler = function dataHandler(data, envelope) {
-	            _this.dataCount[envelope.topic]++;
-
-	            // Pre-decode image urls
-	            if (data.url && data.type === 'blob' && data.data.type.indexOf('image') !== -1 && data.image === undefined) {
-	                data.image = new Image();
-	                data.image.src = data.url;
-	            }
-
-	            if (data.error) {
-	                return _this.emit('error', envelope);
-	                // console.error('Error when fetching ' + envelope.topic);
-	            }
-
-	            // All fetched request are complete
-	            var minValue = (0, _min2.default)(_this.dataCount),
-	                maxValue = (0, _max2.default)(_this.dataCount),
-	                dataSize = (0, _size2.default)(_this.dataCount);
-
-	            if (minValue === maxValue && (dataSize === 1 ? minValue === 0 : true)) {
-	                // Handling requests after any re-queue
-	                setImmediate(function () {
-	                    while (_this.requests.length) {
-	                        processRequest(_this.requests.pop());
-	                    }
-	                });
-	            }
-	        };
-
-	        // Flatten args
-	        for (var key in jsonData.arguments) {
-	            var arg = jsonData.arguments[key];
-	            this.args[key] = {
-	                label: arg.label ? arg.label : key,
-	                idx: arg.default ? arg.default : 0,
-	                direction: 1,
-	                anime: false,
-	                values: arg.values,
-	                ui: arg.ui ? arg.ui : 'list',
-	                delta: arg.loop ? arg.loop === 'reverse' ? deltaReverse : arg.loop === 'modulo' ? deltaModulo : deltaNone : deltaNone
-	            };
+	        // Move all flagged arg to next()
+	        for (var argName in _this.args) {
+	          if (_this.args[argName].anime) {
+	            changeDetected = _this.next(argName) || changeDetected;
+	          }
 	        }
 
-	        // Register all data urls
-	        jsonData.data.forEach(function (dataEntry) {
-	            var dataId = _this.id + dataEntry.name;
-
-	            // Register data metadata if any
-	            _this.dataMetadata[dataEntry.name] = dataEntry.metadata || {};
-
-	            // Fill categories with dataIds
-	            (dataEntry.categories || [DEFAULT_KEY_NAME]).forEach(function (category) {
-	                if ((0, _hasOwn2.default)(_this.categories, category)) {
-	                    _this.categories[category].push(dataId);
-	                } else {
-	                    _this.categories[category] = [dataId];
-	                }
+	        // Keep moving if change detected
+	        if (changeDetected) {
+	          // Get new data
+	          _this.lazyFetchData(); // FIXME may need a category
+	        } else {
+	            // Auto stop as nothing change
+	            _this.keepAnimating = false;
+	            _this.emit('state.change.play', {
+	              instance: _this
 	            });
-
-	            // Register data handler + listener
-	            dataManager.registerURL(dataId, (dataEntry.absolute ? '' : basepath) + dataEntry.pattern, dataEntry.type, dataEntry.mimeType);
-	            dataManager.on(dataId, dataHandler);
-	            _this.dataCount[dataId] = 0;
+	          }
+	      } else {
+	        _this.emit('state.change.play', {
+	          instance: _this
 	        });
+	      }
+	    };
 
-	        // Data Exploration handling
-	        this.exploreState = {
-	            order: jsonData.arguments_order.map(function (f) {
-	                return f;
-	            }).reverse(), // Clone
-	            idxs: jsonData.arguments_order.map(function (i) {
-	                return 0;
-	            }), // Reset index
-	            sizes: jsonData.arguments_order.map(function (f) {
-	                return _this.getSize(f);
-	            }).reverse(), // Get Size
-	            onDataReady: true,
-	            animate: false
-	        };
+	    var processRequest = function processRequest(request) {
+	      var dataToBroadcast = {},
+	          count = request.urls.length,
+	          hasPending = false,
+	          hasError = false;
 
-	        this.explorationSubscription = this.onDataChange(function () {
-	            if (_this.exploreState.animate && _this.exploreState.onDataReady) {
-	                setImmediate(function (_) {
-	                    return _this.nextExploration();
-	                });
-	            }
+	      if (_this.animationTimerId !== 0) {
+	        clearTimeout(_this.animationTimerId);
+	        _this.animationTimerId = 0;
+	      }
+
+	      while (count--) {
+	        var item = request.urls[count];
+	        dataToBroadcast[item.key] = dataManager.get(item.url);
+	        if (dataToBroadcast[item.key]) {
+	          hasPending = hasPending || dataToBroadcast[item.key].pending;
+	        } else {
+	          hasError = true;
+	        }
+	      }
+
+	      if (hasPending) {
+	        // put the request back in the queue
+	        setImmediate(function () {
+	          _this.requests.push(request);
 	        });
+	      } else if (!hasError) {
+	        // We are good to go
+	        // Broadcast data to the category
+	        _this.emit(request.category, dataToBroadcast);
+
+	        // Trigger new fetch data if any lazyFetchData is pending
+	        if (_this.requests.length === 0 && _this.lazyFetchRequest) {
+	          _this.fetchData(_this.lazyFetchRequest);
+	          _this.lazyFetchRequest = null;
+	        }
+	      }
+
+	      // Handle animation if any
+	      if (_this.keepAnimating) {
+	        var ts = +new Date();
+	        _this.animationTimerId = setTimeout(_this.playNext, ts - _this.lastPlay > _this.deltaT ? 0 : _this.deltaT);
+	      }
+	    };
+
+	    var dataHandler = function dataHandler(data, envelope) {
+	      _this.dataCount[envelope.topic]++;
+
+	      // Pre-decode image urls
+	      if (data.url && data.type === 'blob' && data.data.type.indexOf('image') !== -1 && data.image === undefined) {
+	        data.image = new Image();
+	        data.image.src = data.url;
+	      }
+
+	      if (data.error) {
+	        _this.emit('error', envelope);
+	        return;
+	        // console.error('Error when fetching ' + envelope.topic);
+	      }
+
+	      // All fetched request are complete
+	      var minValue = (0, _min2.default)(_this.dataCount),
+	          maxValue = (0, _max2.default)(_this.dataCount),
+	          dataSize = (0, _size2.default)(_this.dataCount);
+
+	      if (minValue === maxValue && (dataSize === 1 ? minValue === 0 : true)) {
+	        // Handling requests after any re-queue
+	        setImmediate(function () {
+	          while (_this.requests.length) {
+	            processRequest(_this.requests.pop());
+	          }
+	        });
+	      }
+	    };
+
+	    // Flatten args
+	    for (var key in jsonData.arguments) {
+	      var arg = jsonData.arguments[key];
+	      this.args[key] = {
+	        label: arg.label ? arg.label : key,
+	        idx: arg.default ? arg.default : 0,
+	        direction: 1,
+	        anime: false,
+	        values: arg.values,
+	        ui: arg.ui ? arg.ui : 'list',
+	        delta: arg.loop ? arg.loop === 'reverse' ? deltaReverse : arg.loop === 'modulo' ? deltaModulo : deltaNone : deltaNone
+	      };
 	    }
 
-	    _createClass(QueryDataModel, [{
-	        key: 'getDataMetaData',
-	        value: function getDataMetaData(dataName) {
-	            return this.dataMetadata[dataName];
+	    // Register all data urls
+	    jsonData.data.forEach(function (dataEntry) {
+	      var dataId = _this.id + dataEntry.name;
+
+	      // Register data metadata if any
+	      _this.dataMetadata[dataEntry.name] = dataEntry.metadata || {};
+
+	      // Fill categories with dataIds
+	      (dataEntry.categories || [DEFAULT_KEY_NAME]).forEach(function (category) {
+	        if ((0, _hasOwn2.default)(_this.categories, category)) {
+	          _this.categories[category].push(dataId);
+	        } else {
+	          _this.categories[category] = [dataId];
 	        }
+	      });
 
-	        // Return the current set of arguments values
+	      // Register data handler + listener
+	      dataManager.registerURL(dataId, (dataEntry.absolute ? '' : basepath) + dataEntry.pattern, dataEntry.type, dataEntry.mimeType);
+	      dataManager.on(dataId, dataHandler);
+	      _this.dataCount[dataId] = 0;
+	    });
 
-	    }, {
-	        key: 'getQuery',
-	        value: function getQuery() {
-	            var query = {};
+	    // Data Exploration handling
+	    this.exploreState = {
+	      order: jsonData.arguments_order.map(function (f) {
+	        return f;
+	      }).reverse(), // Clone
+	      idxs: jsonData.arguments_order.map(function (i) {
+	        return 0;
+	      }), // Reset index
+	      sizes: jsonData.arguments_order.map(function (f) {
+	        return _this.getSize(f);
+	      }).reverse(), // Get Size
+	      onDataReady: true,
+	      animate: false
+	    };
 
-	            for (var key in this.args) {
-	                var arg = this.args[key];
-	                query[key] = arg.values[arg.idx];
-	            }
+	    this.explorationSubscription = this.onDataChange(function () {
+	      if (_this.exploreState.animate && _this.exploreState.onDataReady) {
+	        setImmediate(function (_) {
+	          return _this.nextExploration();
+	        });
+	      }
+	    });
+	  }
 
-	            // Add external args to the query too
-	            for (var eKey in this.externalArgs) {
-	                query[eKey] = this.externalArgs[eKey];
-	            }
+	  _createClass(QueryDataModel, [{
+	    key: 'getDataMetaData',
+	    value: function getDataMetaData(dataName) {
+	      return this.dataMetadata[dataName];
+	    }
 
-	            return query;
+	    // Return the current set of arguments values
+
+	  }, {
+	    key: 'getQuery',
+	    value: function getQuery() {
+	      var query = {};
+
+	      for (var key in this.args) {
+	        var arg = this.args[key];
+	        query[key] = arg.values[arg.idx];
+	      }
+
+	      // Add external args to the query too
+	      for (var eKey in this.externalArgs) {
+	        query[eKey] = this.externalArgs[eKey];
+	      }
+
+	      return query;
+	    }
+
+	    // Fetch data for a given category or _ if none provided
+
+	  }, {
+	    key: 'fetchData',
+	    value: function fetchData() {
+	      var _this2 = this;
+
+	      var category = arguments.length <= 0 || arguments[0] === undefined ? DEFAULT_KEY_NAME : arguments[0];
+
+	      var dataToFetch = [],
+	          query = this.getQuery(),
+	          request = {
+	        urls: []
+	      };
+
+	      // fill the data to fetch
+	      if (category.name) {
+	        request.category = category.name;
+	        category.categories.forEach(function (cat) {
+	          if (_this2.categories[cat]) {
+	            dataToFetch = dataToFetch.concat(_this2.categories[cat]);
+	          }
+	        });
+	      } else if (this.categories[category]) {
+	        request.category = category;
+	        dataToFetch = dataToFetch.concat(this.categories[category]);
+	      }
+
+	      // Decrease the count and record the category request + trigger fetch
+	      if (dataToFetch.length) {
+	        this.requests.push(request);
+	      }
+
+	      dataToFetch.forEach(function (dataId) {
+	        _this2.dataCount[dataId]--;
+	        request.urls.push({
+	          key: dataId.slice(_this2.id.length),
+	          url: dataManager.fetch(dataId, query)
+	        });
+	      });
+	    }
+	  }, {
+	    key: 'lazyFetchData',
+	    value: function lazyFetchData() {
+	      var category = arguments.length <= 0 || arguments[0] === undefined ? DEFAULT_KEY_NAME : arguments[0];
+
+	      if (this.lazyFetchRequest || this.requests.length > 0) {
+	        this.lazyFetchRequest = category;
+	      } else {
+	        this.fetchData(category);
+	      }
+	    }
+
+	    // Got to the first value of a given attribute and return true if data has changed
+
+	  }, {
+	    key: 'first',
+	    value: function first(attributeName) {
+	      var arg = this.args[attributeName];
+
+	      if (arg && arg.idx !== 0) {
+	        arg.idx = 0;
+	        this.emit('state.change.first', {
+	          value: arg.values[arg.idx],
+	          idx: arg.idx,
+	          name: attributeName,
+	          instance: this
+	        });
+	        return true;
+	      }
+
+	      return false;
+	    }
+
+	    // Got to the last value of a given attribute and return true if data has changed
+
+	  }, {
+	    key: 'last',
+	    value: function last(attributeName) {
+	      var arg = this.args[attributeName],
+	          last = arg.values.length - 1;
+
+	      if (arg && arg.idx !== last) {
+	        arg.idx = last;
+	        this.emit('state.change.last', {
+	          value: arg.values[arg.idx],
+	          idx: arg.idx,
+	          name: attributeName,
+	          instance: this
+	        });
+	        return true;
+	      }
+
+	      return false;
+	    }
+
+	    // Got to the next value of a given attribute and return true if data has changed
+
+	  }, {
+	    key: 'next',
+	    value: function next(attributeName) {
+	      var arg = this.args[attributeName];
+	      if (arg && arg.delta(arg, +1)) {
+	        this.emit('state.change.next', {
+	          delta: 1,
+	          value: arg.values[arg.idx],
+	          idx: arg.idx,
+	          name: attributeName,
+	          instance: this
+	        });
+	        return true;
+	      }
+	      return false;
+	    }
+
+	    // Got to the previous value of a given attribute and return true if data has changed
+
+	  }, {
+	    key: 'previous',
+	    value: function previous(attributeName) {
+	      var arg = this.args[attributeName];
+	      if (arg && arg.delta(arg, -1)) {
+	        this.emit('state.change.previous', {
+	          delta: -1,
+	          value: arg.values[arg.idx],
+	          idx: arg.idx,
+	          name: attributeName,
+	          instance: this
+	        });
+	        return true;
+	      }
+	      return false;
+	    }
+
+	    // Set a value to an argument (must be in values) and return true if data has changed
+	    // If argument is not in the argument list. This will be added inside the external argument list.
+
+	  }, {
+	    key: 'setValue',
+	    value: function setValue(attributeName, value) {
+	      var arg = this.args[attributeName],
+	          newIdx = arg ? arg.values.indexOf(value) : 0;
+
+	      if (arg && newIdx !== -1 && newIdx !== arg.idx) {
+	        arg.idx = newIdx;
+	        this.emit('state.change.value', {
+	          value: arg.values[arg.idx],
+	          idx: arg.idx,
+	          name: attributeName,
+	          instance: this
+	        });
+	        return true;
+	      }
+
+	      if (arg === undefined && this.externalArgs[attributeName] !== value) {
+	        this.externalArgs[attributeName] = value;
+	        this.emit('state.change.value', {
+	          value: value,
+	          name: attributeName,
+	          external: true,
+	          instance: this
+	        });
+	        return true;
+	      }
+
+	      return false;
+	    }
+
+	    // Set a new index to an argument (must be in values range) and return true if data has changed
+
+	  }, {
+	    key: 'setIndex',
+	    value: function setIndex(attributeName, idx) {
+	      var arg = this.args[attributeName];
+
+	      if (arg && idx > -1 && idx < arg.values.length && arg.idx !== idx) {
+	        arg.idx = idx;
+	        this.emit('state.change.idx', {
+	          value: arg.values[arg.idx],
+	          idx: arg.idx,
+	          name: attributeName,
+	          instance: this
+	        });
+	        return true;
+	      }
+
+	      return false;
+	    }
+
+	    // Return the argument value or null if the argument was not found
+	    // If argument is not in the argument list.
+	    // We will also search inside the external argument list.
+
+	  }, {
+	    key: 'getValue',
+	    value: function getValue(attributeName) {
+	      var arg = this.args[attributeName];
+	      return arg ? arg.values[arg.idx] : this.externalArgs[attributeName];
+	    }
+
+	    // Return the argument values list or null if the argument was not found
+
+	  }, {
+	    key: 'getValues',
+	    value: function getValues(attributeName) {
+	      var arg = this.args[attributeName];
+	      return arg ? arg.values : null;
+	    }
+
+	    // Return the argument index or null if the argument was not found
+
+	  }, {
+	    key: 'getIndex',
+	    value: function getIndex(attributeName) {
+	      var arg = this.args[attributeName];
+	      return arg ? arg.idx : null;
+	    }
+
+	    // Return the argument index or null if the argument was not found
+
+	  }, {
+	    key: 'getUiType',
+	    value: function getUiType(attributeName) {
+	      var arg = this.args[attributeName];
+	      return arg ? arg.ui : null;
+	    }
+
+	    // Return the argument size or null if the argument was not found
+
+	  }, {
+	    key: 'getSize',
+	    value: function getSize(attributeName) {
+	      var arg = this.args[attributeName];
+	      return arg ? arg.values.length : null;
+	    }
+
+	    // Return the argument label or null if the argument was not found
+
+	  }, {
+	    key: 'label',
+	    value: function label(attributeName) {
+	      var arg = this.args[attributeName];
+	      return arg ? arg.label : null;
+	    }
+
+	    // Return the argument animation flag or false if the argument was not found
+
+	  }, {
+	    key: 'getAnimationFlag',
+	    value: function getAnimationFlag(attributeName) {
+	      var arg = this.args[attributeName];
+	      return arg ? arg.anime : false;
+	    }
+
+	    // Set the argument animation flag and return true if the value changed
+
+	  }, {
+	    key: 'setAnimationFlag',
+	    value: function setAnimationFlag(attributeName, state) {
+	      var arg = this.args[attributeName];
+
+	      if (arg && arg.anime !== state) {
+	        arg.anime = state;
+	        this.emit('state.change.animation', {
+	          animation: arg.anim,
+	          name: arg.name,
+	          instance: this
+	        });
+	        return true;
+	      }
+
+	      return false;
+	    }
+
+	    // Toggle the argument animation flag state and return the current state or
+	    // null if not found.
+
+	  }, {
+	    key: 'toggleAnimationFlag',
+	    value: function toggleAnimationFlag(attributeName) {
+	      var arg = this.args[attributeName];
+
+	      if (arg) {
+	        arg.anime = !arg.anime;
+	        this.emit('state.change.animation', {
+	          animation: arg.anim,
+	          name: arg.name,
+	          instance: this
+	        });
+	        return arg.anime;
+	      }
+
+	      return null;
+	    }
+
+	    // Check if one of the argument is currently active for the animation
+
+	  }, {
+	    key: 'hasAnimationFlag',
+	    value: function hasAnimationFlag() {
+	      for (var key in this.args) {
+	        if (this.args[key].anime) {
+	          return true;
 	        }
+	      }
+	      return false;
+	    }
 
-	        // Fetch data for a given category or _ if none provided
+	    // Return true if an animation is currently running
 
-	    }, {
-	        key: 'fetchData',
-	        value: function fetchData() {
-	            var _this2 = this;
+	  }, {
+	    key: 'isAnimating',
+	    value: function isAnimating() {
+	      return this.keepAnimating;
+	    }
 
-	            var category = arguments.length <= 0 || arguments[0] === undefined ? DEFAULT_KEY_NAME : arguments[0];
+	    // Start/Stop an animation
 
-	            var dataToFetch = [],
-	                query = this.getQuery(),
-	                request = { urls: [] };
+	  }, {
+	    key: 'animate',
+	    value: function animate(start) {
+	      var deltaT = arguments.length <= 1 || arguments[1] === undefined ? 500 : arguments[1];
 
-	            // fill the data to fetch
-	            if (category.name) {
-	                request.category = category.name;
-	                category.categories.forEach(function (cat) {
-	                    if (_this2.categories[cat]) {
-	                        dataToFetch = dataToFetch.concat(_this2.categories[cat]);
-	                    }
-	                });
-	            } else if (this.categories[category]) {
-	                request.category = category;
-	                dataToFetch = dataToFetch.concat(this.categories[category]);
+	      // Update deltaT
+	      this.deltaT = deltaT;
+
+	      if (start !== this.keepAnimating) {
+	        this.keepAnimating = start;
+	        this.playNext();
+	      }
+	    }
+
+	    // Mouse handler if any base on the binding
+
+	  }, {
+	    key: 'getMouseListener',
+	    value: function getMouseListener() {
+	      if (this.mouseListener) {
+	        return this.mouseListener;
+	      }
+
+	      // Record last action time
+	      this.lastTime = {};
+	      this.newMouseTimeout = 250;
+
+	      // We need to create a mouse listener
+	      var self = this,
+	          actions = {};
+
+	      // Create an action map
+	      for (var key in this.originalData.arguments) {
+	        var value = this.originalData.arguments[key];
+	        if (value.bind && value.bind.mouse) {
+	          for (var action in value.bind.mouse) {
+	            var obj = (0, _omit2.default)(value.bind.mouse[action]);
+	            obj.name = key;
+	            obj.lastCoord = 0;
+	            if (obj.orientation === undefined) {
+	              obj.orientation = 1;
 	            }
-
-	            // Decrease the count and record the category request + trigger fetch
-	            if (dataToFetch.length) {
-	                this.requests.push(request);
-	            }
-
-	            dataToFetch.forEach(function (dataId) {
-	                _this2.dataCount[dataId]--;
-	                request.urls.push({
-	                    key: dataId.slice(_this2.id.length),
-	                    url: dataManager.fetch(dataId, query)
-	                });
-	            });
-	        }
-	    }, {
-	        key: 'lazyFetchData',
-	        value: function lazyFetchData() {
-	            var category = arguments.length <= 0 || arguments[0] === undefined ? DEFAULT_KEY_NAME : arguments[0];
-
-	            if (this.lazyFetchRequest || this.requests.length > 0) {
-	                this.lazyFetchRequest = category;
+	            if (actions[action]) {
+	              actions[action].push(obj);
 	            } else {
-	                this.fetchData(category);
+	              actions[action] = [obj];
 	            }
+	          }
 	        }
+	      }
 
-	        // Got to the first value of a given attribute and return true if data has changed
+	      /* eslint-disable complexity */
+	      function processEvent(event, envelope) {
+	        var array = actions[event.topic],
+	            time = (0, _now2.default)(),
+	            newEvent = self.lastTime[event.topic] + self.newMouseTimeout < time,
+	            count = array.length,
+	            changeDetected = false,
+	            eventHandled = false;
 
-	    }, {
-	        key: 'first',
-	        value: function first(attributeName) {
-	            var arg = this.args[attributeName];
+	        // Check all associated actions
+	        while (count--) {
+	          var item = array[count],
+	              deltaName = item.coordinate === 0 ? 'deltaX' : 'deltaY';
 
-	            if (arg && arg.idx !== 0) {
-	                arg.idx = 0;
-	                this.emit('state.change.first', { value: arg.values[arg.idx], idx: arg.idx, name: attributeName, instance: this });
-	                return true;
+	          if (newEvent) {
+	            item.lastCoord = 0;
+	          }
+
+	          if (item.modifier & event.modifier || item.modifier === event.modifier) {
+	            eventHandled = true;
+	            var delta = event[deltaName] - item.lastCoord;
+	            self.lastTime[event.topic] = time;
+
+	            if (Math.abs(delta) > item.step) {
+	              item.lastCoord = Number(event[deltaName]);
+
+	              if (item.orientation * delta > 0) {
+	                changeDetected = self.next(item.name) || changeDetected;
+	              } else {
+	                changeDetected = self.previous(item.name) || changeDetected;
+	              }
 	            }
-
-	            return false;
+	          }
 	        }
 
-	        // Got to the last value of a given attribute and return true if data has changed
-
-	    }, {
-	        key: 'last',
-	        value: function last(attributeName) {
-	            var arg = this.args[attributeName],
-	                last = arg.values.length - 1;
-
-	            if (arg && arg.idx !== last) {
-	                arg.idx = last;
-	                this.emit('state.change.last', { value: arg.values[arg.idx], idx: arg.idx, name: attributeName, instance: this });
-	                return true;
-	            }
-
-	            return false;
+	        if (changeDetected) {
+	          self.lazyFetchData(); // FIXME category
 	        }
 
-	        // Got to the next value of a given attribute and return true if data has changed
-
-	    }, {
-	        key: 'next',
-	        value: function next(attributeName) {
-	            var arg = this.args[attributeName];
-	            if (arg && arg.delta(arg, +1)) {
-	                this.emit('state.change.next', { delta: 1, value: arg.values[arg.idx], idx: arg.idx, name: attributeName, instance: this });
-	                return true;
-	            }
-	            return false;
-	        }
-
-	        // Got to the previous value of a given attribute and return true if data has changed
-
-	    }, {
-	        key: 'previous',
-	        value: function previous(attributeName) {
-	            var arg = this.args[attributeName];
-	            if (arg && arg.delta(arg, -1)) {
-	                this.emit('state.change.previous', { delta: -1, value: arg.values[arg.idx], idx: arg.idx, name: attributeName, instance: this });
-	                return true;
-	            }
-	            return false;
-	        }
-
-	        // Set a value to an argument (must be in values) and return true if data has changed
-	        // If argument is not in the argument list. This will be added inside the external argument list.
-
-	    }, {
-	        key: 'setValue',
-	        value: function setValue(attributeName, value) {
-	            var arg = this.args[attributeName],
-	                newIdx = arg ? arg.values.indexOf(value) : 0;
-
-	            if (arg && newIdx !== -1 && newIdx !== arg.idx) {
-	                arg.idx = newIdx;
-	                this.emit('state.change.value', { value: arg.values[arg.idx], idx: arg.idx, name: attributeName, instance: this });
-	                return true;
-	            }
-
-	            if (arg === undefined && this.externalArgs[attributeName] !== value) {
-	                this.externalArgs[attributeName] = value;
-	                this.emit('state.change.value', { value: value, name: attributeName, external: true, instance: this });
-	                return true;
-	            }
-
-	            return false;
-	        }
-
-	        // Set a new index to an argument (must be in values range) and return true if data has changed
-
-	    }, {
-	        key: 'setIndex',
-	        value: function setIndex(attributeName, idx) {
-	            var arg = this.args[attributeName];
-
-	            if (arg && idx > -1 && idx < arg.values.length && arg.idx !== idx) {
-	                arg.idx = idx;
-	                this.emit('state.change.idx', { value: arg.values[arg.idx], idx: arg.idx, name: attributeName, instance: this });
-	                return true;
-	            }
-
-	            return false;
-	        }
-
-	        // Return the argument value or null if the argument was not found
-	        // If argument is not in the argument list.
-	        // We will also search inside the external argument list.
-
-	    }, {
-	        key: 'getValue',
-	        value: function getValue(attributeName) {
-	            var arg = this.args[attributeName];
-	            return arg ? arg.values[arg.idx] : this.externalArgs[attributeName];
-	        }
-
-	        // Return the argument values list or null if the argument was not found
-
-	    }, {
-	        key: 'getValues',
-	        value: function getValues(attributeName) {
-	            var arg = this.args[attributeName];
-	            return arg ? arg.values : null;
-	        }
-
-	        // Return the argument index or null if the argument was not found
-
-	    }, {
-	        key: 'getIndex',
-	        value: function getIndex(attributeName) {
-	            var arg = this.args[attributeName];
-	            return arg ? arg.idx : null;
-	        }
-
-	        // Return the argument index or null if the argument was not found
-
-	    }, {
-	        key: 'getUiType',
-	        value: function getUiType(attributeName) {
-	            var arg = this.args[attributeName];
-	            return arg ? arg.ui : null;
-	        }
-
-	        // Return the argument size or null if the argument was not found
-
-	    }, {
-	        key: 'getSize',
-	        value: function getSize(attributeName) {
-	            var arg = this.args[attributeName];
-	            return arg ? arg.values.length : null;
-	        }
-
-	        // Return the argument label or null if the argument was not found
-
-	    }, {
-	        key: 'label',
-	        value: function label(attributeName) {
-	            var arg = this.args[attributeName];
-	            return arg ? arg.label : null;
-	        }
-
-	        // Return the argument animation flag or false if the argument was not found
-
-	    }, {
-	        key: 'getAnimationFlag',
-	        value: function getAnimationFlag(attributeName) {
-	            var arg = this.args[attributeName];
-	            return arg ? arg.anime : false;
-	        }
-
-	        // Set the argument animation flag and return true if the value changed
-
-	    }, {
-	        key: 'setAnimationFlag',
-	        value: function setAnimationFlag(attributeName, state) {
-	            var arg = this.args[attributeName];
-
-	            if (arg && arg.anime !== state) {
-	                arg.anime = state;
-	                this.emit('state.change.animation', { animation: arg.anim, name: arg.name, instance: this });
-	                return true;
-	            }
-
-	            return false;
-	        }
-
-	        // Toggle the argument animation flag state and return the current state or
-	        // null if not found.
-
-	    }, {
-	        key: 'toggleAnimationFlag',
-	        value: function toggleAnimationFlag(attributeName) {
-	            var arg = this.args[attributeName];
-
-	            if (arg) {
-	                arg.anime = !arg.anime;
-	                this.emit('state.change.animation', { animation: arg.anim, name: arg.name, instance: this });
-	                return arg.anime;
-	            }
-
-	            return null;
-	        }
-
-	        // Check if one of the argument is currently active for the animation
-
-	    }, {
-	        key: 'hasAnimationFlag',
-	        value: function hasAnimationFlag() {
-	            for (var key in this.args) {
-	                if (this.args[key].anime) {
-	                    return true;
-	                }
-	            }
-	            return false;
-	        }
-
-	        // Return true if an animation is currently running
-
-	    }, {
-	        key: 'isAnimating',
-	        value: function isAnimating() {
-	            return this.keepAnimating;
-	        }
-
-	        // Start/Stop an animation
-
-	    }, {
-	        key: 'animate',
-	        value: function animate(start) {
-	            var deltaT = arguments.length <= 1 || arguments[1] === undefined ? 500 : arguments[1];
-
-	            // Update deltaT
-	            this.deltaT = deltaT;
-
-	            if (start !== this.keepAnimating) {
-	                this.keepAnimating = start;
-	                this.playNext();
-	            }
-	        }
-
-	        // Mouse handler if any base on the binding
-
-	    }, {
-	        key: 'getMouseListener',
-	        value: function getMouseListener() {
-	            if (this.mouseListener) {
-	                return this.mouseListener;
-	            }
-
-	            // Record last action time
-	            this.lastTime = {};
-	            this.newMouseTimeout = 250;
-
-	            // We need to create a mouse listener
-	            var self = this,
-	                actions = {};
-
-	            // Create an action map
-	            for (var key in this.originalData.arguments) {
-	                var value = this.originalData.arguments[key];
-	                if (value.bind && value.bind.mouse) {
-	                    for (var action in value.bind.mouse) {
-	                        var obj = (0, _omit2.default)(value.bind.mouse[action]);
-	                        obj.name = key;
-	                        obj.lastCoord = 0;
-	                        if (obj.orientation === undefined) {
-	                            obj.orientation = 1;
-	                        }
-	                        if (actions[action]) {
-	                            actions[action].push(obj);
-	                        } else {
-	                            actions[action] = [obj];
-	                        }
-	                    }
-	                }
-	            }
-
-	            /* eslint-disable complexity */
-	            function processEvent(event, envelope) {
-	                var array = actions[event.topic],
-	                    time = (0, _now2.default)(),
-	                    newEvent = self.lastTime[event.topic] + self.newMouseTimeout < time,
-	                    count = array.length,
-	                    changeDetected = false,
-	                    eventHandled = false;
-
-	                // Check all associated actions
-	                while (count--) {
-	                    var item = array[count],
-	                        deltaName = item.coordinate === 0 ? 'deltaX' : 'deltaY';
-
-	                    if (newEvent) {
-	                        item.lastCoord = 0;
-	                    }
-
-	                    if (item.modifier & event.modifier || item.modifier === event.modifier) {
-	                        eventHandled = true;
-	                        var delta = event[deltaName] - item.lastCoord;
-	                        self.lastTime[event.topic] = time;
-
-	                        if (Math.abs(delta) > item.step) {
-	                            item.lastCoord = Number(event[deltaName]);
-
-	                            if (item.orientation * delta > 0) {
-	                                changeDetected = self.next(item.name) || changeDetected;
-	                            } else {
-	                                changeDetected = self.previous(item.name) || changeDetected;
-	                            }
-	                        }
-	                    }
-	                }
-
-	                if (changeDetected) {
-	                    self.lazyFetchData(); // FIXME category
-	                }
-
-	                return eventHandled;
-	            }
-	            /* eslint-enable complexity */
-
-	            this.mouseListener = {};
-	            for (var actionName in actions) {
-	                this.mouseListener[actionName] = processEvent;
-	                this.lastTime[actionName] = (0, _now2.default)();
-	            }
-
-	            return this.mouseListener;
-	        }
-
-	        // Event helpers
-
-	    }, {
-	        key: 'onStateChange',
-	        value: function onStateChange(callback) {
-	            return this.on('state.change.*', callback);
-	        }
-	    }, {
-	        key: 'onDataChange',
-	        value: function onDataChange(callback) {
-	            return this.on(DEFAULT_KEY_NAME, callback);
-	        }
-
-	        // Return a new instance based on the same metadata and basepath
-
-	    }, {
-	        key: 'clone',
-	        value: function clone() {
-	            return new QueryDataModel(this.originalData, this.basepath);
-	        }
-	    }, {
-	        key: 'destroy',
-	        value: function destroy() {
-	            this.off();
-
-	            this.explorationSubscription.unsubscribe();
-	            this.explorationSubscription = null;
-	        }
-
-	        // Data exploration -----------------------------------------------------------
-
-	    }, {
-	        key: 'exploreQuery',
-	        value: function exploreQuery() {
-	            var start = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
-
-	            var _this3 = this;
-
-	            var fromBeguining = arguments.length <= 1 || arguments[1] === undefined ? true : arguments[1];
-	            var onDataReady = arguments.length <= 2 || arguments[2] === undefined ? true : arguments[2];
-
-	            if (fromBeguining) {
-	                this.exploreState.idxs = this.exploreState.order.map(function (i) {
-	                    return 0;
-	                });
+	        return eventHandled;
+	      }
+	      /* eslint-enable complexity */
+
+	      this.mouseListener = {};
+	      for (var actionName in actions) {
+	        this.mouseListener[actionName] = processEvent;
+	        this.lastTime[actionName] = (0, _now2.default)();
+	      }
+
+	      return this.mouseListener;
+	    }
+
+	    // Event helpers
+
+	  }, {
+	    key: 'onStateChange',
+	    value: function onStateChange(callback) {
+	      return this.on('state.change.*', callback);
+	    }
+	  }, {
+	    key: 'onDataChange',
+	    value: function onDataChange(callback) {
+	      return this.on(DEFAULT_KEY_NAME, callback);
+	    }
+
+	    // Return a new instance based on the same metadata and basepath
+
+	  }, {
+	    key: 'clone',
+	    value: function clone() {
+	      return new QueryDataModel(this.originalData, this.basepath);
+	    }
+	  }, {
+	    key: 'destroy',
+	    value: function destroy() {
+	      this.off();
+
+	      this.explorationSubscription.unsubscribe();
+	      this.explorationSubscription = null;
+	    }
+
+	    // Data exploration -----------------------------------------------------------
+
+	  }, {
+	    key: 'exploreQuery',
+	    value: function exploreQuery() {
+	      var start = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
+
+	      var _this3 = this;
+
+	      var fromBeguining = arguments.length <= 1 || arguments[1] === undefined ? true : arguments[1];
+	      var onDataReady = arguments.length <= 2 || arguments[2] === undefined ? true : arguments[2];
+
+	      if (fromBeguining) {
+	        this.exploreState.idxs = this.exploreState.order.map(function (i) {
+	          return 0;
+	        });
+	      } else {
+	        this.exploreState.idxs = this.exploreState.order.map(function (field) {
+	          return _this3.getIndex(field);
+	        });
+	      }
+	      this.exploreState.onDataReady = onDataReady;
+	      this.exploreState.animate = start;
+
+	      // Start animation
+	      if (this.exploreState.animate) {
+	        this.nextExploration();
+	      }
+
+	      this.emit('state.change.exploration', {
+	        exploration: this.exploreState,
+	        instance: this
+	      });
+	    }
+	  }, {
+	    key: 'nextExploration',
+	    value: function nextExploration() {
+	      var _this4 = this;
+
+	      if (this.exploreState.animate) {
+	        // Update internal query
+	        this.exploreState.order.forEach(function (f, i) {
+	          _this4.setIndex(f, _this4.exploreState.idxs[i]);
+	        });
+
+	        // Move to next step
+	        var idxs = this.exploreState.idxs,
+	            sizes = this.exploreState.sizes;
+	        var count = idxs.length;
+
+	        // May overshoot
+	        idxs[count - 1]++;
+
+	        // Handle overshoot
+	        while (count--) {
+	          if (idxs[count] < sizes[count]) {
+	            // We are good
+	            continue;
+	          } else {
+	            // We need to move the index back up
+	            if (count > 0) {
+	              idxs[count] = 0;
+	              idxs[count - 1]++;
 	            } else {
-	                this.exploreState.idxs = this.exploreState.order.map(function (field) {
-	                    return _this3.getIndex(field);
-	                });
+	              this.exploreState.animate = false;
+	              this.emit('state.change.exploration', {
+	                exploration: this.exploreState,
+	                instance: this
+	              });
+	              return this.exploreState.animate; // We are done
 	            }
-	            this.exploreState.onDataReady = onDataReady;
-	            this.exploreState.animate = start;
+	          }
+	        }
 
-	            // Start animation
-	            if (this.exploreState.animate) {
-	                this.nextExploration();
+	        // Trigger the fetchData
+	        this.lazyFetchData();
+	      }
+	      return this.exploreState.animate;
+	    }
+	  }, {
+	    key: 'setCacheSize',
+	    value: function setCacheSize(sizeBeforeGC) {
+	      dataManager.cacheSize = sizeBeforeGC;
+	    }
+	  }, {
+	    key: 'getCacheSize',
+	    value: function getCacheSize() {
+	      return dataManager.cacheSize;
+	    }
+	  }, {
+	    key: 'getMemoryUsage',
+	    value: function getMemoryUsage() {
+	      return dataManager.cacheData.size;
+	    }
+	  }, {
+	    key: 'link',
+	    value: function link(queryDataModel) {
+	      var _this5 = this;
+
+	      var args = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+	      var fetch = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
+
+	      return queryDataModel.onStateChange(function (data, envelope) {
+	        if (data.name !== undefined && data.value !== undefined) {
+	          if (args === null || args.indexOf(data.name) !== -1) {
+	            if (_this5.setValue(data.name, data.value) && fetch) {
+	              _this5.lazyFetchData();
 	            }
-
-	            this.emit('state.change.exploration', { exploration: this.exploreState, instance: this });
+	          }
 	        }
-	    }, {
-	        key: 'nextExploration',
-	        value: function nextExploration() {
-	            var _this4 = this;
+	      });
+	    }
+	  }]);
 
-	            if (this.exploreState.animate) {
-	                // Update internal query
-	                this.exploreState.order.forEach(function (f, i) {
-	                    _this4.setIndex(f, _this4.exploreState.idxs[i]);
-	                });
-
-	                // Move to next step
-	                var idxs = this.exploreState.idxs,
-	                    sizes = this.exploreState.sizes;
-	                var count = idxs.length;
-
-	                // May overshoot
-	                idxs[count - 1]++;
-
-	                // Handle overshoot
-	                while (count--) {
-	                    if (idxs[count] < sizes[count]) {
-	                        // We are good
-	                        continue;
-	                    } else {
-	                        // We need to move the index back up
-	                        if (count > 0) {
-	                            idxs[count] = 0;
-	                            idxs[count - 1]++;
-	                        } else {
-	                            this.exploreState.animate = false;
-	                            this.emit('state.change.exploration', { exploration: this.exploreState, instance: this });
-	                            return this.exploreState.animate; // We are done
-	                        }
-	                    }
-	                }
-
-	                // Trigger the fetchData
-	                this.lazyFetchData();
-	            }
-	            return this.exploreState.animate;
-	        }
-	    }, {
-	        key: 'setCacheSize',
-	        value: function setCacheSize(sizeBeforeGC) {
-	            dataManager.cacheSize = sizeBeforeGC;
-	        }
-	    }, {
-	        key: 'getCacheSize',
-	        value: function getCacheSize() {
-	            return dataManager.cacheSize;
-	        }
-	    }, {
-	        key: 'getMemoryUsage',
-	        value: function getMemoryUsage() {
-	            return dataManager.cacheData.size;
-	        }
-	    }, {
-	        key: 'link',
-	        value: function link(queryDataModel) {
-	            var _this5 = this;
-
-	            var args = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
-	            var fetch = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
-
-	            return queryDataModel.onStateChange(function (data, envelope) {
-	                if (data.name !== undefined && data.value !== undefined) {
-	                    if (args === null || args.indexOf(data.name) !== -1) {
-	                        if (_this5.setValue(data.name, data.value) && fetch) {
-	                            _this5.lazyFetchData();
-	                        }
-	                    }
-	                }
-	            });
-	        }
-	    }]);
-
-	    return QueryDataModel;
+	  return QueryDataModel;
 	}();
 
 	exports.default = QueryDataModel;
@@ -42564,7 +42844,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // Module dependencies and constants
@@ -42587,27 +42867,27 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var typeFnMap = {
-	    json: _request2.default.fetchJSON,
-	    text: _request2.default.fetchTxt,
-	    blob: _request2.default.fetchBlob,
-	    arraybuffer: _request2.default.fetchArray,
-	    array: _request2.default.fetchArray
+	  json: _request2.default.fetchJSON,
+	  text: _request2.default.fetchTxt,
+	  blob: _request2.default.fetchBlob,
+	  arraybuffer: _request2.default.fetchArray,
+	  array: _request2.default.fetchArray
 	};
 
 	// Internal helper that return the current time
 	function ts() {
-	    return new Date().getTime();
+	  return new Date().getTime();
 	}
 
 	function updateDataSize(data) {
-	    if (data.type === 'json') {
-	        data.size = JSON.stringify(data.data).length;
-	    } else if (data.type === 'blob') {
-	        data.size = data.data.size;
-	    } else {
-	        data.size = data.data.length;
-	    }
-	    return data.size;
+	  if (data.type === 'json') {
+	    data.size = JSON.stringify(data.data).length;
+	  } else if (data.type === 'blob') {
+	    data.size = data.data.size;
+	  } else {
+	    data.size = data.data.length;
+	  }
+	  return data.size;
 	}
 
 	// Should use converter
@@ -42624,230 +42904,242 @@
 	// }
 
 	var DataManager = function () {
-	    function DataManager() {
-	        var cacheSize = arguments.length <= 0 || arguments[0] === undefined ? 1000000000 : arguments[0];
+	  function DataManager() {
+	    var cacheSize = arguments.length <= 0 || arguments[0] === undefined ? 1000000000 : arguments[0];
 
-	        _classCallCheck(this, DataManager);
+	    _classCallCheck(this, DataManager);
 
-	        this.pattern = new _pattern2.default();
-	        this.keyToTypeMap = {};
-	        this.cacheSize = cacheSize;
-	        this.cacheData = {
-	            cache: {},
-	            modified: 0,
-	            ts: 0,
-	            size: 0
-	        };
+	    this.pattern = new _pattern2.default();
+	    this.keyToTypeMap = {};
+	    this.cacheSize = cacheSize;
+	    this.cacheData = {
+	      cache: {},
+	      modified: 0,
+	      ts: 0,
+	      size: 0
+	    };
+	  }
+
+	  _createClass(DataManager, [{
+	    key: 'destroy',
+	    value: function destroy() {
+	      this.off();
+	      this.clear();
 	    }
 
-	    _createClass(DataManager, [{
-	        key: 'destroy',
-	        value: function destroy() {
-	            this.off();
-	            this.clear();
-	        }
+	    // Fetch data in an asynchronous manner
+	    // This will trigger an event using the key as the type
 
-	        // Fetch data in an asynchronous manner
-	        // This will trigger an event using the key as the type
+	  }, {
+	    key: 'fetch',
+	    value: function fetch(key, options) {
+	      var _this = this;
 
-	    }, {
-	        key: 'fetch',
-	        value: function fetch(key, options) {
-	            var _this = this;
+	      var notificationTopic = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
 
-	            var notificationTopic = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
+	      var url = options ? this.pattern.getValue(key, options) : key,
+	          dataCached = this.cacheData.cache[url];
 
-	            var url = options ? this.pattern.getValue(key, options) : key,
-	                dataCached = this.cacheData.cache[url];
+	      if (dataCached) {
+	        if (!dataCached.pending) {
+	          this.cacheData.ts = dataCached.ts = ts();
 
-	            if (dataCached) {
-	                if (!dataCached.pending) {
-	                    this.cacheData.ts = dataCached.ts = ts();
+	          // Trigger the event after the return
+	          setTimeout(function () {
+	            var array = dataCached.keysToNotify || [key],
+	                count = array.length;
 
-	                    // Trigger the event after the return
-	                    setTimeout(function () {
-	                        var array = dataCached.keysToNotify || [key],
-	                            count = array.length;
+	            delete dataCached.keysToNotify;
 
-	                        delete dataCached.keysToNotify;
-
-	                        while (count--) {
-	                            _this.emit(array[count], dataCached);
-	                        }
-
-	                        if (notificationTopic) {
-	                            _this.emit(notificationTopic, dataCached);
-	                        }
-	                    }, 0);
-	                } else {
-	                    dataCached.keysToNotify.push(key);
-	                    if (notificationTopic) {
-	                        dataCached.keysToNotify.push(notificationTopic);
-	                    }
-	                }
-	            } else {
-	                (function () {
-	                    // Run Garbage collector to free memory if need be
-	                    _this.gc();
-
-	                    // Prevent double fetch
-	                    _this.cacheData.cache[url] = { pending: true, keysToNotify: [key] };
-
-	                    if (notificationTopic) {
-	                        _this.cacheData.cache[url].keysToNotify.push(notificationTopic);
-	                    }
-
-	                    // Need to fetch the data on the web
-	                    var self = _this,
-	                        typeFnMime = _this.keyToTypeMap[key],
-	                        type = typeFnMime[0],
-	                        fn = typeFnMime[1],
-	                        mimeType = typeFnMime[2],
-	                        callback = function callback(error, data) {
-	                        if (error) {
-	                            delete self.cacheData.cache[url];
-	                            self.emit(key, { error: error, data: { key: key, options: options, url: url, typeFnMime: typeFnMime } });
-	                            return null;
-	                        }
-
-	                        dataCached = {
-	                            data: data,
-	                            type: type,
-	                            requestedURL: url,
-	                            pending: false
-	                        };
-
-	                        // Handle internal url for image blob
-	                        if (mimeType && mimeType.indexOf('image') !== -1) {
-	                            dataCached.url = window.URL.createObjectURL(data);
-	                        }
-
-	                        // Update memory usage
-	                        self.cacheData.size += updateDataSize(dataCached);
-
-	                        // Update ts
-	                        self.cacheData.modified = self.cacheData.ts = dataCached.ts = ts();
-
-	                        // Trigger the event
-	                        var array = self.cacheData.cache[url].keysToNotify;
-	                        var count = array.length;
-
-	                        // Store it in the cache
-	                        self.cacheData.cache[url] = dataCached;
-
-	                        while (count--) {
-	                            self.emit(array[count], dataCached);
-	                        }
-	                    };
-
-	                    fn(url, mimeType ? mimeType : callback, callback);
-	                })();
-	            }
-
-	            return url;
-	        }
-
-	        // Fetch data from URL
-
-	    }, {
-	        key: 'fetchURL',
-	        value: function fetchURL(url, type, mimeType) {
-	            var notificationTopic = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
-
-	            this.keyToTypeMap[url] = [type, typeFnMap[type], mimeType];
-	            return this.fetch(url, null, notificationTopic);
-	        }
-
-	        // Get data in cache
-
-	    }, {
-	        key: 'get',
-	        value: function get(url, freeCache) {
-	            var dataObj = this.cacheData.cache[url];
-	            if (freeCache) {
-	                this.free(url);
-	            }
-	            return dataObj;
-	        }
-
-	        // Free a fetched data
-
-	    }, {
-	        key: 'free',
-	        value: function free(url) {
-	            var dataCached = this.cacheData.cache[url];
-	            if (dataCached && dataCached.url) {
-	                window.URL.revokeObjectURL(dataCached.url);
-	                delete dataCached.url;
-	            }
-
-	            delete this.cacheData.cache[url];
-	            this.off(url);
-	        }
-
-	        // Register a key/pattern for future use
-	        // Type can only be ['json', 'text', 'blob', 'array']
-	        // mimeType is only required for blob
-
-	    }, {
-	        key: 'registerURL',
-	        value: function registerURL(key, filePattern, type, mimeType) {
-	            this.pattern.registerPattern(key, filePattern);
-	            this.keyToTypeMap[key] = [type, typeFnMap[type], mimeType];
-	        }
-
-	        // Free previously registered URL
-
-	    }, {
-	        key: 'unregisterURL',
-	        value: function unregisterURL(key) {
-	            this.pattern.unregisterPattern(key);
-	            delete this.keyToTypeMap[key];
-	            this.off(key);
-	        }
-
-	        // Empty cache
-
-	    }, {
-	        key: 'clear',
-	        value: function clear() {
-	            var urlToDelete = [];
-	            for (var url in this.cacheData.cache) {
-	                urlToDelete.push(url);
-	            }
-
-	            var count = urlToDelete.length;
 	            while (count--) {
-	                this.free(urlToDelete[count]);
+	              _this.emit(array[count], dataCached);
 	            }
-	            this.cacheData.size = 0;
-	        }
-	    }, {
-	        key: 'gc',
-	        value: function gc() {
-	            if (this.cacheData.size > this.cacheSize) {
-	                console.log('Free cache memory', this.cacheData.size);
-	                this.clear();
-	            }
-	        }
-	    }, {
-	        key: 'setCacheSize',
-	        value: function setCacheSize(sizeBeforeGC) {
-	            this.cacheSize = sizeBeforeGC;
-	        }
-	    }, {
-	        key: 'getCacheSize',
-	        value: function getCacheSize() {
-	            return this.cacheSize;
-	        }
-	    }, {
-	        key: 'getMemoryUsage',
-	        value: function getMemoryUsage() {
-	            return this.cacheData.size;
-	        }
-	    }]);
 
-	    return DataManager;
+	            if (notificationTopic) {
+	              _this.emit(notificationTopic, dataCached);
+	            }
+	          }, 0);
+	        } else {
+	          dataCached.keysToNotify.push(key);
+	          if (notificationTopic) {
+	            dataCached.keysToNotify.push(notificationTopic);
+	          }
+	        }
+	      } else {
+	        (function () {
+	          // Run Garbage collector to free memory if need be
+	          _this.gc();
+
+	          // Prevent double fetch
+	          _this.cacheData.cache[url] = {
+	            pending: true,
+	            keysToNotify: [key]
+	          };
+
+	          if (notificationTopic) {
+	            _this.cacheData.cache[url].keysToNotify.push(notificationTopic);
+	          }
+
+	          // Need to fetch the data on the web
+	          var self = _this,
+	              typeFnMime = _this.keyToTypeMap[key],
+	              type = typeFnMime[0],
+	              fn = typeFnMime[1],
+	              mimeType = typeFnMime[2],
+	              callback = function callback(error, data) {
+	            if (error) {
+	              delete self.cacheData.cache[url];
+	              self.emit(key, {
+	                error: error,
+	                data: {
+	                  key: key, options: options, url: url, typeFnMime: typeFnMime
+	                }
+	              });
+	              return;
+	            }
+
+	            dataCached = {
+	              data: data,
+	              type: type,
+	              requestedURL: url,
+	              pending: false
+	            };
+
+	            // Handle internal url for image blob
+	            if (mimeType && mimeType.indexOf('image') !== -1) {
+	              dataCached.url = window.URL.createObjectURL(data);
+	            }
+
+	            // Update memory usage
+	            self.cacheData.size += updateDataSize(dataCached);
+
+	            // Update ts
+	            self.cacheData.modified = self.cacheData.ts = dataCached.ts = ts();
+
+	            // Trigger the event
+	            var array = self.cacheData.cache[url].keysToNotify;
+	            var count = array.length;
+
+	            // Store it in the cache
+	            self.cacheData.cache[url] = dataCached;
+
+	            while (count--) {
+	              self.emit(array[count], dataCached);
+	            }
+	          };
+
+	          if (mimeType) {
+	            fn(url, mimeType, callback);
+	          } else {
+	            fn(url, callback);
+	          }
+	        })();
+	      }
+
+	      return url;
+	    }
+
+	    // Fetch data from URL
+
+	  }, {
+	    key: 'fetchURL',
+	    value: function fetchURL(url, type, mimeType) {
+	      var notificationTopic = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
+
+	      this.keyToTypeMap[url] = [type, typeFnMap[type], mimeType];
+	      return this.fetch(url, null, notificationTopic);
+	    }
+
+	    // Get data in cache
+
+	  }, {
+	    key: 'get',
+	    value: function get(url, freeCache) {
+	      var dataObj = this.cacheData.cache[url];
+	      if (freeCache) {
+	        this.free(url);
+	      }
+	      return dataObj;
+	    }
+
+	    // Free a fetched data
+
+	  }, {
+	    key: 'free',
+	    value: function free(url) {
+	      var dataCached = this.cacheData.cache[url];
+	      if (dataCached && dataCached.url) {
+	        window.URL.revokeObjectURL(dataCached.url);
+	        delete dataCached.url;
+	      }
+
+	      delete this.cacheData.cache[url];
+	      this.off(url);
+	    }
+
+	    // Register a key/pattern for future use
+	    // Type can only be ['json', 'text', 'blob', 'array']
+	    // mimeType is only required for blob
+
+	  }, {
+	    key: 'registerURL',
+	    value: function registerURL(key, filePattern, type, mimeType) {
+	      this.pattern.registerPattern(key, filePattern);
+	      this.keyToTypeMap[key] = [type, typeFnMap[type], mimeType];
+	    }
+
+	    // Free previously registered URL
+
+	  }, {
+	    key: 'unregisterURL',
+	    value: function unregisterURL(key) {
+	      this.pattern.unregisterPattern(key);
+	      delete this.keyToTypeMap[key];
+	      this.off(key);
+	    }
+
+	    // Empty cache
+
+	  }, {
+	    key: 'clear',
+	    value: function clear() {
+	      var urlToDelete = [];
+	      for (var url in this.cacheData.cache) {
+	        urlToDelete.push(url);
+	      }
+
+	      var count = urlToDelete.length;
+	      while (count--) {
+	        this.free(urlToDelete[count]);
+	      }
+	      this.cacheData.size = 0;
+	    }
+	  }, {
+	    key: 'gc',
+	    value: function gc() {
+	      if (this.cacheData.size > this.cacheSize) {
+	        console.log('Free cache memory', this.cacheData.size);
+	        this.clear();
+	      }
+	    }
+	  }, {
+	    key: 'setCacheSize',
+	    value: function setCacheSize(sizeBeforeGC) {
+	      this.cacheSize = sizeBeforeGC;
+	    }
+	  }, {
+	    key: 'getCacheSize',
+	    value: function getCacheSize() {
+	      return this.cacheSize;
+	    }
+	  }, {
+	    key: 'getMemoryUsage',
+	    value: function getMemoryUsage() {
+	      return this.cacheData.size;
+	    }
+	  }]);
+
+	  return DataManager;
 	}();
 
 	exports.default = DataManager;
@@ -42862,105 +43154,112 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	// Generic request handler
 	function makeRequest(url, handler) {
-	    var xhr = new XMLHttpRequest();
+	  var xhr = new XMLHttpRequest();
 
-	    xhr.open('GET', url, true);
-	    xhr.responseType = handler.type;
+	  xhr.open('GET', url, true);
+	  xhr.responseType = handler.type;
 
-	    xhr.onload = function (e) {
-	        if (this.status === 200) {
-	            return handler.fn(null, xhr);
-	        }
-	        handler.fn(e, xhr);
-	    };
-	    xhr.onerror = function (e) {
-	        handler.fn(e, xhr);
-	    };
-	    xhr.send();
+	  xhr.onload = function onLoad(e) {
+	    if (this.status === 200) {
+	      handler.fn(null, xhr);
+	      return;
+	    }
+	    handler.fn(e, xhr);
+	  };
+	  xhr.onerror = function onError(e) {
+	    handler.fn(e, xhr);
+	  };
+	  xhr.send();
 	}
 
 	// Array buffer handler
 	function arraybufferHandler(callback) {
-	    return {
-	        type: 'arraybuffer',
-	        fn: function fn(error, xhrObject) {
-	            if (error) {
-	                return callback(error);
-	            }
-	            callback(null, xhrObject.response);
-	        }
-	    };
+	  return {
+	    type: 'arraybuffer',
+	    fn: function fn(error, xhrObject) {
+	      if (error) {
+	        callback(error);
+	        return;
+	      }
+	      callback(null, xhrObject.response);
+	    }
+	  };
 	}
 
 	// Text handler
 	function textHandler(callback) {
-	    return {
-	        type: 'text',
-	        fn: function fn(error, xhrObject) {
-	            if (error) {
-	                return callback(error);
-	            }
-	            callback(null, xhrObject.response);
-	        }
-	    };
+	  return {
+	    type: 'text',
+	    fn: function fn(error, xhrObject) {
+	      if (error) {
+	        callback(error);
+	        return;
+	      }
+	      callback(null, xhrObject.response);
+	    }
+	  };
 	}
 
 	// JSON handler
 	function jsonHandler(callback) {
-	    return {
-	        type: 'text',
-	        fn: function fn(error, xhrObject) {
-	            if (error) {
-	                return callback(error);
-	            }
-	            callback(null, JSON.parse(xhrObject.response));
-	        }
-	    };
+	  return {
+	    type: 'text',
+	    fn: function fn(error, xhrObject) {
+	      if (error) {
+	        callback(error);
+	        return;
+	      }
+	      callback(null, JSON.parse(xhrObject.response));
+	    }
+	  };
 	}
 
 	// Blob handler
 	function blobHandler(mimeType, callback) {
-	    return {
-	        type: 'blob',
-	        fn: function fn(error, xhrObject) {
-	            if (error) {
-	                return callback(error);
-	            }
+	  return {
+	    type: 'blob',
+	    fn: function fn(error, xhrObject) {
+	      if (error) {
+	        callback(error);
+	        return;
+	      }
 
-	            var blob = new Blob([xhrObject.response], { type: mimeType });
-	            callback(null, blob);
-	        }
-	    };
+	      var blob = new Blob([xhrObject.response], {
+	        type: mimeType
+	      });
+	      callback(null, blob);
+	    }
+	  };
 	}
 
 	// Fetch methods
 
 	function fetchJSON(url, callback) {
-	    makeRequest(url, jsonHandler(callback));
+	  makeRequest(url, jsonHandler(callback));
 	}
 
 	function fetchTxt(url, callback) {
-	    makeRequest(url, textHandler(callback));
+	  makeRequest(url, textHandler(callback));
 	}
 
 	function fetchBlob(url, mimeType, callback) {
-	    makeRequest(url, blobHandler(mimeType, callback));
+	  makeRequest(url, blobHandler(mimeType, callback));
 	}
 
 	function fetchArray(url, callback) {
-	    makeRequest(url, arraybufferHandler(callback));
+	  makeRequest(url, arraybufferHandler(callback));
 	}
 
 	// Export fetch methods
 	exports.default = {
-	    fetchJSON: fetchJSON,
-	    fetchTxt: fetchTxt,
-	    fetchBlob: fetchBlob,
-	    fetchArray: fetchArray
+	  fetchJSON: fetchJSON,
+	  fetchTxt: fetchTxt,
+	  fetchBlob: fetchBlob,
+	  fetchArray: fetchArray
 	};
 
 /***/ },
@@ -42970,9 +43269,13 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
-	exports.default = PatternMap;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 	// The goal of that module is to be able to register a set of String pattern
 	// and have a simple way to evaluate that pattern from an object.
 	// Here is an example on how the following module can be used.
@@ -43006,31 +43309,50 @@
 	//     }
 	//     m.unregisterPattern('imageURL');
 
-	function PatternMap() {
+	var PatternMap = function () {
+	  function PatternMap() {
+	    _classCallCheck(this, PatternMap);
+
 	    this.keyPatternMap = {};
-	}
+	  }
 
-	// Register a pattern to a given key
-	PatternMap.prototype.registerPattern = function (key, pattern) {
-	    this.keyPatternMap[key] = pattern;
-	};
+	  // Register a pattern to a given key
 
-	// Unregister a key
-	PatternMap.prototype.unregisterPattern = function (key) {
-	    delete this.keyPatternMap[key];
-	};
 
-	// Evaluate the pattern base on its registered key and set of key to be replaced
-	PatternMap.prototype.getValue = function (key, options) {
-	    var result = this.keyPatternMap[key],
-	        keyPattern = ['{', '}'];
-
-	    for (var opt in options) {
-	        result = result.replace(keyPattern.join(opt), options[opt]);
+	  _createClass(PatternMap, [{
+	    key: 'registerPattern',
+	    value: function registerPattern(key, pattern) {
+	      this.keyPatternMap[key] = pattern;
 	    }
 
-	    return result;
-	};
+	    // Unregister a key
+
+	  }, {
+	    key: 'unregisterPattern',
+	    value: function unregisterPattern(key) {
+	      delete this.keyPatternMap[key];
+	    }
+
+	    // Evaluate the pattern base on its registered key and set of key to be replaced
+
+	  }, {
+	    key: 'getValue',
+	    value: function getValue(key, options) {
+	      var result = this.keyPatternMap[key],
+	          keyPattern = ['{', '}'];
+
+	      for (var opt in options) {
+	        result = result.replace(keyPattern.join(opt), options[opt]);
+	      }
+
+	      return result;
+	    }
+	  }]);
+
+	  return PatternMap;
+	}();
+
+	exports.default = PatternMap;
 
 /***/ },
 /* 254 */

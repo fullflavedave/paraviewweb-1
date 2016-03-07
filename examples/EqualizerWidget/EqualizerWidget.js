@@ -149,8 +149,8 @@
 	    this.draw();
 	    this.mouseHandler = new _MouseHandler2.default(_reactDom2.default.findDOMNode(this.refs.canvas));
 	    this.mouseHandler.attach({
-	      'click': this.clicked,
-	      'drag': this.clicked
+	      click: this.clicked,
+	      drag: this.clicked
 	    });
 	  },
 	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
@@ -665,7 +665,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -687,261 +687,274 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	// Module dependencies and constants
-	var Modifier = { NONE: 0, ALT: 1, META: 2, SHIFT: 4, CTRL: 8 },
+	var Modifier = {
+	  NONE: 0,
+	  ALT: 1,
+	  META: 2,
+	  SHIFT: 4,
+	  CTRL: 8
+	},
 	    eventTypeMapping = {
-	    'contextmenu': 'contextmenu',
-	    'mousewheel': 'zoom',
-	    'DOMMouseScroll': 'zoom'
+	  contextmenu: 'contextmenu',
+	  mousewheel: 'zoom',
+	  DOMMouseScroll: 'zoom'
 	},
 	    TIMEOUT_BETWEEN_ZOOM = 300;
 
 	var handlerCount = 0;
 
 	function getModifier(e) {
-	    var modifier = 0;
-	    if (e.srcEvent) {
-	        modifier += e.srcEvent.altKey ? Modifier.ALT : 0;
-	        modifier += e.srcEvent.ctrlKey ? Modifier.CTRL : 0;
-	        modifier += e.srcEvent.metaKey ? Modifier.META : 0;
-	        modifier += e.srcEvent.shiftKey ? Modifier.SHIFT : 0;
-	    }
+	  var modifier = 0;
+	  if (e.srcEvent) {
+	    modifier += e.srcEvent.altKey ? Modifier.ALT : 0;
+	    modifier += e.srcEvent.ctrlKey ? Modifier.CTRL : 0;
+	    modifier += e.srcEvent.metaKey ? Modifier.META : 0;
+	    modifier += e.srcEvent.shiftKey ? Modifier.SHIFT : 0;
+	  }
 
-	    return modifier;
+	  return modifier;
 	}
 
 	function getRelative(el, event) {
-	    return {
-	        x: event.center.x - (el.getClientRects()[0].x || el.getClientRects()[0].left),
-	        y: event.center.y - (el.getClientRects()[0].y || el.getClientRects()[0].top)
-	    };
+	  return {
+	    x: event.center.x - (el.getClientRects()[0].x || el.getClientRects()[0].left),
+	    y: event.center.y - (el.getClientRects()[0].y || el.getClientRects()[0].top)
+	  };
 	}
 
 	function broadcast(ctx, topic, event) {
-	    event.preventDefault();
+	  event.preventDefault();
 
-	    event.button = 0;
-	    event.topic = topic;
-	    event.modifier = ctx.modifier ? ctx.modifier : getModifier(event);
-	    event.relative = getRelative(ctx.el, event);
+	  event.button = 0;
+	  event.topic = topic;
+	  event.modifier = ctx.modifier ? ctx.modifier : getModifier(event);
+	  event.relative = getRelative(ctx.el, event);
 
-	    ctx.emit(topic, event);
+	  ctx.emit(topic, event);
 	}
 
 	var MouseHandler = function () {
-	    function MouseHandler(domElement, options) {
-	        var _this = this;
+	  function MouseHandler(domElement, options) {
+	    var _this = this;
 
-	        _classCallCheck(this, MouseHandler);
+	    _classCallCheck(this, MouseHandler);
 
-	        var defaultOptions = {
-	            pan: {
-	                threshold: 0
-	            },
-	            pinch: {
-	                threshold: 0
-	            }
-	        };
-	        options = (0, _merge2.default)(defaultOptions, options);
+	    var defaultOptions = {
+	      pan: {
+	        threshold: 0
+	      },
+	      pinch: {
+	        threshold: 0
+	      }
+	    };
+	    options = (0, _merge2.default)(defaultOptions, options);
 
-	        this.Modifier = Modifier;
+	    this.Modifier = Modifier;
 
-	        handlerCount++;
-	        this.id = 'mouse_handler_' + handlerCount;
-	        this.el = domElement;
-	        this.modifier = 0;
-	        this.toggleModifiers = [0];
-	        this.toggleModifierIdx = 0;
-	        this.toggleModifierEnable = false;
-	        this.hammer = new _hammerjs2.default(domElement);
-	        this.scrollInternal = {
-	            ts: +new Date(),
-	            deltaX: 0,
-	            deltaY: 0
-	        };
-	        this.finalZoomEvent = null;
-	        this.finalZoomTimerId = 0;
-	        this.triggerFinalZoomEvent = function () {
-	            if (_this.finalZoomEvent) {
-	                _this.finalZoomEvent.isFirst = false;
-	                _this.finalZoomEvent.isFinal = true;
-	            }
-	            _this.emit(_this.finalZoomEvent.topic, _this.finalZoomEvent);
-	        };
+	    this.id = 'mouse_handler_' + ++handlerCount;
+	    this.el = domElement;
+	    this.modifier = 0;
+	    this.toggleModifiers = [0];
+	    this.toggleModifierIdx = 0;
+	    this.toggleModifierEnable = false;
+	    this.hammer = new _hammerjs2.default(domElement);
+	    this.scrollInternal = {
+	      ts: +new Date(),
+	      deltaX: 0,
+	      deltaY: 0
+	    };
+	    this.finalZoomEvent = null;
+	    this.finalZoomTimerId = 0;
+	    this.triggerFinalZoomEvent = function () {
+	      if (_this.finalZoomEvent) {
+	        _this.finalZoomEvent.isFirst = false;
+	        _this.finalZoomEvent.isFinal = true;
+	      }
+	      _this.emit(_this.finalZoomEvent.topic, _this.finalZoomEvent);
+	    };
 
-	        this.domEventHandler = function (e) {
-	            e.preventDefault();
-	            var event = {
-	                srcEvent: e,
-	                button: e.type === 'contextmenu' ? 2 : 0,
-	                topic: eventTypeMapping[e.type],
+	    this.domEventHandler = function (e) {
+	      e.preventDefault();
+	      var event = {
+	        srcEvent: e,
+	        button: e.type === 'contextmenu' ? 2 : 0,
+	        topic: eventTypeMapping[e.type],
 
-	                center: {
-	                    x: e.clientX,
-	                    y: e.clientY
-	                },
-	                relative: {
-	                    x: e.clientX - (_this.el.getClientRects()[0].x || _this.el.getClientRects()[0].left),
-	                    y: e.clientY - (_this.el.getClientRects()[0].y || _this.el.getClientRects()[0].top)
-	                },
+	        center: {
+	          x: e.clientX,
+	          y: e.clientY
+	        },
+	        relative: {
+	          x: e.clientX - (_this.el.getClientRects()[0].x || _this.el.getClientRects()[0].left),
+	          y: e.clientY - (_this.el.getClientRects()[0].y || _this.el.getClientRects()[0].top)
+	        },
 
-	                scale: 1,
+	        scale: 1,
 
-	                deltaX: 0,
-	                deltaY: 0,
-	                delta: 0,
-	                deltaTime: 0,
+	        deltaX: 0,
+	        deltaY: 0,
+	        delta: 0,
+	        deltaTime: 0,
 
-	                velocityX: 0,
-	                velocityY: 0,
-	                velocity: 0,
+	        velocityX: 0,
+	        velocityY: 0,
+	        velocity: 0,
 
-	                isFirst: false,
-	                isFinal: false
-	            };
-	            event.modifier = _this.modifier ? _this.modifier : getModifier(event);
+	        isFirst: false,
+	        isFinal: false
+	      };
+	      event.modifier = _this.modifier ? _this.modifier : getModifier(event);
 
-	            // Handle scroll/zoom if any
-	            if (event.topic === 'zoom') {
-	                // Register final zoom
-	                clearTimeout(_this.finalZoomTimerId);
-	                _this.finalZoomTimerId = setTimeout(_this.triggerFinalZoomEvent, TIMEOUT_BETWEEN_ZOOM);
+	      // Handle scroll/zoom if any
+	      if (event.topic === 'zoom') {
+	        // Register final zoom
+	        clearTimeout(_this.finalZoomTimerId);
+	        _this.finalZoomTimerId = setTimeout(_this.triggerFinalZoomEvent, TIMEOUT_BETWEEN_ZOOM);
 
-	                var currentTime = +new Date();
-	                if (currentTime - _this.scrollInternal.ts > TIMEOUT_BETWEEN_ZOOM) {
-	                    _this.scrollInternal.deltaX = 0;
-	                    _this.scrollInternal.deltaY = 0;
-	                    event.isFirst = true;
-	                    event.isFinal = false;
-	                } else {
-	                    event.isFinal = false;
-	                }
+	        var currentTime = +new Date();
+	        if (currentTime - _this.scrollInternal.ts > TIMEOUT_BETWEEN_ZOOM) {
+	          _this.scrollInternal.deltaX = 0;
+	          _this.scrollInternal.deltaY = 0;
+	          event.isFirst = true;
+	          event.isFinal = false;
+	        } else {
+	          event.isFinal = false;
+	        }
 
-	                if (e.wheelDeltaX === undefined) {
-	                    event.zoom = _this.lastScrollZoomFactor;
-	                    _this.scrollInternal.deltaY -= e.detail * 2.0;
-	                } else {
-	                    event.zoom = _this.lastScrollZoomFactor;
-	                    _this.scrollInternal.deltaX += e.wheelDeltaX;
-	                    _this.scrollInternal.deltaY += e.wheelDeltaY;
-	                }
+	        if (e.wheelDeltaX === undefined) {
+	          event.zoom = _this.lastScrollZoomFactor;
+	          _this.scrollInternal.deltaY -= e.detail * 2.0;
+	        } else {
+	          event.zoom = _this.lastScrollZoomFactor;
+	          _this.scrollInternal.deltaX += e.wheelDeltaX;
+	          _this.scrollInternal.deltaY += e.wheelDeltaY;
+	        }
 
-	                event.deltaX = _this.scrollInternal.deltaX;
-	                event.deltaY = _this.scrollInternal.deltaY;
-	                event.scale = 1.0 + event.deltaY / _this.el.getClientRects()[0].height;
-	                event.scale = event.scale < 0.1 ? 0.1 : event.scale;
-	                _this.scrollInternal.ts = currentTime;
+	        event.deltaX = _this.scrollInternal.deltaX;
+	        event.deltaY = _this.scrollInternal.deltaY;
+	        event.scale = 1.0 + event.deltaY / _this.el.getClientRects()[0].height;
+	        event.scale = event.scale < 0.1 ? 0.1 : event.scale;
+	        _this.scrollInternal.ts = currentTime;
 
-	                _this.finalZoomEvent = event;
-	            }
+	        _this.finalZoomEvent = event;
+	      }
 
-	            _this.emit(event.topic, event);
-	            return false;
-	        };
+	      _this.emit(event.topic, event);
+	      return false;
+	    };
 
-	        // set hammer options
-	        this.hammer.get('pan').set(options.pan);
-	        this.hammer.get('pinch').set(options.pinch);
+	    // set hammer options
+	    this.hammer.get('pan').set(options.pan);
+	    this.hammer.get('pinch').set(options.pinch);
 
-	        // Listen to hammer events
-	        this.hammer.on('tap', function (e) {
-	            broadcast(_this, 'click', e);
+	    // Listen to hammer events
+	    this.hammer.on('tap', function (e) {
+	      broadcast(_this, 'click', e);
+	    });
+
+	    this.hammer.on('doubletap', function (e) {
+	      broadcast(_this, 'dblclick', e);
+	    });
+
+	    this.hammer.on('pan', function (e) {
+	      broadcast(_this, 'drag', e);
+	    });
+
+	    this.hammer.on('panstart', function (e) {
+	      e.isFirst = true;
+	      broadcast(_this, 'drag', e);
+	    });
+
+	    this.hammer.on('panend', function (e) {
+	      e.isFinal = true;
+	      broadcast(_this, 'drag', e);
+	    });
+
+	    this.hammer.on('pinch', function (e) {
+	      broadcast(_this, 'zoom', e);
+	    });
+
+	    this.hammer.on('pinchstart', function (e) {
+	      console.log('zoom start');
+	      e.isFirst = true;
+	      broadcast(_this, 'zoom', e);
+	    });
+
+	    this.hammer.on('pinchend', function (e) {
+	      e.isFinal = true;
+	      console.log('zoom end');
+	      broadcast(_this, 'zoom', e);
+	    });
+
+	    this.hammer.get('pinch').set({
+	      enable: true
+	    });
+
+	    this.hammer.on('press', function (e) {
+	      if (_this.toggleModifierEnable) {
+	        _this.toggleModifierIdx = (_this.toggleModifierIdx + 1) % _this.toggleModifiers.length;
+	        _this.modifier = _this.toggleModifiers[_this.toggleModifierIdx];
+
+	        e.relative = getRelative(_this.el, e);
+
+	        _this.emit('modifier.change', {
+	          value: _this.modifier,
+	          list: Modifier,
+	          event: e
 	        });
+	      }
+	    });
 
-	        this.hammer.on('doubletap', function (e) {
-	            broadcast(_this, 'dblclick', e);
-	        });
+	    // Manage events that are not captured by hammer
+	    this.el.addEventListener('contextmenu', this.domEventHandler);
+	    this.el.addEventListener('mousewheel', this.domEventHandler);
+	    this.el.addEventListener('DOMMouseScroll', this.domEventHandler);
+	  }
 
-	        this.hammer.on('pan', function (e) {
-	            broadcast(_this, 'drag', e);
-	        });
-
-	        this.hammer.on('panstart', function (e) {
-	            e.isFirst = true;
-	            broadcast(_this, 'drag', e);
-	        });
-
-	        this.hammer.on('panend', function (e) {
-	            e.isFinal = true;
-	            broadcast(_this, 'drag', e);
-	        });
-
-	        this.hammer.on('pinch', function (e) {
-	            broadcast(_this, 'zoom', e);
-	        });
-
-	        this.hammer.on('pinchstart', function (e) {
-	            console.log('zoom start');
-	            e.isFirst = true;
-	            broadcast(_this, 'zoom', e);
-	        });
-
-	        this.hammer.on('pinchend', function (e) {
-	            e.isFinal = true;
-	            console.log('zoom end');
-	            broadcast(_this, 'zoom', e);
-	        });
-
-	        this.hammer.get('pinch').set({ enable: true });
-
-	        this.hammer.on('press', function (e) {
-	            if (_this.toggleModifierEnable) {
-	                _this.toggleModifierIdx = (_this.toggleModifierIdx + 1) % _this.toggleModifiers.length;
-	                _this.modifier = _this.toggleModifiers[_this.toggleModifierIdx];
-
-	                e.relative = getRelative(_this.el, e);
-
-	                _this.emit('modifier.change', { value: _this.modifier, list: Modifier, event: e });
-	            }
-	        });
-
-	        // Manage events that are not captured by hammer
-	        this.el.addEventListener('contextmenu', this.domEventHandler);
-	        this.el.addEventListener('mousewheel', this.domEventHandler);
-	        this.el.addEventListener('DOMMouseScroll', this.domEventHandler);
+	  _createClass(MouseHandler, [{
+	    key: 'enablePinch',
+	    value: function enablePinch(enable) {
+	      this.hammer.get('pinch').set({
+	        enable: enable
+	      });
 	    }
+	  }, {
+	    key: 'setModifier',
+	    value: function setModifier(modifier) {
+	      this.modifier = modifier;
+	    }
+	  }, {
+	    key: 'toggleModifierOnPress',
+	    value: function toggleModifierOnPress(enable, modifiers) {
+	      this.toggleModifiers = modifiers;
+	      this.toggleModifierEnable = enable;
+	    }
+	  }, {
+	    key: 'attach',
+	    value: function attach(listeners) {
+	      var subscriptions = {};
+	      for (var key in listeners) {
+	        subscriptions[key] = this.on(key, listeners[key]);
+	      }
+	      return subscriptions;
+	    }
+	  }, {
+	    key: 'destroy',
+	    value: function destroy() {
+	      // Remove all listeners is any
+	      this.off();
 
-	    _createClass(MouseHandler, [{
-	        key: 'enablePinch',
-	        value: function enablePinch(enable) {
-	            this.hammer.get('pinch').set({ enable: enable });
-	        }
-	    }, {
-	        key: 'setModifier',
-	        value: function setModifier(modifier) {
-	            this.modifier = modifier;
-	        }
-	    }, {
-	        key: 'toggleModifierOnPress',
-	        value: function toggleModifierOnPress(enable, modifiers) {
-	            this.toggleModifiers = modifiers;
-	            this.toggleModifierEnable = enable;
-	        }
-	    }, {
-	        key: 'attach',
-	        value: function attach(listeners) {
-	            var subscriptions = {};
-	            for (var key in listeners) {
-	                subscriptions[key] = this.on(key, listeners[key]);
-	            }
-	            return subscriptions;
-	        }
-	    }, {
-	        key: 'destroy',
-	        value: function destroy() {
-	            // Remove all listeners is any
-	            this.off();
+	      // Release hammer
+	      this.hammer.destroy();
 
-	            // Release hammer
-	            this.hammer.destroy();
+	      // Remove events that are not captured by hammer
+	      this.el.removeEventListener('contextmenu', this.domEventHandler);
+	      this.el.removeEventListener('mousewheel', this.domEventHandler);
+	      this.el.removeEventListener('DOMMouseScroll', this.domEventHandler);
+	    }
+	  }]);
 
-	            // Remove events that are not captured by hammer
-	            this.el.removeEventListener('contextmenu', this.domEventHandler);
-	            this.el.removeEventListener('mousewheel', this.domEventHandler);
-	            this.el.removeEventListener('DOMMouseScroll', this.domEventHandler);
-	        }
-	    }]);
-
-	    return MouseHandler;
+	  return MouseHandler;
 	}();
 
 	// Add Observer pattern using Monologue.js
@@ -34696,7 +34709,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	exports.getSize = getSize;
 	exports.onSizeChange = onSizeChange;
@@ -34713,80 +34726,82 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var observableInstance = new _Observable2.default(),
-	    TOPIC = 'window.size.change',
-	    domSizes = new WeakMap(),
-	    sizeProperties = ['scrollWidth', 'scrollHeight', 'clientWidth', 'clientHeight'],
-	    windowListener = (0, _Debounce.debounce)(invalidateSize, 250);
+	/* eslint-disable no-use-before-define */
 
-	var timestamp = 0,
-	    listenerAttached = false;
+	var observableInstance = new _Observable2.default();
+	var TOPIC = 'window.size.change';
+	var domSizes = new WeakMap();
+	var sizeProperties = ['scrollWidth', 'scrollHeight', 'clientWidth', 'clientHeight'];
+	var windowListener = (0, _Debounce.debounce)(invalidateSize, 250);
+
+	var timestamp = 0;
+	var listenerAttached = false;
 
 	// ------ internal functions ------
 
 	function updateSize(domElement, cacheObj) {
-	    if (cacheObj.timestamp < timestamp) {
-	        sizeProperties.forEach(function (prop) {
-	            cacheObj[prop] = domElement[prop];
-	        });
-	        cacheObj.clientRect = domElement.getClientRects()[0];
-	    }
+	  if (cacheObj.timestamp < timestamp) {
+	    sizeProperties.forEach(function (prop) {
+	      cacheObj[prop] = domElement[prop];
+	    });
+	    cacheObj.clientRect = domElement.getClientRects()[0];
+	  }
 	}
 
 	// ------ New API ------
 
 	function getSize(domElement) {
-	    var cachedSize = domSizes.get(domElement);
-	    if (!cachedSize) {
-	        cachedSize = { timestamp: -1 };
-	        domSizes.set(domElement, cachedSize);
-	    }
-	    updateSize(domElement, cachedSize);
+	  var cachedSize = domSizes.get(domElement);
+	  if (!cachedSize) {
+	    cachedSize = { timestamp: -1 };
+	    domSizes.set(domElement, cachedSize);
+	  }
+	  updateSize(domElement, cachedSize);
 
-	    return cachedSize;
+	  return cachedSize;
 	}
 
 	function onSizeChange(callback) {
-	    return observableInstance.on(TOPIC, callback);
+	  return observableInstance.on(TOPIC, callback);
 	}
 
 	function triggerChange() {
-	    observableInstance.emit(TOPIC);
+	  observableInstance.emit(TOPIC);
 	}
 
 	function isListening() {
-	    return listenerAttached;
+	  return listenerAttached;
 	}
 
 	function startListening() {
-	    if (!listenerAttached) {
-	        window.addEventListener("resize", windowListener);
-	        listenerAttached = true;
-	    }
+	  if (!listenerAttached) {
+	    window.addEventListener('resize', windowListener);
+	    listenerAttached = true;
+	  }
 	}
 
 	function stopListening() {
-	    if (listenerAttached) {
-	        window.removeEventListener("resize", windowListener);
-	        listenerAttached = false;
-	    }
+	  if (listenerAttached) {
+	    window.removeEventListener('resize', windowListener);
+	    listenerAttached = false;
+	  }
 	}
 
 	// ------ internal functions ------
 
 	function invalidateSize() {
-	    timestamp++;
-	    triggerChange();
+	  timestamp++;
+	  triggerChange();
 	}
 
 	// Export
 	exports.default = {
-	    getSize: getSize,
-	    isListening: isListening,
-	    onSizeChange: onSizeChange,
-	    startListening: startListening,
-	    stopListening: stopListening,
-	    triggerChange: triggerChange
+	  getSize: getSize,
+	  isListening: isListening,
+	  onSizeChange: onSizeChange,
+	  startListening: startListening,
+	  stopListening: stopListening,
+	  triggerChange: triggerChange
 	};
 
 /***/ },
@@ -34796,7 +34811,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -34810,18 +34825,18 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var Observable = function () {
-	    function Observable() {
-	        _classCallCheck(this, Observable);
+	  function Observable() {
+	    _classCallCheck(this, Observable);
+	  }
+
+	  _createClass(Observable, [{
+	    key: 'destroy',
+	    value: function destroy() {
+	      this.off();
 	    }
+	  }]);
 
-	    _createClass(Observable, [{
-	        key: 'destroy',
-	        value: function destroy() {
-	            this.off();
-	        }
-	    }]);
-
-	    return Observable;
+	  return Observable;
 	}();
 
 	// Add Observer pattern using Monologue.js
@@ -34837,7 +34852,7 @@
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	exports.debounce = debounce;
 	// Returns a function, that, as long as it continues to be invoked, will not
@@ -34846,27 +34861,32 @@
 	// leading edge, instead of the trailing.
 
 	function debounce(func, wait, immediate) {
-	    var timeout;
-	    return function () {
-	        var context = this,
-	            args = arguments;
-	        var later = function later() {
-	            timeout = null;
-	            if (!immediate) {
-	                func.apply(context, args);
-	            }
-	        };
-	        var callNow = immediate && !timeout;
-	        clearTimeout(timeout);
-	        timeout = setTimeout(later, wait);
-	        if (callNow) {
-	            func.apply(context, args);
-	        }
+	  var _this = this;
+
+	  var timeout;
+	  return function () {
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+
+	    var context = _this;
+	    var later = function later() {
+	      timeout = null;
+	      if (!immediate) {
+	        func.apply(context, args);
+	      }
 	    };
+	    var callNow = immediate && !timeout;
+	    clearTimeout(timeout);
+	    timeout = setTimeout(later, wait);
+	    if (callNow) {
+	      func.apply(context, args);
+	    }
+	  };
 	}
 
 	exports.default = {
-	    debounce: debounce
+	  debounce: debounce
 	};
 
 /***/ },

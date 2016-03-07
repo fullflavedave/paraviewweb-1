@@ -121,7 +121,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _react = __webpack_require__(2);
@@ -148,188 +148,205 @@
 
 	exports.default = _react2.default.createClass({
 
-	    displayName: 'AbstractViewerMenu',
+	  displayName: 'AbstractViewerMenu',
 
-	    propTypes: {
-	        children: _react2.default.PropTypes.array,
-	        config: _react2.default.PropTypes.object,
-	        geometryBuilder: _react2.default.PropTypes.object,
-	        imageBuilder: _react2.default.PropTypes.object,
-	        layout: _react2.default.PropTypes.string,
-	        magicLensController: _react2.default.PropTypes.object,
-	        mouseListener: _react2.default.PropTypes.object,
-	        queryDataModel: _react2.default.PropTypes.object,
-	        renderer: _react2.default.PropTypes.string,
-	        renderers: _react2.default.PropTypes.object
-	    },
+	  propTypes: {
+	    children: _react2.default.PropTypes.array,
+	    config: _react2.default.PropTypes.object,
+	    geometryBuilder: _react2.default.PropTypes.object,
+	    imageBuilder: _react2.default.PropTypes.object,
+	    layout: _react2.default.PropTypes.string,
+	    magicLensController: _react2.default.PropTypes.object,
+	    mouseListener: _react2.default.PropTypes.object,
+	    queryDataModel: _react2.default.PropTypes.object,
+	    renderer: _react2.default.PropTypes.string,
+	    renderers: _react2.default.PropTypes.object
+	  },
 
-	    getDefaultProps: function getDefaultProps() {
-	        return {
-	            config: {},
-	            renderer: 'ImageRenderer'
-	        };
-	    },
-	    getInitialState: function getInitialState() {
-	        return {
-	            collapsed: true,
-	            speedIdx: 0,
-	            speeds: [20, 50, 100, 200, 500],
-	            record: false
-	        };
-	    },
-
-
-	    // Auto mount listener unless notified otherwise
-	    componentWillMount: function componentWillMount() {
-	        this.attachListener(this.props.queryDataModel);
-	    },
-	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	        var previousDataModel = this.props.queryDataModel,
-	            nextDataModel = nextProps.queryDataModel;
-
-	        if (previousDataModel !== nextDataModel) {
-	            this.detachListener();
-	            this.attachListener(nextDataModel);
-	        }
-	    },
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      config: {},
+	      renderer: 'ImageRenderer'
+	    };
+	  },
+	  getInitialState: function getInitialState() {
+	    return {
+	      collapsed: true,
+	      speedIdx: 0,
+	      speeds: [20, 50, 100, 200, 500],
+	      record: false
+	    };
+	  },
 
 
-	    // Auto unmount listener
-	    componentWillUnmount: function componentWillUnmount() {
-	        this.detachListener();
-	    },
-	    attachListener: function attachListener(dataModel) {
-	        var _this = this;
+	  // Auto mount listener unless notified otherwise
+	  componentWillMount: function componentWillMount() {
+	    this.attachListener(this.props.queryDataModel);
+	  },
+	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    var previousDataModel = this.props.queryDataModel,
+	        nextDataModel = nextProps.queryDataModel;
 
-	        this.detachListener();
-	        this.queryDataModelChangeSubscription = dataModel.onStateChange(function (data, envelope) {
-	            _this.forceUpdate();
-	        });
-	    },
-	    detachListener: function detachListener() {
-	        if (this.queryDataModelChangeSubscription) {
-	            this.queryDataModelChangeSubscription.unsubscribe();
-	            this.queryDataModelChangeSubscription = null;
-	        }
-	    },
-	    toggleRecord: function toggleRecord() {
-	        var record = !this.state.record;
-	        this.setState({ record: record });
-	        this.getRenderer().recordImages(record);
-	    },
-	    togglePanel: function togglePanel() {
-	        this.setState({ collapsed: !this.state.collapsed });
-	        this.props.queryDataModel.fetchData();
-	    },
-	    toggleLens: function toggleLens() {
-	        var magicLensController = this.props.magicLensController;
-	        if (magicLensController) {
-	            magicLensController.toggleLens();
-	            this.forceUpdate();
-	        }
-	    },
-	    resetCamera: function resetCamera() {
-	        if (this.isMounted() && (this.props.renderer === 'ImageRenderer' || this.props.renderer === 'GeometryRenderer')) {
-	            this.refs.imageRenderer.resetCamera();
-	        }
-	    },
-	    play: function play() {
-	        this.props.queryDataModel.animate(true, this.state.speeds[this.state.speedIdx]);
-	    },
-	    stop: function stop() {
-	        this.props.queryDataModel.animate(false);
-	    },
-	    updateSpeed: function updateSpeed() {
-	        var newIdx = (this.state.speedIdx + 1) % this.state.speeds.length,
-	            queryDataModel = this.props.queryDataModel;
-
-	        this.setState({ speedIdx: newIdx });
-	        if (queryDataModel.isAnimating()) {
-	            queryDataModel.animate(true, this.state.speeds[newIdx]);
-	        }
-	    },
-	    getRenderer: function getRenderer() {
-	        return this.refs.imageRenderer;
-	    },
-
-
-	    /* eslint-disable complexity */
-	    render: function render() {
-	        var queryDataModel = this.props.queryDataModel,
-	            magicLensController = this.props.magicLensController,
-	            rootImageBuilder = magicLensController || this.props.imageBuilder,
-	            renderer = null,
-	            serverRecording = !!this.props.config.Recording,
-	            isImageRenderer = this.props.renderer === 'ImageRenderer',
-	            isMultiViewer = this.props.renderer === 'MultiViewRenderer',
-	            isGeometryViewer = this.props.renderer === 'GeometryRenderer';
-
-	        if (isImageRenderer) {
-	            renderer = _react2.default.createElement(_ImageRenderer2.default, {
-	                ref: 'imageRenderer',
-	                className: _AbstractViewerMenu2.default.renderer,
-	                imageBuilder: rootImageBuilder,
-	                listener: this.props.mouseListener || rootImageBuilder.getListeners()
-	            });
-	        }
-
-	        if (isMultiViewer) {
-	            renderer = _react2.default.createElement(_MultiLayoutRenderer2.default, {
-	                ref: 'imageRenderer',
-	                className: _AbstractViewerMenu2.default.renderer,
-	                renderers: this.props.renderers,
-	                layout: this.props.layout
-	            });
-	        }
-
-	        if (isGeometryViewer) {
-	            renderer = _react2.default.createElement(_GeometryRenderer2.default, {
-	                ref: 'imageRenderer',
-	                className: _AbstractViewerMenu2.default.renderer,
-	                geometryBuilder: this.props.geometryBuilder
-	            });
-	        }
-
-	        return _react2.default.createElement(
-	            'div',
-	            { className: _AbstractViewerMenu2.default.container },
-	            _react2.default.createElement(
-	                'div',
-	                {
-	                    className: this.state.collapsed ? _AbstractViewerMenu2.default.collapsedControl : _AbstractViewerMenu2.default.control },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: _AbstractViewerMenu2.default.controlBar },
-	                    _react2.default.createElement('i', { className: magicLensController ? magicLensController.isFront() ? _AbstractViewerMenu2.default.magicLensButtonIn : _AbstractViewerMenu2.default.magicLensButtonOut : _AbstractViewerMenu2.default.hidden,
-	                        onClick: this.toggleLens }),
-	                    _react2.default.createElement('i', { className: serverRecording && isImageRenderer && this.props.imageBuilder.handleRecord ? this.state.record ? _AbstractViewerMenu2.default.recordButtonOn : _AbstractViewerMenu2.default.recordButtonOff : _AbstractViewerMenu2.default.hidden,
-	                        onClick: this.toggleRecord }),
-	                    _react2.default.createElement('i', { className: isImageRenderer || isGeometryViewer ? _AbstractViewerMenu2.default.resetCameraButton : _AbstractViewerMenu2.default.hidden,
-	                        onClick: this.resetCamera }),
-	                    _react2.default.createElement('i', { className: queryDataModel.hasAnimationFlag() && !queryDataModel.isAnimating() ? _AbstractViewerMenu2.default.playButton : _AbstractViewerMenu2.default.hidden,
-	                        onClick: this.play }),
-	                    _react2.default.createElement('i', { className: queryDataModel.isAnimating() ? _AbstractViewerMenu2.default.stopButton : _AbstractViewerMenu2.default.hidden,
-	                        onClick: this.stop }),
-	                    _react2.default.createElement('i', { className: queryDataModel.hasAnimationFlag() ? _AbstractViewerMenu2.default.speedButton : _AbstractViewerMenu2.default.hidden,
-	                        onClick: this.updateSpeed }),
-	                    _react2.default.createElement(
-	                        'i',
-	                        { className: queryDataModel.hasAnimationFlag() ? _AbstractViewerMenu2.default.animationSpeed : _AbstractViewerMenu2.default.hidden,
-	                            onClick: this.updateSpeed },
-	                        this.state.speeds[this.state.speedIdx] + 'ms'
-	                    ),
-	                    _react2.default.createElement('i', { className: this.state.collapsed ? _AbstractViewerMenu2.default.collapsedMenuButton : _AbstractViewerMenu2.default.menuButton,
-	                        onClick: this.togglePanel })
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: _AbstractViewerMenu2.default.controlContent },
-	                    this.props.children
-	                )
-	            ),
-	            renderer
-	        );
+	    if (previousDataModel !== nextDataModel) {
+	      this.detachListener();
+	      this.attachListener(nextDataModel);
 	    }
+	  },
+
+
+	  // Auto unmount listener
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.detachListener();
+	  },
+	  attachListener: function attachListener(dataModel) {
+	    var _this = this;
+
+	    this.detachListener();
+	    this.queryDataModelChangeSubscription = dataModel.onStateChange(function (data, envelope) {
+	      _this.forceUpdate();
+	    });
+	  },
+	  detachListener: function detachListener() {
+	    if (this.queryDataModelChangeSubscription) {
+	      this.queryDataModelChangeSubscription.unsubscribe();
+	      this.queryDataModelChangeSubscription = null;
+	    }
+	  },
+	  toggleRecord: function toggleRecord() {
+	    var record = !this.state.record;
+	    this.setState({ record: record });
+	    this.getRenderer().recordImages(record);
+	  },
+	  togglePanel: function togglePanel() {
+	    this.setState({ collapsed: !this.state.collapsed });
+	    this.props.queryDataModel.fetchData();
+	  },
+	  toggleLens: function toggleLens() {
+	    var magicLensController = this.props.magicLensController;
+	    if (magicLensController) {
+	      magicLensController.toggleLens();
+	      this.forceUpdate();
+	    }
+	  },
+	  resetCamera: function resetCamera() {
+	    if (this.isMounted() && (this.props.renderer === 'ImageRenderer' || this.props.renderer === 'GeometryRenderer')) {
+	      this.refs.imageRenderer.resetCamera();
+	    }
+	  },
+	  play: function play() {
+	    this.props.queryDataModel.animate(true, this.state.speeds[this.state.speedIdx]);
+	  },
+	  stop: function stop() {
+	    this.props.queryDataModel.animate(false);
+	  },
+	  updateSpeed: function updateSpeed() {
+	    var newIdx = (this.state.speedIdx + 1) % this.state.speeds.length,
+	        queryDataModel = this.props.queryDataModel;
+
+	    this.setState({ speedIdx: newIdx });
+	    if (queryDataModel.isAnimating()) {
+	      queryDataModel.animate(true, this.state.speeds[newIdx]);
+	    }
+	  },
+	  getRenderer: function getRenderer() {
+	    return this.refs.imageRenderer;
+	  },
+
+
+	  /* eslint-disable complexity */
+	  render: function render() {
+	    var queryDataModel = this.props.queryDataModel,
+	        magicLensController = this.props.magicLensController,
+	        rootImageBuilder = magicLensController || this.props.imageBuilder,
+	        renderer = null,
+	        serverRecording = !!this.props.config.Recording,
+	        isImageRenderer = this.props.renderer === 'ImageRenderer',
+	        isMultiViewer = this.props.renderer === 'MultiViewRenderer',
+	        isGeometryViewer = this.props.renderer === 'GeometryRenderer';
+
+	    if (isImageRenderer) {
+	      renderer = _react2.default.createElement(_ImageRenderer2.default, {
+	        ref: 'imageRenderer',
+	        className: _AbstractViewerMenu2.default.renderer,
+	        imageBuilder: rootImageBuilder,
+	        listener: this.props.mouseListener || rootImageBuilder.getListeners()
+	      });
+	    }
+
+	    if (isMultiViewer) {
+	      renderer = _react2.default.createElement(_MultiLayoutRenderer2.default, {
+	        ref: 'imageRenderer',
+	        className: _AbstractViewerMenu2.default.renderer,
+	        renderers: this.props.renderers,
+	        layout: this.props.layout
+	      });
+	    }
+
+	    if (isGeometryViewer) {
+	      renderer = _react2.default.createElement(_GeometryRenderer2.default, {
+	        ref: 'imageRenderer',
+	        className: _AbstractViewerMenu2.default.renderer,
+	        geometryBuilder: this.props.geometryBuilder
+	      });
+	    }
+
+	    return _react2.default.createElement(
+	      'div',
+	      { className: _AbstractViewerMenu2.default.container },
+	      _react2.default.createElement(
+	        'div',
+	        {
+	          className: this.state.collapsed ? _AbstractViewerMenu2.default.collapsedControl : _AbstractViewerMenu2.default.control
+	        },
+	        _react2.default.createElement(
+	          'div',
+	          { className: _AbstractViewerMenu2.default.controlBar },
+	          _react2.default.createElement('i', {
+	            className: magicLensController ? magicLensController.isFront() ? _AbstractViewerMenu2.default.magicLensButtonIn : _AbstractViewerMenu2.default.magicLensButtonOut : _AbstractViewerMenu2.default.hidden,
+	            onClick: this.toggleLens
+	          }),
+	          _react2.default.createElement('i', {
+	            className: serverRecording && isImageRenderer && this.props.imageBuilder.handleRecord ? this.state.record ? _AbstractViewerMenu2.default.recordButtonOn : _AbstractViewerMenu2.default.recordButtonOff : _AbstractViewerMenu2.default.hidden,
+	            onClick: this.toggleRecord
+	          }),
+	          _react2.default.createElement('i', {
+	            className: isImageRenderer || isGeometryViewer ? _AbstractViewerMenu2.default.resetCameraButton : _AbstractViewerMenu2.default.hidden,
+	            onClick: this.resetCamera
+	          }),
+	          _react2.default.createElement('i', {
+	            className: queryDataModel.hasAnimationFlag() && !queryDataModel.isAnimating() ? _AbstractViewerMenu2.default.playButton : _AbstractViewerMenu2.default.hidden,
+	            onClick: this.play
+	          }),
+	          _react2.default.createElement('i', {
+	            className: queryDataModel.isAnimating() ? _AbstractViewerMenu2.default.stopButton : _AbstractViewerMenu2.default.hidden,
+	            onClick: this.stop
+	          }),
+	          _react2.default.createElement('i', {
+	            className: queryDataModel.hasAnimationFlag() ? _AbstractViewerMenu2.default.speedButton : _AbstractViewerMenu2.default.hidden,
+	            onClick: this.updateSpeed
+	          }),
+	          _react2.default.createElement(
+	            'i',
+	            {
+	              className: queryDataModel.hasAnimationFlag() ? _AbstractViewerMenu2.default.animationSpeed : _AbstractViewerMenu2.default.hidden,
+	              onClick: this.updateSpeed
+	            },
+	            this.state.speeds[this.state.speedIdx] + 'ms'
+	          ),
+	          _react2.default.createElement('i', {
+	            className: this.state.collapsed ? _AbstractViewerMenu2.default.collapsedMenuButton : _AbstractViewerMenu2.default.menuButton,
+	            onClick: this.togglePanel
+	          })
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: _AbstractViewerMenu2.default.controlContent },
+	          this.props.children
+	        )
+	      ),
+	      renderer
+	    );
+	  }
 	});
 
 /***/ },
@@ -19985,7 +20002,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _react = __webpack_require__(2);
@@ -20004,68 +20021,75 @@
 
 	exports.default = _react2.default.createClass({
 
-	    displayName: 'GeometryRenderer',
+	  displayName: 'GeometryRenderer',
 
-	    propTypes: {
-	        geometryBuilder: _react2.default.PropTypes.object
-	    },
+	  propTypes: {
+	    geometryBuilder: _react2.default.PropTypes.object
+	  },
 
-	    getDefaultProps: function getDefaultProps() {
-	        return {};
-	    },
-	    getInitialState: function getInitialState() {
-	        return { width: 200, height: 200 };
-	    },
-	    componentWillMount: function componentWillMount() {
-	        // Listen to window resize
-	        this.sizeSubscription = _SizeHelper2.default.onSizeChange(this.updateDimensions);
+	  getDefaultProps: function getDefaultProps() {
+	    return {};
+	  },
+	  getInitialState: function getInitialState() {
+	    return {
+	      width: 200,
+	      height: 200
+	    };
+	  },
+	  componentWillMount: function componentWillMount() {
+	    // Listen to window resize
+	    this.sizeSubscription = _SizeHelper2.default.onSizeChange(this.updateDimensions);
 
-	        // Make sure we monitor window size if it is not already the case
-	        _SizeHelper2.default.startListening();
-	    },
-	    componentDidMount: function componentDidMount() {
-	        if (this.props.geometryBuilder) {
-	            this.props.geometryBuilder.configureRenderer(_reactDom2.default.findDOMNode(this.refs.canvasRenderer));
-	            this.props.geometryBuilder.render();
-	        }
-	        this.updateDimensions();
-	    },
-	    componentDidUpdate: function componentDidUpdate(nextProps, nextState) {
-	        this.updateDimensions();
-	    },
-	    componentWillUnmount: function componentWillUnmount() {
-	        // Remove window listener
-	        if (this.sizeSubscription) {
-	            this.sizeSubscription.unsubscribe();
-	            this.sizeSubscription = null;
-	        }
-	    },
-	    updateDimensions: function updateDimensions() {
-	        var el = _reactDom2.default.findDOMNode(this).parentNode,
-	            elSize = _SizeHelper2.default.getSize(el);
-
-	        if (el && (this.state.width !== elSize.clientWidth || this.state.height !== elSize.clientHeight)) {
-	            this.setState({ width: elSize.clientWidth, height: elSize.clientHeight });
-
-	            if (this.props.geometryBuilder) {
-	                this.props.geometryBuilder.updateSize(innerWidth, innerHeight);
-	            }
-	            return true;
-	        }
-	        return false;
-	    },
-	    resetCamera: function resetCamera() {
-	        if (this.props.geometryBuilder) {
-	            this.props.geometryBuilder.resetCamera();
-	        }
-	    },
-	    render: function render() {
-	        return _react2.default.createElement('canvas', {
-	            className: 'CanvasImageRenderer',
-	            ref: 'canvasRenderer',
-	            width: this.state.width,
-	            height: this.state.height });
+	    // Make sure we monitor window size if it is not already the case
+	    _SizeHelper2.default.startListening();
+	  },
+	  componentDidMount: function componentDidMount() {
+	    if (this.props.geometryBuilder) {
+	      this.props.geometryBuilder.configureRenderer(_reactDom2.default.findDOMNode(this.refs.canvasRenderer));
+	      this.props.geometryBuilder.render();
 	    }
+	    this.updateDimensions();
+	  },
+	  componentDidUpdate: function componentDidUpdate(nextProps, nextState) {
+	    this.updateDimensions();
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    // Remove window listener
+	    if (this.sizeSubscription) {
+	      this.sizeSubscription.unsubscribe();
+	      this.sizeSubscription = null;
+	    }
+	  },
+	  updateDimensions: function updateDimensions() {
+	    var el = _reactDom2.default.findDOMNode(this).parentNode,
+	        elSize = _SizeHelper2.default.getSize(el);
+
+	    if (el && (this.state.width !== elSize.clientWidth || this.state.height !== elSize.clientHeight)) {
+	      this.setState({
+	        width: elSize.clientWidth,
+	        height: elSize.clientHeight
+	      });
+
+	      if (this.props.geometryBuilder) {
+	        this.props.geometryBuilder.updateSize(innerWidth, innerHeight);
+	      }
+	      return true;
+	    }
+	    return false;
+	  },
+	  resetCamera: function resetCamera() {
+	    if (this.props.geometryBuilder) {
+	      this.props.geometryBuilder.resetCamera();
+	    }
+	  },
+	  render: function render() {
+	    return _react2.default.createElement('canvas', {
+	      className: 'CanvasImageRenderer',
+	      ref: 'canvasRenderer',
+	      width: this.state.width,
+	      height: this.state.height
+	    });
+	  }
 	});
 
 /***/ },
@@ -20083,7 +20107,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	exports.getSize = getSize;
 	exports.onSizeChange = onSizeChange;
@@ -20100,80 +20124,82 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var observableInstance = new _Observable2.default(),
-	    TOPIC = 'window.size.change',
-	    domSizes = new WeakMap(),
-	    sizeProperties = ['scrollWidth', 'scrollHeight', 'clientWidth', 'clientHeight'],
-	    windowListener = (0, _Debounce.debounce)(invalidateSize, 250);
+	/* eslint-disable no-use-before-define */
 
-	var timestamp = 0,
-	    listenerAttached = false;
+	var observableInstance = new _Observable2.default();
+	var TOPIC = 'window.size.change';
+	var domSizes = new WeakMap();
+	var sizeProperties = ['scrollWidth', 'scrollHeight', 'clientWidth', 'clientHeight'];
+	var windowListener = (0, _Debounce.debounce)(invalidateSize, 250);
+
+	var timestamp = 0;
+	var listenerAttached = false;
 
 	// ------ internal functions ------
 
 	function updateSize(domElement, cacheObj) {
-	    if (cacheObj.timestamp < timestamp) {
-	        sizeProperties.forEach(function (prop) {
-	            cacheObj[prop] = domElement[prop];
-	        });
-	        cacheObj.clientRect = domElement.getClientRects()[0];
-	    }
+	  if (cacheObj.timestamp < timestamp) {
+	    sizeProperties.forEach(function (prop) {
+	      cacheObj[prop] = domElement[prop];
+	    });
+	    cacheObj.clientRect = domElement.getClientRects()[0];
+	  }
 	}
 
 	// ------ New API ------
 
 	function getSize(domElement) {
-	    var cachedSize = domSizes.get(domElement);
-	    if (!cachedSize) {
-	        cachedSize = { timestamp: -1 };
-	        domSizes.set(domElement, cachedSize);
-	    }
-	    updateSize(domElement, cachedSize);
+	  var cachedSize = domSizes.get(domElement);
+	  if (!cachedSize) {
+	    cachedSize = { timestamp: -1 };
+	    domSizes.set(domElement, cachedSize);
+	  }
+	  updateSize(domElement, cachedSize);
 
-	    return cachedSize;
+	  return cachedSize;
 	}
 
 	function onSizeChange(callback) {
-	    return observableInstance.on(TOPIC, callback);
+	  return observableInstance.on(TOPIC, callback);
 	}
 
 	function triggerChange() {
-	    observableInstance.emit(TOPIC);
+	  observableInstance.emit(TOPIC);
 	}
 
 	function isListening() {
-	    return listenerAttached;
+	  return listenerAttached;
 	}
 
 	function startListening() {
-	    if (!listenerAttached) {
-	        window.addEventListener("resize", windowListener);
-	        listenerAttached = true;
-	    }
+	  if (!listenerAttached) {
+	    window.addEventListener('resize', windowListener);
+	    listenerAttached = true;
+	  }
 	}
 
 	function stopListening() {
-	    if (listenerAttached) {
-	        window.removeEventListener("resize", windowListener);
-	        listenerAttached = false;
-	    }
+	  if (listenerAttached) {
+	    window.removeEventListener('resize', windowListener);
+	    listenerAttached = false;
+	  }
 	}
 
 	// ------ internal functions ------
 
 	function invalidateSize() {
-	    timestamp++;
-	    triggerChange();
+	  timestamp++;
+	  triggerChange();
 	}
 
 	// Export
 	exports.default = {
-	    getSize: getSize,
-	    isListening: isListening,
-	    onSizeChange: onSizeChange,
-	    startListening: startListening,
-	    stopListening: stopListening,
-	    triggerChange: triggerChange
+	  getSize: getSize,
+	  isListening: isListening,
+	  onSizeChange: onSizeChange,
+	  startListening: startListening,
+	  stopListening: stopListening,
+	  triggerChange: triggerChange
 	};
 
 /***/ },
@@ -20183,7 +20209,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -20197,18 +20223,18 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var Observable = function () {
-	    function Observable() {
-	        _classCallCheck(this, Observable);
+	  function Observable() {
+	    _classCallCheck(this, Observable);
+	  }
+
+	  _createClass(Observable, [{
+	    key: 'destroy',
+	    value: function destroy() {
+	      this.off();
 	    }
+	  }]);
 
-	    _createClass(Observable, [{
-	        key: 'destroy',
-	        value: function destroy() {
-	            this.off();
-	        }
-	    }]);
-
-	    return Observable;
+	  return Observable;
 	}();
 
 	// Add Observer pattern using Monologue.js
@@ -31529,7 +31555,7 @@
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	exports.debounce = debounce;
 	// Returns a function, that, as long as it continues to be invoked, will not
@@ -31538,27 +31564,32 @@
 	// leading edge, instead of the trailing.
 
 	function debounce(func, wait, immediate) {
-	    var timeout;
-	    return function () {
-	        var context = this,
-	            args = arguments;
-	        var later = function later() {
-	            timeout = null;
-	            if (!immediate) {
-	                func.apply(context, args);
-	            }
-	        };
-	        var callNow = immediate && !timeout;
-	        clearTimeout(timeout);
-	        timeout = setTimeout(later, wait);
-	        if (callNow) {
-	            func.apply(context, args);
-	        }
+	  var _this = this;
+
+	  var timeout;
+	  return function () {
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+
+	    var context = _this;
+	    var later = function later() {
+	      timeout = null;
+	      if (!immediate) {
+	        func.apply(context, args);
+	      }
 	    };
+	    var callNow = immediate && !timeout;
+	    clearTimeout(timeout);
+	    timeout = setTimeout(later, wait);
+	    if (callNow) {
+	      func.apply(context, args);
+	    }
+	  };
 	}
 
 	exports.default = {
-	    debounce: debounce
+	  debounce: debounce
 	};
 
 /***/ },
@@ -31568,7 +31599,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _react = __webpack_require__(2);
@@ -31602,98 +31633,98 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function onImageLoaded() {
-	    var image = this;
+	  var image = this;
 
-	    if (image.drawToCanvas) {
-	        if (image.firstRender) {
-	            image.firstRender = false;
-	            image.component.resetCamera();
-	        } else {
-	            image.drawToCanvas();
-	        }
+	  if (image.drawToCanvas) {
+	    if (image.firstRender) {
+	      image.firstRender = false;
+	      image.component.resetCamera();
+	    } else {
+	      image.drawToCanvas();
 	    }
+	  }
 	}
 
 	function drawToCanvasAsImage() {
-	    var image = this,
-	        component = this.component,
-	        canvas = _reactDom2.default.findDOMNode(component.refs.canvasRenderer),
-	        ctx = canvas.getContext('2d'),
-	        w = component.state.width,
-	        h = component.state.height,
-	        iw = image ? image.width : 500,
-	        ih = image ? image.height : 500,
-	        zoomLevel = component.zoom,
-	        drawingCenter = component.center;
+	  var image = this,
+	      component = this.component,
+	      canvas = _reactDom2.default.findDOMNode(component.refs.canvasRenderer),
+	      ctx = canvas.getContext('2d'),
+	      w = component.state.width,
+	      h = component.state.height,
+	      iw = image ? image.width : 500,
+	      ih = image ? image.height : 500,
+	      zoomLevel = component.zoom,
+	      drawingCenter = component.center;
 
-	    ctx.clearRect(0, 0, w, h);
+	  ctx.clearRect(0, 0, w, h);
 
-	    var tw = Math.floor(iw * zoomLevel),
-	        th = Math.floor(ih * zoomLevel),
-	        tx = w * drawingCenter[0] - tw / 2,
-	        ty = h * drawingCenter[1] - th / 2;
+	  var tw = Math.floor(iw * zoomLevel),
+	      th = Math.floor(ih * zoomLevel),
+	      tx = w * drawingCenter[0] - tw / 2,
+	      ty = h * drawingCenter[1] - th / 2;
 
-	    image.activeArea = [tx, ty, tw, th];
+	  image.activeArea = [tx, ty, tw, th];
 
-	    try {
-	        ctx.drawImage(image, 0, 0, iw, ih, // Source image   [Location,Size]
-	        tx, ty, tw, th); // Target drawing [Location,Size]
-	    } catch (err) {
-	        console.log('Error in ImageRenderer::drawToCanvasAsImage', err);
-	    }
+	  try {
+	    ctx.drawImage(image, 0, 0, iw, ih, // Source image   [Location,Size]
+	    tx, ty, tw, th); // Target drawing [Location,Size]
+	  } catch (err) {
+	    console.log('Error in ImageRenderer::drawToCanvasAsImage', err);
+	  }
 	}
 
 	function drawToCanvasAsBuffer() {
-	    // canvas: this.bgCanvas.el,
-	    // area: [0, 0, width, height],
-	    // outputSize: [destWidth, destHeight],
-	    // crosshair: [lineX * scaleX, lineY * scaleY],
-	    // type: this.renderMethod
+	  // canvas: this.bgCanvas.el,
+	  // area: [0, 0, width, height],
+	  // outputSize: [destWidth, destHeight],
+	  // crosshair: [lineX * scaleX, lineY * scaleY],
+	  // type: this.renderMethod
 
-	    var image = this,
-	        data = this.data,
-	        component = this.component,
-	        destCanvas = _reactDom2.default.findDOMNode(component.refs.canvasRenderer),
-	        ctx = destCanvas.getContext('2d'),
-	        w = component.state.width,
-	        h = component.state.height,
-	        iw = data.outputSize[0],
-	        ih = data.outputSize[1],
-	        zoomLevel = component.zoom,
-	        drawingCenter = component.center;
+	  var image = this,
+	      data = this.data,
+	      component = this.component,
+	      destCanvas = _reactDom2.default.findDOMNode(component.refs.canvasRenderer),
+	      ctx = destCanvas.getContext('2d'),
+	      w = component.state.width,
+	      h = component.state.height,
+	      iw = data.outputSize[0],
+	      ih = data.outputSize[1],
+	      zoomLevel = component.zoom,
+	      drawingCenter = component.center;
 
-	    ctx.clearRect(0, 0, w, h);
+	  ctx.clearRect(0, 0, w, h);
 
-	    var tw = Math.floor(iw * zoomLevel),
-	        th = Math.floor(ih * zoomLevel),
-	        tx = w * drawingCenter[0] - tw / 2,
-	        ty = h * drawingCenter[1] - th / 2;
+	  var tw = Math.floor(iw * zoomLevel),
+	      th = Math.floor(ih * zoomLevel),
+	      tx = w * drawingCenter[0] - tw / 2,
+	      ty = h * drawingCenter[1] - th / 2;
 
-	    try {
-	        ctx.drawImage(data.canvas, data.area[0], data.area[1], data.area[2], data.area[3], // Source image   [Location,Size]
-	        tx, ty, tw, th); // Target drawing [Location,Size]
+	  try {
+	    ctx.drawImage(data.canvas, data.area[0], data.area[1], data.area[2], data.area[3], // Source image   [Location,Size]
+	    tx, ty, tw, th); // Target drawing [Location,Size]
 
-	        image.activeArea = [tx, ty, tw, th];
+	    image.activeArea = [tx, ty, tw, th];
 
-	        var scale = [tw / data.area[2], th / data.area[3]],
-	            translate = [tx, ty];
+	    var scale = [tw / data.area[2], th / data.area[3]],
+	        translate = [tx, ty];
 
-	        if (data.crosshair) {
-	            ctx.beginPath();
+	    if (data.crosshair) {
+	      ctx.beginPath();
 
-	            ctx.moveTo(translate[0] + scale[0] * data.crosshair[0], 0);
-	            ctx.lineTo(translate[0] + scale[0] * data.crosshair[0], h);
+	      ctx.moveTo(translate[0] + scale[0] * data.crosshair[0], 0);
+	      ctx.lineTo(translate[0] + scale[0] * data.crosshair[0], h);
 
-	            ctx.moveTo(0, translate[1] + scale[1] * data.crosshair[1]);
-	            ctx.lineTo(w, translate[1] + scale[1] * data.crosshair[1]);
+	      ctx.moveTo(0, translate[1] + scale[1] * data.crosshair[1]);
+	      ctx.lineTo(w, translate[1] + scale[1] * data.crosshair[1]);
 
-	            ctx.strokeStyle = component.props.crosshairColor;
-	            ctx.lineWidth = 1;
-	            ctx.stroke();
-	        }
-	    } catch (err) {
-	        console.log('Error in ImageRenderer::drawToCanvasAsBuffer', err);
+	      ctx.strokeStyle = component.props.crosshairColor;
+	      ctx.lineWidth = 1;
+	      ctx.stroke();
 	    }
+	  } catch (err) {
+	    console.log('Error in ImageRenderer::drawToCanvasAsBuffer', err);
+	  }
 	}
 
 	/**
@@ -31712,374 +31743,396 @@
 	 */
 	exports.default = _react2.default.createClass({
 
-	    displayName: 'ImageRenderer',
+	  displayName: 'ImageRenderer',
 
-	    propTypes: {
-	        crosshairColor: _react2.default.PropTypes.string,
-	        imageBuilder: _react2.default.PropTypes.object,
-	        listener: _react2.default.PropTypes.object,
-	        maxZoom: _react2.default.PropTypes.number,
-	        minZoom: _react2.default.PropTypes.number,
-	        modifiers: _react2.default.PropTypes.array,
-	        pressRadius: _react2.default.PropTypes.number
-	    },
+	  propTypes: {
+	    crosshairColor: _react2.default.PropTypes.string,
+	    imageBuilder: _react2.default.PropTypes.object,
+	    listener: _react2.default.PropTypes.object,
+	    maxZoom: _react2.default.PropTypes.number,
+	    minZoom: _react2.default.PropTypes.number,
+	    modifiers: _react2.default.PropTypes.array,
+	    pressRadius: _react2.default.PropTypes.number
+	  },
 
-	    getDefaultProps: function getDefaultProps() {
-	        return { minZoom: 0.1, maxZoom: 10, crosshairColor: '#000', modifiers: [0, 2], pressRadius: 50 };
-	    },
-	    getInitialState: function getInitialState() {
-	        var metadata = this.props.imageBuilder ? this.props.imageBuilder.queryDataModel.originalData.metadata || {} : {},
-	            title = metadata.title || 'No title',
-	            description = metadata.description || 'No description';
-	        return { width: 200, height: 200, dialog: false, title: title, description: description };
-	    },
-	    componentWillMount: function componentWillMount() {
-	        var _this = this;
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      minZoom: 0.1,
+	      maxZoom: 10,
+	      crosshairColor: '#000',
+	      modifiers: [0, 2],
+	      pressRadius: 50
+	    };
+	  },
+	  getInitialState: function getInitialState() {
+	    var metadata = this.props.imageBuilder ? this.props.imageBuilder.queryDataModel.originalData.metadata || {} : {},
+	        title = metadata.title || 'No title',
+	        description = metadata.description || 'No description';
+	    return {
+	      width: 200,
+	      height: 200,
+	      dialog: false,
+	      title: title,
+	      description: description
+	    };
+	  },
+	  componentWillMount: function componentWillMount() {
+	    var _this = this;
 
-	        this.imageToDraw = new Image();
+	    this.imageToDraw = new Image();
 
-	        // Monitor image builder
-	        if (this.props.imageBuilder) {
-	            this.imageBuilderSubscription = this.props.imageBuilder.onImageReady(function (data, envelope) {
-	                if (data.url) {
-	                    _this.renderImage(data);
-	                } else {
-	                    _this.renderCanvas(data);
-	                }
-	            });
-	        }
-
-	        // Shared properties
-	        this.zoom = 1;
-	        this.baseZoom = 1;
-	        this.center = [0.5, 0.5];
-	        this.baseCenter = [0.5, 0.5];
-
-	        // Attach context to image
-	        this.imageToDraw.component = this;
-	        this.imageToDraw.onload = onImageLoaded;
-	        this.imageToDraw.firstRender = true;
-
-	        // Listen to window resize
-	        this.sizeSubscription = _SizeHelper2.default.onSizeChange(this.updateDimensions);
-
-	        // Make sure we monitor window size if it is not already the case
-	        _SizeHelper2.default.startListening();
-
-	        // Listen to keyDown
-	        document.addEventListener('keydown', this.handleKeyDown);
-
-	        // Add image exporter
-	        this.sendToServer = false;
-	        this.imageExporter = new _ImageExporter2.default();
-	    },
-	    componentDidMount: function componentDidMount() {
-	        var _this2 = this;
-
-	        this.updateDimensions();
-	        if (this.imageToDraw.drawToCanvas) {
-	            this.imageToDraw.drawToCanvas();
-	        }
-
-	        // Attach mouse listener
-	        this.mouseHandler = new _MouseHandler2.default(_reactDom2.default.findDOMNode(this.refs.canvasRenderer));
-
-	        // Allow modifier via press action
-	        if (this.props.modifiers) {
-	            this.mouseHandler.toggleModifierOnPress(true, this.props.modifiers);
-	        }
-
-	        this.mouseHandler.attach({
-	            'drag': this.dragCallback,
-	            'zoom': this.zoomCallback,
-	            'click': this.clickCallback
-	        });
-
-	        this.mouseHandler.on('modifier.change', function (change, envelope) {
-	            var image = _this2.imageToDraw,
-	                ctx = _reactDom2.default.findDOMNode(_this2.refs.canvasRenderer).getContext('2d');
-
-	            ctx.beginPath();
-	            ctx.fillStyle = "#ffffff";
-	            ctx.lineWidth = 5;
-	            ctx.strokeStyle = "#000000";
-	            ctx.arc(change.event.relative.x, change.event.relative.y, _this2.props.pressRadius, 0, 2 * Math.PI, false);
-	            ctx.fill();
-	            ctx.stroke();
-
-	            setTimeout(function () {
-	                image.drawToCanvas();
-	            }, 300);
-	        });
-	    },
-	    componentDidUpdate: function componentDidUpdate(nextProps, nextState) {
-	        this.updateDimensions();
-	        if (this.imageToDraw.drawToCanvas) {
-	            this.imageToDraw.drawToCanvas();
-	        }
-	    },
-	    componentWillUnmount: function componentWillUnmount() {
-	        // Remove key listener
-	        document.removeEventListener('keydown', this.handleKeyDown);
-
-	        // Remove listener
-	        if (this.imageBuilderSubscription) {
-	            this.imageBuilderSubscription.unsubscribe();
-	            this.imageBuilderSubscription = null;
-	        }
-
-	        // Clean image
-	        this.imageToDraw.onload = null;
-	        this.imageToDraw.drawToCanvas = null;
-	        this.imageToDraw.component = null;
-	        this.imageToDraw.data = null;
-	        this.imageToDraw = null;
-
-	        // Free mouseHandler
-	        this.mouseHandler.destroy();
-	        this.mouseHandler = null;
-
-	        // Remove window listener
-	        if (this.sizeSubscription) {
-	            this.sizeSubscription.unsubscribe();
-	            this.sizeSubscription = null;
-	        }
-	    },
-	    updateDimensions: function updateDimensions() {
-	        var el = _reactDom2.default.findDOMNode(this).parentNode,
-	            elSize = _SizeHelper2.default.getSize(el);
-
-	        if (el && (this.state.width !== elSize.clientWidth || this.state.height !== elSize.clientHeight)) {
-	            this.setState({ width: elSize.clientWidth, height: elSize.clientHeight });
-	            return true;
-	        }
-	        return false;
-	    },
-	    zoomCallback: function zoomCallback(event, envelope) {
-	        var eventManaged = false;
-
-	        // Extend event with active area
-	        event.activeArea = this.imageToDraw.activeArea;
-
-	        // Handle mouse listener if any
-	        if (this.props.listener && this.props.listener.zoom) {
-	            eventManaged = this.props.listener.zoom(event, envelope);
-	        }
-
-	        // Handle local zoom
-	        if (!eventManaged) {
-	            if (event.isFirst) {
-	                this.baseZoom = this.zoom;
-	            }
-	            var zoom = this.baseZoom * event.scale;
-
-	            if (zoom < this.props.minZoom) {
-	                zoom = this.props.minZoom;
-	            }
-	            if (zoom > this.props.maxZoom) {
-	                zoom = this.props.maxZoom;
-	            }
-
-	            if (this.zoom !== zoom) {
-	                // Update center to keep the location of the pointer the same
-	                var x = this.center[0],
-	                    y = this.center[1],
-	                    deltaZoom = zoom / this.zoom,
-	                    fixedX = event.relative.x / this.state.width,
-	                    fixedY = event.relative.y / this.state.height;
-
-	                this.zoom = zoom;
-	                this.center[0] = fixedX + deltaZoom * (x - fixedX);
-	                this.center[1] = fixedY + deltaZoom * (y - fixedY);
-
-	                if (this.imageToDraw.drawToCanvas) {
-	                    this.imageToDraw.drawToCanvas();
-	                }
-	            }
-
-	            if (event.isFinal) {
-	                this.baseZoom = this.zoom;
-	            }
-	        }
-
-	        // Store center
-	        this.baseCenter = [this.center[0], this.center[1]];
-	    },
-	    dragCallback: function dragCallback(event, envelope) {
-	        var eventManaged = false;
-
-	        // Extend event with active area
-	        event.activeArea = this.imageToDraw.activeArea;
-
-	        // Store zoom
-	        this.baseZoom = this.zoom;
-
-	        // Handle mouse listener if any
-	        if (this.props.listener && this.props.listener.drag) {
-	            eventManaged = this.props.listener.drag(event, envelope);
-	        }
-
-	        // Handle drag to pan
-	        if (!eventManaged) {
-	            if (event.isFirst) {
-	                this.baseCenter = [this.center[0], this.center[1]];
-	            }
-
-	            var deltaX = event.deltaX / this.state.width,
-	                deltaY = event.deltaY / this.state.height;
-
-	            this.center[0] = this.baseCenter[0] + deltaX;
-	            this.center[1] = this.baseCenter[1] + deltaY;
-
-	            if (event.isFinal) {
-	                this.baseCenter = [this.center[0], this.center[1]];
-	            }
-
-	            if (this.imageToDraw.drawToCanvas) {
-	                this.imageToDraw.drawToCanvas();
-	            }
-	        }
-	    },
-	    clickCallback: function clickCallback(event, envelope) {
-	        // Extend event with active area
-	        event.activeArea = this.imageToDraw.activeArea;
-
-	        // Handle mouse listener if any
-	        if (this.props.listener && this.props.listener.click) {
-	            this.props.listener.click(event, envelope);
-	        }
-	    },
-	    renderImage: function renderImage(data) {
-	        this.imageToDraw.drawToCanvas = drawToCanvasAsImage;
-	        this.imageToDraw.src = data.url;
-	    },
-	    renderCanvas: function renderCanvas(data) {
-	        this.imageToDraw.drawToCanvas = drawToCanvasAsBuffer;
-	        this.imageToDraw.data = data;
-	        this.imageToDraw.width = data.outputSize[0];
-	        this.imageToDraw.height = data.outputSize[1];
-
-	        // Send data to server for export
-	        if (this.sendToServer) {
-	            this.imageExporter.exportImage(data);
-	        }
-
-	        // No need to wait to render it
-	        if (this.imageToDraw.firstRender) {
-	            this.imageToDraw.firstRender = false;
-	            this.resetCamera();
+	    // Monitor image builder
+	    if (this.props.imageBuilder) {
+	      this.imageBuilderSubscription = this.props.imageBuilder.onImageReady(function (data, envelope) {
+	        if (data.url) {
+	          _this.renderImage(data);
 	        } else {
-	            this.imageToDraw.drawToCanvas();
+	          _this.renderCanvas(data);
 	        }
-	    },
-	    resetCamera: function resetCamera() {
-	        var w = this.state.width,
-	            h = this.state.height,
-	            image = this.imageToDraw,
-	            iw = image ? image.width : 500,
-	            ih = image ? image.height : 500;
-
-	        this.zoom = Math.min(w / iw, h / ih);
-	        this.baseZoom = Math.min(w / iw, h / ih);
-	        this.baseCenter = [0.5, 0.5];
-	        this.center = [0.5, 0.5];
-
-	        image.drawToCanvas();
-	    },
-	    recordImages: function recordImages(record) {
-	        this.sendToServer = record;
-	    },
-	    handleKeyDown: function handleKeyDown(event) {
-	        if (event.keyCode === 82) {
-	            // r => reset camera
-	            this.resetCamera();
-	        } else if (event.keyCode === 85 && !this.state.dialog) {
-	            // u => Update dataset metadata
-	            var thumbnailImage = _reactDom2.default.findDOMNode(this.refs.thumbnail);
-
-	            if (this.imageToDraw.data.canvas.nodeName === 'CANVAS') {
-	                if (this.imageToDraw.data.canvas.width === this.imageToDraw.data.area[2] && this.imageToDraw.data.canvas.height === this.imageToDraw.data.area[3]) {
-	                    thumbnailImage.src = this.imageToDraw.data.canvas.toDataURL('image/png');
-	                } else {
-	                    // Need to extract region
-	                    thumbnailImage.src = this.imageExporter.extractCanvasRegion(this.imageToDraw.data.canvas, this.imageToDraw.data.area, this.imageToDraw.data.outputSize);
-	                }
-	            } else {
-	                // Use image URL
-	                thumbnailImage.src = this.imageToDraw.data.canvas.src;
-	            }
-
-	            this.setState({ dialog: !this.state.dialog });
-	        }
-	    },
-	    updateTitle: function updateTitle(event) {
-	        var title = event.target.value;
-	        this.setState({ title: title });
-	    },
-	    updateDescription: function updateDescription(event) {
-	        var description = event.target.value;
-	        this.setState({ description: description });
-	    },
-	    toggleDialog: function toggleDialog() {
-	        this.setState({ dialog: !this.state.dialog });
-	    },
-	    updateMetadata: function updateMetadata() {
-	        this.setState({ dialog: !this.state.dialog });
-	        this.imageExporter.updateMetadata({
-	            title: this.state.title,
-	            description: this.state.description,
-	            image: _reactDom2.default.findDOMNode(this.refs.thumbnail).src,
-	            path: this.props.imageBuilder.queryDataModel.basepath
-	        });
-	    },
-	    render: function render() {
-	        return _react2.default.createElement(
-	            'div',
-	            { className: _ImageRenderer2.default.container },
-	            _react2.default.createElement('canvas', {
-	                className: _ImageRenderer2.default.renderer,
-	                ref: 'canvasRenderer',
-	                width: this.state.width,
-	                height: this.state.height }),
-	            _react2.default.createElement(
-	                'div',
-	                { className: this.state.dialog ? _ImageRenderer2.default.dialog : _ImageRenderer2.default.hidden },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: _ImageRenderer2.default.inside },
-	                    _react2.default.createElement('img', { ref: 'thumbnail', className: _ImageRenderer2.default.thumbnail, height: Math.floor(this.state.height / 2) }),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: _ImageRenderer2.default.metadata, style: { height: Math.floor(this.state.height / 2) + 'px' } },
-	                        _react2.default.createElement(
-	                            'strong',
-	                            { className: _ImageRenderer2.default.title },
-	                            _react2.default.createElement(_ContentEditableWidget2.default, { html: this.state.title, onChange: this.updateTitle })
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: _ImageRenderer2.default.description },
-	                            _react2.default.createElement(_ContentEditableWidget2.default, { html: this.state.description, onChange: this.updateDescription })
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: _ImageRenderer2.default.buttons },
-	                        _react2.default.createElement(
-	                            'button',
-	                            { className: _ImageRenderer2.default.button, onClick: this.toggleDialog },
-	                            'Cancel'
-	                        ),
-	                        _react2.default.createElement(
-	                            'button',
-	                            { className: _ImageRenderer2.default.button, onClick: this.updateMetadata },
-	                            'Save'
-	                        )
-	                    )
-	                )
-	            )
-	        );
+	      });
 	    }
+
+	    // Shared properties
+	    this.zoom = 1;
+	    this.baseZoom = 1;
+	    this.center = [0.5, 0.5];
+	    this.baseCenter = [0.5, 0.5];
+
+	    // Attach context to image
+	    this.imageToDraw.component = this;
+	    this.imageToDraw.onload = onImageLoaded;
+	    this.imageToDraw.firstRender = true;
+
+	    // Listen to window resize
+	    this.sizeSubscription = _SizeHelper2.default.onSizeChange(this.updateDimensions);
+
+	    // Make sure we monitor window size if it is not already the case
+	    _SizeHelper2.default.startListening();
+
+	    // Listen to keyDown
+	    document.addEventListener('keydown', this.handleKeyDown);
+
+	    // Add image exporter
+	    this.sendToServer = false;
+	    this.imageExporter = new _ImageExporter2.default();
+	  },
+	  componentDidMount: function componentDidMount() {
+	    var _this2 = this;
+
+	    this.updateDimensions();
+	    if (this.imageToDraw.drawToCanvas) {
+	      this.imageToDraw.drawToCanvas();
+	    }
+
+	    // Attach mouse listener
+	    this.mouseHandler = new _MouseHandler2.default(_reactDom2.default.findDOMNode(this.refs.canvasRenderer));
+
+	    // Allow modifier via press action
+	    if (this.props.modifiers) {
+	      this.mouseHandler.toggleModifierOnPress(true, this.props.modifiers);
+	    }
+
+	    this.mouseHandler.attach({
+	      drag: this.dragCallback,
+	      zoom: this.zoomCallback,
+	      click: this.clickCallback
+	    });
+
+	    this.mouseHandler.on('modifier.change', function (change, envelope) {
+	      var image = _this2.imageToDraw,
+	          ctx = _reactDom2.default.findDOMNode(_this2.refs.canvasRenderer).getContext('2d');
+
+	      ctx.beginPath();
+	      ctx.fillStyle = '#ffffff';
+	      ctx.lineWidth = 5;
+	      ctx.strokeStyle = '#000000';
+	      ctx.arc(change.event.relative.x, change.event.relative.y, _this2.props.pressRadius, 0, 2 * Math.PI, false);
+	      ctx.fill();
+	      ctx.stroke();
+
+	      setTimeout(function () {
+	        image.drawToCanvas();
+	      }, 300);
+	    });
+	  },
+	  componentDidUpdate: function componentDidUpdate(nextProps, nextState) {
+	    this.updateDimensions();
+	    if (this.imageToDraw.drawToCanvas) {
+	      this.imageToDraw.drawToCanvas();
+	    }
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    // Remove key listener
+	    document.removeEventListener('keydown', this.handleKeyDown);
+
+	    // Remove listener
+	    if (this.imageBuilderSubscription) {
+	      this.imageBuilderSubscription.unsubscribe();
+	      this.imageBuilderSubscription = null;
+	    }
+
+	    // Clean image
+	    this.imageToDraw.onload = null;
+	    this.imageToDraw.drawToCanvas = null;
+	    this.imageToDraw.component = null;
+	    this.imageToDraw.data = null;
+	    this.imageToDraw = null;
+
+	    // Free mouseHandler
+	    this.mouseHandler.destroy();
+	    this.mouseHandler = null;
+
+	    // Remove window listener
+	    if (this.sizeSubscription) {
+	      this.sizeSubscription.unsubscribe();
+	      this.sizeSubscription = null;
+	    }
+	  },
+	  updateDimensions: function updateDimensions() {
+	    var el = _reactDom2.default.findDOMNode(this).parentNode,
+	        elSize = _SizeHelper2.default.getSize(el);
+
+	    if (el && (this.state.width !== elSize.clientWidth || this.state.height !== elSize.clientHeight)) {
+	      this.setState({
+	        width: elSize.clientWidth,
+	        height: elSize.clientHeight
+	      });
+	      return true;
+	    }
+	    return false;
+	  },
+	  zoomCallback: function zoomCallback(event, envelope) {
+	    var eventManaged = false;
+
+	    // Extend event with active area
+	    event.activeArea = this.imageToDraw.activeArea;
+
+	    // Handle mouse listener if any
+	    if (this.props.listener && this.props.listener.zoom) {
+	      eventManaged = this.props.listener.zoom(event, envelope);
+	    }
+
+	    // Handle local zoom
+	    if (!eventManaged) {
+	      if (event.isFirst) {
+	        this.baseZoom = this.zoom;
+	      }
+	      var zoom = this.baseZoom * event.scale;
+
+	      if (zoom < this.props.minZoom) {
+	        zoom = this.props.minZoom;
+	      }
+	      if (zoom > this.props.maxZoom) {
+	        zoom = this.props.maxZoom;
+	      }
+
+	      if (this.zoom !== zoom) {
+	        // Update center to keep the location of the pointer the same
+	        var x = this.center[0],
+	            y = this.center[1],
+	            deltaZoom = zoom / this.zoom,
+	            fixedX = event.relative.x / this.state.width,
+	            fixedY = event.relative.y / this.state.height;
+
+	        this.zoom = zoom;
+	        this.center[0] = fixedX + deltaZoom * (x - fixedX);
+	        this.center[1] = fixedY + deltaZoom * (y - fixedY);
+
+	        if (this.imageToDraw.drawToCanvas) {
+	          this.imageToDraw.drawToCanvas();
+	        }
+	      }
+
+	      if (event.isFinal) {
+	        this.baseZoom = this.zoom;
+	      }
+	    }
+
+	    // Store center
+	    this.baseCenter = [this.center[0], this.center[1]];
+	  },
+	  dragCallback: function dragCallback(event, envelope) {
+	    var eventManaged = false;
+
+	    // Extend event with active area
+	    event.activeArea = this.imageToDraw.activeArea;
+
+	    // Store zoom
+	    this.baseZoom = this.zoom;
+
+	    // Handle mouse listener if any
+	    if (this.props.listener && this.props.listener.drag) {
+	      eventManaged = this.props.listener.drag(event, envelope);
+	    }
+
+	    // Handle drag to pan
+	    if (!eventManaged) {
+	      if (event.isFirst) {
+	        this.baseCenter = [this.center[0], this.center[1]];
+	      }
+
+	      var deltaX = event.deltaX / this.state.width,
+	          deltaY = event.deltaY / this.state.height;
+
+	      this.center[0] = this.baseCenter[0] + deltaX;
+	      this.center[1] = this.baseCenter[1] + deltaY;
+
+	      if (event.isFinal) {
+	        this.baseCenter = [this.center[0], this.center[1]];
+	      }
+
+	      if (this.imageToDraw.drawToCanvas) {
+	        this.imageToDraw.drawToCanvas();
+	      }
+	    }
+	  },
+	  clickCallback: function clickCallback(event, envelope) {
+	    // Extend event with active area
+	    event.activeArea = this.imageToDraw.activeArea;
+
+	    // Handle mouse listener if any
+	    if (this.props.listener && this.props.listener.click) {
+	      this.props.listener.click(event, envelope);
+	    }
+	  },
+	  renderImage: function renderImage(data) {
+	    this.imageToDraw.drawToCanvas = drawToCanvasAsImage;
+	    this.imageToDraw.src = data.url;
+	  },
+	  renderCanvas: function renderCanvas(data) {
+	    this.imageToDraw.drawToCanvas = drawToCanvasAsBuffer;
+	    this.imageToDraw.data = data;
+	    this.imageToDraw.width = data.outputSize[0];
+	    this.imageToDraw.height = data.outputSize[1];
+
+	    // Send data to server for export
+	    if (this.sendToServer) {
+	      this.imageExporter.exportImage(data);
+	    }
+
+	    // No need to wait to render it
+	    if (this.imageToDraw.firstRender) {
+	      this.imageToDraw.firstRender = false;
+	      this.resetCamera();
+	    } else {
+	      this.imageToDraw.drawToCanvas();
+	    }
+	  },
+	  resetCamera: function resetCamera() {
+	    var w = this.state.width,
+	        h = this.state.height,
+	        image = this.imageToDraw,
+	        iw = image ? image.width : 500,
+	        ih = image ? image.height : 500;
+
+	    this.zoom = Math.min(w / iw, h / ih);
+	    this.baseZoom = Math.min(w / iw, h / ih);
+	    this.baseCenter = [0.5, 0.5];
+	    this.center = [0.5, 0.5];
+
+	    image.drawToCanvas();
+	  },
+	  recordImages: function recordImages(record) {
+	    this.sendToServer = record;
+	  },
+	  handleKeyDown: function handleKeyDown(event) {
+	    if (event.keyCode === 82) {
+	      // r => reset camera
+	      this.resetCamera();
+	    } else if (event.keyCode === 85 && !this.state.dialog) {
+	      // u => Update dataset metadata
+	      var thumbnailImage = _reactDom2.default.findDOMNode(this.refs.thumbnail);
+
+	      if (this.imageToDraw.data.canvas.nodeName === 'CANVAS') {
+	        if (this.imageToDraw.data.canvas.width === this.imageToDraw.data.area[2] && this.imageToDraw.data.canvas.height === this.imageToDraw.data.area[3]) {
+	          thumbnailImage.src = this.imageToDraw.data.canvas.toDataURL('image/png');
+	        } else {
+	          // Need to extract region
+	          thumbnailImage.src = this.imageExporter.extractCanvasRegion(this.imageToDraw.data.canvas, this.imageToDraw.data.area, this.imageToDraw.data.outputSize);
+	        }
+	      } else {
+	        // Use image URL
+	        thumbnailImage.src = this.imageToDraw.data.canvas.src;
+	      }
+
+	      this.setState({
+	        dialog: !this.state.dialog
+	      });
+	    }
+	  },
+	  updateTitle: function updateTitle(event) {
+	    var title = event.target.value;
+	    this.setState({ title: title });
+	  },
+	  updateDescription: function updateDescription(event) {
+	    var description = event.target.value;
+	    this.setState({ description: description });
+	  },
+	  toggleDialog: function toggleDialog() {
+	    this.setState({
+	      dialog: !this.state.dialog
+	    });
+	  },
+	  updateMetadata: function updateMetadata() {
+	    this.setState({
+	      dialog: !this.state.dialog
+	    });
+	    this.imageExporter.updateMetadata({
+	      title: this.state.title,
+	      description: this.state.description,
+	      image: _reactDom2.default.findDOMNode(this.refs.thumbnail).src,
+	      path: this.props.imageBuilder.queryDataModel.basepath
+	    });
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { className: _ImageRenderer2.default.container },
+	      _react2.default.createElement('canvas', {
+	        className: _ImageRenderer2.default.renderer,
+	        ref: 'canvasRenderer',
+	        width: this.state.width,
+	        height: this.state.height
+	      }),
+	      _react2.default.createElement(
+	        'div',
+	        { className: this.state.dialog ? _ImageRenderer2.default.dialog : _ImageRenderer2.default.hidden },
+	        _react2.default.createElement(
+	          'div',
+	          { className: _ImageRenderer2.default.inside },
+	          _react2.default.createElement('img', { ref: 'thumbnail', className: _ImageRenderer2.default.thumbnail, height: Math.floor(this.state.height / 2) }),
+	          _react2.default.createElement(
+	            'div',
+	            { className: _ImageRenderer2.default.metadata, style: { height: Math.floor(this.state.height / 2) + 'px' } },
+	            _react2.default.createElement(
+	              'strong',
+	              { className: _ImageRenderer2.default.title },
+	              _react2.default.createElement(_ContentEditableWidget2.default, { html: this.state.title, onChange: this.updateTitle })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: _ImageRenderer2.default.description },
+	              _react2.default.createElement(_ContentEditableWidget2.default, { html: this.state.description, onChange: this.updateDescription })
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: _ImageRenderer2.default.buttons },
+	            _react2.default.createElement(
+	              'button',
+	              { className: _ImageRenderer2.default.button, onClick: this.toggleDialog },
+	              'Cancel'
+	            ),
+	            _react2.default.createElement(
+	              'button',
+	              { className: _ImageRenderer2.default.button, onClick: this.updateMetadata },
+	              'Save'
+	            )
+	          )
+	        )
+	      )
+	    );
+	  }
 	});
 
 /***/ },
@@ -32089,7 +32142,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _react = __webpack_require__(2);
@@ -32102,70 +32155,76 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var noOp = function noOp() {};
+
 	exports.default = _react2.default.createClass({
 
-	    displayName: 'ContentEditableWidget',
+	  displayName: 'ContentEditableWidget',
 
-	    propTypes: {
-	        blurOnEnter: _react2.default.PropTypes.bool,
-	        className: _react2.default.PropTypes.string,
-	        html: _react2.default.PropTypes.string,
-	        onBlur: _react2.default.PropTypes.func,
-	        onChange: _react2.default.PropTypes.func
-	    },
+	  propTypes: {
+	    blurOnEnter: _react2.default.PropTypes.bool,
+	    className: _react2.default.PropTypes.string,
+	    html: _react2.default.PropTypes.string,
+	    onBlur: _react2.default.PropTypes.func,
+	    onChange: _react2.default.PropTypes.func
+	  },
 
-	    getDefaultProps: function getDefaultProps() {
-	        return {
-	            blurOnEnter: false,
-	            className: ''
-	        };
-	    },
-	    shouldComponentUpdate: function shouldComponentUpdate(nextProps) {
-	        return nextProps.html !== _reactDom2.default.findDOMNode(this).innerHTML;
-	    },
-	    componentDidUpdate: function componentDidUpdate() {
-	        if (this.props.html !== _reactDom2.default.findDOMNode(this).innerHTML) {
-	            _reactDom2.default.findDOMNode(this).innerHTML = this.props.html;
-	        }
-	    },
-	    setFocus: function setFocus() {
-	        var range = document.createRange();
-	        range.selectNodeContents(_reactDom2.default.findDOMNode(this));
-	        var sel = window.getSelection();
-	        sel.removeAllRanges();
-	        sel.addRange(range);
-	    },
-	    blurEditable: function blurEditable(event) {
-	        if (event.charCode === 13) {
-	            _reactDom2.default.findDOMNode(this).blur();
-	            window.getSelection().removeAllRanges();
-	            if (this.props.onBlur) {
-	                this.props.onBlur();
-	            }
-	        }
-	    },
-	    emitChange: function emitChange(evt) {
-	        var html = _reactDom2.default.findDOMNode(this).innerHTML;
-	        if (this.props.onChange && html !== this.lastHtml) {
-	            evt.target = { value: html };
-	            this.props.onChange(evt);
-	        }
-	        this.lastHtml = html;
-	        if (evt.type === 'blur' && this.props.onBlur) {
-	            this.props.onBlur();
-	        }
-	    },
-
-
-	    /* eslint-disable react/no-danger */
-	    render: function render() {
-	        return _react2.default.createElement('div', { className: this.props.className,
-	            onInput: this.emitChange,
-	            onBlur: this.emitChange,
-	            onKeyPress: this.props.blurOnEnter ? this.blurEditable : function () {},
-	            contentEditable: true,
-	            dangerouslySetInnerHTML: { __html: this.props.html } });
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      blurOnEnter: false,
+	      className: ''
+	    };
+	  },
+	  shouldComponentUpdate: function shouldComponentUpdate(nextProps) {
+	    return nextProps.html !== _reactDom2.default.findDOMNode(this).innerHTML;
+	  },
+	  componentDidUpdate: function componentDidUpdate() {
+	    if (this.props.html !== _reactDom2.default.findDOMNode(this).innerHTML) {
+	      _reactDom2.default.findDOMNode(this).innerHTML = this.props.html;
 	    }
+	  },
+	  setFocus: function setFocus() {
+	    var range = document.createRange();
+	    range.selectNodeContents(_reactDom2.default.findDOMNode(this));
+	    var sel = window.getSelection();
+	    sel.removeAllRanges();
+	    sel.addRange(range);
+	  },
+	  blurEditable: function blurEditable(event) {
+	    if (event.charCode === 13) {
+	      _reactDom2.default.findDOMNode(this).blur();
+	      window.getSelection().removeAllRanges();
+	      if (this.props.onBlur) {
+	        this.props.onBlur();
+	      }
+	    }
+	  },
+	  emitChange: function emitChange(evt) {
+	    var html = _reactDom2.default.findDOMNode(this).innerHTML;
+	    if (this.props.onChange && html !== this.lastHtml) {
+	      evt.target = {
+	        value: html
+	      };
+	      this.props.onChange(evt);
+	    }
+	    this.lastHtml = html;
+	    if (evt.type === 'blur' && this.props.onBlur) {
+	      this.props.onBlur();
+	    }
+	  },
+
+
+	  /* eslint-disable react/no-danger */
+	  render: function render() {
+	    return _react2.default.createElement('div', {
+	      className: this.props.className,
+	      onInput: this.emitChange,
+	      onBlur: this.emitChange,
+	      onKeyPress: this.props.blurOnEnter ? this.blurEditable : noOp,
+	      contentEditable: true,
+	      dangerouslySetInnerHTML: { __html: this.props.html }
+	    });
+	  }
 	});
 
 /***/ },
@@ -32175,7 +32234,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -32189,108 +32248,108 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var ImageExporter = function () {
-	    function ImageExporter() {
-	        var format = arguments.length <= 0 || arguments[0] === undefined ? 'image/jpeg' : arguments[0];
-	        var padding = arguments.length <= 1 || arguments[1] === undefined ? 3 : arguments[1];
+	  function ImageExporter() {
+	    var format = arguments.length <= 0 || arguments[0] === undefined ? 'image/jpeg' : arguments[0];
+	    var padding = arguments.length <= 1 || arguments[1] === undefined ? 3 : arguments[1];
 
-	        _classCallCheck(this, ImageExporter);
+	    _classCallCheck(this, ImageExporter);
 
-	        this.format = format;
-	        this.padding = padding;
-	        this.counter = 0;
-	        this.bgCanvas = null;
-	        this.imageToDecode = null;
+	    this.format = format;
+	    this.padding = padding;
+	    this.counter = 0;
+	    this.bgCanvas = null;
+	    this.imageToDecode = null;
+	  }
+
+	  _createClass(ImageExporter, [{
+	    key: 'exportImage',
+	    value: function exportImage(data) {
+	      var xhr = new XMLHttpRequest();
+	      var dataToSend = {};
+	      var ts = Number(this.counter++).toString();
+
+	      if (!data.canvas || !data.arguments) {
+	        return;
+	      }
+
+	      while (ts.length < this.padding) {
+	        ts = '0' + ts;
+	      }
+	      dataToSend.arguments = data.arguments;
+	      dataToSend.image = data.canvas.toDataURL(this.format);
+	      dataToSend.arguments.__ = ts;
+
+	      xhr.open('POST', '/export', true);
+	      xhr.responseType = 'text';
+	      xhr.setRequestHeader('Content-Type', 'application/json');
+
+	      xhr.onload = function (e) {
+	        if (xhr.status === 200) {
+	          return;
+	        }
+	      };
+
+	      xhr.onerror = function (e) {
+	        console.log('error export', data.arguments);
+	      };
+
+	      xhr.send(JSON.stringify(dataToSend));
 	    }
-
-	    _createClass(ImageExporter, [{
-	        key: 'exportImage',
-	        value: function exportImage(data) {
-	            var xhr = new XMLHttpRequest(),
-	                dataToSend = {},
-	                ts = Number(this.counter++).toString();
-
-	            if (!data.canvas || !data.arguments) {
-	                return;
-	            }
-
-	            while (ts.length < this.padding) {
-	                ts = '0' + ts;
-	            }
-	            dataToSend.arguments = data.arguments;
-	            dataToSend.image = data.canvas.toDataURL(this.format);
-	            dataToSend.arguments.__ = ts;
-
-	            xhr.open('POST', '/export', true);
-	            xhr.responseType = 'text';
-	            xhr.setRequestHeader('Content-Type', 'application/json');
-
-	            xhr.onload = function (e) {
-	                if (xhr.status === 200) {
-	                    return;
-	                }
-	            };
-
-	            xhr.onerror = function (e) {
-	                console.log('error export', data.arguments);
-	            };
-
-	            xhr.send(JSON.stringify(dataToSend));
+	  }, {
+	    key: 'updateMetadata',
+	    value: function updateMetadata(dataToSend) {
+	      // Validate image data and use a canvas to convert it if need be
+	      if (dataToSend.image.indexOf('blob:') !== -1) {
+	        if (!this.bgCanvas) {
+	          this.bgCanvas = new _CanvasOffscreenBuffer2.default(100, 100);
 	        }
-	    }, {
-	        key: 'updateMetadata',
-	        value: function updateMetadata(dataToSend) {
-	            // Validate image data and use a canvas to convert it if need be
-	            if (dataToSend.image.indexOf('blob:') !== -1) {
-	                if (!this.bgCanvas) {
-	                    this.bgCanvas = new _CanvasOffscreenBuffer2.default(100, 100);
-	                }
-	                if (!this.imageToDecode) {
-	                    this.imageToDecode = new Image();
-	                }
-
-	                // Decode image
-	                this.imageToDecode.src = dataToSend.image;
-
-	                // Resize canvas and draw image into it
-	                this.bgCanvas.size(this.imageToDecode.width, this.imageToDecode.height);
-	                this.bgCanvas.get2DContext().drawImage(this.imageToDecode, 0, 0);
-	                dataToSend.image = this.bgCanvas.toDataURL('image/png');
-	            }
-
-	            var xhr = new XMLHttpRequest();
-
-	            xhr.open('POST', '/update', true);
-	            xhr.responseType = 'text';
-	            xhr.setRequestHeader('Content-Type', 'application/json');
-
-	            xhr.onload = function (e) {
-	                if (xhr.status === 200) {
-	                    return;
-	                }
-	            };
-
-	            xhr.onerror = function (e) {
-	                console.log('error export', e);
-	            };
-
-	            xhr.send(JSON.stringify(dataToSend));
+	        if (!this.imageToDecode) {
+	          this.imageToDecode = new Image();
 	        }
-	    }, {
-	        key: 'extractCanvasRegion',
-	        value: function extractCanvasRegion(canvas, region, outputSize) {
-	            var format = arguments.length <= 3 || arguments[3] === undefined ? 'image/png' : arguments[3];
 
-	            if (!this.bgCanvas) {
-	                this.bgCanvas = new _CanvasOffscreenBuffer2.default(100, 100);
-	            }
+	        // Decode image
+	        this.imageToDecode.src = dataToSend.image;
 
-	            this.bgCanvas.size(outputSize[0], outputSize[1]);
-	            this.bgCanvas.get2DContext().drawImage(canvas, region[0], region[1], region[2], region[3], 0, 0, outputSize[0], outputSize[1]);
-	            return this.bgCanvas.toDataURL(format);
+	        // Resize canvas and draw image into it
+	        this.bgCanvas.size(this.imageToDecode.width, this.imageToDecode.height);
+	        this.bgCanvas.get2DContext().drawImage(this.imageToDecode, 0, 0);
+	        dataToSend.image = this.bgCanvas.toDataURL('image/png');
+	      }
+
+	      var xhr = new XMLHttpRequest();
+
+	      xhr.open('POST', '/update', true);
+	      xhr.responseType = 'text';
+	      xhr.setRequestHeader('Content-Type', 'application/json');
+
+	      xhr.onload = function (e) {
+	        if (xhr.status === 200) {
+	          return;
 	        }
-	    }]);
+	      };
 
-	    return ImageExporter;
+	      xhr.onerror = function (e) {
+	        console.log('error export', e);
+	      };
+
+	      xhr.send(JSON.stringify(dataToSend));
+	    }
+	  }, {
+	    key: 'extractCanvasRegion',
+	    value: function extractCanvasRegion(canvas, region, outputSize) {
+	      var format = arguments.length <= 3 || arguments[3] === undefined ? 'image/png' : arguments[3];
+
+	      if (!this.bgCanvas) {
+	        this.bgCanvas = new _CanvasOffscreenBuffer2.default(100, 100);
+	      }
+
+	      this.bgCanvas.size(outputSize[0], outputSize[1]);
+	      this.bgCanvas.get2DContext().drawImage(canvas, region[0], region[1], region[2], region[3], 0, 0, outputSize[0], outputSize[1]);
+	      return this.bgCanvas.toDataURL(format);
+	    }
+	  }]);
+
+	  return ImageExporter;
 	}();
 
 	exports.default = ImageExporter;
@@ -32302,7 +32361,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -32314,63 +32373,63 @@
 	// Create <canvas/> within the DOM
 
 	var CanvasOffscreenBuffer = function () {
-	    function CanvasOffscreenBuffer(width, height) {
-	        _classCallCheck(this, CanvasOffscreenBuffer);
+	  function CanvasOffscreenBuffer(width, height) {
+	    _classCallCheck(this, CanvasOffscreenBuffer);
 
-	        this.id = 'CanvasOffscreenBuffer_' + ++offscreenCanvasCount;
-	        this.el = document.createElement('canvas');
-	        this.width = width;
-	        this.height = height;
+	    this.id = 'CanvasOffscreenBuffer_' + ++offscreenCanvasCount;
+	    this.el = document.createElement('canvas');
+	    this.width = width;
+	    this.height = height;
 
-	        this.el.style.display = 'none';
-	        this.el.setAttribute('width', this.width);
-	        this.el.setAttribute('height', this.height);
+	    this.el.style.display = 'none';
+	    this.el.setAttribute('width', this.width);
+	    this.el.setAttribute('height', this.height);
 
-	        document.body.appendChild(this.el);
+	    document.body.appendChild(this.el);
+	  }
+
+	  _createClass(CanvasOffscreenBuffer, [{
+	    key: 'size',
+	    value: function size(width, height) {
+	      if (width) {
+	        this.el.setAttribute('width', this.width = width);
+	      }
+	      if (height) {
+	        this.el.setAttribute('height', this.height = height);
+	      }
+	      return [Number(this.width), Number(this.height)];
+	    }
+	  }, {
+	    key: 'get2DContext',
+	    value: function get2DContext() {
+	      return this.el.getContext('2d');
+	    }
+	  }, {
+	    key: 'get3DContext',
+	    value: function get3DContext() {
+	      var options = arguments.length <= 0 || arguments[0] === undefined ? { preserveDrawingBuffer: true, premultipliedAlpha: false } : arguments[0];
+
+	      return this.el.getContext('webgl', options) || this.el.getContext('experimental-webgl', options);
 	    }
 
-	    _createClass(CanvasOffscreenBuffer, [{
-	        key: 'size',
-	        value: function size(width, height) {
-	            if (width) {
-	                this.el.setAttribute('width', this.width = width);
-	            }
-	            if (height) {
-	                this.el.setAttribute('height', this.height = height);
-	            }
-	            return [Number(this.width), Number(this.height)];
-	        }
-	    }, {
-	        key: 'get2DContext',
-	        value: function get2DContext() {
-	            return this.el.getContext("2d");
-	        }
-	    }, {
-	        key: 'get3DContext',
-	        value: function get3DContext() {
-	            var options = arguments.length <= 0 || arguments[0] === undefined ? { preserveDrawingBuffer: true, premultipliedAlpha: false } : arguments[0];
+	    // Remove canvas from DOM
 
-	            return this.el.getContext("webgl", options) || this.el.getContext("experimental-webgl", options);
-	        }
+	  }, {
+	    key: 'destroy',
+	    value: function destroy() {
+	      this.el.parentNode.removeChild(this.el);
+	      this.el = null;
+	      this.width = null;
+	      this.height = null;
+	    }
+	  }, {
+	    key: 'toDataURL',
+	    value: function toDataURL(type, encoderOptions) {
+	      return this.el.toDataURL(type, encoderOptions);
+	    }
+	  }]);
 
-	        // Remove canvas from DOM
-
-	    }, {
-	        key: 'destroy',
-	        value: function destroy() {
-	            this.el.parentNode.removeChild(this.el);
-	            this.el = null;
-	            this.width = null;
-	            this.height = null;
-	        }
-	    }, {
-	        key: 'toDataURL',
-	        value: function toDataURL(type, encoderOptions) {
-	            return this.el.toDataURL(type, encoderOptions);
-	        }
-	    }]);
-
-	    return CanvasOffscreenBuffer;
+	  return CanvasOffscreenBuffer;
 	}();
 
 	exports.default = CanvasOffscreenBuffer;
@@ -32382,7 +32441,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -32404,261 +32463,274 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	// Module dependencies and constants
-	var Modifier = { NONE: 0, ALT: 1, META: 2, SHIFT: 4, CTRL: 8 },
+	var Modifier = {
+	  NONE: 0,
+	  ALT: 1,
+	  META: 2,
+	  SHIFT: 4,
+	  CTRL: 8
+	},
 	    eventTypeMapping = {
-	    'contextmenu': 'contextmenu',
-	    'mousewheel': 'zoom',
-	    'DOMMouseScroll': 'zoom'
+	  contextmenu: 'contextmenu',
+	  mousewheel: 'zoom',
+	  DOMMouseScroll: 'zoom'
 	},
 	    TIMEOUT_BETWEEN_ZOOM = 300;
 
 	var handlerCount = 0;
 
 	function getModifier(e) {
-	    var modifier = 0;
-	    if (e.srcEvent) {
-	        modifier += e.srcEvent.altKey ? Modifier.ALT : 0;
-	        modifier += e.srcEvent.ctrlKey ? Modifier.CTRL : 0;
-	        modifier += e.srcEvent.metaKey ? Modifier.META : 0;
-	        modifier += e.srcEvent.shiftKey ? Modifier.SHIFT : 0;
-	    }
+	  var modifier = 0;
+	  if (e.srcEvent) {
+	    modifier += e.srcEvent.altKey ? Modifier.ALT : 0;
+	    modifier += e.srcEvent.ctrlKey ? Modifier.CTRL : 0;
+	    modifier += e.srcEvent.metaKey ? Modifier.META : 0;
+	    modifier += e.srcEvent.shiftKey ? Modifier.SHIFT : 0;
+	  }
 
-	    return modifier;
+	  return modifier;
 	}
 
 	function getRelative(el, event) {
-	    return {
-	        x: event.center.x - (el.getClientRects()[0].x || el.getClientRects()[0].left),
-	        y: event.center.y - (el.getClientRects()[0].y || el.getClientRects()[0].top)
-	    };
+	  return {
+	    x: event.center.x - (el.getClientRects()[0].x || el.getClientRects()[0].left),
+	    y: event.center.y - (el.getClientRects()[0].y || el.getClientRects()[0].top)
+	  };
 	}
 
 	function broadcast(ctx, topic, event) {
-	    event.preventDefault();
+	  event.preventDefault();
 
-	    event.button = 0;
-	    event.topic = topic;
-	    event.modifier = ctx.modifier ? ctx.modifier : getModifier(event);
-	    event.relative = getRelative(ctx.el, event);
+	  event.button = 0;
+	  event.topic = topic;
+	  event.modifier = ctx.modifier ? ctx.modifier : getModifier(event);
+	  event.relative = getRelative(ctx.el, event);
 
-	    ctx.emit(topic, event);
+	  ctx.emit(topic, event);
 	}
 
 	var MouseHandler = function () {
-	    function MouseHandler(domElement, options) {
-	        var _this = this;
+	  function MouseHandler(domElement, options) {
+	    var _this = this;
 
-	        _classCallCheck(this, MouseHandler);
+	    _classCallCheck(this, MouseHandler);
 
-	        var defaultOptions = {
-	            pan: {
-	                threshold: 0
-	            },
-	            pinch: {
-	                threshold: 0
-	            }
-	        };
-	        options = (0, _merge2.default)(defaultOptions, options);
+	    var defaultOptions = {
+	      pan: {
+	        threshold: 0
+	      },
+	      pinch: {
+	        threshold: 0
+	      }
+	    };
+	    options = (0, _merge2.default)(defaultOptions, options);
 
-	        this.Modifier = Modifier;
+	    this.Modifier = Modifier;
 
-	        handlerCount++;
-	        this.id = 'mouse_handler_' + handlerCount;
-	        this.el = domElement;
-	        this.modifier = 0;
-	        this.toggleModifiers = [0];
-	        this.toggleModifierIdx = 0;
-	        this.toggleModifierEnable = false;
-	        this.hammer = new _hammerjs2.default(domElement);
-	        this.scrollInternal = {
-	            ts: +new Date(),
-	            deltaX: 0,
-	            deltaY: 0
-	        };
-	        this.finalZoomEvent = null;
-	        this.finalZoomTimerId = 0;
-	        this.triggerFinalZoomEvent = function () {
-	            if (_this.finalZoomEvent) {
-	                _this.finalZoomEvent.isFirst = false;
-	                _this.finalZoomEvent.isFinal = true;
-	            }
-	            _this.emit(_this.finalZoomEvent.topic, _this.finalZoomEvent);
-	        };
+	    this.id = 'mouse_handler_' + ++handlerCount;
+	    this.el = domElement;
+	    this.modifier = 0;
+	    this.toggleModifiers = [0];
+	    this.toggleModifierIdx = 0;
+	    this.toggleModifierEnable = false;
+	    this.hammer = new _hammerjs2.default(domElement);
+	    this.scrollInternal = {
+	      ts: +new Date(),
+	      deltaX: 0,
+	      deltaY: 0
+	    };
+	    this.finalZoomEvent = null;
+	    this.finalZoomTimerId = 0;
+	    this.triggerFinalZoomEvent = function () {
+	      if (_this.finalZoomEvent) {
+	        _this.finalZoomEvent.isFirst = false;
+	        _this.finalZoomEvent.isFinal = true;
+	      }
+	      _this.emit(_this.finalZoomEvent.topic, _this.finalZoomEvent);
+	    };
 
-	        this.domEventHandler = function (e) {
-	            e.preventDefault();
-	            var event = {
-	                srcEvent: e,
-	                button: e.type === 'contextmenu' ? 2 : 0,
-	                topic: eventTypeMapping[e.type],
+	    this.domEventHandler = function (e) {
+	      e.preventDefault();
+	      var event = {
+	        srcEvent: e,
+	        button: e.type === 'contextmenu' ? 2 : 0,
+	        topic: eventTypeMapping[e.type],
 
-	                center: {
-	                    x: e.clientX,
-	                    y: e.clientY
-	                },
-	                relative: {
-	                    x: e.clientX - (_this.el.getClientRects()[0].x || _this.el.getClientRects()[0].left),
-	                    y: e.clientY - (_this.el.getClientRects()[0].y || _this.el.getClientRects()[0].top)
-	                },
+	        center: {
+	          x: e.clientX,
+	          y: e.clientY
+	        },
+	        relative: {
+	          x: e.clientX - (_this.el.getClientRects()[0].x || _this.el.getClientRects()[0].left),
+	          y: e.clientY - (_this.el.getClientRects()[0].y || _this.el.getClientRects()[0].top)
+	        },
 
-	                scale: 1,
+	        scale: 1,
 
-	                deltaX: 0,
-	                deltaY: 0,
-	                delta: 0,
-	                deltaTime: 0,
+	        deltaX: 0,
+	        deltaY: 0,
+	        delta: 0,
+	        deltaTime: 0,
 
-	                velocityX: 0,
-	                velocityY: 0,
-	                velocity: 0,
+	        velocityX: 0,
+	        velocityY: 0,
+	        velocity: 0,
 
-	                isFirst: false,
-	                isFinal: false
-	            };
-	            event.modifier = _this.modifier ? _this.modifier : getModifier(event);
+	        isFirst: false,
+	        isFinal: false
+	      };
+	      event.modifier = _this.modifier ? _this.modifier : getModifier(event);
 
-	            // Handle scroll/zoom if any
-	            if (event.topic === 'zoom') {
-	                // Register final zoom
-	                clearTimeout(_this.finalZoomTimerId);
-	                _this.finalZoomTimerId = setTimeout(_this.triggerFinalZoomEvent, TIMEOUT_BETWEEN_ZOOM);
+	      // Handle scroll/zoom if any
+	      if (event.topic === 'zoom') {
+	        // Register final zoom
+	        clearTimeout(_this.finalZoomTimerId);
+	        _this.finalZoomTimerId = setTimeout(_this.triggerFinalZoomEvent, TIMEOUT_BETWEEN_ZOOM);
 
-	                var currentTime = +new Date();
-	                if (currentTime - _this.scrollInternal.ts > TIMEOUT_BETWEEN_ZOOM) {
-	                    _this.scrollInternal.deltaX = 0;
-	                    _this.scrollInternal.deltaY = 0;
-	                    event.isFirst = true;
-	                    event.isFinal = false;
-	                } else {
-	                    event.isFinal = false;
-	                }
+	        var currentTime = +new Date();
+	        if (currentTime - _this.scrollInternal.ts > TIMEOUT_BETWEEN_ZOOM) {
+	          _this.scrollInternal.deltaX = 0;
+	          _this.scrollInternal.deltaY = 0;
+	          event.isFirst = true;
+	          event.isFinal = false;
+	        } else {
+	          event.isFinal = false;
+	        }
 
-	                if (e.wheelDeltaX === undefined) {
-	                    event.zoom = _this.lastScrollZoomFactor;
-	                    _this.scrollInternal.deltaY -= e.detail * 2.0;
-	                } else {
-	                    event.zoom = _this.lastScrollZoomFactor;
-	                    _this.scrollInternal.deltaX += e.wheelDeltaX;
-	                    _this.scrollInternal.deltaY += e.wheelDeltaY;
-	                }
+	        if (e.wheelDeltaX === undefined) {
+	          event.zoom = _this.lastScrollZoomFactor;
+	          _this.scrollInternal.deltaY -= e.detail * 2.0;
+	        } else {
+	          event.zoom = _this.lastScrollZoomFactor;
+	          _this.scrollInternal.deltaX += e.wheelDeltaX;
+	          _this.scrollInternal.deltaY += e.wheelDeltaY;
+	        }
 
-	                event.deltaX = _this.scrollInternal.deltaX;
-	                event.deltaY = _this.scrollInternal.deltaY;
-	                event.scale = 1.0 + event.deltaY / _this.el.getClientRects()[0].height;
-	                event.scale = event.scale < 0.1 ? 0.1 : event.scale;
-	                _this.scrollInternal.ts = currentTime;
+	        event.deltaX = _this.scrollInternal.deltaX;
+	        event.deltaY = _this.scrollInternal.deltaY;
+	        event.scale = 1.0 + event.deltaY / _this.el.getClientRects()[0].height;
+	        event.scale = event.scale < 0.1 ? 0.1 : event.scale;
+	        _this.scrollInternal.ts = currentTime;
 
-	                _this.finalZoomEvent = event;
-	            }
+	        _this.finalZoomEvent = event;
+	      }
 
-	            _this.emit(event.topic, event);
-	            return false;
-	        };
+	      _this.emit(event.topic, event);
+	      return false;
+	    };
 
-	        // set hammer options
-	        this.hammer.get('pan').set(options.pan);
-	        this.hammer.get('pinch').set(options.pinch);
+	    // set hammer options
+	    this.hammer.get('pan').set(options.pan);
+	    this.hammer.get('pinch').set(options.pinch);
 
-	        // Listen to hammer events
-	        this.hammer.on('tap', function (e) {
-	            broadcast(_this, 'click', e);
+	    // Listen to hammer events
+	    this.hammer.on('tap', function (e) {
+	      broadcast(_this, 'click', e);
+	    });
+
+	    this.hammer.on('doubletap', function (e) {
+	      broadcast(_this, 'dblclick', e);
+	    });
+
+	    this.hammer.on('pan', function (e) {
+	      broadcast(_this, 'drag', e);
+	    });
+
+	    this.hammer.on('panstart', function (e) {
+	      e.isFirst = true;
+	      broadcast(_this, 'drag', e);
+	    });
+
+	    this.hammer.on('panend', function (e) {
+	      e.isFinal = true;
+	      broadcast(_this, 'drag', e);
+	    });
+
+	    this.hammer.on('pinch', function (e) {
+	      broadcast(_this, 'zoom', e);
+	    });
+
+	    this.hammer.on('pinchstart', function (e) {
+	      console.log('zoom start');
+	      e.isFirst = true;
+	      broadcast(_this, 'zoom', e);
+	    });
+
+	    this.hammer.on('pinchend', function (e) {
+	      e.isFinal = true;
+	      console.log('zoom end');
+	      broadcast(_this, 'zoom', e);
+	    });
+
+	    this.hammer.get('pinch').set({
+	      enable: true
+	    });
+
+	    this.hammer.on('press', function (e) {
+	      if (_this.toggleModifierEnable) {
+	        _this.toggleModifierIdx = (_this.toggleModifierIdx + 1) % _this.toggleModifiers.length;
+	        _this.modifier = _this.toggleModifiers[_this.toggleModifierIdx];
+
+	        e.relative = getRelative(_this.el, e);
+
+	        _this.emit('modifier.change', {
+	          value: _this.modifier,
+	          list: Modifier,
+	          event: e
 	        });
+	      }
+	    });
 
-	        this.hammer.on('doubletap', function (e) {
-	            broadcast(_this, 'dblclick', e);
-	        });
+	    // Manage events that are not captured by hammer
+	    this.el.addEventListener('contextmenu', this.domEventHandler);
+	    this.el.addEventListener('mousewheel', this.domEventHandler);
+	    this.el.addEventListener('DOMMouseScroll', this.domEventHandler);
+	  }
 
-	        this.hammer.on('pan', function (e) {
-	            broadcast(_this, 'drag', e);
-	        });
-
-	        this.hammer.on('panstart', function (e) {
-	            e.isFirst = true;
-	            broadcast(_this, 'drag', e);
-	        });
-
-	        this.hammer.on('panend', function (e) {
-	            e.isFinal = true;
-	            broadcast(_this, 'drag', e);
-	        });
-
-	        this.hammer.on('pinch', function (e) {
-	            broadcast(_this, 'zoom', e);
-	        });
-
-	        this.hammer.on('pinchstart', function (e) {
-	            console.log('zoom start');
-	            e.isFirst = true;
-	            broadcast(_this, 'zoom', e);
-	        });
-
-	        this.hammer.on('pinchend', function (e) {
-	            e.isFinal = true;
-	            console.log('zoom end');
-	            broadcast(_this, 'zoom', e);
-	        });
-
-	        this.hammer.get('pinch').set({ enable: true });
-
-	        this.hammer.on('press', function (e) {
-	            if (_this.toggleModifierEnable) {
-	                _this.toggleModifierIdx = (_this.toggleModifierIdx + 1) % _this.toggleModifiers.length;
-	                _this.modifier = _this.toggleModifiers[_this.toggleModifierIdx];
-
-	                e.relative = getRelative(_this.el, e);
-
-	                _this.emit('modifier.change', { value: _this.modifier, list: Modifier, event: e });
-	            }
-	        });
-
-	        // Manage events that are not captured by hammer
-	        this.el.addEventListener('contextmenu', this.domEventHandler);
-	        this.el.addEventListener('mousewheel', this.domEventHandler);
-	        this.el.addEventListener('DOMMouseScroll', this.domEventHandler);
+	  _createClass(MouseHandler, [{
+	    key: 'enablePinch',
+	    value: function enablePinch(enable) {
+	      this.hammer.get('pinch').set({
+	        enable: enable
+	      });
 	    }
+	  }, {
+	    key: 'setModifier',
+	    value: function setModifier(modifier) {
+	      this.modifier = modifier;
+	    }
+	  }, {
+	    key: 'toggleModifierOnPress',
+	    value: function toggleModifierOnPress(enable, modifiers) {
+	      this.toggleModifiers = modifiers;
+	      this.toggleModifierEnable = enable;
+	    }
+	  }, {
+	    key: 'attach',
+	    value: function attach(listeners) {
+	      var subscriptions = {};
+	      for (var key in listeners) {
+	        subscriptions[key] = this.on(key, listeners[key]);
+	      }
+	      return subscriptions;
+	    }
+	  }, {
+	    key: 'destroy',
+	    value: function destroy() {
+	      // Remove all listeners is any
+	      this.off();
 
-	    _createClass(MouseHandler, [{
-	        key: 'enablePinch',
-	        value: function enablePinch(enable) {
-	            this.hammer.get('pinch').set({ enable: enable });
-	        }
-	    }, {
-	        key: 'setModifier',
-	        value: function setModifier(modifier) {
-	            this.modifier = modifier;
-	        }
-	    }, {
-	        key: 'toggleModifierOnPress',
-	        value: function toggleModifierOnPress(enable, modifiers) {
-	            this.toggleModifiers = modifiers;
-	            this.toggleModifierEnable = enable;
-	        }
-	    }, {
-	        key: 'attach',
-	        value: function attach(listeners) {
-	            var subscriptions = {};
-	            for (var key in listeners) {
-	                subscriptions[key] = this.on(key, listeners[key]);
-	            }
-	            return subscriptions;
-	        }
-	    }, {
-	        key: 'destroy',
-	        value: function destroy() {
-	            // Remove all listeners is any
-	            this.off();
+	      // Release hammer
+	      this.hammer.destroy();
 
-	            // Release hammer
-	            this.hammer.destroy();
+	      // Remove events that are not captured by hammer
+	      this.el.removeEventListener('contextmenu', this.domEventHandler);
+	      this.el.removeEventListener('mousewheel', this.domEventHandler);
+	      this.el.removeEventListener('DOMMouseScroll', this.domEventHandler);
+	    }
+	  }]);
 
-	            // Remove events that are not captured by hammer
-	            this.el.removeEventListener('contextmenu', this.domEventHandler);
-	            this.el.removeEventListener('mousewheel', this.domEventHandler);
-	            this.el.removeEventListener('DOMMouseScroll', this.domEventHandler);
-	        }
-	    }]);
-
-	    return MouseHandler;
+	  return MouseHandler;
 	}();
 
 	// Add Observer pattern using Monologue.js
@@ -35968,7 +36040,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _react = __webpack_require__(2);
@@ -35997,369 +36069,384 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var layoutNames = Object.keys(_Layouts2.default),
-	    ACTIVE_VIEWPORT_CHANGE = 'multiview-viewport-active-change',
-	    LAYOUT_CHANGE = 'multiview-layout-change';
+	var layoutNames = Object.keys(_Layouts2.default);
+	var ACTIVE_VIEWPORT_CHANGE = 'multiview-viewport-active-change';
+	var LAYOUT_CHANGE = 'multiview-layout-change';
 
 	/**
 	 * This React component expect the following input properties:
 	 */
 	var MultiViewRenderer = _react2.default.createClass({
 
-	    displayName: 'MultiViewRenderer',
+	  displayName: 'MultiViewRenderer',
 
-	    propTypes: {
-	        activeColor: _react2.default.PropTypes.string,
-	        borderColor: _react2.default.PropTypes.string,
-	        crosshairColor: _react2.default.PropTypes.string,
-	        layout: _react2.default.PropTypes.string,
-	        renderers: _react2.default.PropTypes.object,
-	        spacing: _react2.default.PropTypes.number
-	    },
+	  propTypes: {
+	    activeColor: _react2.default.PropTypes.string,
+	    borderColor: _react2.default.PropTypes.string,
+	    crosshairColor: _react2.default.PropTypes.string,
+	    layout: _react2.default.PropTypes.string,
+	    renderers: _react2.default.PropTypes.object,
+	    spacing: _react2.default.PropTypes.number
+	  },
 
-	    getDefaultProps: function getDefaultProps() {
-	        return {
-	            spacing: 10,
-	            borderColor: '#000000',
-	            activeColor: '#0000FF',
-	            crosshairColor: '#000000',
-	            renderers: {}
-	        };
-	    },
-	    getInitialState: function getInitialState() {
-	        return { width: 200, height: 200 };
-	    },
-	    componentWillMount: function componentWillMount() {
-	        var drawViewportByName = this.drawViewportByName;
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      spacing: 10,
+	      borderColor: '#000000',
+	      activeColor: '#0000FF',
+	      crosshairColor: '#000000',
+	      renderers: {}
+	    };
+	  },
+	  getInitialState: function getInitialState() {
+	    return {
+	      width: 200,
+	      height: 200
+	    };
+	  },
+	  componentWillMount: function componentWillMount() {
+	    var drawViewportByName = this.drawViewportByName;
 
-	        this.dragCenter = false;
-	        this.dragInViewport = null;
-	        this.center = [0.5, 0.5];
-	        this.layout = this.props.layout || '3xT';
-	        this.viewports = [];
+	    this.dragCenter = false;
+	    this.dragInViewport = null;
+	    this.center = [0.5, 0.5];
+	    this.layout = this.props.layout || '3xT';
+	    this.viewports = [];
 
-	        function drawCallback(data, envelope) {
-	            this.dataToDraw = data;
-	            drawViewportByName(this.name);
-	        }
-
-	        // Init viewports from props
-	        for (var name in this.props.renderers) {
-	            var item = this.props.renderers[name],
-	                imageBuilder = item.builder,
-	                painter = item.painter;
-
-	            // Renderer is an ImageBuilder
-	            if (imageBuilder) {
-	                imageBuilder.onImageReady(drawCallback).context(item);
-	            }
-	            // Renderer is a Painter
-	            if (painter) {
-	                painter.onPainterReady(drawCallback).context(item);
-	            }
-
-	            this.viewports.push({ name: name, active: false });
-	        }
-
-	        // Listen to window resize
-	        this.sizeSubscription = _SizeHelper2.default.onSizeChange(this.updateDimensions);
-
-	        // Make sure we monitor window size if it is not already the case
-	        _SizeHelper2.default.startListening();
-	    },
-	    componentDidMount: function componentDidMount() {
-	        this.updateDimensions();
-
-	        // Attach mouse listener
-	        this.mouseHandler = new _MouseHandler2.default(_reactDom2.default.findDOMNode(this.refs.canvasRenderer));
-
-	        this.mouseHandler.attach({
-	            'drag': this.dragCallback,
-	            'click': this.clickCallback,
-	            'zoom': this.zoomCallback
-	        });
-	    },
-	    componentDidUpdate: function componentDidUpdate(nextProps, nextState) {
-	        this.drawLayout();
-	    },
-	    componentWillUnmount: function componentWillUnmount() {
-	        this.off();
-
-	        // Free mouseHandler
-	        if (this.mouseHandler) {
-	            this.mouseHandler.destroy();
-	            this.mouseHandler = null;
-	        }
-
-	        // Remove window listener
-	        if (this.sizeSubscription) {
-	            this.sizeSubscription.unsubscribe();
-	            this.sizeSubscription = null;
-	        }
-	    },
-	    setLayout: function setLayout(name) {
-	        this.layout = name;
-	        this.drawLayout();
-	        this.emit(LAYOUT_CHANGE, name);
-	    },
-	    getLayouts: function getLayouts() {
-	        return layoutNames;
-	    },
-	    getActiveLayout: function getActiveLayout() {
-	        return this.layout;
-	    },
-	    setRenderMethod: function setRenderMethod(name) {
-	        var _this = this;
-
-	        this.viewports.forEach(function (viewport) {
-	            if (viewport.active) {
-	                viewport.name = name;
-	                _this.emit(ACTIVE_VIEWPORT_CHANGE, viewport);
-	            }
-	        });
-	        this.drawViewportByName(null);
-	    },
-	    getRenderMethods: function getRenderMethods() {
-	        return Object.keys(this.props.renderers);
-	    },
-	    getActiveRenderMethod: function getActiveRenderMethod() {
-	        this.viewports.forEach(function (viewport) {
-	            if (viewport.active) {
-	                return viewport.name;
-	            }
-	        });
-	        return "No render method";
-	    },
-	    updateDimensions: function updateDimensions() {
-	        var el = _reactDom2.default.findDOMNode(this).parentNode,
-	            elSize = _SizeHelper2.default.getSize(el);
-
-	        if (el && (this.state.width !== elSize.clientWidth || this.state.height !== elSize.clientHeight)) {
-	            this.setState({ width: elSize.clientWidth, height: elSize.clientHeight });
-	            return true;
-	        }
-	        return false;
-	    },
-	    dragCallback: function dragCallback(event, envelope) {
-	        var viewport = this.getViewPort(event);
-
-	        if ((viewport || this.dragInViewport) && !this.dragCenter) {
-	            this.dragInViewport = this.dragInViewport || viewport;
-
-	            // Forward event to viewport event handler
-	            var renderer = this.props.renderers[this.dragInViewport.name],
-	                imageBuilder = renderer.builder,
-	                listeners = imageBuilder ? imageBuilder.getListeners() : null; // FIXME ?
-
-	            if (listeners && listeners.drag) {
-	                // Update relative information
-	                event.activeArea = this.dragInViewport.activeArea;
-
-	                // Forward event
-	                listeners.drag(event, envelope);
-	            }
-	        } else {
-	            this.dragCenter = true;
-
-	            // Update center and redraw
-	            this.center[0] = event.relative.x / this.state.width;
-	            this.center[1] = event.relative.y / this.state.height;
-	            this.drawLayout();
-	        }
-
-	        if (event.isFinal) {
-	            this.dragCenter = false;
-	            this.dragInViewport = null;
-	        }
-	    },
-	    clickCallback: function clickCallback(event, envelope) {
-	        // Reset any previous drag state
-	        this.dragCenter = false;
-	        this.dragInViewport = null;
-
-	        var viewport = this.getViewPort(event);
-
-	        if (viewport) {
-	            this.viewports.forEach(function (item) {
-	                item.active = false;
-	            });
-	            viewport.active = true;
-
-	            // Forward event to viewport event handler
-	            var renderer = this.props.renderers[viewport.name],
-	                imageBuilder = renderer.builder,
-	                listeners = imageBuilder ? imageBuilder.getListeners() : null; // FIXME ?
-
-	            if (listeners && listeners.click) {
-	                // Update relative information
-	                event.activeArea = viewport.activeArea;
-
-	                // Forward event
-	                listeners.click(event, envelope);
-	            }
-
-	            // Let's other know that the active viewport has changed
-	            this.emit(ACTIVE_VIEWPORT_CHANGE, viewport);
-	        }
-
-	        // Redraw the outline with the appropriate color for active
-	        this.drawLayout();
-	    },
-	    zoomCallback: function zoomCallback(event, envelope) {
-	        var viewport = this.getViewPort(event);
-
-	        if (viewport) {
-	            // Forward event to viewport event handler
-	            var renderer = this.props.renderers[viewport.name],
-	                imageBuilder = renderer.builder,
-	                listeners = imageBuilder ? imageBuilder.getListeners() : null;
-
-	            if (listeners && listeners.zoom) {
-	                // Update relative information
-	                event.activeArea = viewport.activeArea;
-
-	                // Forward event
-	                listeners.zoom(event, envelope);
-	            }
-	        }
-	    },
-	    getViewPort: function getViewPort(event) {
-	        var count = this.viewports.length,
-	            x = event.relative.x,
-	            y = event.relative.y;
-
-	        while (count--) {
-	            var area = this.viewports[count].activeArea || this.viewports[count].region;
-	            if (x >= area[0] && y >= area[1] && x <= area[0] + area[2] && y <= area[1] + area[3]) {
-	                return this.viewports[count];
-	            }
-	        }
-	        return null;
-	    },
-	    drawViewport: function drawViewport(viewport) {
-	        var renderer = this.props.renderers[viewport.name],
-	            region = viewport.region,
-	            ctx = _reactDom2.default.findDOMNode(this.refs.canvasRenderer).getContext('2d');
-
-	        if (!renderer || renderer.builder && !renderer.dataToDraw || renderer.painter && !renderer.painter.isReady()) {
-	            return;
-	        }
-
-	        if (renderer.painter) {
-	            var location = {
-	                x: region[0] + 2,
-	                y: region[1] + 2,
-	                width: region[2] - 4,
-	                height: region[3] - 4
-	            };
-	            viewport.activeArea = [].concat(viewport.region);
-	            renderer.painter.paint(ctx, location);
-	        } else {
-	            // Assume Image builder
-	            var dataToDraw = this.props.renderers[viewport.name].dataToDraw,
-	                w = region[2] - 2,
-	                h = region[3] - 2,
-	                iw = dataToDraw.outputSize[0],
-	                ih = dataToDraw.outputSize[1],
-	                zoomLevel = Math.min(w / iw, h / ih);
-
-	            ctx.clearRect(region[0] + 1, region[1] + 1, region[2] - 2, region[3] - 2);
-
-	            var tw = Math.floor(iw * zoomLevel) - 2,
-	                th = Math.floor(ih * zoomLevel) - 2,
-	                tx = 1 + region[0] + w * 0.5 - tw / 2,
-	                ty = 1 + region[1] + h * 0.5 - th / 2;
-
-	            try {
-	                ctx.drawImage(dataToDraw.canvas, dataToDraw.area[0], dataToDraw.area[1], dataToDraw.area[2], dataToDraw.area[3], // Source image   [Location,Size]
-	                tx, ty, tw, th); // Target drawing [Location,Size]
-
-	                // Draw cross hair if any
-	                if (dataToDraw.crosshair) {
-	                    var scale = [tw / dataToDraw.area[2], th / dataToDraw.area[3]],
-	                        translate = [tx, ty];
-
-	                    ctx.beginPath();
-
-	                    ctx.moveTo(translate[0] + scale[0] * dataToDraw.crosshair[0], ty);
-	                    ctx.lineTo(translate[0] + scale[0] * dataToDraw.crosshair[0], ty + th);
-
-	                    ctx.moveTo(tx, translate[1] + scale[1] * dataToDraw.crosshair[1]);
-	                    ctx.lineTo(tx + tw, translate[1] + scale[1] * dataToDraw.crosshair[1]);
-
-	                    ctx.strokeStyle = this.props.crosshairColor;
-	                    ctx.lineWidth = 1;
-	                    ctx.stroke();
-	                }
-
-	                viewport.activeArea = [tx, ty, tw, th];
-	            } catch (err) {
-	                console.log('Error in MultiLayoutRenderer::drawViewport', err);
-	            }
-	        }
-	    },
-	    drawViewportByName: function drawViewportByName(name) {
-	        var _this2 = this;
-
-	        var renderer = name ? this.props.renderers[name] : null;
-
-	        // Update image builder if any
-	        if (renderer && renderer.builder && !renderer.dataToDraw) {
-	            renderer.builder.update();
-	            return;
-	        }
-
-	        this.viewports.forEach(function (viewport) {
-	            if (viewport.name === name || name === null) {
-	                _this2.drawViewport(viewport);
-	            }
-	        });
-	    },
-	    drawLayout: function drawLayout() {
-	        var ctx = _reactDom2.default.findDOMNode(this.refs.canvasRenderer).getContext('2d'),
-	            width = ctx.canvas.width = this.state.width,
-	            height = ctx.canvas.height = this.state.height,
-	            centerPx = [this.center[0] * width, this.center[1] * height],
-	            spacing = this.props.spacing,
-	            regions = _Layouts2.default[this.layout](centerPx, spacing, width, height),
-	            viewports = this.viewports,
-	            numberOfRegions = regions.length;
-
-	        ctx.clearRect(0, 0, width, height);
-
-	        for (var i = 0; i < numberOfRegions; ++i) {
-	            var region = regions.shift();
-	            if (i < viewports.length) {
-	                viewports[i].region = region;
-	            } else {
-	                viewports.push({ name: this.getRenderMethods()[0], region: region, active: false });
-	            }
-	            ctx.beginPath();
-	            ctx.strokeStyle = viewports[i].active ? this.props.activeColor : this.props.borderColor;
-	            ctx.rect.apply(ctx, region);
-	            ctx.stroke();
-	        }
-
-	        // Remove the unused viewports
-	        while (viewports.length > numberOfRegions) {
-	            viewports.pop();
-	        }
-
-	        this.drawViewportByName(null);
-	    },
-	    onActiveViewportChange: function onActiveViewportChange(callback) {
-	        return this.on(ACTIVE_VIEWPORT_CHANGE, callback);
-	    },
-	    onLayoutChange: function onLayoutChange(callback) {
-	        return this.on(LAYOUT_CHANGE, callback);
-	    },
-	    render: function render() {
-	        return _react2.default.createElement('canvas', {
-	            className: 'CanvasMultiImageRenderer',
-	            ref: 'canvasRenderer',
-	            width: this.state.width,
-	            height: this.state.height });
+	    function drawCallback(data, envelope) {
+	      this.dataToDraw = data;
+	      drawViewportByName(this.name);
 	    }
+
+	    // Init viewports from props
+	    for (var name in this.props.renderers) {
+	      var item = this.props.renderers[name],
+	          imageBuilder = item.builder,
+	          painter = item.painter;
+
+	      // Renderer is an ImageBuilder
+	      if (imageBuilder) {
+	        imageBuilder.onImageReady(drawCallback).context(item);
+	      }
+	      // Renderer is a Painter
+	      if (painter) {
+	        painter.onPainterReady(drawCallback).context(item);
+	      }
+
+	      this.viewports.push({
+	        name: name,
+	        active: false
+	      });
+	    }
+
+	    // Listen to window resize
+	    this.sizeSubscription = _SizeHelper2.default.onSizeChange(this.updateDimensions);
+
+	    // Make sure we monitor window size if it is not already the case
+	    _SizeHelper2.default.startListening();
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.updateDimensions();
+
+	    // Attach mouse listener
+	    this.mouseHandler = new _MouseHandler2.default(_reactDom2.default.findDOMNode(this.refs.canvasRenderer));
+
+	    this.mouseHandler.attach({
+	      drag: this.dragCallback,
+	      click: this.clickCallback,
+	      zoom: this.zoomCallback
+	    });
+	  },
+	  componentDidUpdate: function componentDidUpdate(nextProps, nextState) {
+	    this.drawLayout();
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.off();
+
+	    // Free mouseHandler
+	    if (this.mouseHandler) {
+	      this.mouseHandler.destroy();
+	      this.mouseHandler = null;
+	    }
+
+	    // Remove window listener
+	    if (this.sizeSubscription) {
+	      this.sizeSubscription.unsubscribe();
+	      this.sizeSubscription = null;
+	    }
+	  },
+	  setLayout: function setLayout(name) {
+	    this.layout = name;
+	    this.drawLayout();
+	    this.emit(LAYOUT_CHANGE, name);
+	  },
+	  getLayouts: function getLayouts() {
+	    return layoutNames;
+	  },
+	  getActiveLayout: function getActiveLayout() {
+	    return this.layout;
+	  },
+	  setRenderMethod: function setRenderMethod(name) {
+	    var _this = this;
+
+	    this.viewports.forEach(function (viewport) {
+	      if (viewport.active) {
+	        viewport.name = name;
+	        _this.emit(ACTIVE_VIEWPORT_CHANGE, viewport);
+	      }
+	    });
+	    this.drawViewportByName(null);
+	  },
+	  getRenderMethods: function getRenderMethods() {
+	    return Object.keys(this.props.renderers);
+	  },
+	  getActiveRenderMethod: function getActiveRenderMethod() {
+	    var name = 'No render method';
+	    this.viewports.forEach(function (viewport) {
+	      if (viewport.active) {
+	        name = viewport.name;
+	      }
+	    });
+	    return name;
+	  },
+	  updateDimensions: function updateDimensions() {
+	    var el = _reactDom2.default.findDOMNode(this).parentNode,
+	        elSize = _SizeHelper2.default.getSize(el);
+
+	    if (el && (this.state.width !== elSize.clientWidth || this.state.height !== elSize.clientHeight)) {
+	      this.setState({
+	        width: elSize.clientWidth,
+	        height: elSize.clientHeight
+	      });
+	      return true;
+	    }
+	    return false;
+	  },
+	  dragCallback: function dragCallback(event, envelope) {
+	    var viewport = this.getViewPort(event);
+
+	    if ((viewport || this.dragInViewport) && !this.dragCenter) {
+	      this.dragInViewport = this.dragInViewport || viewport;
+
+	      // Forward event to viewport event handler
+	      var renderer = this.props.renderers[this.dragInViewport.name],
+	          imageBuilder = renderer.builder,
+	          listeners = imageBuilder ? imageBuilder.getListeners() : null; // FIXME ?
+
+	      if (listeners && listeners.drag) {
+	        // Update relative information
+	        event.activeArea = this.dragInViewport.activeArea;
+
+	        // Forward event
+	        listeners.drag(event, envelope);
+	      }
+	    } else {
+	      this.dragCenter = true;
+
+	      // Update center and redraw
+	      this.center[0] = event.relative.x / this.state.width;
+	      this.center[1] = event.relative.y / this.state.height;
+	      this.drawLayout();
+	    }
+
+	    if (event.isFinal) {
+	      this.dragCenter = false;
+	      this.dragInViewport = null;
+	    }
+	  },
+	  clickCallback: function clickCallback(event, envelope) {
+	    // Reset any previous drag state
+	    this.dragCenter = false;
+	    this.dragInViewport = null;
+
+	    var viewport = this.getViewPort(event);
+
+	    if (viewport) {
+	      this.viewports.forEach(function (item) {
+	        item.active = false;
+	      });
+	      viewport.active = true;
+
+	      // Forward event to viewport event handler
+	      var renderer = this.props.renderers[viewport.name],
+	          imageBuilder = renderer.builder,
+	          listeners = imageBuilder ? imageBuilder.getListeners() : null; // FIXME ?
+
+	      if (listeners && listeners.click) {
+	        // Update relative information
+	        event.activeArea = viewport.activeArea;
+
+	        // Forward event
+	        listeners.click(event, envelope);
+	      }
+
+	      // Let's other know that the active viewport has changed
+	      this.emit(ACTIVE_VIEWPORT_CHANGE, viewport);
+	    }
+
+	    // Redraw the outline with the appropriate color for active
+	    this.drawLayout();
+	  },
+	  zoomCallback: function zoomCallback(event, envelope) {
+	    var viewport = this.getViewPort(event);
+
+	    if (viewport) {
+	      // Forward event to viewport event handler
+	      var renderer = this.props.renderers[viewport.name],
+	          imageBuilder = renderer.builder,
+	          listeners = imageBuilder ? imageBuilder.getListeners() : null;
+
+	      if (listeners && listeners.zoom) {
+	        // Update relative information
+	        event.activeArea = viewport.activeArea;
+
+	        // Forward event
+	        listeners.zoom(event, envelope);
+	      }
+	    }
+	  },
+	  getViewPort: function getViewPort(event) {
+	    var count = this.viewports.length,
+	        x = event.relative.x,
+	        y = event.relative.y;
+
+	    while (count--) {
+	      var area = this.viewports[count].activeArea || this.viewports[count].region;
+	      if (x >= area[0] && y >= area[1] && x <= area[0] + area[2] && y <= area[1] + area[3]) {
+	        return this.viewports[count];
+	      }
+	    }
+	    return null;
+	  },
+	  drawViewport: function drawViewport(viewport) {
+	    var renderer = this.props.renderers[viewport.name],
+	        region = viewport.region,
+	        ctx = _reactDom2.default.findDOMNode(this.refs.canvasRenderer).getContext('2d');
+
+	    if (!renderer || renderer.builder && !renderer.dataToDraw || renderer.painter && !renderer.painter.isReady()) {
+	      return;
+	    }
+
+	    if (renderer.painter) {
+	      var location = {
+	        x: region[0] + 2,
+	        y: region[1] + 2,
+	        width: region[2] - 4,
+	        height: region[3] - 4
+	      };
+	      viewport.activeArea = [].concat(viewport.region);
+	      renderer.painter.paint(ctx, location);
+	    } else {
+	      // Assume Image builder
+	      var dataToDraw = this.props.renderers[viewport.name].dataToDraw,
+	          w = region[2] - 2,
+	          h = region[3] - 2,
+	          iw = dataToDraw.outputSize[0],
+	          ih = dataToDraw.outputSize[1],
+	          zoomLevel = Math.min(w / iw, h / ih);
+
+	      ctx.clearRect(region[0] + 1, region[1] + 1, region[2] - 2, region[3] - 2);
+
+	      var tw = Math.floor(iw * zoomLevel) - 2,
+	          th = Math.floor(ih * zoomLevel) - 2,
+	          tx = 1 + region[0] + w * 0.5 - tw / 2,
+	          ty = 1 + region[1] + h * 0.5 - th / 2;
+
+	      try {
+	        ctx.drawImage(dataToDraw.canvas, dataToDraw.area[0], dataToDraw.area[1], dataToDraw.area[2], dataToDraw.area[3], // Source image   [Location,Size]
+	        tx, ty, tw, th); // Target drawing [Location,Size]
+
+	        // Draw cross hair if any
+	        if (dataToDraw.crosshair) {
+	          var scale = [tw / dataToDraw.area[2], th / dataToDraw.area[3]],
+	              translate = [tx, ty];
+
+	          ctx.beginPath();
+
+	          ctx.moveTo(translate[0] + scale[0] * dataToDraw.crosshair[0], ty);
+	          ctx.lineTo(translate[0] + scale[0] * dataToDraw.crosshair[0], ty + th);
+
+	          ctx.moveTo(tx, translate[1] + scale[1] * dataToDraw.crosshair[1]);
+	          ctx.lineTo(tx + tw, translate[1] + scale[1] * dataToDraw.crosshair[1]);
+
+	          ctx.strokeStyle = this.props.crosshairColor;
+	          ctx.lineWidth = 1;
+	          ctx.stroke();
+	        }
+
+	        viewport.activeArea = [tx, ty, tw, th];
+	      } catch (err) {
+	        console.log('Error in MultiLayoutRenderer::drawViewport', err);
+	      }
+	    }
+	  },
+	  drawViewportByName: function drawViewportByName(name) {
+	    var _this2 = this;
+
+	    var renderer = name ? this.props.renderers[name] : null;
+
+	    // Update image builder if any
+	    if (renderer && renderer.builder && !renderer.dataToDraw) {
+	      renderer.builder.update();
+	      return;
+	    }
+
+	    this.viewports.forEach(function (viewport) {
+	      if (viewport.name === name || name === null) {
+	        _this2.drawViewport(viewport);
+	      }
+	    });
+	  },
+	  drawLayout: function drawLayout() {
+	    var ctx = _reactDom2.default.findDOMNode(this.refs.canvasRenderer).getContext('2d'),
+	        width = ctx.canvas.width = this.state.width,
+	        height = ctx.canvas.height = this.state.height,
+	        centerPx = [this.center[0] * width, this.center[1] * height],
+	        spacing = this.props.spacing,
+	        regions = _Layouts2.default[this.layout](centerPx, spacing, width, height),
+	        viewports = this.viewports,
+	        numberOfRegions = regions.length;
+
+	    ctx.clearRect(0, 0, width, height);
+
+	    for (var i = 0; i < numberOfRegions; ++i) {
+	      var region = regions.shift();
+	      if (i < viewports.length) {
+	        viewports[i].region = region;
+	      } else {
+	        viewports.push({
+	          name: this.getRenderMethods()[0],
+	          region: region,
+	          active: false
+	        });
+	      }
+	      ctx.beginPath();
+	      ctx.strokeStyle = viewports[i].active ? this.props.activeColor : this.props.borderColor;
+	      ctx.rect.apply(ctx, region);
+	      ctx.stroke();
+	    }
+
+	    // Remove the unused viewports
+	    while (viewports.length > numberOfRegions) {
+	      viewports.pop();
+	    }
+
+	    this.drawViewportByName(null);
+	  },
+	  onActiveViewportChange: function onActiveViewportChange(callback) {
+	    return this.on(ACTIVE_VIEWPORT_CHANGE, callback);
+	  },
+	  onLayoutChange: function onLayoutChange(callback) {
+	    return this.on(LAYOUT_CHANGE, callback);
+	  },
+	  render: function render() {
+	    return _react2.default.createElement('canvas', {
+	      className: 'CanvasMultiImageRenderer',
+	      ref: 'canvasRenderer',
+	      width: this.state.width,
+	      height: this.state.height
+	    });
+	  }
 	});
 
 	// Add Observer pattern to the class using Monologue.js
@@ -36377,7 +36464,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	   value: true
 	});
-	/* eslint-disable babel/object-shorthand */
+	/* eslint-disable */
 	exports.default = {
 	   "2x2": function x2(center, spacing, width, height) {
 	      return [[spacing, spacing, center[0] - 1.5 * spacing, center[1] - 1.5 * spacing], [center[0] + 0.5 * spacing, spacing, width - center[0] - 1.5 * spacing, center[1] - 1.5 * spacing], [spacing, center[1] + 0.5 * spacing, center[0] - 1.5 * spacing, height - center[1] - 1.5 * spacing], [center[0] + 0.5 * spacing, center[1] + 0.5 * spacing, width - center[0] - 1.5 * spacing, height - center[1] - 1.5 * spacing]];
@@ -36404,7 +36491,7 @@
 	      return [[spacing, spacing, center[0] - 1.5 * spacing, center[1] - 1.5 * spacing], [center[0] + 0.5 * spacing, spacing, width - center[0] - 1.5 * spacing, center[1] - 1.5 * spacing], [spacing, center[1] + 0.5 * spacing, width - 2 * spacing, height - center[1] - 1.5 * spacing]];
 	   }
 	};
-	/* eslint-enable babel/object-shorthand */
+	/* eslint-enable */
 
 /***/ },
 /* 193 */
@@ -37254,7 +37341,7 @@
 	/* WEBPACK VAR INJECTION */(function(setImmediate) {'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -37304,770 +37391,828 @@
 
 	// Helper function used to handle next/previous when the loop function is 'reverse'
 	function deltaReverse(arg, increment) {
-	    var newIdx = arg.idx + arg.direction * increment;
-	    if (newIdx >= arg.values.length) {
-	        arg.direction *= -1; // Reverse direction
-	        newIdx = arg.values.length - 2;
-	    }
+	  var newIdx = arg.idx + arg.direction * increment;
+	  if (newIdx >= arg.values.length) {
+	    arg.direction *= -1; // Reverse direction
+	    newIdx = arg.values.length - 2;
+	  }
 
-	    if (newIdx < 0) {
-	        arg.direction *= -1; // Reverse direction
-	        newIdx = 1;
-	    }
+	  if (newIdx < 0) {
+	    arg.direction *= -1; // Reverse direction
+	    newIdx = 1;
+	  }
 
-	    if (newIdx >= 0 && newIdx < arg.values.length) {
-	        arg.idx = newIdx;
-	    }
+	  if (newIdx >= 0 && newIdx < arg.values.length) {
+	    arg.idx = newIdx;
+	  }
 
-	    return true;
+	  return true;
 	}
 
 	// Helper function used to handle next/previous when the loop function is 'modulo'
 	function deltaModulo(arg, increment) {
-	    arg.idx = (arg.values.length + arg.idx + increment) % arg.values.length;
-	    return true;
+	  arg.idx = (arg.values.length + arg.idx + increment) % arg.values.length;
+	  return true;
 	}
 
 	// Helper function used to handle next/previous when the loop function is 'none'
 	function deltaNone(arg, increment) {
-	    var newIdx = arg.idx + increment;
+	  var newIdx = arg.idx + increment;
 
-	    if (newIdx >= arg.values.length) {
-	        newIdx = arg.values.length - 1;
-	    }
+	  if (newIdx >= arg.values.length) {
+	    newIdx = arg.values.length - 1;
+	  }
 
-	    if (newIdx < 0) {
-	        newIdx = 0;
-	    }
+	  if (newIdx < 0) {
+	    newIdx = 0;
+	  }
 
-	    if (arg.idx !== newIdx) {
-	        arg.idx = newIdx;
-	        return true;
-	    }
+	  if (arg.idx !== newIdx) {
+	    arg.idx = newIdx;
+	    return true;
+	  }
 
-	    return false;
+	  return false;
 	}
 
 	// QueryDataModel class definition
 
 	var QueryDataModel = function () {
-	    function QueryDataModel(jsonData, basepath) {
-	        var _this = this;
+	  function QueryDataModel(jsonData, basepath) {
+	    var _this = this;
 
-	        _classCallCheck(this, QueryDataModel);
+	    _classCallCheck(this, QueryDataModel);
 
-	        this.originalData = jsonData;
-	        this.basepath = basepath; // Needed for cloning
-	        this.id = 'QueryDataModel_' + ++queryDataModelCounter + ':';
-	        this.args = {};
-	        this.externalArgs = {};
-	        this.dataCount = {};
-	        this.categories = {};
-	        this.requests = [];
-	        this.keepAnimating = false;
-	        this.animationTimerId = 0;
-	        this.mouseListener = null;
-	        this.dataMetadata = {};
-	        this.lazyFetchRequest = null;
+	    this.originalData = jsonData;
+	    this.basepath = basepath; // Needed for cloning
+	    this.id = 'QueryDataModel_' + ++queryDataModelCounter + ' :';
+	    this.args = {};
+	    this.externalArgs = {};
+	    this.dataCount = {};
+	    this.categories = {};
+	    this.requests = [];
+	    this.keepAnimating = false;
+	    this.animationTimerId = 0;
+	    this.mouseListener = null;
+	    this.dataMetadata = {};
+	    this.lazyFetchRequest = null;
 
-	        this.playNext = function () {
-	            if (_this.keepAnimating) {
-	                var changeDetected = false;
-	                _this.lastPlay = +new Date();
+	    this.playNext = function () {
+	      if (_this.keepAnimating) {
+	        var changeDetected = false;
+	        _this.lastPlay = +new Date();
 
-	                // Move all flagged arg to next()
-	                for (var argName in _this.args) {
-	                    if (_this.args[argName].anime) {
-	                        changeDetected = _this.next(argName) || changeDetected;
-	                    }
-	                }
-
-	                // Keep moving if change detected
-	                if (changeDetected) {
-	                    // Get new data
-	                    _this.lazyFetchData(); // FIXME may need a category
-	                } else {
-	                        // Auto stop as nothing change
-	                        _this.keepAnimating = false;
-	                        _this.emit('state.change.play', { instance: _this });
-	                    }
-	            } else {
-	                _this.emit('state.change.play', { instance: _this });
-	            }
-	        };
-
-	        var processRequest = function processRequest(request) {
-	            var dataToBroadcast = {},
-	                count = request.urls.length,
-	                hasPending = false,
-	                hasError = false;
-
-	            if (_this.animationTimerId !== 0) {
-	                clearTimeout(_this.animationTimerId);
-	                _this.animationTimerId = 0;
-	            }
-
-	            while (count--) {
-	                var item = request.urls[count];
-	                dataToBroadcast[item.key] = dataManager.get(item.url);
-	                if (dataToBroadcast[item.key]) {
-	                    hasPending = hasPending || dataToBroadcast[item.key].pending;
-	                } else {
-	                    hasError = true;
-	                }
-	            }
-
-	            if (hasPending) {
-	                // put the request back in the queue
-	                setImmediate(function () {
-	                    _this.requests.push(request);
-	                });
-	            } else if (!hasError) {
-	                // We are good to go
-	                // Broadcast data to the category
-	                _this.emit(request.category, dataToBroadcast);
-
-	                // Trigger new fetch data if any lazyFetchData is pending
-	                if (_this.requests.length === 0 && _this.lazyFetchRequest) {
-	                    _this.fetchData(_this.lazyFetchRequest);
-	                    _this.lazyFetchRequest = null;
-	                }
-	            }
-
-	            // Handle animation if any
-	            if (_this.keepAnimating) {
-	                var ts = +new Date();
-	                _this.animationTimerId = setTimeout(_this.playNext, ts - _this.lastPlay > _this.deltaT ? 0 : _this.deltaT);
-	            }
-	        };
-
-	        var dataHandler = function dataHandler(data, envelope) {
-	            _this.dataCount[envelope.topic]++;
-
-	            // Pre-decode image urls
-	            if (data.url && data.type === 'blob' && data.data.type.indexOf('image') !== -1 && data.image === undefined) {
-	                data.image = new Image();
-	                data.image.src = data.url;
-	            }
-
-	            if (data.error) {
-	                return _this.emit('error', envelope);
-	                // console.error('Error when fetching ' + envelope.topic);
-	            }
-
-	            // All fetched request are complete
-	            var minValue = (0, _min2.default)(_this.dataCount),
-	                maxValue = (0, _max2.default)(_this.dataCount),
-	                dataSize = (0, _size2.default)(_this.dataCount);
-
-	            if (minValue === maxValue && (dataSize === 1 ? minValue === 0 : true)) {
-	                // Handling requests after any re-queue
-	                setImmediate(function () {
-	                    while (_this.requests.length) {
-	                        processRequest(_this.requests.pop());
-	                    }
-	                });
-	            }
-	        };
-
-	        // Flatten args
-	        for (var key in jsonData.arguments) {
-	            var arg = jsonData.arguments[key];
-	            this.args[key] = {
-	                label: arg.label ? arg.label : key,
-	                idx: arg.default ? arg.default : 0,
-	                direction: 1,
-	                anime: false,
-	                values: arg.values,
-	                ui: arg.ui ? arg.ui : 'list',
-	                delta: arg.loop ? arg.loop === 'reverse' ? deltaReverse : arg.loop === 'modulo' ? deltaModulo : deltaNone : deltaNone
-	            };
+	        // Move all flagged arg to next()
+	        for (var argName in _this.args) {
+	          if (_this.args[argName].anime) {
+	            changeDetected = _this.next(argName) || changeDetected;
+	          }
 	        }
 
-	        // Register all data urls
-	        jsonData.data.forEach(function (dataEntry) {
-	            var dataId = _this.id + dataEntry.name;
-
-	            // Register data metadata if any
-	            _this.dataMetadata[dataEntry.name] = dataEntry.metadata || {};
-
-	            // Fill categories with dataIds
-	            (dataEntry.categories || [DEFAULT_KEY_NAME]).forEach(function (category) {
-	                if ((0, _hasOwn2.default)(_this.categories, category)) {
-	                    _this.categories[category].push(dataId);
-	                } else {
-	                    _this.categories[category] = [dataId];
-	                }
+	        // Keep moving if change detected
+	        if (changeDetected) {
+	          // Get new data
+	          _this.lazyFetchData(); // FIXME may need a category
+	        } else {
+	            // Auto stop as nothing change
+	            _this.keepAnimating = false;
+	            _this.emit('state.change.play', {
+	              instance: _this
 	            });
-
-	            // Register data handler + listener
-	            dataManager.registerURL(dataId, (dataEntry.absolute ? '' : basepath) + dataEntry.pattern, dataEntry.type, dataEntry.mimeType);
-	            dataManager.on(dataId, dataHandler);
-	            _this.dataCount[dataId] = 0;
+	          }
+	      } else {
+	        _this.emit('state.change.play', {
+	          instance: _this
 	        });
+	      }
+	    };
 
-	        // Data Exploration handling
-	        this.exploreState = {
-	            order: jsonData.arguments_order.map(function (f) {
-	                return f;
-	            }).reverse(), // Clone
-	            idxs: jsonData.arguments_order.map(function (i) {
-	                return 0;
-	            }), // Reset index
-	            sizes: jsonData.arguments_order.map(function (f) {
-	                return _this.getSize(f);
-	            }).reverse(), // Get Size
-	            onDataReady: true,
-	            animate: false
-	        };
+	    var processRequest = function processRequest(request) {
+	      var dataToBroadcast = {},
+	          count = request.urls.length,
+	          hasPending = false,
+	          hasError = false;
 
-	        this.explorationSubscription = this.onDataChange(function () {
-	            if (_this.exploreState.animate && _this.exploreState.onDataReady) {
-	                setImmediate(function (_) {
-	                    return _this.nextExploration();
-	                });
-	            }
+	      if (_this.animationTimerId !== 0) {
+	        clearTimeout(_this.animationTimerId);
+	        _this.animationTimerId = 0;
+	      }
+
+	      while (count--) {
+	        var item = request.urls[count];
+	        dataToBroadcast[item.key] = dataManager.get(item.url);
+	        if (dataToBroadcast[item.key]) {
+	          hasPending = hasPending || dataToBroadcast[item.key].pending;
+	        } else {
+	          hasError = true;
+	        }
+	      }
+
+	      if (hasPending) {
+	        // put the request back in the queue
+	        setImmediate(function () {
+	          _this.requests.push(request);
 	        });
+	      } else if (!hasError) {
+	        // We are good to go
+	        // Broadcast data to the category
+	        _this.emit(request.category, dataToBroadcast);
+
+	        // Trigger new fetch data if any lazyFetchData is pending
+	        if (_this.requests.length === 0 && _this.lazyFetchRequest) {
+	          _this.fetchData(_this.lazyFetchRequest);
+	          _this.lazyFetchRequest = null;
+	        }
+	      }
+
+	      // Handle animation if any
+	      if (_this.keepAnimating) {
+	        var ts = +new Date();
+	        _this.animationTimerId = setTimeout(_this.playNext, ts - _this.lastPlay > _this.deltaT ? 0 : _this.deltaT);
+	      }
+	    };
+
+	    var dataHandler = function dataHandler(data, envelope) {
+	      _this.dataCount[envelope.topic]++;
+
+	      // Pre-decode image urls
+	      if (data.url && data.type === 'blob' && data.data.type.indexOf('image') !== -1 && data.image === undefined) {
+	        data.image = new Image();
+	        data.image.src = data.url;
+	      }
+
+	      if (data.error) {
+	        _this.emit('error', envelope);
+	        return;
+	        // console.error('Error when fetching ' + envelope.topic);
+	      }
+
+	      // All fetched request are complete
+	      var minValue = (0, _min2.default)(_this.dataCount),
+	          maxValue = (0, _max2.default)(_this.dataCount),
+	          dataSize = (0, _size2.default)(_this.dataCount);
+
+	      if (minValue === maxValue && (dataSize === 1 ? minValue === 0 : true)) {
+	        // Handling requests after any re-queue
+	        setImmediate(function () {
+	          while (_this.requests.length) {
+	            processRequest(_this.requests.pop());
+	          }
+	        });
+	      }
+	    };
+
+	    // Flatten args
+	    for (var key in jsonData.arguments) {
+	      var arg = jsonData.arguments[key];
+	      this.args[key] = {
+	        label: arg.label ? arg.label : key,
+	        idx: arg.default ? arg.default : 0,
+	        direction: 1,
+	        anime: false,
+	        values: arg.values,
+	        ui: arg.ui ? arg.ui : 'list',
+	        delta: arg.loop ? arg.loop === 'reverse' ? deltaReverse : arg.loop === 'modulo' ? deltaModulo : deltaNone : deltaNone
+	      };
 	    }
 
-	    _createClass(QueryDataModel, [{
-	        key: 'getDataMetaData',
-	        value: function getDataMetaData(dataName) {
-	            return this.dataMetadata[dataName];
+	    // Register all data urls
+	    jsonData.data.forEach(function (dataEntry) {
+	      var dataId = _this.id + dataEntry.name;
+
+	      // Register data metadata if any
+	      _this.dataMetadata[dataEntry.name] = dataEntry.metadata || {};
+
+	      // Fill categories with dataIds
+	      (dataEntry.categories || [DEFAULT_KEY_NAME]).forEach(function (category) {
+	        if ((0, _hasOwn2.default)(_this.categories, category)) {
+	          _this.categories[category].push(dataId);
+	        } else {
+	          _this.categories[category] = [dataId];
 	        }
+	      });
 
-	        // Return the current set of arguments values
+	      // Register data handler + listener
+	      dataManager.registerURL(dataId, (dataEntry.absolute ? '' : basepath) + dataEntry.pattern, dataEntry.type, dataEntry.mimeType);
+	      dataManager.on(dataId, dataHandler);
+	      _this.dataCount[dataId] = 0;
+	    });
 
-	    }, {
-	        key: 'getQuery',
-	        value: function getQuery() {
-	            var query = {};
+	    // Data Exploration handling
+	    this.exploreState = {
+	      order: jsonData.arguments_order.map(function (f) {
+	        return f;
+	      }).reverse(), // Clone
+	      idxs: jsonData.arguments_order.map(function (i) {
+	        return 0;
+	      }), // Reset index
+	      sizes: jsonData.arguments_order.map(function (f) {
+	        return _this.getSize(f);
+	      }).reverse(), // Get Size
+	      onDataReady: true,
+	      animate: false
+	    };
 
-	            for (var key in this.args) {
-	                var arg = this.args[key];
-	                query[key] = arg.values[arg.idx];
-	            }
+	    this.explorationSubscription = this.onDataChange(function () {
+	      if (_this.exploreState.animate && _this.exploreState.onDataReady) {
+	        setImmediate(function (_) {
+	          return _this.nextExploration();
+	        });
+	      }
+	    });
+	  }
 
-	            // Add external args to the query too
-	            for (var eKey in this.externalArgs) {
-	                query[eKey] = this.externalArgs[eKey];
-	            }
+	  _createClass(QueryDataModel, [{
+	    key: 'getDataMetaData',
+	    value: function getDataMetaData(dataName) {
+	      return this.dataMetadata[dataName];
+	    }
 
-	            return query;
+	    // Return the current set of arguments values
+
+	  }, {
+	    key: 'getQuery',
+	    value: function getQuery() {
+	      var query = {};
+
+	      for (var key in this.args) {
+	        var arg = this.args[key];
+	        query[key] = arg.values[arg.idx];
+	      }
+
+	      // Add external args to the query too
+	      for (var eKey in this.externalArgs) {
+	        query[eKey] = this.externalArgs[eKey];
+	      }
+
+	      return query;
+	    }
+
+	    // Fetch data for a given category or _ if none provided
+
+	  }, {
+	    key: 'fetchData',
+	    value: function fetchData() {
+	      var _this2 = this;
+
+	      var category = arguments.length <= 0 || arguments[0] === undefined ? DEFAULT_KEY_NAME : arguments[0];
+
+	      var dataToFetch = [],
+	          query = this.getQuery(),
+	          request = {
+	        urls: []
+	      };
+
+	      // fill the data to fetch
+	      if (category.name) {
+	        request.category = category.name;
+	        category.categories.forEach(function (cat) {
+	          if (_this2.categories[cat]) {
+	            dataToFetch = dataToFetch.concat(_this2.categories[cat]);
+	          }
+	        });
+	      } else if (this.categories[category]) {
+	        request.category = category;
+	        dataToFetch = dataToFetch.concat(this.categories[category]);
+	      }
+
+	      // Decrease the count and record the category request + trigger fetch
+	      if (dataToFetch.length) {
+	        this.requests.push(request);
+	      }
+
+	      dataToFetch.forEach(function (dataId) {
+	        _this2.dataCount[dataId]--;
+	        request.urls.push({
+	          key: dataId.slice(_this2.id.length),
+	          url: dataManager.fetch(dataId, query)
+	        });
+	      });
+	    }
+	  }, {
+	    key: 'lazyFetchData',
+	    value: function lazyFetchData() {
+	      var category = arguments.length <= 0 || arguments[0] === undefined ? DEFAULT_KEY_NAME : arguments[0];
+
+	      if (this.lazyFetchRequest || this.requests.length > 0) {
+	        this.lazyFetchRequest = category;
+	      } else {
+	        this.fetchData(category);
+	      }
+	    }
+
+	    // Got to the first value of a given attribute and return true if data has changed
+
+	  }, {
+	    key: 'first',
+	    value: function first(attributeName) {
+	      var arg = this.args[attributeName];
+
+	      if (arg && arg.idx !== 0) {
+	        arg.idx = 0;
+	        this.emit('state.change.first', {
+	          value: arg.values[arg.idx],
+	          idx: arg.idx,
+	          name: attributeName,
+	          instance: this
+	        });
+	        return true;
+	      }
+
+	      return false;
+	    }
+
+	    // Got to the last value of a given attribute and return true if data has changed
+
+	  }, {
+	    key: 'last',
+	    value: function last(attributeName) {
+	      var arg = this.args[attributeName],
+	          last = arg.values.length - 1;
+
+	      if (arg && arg.idx !== last) {
+	        arg.idx = last;
+	        this.emit('state.change.last', {
+	          value: arg.values[arg.idx],
+	          idx: arg.idx,
+	          name: attributeName,
+	          instance: this
+	        });
+	        return true;
+	      }
+
+	      return false;
+	    }
+
+	    // Got to the next value of a given attribute and return true if data has changed
+
+	  }, {
+	    key: 'next',
+	    value: function next(attributeName) {
+	      var arg = this.args[attributeName];
+	      if (arg && arg.delta(arg, +1)) {
+	        this.emit('state.change.next', {
+	          delta: 1,
+	          value: arg.values[arg.idx],
+	          idx: arg.idx,
+	          name: attributeName,
+	          instance: this
+	        });
+	        return true;
+	      }
+	      return false;
+	    }
+
+	    // Got to the previous value of a given attribute and return true if data has changed
+
+	  }, {
+	    key: 'previous',
+	    value: function previous(attributeName) {
+	      var arg = this.args[attributeName];
+	      if (arg && arg.delta(arg, -1)) {
+	        this.emit('state.change.previous', {
+	          delta: -1,
+	          value: arg.values[arg.idx],
+	          idx: arg.idx,
+	          name: attributeName,
+	          instance: this
+	        });
+	        return true;
+	      }
+	      return false;
+	    }
+
+	    // Set a value to an argument (must be in values) and return true if data has changed
+	    // If argument is not in the argument list. This will be added inside the external argument list.
+
+	  }, {
+	    key: 'setValue',
+	    value: function setValue(attributeName, value) {
+	      var arg = this.args[attributeName],
+	          newIdx = arg ? arg.values.indexOf(value) : 0;
+
+	      if (arg && newIdx !== -1 && newIdx !== arg.idx) {
+	        arg.idx = newIdx;
+	        this.emit('state.change.value', {
+	          value: arg.values[arg.idx],
+	          idx: arg.idx,
+	          name: attributeName,
+	          instance: this
+	        });
+	        return true;
+	      }
+
+	      if (arg === undefined && this.externalArgs[attributeName] !== value) {
+	        this.externalArgs[attributeName] = value;
+	        this.emit('state.change.value', {
+	          value: value,
+	          name: attributeName,
+	          external: true,
+	          instance: this
+	        });
+	        return true;
+	      }
+
+	      return false;
+	    }
+
+	    // Set a new index to an argument (must be in values range) and return true if data has changed
+
+	  }, {
+	    key: 'setIndex',
+	    value: function setIndex(attributeName, idx) {
+	      var arg = this.args[attributeName];
+
+	      if (arg && idx > -1 && idx < arg.values.length && arg.idx !== idx) {
+	        arg.idx = idx;
+	        this.emit('state.change.idx', {
+	          value: arg.values[arg.idx],
+	          idx: arg.idx,
+	          name: attributeName,
+	          instance: this
+	        });
+	        return true;
+	      }
+
+	      return false;
+	    }
+
+	    // Return the argument value or null if the argument was not found
+	    // If argument is not in the argument list.
+	    // We will also search inside the external argument list.
+
+	  }, {
+	    key: 'getValue',
+	    value: function getValue(attributeName) {
+	      var arg = this.args[attributeName];
+	      return arg ? arg.values[arg.idx] : this.externalArgs[attributeName];
+	    }
+
+	    // Return the argument values list or null if the argument was not found
+
+	  }, {
+	    key: 'getValues',
+	    value: function getValues(attributeName) {
+	      var arg = this.args[attributeName];
+	      return arg ? arg.values : null;
+	    }
+
+	    // Return the argument index or null if the argument was not found
+
+	  }, {
+	    key: 'getIndex',
+	    value: function getIndex(attributeName) {
+	      var arg = this.args[attributeName];
+	      return arg ? arg.idx : null;
+	    }
+
+	    // Return the argument index or null if the argument was not found
+
+	  }, {
+	    key: 'getUiType',
+	    value: function getUiType(attributeName) {
+	      var arg = this.args[attributeName];
+	      return arg ? arg.ui : null;
+	    }
+
+	    // Return the argument size or null if the argument was not found
+
+	  }, {
+	    key: 'getSize',
+	    value: function getSize(attributeName) {
+	      var arg = this.args[attributeName];
+	      return arg ? arg.values.length : null;
+	    }
+
+	    // Return the argument label or null if the argument was not found
+
+	  }, {
+	    key: 'label',
+	    value: function label(attributeName) {
+	      var arg = this.args[attributeName];
+	      return arg ? arg.label : null;
+	    }
+
+	    // Return the argument animation flag or false if the argument was not found
+
+	  }, {
+	    key: 'getAnimationFlag',
+	    value: function getAnimationFlag(attributeName) {
+	      var arg = this.args[attributeName];
+	      return arg ? arg.anime : false;
+	    }
+
+	    // Set the argument animation flag and return true if the value changed
+
+	  }, {
+	    key: 'setAnimationFlag',
+	    value: function setAnimationFlag(attributeName, state) {
+	      var arg = this.args[attributeName];
+
+	      if (arg && arg.anime !== state) {
+	        arg.anime = state;
+	        this.emit('state.change.animation', {
+	          animation: arg.anim,
+	          name: arg.name,
+	          instance: this
+	        });
+	        return true;
+	      }
+
+	      return false;
+	    }
+
+	    // Toggle the argument animation flag state and return the current state or
+	    // null if not found.
+
+	  }, {
+	    key: 'toggleAnimationFlag',
+	    value: function toggleAnimationFlag(attributeName) {
+	      var arg = this.args[attributeName];
+
+	      if (arg) {
+	        arg.anime = !arg.anime;
+	        this.emit('state.change.animation', {
+	          animation: arg.anim,
+	          name: arg.name,
+	          instance: this
+	        });
+	        return arg.anime;
+	      }
+
+	      return null;
+	    }
+
+	    // Check if one of the argument is currently active for the animation
+
+	  }, {
+	    key: 'hasAnimationFlag',
+	    value: function hasAnimationFlag() {
+	      for (var key in this.args) {
+	        if (this.args[key].anime) {
+	          return true;
 	        }
+	      }
+	      return false;
+	    }
 
-	        // Fetch data for a given category or _ if none provided
+	    // Return true if an animation is currently running
 
-	    }, {
-	        key: 'fetchData',
-	        value: function fetchData() {
-	            var _this2 = this;
+	  }, {
+	    key: 'isAnimating',
+	    value: function isAnimating() {
+	      return this.keepAnimating;
+	    }
 
-	            var category = arguments.length <= 0 || arguments[0] === undefined ? DEFAULT_KEY_NAME : arguments[0];
+	    // Start/Stop an animation
 
-	            var dataToFetch = [],
-	                query = this.getQuery(),
-	                request = { urls: [] };
+	  }, {
+	    key: 'animate',
+	    value: function animate(start) {
+	      var deltaT = arguments.length <= 1 || arguments[1] === undefined ? 500 : arguments[1];
 
-	            // fill the data to fetch
-	            if (category.name) {
-	                request.category = category.name;
-	                category.categories.forEach(function (cat) {
-	                    if (_this2.categories[cat]) {
-	                        dataToFetch = dataToFetch.concat(_this2.categories[cat]);
-	                    }
-	                });
-	            } else if (this.categories[category]) {
-	                request.category = category;
-	                dataToFetch = dataToFetch.concat(this.categories[category]);
+	      // Update deltaT
+	      this.deltaT = deltaT;
+
+	      if (start !== this.keepAnimating) {
+	        this.keepAnimating = start;
+	        this.playNext();
+	      }
+	    }
+
+	    // Mouse handler if any base on the binding
+
+	  }, {
+	    key: 'getMouseListener',
+	    value: function getMouseListener() {
+	      if (this.mouseListener) {
+	        return this.mouseListener;
+	      }
+
+	      // Record last action time
+	      this.lastTime = {};
+	      this.newMouseTimeout = 250;
+
+	      // We need to create a mouse listener
+	      var self = this,
+	          actions = {};
+
+	      // Create an action map
+	      for (var key in this.originalData.arguments) {
+	        var value = this.originalData.arguments[key];
+	        if (value.bind && value.bind.mouse) {
+	          for (var action in value.bind.mouse) {
+	            var obj = (0, _omit2.default)(value.bind.mouse[action]);
+	            obj.name = key;
+	            obj.lastCoord = 0;
+	            if (obj.orientation === undefined) {
+	              obj.orientation = 1;
 	            }
-
-	            // Decrease the count and record the category request + trigger fetch
-	            if (dataToFetch.length) {
-	                this.requests.push(request);
-	            }
-
-	            dataToFetch.forEach(function (dataId) {
-	                _this2.dataCount[dataId]--;
-	                request.urls.push({
-	                    key: dataId.slice(_this2.id.length),
-	                    url: dataManager.fetch(dataId, query)
-	                });
-	            });
-	        }
-	    }, {
-	        key: 'lazyFetchData',
-	        value: function lazyFetchData() {
-	            var category = arguments.length <= 0 || arguments[0] === undefined ? DEFAULT_KEY_NAME : arguments[0];
-
-	            if (this.lazyFetchRequest || this.requests.length > 0) {
-	                this.lazyFetchRequest = category;
+	            if (actions[action]) {
+	              actions[action].push(obj);
 	            } else {
-	                this.fetchData(category);
+	              actions[action] = [obj];
 	            }
+	          }
 	        }
+	      }
 
-	        // Got to the first value of a given attribute and return true if data has changed
+	      /* eslint-disable complexity */
+	      function processEvent(event, envelope) {
+	        var array = actions[event.topic],
+	            time = (0, _now2.default)(),
+	            newEvent = self.lastTime[event.topic] + self.newMouseTimeout < time,
+	            count = array.length,
+	            changeDetected = false,
+	            eventHandled = false;
 
-	    }, {
-	        key: 'first',
-	        value: function first(attributeName) {
-	            var arg = this.args[attributeName];
+	        // Check all associated actions
+	        while (count--) {
+	          var item = array[count],
+	              deltaName = item.coordinate === 0 ? 'deltaX' : 'deltaY';
 
-	            if (arg && arg.idx !== 0) {
-	                arg.idx = 0;
-	                this.emit('state.change.first', { value: arg.values[arg.idx], idx: arg.idx, name: attributeName, instance: this });
-	                return true;
+	          if (newEvent) {
+	            item.lastCoord = 0;
+	          }
+
+	          if (item.modifier & event.modifier || item.modifier === event.modifier) {
+	            eventHandled = true;
+	            var delta = event[deltaName] - item.lastCoord;
+	            self.lastTime[event.topic] = time;
+
+	            if (Math.abs(delta) > item.step) {
+	              item.lastCoord = Number(event[deltaName]);
+
+	              if (item.orientation * delta > 0) {
+	                changeDetected = self.next(item.name) || changeDetected;
+	              } else {
+	                changeDetected = self.previous(item.name) || changeDetected;
+	              }
 	            }
-
-	            return false;
+	          }
 	        }
 
-	        // Got to the last value of a given attribute and return true if data has changed
-
-	    }, {
-	        key: 'last',
-	        value: function last(attributeName) {
-	            var arg = this.args[attributeName],
-	                last = arg.values.length - 1;
-
-	            if (arg && arg.idx !== last) {
-	                arg.idx = last;
-	                this.emit('state.change.last', { value: arg.values[arg.idx], idx: arg.idx, name: attributeName, instance: this });
-	                return true;
-	            }
-
-	            return false;
+	        if (changeDetected) {
+	          self.lazyFetchData(); // FIXME category
 	        }
 
-	        // Got to the next value of a given attribute and return true if data has changed
-
-	    }, {
-	        key: 'next',
-	        value: function next(attributeName) {
-	            var arg = this.args[attributeName];
-	            if (arg && arg.delta(arg, +1)) {
-	                this.emit('state.change.next', { delta: 1, value: arg.values[arg.idx], idx: arg.idx, name: attributeName, instance: this });
-	                return true;
-	            }
-	            return false;
-	        }
-
-	        // Got to the previous value of a given attribute and return true if data has changed
-
-	    }, {
-	        key: 'previous',
-	        value: function previous(attributeName) {
-	            var arg = this.args[attributeName];
-	            if (arg && arg.delta(arg, -1)) {
-	                this.emit('state.change.previous', { delta: -1, value: arg.values[arg.idx], idx: arg.idx, name: attributeName, instance: this });
-	                return true;
-	            }
-	            return false;
-	        }
-
-	        // Set a value to an argument (must be in values) and return true if data has changed
-	        // If argument is not in the argument list. This will be added inside the external argument list.
-
-	    }, {
-	        key: 'setValue',
-	        value: function setValue(attributeName, value) {
-	            var arg = this.args[attributeName],
-	                newIdx = arg ? arg.values.indexOf(value) : 0;
-
-	            if (arg && newIdx !== -1 && newIdx !== arg.idx) {
-	                arg.idx = newIdx;
-	                this.emit('state.change.value', { value: arg.values[arg.idx], idx: arg.idx, name: attributeName, instance: this });
-	                return true;
-	            }
-
-	            if (arg === undefined && this.externalArgs[attributeName] !== value) {
-	                this.externalArgs[attributeName] = value;
-	                this.emit('state.change.value', { value: value, name: attributeName, external: true, instance: this });
-	                return true;
-	            }
-
-	            return false;
-	        }
-
-	        // Set a new index to an argument (must be in values range) and return true if data has changed
-
-	    }, {
-	        key: 'setIndex',
-	        value: function setIndex(attributeName, idx) {
-	            var arg = this.args[attributeName];
-
-	            if (arg && idx > -1 && idx < arg.values.length && arg.idx !== idx) {
-	                arg.idx = idx;
-	                this.emit('state.change.idx', { value: arg.values[arg.idx], idx: arg.idx, name: attributeName, instance: this });
-	                return true;
-	            }
-
-	            return false;
-	        }
-
-	        // Return the argument value or null if the argument was not found
-	        // If argument is not in the argument list.
-	        // We will also search inside the external argument list.
-
-	    }, {
-	        key: 'getValue',
-	        value: function getValue(attributeName) {
-	            var arg = this.args[attributeName];
-	            return arg ? arg.values[arg.idx] : this.externalArgs[attributeName];
-	        }
-
-	        // Return the argument values list or null if the argument was not found
-
-	    }, {
-	        key: 'getValues',
-	        value: function getValues(attributeName) {
-	            var arg = this.args[attributeName];
-	            return arg ? arg.values : null;
-	        }
-
-	        // Return the argument index or null if the argument was not found
-
-	    }, {
-	        key: 'getIndex',
-	        value: function getIndex(attributeName) {
-	            var arg = this.args[attributeName];
-	            return arg ? arg.idx : null;
-	        }
-
-	        // Return the argument index or null if the argument was not found
-
-	    }, {
-	        key: 'getUiType',
-	        value: function getUiType(attributeName) {
-	            var arg = this.args[attributeName];
-	            return arg ? arg.ui : null;
-	        }
-
-	        // Return the argument size or null if the argument was not found
-
-	    }, {
-	        key: 'getSize',
-	        value: function getSize(attributeName) {
-	            var arg = this.args[attributeName];
-	            return arg ? arg.values.length : null;
-	        }
-
-	        // Return the argument label or null if the argument was not found
-
-	    }, {
-	        key: 'label',
-	        value: function label(attributeName) {
-	            var arg = this.args[attributeName];
-	            return arg ? arg.label : null;
-	        }
-
-	        // Return the argument animation flag or false if the argument was not found
-
-	    }, {
-	        key: 'getAnimationFlag',
-	        value: function getAnimationFlag(attributeName) {
-	            var arg = this.args[attributeName];
-	            return arg ? arg.anime : false;
-	        }
-
-	        // Set the argument animation flag and return true if the value changed
-
-	    }, {
-	        key: 'setAnimationFlag',
-	        value: function setAnimationFlag(attributeName, state) {
-	            var arg = this.args[attributeName];
-
-	            if (arg && arg.anime !== state) {
-	                arg.anime = state;
-	                this.emit('state.change.animation', { animation: arg.anim, name: arg.name, instance: this });
-	                return true;
-	            }
-
-	            return false;
-	        }
-
-	        // Toggle the argument animation flag state and return the current state or
-	        // null if not found.
-
-	    }, {
-	        key: 'toggleAnimationFlag',
-	        value: function toggleAnimationFlag(attributeName) {
-	            var arg = this.args[attributeName];
-
-	            if (arg) {
-	                arg.anime = !arg.anime;
-	                this.emit('state.change.animation', { animation: arg.anim, name: arg.name, instance: this });
-	                return arg.anime;
-	            }
-
-	            return null;
-	        }
-
-	        // Check if one of the argument is currently active for the animation
-
-	    }, {
-	        key: 'hasAnimationFlag',
-	        value: function hasAnimationFlag() {
-	            for (var key in this.args) {
-	                if (this.args[key].anime) {
-	                    return true;
-	                }
-	            }
-	            return false;
-	        }
-
-	        // Return true if an animation is currently running
-
-	    }, {
-	        key: 'isAnimating',
-	        value: function isAnimating() {
-	            return this.keepAnimating;
-	        }
-
-	        // Start/Stop an animation
-
-	    }, {
-	        key: 'animate',
-	        value: function animate(start) {
-	            var deltaT = arguments.length <= 1 || arguments[1] === undefined ? 500 : arguments[1];
-
-	            // Update deltaT
-	            this.deltaT = deltaT;
-
-	            if (start !== this.keepAnimating) {
-	                this.keepAnimating = start;
-	                this.playNext();
-	            }
-	        }
-
-	        // Mouse handler if any base on the binding
-
-	    }, {
-	        key: 'getMouseListener',
-	        value: function getMouseListener() {
-	            if (this.mouseListener) {
-	                return this.mouseListener;
-	            }
-
-	            // Record last action time
-	            this.lastTime = {};
-	            this.newMouseTimeout = 250;
-
-	            // We need to create a mouse listener
-	            var self = this,
-	                actions = {};
-
-	            // Create an action map
-	            for (var key in this.originalData.arguments) {
-	                var value = this.originalData.arguments[key];
-	                if (value.bind && value.bind.mouse) {
-	                    for (var action in value.bind.mouse) {
-	                        var obj = (0, _omit2.default)(value.bind.mouse[action]);
-	                        obj.name = key;
-	                        obj.lastCoord = 0;
-	                        if (obj.orientation === undefined) {
-	                            obj.orientation = 1;
-	                        }
-	                        if (actions[action]) {
-	                            actions[action].push(obj);
-	                        } else {
-	                            actions[action] = [obj];
-	                        }
-	                    }
-	                }
-	            }
-
-	            /* eslint-disable complexity */
-	            function processEvent(event, envelope) {
-	                var array = actions[event.topic],
-	                    time = (0, _now2.default)(),
-	                    newEvent = self.lastTime[event.topic] + self.newMouseTimeout < time,
-	                    count = array.length,
-	                    changeDetected = false,
-	                    eventHandled = false;
-
-	                // Check all associated actions
-	                while (count--) {
-	                    var item = array[count],
-	                        deltaName = item.coordinate === 0 ? 'deltaX' : 'deltaY';
-
-	                    if (newEvent) {
-	                        item.lastCoord = 0;
-	                    }
-
-	                    if (item.modifier & event.modifier || item.modifier === event.modifier) {
-	                        eventHandled = true;
-	                        var delta = event[deltaName] - item.lastCoord;
-	                        self.lastTime[event.topic] = time;
-
-	                        if (Math.abs(delta) > item.step) {
-	                            item.lastCoord = Number(event[deltaName]);
-
-	                            if (item.orientation * delta > 0) {
-	                                changeDetected = self.next(item.name) || changeDetected;
-	                            } else {
-	                                changeDetected = self.previous(item.name) || changeDetected;
-	                            }
-	                        }
-	                    }
-	                }
-
-	                if (changeDetected) {
-	                    self.lazyFetchData(); // FIXME category
-	                }
-
-	                return eventHandled;
-	            }
-	            /* eslint-enable complexity */
-
-	            this.mouseListener = {};
-	            for (var actionName in actions) {
-	                this.mouseListener[actionName] = processEvent;
-	                this.lastTime[actionName] = (0, _now2.default)();
-	            }
-
-	            return this.mouseListener;
-	        }
-
-	        // Event helpers
-
-	    }, {
-	        key: 'onStateChange',
-	        value: function onStateChange(callback) {
-	            return this.on('state.change.*', callback);
-	        }
-	    }, {
-	        key: 'onDataChange',
-	        value: function onDataChange(callback) {
-	            return this.on(DEFAULT_KEY_NAME, callback);
-	        }
-
-	        // Return a new instance based on the same metadata and basepath
-
-	    }, {
-	        key: 'clone',
-	        value: function clone() {
-	            return new QueryDataModel(this.originalData, this.basepath);
-	        }
-	    }, {
-	        key: 'destroy',
-	        value: function destroy() {
-	            this.off();
-
-	            this.explorationSubscription.unsubscribe();
-	            this.explorationSubscription = null;
-	        }
-
-	        // Data exploration -----------------------------------------------------------
-
-	    }, {
-	        key: 'exploreQuery',
-	        value: function exploreQuery() {
-	            var start = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
-
-	            var _this3 = this;
-
-	            var fromBeguining = arguments.length <= 1 || arguments[1] === undefined ? true : arguments[1];
-	            var onDataReady = arguments.length <= 2 || arguments[2] === undefined ? true : arguments[2];
-
-	            if (fromBeguining) {
-	                this.exploreState.idxs = this.exploreState.order.map(function (i) {
-	                    return 0;
-	                });
+	        return eventHandled;
+	      }
+	      /* eslint-enable complexity */
+
+	      this.mouseListener = {};
+	      for (var actionName in actions) {
+	        this.mouseListener[actionName] = processEvent;
+	        this.lastTime[actionName] = (0, _now2.default)();
+	      }
+
+	      return this.mouseListener;
+	    }
+
+	    // Event helpers
+
+	  }, {
+	    key: 'onStateChange',
+	    value: function onStateChange(callback) {
+	      return this.on('state.change.*', callback);
+	    }
+	  }, {
+	    key: 'onDataChange',
+	    value: function onDataChange(callback) {
+	      return this.on(DEFAULT_KEY_NAME, callback);
+	    }
+
+	    // Return a new instance based on the same metadata and basepath
+
+	  }, {
+	    key: 'clone',
+	    value: function clone() {
+	      return new QueryDataModel(this.originalData, this.basepath);
+	    }
+	  }, {
+	    key: 'destroy',
+	    value: function destroy() {
+	      this.off();
+
+	      this.explorationSubscription.unsubscribe();
+	      this.explorationSubscription = null;
+	    }
+
+	    // Data exploration -----------------------------------------------------------
+
+	  }, {
+	    key: 'exploreQuery',
+	    value: function exploreQuery() {
+	      var start = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
+
+	      var _this3 = this;
+
+	      var fromBeguining = arguments.length <= 1 || arguments[1] === undefined ? true : arguments[1];
+	      var onDataReady = arguments.length <= 2 || arguments[2] === undefined ? true : arguments[2];
+
+	      if (fromBeguining) {
+	        this.exploreState.idxs = this.exploreState.order.map(function (i) {
+	          return 0;
+	        });
+	      } else {
+	        this.exploreState.idxs = this.exploreState.order.map(function (field) {
+	          return _this3.getIndex(field);
+	        });
+	      }
+	      this.exploreState.onDataReady = onDataReady;
+	      this.exploreState.animate = start;
+
+	      // Start animation
+	      if (this.exploreState.animate) {
+	        this.nextExploration();
+	      }
+
+	      this.emit('state.change.exploration', {
+	        exploration: this.exploreState,
+	        instance: this
+	      });
+	    }
+	  }, {
+	    key: 'nextExploration',
+	    value: function nextExploration() {
+	      var _this4 = this;
+
+	      if (this.exploreState.animate) {
+	        // Update internal query
+	        this.exploreState.order.forEach(function (f, i) {
+	          _this4.setIndex(f, _this4.exploreState.idxs[i]);
+	        });
+
+	        // Move to next step
+	        var idxs = this.exploreState.idxs,
+	            sizes = this.exploreState.sizes;
+	        var count = idxs.length;
+
+	        // May overshoot
+	        idxs[count - 1]++;
+
+	        // Handle overshoot
+	        while (count--) {
+	          if (idxs[count] < sizes[count]) {
+	            // We are good
+	            continue;
+	          } else {
+	            // We need to move the index back up
+	            if (count > 0) {
+	              idxs[count] = 0;
+	              idxs[count - 1]++;
 	            } else {
-	                this.exploreState.idxs = this.exploreState.order.map(function (field) {
-	                    return _this3.getIndex(field);
-	                });
+	              this.exploreState.animate = false;
+	              this.emit('state.change.exploration', {
+	                exploration: this.exploreState,
+	                instance: this
+	              });
+	              return this.exploreState.animate; // We are done
 	            }
-	            this.exploreState.onDataReady = onDataReady;
-	            this.exploreState.animate = start;
+	          }
+	        }
 
-	            // Start animation
-	            if (this.exploreState.animate) {
-	                this.nextExploration();
+	        // Trigger the fetchData
+	        this.lazyFetchData();
+	      }
+	      return this.exploreState.animate;
+	    }
+	  }, {
+	    key: 'setCacheSize',
+	    value: function setCacheSize(sizeBeforeGC) {
+	      dataManager.cacheSize = sizeBeforeGC;
+	    }
+	  }, {
+	    key: 'getCacheSize',
+	    value: function getCacheSize() {
+	      return dataManager.cacheSize;
+	    }
+	  }, {
+	    key: 'getMemoryUsage',
+	    value: function getMemoryUsage() {
+	      return dataManager.cacheData.size;
+	    }
+	  }, {
+	    key: 'link',
+	    value: function link(queryDataModel) {
+	      var _this5 = this;
+
+	      var args = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+	      var fetch = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
+
+	      return queryDataModel.onStateChange(function (data, envelope) {
+	        if (data.name !== undefined && data.value !== undefined) {
+	          if (args === null || args.indexOf(data.name) !== -1) {
+	            if (_this5.setValue(data.name, data.value) && fetch) {
+	              _this5.lazyFetchData();
 	            }
-
-	            this.emit('state.change.exploration', { exploration: this.exploreState, instance: this });
+	          }
 	        }
-	    }, {
-	        key: 'nextExploration',
-	        value: function nextExploration() {
-	            var _this4 = this;
+	      });
+	    }
+	  }]);
 
-	            if (this.exploreState.animate) {
-	                // Update internal query
-	                this.exploreState.order.forEach(function (f, i) {
-	                    _this4.setIndex(f, _this4.exploreState.idxs[i]);
-	                });
-
-	                // Move to next step
-	                var idxs = this.exploreState.idxs,
-	                    sizes = this.exploreState.sizes;
-	                var count = idxs.length;
-
-	                // May overshoot
-	                idxs[count - 1]++;
-
-	                // Handle overshoot
-	                while (count--) {
-	                    if (idxs[count] < sizes[count]) {
-	                        // We are good
-	                        continue;
-	                    } else {
-	                        // We need to move the index back up
-	                        if (count > 0) {
-	                            idxs[count] = 0;
-	                            idxs[count - 1]++;
-	                        } else {
-	                            this.exploreState.animate = false;
-	                            this.emit('state.change.exploration', { exploration: this.exploreState, instance: this });
-	                            return this.exploreState.animate; // We are done
-	                        }
-	                    }
-	                }
-
-	                // Trigger the fetchData
-	                this.lazyFetchData();
-	            }
-	            return this.exploreState.animate;
-	        }
-	    }, {
-	        key: 'setCacheSize',
-	        value: function setCacheSize(sizeBeforeGC) {
-	            dataManager.cacheSize = sizeBeforeGC;
-	        }
-	    }, {
-	        key: 'getCacheSize',
-	        value: function getCacheSize() {
-	            return dataManager.cacheSize;
-	        }
-	    }, {
-	        key: 'getMemoryUsage',
-	        value: function getMemoryUsage() {
-	            return dataManager.cacheData.size;
-	        }
-	    }, {
-	        key: 'link',
-	        value: function link(queryDataModel) {
-	            var _this5 = this;
-
-	            var args = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
-	            var fetch = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
-
-	            return queryDataModel.onStateChange(function (data, envelope) {
-	                if (data.name !== undefined && data.value !== undefined) {
-	                    if (args === null || args.indexOf(data.name) !== -1) {
-	                        if (_this5.setValue(data.name, data.value) && fetch) {
-	                            _this5.lazyFetchData();
-	                        }
-	                    }
-	                }
-	            });
-	        }
-	    }]);
-
-	    return QueryDataModel;
+	  return QueryDataModel;
 	}();
 
 	exports.default = QueryDataModel;
@@ -38167,7 +38312,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // Module dependencies and constants
@@ -38190,27 +38335,27 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var typeFnMap = {
-	    json: _request2.default.fetchJSON,
-	    text: _request2.default.fetchTxt,
-	    blob: _request2.default.fetchBlob,
-	    arraybuffer: _request2.default.fetchArray,
-	    array: _request2.default.fetchArray
+	  json: _request2.default.fetchJSON,
+	  text: _request2.default.fetchTxt,
+	  blob: _request2.default.fetchBlob,
+	  arraybuffer: _request2.default.fetchArray,
+	  array: _request2.default.fetchArray
 	};
 
 	// Internal helper that return the current time
 	function ts() {
-	    return new Date().getTime();
+	  return new Date().getTime();
 	}
 
 	function updateDataSize(data) {
-	    if (data.type === 'json') {
-	        data.size = JSON.stringify(data.data).length;
-	    } else if (data.type === 'blob') {
-	        data.size = data.data.size;
-	    } else {
-	        data.size = data.data.length;
-	    }
-	    return data.size;
+	  if (data.type === 'json') {
+	    data.size = JSON.stringify(data.data).length;
+	  } else if (data.type === 'blob') {
+	    data.size = data.data.size;
+	  } else {
+	    data.size = data.data.length;
+	  }
+	  return data.size;
 	}
 
 	// Should use converter
@@ -38227,230 +38372,242 @@
 	// }
 
 	var DataManager = function () {
-	    function DataManager() {
-	        var cacheSize = arguments.length <= 0 || arguments[0] === undefined ? 1000000000 : arguments[0];
+	  function DataManager() {
+	    var cacheSize = arguments.length <= 0 || arguments[0] === undefined ? 1000000000 : arguments[0];
 
-	        _classCallCheck(this, DataManager);
+	    _classCallCheck(this, DataManager);
 
-	        this.pattern = new _pattern2.default();
-	        this.keyToTypeMap = {};
-	        this.cacheSize = cacheSize;
-	        this.cacheData = {
-	            cache: {},
-	            modified: 0,
-	            ts: 0,
-	            size: 0
-	        };
+	    this.pattern = new _pattern2.default();
+	    this.keyToTypeMap = {};
+	    this.cacheSize = cacheSize;
+	    this.cacheData = {
+	      cache: {},
+	      modified: 0,
+	      ts: 0,
+	      size: 0
+	    };
+	  }
+
+	  _createClass(DataManager, [{
+	    key: 'destroy',
+	    value: function destroy() {
+	      this.off();
+	      this.clear();
 	    }
 
-	    _createClass(DataManager, [{
-	        key: 'destroy',
-	        value: function destroy() {
-	            this.off();
-	            this.clear();
-	        }
+	    // Fetch data in an asynchronous manner
+	    // This will trigger an event using the key as the type
 
-	        // Fetch data in an asynchronous manner
-	        // This will trigger an event using the key as the type
+	  }, {
+	    key: 'fetch',
+	    value: function fetch(key, options) {
+	      var _this = this;
 
-	    }, {
-	        key: 'fetch',
-	        value: function fetch(key, options) {
-	            var _this = this;
+	      var notificationTopic = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
 
-	            var notificationTopic = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
+	      var url = options ? this.pattern.getValue(key, options) : key,
+	          dataCached = this.cacheData.cache[url];
 
-	            var url = options ? this.pattern.getValue(key, options) : key,
-	                dataCached = this.cacheData.cache[url];
+	      if (dataCached) {
+	        if (!dataCached.pending) {
+	          this.cacheData.ts = dataCached.ts = ts();
 
-	            if (dataCached) {
-	                if (!dataCached.pending) {
-	                    this.cacheData.ts = dataCached.ts = ts();
+	          // Trigger the event after the return
+	          setTimeout(function () {
+	            var array = dataCached.keysToNotify || [key],
+	                count = array.length;
 
-	                    // Trigger the event after the return
-	                    setTimeout(function () {
-	                        var array = dataCached.keysToNotify || [key],
-	                            count = array.length;
+	            delete dataCached.keysToNotify;
 
-	                        delete dataCached.keysToNotify;
-
-	                        while (count--) {
-	                            _this.emit(array[count], dataCached);
-	                        }
-
-	                        if (notificationTopic) {
-	                            _this.emit(notificationTopic, dataCached);
-	                        }
-	                    }, 0);
-	                } else {
-	                    dataCached.keysToNotify.push(key);
-	                    if (notificationTopic) {
-	                        dataCached.keysToNotify.push(notificationTopic);
-	                    }
-	                }
-	            } else {
-	                (function () {
-	                    // Run Garbage collector to free memory if need be
-	                    _this.gc();
-
-	                    // Prevent double fetch
-	                    _this.cacheData.cache[url] = { pending: true, keysToNotify: [key] };
-
-	                    if (notificationTopic) {
-	                        _this.cacheData.cache[url].keysToNotify.push(notificationTopic);
-	                    }
-
-	                    // Need to fetch the data on the web
-	                    var self = _this,
-	                        typeFnMime = _this.keyToTypeMap[key],
-	                        type = typeFnMime[0],
-	                        fn = typeFnMime[1],
-	                        mimeType = typeFnMime[2],
-	                        callback = function callback(error, data) {
-	                        if (error) {
-	                            delete self.cacheData.cache[url];
-	                            self.emit(key, { error: error, data: { key: key, options: options, url: url, typeFnMime: typeFnMime } });
-	                            return null;
-	                        }
-
-	                        dataCached = {
-	                            data: data,
-	                            type: type,
-	                            requestedURL: url,
-	                            pending: false
-	                        };
-
-	                        // Handle internal url for image blob
-	                        if (mimeType && mimeType.indexOf('image') !== -1) {
-	                            dataCached.url = window.URL.createObjectURL(data);
-	                        }
-
-	                        // Update memory usage
-	                        self.cacheData.size += updateDataSize(dataCached);
-
-	                        // Update ts
-	                        self.cacheData.modified = self.cacheData.ts = dataCached.ts = ts();
-
-	                        // Trigger the event
-	                        var array = self.cacheData.cache[url].keysToNotify;
-	                        var count = array.length;
-
-	                        // Store it in the cache
-	                        self.cacheData.cache[url] = dataCached;
-
-	                        while (count--) {
-	                            self.emit(array[count], dataCached);
-	                        }
-	                    };
-
-	                    fn(url, mimeType ? mimeType : callback, callback);
-	                })();
-	            }
-
-	            return url;
-	        }
-
-	        // Fetch data from URL
-
-	    }, {
-	        key: 'fetchURL',
-	        value: function fetchURL(url, type, mimeType) {
-	            var notificationTopic = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
-
-	            this.keyToTypeMap[url] = [type, typeFnMap[type], mimeType];
-	            return this.fetch(url, null, notificationTopic);
-	        }
-
-	        // Get data in cache
-
-	    }, {
-	        key: 'get',
-	        value: function get(url, freeCache) {
-	            var dataObj = this.cacheData.cache[url];
-	            if (freeCache) {
-	                this.free(url);
-	            }
-	            return dataObj;
-	        }
-
-	        // Free a fetched data
-
-	    }, {
-	        key: 'free',
-	        value: function free(url) {
-	            var dataCached = this.cacheData.cache[url];
-	            if (dataCached && dataCached.url) {
-	                window.URL.revokeObjectURL(dataCached.url);
-	                delete dataCached.url;
-	            }
-
-	            delete this.cacheData.cache[url];
-	            this.off(url);
-	        }
-
-	        // Register a key/pattern for future use
-	        // Type can only be ['json', 'text', 'blob', 'array']
-	        // mimeType is only required for blob
-
-	    }, {
-	        key: 'registerURL',
-	        value: function registerURL(key, filePattern, type, mimeType) {
-	            this.pattern.registerPattern(key, filePattern);
-	            this.keyToTypeMap[key] = [type, typeFnMap[type], mimeType];
-	        }
-
-	        // Free previously registered URL
-
-	    }, {
-	        key: 'unregisterURL',
-	        value: function unregisterURL(key) {
-	            this.pattern.unregisterPattern(key);
-	            delete this.keyToTypeMap[key];
-	            this.off(key);
-	        }
-
-	        // Empty cache
-
-	    }, {
-	        key: 'clear',
-	        value: function clear() {
-	            var urlToDelete = [];
-	            for (var url in this.cacheData.cache) {
-	                urlToDelete.push(url);
-	            }
-
-	            var count = urlToDelete.length;
 	            while (count--) {
-	                this.free(urlToDelete[count]);
+	              _this.emit(array[count], dataCached);
 	            }
-	            this.cacheData.size = 0;
-	        }
-	    }, {
-	        key: 'gc',
-	        value: function gc() {
-	            if (this.cacheData.size > this.cacheSize) {
-	                console.log('Free cache memory', this.cacheData.size);
-	                this.clear();
-	            }
-	        }
-	    }, {
-	        key: 'setCacheSize',
-	        value: function setCacheSize(sizeBeforeGC) {
-	            this.cacheSize = sizeBeforeGC;
-	        }
-	    }, {
-	        key: 'getCacheSize',
-	        value: function getCacheSize() {
-	            return this.cacheSize;
-	        }
-	    }, {
-	        key: 'getMemoryUsage',
-	        value: function getMemoryUsage() {
-	            return this.cacheData.size;
-	        }
-	    }]);
 
-	    return DataManager;
+	            if (notificationTopic) {
+	              _this.emit(notificationTopic, dataCached);
+	            }
+	          }, 0);
+	        } else {
+	          dataCached.keysToNotify.push(key);
+	          if (notificationTopic) {
+	            dataCached.keysToNotify.push(notificationTopic);
+	          }
+	        }
+	      } else {
+	        (function () {
+	          // Run Garbage collector to free memory if need be
+	          _this.gc();
+
+	          // Prevent double fetch
+	          _this.cacheData.cache[url] = {
+	            pending: true,
+	            keysToNotify: [key]
+	          };
+
+	          if (notificationTopic) {
+	            _this.cacheData.cache[url].keysToNotify.push(notificationTopic);
+	          }
+
+	          // Need to fetch the data on the web
+	          var self = _this,
+	              typeFnMime = _this.keyToTypeMap[key],
+	              type = typeFnMime[0],
+	              fn = typeFnMime[1],
+	              mimeType = typeFnMime[2],
+	              callback = function callback(error, data) {
+	            if (error) {
+	              delete self.cacheData.cache[url];
+	              self.emit(key, {
+	                error: error,
+	                data: {
+	                  key: key, options: options, url: url, typeFnMime: typeFnMime
+	                }
+	              });
+	              return;
+	            }
+
+	            dataCached = {
+	              data: data,
+	              type: type,
+	              requestedURL: url,
+	              pending: false
+	            };
+
+	            // Handle internal url for image blob
+	            if (mimeType && mimeType.indexOf('image') !== -1) {
+	              dataCached.url = window.URL.createObjectURL(data);
+	            }
+
+	            // Update memory usage
+	            self.cacheData.size += updateDataSize(dataCached);
+
+	            // Update ts
+	            self.cacheData.modified = self.cacheData.ts = dataCached.ts = ts();
+
+	            // Trigger the event
+	            var array = self.cacheData.cache[url].keysToNotify;
+	            var count = array.length;
+
+	            // Store it in the cache
+	            self.cacheData.cache[url] = dataCached;
+
+	            while (count--) {
+	              self.emit(array[count], dataCached);
+	            }
+	          };
+
+	          if (mimeType) {
+	            fn(url, mimeType, callback);
+	          } else {
+	            fn(url, callback);
+	          }
+	        })();
+	      }
+
+	      return url;
+	    }
+
+	    // Fetch data from URL
+
+	  }, {
+	    key: 'fetchURL',
+	    value: function fetchURL(url, type, mimeType) {
+	      var notificationTopic = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
+
+	      this.keyToTypeMap[url] = [type, typeFnMap[type], mimeType];
+	      return this.fetch(url, null, notificationTopic);
+	    }
+
+	    // Get data in cache
+
+	  }, {
+	    key: 'get',
+	    value: function get(url, freeCache) {
+	      var dataObj = this.cacheData.cache[url];
+	      if (freeCache) {
+	        this.free(url);
+	      }
+	      return dataObj;
+	    }
+
+	    // Free a fetched data
+
+	  }, {
+	    key: 'free',
+	    value: function free(url) {
+	      var dataCached = this.cacheData.cache[url];
+	      if (dataCached && dataCached.url) {
+	        window.URL.revokeObjectURL(dataCached.url);
+	        delete dataCached.url;
+	      }
+
+	      delete this.cacheData.cache[url];
+	      this.off(url);
+	    }
+
+	    // Register a key/pattern for future use
+	    // Type can only be ['json', 'text', 'blob', 'array']
+	    // mimeType is only required for blob
+
+	  }, {
+	    key: 'registerURL',
+	    value: function registerURL(key, filePattern, type, mimeType) {
+	      this.pattern.registerPattern(key, filePattern);
+	      this.keyToTypeMap[key] = [type, typeFnMap[type], mimeType];
+	    }
+
+	    // Free previously registered URL
+
+	  }, {
+	    key: 'unregisterURL',
+	    value: function unregisterURL(key) {
+	      this.pattern.unregisterPattern(key);
+	      delete this.keyToTypeMap[key];
+	      this.off(key);
+	    }
+
+	    // Empty cache
+
+	  }, {
+	    key: 'clear',
+	    value: function clear() {
+	      var urlToDelete = [];
+	      for (var url in this.cacheData.cache) {
+	        urlToDelete.push(url);
+	      }
+
+	      var count = urlToDelete.length;
+	      while (count--) {
+	        this.free(urlToDelete[count]);
+	      }
+	      this.cacheData.size = 0;
+	    }
+	  }, {
+	    key: 'gc',
+	    value: function gc() {
+	      if (this.cacheData.size > this.cacheSize) {
+	        console.log('Free cache memory', this.cacheData.size);
+	        this.clear();
+	      }
+	    }
+	  }, {
+	    key: 'setCacheSize',
+	    value: function setCacheSize(sizeBeforeGC) {
+	      this.cacheSize = sizeBeforeGC;
+	    }
+	  }, {
+	    key: 'getCacheSize',
+	    value: function getCacheSize() {
+	      return this.cacheSize;
+	    }
+	  }, {
+	    key: 'getMemoryUsage',
+	    value: function getMemoryUsage() {
+	      return this.cacheData.size;
+	    }
+	  }]);
+
+	  return DataManager;
 	}();
 
 	exports.default = DataManager;
@@ -38465,105 +38622,112 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	// Generic request handler
 	function makeRequest(url, handler) {
-	    var xhr = new XMLHttpRequest();
+	  var xhr = new XMLHttpRequest();
 
-	    xhr.open('GET', url, true);
-	    xhr.responseType = handler.type;
+	  xhr.open('GET', url, true);
+	  xhr.responseType = handler.type;
 
-	    xhr.onload = function (e) {
-	        if (this.status === 200) {
-	            return handler.fn(null, xhr);
-	        }
-	        handler.fn(e, xhr);
-	    };
-	    xhr.onerror = function (e) {
-	        handler.fn(e, xhr);
-	    };
-	    xhr.send();
+	  xhr.onload = function onLoad(e) {
+	    if (this.status === 200) {
+	      handler.fn(null, xhr);
+	      return;
+	    }
+	    handler.fn(e, xhr);
+	  };
+	  xhr.onerror = function onError(e) {
+	    handler.fn(e, xhr);
+	  };
+	  xhr.send();
 	}
 
 	// Array buffer handler
 	function arraybufferHandler(callback) {
-	    return {
-	        type: 'arraybuffer',
-	        fn: function fn(error, xhrObject) {
-	            if (error) {
-	                return callback(error);
-	            }
-	            callback(null, xhrObject.response);
-	        }
-	    };
+	  return {
+	    type: 'arraybuffer',
+	    fn: function fn(error, xhrObject) {
+	      if (error) {
+	        callback(error);
+	        return;
+	      }
+	      callback(null, xhrObject.response);
+	    }
+	  };
 	}
 
 	// Text handler
 	function textHandler(callback) {
-	    return {
-	        type: 'text',
-	        fn: function fn(error, xhrObject) {
-	            if (error) {
-	                return callback(error);
-	            }
-	            callback(null, xhrObject.response);
-	        }
-	    };
+	  return {
+	    type: 'text',
+	    fn: function fn(error, xhrObject) {
+	      if (error) {
+	        callback(error);
+	        return;
+	      }
+	      callback(null, xhrObject.response);
+	    }
+	  };
 	}
 
 	// JSON handler
 	function jsonHandler(callback) {
-	    return {
-	        type: 'text',
-	        fn: function fn(error, xhrObject) {
-	            if (error) {
-	                return callback(error);
-	            }
-	            callback(null, JSON.parse(xhrObject.response));
-	        }
-	    };
+	  return {
+	    type: 'text',
+	    fn: function fn(error, xhrObject) {
+	      if (error) {
+	        callback(error);
+	        return;
+	      }
+	      callback(null, JSON.parse(xhrObject.response));
+	    }
+	  };
 	}
 
 	// Blob handler
 	function blobHandler(mimeType, callback) {
-	    return {
-	        type: 'blob',
-	        fn: function fn(error, xhrObject) {
-	            if (error) {
-	                return callback(error);
-	            }
+	  return {
+	    type: 'blob',
+	    fn: function fn(error, xhrObject) {
+	      if (error) {
+	        callback(error);
+	        return;
+	      }
 
-	            var blob = new Blob([xhrObject.response], { type: mimeType });
-	            callback(null, blob);
-	        }
-	    };
+	      var blob = new Blob([xhrObject.response], {
+	        type: mimeType
+	      });
+	      callback(null, blob);
+	    }
+	  };
 	}
 
 	// Fetch methods
 
 	function fetchJSON(url, callback) {
-	    makeRequest(url, jsonHandler(callback));
+	  makeRequest(url, jsonHandler(callback));
 	}
 
 	function fetchTxt(url, callback) {
-	    makeRequest(url, textHandler(callback));
+	  makeRequest(url, textHandler(callback));
 	}
 
 	function fetchBlob(url, mimeType, callback) {
-	    makeRequest(url, blobHandler(mimeType, callback));
+	  makeRequest(url, blobHandler(mimeType, callback));
 	}
 
 	function fetchArray(url, callback) {
-	    makeRequest(url, arraybufferHandler(callback));
+	  makeRequest(url, arraybufferHandler(callback));
 	}
 
 	// Export fetch methods
 	exports.default = {
-	    fetchJSON: fetchJSON,
-	    fetchTxt: fetchTxt,
-	    fetchBlob: fetchBlob,
-	    fetchArray: fetchArray
+	  fetchJSON: fetchJSON,
+	  fetchTxt: fetchTxt,
+	  fetchBlob: fetchBlob,
+	  fetchArray: fetchArray
 	};
 
 /***/ },
@@ -38573,9 +38737,13 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
-	exports.default = PatternMap;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 	// The goal of that module is to be able to register a set of String pattern
 	// and have a simple way to evaluate that pattern from an object.
 	// Here is an example on how the following module can be used.
@@ -38609,31 +38777,50 @@
 	//     }
 	//     m.unregisterPattern('imageURL');
 
-	function PatternMap() {
+	var PatternMap = function () {
+	  function PatternMap() {
+	    _classCallCheck(this, PatternMap);
+
 	    this.keyPatternMap = {};
-	}
+	  }
 
-	// Register a pattern to a given key
-	PatternMap.prototype.registerPattern = function (key, pattern) {
-	    this.keyPatternMap[key] = pattern;
-	};
+	  // Register a pattern to a given key
 
-	// Unregister a key
-	PatternMap.prototype.unregisterPattern = function (key) {
-	    delete this.keyPatternMap[key];
-	};
 
-	// Evaluate the pattern base on its registered key and set of key to be replaced
-	PatternMap.prototype.getValue = function (key, options) {
-	    var result = this.keyPatternMap[key],
-	        keyPattern = ['{', '}'];
-
-	    for (var opt in options) {
-	        result = result.replace(keyPattern.join(opt), options[opt]);
+	  _createClass(PatternMap, [{
+	    key: 'registerPattern',
+	    value: function registerPattern(key, pattern) {
+	      this.keyPatternMap[key] = pattern;
 	    }
 
-	    return result;
-	};
+	    // Unregister a key
+
+	  }, {
+	    key: 'unregisterPattern',
+	    value: function unregisterPattern(key) {
+	      delete this.keyPatternMap[key];
+	    }
+
+	    // Evaluate the pattern base on its registered key and set of key to be replaced
+
+	  }, {
+	    key: 'getValue',
+	    value: function getValue(key, options) {
+	      var result = this.keyPatternMap[key],
+	          keyPattern = ['{', '}'];
+
+	      for (var opt in options) {
+	        result = result.replace(keyPattern.join(opt), options[opt]);
+	      }
+
+	      return result;
+	    }
+	  }]);
+
+	  return PatternMap;
+	}();
+
+	exports.default = PatternMap;
 
 /***/ },
 /* 208 */
@@ -39233,7 +39420,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -39251,62 +39438,62 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var QueryDataModelImageBuilder = function (_AbstractImageBuilder) {
-	    _inherits(QueryDataModelImageBuilder, _AbstractImageBuilder);
+	  _inherits(QueryDataModelImageBuilder, _AbstractImageBuilder);
 
-	    // ------------------------------------------------------------------------
+	  // ------------------------------------------------------------------------
 
-	    function QueryDataModelImageBuilder(queryDataModel) {
-	        _classCallCheck(this, QueryDataModelImageBuilder);
+	  function QueryDataModelImageBuilder(queryDataModel) {
+	    _classCallCheck(this, QueryDataModelImageBuilder);
 
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(QueryDataModelImageBuilder).call(this, { queryDataModel: queryDataModel, dimensions: queryDataModel.originalData.data[0].dimensions || [500, 500] }));
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(QueryDataModelImageBuilder).call(this, { queryDataModel: queryDataModel, dimensions: queryDataModel.originalData.data[0].dimensions || [500, 500] }));
 
-	        _this.lastQueryImage = null;
-	        _this.onLoadCallback = function () {
-	            _this.lastQueryImage.removeEventListener('load', _this.onLoadCallback);
-	            _this.render();
-	        };
+	    _this.lastQueryImage = null;
+	    _this.onLoadCallback = function () {
+	      _this.lastQueryImage.removeEventListener('load', _this.onLoadCallback);
+	      _this.render();
+	    };
 
-	        _this.registerSubscription(queryDataModel.onDataChange(function (data, envelope) {
-	            if (_this.lastQueryImage) {
-	                _this.lastQueryImage.removeEventListener('load', _this.onLoadCallback);
-	            }
+	    _this.registerSubscription(queryDataModel.onDataChange(function (data, envelope) {
+	      if (_this.lastQueryImage) {
+	        _this.lastQueryImage.removeEventListener('load', _this.onLoadCallback);
+	      }
 
-	            if (data.image) {
-	                _this.lastQueryImage = data.image.image;
-	                _this.render();
-	            }
-	        }));
-	        return _this;
+	      if (data.image) {
+	        _this.lastQueryImage = data.image.image;
+	        _this.render();
+	      }
+	    }));
+	    return _this;
+	  }
+
+	  // ------------------------------------------------------------------------
+
+	  _createClass(QueryDataModelImageBuilder, [{
+	    key: 'render',
+	    value: function render() {
+	      if (!this.lastQueryImage) {
+	        this.queryDataModel.fetchData();
+	        return;
+	      }
+
+	      if (this.lastQueryImage.complete) {
+	        var width = this.lastQueryImage.width,
+	            height = this.lastQueryImage.height;
+
+	        this.imageReady({
+	          canvas: this.lastQueryImage,
+	          area: [0, 0, width, height],
+	          outputSize: [width, height],
+	          builder: this,
+	          arguments: this.queryDataModel.getQuery()
+	        });
+	      } else {
+	        this.lastQueryImage.addEventListener('load', this.onLoadCallback);
+	      }
 	    }
+	  }]);
 
-	    // ------------------------------------------------------------------------
-
-	    _createClass(QueryDataModelImageBuilder, [{
-	        key: 'render',
-	        value: function render() {
-	            if (!this.lastQueryImage) {
-	                this.queryDataModel.fetchData();
-	                return;
-	            }
-
-	            if (this.lastQueryImage.complete) {
-	                var width = this.lastQueryImage.width,
-	                    height = this.lastQueryImage.height;
-
-	                this.imageReady({
-	                    canvas: this.lastQueryImage,
-	                    area: [0, 0, width, height],
-	                    outputSize: [width, height],
-	                    builder: this,
-	                    arguments: this.queryDataModel.getQuery()
-	                });
-	            } else {
-	                this.lastQueryImage.addEventListener('load', this.onLoadCallback);
-	            }
-	        }
-	    }]);
-
-	    return QueryDataModelImageBuilder;
+	  return QueryDataModelImageBuilder;
 	}(_AbstractImageBuilder3.default);
 
 	exports.default = QueryDataModelImageBuilder;
@@ -39318,7 +39505,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -39335,135 +39522,145 @@
 
 	var AbstractImageBuilder = function () {
 
-	    // ------------------------------------------------------------------------
+	  // ------------------------------------------------------------------------
 
-	    function AbstractImageBuilder(_ref) {
-	        var queryDataModel = _ref.queryDataModel;
-	        var pipelineModel = _ref.pipelineModel;
-	        var lookupTableManager = _ref.lookupTableManager;
-	        var _ref$handleRecord = _ref.handleRecord;
-	        var handleRecord = _ref$handleRecord === undefined ? false : _ref$handleRecord;
-	        var _ref$dimensions = _ref.dimensions;
-	        var dimensions = _ref$dimensions === undefined ? [500, 500] : _ref$dimensions;
+	  function AbstractImageBuilder(_ref) {
+	    var queryDataModel = _ref.queryDataModel;
+	    var pipelineModel = _ref.pipelineModel;
+	    var lookupTableManager = _ref.lookupTableManager;
+	    var _ref$handleRecord = _ref.handleRecord;
+	    var handleRecord = _ref$handleRecord === undefined ? false : _ref$handleRecord;
+	    var _ref$dimensions = _ref.dimensions;
+	    var dimensions = _ref$dimensions === undefined ? [500, 500] : _ref$dimensions;
 
-	        _classCallCheck(this, AbstractImageBuilder);
+	    _classCallCheck(this, AbstractImageBuilder);
 
-	        this.queryDataModel = queryDataModel;
-	        this.pipelineModel = pipelineModel;
-	        this.lookupTableManager = lookupTableManager;
-	        this.handleRecord = handleRecord;
-	        this.subscriptions = [];
-	        this.objectsToFree = [];
-	        this.dimensions = dimensions;
+	    this.queryDataModel = queryDataModel;
+	    this.pipelineModel = pipelineModel;
+	    this.lookupTableManager = lookupTableManager;
+	    this.handleRecord = handleRecord;
+	    this.subscriptions = [];
+	    this.objectsToFree = [];
+	    this.dimensions = dimensions;
 
-	        this.controlWidgets = [];
-	        if (this.lookupTableManager) {
-	            this.controlWidgets.push({ name: "LookupTableManagerWidget", lookupTableManager: lookupTableManager });
-	        }
-	        if (this.pipelineModel) {
-	            this.controlWidgets.push({ name: "CompositeControl", pipelineModel: pipelineModel });
-	        }
-	        if (this.queryDataModel) {
-	            this.controlWidgets.push({ name: "QueryDataModelWidget", queryDataModel: queryDataModel });
-	        }
+	    this.controlWidgets = [];
+	    if (this.lookupTableManager) {
+	      this.controlWidgets.push({
+	        name: 'LookupTableManagerWidget',
+	        lookupTableManager: lookupTableManager
+	      });
 	    }
+	    if (this.pipelineModel) {
+	      this.controlWidgets.push({
+	        name: 'CompositeControl',
+	        pipelineModel: pipelineModel
+	      });
+	    }
+	    if (this.queryDataModel) {
+	      this.controlWidgets.push({
+	        name: 'QueryDataModelWidget',
+	        queryDataModel: queryDataModel
+	      });
+	    }
+	  }
+
+	  // ------------------------------------------------------------------------
+
+	  _createClass(AbstractImageBuilder, [{
+	    key: 'update',
+	    value: function update() {
+	      if (this.queryDataModel) {
+	        this.queryDataModel.fetchData();
+	      }
+	    }
+
 	    // ------------------------------------------------------------------------
 
-	    _createClass(AbstractImageBuilder, [{
-	        key: 'update',
-	        value: function update() {
-	            if (this.queryDataModel) {
-	                this.queryDataModel.fetchData();
-	            }
-	        }
+	  }, {
+	    key: 'onImageReady',
+	    value: function onImageReady(callback) {
+	      return this.on(IMAGE_READY_TOPIC, callback);
+	    }
 
-	        // ------------------------------------------------------------------------
+	    // ------------------------------------------------------------------------
 
-	    }, {
-	        key: 'onImageReady',
-	        value: function onImageReady(callback) {
-	            return this.on(IMAGE_READY_TOPIC, callback);
-	        }
+	  }, {
+	    key: 'imageReady',
+	    value: function imageReady(readyImage) {
+	      this.emit(IMAGE_READY_TOPIC, readyImage);
+	    }
 
-	        // ------------------------------------------------------------------------
+	    // ------------------------------------------------------------------------
 
-	    }, {
-	        key: 'imageReady',
-	        value: function imageReady(readyImage) {
-	            this.emit(IMAGE_READY_TOPIC, readyImage);
-	        }
+	  }, {
+	    key: 'registerSubscription',
+	    value: function registerSubscription(subscription) {
+	      this.subscriptions.push(subscription);
+	    }
 
-	        // ------------------------------------------------------------------------
+	    // ------------------------------------------------------------------------
 
-	    }, {
-	        key: 'registerSubscription',
-	        value: function registerSubscription(subscription) {
-	            this.subscriptions.push(subscription);
-	        }
+	  }, {
+	    key: 'registerObjectToFree',
+	    value: function registerObjectToFree(obj) {
+	      this.objectsToFree.push(obj);
+	    }
 
-	        // ------------------------------------------------------------------------
+	    // ------------------------------------------------------------------------
 
-	    }, {
-	        key: 'registerObjectToFree',
-	        value: function registerObjectToFree(obj) {
-	            this.objectsToFree.push(obj);
-	        }
+	  }, {
+	    key: 'getListeners',
+	    value: function getListeners() {
+	      return this.queryDataModel ? this.queryDataModel.getMouseListener() : {};
+	    }
 
-	        // ------------------------------------------------------------------------
+	    // ------------------------------------------------------------------------
 
-	    }, {
-	        key: 'getListeners',
-	        value: function getListeners() {
-	            return this.queryDataModel ? this.queryDataModel.getMouseListener() : {};
-	        }
+	    // Method meant to be used with the WidgetFactory
 
-	        // ------------------------------------------------------------------------
+	  }, {
+	    key: 'getControlWidgets',
+	    value: function getControlWidgets() {
+	      return this.controlWidgets;
+	    }
 
-	        // Method meant to be used with the WidgetFactory
+	    // ------------------------------------------------------------------------
 
-	    }, {
-	        key: 'getControlWidgets',
-	        value: function getControlWidgets() {
-	            return this.controlWidgets;
-	        }
+	  }, {
+	    key: 'getControlModels',
+	    value: function getControlModels() {
+	      return {
+	        pipelineModel: this.pipelineModel,
+	        queryDataModel: this.queryDataModel,
+	        lookupTableManager: this.lookupTableManager,
+	        dimensions: this.dimensions
+	      };
+	    }
 
-	        // ------------------------------------------------------------------------
+	    // ------------------------------------------------------------------------
 
-	    }, {
-	        key: 'getControlModels',
-	        value: function getControlModels() {
-	            return {
-	                pipelineModel: this.pipelineModel,
-	                queryDataModel: this.queryDataModel,
-	                lookupTableManager: this.lookupTableManager,
-	                dimensions: this.dimensions
-	            };
-	        }
+	  }, {
+	    key: 'destroy',
+	    value: function destroy() {
+	      this.off();
 
-	        // ------------------------------------------------------------------------
+	      while (this.subscriptions.length) {
+	        this.subscriptions.pop().unsubscribe();
+	      }
 
-	    }, {
-	        key: 'destroy',
-	        value: function destroy() {
-	            this.off();
+	      while (this.objectsToFree.length) {
+	        this.objectsToFree.pop().destroy();
+	      }
 
-	            while (this.subscriptions.length) {
-	                this.subscriptions.pop().unsubscribe();
-	            }
+	      this.queryDataModel = null;
+	      this.pipelineModel = null;
+	      this.lookupTableManager = null;
+	      this.dimensions = null;
+	      this.controlWidgets = null;
+	    }
+	  }]);
 
-	            while (this.objectsToFree.length) {
-	                this.objectsToFree.pop().destroy();
-	            }
-
-	            this.queryDataModel = null;
-	            this.pipelineModel = null;
-	            this.lookupTableManager = null;
-	            this.dimensions = null;
-	            this.controlWidgets = null;
-	        }
-	    }]);
-
-	    return AbstractImageBuilder;
+	  return AbstractImageBuilder;
 	}();
 
 	// Add Observer pattern using Monologue.js

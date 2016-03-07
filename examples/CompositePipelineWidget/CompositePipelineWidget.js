@@ -87,7 +87,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _react = __webpack_require__(2);
@@ -111,58 +111,60 @@
 	 */
 	exports.default = _react2.default.createClass({
 
-	    displayName: 'CompositePipelineWidget',
+	  displayName: 'CompositePipelineWidget',
 
-	    propTypes: {
-	        model: _react2.default.PropTypes.object.isRequired
-	    },
+	  propTypes: {
+	    model: _react2.default.PropTypes.object.isRequired
+	  },
 
-	    componentDidMount: function componentDidMount() {
-	        this.attachListener(this.props.model);
-	    },
-	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	        var previous = this.props.model,
-	            next = nextProps.model;
+	  componentDidMount: function componentDidMount() {
+	    this.attachListener(this.props.model);
+	  },
+	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    var previous = this.props.model,
+	        next = nextProps.model;
 
-	        if (previous !== next) {
-	            this.detachListener();
-	            this.attachListener(next);
-	        }
-	    },
-
-
-	    // Auto unmount listener
-	    componentWillUnmount: function componentWillUnmount() {
-	        this.detachListener();
-	    },
-	    attachListener: function attachListener(pipelineModel) {
-	        var _this = this;
-
-	        this.pipelineSubscription = pipelineModel.onChange(function (data, envelope) {
-	            _this.forceUpdate();
-	        });
-	    },
-	    detachListener: function detachListener() {
-	        if (this.pipelineSubscription) {
-	            this.pipelineSubscription.unsubscribe();
-	            this.pipelineSubscription = null;
-	        }
-	    },
-	    render: function render() {
-	        var pipelineModel = this.props.model,
-	            pipelineDescription = pipelineModel.getPipelineDescription();
-	        return _react2.default.createElement(
-	            'div',
-	            { className: _CompositePipelineWidget2.default.container },
-	            pipelineDescription.map(function (item, idx) {
-	                return _react2.default.createElement(_RootItem2.default, {
-	                    key: idx,
-	                    item: item,
-	                    layer: item.ids.join(''),
-	                    model: pipelineModel });
-	            })
-	        );
+	    if (previous !== next) {
+	      this.detachListener();
+	      this.attachListener(next);
 	    }
+	  },
+
+
+	  // Auto unmount listener
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.detachListener();
+	  },
+	  attachListener: function attachListener(pipelineModel) {
+	    var _this = this;
+
+	    this.pipelineSubscription = pipelineModel.onChange(function (data, envelope) {
+	      _this.forceUpdate();
+	    });
+	  },
+	  detachListener: function detachListener() {
+	    if (this.pipelineSubscription) {
+	      this.pipelineSubscription.unsubscribe();
+	      this.pipelineSubscription = null;
+	    }
+	  },
+	  render: function render() {
+	    var pipelineModel = this.props.model,
+	        pipelineDescription = pipelineModel.getPipelineDescription();
+
+	    return _react2.default.createElement(
+	      'div',
+	      { className: _CompositePipelineWidget2.default.container },
+	      pipelineDescription.map(function (item, idx) {
+	        return _react2.default.createElement(_RootItem2.default, {
+	          key: idx,
+	          item: item,
+	          layer: item.ids.join(''),
+	          model: pipelineModel
+	        });
+	      })
+	    );
+	  }
 	});
 
 /***/ },
@@ -19818,7 +19820,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _ChildItem = __webpack_require__(160);
@@ -19846,100 +19848,108 @@
 	 */
 	exports.default = _react2.default.createClass({
 
-	    displayName: 'CompositePipelineWidget.RootItem',
+	  displayName: 'CompositePipelineWidget.RootItem',
 
-	    propTypes: {
-	        item: _react2.default.PropTypes.object,
-	        layer: _react2.default.PropTypes.string,
-	        model: _react2.default.PropTypes.object
-	    },
+	  propTypes: {
+	    item: _react2.default.PropTypes.object,
+	    layer: _react2.default.PropTypes.string,
+	    model: _react2.default.PropTypes.object
+	  },
 
-	    getInitialState: function getInitialState() {
-	        return {
-	            dropDown: false
-	        };
-	    },
-	    toggleVisibility: function toggleVisibility() {
-	        this.props.model.toggleLayerVisible(this.props.layer);
-	    },
-	    toggleDropDown: function toggleDropDown() {
-	        if (this.props.model.getColor(this.props.layer).length > 1) {
-	            this.setState({ dropDown: !this.state.dropDown });
-	        }
-	    },
-	    updateColorBy: function updateColorBy(event) {
-	        this.props.model.setActiveColor(this.props.layer, event.target.dataset.color);
-	        this.toggleDropDown();
-	    },
-	    toggleEditMode: function toggleEditMode() {
-	        this.props.model.toggleEditMode(this.props.layer);
-	    },
-	    updateOpacity: function updateOpacity(e) {
-	        this.props.model.setOpacity(this.props.layer, e.target.value);
-	        this.forceUpdate();
-	    },
-	    render: function render() {
-	        var model = this.props.model,
-	            layer = this.props.layer,
-	            visible = model.isLayerVisible(this.props.layer),
-	            children = this.props.item.children || [],
-	            inEditMode = this.props.model.isLayerInEditMode(this.props.layer),
-	            hasChildren = children.length > 0,
-	            hasOpacity = model.hasOpacity(),
-	            hasDropDown = this.props.model.getColor(this.props.layer).length > 1,
-	            editButton = hasChildren ? _react2.default.createElement('i', { className: inEditMode ? _CompositePipelineWidget2.default.editButtonOn : _CompositePipelineWidget2.default.editButtonOff, onClick: this.toggleEditMode }) : '';
-
-	        return _react2.default.createElement(
-	            'div',
-	            { className: _CompositePipelineWidget2.default.section },
-	            _react2.default.createElement(
-	                'div',
-	                { className: _CompositePipelineWidget2.default.item },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: _CompositePipelineWidget2.default.label },
-	                    this.props.item.name
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: _CompositePipelineWidget2.default.actions },
-	                    editButton,
-	                    _react2.default.createElement('i', { className: visible ? _CompositePipelineWidget2.default.visibleButtonOn : _CompositePipelineWidget2.default.visibleButtonOff, onClick: this.toggleVisibility }),
-	                    _react2.default.createElement('i', { className: hasDropDown ? _CompositePipelineWidget2.default.dropDownButtonOn : _CompositePipelineWidget2.default.dropDownButtonOff, onClick: this.toggleDropDown }),
-	                    _react2.default.createElement(
-	                        'div',
-	                        {
-	                            onClick: this.updateColorBy,
-	                            className: this.state.dropDown ? _CompositePipelineWidget2.default.menu : _CompositePipelineWidget2.default.hidden },
-	                        model.getColor(layer).map(function (color) {
-	                            return _react2.default.createElement(
-	                                'div',
-	                                { key: color, 'data-color': color,
-	                                    className: model.isActiveColor(layer, color) ? _CompositePipelineWidget2.default.selectedMenuItem : _CompositePipelineWidget2.default.menuItem },
-	                                model.getColorToLabel(color)
-	                            );
-	                        })
-	                    )
-	                )
-	            ),
-	            _react2.default.createElement(
-	                'div',
-	                { className: hasOpacity && !hasChildren ? _CompositePipelineWidget2.default.item : _CompositePipelineWidget2.default.hidden },
-	                _react2.default.createElement('input', { className: _CompositePipelineWidget2.default.opacity,
-	                    type: 'range',
-	                    min: '0', max: '100',
-	                    value: model.getOpacity(layer),
-	                    onChange: this.updateOpacity })
-	            ),
-	            _react2.default.createElement(
-	                'div',
-	                { className: _CompositePipelineWidget2.default.children },
-	                children.map(function (item, idx) {
-	                    return _react2.default.createElement(_ChildItem2.default, { key: idx, item: item, layer: item.ids.join(''), model: model });
-	                })
-	            )
-	        );
+	  getInitialState: function getInitialState() {
+	    return {
+	      dropDown: false
+	    };
+	  },
+	  toggleVisibility: function toggleVisibility() {
+	    this.props.model.toggleLayerVisible(this.props.layer);
+	  },
+	  toggleDropDown: function toggleDropDown() {
+	    if (this.props.model.getColor(this.props.layer).length > 1) {
+	      this.setState({
+	        dropDown: !this.state.dropDown
+	      });
 	    }
+	  },
+	  updateColorBy: function updateColorBy(event) {
+	    this.props.model.setActiveColor(this.props.layer, event.target.dataset.color);
+	    this.toggleDropDown();
+	  },
+	  toggleEditMode: function toggleEditMode() {
+	    this.props.model.toggleEditMode(this.props.layer);
+	  },
+	  updateOpacity: function updateOpacity(e) {
+	    this.props.model.setOpacity(this.props.layer, e.target.value);
+	    this.forceUpdate();
+	  },
+	  render: function render() {
+	    var model = this.props.model,
+	        layer = this.props.layer,
+	        visible = model.isLayerVisible(this.props.layer),
+	        children = this.props.item.children || [],
+	        inEditMode = this.props.model.isLayerInEditMode(this.props.layer),
+	        hasChildren = children.length > 0,
+	        hasOpacity = model.hasOpacity(),
+	        hasDropDown = this.props.model.getColor(this.props.layer).length > 1,
+	        editButton = hasChildren ? _react2.default.createElement('i', { className: inEditMode ? _CompositePipelineWidget2.default.editButtonOn : _CompositePipelineWidget2.default.editButtonOff, onClick: this.toggleEditMode }) : '';
+
+	    return _react2.default.createElement(
+	      'div',
+	      { className: _CompositePipelineWidget2.default.section },
+	      _react2.default.createElement(
+	        'div',
+	        { className: _CompositePipelineWidget2.default.item },
+	        _react2.default.createElement(
+	          'div',
+	          { className: _CompositePipelineWidget2.default.label },
+	          this.props.item.name
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: _CompositePipelineWidget2.default.actions },
+	          editButton,
+	          _react2.default.createElement('i', { className: visible ? _CompositePipelineWidget2.default.visibleButtonOn : _CompositePipelineWidget2.default.visibleButtonOff, onClick: this.toggleVisibility }),
+	          _react2.default.createElement('i', { className: hasDropDown ? _CompositePipelineWidget2.default.dropDownButtonOn : _CompositePipelineWidget2.default.dropDownButtonOff, onClick: this.toggleDropDown }),
+	          _react2.default.createElement(
+	            'div',
+	            {
+	              onClick: this.updateColorBy,
+	              className: this.state.dropDown ? _CompositePipelineWidget2.default.menu : _CompositePipelineWidget2.default.hidden
+	            },
+	            model.getColor(layer).map(function (color) {
+	              return _react2.default.createElement(
+	                'div',
+	                {
+	                  key: color, 'data-color': color,
+	                  className: model.isActiveColor(layer, color) ? _CompositePipelineWidget2.default.selectedMenuItem : _CompositePipelineWidget2.default.menuItem
+	                },
+	                model.getColorToLabel(color)
+	              );
+	            })
+	          )
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: hasOpacity && !hasChildren ? _CompositePipelineWidget2.default.item : _CompositePipelineWidget2.default.hidden },
+	        _react2.default.createElement('input', {
+	          className: _CompositePipelineWidget2.default.opacity,
+	          type: 'range',
+	          min: '0',
+	          max: '100',
+	          value: model.getOpacity(layer),
+	          onChange: this.updateOpacity
+	        })
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: _CompositePipelineWidget2.default.children },
+	        children.map(function (item, idx) {
+	          return _react2.default.createElement(_ChildItem2.default, { key: idx, item: item, layer: item.ids.join(''), model: model });
+	        })
+	      )
+	    );
+	  }
 	});
 
 /***/ },
@@ -19949,7 +19959,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _react = __webpack_require__(2);
@@ -19971,45 +19981,49 @@
 	 */
 	exports.default = _react2.default.createClass({
 
-	    displayName: 'CompositePipelineWidget.ChildItem',
+	  displayName: 'CompositePipelineWidget.ChildItem',
 
-	    propTypes: {
-	        item: _react2.default.PropTypes.object,
-	        layer: _react2.default.PropTypes.string,
-	        model: _react2.default.PropTypes.object
-	    },
+	  propTypes: {
+	    item: _react2.default.PropTypes.object,
+	    layer: _react2.default.PropTypes.string,
+	    model: _react2.default.PropTypes.object
+	  },
 
-	    toggleActiveLayer: function toggleActiveLayer(event) {
-	        this.props.model.toggleLayerActive(this.props.layer);
-	    },
-	    updateOpacity: function updateOpacity(e) {
-	        this.props.model.setOpacity(this.props.layer, e.target.value);
-	        this.forceUpdate();
-	    },
-	    render: function render() {
-	        var inEditMode = this.props.model.isLayerInEditMode(this.props.layer),
-	            isActive = this.props.model.isLayerActive(this.props.layer),
-	            hidden = !isActive && !inEditMode,
-	            hasOpacity = this.props.model.hasOpacity();
+	  toggleActiveLayer: function toggleActiveLayer(event) {
+	    this.props.model.toggleLayerActive(this.props.layer);
+	  },
+	  updateOpacity: function updateOpacity(e) {
+	    this.props.model.setOpacity(this.props.layer, e.target.value);
+	    this.forceUpdate();
+	  },
+	  render: function render() {
+	    var inEditMode = this.props.model.isLayerInEditMode(this.props.layer),
+	        isActive = this.props.model.isLayerActive(this.props.layer),
+	        hidden = !isActive && !inEditMode,
+	        hasOpacity = this.props.model.hasOpacity();
 
-	        return _react2.default.createElement(
-	            'div',
-	            { className: hidden ? _CompositePipelineWidget2.default.hidden : _CompositePipelineWidget2.default.childItem },
-	            _react2.default.createElement('i', { className: !inEditMode ? _CompositePipelineWidget2.default.deleteButtonOff : isActive ? _CompositePipelineWidget2.default.activeButton : _CompositePipelineWidget2.default.deleteButtonOn,
-	                onClick: this.toggleActiveLayer }),
-	            _react2.default.createElement(
-	                'div',
-	                { className: _CompositePipelineWidget2.default.label },
-	                this.props.item.name
-	            ),
-	            _react2.default.createElement('input', {
-	                className: hasOpacity ? _CompositePipelineWidget2.default.opacity : _CompositePipelineWidget2.default.hidden,
-	                type: 'range',
-	                min: '0', max: '100',
-	                value: this.props.model.getOpacity(this.props.layer),
-	                onChange: this.updateOpacity })
-	        );
-	    }
+	    return _react2.default.createElement(
+	      'div',
+	      { className: hidden ? _CompositePipelineWidget2.default.hidden : _CompositePipelineWidget2.default.childItem },
+	      _react2.default.createElement('i', {
+	        className: !inEditMode ? _CompositePipelineWidget2.default.deleteButtonOff : isActive ? _CompositePipelineWidget2.default.activeButton : _CompositePipelineWidget2.default.deleteButtonOn,
+	        onClick: this.toggleActiveLayer
+	      }),
+	      _react2.default.createElement(
+	        'div',
+	        { className: _CompositePipelineWidget2.default.label },
+	        this.props.item.name
+	      ),
+	      _react2.default.createElement('input', {
+	        className: hasOpacity ? _CompositePipelineWidget2.default.opacity : _CompositePipelineWidget2.default.hidden,
+	        type: 'range',
+	        min: '0',
+	        max: '100',
+	        value: this.props.model.getOpacity(this.props.layer),
+	        onChange: this.updateOpacity
+	      })
+	    );
+	  }
 	});
 
 /***/ },
@@ -21162,7 +21176,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -21175,304 +21189,301 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var CHANGE_TOPIC = 'pipeline.change',
-	    OPACITY_CHANGE_TOPIC = 'opacity.change',
-	    LAYER_CODE = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	var CHANGE_TOPIC = 'pipeline.change';
+	var OPACITY_CHANGE_TOPIC = 'opacity.change';
+	var LAYER_CODE = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 	var PipelineState = function () {
+	  function PipelineState(jsonData) {
+	    var _this = this;
 
-	    // ------------------------------------------------------------------------
+	    var hasOpacity = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
 
-	    function PipelineState(jsonData) {
-	        var _this = this;
+	    _classCallCheck(this, PipelineState);
 
-	        var hasOpacity = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
+	    this.originalData = jsonData;
+	    this.visibilityState = {};
+	    this.activeState = {};
+	    this.editMode = {};
+	    this.activeColors = {};
+	    this.noTrigger = true;
+	    this.handleOpacity = hasOpacity;
+	    this.opacityMap = {};
+	    this.nbLayers = 0;
 
-	        _classCallCheck(this, PipelineState);
+	    // Handle default pipeline if any
+	    var pipelineQuery = jsonData.CompositePipeline.default_pipeline;
+	    var layerFields = jsonData.CompositePipeline.layer_fields;
+	    function isLayerVisible(layers) {
+	      if (!pipelineQuery || layers.length > 1) {
+	        return true;
+	      }
 
-	        this.originalData = jsonData;
-	        this.visibilityState = {};
-	        this.activeState = {};
-	        this.editMode = {};
-	        this.activeColors = {};
-	        this.noTrigger = true;
-	        this.handleOpacity = hasOpacity;
-	        this.opacityMap = {};
-	        this.nbLayers = 0;
+	      var layerIdx = LAYER_CODE.indexOf(layers[0]);
 
-	        // Handle default pipeline if any
-	        var pipelineQuery = jsonData.CompositePipeline.default_pipeline;
-	        var layerFields = jsonData.CompositePipeline.layer_fields;
-	        function isLayerVisible(layers) {
-	            if (!pipelineQuery || layers.length > 1) {
-	                return true;
-	            }
+	      return pipelineQuery[layerIdx * 2 + 1] !== '_';
+	    }
+	    function getColorCode(layers) {
+	      if (!pipelineQuery || layers.length > 1) {
+	        return layerFields[layers][0];
+	      }
 
-	            var layerIdx = LAYER_CODE.indexOf(layers[0]);
+	      var layerIdx = LAYER_CODE.indexOf(layers[0]);
+	      var colorCode = pipelineQuery[layerIdx * 2 + 1];
 
-	            return pipelineQuery[layerIdx * 2 + 1] !== '_';
-	        }
-	        function getColorCode(layers) {
-	            if (!pipelineQuery || layers.length > 1) {
-	                return layerFields[layers][0];
-	            }
+	      return colorCode === '_' ? layerFields[layers][0] : colorCode;
+	    }
 
-	            var layerIdx = LAYER_CODE.indexOf(layers[0]);
-	            var colorCode = pipelineQuery[layerIdx * 2 + 1];
+	    // Fill visibility and activate all layers
+	    var isRoot = {};
+	    jsonData.CompositePipeline.pipeline.forEach(function (item) {
+	      isRoot[item.ids.join('')] = true;
+	      _this.setLayerVisible(item.ids.join(''), isLayerVisible(item.ids.join('')));
+	    });
+	    jsonData.CompositePipeline.layers.forEach(function (item) {
+	      _this.activeState[item] = isRoot[item] ? true : isLayerVisible(item);
+	      _this.activeColors[item] = getColorCode(item);
 
-	            return colorCode === '_' ? layerFields[layers][0] : colorCode;
-	        }
+	      // Initialize opacity
+	      _this.opacityMap[item] = 100.0;
+	      _this.nbLayers++;
+	    });
 
-	        // Fill visibility and activate all layers
-	        var isRoot = {};
-	        jsonData.CompositePipeline.pipeline.forEach(function (item) {
-	            isRoot[item.ids.join('')] = true;
-	            _this.setLayerVisible(item.ids.join(''), isLayerVisible(item.ids.join('')));
-	        });
-	        jsonData.CompositePipeline.layers.forEach(function (item) {
-	            _this.activeState[item] = isRoot[item] ? true : isLayerVisible(item);
-	            _this.activeColors[item] = getColorCode(item);
+	    this.noTrigger = false;
+	    this.triggerChange();
+	  }
 
-	            // Initialize opacity
-	            _this.opacityMap[item] = 100.0;
-	            _this.nbLayers++;
-	        });
+	  // ------------------------------------------------------------------------
 
-	        this.noTrigger = false;
-	        this.triggerChange();
+	  _createClass(PipelineState, [{
+	    key: 'onChange',
+	    value: function onChange(listener) {
+	      return this.on(CHANGE_TOPIC, listener);
 	    }
 
 	    // ------------------------------------------------------------------------
 
-	    _createClass(PipelineState, [{
-	        key: 'onChange',
-	        value: function onChange(listener) {
-	            return this.on(CHANGE_TOPIC, listener);
+	  }, {
+	    key: 'onOpacityChange',
+	    value: function onOpacityChange(listener) {
+	      return this.on(OPACITY_CHANGE_TOPIC, listener);
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'TopicChange',
+	    value: function TopicChange() {
+	      return CHANGE_TOPIC;
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'triggerChange',
+	    value: function triggerChange() {
+	      if (this.noTrigger) {
+	        return;
+	      }
+
+	      var pipelineQuery = this.getPipelineQuery();
+	      this.emit(CHANGE_TOPIC, pipelineQuery);
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'isLayerActive',
+	    value: function isLayerActive(layerId) {
+	      return this.activeState[layerId];
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'setLayerActive',
+	    value: function setLayerActive(layerId, active) {
+	      if (this.activeState[layerId] !== active) {
+	        this.activeState[layerId] = active;
+	        this.triggerChange();
+	      }
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'toggleLayerActive',
+	    value: function toggleLayerActive(layerId) {
+	      this.activeState[layerId] = !this.activeState[layerId];
+	      this.triggerChange();
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'isLayerVisible',
+	    value: function isLayerVisible(layerId) {
+	      return this.visibilityState[layerId];
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'setLayerVisible',
+	    value: function setLayerVisible(layerId, visible) {
+	      if (this.visibilityState[layerId] !== visible) {
+	        this.visibilityState[layerId] = visible;
+	        var count = layerId.length;
+	        while (count--) {
+	          this.visibilityState[layerId[count]] = visible;
+	        }
+	        this.triggerChange();
+	      }
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'toggleLayerVisible',
+	    value: function toggleLayerVisible(layerId) {
+	      this.setLayerVisible(layerId, !this.visibilityState[layerId]);
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'toggleEditMode',
+	    value: function toggleEditMode(layerId) {
+	      this.editMode[layerId] = !this.editMode[layerId];
+	      this.triggerChange();
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'isLayerInEditMode',
+	    value: function isLayerInEditMode(layerId) {
+	      for (var key in this.editMode) {
+	        if (this.editMode[key] && key.indexOf(layerId) !== -1) {
+	          return true;
+	        }
+	      }
+	      return false;
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'getColor',
+	    value: function getColor(layerId) {
+	      return this.originalData.CompositePipeline.layer_fields[layerId[0]];
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'getColorToLabel',
+	    value: function getColorToLabel(colorCode) {
+	      return this.originalData.CompositePipeline.fields[colorCode];
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'isActiveColor',
+	    value: function isActiveColor(layerId, colorCode) {
+	      return this.activeColors[layerId[0]] === colorCode;
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'setActiveColor',
+	    value: function setActiveColor(layerId, colorCode) {
+	      var count = layerId.length;
+	      while (count--) {
+	        this.activeColors[layerId[count]] = colorCode;
+	      }
+	      this.triggerChange();
+	    }
+
+	    // ------------------------------------------------------------------------
+	    // Return the encoding of the pipeline configuration
+
+	  }, {
+	    key: 'getPipelineQuery',
+	    value: function getPipelineQuery() {
+	      var _this2 = this;
+
+	      var query = '';
+	      this.originalData.CompositePipeline.layers.forEach(function (item) {
+	        var color = _this2.isLayerActive(item) && _this2.isLayerVisible(item) ? _this2.activeColors[item] : '_';
+	        query += item;
+	        query += color;
+	      });
+	      return query;
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'getPipelineDescription',
+	    value: function getPipelineDescription() {
+	      return this.originalData.CompositePipeline.pipeline;
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'getOpacity',
+	    value: function getOpacity(layerCode) {
+	      return this.opacityMap[layerCode];
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'hasOpacity',
+	    value: function hasOpacity() {
+	      return this.handleOpacity;
+	    }
+
+	    // ------------------------------------------------------------------------
+
+	  }, {
+	    key: 'setOpacity',
+	    value: function setOpacity(layerCode, alpha) {
+	      if (this.opacityMap[layerCode] !== alpha) {
+	        this.opacityMap[layerCode] = alpha;
+
+	        var opacityArray = [];
+	        for (var i = 0; i < this.nbLayers; ++i) {
+	          opacityArray.push(this.opacityMap[LAYER_CODE[i]] / 100.0);
 	        }
 
-	        // ------------------------------------------------------------------------
+	        this.emit(OPACITY_CHANGE_TOPIC, opacityArray);
+	      }
+	    }
 
-	    }, {
-	        key: 'onOpacityChange',
-	        value: function onOpacityChange(listener) {
-	            return this.on(OPACITY_CHANGE_TOPIC, listener);
-	        }
+	    // ------------------------------------------------------------------------
 
-	        // ------------------------------------------------------------------------
+	  }, {
+	    key: 'resetOpacity',
+	    value: function resetOpacity(alpha) {
+	      for (var key in this.opacityMap) {
+	        this.opacityMap[key] = alpha;
+	      }
 
-	    }, {
-	        key: 'TopicChange',
-	        value: function TopicChange() {
-	            return CHANGE_TOPIC;
-	        }
+	      var opacityArray = [];
+	      for (var i = 0; i < this.nbLayers; ++i) {
+	        opacityArray.push(this.opacityMap[LAYER_CODE[i]] / 100.0);
+	      }
 
-	        // ------------------------------------------------------------------------
+	      this.emit(OPACITY_CHANGE_TOPIC, opacityArray);
+	    }
+	  }]);
 
-	    }, {
-	        key: 'triggerChange',
-	        value: function triggerChange() {
-	            if (this.noTrigger) {
-	                return;
-	            }
-
-	            var pipelineQuery = this.getPipelineQuery();
-	            this.emit(CHANGE_TOPIC, pipelineQuery);
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'isLayerActive',
-	        value: function isLayerActive(layerId) {
-	            return this.activeState[layerId];
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'setLayerActive',
-	        value: function setLayerActive(layerId, active) {
-	            if (this.activeState[layerId] !== active) {
-	                this.activeState[layerId] = active;
-	                this.triggerChange();
-	            }
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'toggleLayerActive',
-	        value: function toggleLayerActive(layerId) {
-	            this.activeState[layerId] = !this.activeState[layerId];
-	            this.triggerChange();
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'isLayerVisible',
-	        value: function isLayerVisible(layerId) {
-	            return this.visibilityState[layerId];
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'setLayerVisible',
-	        value: function setLayerVisible(layerId, visible) {
-	            if (this.visibilityState[layerId] !== visible) {
-	                this.visibilityState[layerId] = visible;
-	                var count = layerId.length;
-	                while (count--) {
-	                    this.visibilityState[layerId[count]] = visible;
-	                }
-	                this.triggerChange();
-	            }
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'toggleLayerVisible',
-	        value: function toggleLayerVisible(layerId) {
-	            this.setLayerVisible(layerId, !this.visibilityState[layerId]);
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'toggleEditMode',
-	        value: function toggleEditMode(layerId) {
-	            this.editMode[layerId] = !this.editMode[layerId];
-	            this.triggerChange();
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'isLayerInEditMode',
-	        value: function isLayerInEditMode(layerId) {
-	            for (var key in this.editMode) {
-	                if (this.editMode[key] && key.indexOf(layerId) !== -1) {
-	                    return true;
-	                }
-	            }
-	            return false;
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'getColor',
-	        value: function getColor(layerId) {
-	            return this.originalData.CompositePipeline.layer_fields[layerId[0]];
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'getColorToLabel',
-	        value: function getColorToLabel(colorCode) {
-	            return this.originalData.CompositePipeline.fields[colorCode];
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'isActiveColor',
-	        value: function isActiveColor(layerId, colorCode) {
-	            return this.activeColors[layerId[0]] === colorCode;
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'setActiveColor',
-	        value: function setActiveColor(layerId, colorCode) {
-	            var count = layerId.length;
-	            while (count--) {
-	                this.activeColors[layerId[count]] = colorCode;
-	            }
-	            this.triggerChange();
-	        }
-
-	        // ------------------------------------------------------------------------
-	        // Return the encoding of the pipeline configuration
-
-	    }, {
-	        key: 'getPipelineQuery',
-	        value: function getPipelineQuery() {
-	            var _this2 = this;
-
-	            var query = "";
-	            this.originalData.CompositePipeline.layers.forEach(function (item) {
-	                var color = _this2.isLayerActive(item) && _this2.isLayerVisible(item) ? _this2.activeColors[item] : '_';
-	                query += item;
-	                query += color;
-	            });
-	            return query;
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'getPipelineDescription',
-	        value: function getPipelineDescription() {
-	            return this.originalData.CompositePipeline.pipeline;
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'getOpacity',
-	        value: function getOpacity(layerCode) {
-	            return this.opacityMap[layerCode];
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'hasOpacity',
-	        value: function hasOpacity() {
-	            return this.handleOpacity;
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'setOpacity',
-	        value: function setOpacity(layerCode, alpha) {
-	            if (this.opacityMap[layerCode] !== alpha) {
-	                this.opacityMap[layerCode] = alpha;
-
-	                var opacityArray = [];
-	                for (var i = 0; i < this.nbLayers; ++i) {
-	                    opacityArray.push(this.opacityMap[LAYER_CODE[i]] / 100.0);
-	                }
-
-	                this.emit(OPACITY_CHANGE_TOPIC, opacityArray);
-	            }
-	        }
-
-	        // ------------------------------------------------------------------------
-
-	    }, {
-	        key: 'resetOpacity',
-	        value: function resetOpacity(alpha) {
-	            for (var key in this.opacityMap) {
-	                this.opacityMap[key] = alpha;
-	            }
-
-	            var opacityArray = [];
-	            for (var i = 0; i < this.nbLayers; ++i) {
-	                opacityArray.push(this.opacityMap[LAYER_CODE[i]] / 100.0);
-	            }
-
-	            this.emit(OPACITY_CHANGE_TOPIC, opacityArray);
-	        }
-	    }]);
-
-	    return PipelineState;
+	  return PipelineState;
 	}();
 
 	// Add Observer pattern using Monologue.js

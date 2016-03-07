@@ -132,8 +132,8 @@
 	        'ul',
 	        { className: this.state.open ? _DropDownWidget2.default.list : _DropDownWidget2.default.hidden },
 	        this.props.fields.map(function (v) {
+	          // this pops up in there for some reason.
 	          if (v === '__internal') {
-	            //this pops up in there for some reason.
 	            return null;
 	          }
 

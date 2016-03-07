@@ -19771,11 +19771,15 @@
 	  },
 	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
 	    if (this.state.operation !== nextProps.operator.getOperation()) {
-	      this.setState({ operation: nextProps.operator.getOperation() });
+	      this.setState({
+	        operation: nextProps.operator.getOperation()
+	      });
 	    }
 	  },
 	  updateOperation: function updateOperation(operation) {
-	    this.setState({ operation: operation });
+	    this.setState({
+	      operation: operation
+	    });
 	    this.props.operator.setOperation(operation);
 	  },
 	  render: function render() {
@@ -21075,7 +21079,8 @@
 	        type: 'text',
 	        value: this.state.editing ? this.state.valueRep : this.props.value,
 	        onChange: this.valueChange,
-	        onBlur: this.endEditing }),
+	        onBlur: this.endEditing
+	      }),
 	      _react2.default.createElement('i', { className: this.state.editing ? _TextInputWidget2.default.editingButton : _TextInputWidget2.default.button })
 	    );
 	  }

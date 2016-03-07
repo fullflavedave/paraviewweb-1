@@ -19812,11 +19812,20 @@
 	      _react2.default.createElement(
 	        'div',
 	        { className: _ProxyEditorWidget2.default.toolbar },
-	        _react2.default.createElement('i', { className: this.state.advanced ? _ProxyEditorWidget2.default.activeAdvancedButton : _ProxyEditorWidget2.default.advancedButton,
-	          onClick: this.toggleAdvanced }),
-	        _react2.default.createElement('input', { type: 'text', placeholder: 'filter properties...', onChange: this.updateFilter, className: _ProxyEditorWidget2.default.filter }),
-	        _react2.default.createElement('i', { className: changeCount ? _ProxyEditorWidget2.default.validateButtonOn : _ProxyEditorWidget2.default.validateButton,
-	          onClick: this.applyChanges })
+	        _react2.default.createElement('i', {
+	          className: this.state.advanced ? _ProxyEditorWidget2.default.activeAdvancedButton : _ProxyEditorWidget2.default.advancedButton,
+	          onClick: this.toggleAdvanced
+	        }),
+	        _react2.default.createElement('input', {
+	          type: 'text',
+	          placeholder: 'filter properties...',
+	          onChange: this.updateFilter,
+	          className: _ProxyEditorWidget2.default.filter
+	        }),
+	        _react2.default.createElement('i', {
+	          className: changeCount ? _ProxyEditorWidget2.default.validateButtonOn : _ProxyEditorWidget2.default.validateButton,
+	          onClick: this.applyChanges
+	        })
 	      ),
 	      _react2.default.createElement(
 	        'div',
@@ -19829,7 +19838,8 @@
 	            filter: _this.state.filter,
 	            collapsed: section.collapsed,
 	            advanced: _this.state.advanced,
-	            onChange: _this.updateChangeSet });
+	            onChange: _this.updateChangeSet
+	          });
 	        })
 	      )
 	    );
@@ -20374,15 +20384,15 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	exports.default = function (prop, vd, onChange) {
-	    var fn = factoryMapping[capitalize(prop.ui.propType)];
-	    if (fn) {
-	        return fn(prop, vd, onChange);
-	    }
-	    return null;
+	  var fn = factoryMapping[capitalize(prop.ui.propType)];
+	  if (fn) {
+	    return fn(prop, vd, onChange);
+	  }
+	  return null;
 	};
 
 	var _CellProperty = __webpack_require__(175);
@@ -20411,18 +20421,18 @@
 	/* eslint-disable react/no-multi-comp */
 	/* eslint-disable max-len */
 	var factoryMapping = {
-	    Cell: function Cell(prop, viewData, onChange) {
-	        return _react2.default.createElement(_CellProperty2.default, { key: prop.data.id, data: prop.data, ui: prop.ui, viewData: viewData, show: prop.show, onChange: onChange });
-	    },
-	    Slider: function Slider(prop, viewData, onChange) {
-	        return _react2.default.createElement(_SliderProperty2.default, { key: prop.data.id, data: prop.data, ui: prop.ui, viewData: viewData, show: prop.show, onChange: onChange });
-	    },
-	    Enum: function Enum(prop, viewData, onChange) {
-	        return _react2.default.createElement(_EnumProperty2.default, { key: prop.data.id, data: prop.data, ui: prop.ui, viewData: viewData, show: prop.show, onChange: onChange });
-	    },
-	    Checkbox: function Checkbox(prop, viewData, onChange) {
-	        return _react2.default.createElement(_CheckboxProperty2.default, { key: prop.data.id, data: prop.data, ui: prop.ui, viewData: viewData, show: prop.show, onChange: onChange });
-	    }
+	  Cell: function Cell(prop, viewData, onChange) {
+	    return _react2.default.createElement(_CellProperty2.default, { key: prop.data.id, data: prop.data, ui: prop.ui, viewData: viewData, show: prop.show, onChange: onChange });
+	  },
+	  Slider: function Slider(prop, viewData, onChange) {
+	    return _react2.default.createElement(_SliderProperty2.default, { key: prop.data.id, data: prop.data, ui: prop.ui, viewData: viewData, show: prop.show, onChange: onChange });
+	  },
+	  Enum: function Enum(prop, viewData, onChange) {
+	    return _react2.default.createElement(_EnumProperty2.default, { key: prop.data.id, data: prop.data, ui: prop.ui, viewData: viewData, show: prop.show, onChange: onChange });
+	  },
+	  Checkbox: function Checkbox(prop, viewData, onChange) {
+	    return _react2.default.createElement(_CheckboxProperty2.default, { key: prop.data.id, data: prop.data, ui: prop.ui, viewData: viewData, show: prop.show, onChange: onChange });
+	  }
 	};
 
 	/* eslint-enable react/display-name */
@@ -20430,7 +20440,7 @@
 	/* eslint-enable max-len */
 
 	function capitalize(str) {
-	    return str[0].toUpperCase() + str.substr(1).toLowerCase();
+	  return str[0].toUpperCase() + str.substr(1).toLowerCase();
 	}
 
 /***/ },
@@ -20440,7 +20450,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _BlockMixin = __webpack_require__(176);
@@ -20468,97 +20478,111 @@
 	/* eslint-disable react/no-danger */
 	exports.default = _react2.default.createClass({
 
-	    displayName: 'CellProperty',
+	  displayName: 'CellProperty',
 
-	    propTypes: {
-	        data: _react2.default.PropTypes.object.isRequired,
-	        help: _react2.default.PropTypes.string,
-	        onChange: _react2.default.PropTypes.func,
-	        show: _react2.default.PropTypes.func,
-	        ui: _react2.default.PropTypes.object.isRequired,
-	        viewData: _react2.default.PropTypes.object
-	    },
+	  propTypes: {
+	    data: _react2.default.PropTypes.object.isRequired,
+	    help: _react2.default.PropTypes.string,
+	    onChange: _react2.default.PropTypes.func,
+	    show: _react2.default.PropTypes.func,
+	    ui: _react2.default.PropTypes.object.isRequired,
+	    viewData: _react2.default.PropTypes.object
+	  },
 
-	    mixins: [_BlockMixin2.default],
+	  mixins: [_BlockMixin2.default],
 
-	    valueChange: function valueChange(idx, newVal) {
-	        var newData = this.state.data;
-	        if (newVal === null) {
-	            newData.value.splice(idx, 1);
-	        } else {
-	            newData.value[idx] = newVal;
-	        }
-
-	        this.setState({ data: newData });
-	        if (this.props.onChange) {
-	            this.props.onChange(newData);
-	        }
-	    },
-	    addValue: function addValue() {
-	        var newData = this.state.data,
-	            values = newData.value;
-
-	        switch (values.length) {
-	            case 0:
-	                values.push(0);
-	                break;
-	            case 1:
-	                values.push(values[0]);
-	                break;
-	            default:
-	                var last = Number(values[values.length - 1]);
-	                var beforeLast = Number(values[values.length - 2]);
-	                var newValue = last + (last - beforeLast);
-	                if (!Number.isNaN(newValue) && Number.isFinite(newValue)) {
-	                    values.push(newValue);
-	                } else {
-	                    values.push(values[values.length - 1]);
-	                }
-
-	        }
-
-	        this.setState({ data: newData });
-	        if (this.props.onChange) {
-	            this.props.onChange(newData);
-	        }
-	    },
-	    render: function render() {
-	        return _react2.default.createElement(
-	            'div',
-	            { className: this.props.show(this.props.viewData) ? _CellProperty2.default.container : _CellProperty2.default.hidden },
-	            _react2.default.createElement(
-	                'div',
-	                { className: _CellProperty2.default.header },
-	                _react2.default.createElement(
-	                    'strong',
-	                    null,
-	                    this.props.ui.label
-	                ),
-	                _react2.default.createElement(
-	                    'span',
-	                    null,
-	                    _react2.default.createElement('i', { className: this.props.ui.layout === '-1' ? _CellProperty2.default.plusIcon : _CellProperty2.default.hidden,
-	                        onClick: this.addValue }),
-	                    _react2.default.createElement(_ToggleIconButtonWidget2.default, {
-	                        icon: _CellProperty2.default.helpIcon,
-	                        value: this.state.helpOpen,
-	                        toggle: !!this.props.ui.help,
-	                        onChange: this.helpToggled })
-	                )
-	            ),
-	            _react2.default.createElement(
-	                'div',
-	                { className: _CellProperty2.default.inputBlock },
-	                _react2.default.createElement(
-	                    'table',
-	                    { className: _CellProperty2.default.inputTable },
-	                    (0, _layouts2.default)(this.props.data, this.props.ui, this.valueChange)
-	                )
-	            ),
-	            _react2.default.createElement('div', { className: this.state.helpOpen ? _CellProperty2.default.helpBox : _CellProperty2.default.hidden,
-	                dangerouslySetInnerHTML: { __html: this.props.ui.help } })
-	        );
+	  valueChange: function valueChange(idx, newVal) {
+	    var newData = this.state.data;
+	    if (newVal === null) {
+	      newData.value.splice(idx, 1);
+	    } else {
+	      newData.value[idx] = newVal;
 	    }
+
+	    this.setState({
+	      data: newData
+	    });
+	    if (this.props.onChange) {
+	      this.props.onChange(newData);
+	    }
+	  },
+	  addValue: function addValue() {
+	    var newData = this.state.data,
+	        values = newData.value;
+
+	    switch (values.length) {
+	      case 0:
+	        {
+	          values.push(0);
+	          break;
+	        }
+	      case 1:
+	        {
+	          values.push(values[0]);
+	          break;
+	        }
+	      default:
+	        {
+	          var last = Number(values[values.length - 1]);
+	          var beforeLast = Number(values[values.length - 2]);
+	          var newValue = last + (last - beforeLast);
+	          if (!Number.isNaN(newValue) && Number.isFinite(newValue)) {
+	            values.push(newValue);
+	          } else {
+	            values.push(values[values.length - 1]);
+	          }
+	        }
+	    }
+
+	    this.setState({
+	      data: newData
+	    });
+	    if (this.props.onChange) {
+	      this.props.onChange(newData);
+	    }
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { className: this.props.show(this.props.viewData) ? _CellProperty2.default.container : _CellProperty2.default.hidden },
+	      _react2.default.createElement(
+	        'div',
+	        { className: _CellProperty2.default.header },
+	        _react2.default.createElement(
+	          'strong',
+	          null,
+	          this.props.ui.label
+	        ),
+	        _react2.default.createElement(
+	          'span',
+	          null,
+	          _react2.default.createElement('i', {
+	            className: this.props.ui.layout === '-1' ? _CellProperty2.default.plusIcon : _CellProperty2.default.hidden,
+	            onClick: this.addValue
+	          }),
+	          _react2.default.createElement(_ToggleIconButtonWidget2.default, {
+	            icon: _CellProperty2.default.helpIcon,
+	            value: this.state.helpOpen,
+	            toggle: !!this.props.ui.help,
+	            onChange: this.helpToggled
+	          })
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: _CellProperty2.default.inputBlock },
+	        _react2.default.createElement(
+	          'table',
+	          { className: _CellProperty2.default.inputTable },
+	          (0, _layouts2.default)(this.props.data, this.props.ui, this.valueChange)
+	        )
+	      ),
+	      _react2.default.createElement('div', {
+	        className: this.state.helpOpen ? _CellProperty2.default.helpBox : _CellProperty2.default.hidden,
+	        dangerouslySetInnerHTML: { __html: this.props.ui.help }
+	      })
+	    );
+	  }
 	});
 	/* eslint-enable react/no-danger */
 
@@ -20569,42 +20593,49 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	// This DRYs up the code for Cell, Enum, Slider and Bool quite a bit.
 	/* eslint-disable babel/object-shorthand */
 	exports.default = {
-	    getDefaultProps: function getDefaultProps() {
-	        return { name: '', help: '' };
-	    },
-	    getInitialState: function getInitialState() {
-	        return {
-	            data: this.props.data,
-	            helpOpen: false,
-	            ui: this.props.ui
-	        };
-	    },
-	    componentWillMount: function componentWillMount() {
-	        var newState = {};
-	        if (this.props.ui.default && !this.props.data.value) {
-	            newState.data = this.state.data;
-	            newState.data.value = this.props.ui.default;
-	        }
-
-	        if (Object.keys(newState).length > 0) {
-	            this.setState(newState);
-	        }
-	    },
-	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	        var data = nextProps.data;
-
-	        if (this.state.data !== data) {
-	            this.setState({ data: data });
-	        }
-	    },
-	    helpToggled: function helpToggled(open) {
-	        this.setState({ helpOpen: open });
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      name: '',
+	      help: ''
+	    };
+	  },
+	  getInitialState: function getInitialState() {
+	    return {
+	      data: this.props.data,
+	      helpOpen: false,
+	      ui: this.props.ui
+	    };
+	  },
+	  componentWillMount: function componentWillMount() {
+	    var newState = {};
+	    if (this.props.ui.default && !this.props.data.value) {
+	      newState.data = this.state.data;
+	      newState.data.value = this.props.ui.default;
 	    }
+
+	    if (Object.keys(newState).length > 0) {
+	      this.setState(newState);
+	    }
+	  },
+	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    var data = nextProps.data;
+
+	    if (this.state.data !== data) {
+	      this.setState({
+	        data: data
+	      });
+	    }
+	  },
+	  helpToggled: function helpToggled(open) {
+	    this.setState({
+	      helpOpen: open
+	    });
+	  }
 	};
 	/* eslint-enable babel/object-shorthand */
 
@@ -20615,31 +20646,31 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	exports.default = function (data, ui, callback) {
-	    if (!ui.hasOwnProperty('layout')) {
-	        ui.layout = 'NO_LAYOUT';
-	    }
+	  if (!ui.hasOwnProperty('layout')) {
+	    ui.layout = 'NO_LAYOUT';
+	  }
 
-	    if (!ui.hasOwnProperty('size')) {
-	        ui.size = 1;
-	    }
+	  if (!ui.hasOwnProperty('size')) {
+	    ui.size = 1;
+	  }
 
-	    if (!ui.hasOwnProperty('type')) {
-	        ui.type = 'string';
-	    }
+	  if (!ui.hasOwnProperty('type')) {
+	    ui.type = 'string';
+	  }
 
-	    if (!ui.hasOwnProperty('domain')) {
-	        ui.domain = {};
-	    }
+	  if (!ui.hasOwnProperty('domain')) {
+	    ui.domain = {};
+	  }
 
-	    var fn = layouts[ui.layout];
-	    if (fn) {
-	        return fn(data, ui, callback);
-	    }
-	    return null;
+	  var fn = layouts[ui.layout];
+	  if (fn) {
+	    return fn(data, ui, callback);
+	  }
+	  return null;
 	};
 
 	var _react = __webpack_require__(1);
@@ -20657,175 +20688,172 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function arrayFill(arr, expectedLength) {
-	    var filler = arguments.length <= 2 || arguments[2] === undefined ? '' : arguments[2];
+	  var filler = arguments.length <= 2 || arguments[2] === undefined ? '' : arguments[2];
 
-	    if (!arr) {
-	        return Array(expectedLength).fill(filler);
-	    }
+	  if (!arr) {
+	    return Array(expectedLength).fill(filler);
+	  }
 
-	    while (arr.length < expectedLength) {
-	        arr.push(filler);
-	    }
-	    return arr;
+	  while (arr.length < expectedLength) {
+	    arr.push(filler);
+	  }
+	  return arr;
 	}
-
-	/* eslint-disable react/display-name */
-	/* eslint-disable react/no-multi-comp */
+	/* eslint-disable */
 	var layouts = {
-	    '1': function _(data, ui, callback) {
-	        ui.componentLabels = arrayFill(ui.componentLabels, 1);
-	        data.value = arrayFill(data.value, 1, null);
+	  1: function _(data, ui, callback) {
+	    ui.componentLabels = arrayFill(ui.componentLabels, 1);
+	    data.value = arrayFill(data.value, 1, null);
+	    return _react2.default.createElement(
+	      'tbody',
+	      null,
+	      _react2.default.createElement(
+	        'tr',
+	        { className: _CellProperty2.default.inputRow },
+	        _react2.default.createElement(_InputCell2.default, { idx: 0, label: ui.componentLabels[0], type: ui.type, value: data.value[0], name: data.name, domain: ui.domain, onChange: callback })
+	      )
+	    );
+	  },
+	  2: function _(data, ui, callback) {
+	    ui.componentLabels = arrayFill(ui.componentLabels, 2);
+	    data.value = arrayFill(data.value, 2, null);
+	    return _react2.default.createElement(
+	      'tbody',
+	      null,
+	      _react2.default.createElement(
+	        'tr',
+	        { className: _CellProperty2.default.inputRow },
+	        _react2.default.createElement(_InputCell2.default, { idx: 0, label: ui.componentLabels[0], type: ui.type, value: data.value[0], name: data.name, domain: ui.domain, onChange: callback }),
+	        _react2.default.createElement(_InputCell2.default, { idx: 1, label: ui.componentLabels[1], type: ui.type, value: data.value[1], name: data.name, domain: ui.domain, onChange: callback })
+	      )
+	    );
+	  },
+	  3: function _(data, ui, callback) {
+	    ui.componentLabels = arrayFill(ui.componentLabels, 3);
+	    data.value = arrayFill(data.value, 3, null);
+	    return _react2.default.createElement(
+	      'tbody',
+	      null,
+	      _react2.default.createElement(
+	        'tr',
+	        { className: _CellProperty2.default.inputRow },
+	        _react2.default.createElement(_InputCell2.default, { idx: 0, label: ui.componentLabels[0], type: ui.type, value: data.value[0], name: data.name, domain: ui.domain, onChange: callback }),
+	        _react2.default.createElement(_InputCell2.default, { idx: 1, label: ui.componentLabels[1], type: ui.type, value: data.value[1], name: data.name, domain: ui.domain, onChange: callback }),
+	        _react2.default.createElement(_InputCell2.default, { idx: 2, label: ui.componentLabels[2], type: ui.type, value: data.value[2], name: data.name, domain: ui.domain, onChange: callback })
+	      )
+	    );
+	  },
+	  '2x3': function x3(data, ui, callback) {
+	    ui.componentLabels = arrayFill(ui.componentLabels, 6);
+	    data.value = arrayFill(data.value, 6, null);
+	    return _react2.default.createElement(
+	      'tbody',
+	      null,
+	      _react2.default.createElement(
+	        'tr',
+	        { className: _CellProperty2.default.inputRow, key: data.id + '_0' },
+	        _react2.default.createElement(_InputCell2.default, { idx: 0, label: ui.componentLabels[0], type: ui.type, value: data.value[0], name: data.name, domain: ui.domain, onChange: callback }),
+	        _react2.default.createElement(_InputCell2.default, { idx: 1, label: ui.componentLabels[1], type: ui.type, value: data.value[1], name: data.name, domain: ui.domain, onChange: callback }),
+	        _react2.default.createElement(_InputCell2.default, { idx: 2, label: ui.componentLabels[2], type: ui.type, value: data.value[2], name: data.name, domain: ui.domain, onChange: callback })
+	      ),
+	      _react2.default.createElement(
+	        'tr',
+	        { className: _CellProperty2.default.inputRow, key: data.id + '_1' },
+	        _react2.default.createElement(_InputCell2.default, { idx: 3, label: ui.componentLabels[3], type: ui.type, value: data.value[3], name: data.name, domain: ui.domain, onChange: callback }),
+	        _react2.default.createElement(_InputCell2.default, { idx: 4, label: ui.componentLabels[4], type: ui.type, value: data.value[4], name: data.name, domain: ui.domain, onChange: callback }),
+	        _react2.default.createElement(_InputCell2.default, { idx: 5, label: ui.componentLabels[5], type: ui.type, value: data.value[5], name: data.name, domain: ui.domain, onChange: callback })
+	      )
+	    );
+	  },
+	  '3x2': function x2(data, ui, callback) {
+	    ui.componentLabels = arrayFill(ui.componentLabels, 6);
+	    data.value = arrayFill(data.value, 6, null);
+	    return _react2.default.createElement(
+	      'tbody',
+	      null,
+	      _react2.default.createElement(
+	        'tr',
+	        { className: _CellProperty2.default.inputRow, key: data.id + '_0' },
+	        _react2.default.createElement(_InputCell2.default, { idx: 0, label: ui.componentLabels[0], type: ui.type, value: data.value[0], name: data.name, domain: ui.domain, onChange: callback }),
+	        _react2.default.createElement(_InputCell2.default, { idx: 1, label: ui.componentLabels[1], type: ui.type, value: data.value[1], name: data.name, domain: ui.domain, onChange: callback })
+	      ),
+	      _react2.default.createElement(
+	        'tr',
+	        { className: _CellProperty2.default.inputRow, key: data.id + '_1' },
+	        _react2.default.createElement(_InputCell2.default, { idx: 2, label: ui.componentLabels[2], type: ui.type, value: data.value[2], name: data.name, domain: ui.domain, onChange: callback }),
+	        _react2.default.createElement(_InputCell2.default, { idx: 3, label: ui.componentLabels[3], type: ui.type, value: data.value[3], name: data.name, domain: ui.domain, onChange: callback })
+	      ),
+	      _react2.default.createElement(
+	        'tr',
+	        { className: _CellProperty2.default.inputRow, key: data.id + '_2' },
+	        _react2.default.createElement(_InputCell2.default, { idx: 4, label: ui.componentLabels[4], type: ui.type, value: data.value[4], name: data.name, domain: ui.domain, onChange: callback }),
+	        _react2.default.createElement(_InputCell2.default, { idx: 5, label: ui.componentLabels[5], type: ui.type, value: data.value[5], name: data.name, domain: ui.domain, onChange: callback })
+	      )
+	    );
+	  },
+	  m6: function m6(data, ui, callback) {
+	    ui.componentLabels = arrayFill(ui.componentLabels, 6);
+	    data.value = arrayFill(data.value, 6, null);
+	    return _react2.default.createElement(
+	      'tbody',
+	      null,
+	      _react2.default.createElement(
+	        'tr',
+	        { className: _CellProperty2.default.inputRow, key: data.id + '_0' },
+	        _react2.default.createElement(_InputCell2.default, { idx: 0, label: ui.componentLabels[0], type: ui.type, value: data.value[0], name: data.name, domain: ui.domain, onChange: callback }),
+	        _react2.default.createElement(_InputCell2.default, { idx: 1, label: ui.componentLabels[1], type: ui.type, value: data.value[1], name: data.name, domain: ui.domain, onChange: callback }),
+	        _react2.default.createElement(_InputCell2.default, { idx: 2, label: ui.componentLabels[2], type: ui.type, value: data.value[2], name: data.name, domain: ui.domain, onChange: callback })
+	      ),
+	      _react2.default.createElement(
+	        'tr',
+	        { className: _CellProperty2.default.inputRow, key: data.id + '_1' },
+	        _react2.default.createElement('td', null),
+	        _react2.default.createElement(_InputCell2.default, { idx: 3, label: ui.componentLabels[3], type: ui.type, value: data.value[3], name: data.name, domain: ui.domain, onChange: callback }),
+	        _react2.default.createElement(_InputCell2.default, { idx: 4, label: ui.componentLabels[4], type: ui.type, value: data.value[4], name: data.name, domain: ui.domain, onChange: callback })
+	      ),
+	      _react2.default.createElement(
+	        'tr',
+	        { className: _CellProperty2.default.inputRow, key: data.id + '_2' },
+	        _react2.default.createElement('td', null),
+	        _react2.default.createElement('td', null),
+	        _react2.default.createElement(_InputCell2.default, { idx: 5, label: ui.componentLabels[5], type: ui.type, value: data.value[5], name: data.name, domain: ui.domain, onChange: callback })
+	      )
+	    );
+	  },
+	  '-1': function _(data, ui, callback) {
+	    return _react2.default.createElement(
+	      'tbody',
+	      null,
+	      data.value.map(function (value, index) {
 	        return _react2.default.createElement(
-	            'tbody',
+	          'tr',
+	          { key: [data.id, index].join('_'), className: _CellProperty2.default.inputRow },
+	          _react2.default.createElement(
+	            'td',
 	            null,
-	            _react2.default.createElement(
-	                'tr',
-	                { className: _CellProperty2.default.inputRow },
-	                _react2.default.createElement(_InputCell2.default, { idx: 0, label: ui.componentLabels[0], type: ui.type, value: data.value[0], name: data.name, domain: ui.domain, onChange: callback })
-	            )
+	            _react2.default.createElement('i', { className: index ? _CellProperty2.default.deleteIcon : _CellProperty2.default.hidden,
+	              onClick: function onClick() {
+	                callback(index, null);
+	              } })
+	          ),
+	          _react2.default.createElement(_InputCell2.default, { idx: index, label: '', type: ui.type, value: value, name: data.name, domain: ui.domain, onChange: callback })
 	        );
-	    },
-	    '2': function _(data, ui, callback) {
-	        ui.componentLabels = arrayFill(ui.componentLabels, 2);
-	        data.value = arrayFill(data.value, 2, null);
-	        return _react2.default.createElement(
-	            'tbody',
-	            null,
-	            _react2.default.createElement(
-	                'tr',
-	                { className: _CellProperty2.default.inputRow },
-	                _react2.default.createElement(_InputCell2.default, { idx: 0, label: ui.componentLabels[0], type: ui.type, value: data.value[0], name: data.name, domain: ui.domain, onChange: callback }),
-	                _react2.default.createElement(_InputCell2.default, { idx: 1, label: ui.componentLabels[1], type: ui.type, value: data.value[1], name: data.name, domain: ui.domain, onChange: callback })
-	            )
-	        );
-	    },
-	    '3': function _(data, ui, callback) {
-	        ui.componentLabels = arrayFill(ui.componentLabels, 3);
-	        data.value = arrayFill(data.value, 3, null);
-	        return _react2.default.createElement(
-	            'tbody',
-	            null,
-	            _react2.default.createElement(
-	                'tr',
-	                { className: _CellProperty2.default.inputRow },
-	                _react2.default.createElement(_InputCell2.default, { idx: 0, label: ui.componentLabels[0], type: ui.type, value: data.value[0], name: data.name, domain: ui.domain, onChange: callback }),
-	                _react2.default.createElement(_InputCell2.default, { idx: 1, label: ui.componentLabels[1], type: ui.type, value: data.value[1], name: data.name, domain: ui.domain, onChange: callback }),
-	                _react2.default.createElement(_InputCell2.default, { idx: 2, label: ui.componentLabels[2], type: ui.type, value: data.value[2], name: data.name, domain: ui.domain, onChange: callback })
-	            )
-	        );
-	    },
-	    '2x3': function x3(data, ui, callback) {
-	        ui.componentLabels = arrayFill(ui.componentLabels, 6);
-	        data.value = arrayFill(data.value, 6, null);
-	        return _react2.default.createElement(
-	            'tbody',
-	            null,
-	            _react2.default.createElement(
-	                'tr',
-	                { className: _CellProperty2.default.inputRow, key: data.id + '_0' },
-	                _react2.default.createElement(_InputCell2.default, { idx: 0, label: ui.componentLabels[0], type: ui.type, value: data.value[0], name: data.name, domain: ui.domain, onChange: callback }),
-	                _react2.default.createElement(_InputCell2.default, { idx: 1, label: ui.componentLabels[1], type: ui.type, value: data.value[1], name: data.name, domain: ui.domain, onChange: callback }),
-	                _react2.default.createElement(_InputCell2.default, { idx: 2, label: ui.componentLabels[2], type: ui.type, value: data.value[2], name: data.name, domain: ui.domain, onChange: callback })
-	            ),
-	            _react2.default.createElement(
-	                'tr',
-	                { className: _CellProperty2.default.inputRow, key: data.id + '_1' },
-	                _react2.default.createElement(_InputCell2.default, { idx: 3, label: ui.componentLabels[3], type: ui.type, value: data.value[3], name: data.name, domain: ui.domain, onChange: callback }),
-	                _react2.default.createElement(_InputCell2.default, { idx: 4, label: ui.componentLabels[4], type: ui.type, value: data.value[4], name: data.name, domain: ui.domain, onChange: callback }),
-	                _react2.default.createElement(_InputCell2.default, { idx: 5, label: ui.componentLabels[5], type: ui.type, value: data.value[5], name: data.name, domain: ui.domain, onChange: callback })
-	            )
-	        );
-	    },
-	    '3x2': function x2(data, ui, callback) {
-	        ui.componentLabels = arrayFill(ui.componentLabels, 6);
-	        data.value = arrayFill(data.value, 6, null);
-	        return _react2.default.createElement(
-	            'tbody',
-	            null,
-	            _react2.default.createElement(
-	                'tr',
-	                { className: _CellProperty2.default.inputRow, key: data.id + '_0' },
-	                _react2.default.createElement(_InputCell2.default, { idx: 0, label: ui.componentLabels[0], type: ui.type, value: data.value[0], name: data.name, domain: ui.domain, onChange: callback }),
-	                _react2.default.createElement(_InputCell2.default, { idx: 1, label: ui.componentLabels[1], type: ui.type, value: data.value[1], name: data.name, domain: ui.domain, onChange: callback })
-	            ),
-	            _react2.default.createElement(
-	                'tr',
-	                { className: _CellProperty2.default.inputRow, key: data.id + '_1' },
-	                _react2.default.createElement(_InputCell2.default, { idx: 2, label: ui.componentLabels[2], type: ui.type, value: data.value[2], name: data.name, domain: ui.domain, onChange: callback }),
-	                _react2.default.createElement(_InputCell2.default, { idx: 3, label: ui.componentLabels[3], type: ui.type, value: data.value[3], name: data.name, domain: ui.domain, onChange: callback })
-	            ),
-	            _react2.default.createElement(
-	                'tr',
-	                { className: _CellProperty2.default.inputRow, key: data.id + '_2' },
-	                _react2.default.createElement(_InputCell2.default, { idx: 4, label: ui.componentLabels[4], type: ui.type, value: data.value[4], name: data.name, domain: ui.domain, onChange: callback }),
-	                _react2.default.createElement(_InputCell2.default, { idx: 5, label: ui.componentLabels[5], type: ui.type, value: data.value[5], name: data.name, domain: ui.domain, onChange: callback })
-	            )
-	        );
-	    },
-	    'm6': function m6(data, ui, callback) {
-	        ui.componentLabels = arrayFill(ui.componentLabels, 6);
-	        data.value = arrayFill(data.value, 6, null);
-	        return _react2.default.createElement(
-	            'tbody',
-	            null,
-	            _react2.default.createElement(
-	                'tr',
-	                { className: _CellProperty2.default.inputRow, key: data.id + '_0' },
-	                _react2.default.createElement(_InputCell2.default, { idx: 0, label: ui.componentLabels[0], type: ui.type, value: data.value[0], name: data.name, domain: ui.domain, onChange: callback }),
-	                _react2.default.createElement(_InputCell2.default, { idx: 1, label: ui.componentLabels[1], type: ui.type, value: data.value[1], name: data.name, domain: ui.domain, onChange: callback }),
-	                _react2.default.createElement(_InputCell2.default, { idx: 2, label: ui.componentLabels[2], type: ui.type, value: data.value[2], name: data.name, domain: ui.domain, onChange: callback })
-	            ),
-	            _react2.default.createElement(
-	                'tr',
-	                { className: _CellProperty2.default.inputRow, key: data.id + '_1' },
-	                _react2.default.createElement('td', null),
-	                _react2.default.createElement(_InputCell2.default, { idx: 3, label: ui.componentLabels[3], type: ui.type, value: data.value[3], name: data.name, domain: ui.domain, onChange: callback }),
-	                _react2.default.createElement(_InputCell2.default, { idx: 4, label: ui.componentLabels[4], type: ui.type, value: data.value[4], name: data.name, domain: ui.domain, onChange: callback })
-	            ),
-	            _react2.default.createElement(
-	                'tr',
-	                { className: _CellProperty2.default.inputRow, key: data.id + '_2' },
-	                _react2.default.createElement('td', null),
-	                _react2.default.createElement('td', null),
-	                _react2.default.createElement(_InputCell2.default, { idx: 5, label: ui.componentLabels[5], type: ui.type, value: data.value[5], name: data.name, domain: ui.domain, onChange: callback })
-	            )
-	        );
-	    },
-	    '-1': function _(data, ui, callback) {
-	        return _react2.default.createElement(
-	            'tbody',
-	            null,
-	            data.value.map(function (value, index) {
-	                return _react2.default.createElement(
-	                    'tr',
-	                    { key: [data.id, index].join('_'), className: _CellProperty2.default.inputRow },
-	                    _react2.default.createElement(
-	                        'td',
-	                        null,
-	                        _react2.default.createElement('i', { className: index ? _CellProperty2.default.deleteIcon : _CellProperty2.default.hidden,
-	                            onClick: function onClick() {
-	                                callback(index, null);
-	                            } })
-	                    ),
-	                    _react2.default.createElement(_InputCell2.default, { idx: index, label: '', type: ui.type, value: value, name: data.name, domain: ui.domain, onChange: callback })
-	                );
-	            })
-	        );
-	    },
-	    'NO_LAYOUT': function NO_LAYOUT(data, ui, callback) {
-	        return _react2.default.createElement(
-	            'tbody',
-	            null,
-	            _react2.default.createElement(
-	                'tr',
-	                { className: _CellProperty2.default.inputRow },
-	                _react2.default.createElement(_InputCell2.default, { idx: 0, label: ui.componentLabels[0], type: ui.type, value: data.value[0], name: data.name, domain: ui.domain, onChange: callback })
-	            )
-	        );
-	    }
+	      })
+	    );
+	  },
+	  NO_LAYOUT: function NO_LAYOUT(data, ui, callback) {
+	    return _react2.default.createElement(
+	      'tbody',
+	      null,
+	      _react2.default.createElement(
+	        'tr',
+	        { className: _CellProperty2.default.inputRow },
+	        _react2.default.createElement(_InputCell2.default, { idx: 0, label: ui.componentLabels[0], type: ui.type, value: data.value[0], name: data.name, domain: ui.domain, onChange: callback })
+	      )
+	    );
+	  }
 	};
-	/* eslint-enable react/display-name */
-	/* eslint-enable react/no-multi-comp */
+	/* eslint-enable */
 
 /***/ },
 /* 178 */
@@ -20884,7 +20912,10 @@
 	  },
 	  valueChange: function valueChange(e) {
 	    var newVal = e.target.value;
-	    this.setState({ editing: true, valueRep: newVal });
+	    this.setState({
+	      editing: true,
+	      valueRep: newVal
+	    });
 
 	    if (_Validate2.default[this.props.type](newVal)) {
 	      var propVal = _Convert2.default[this.props.type](newVal);
@@ -20937,7 +20968,9 @@
 	    return tooltip;
 	  },
 	  endEditing: function endEditing() {
-	    this.setState({ editing: false });
+	    this.setState({
+	      editing: false
+	    });
 	  },
 	  render: function render() {
 	    return _react2.default.createElement(
@@ -20953,7 +20986,8 @@
 	        value: this.state.editing ? this.state.valueRep : this.props.value,
 	        onChange: this.valueChange,
 	        title: this.getTooltip(),
-	        onBlur: this.endEditing })
+	        onBlur: this.endEditing
+	      })
 	    );
 	  }
 	});
@@ -20962,7 +20996,7 @@
 /* 179 */
 /***/ function(module, exports) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -20989,7 +21023,6 @@
 	}
 
 	function proxy(val) {
-	  console.log('Try to convert to proxy', val);
 	  return val;
 	}
 
@@ -22290,7 +22323,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _BlockMixin = __webpack_require__(176);
@@ -22318,83 +22351,91 @@
 	/* eslint-disable react/no-danger */
 	exports.default = _react2.default.createClass({
 
-	    displayName: 'CheckboxProperty',
+	  displayName: 'CheckboxProperty',
 
-	    propTypes: {
-	        data: _react2.default.PropTypes.object.isRequired,
-	        help: _react2.default.PropTypes.string,
-	        name: _react2.default.PropTypes.string,
-	        onChange: _react2.default.PropTypes.func,
-	        show: _react2.default.PropTypes.func,
-	        ui: _react2.default.PropTypes.object.isRequired,
-	        viewData: _react2.default.PropTypes.object
-	    },
+	  propTypes: {
+	    data: _react2.default.PropTypes.object.isRequired,
+	    help: _react2.default.PropTypes.string,
+	    name: _react2.default.PropTypes.string,
+	    onChange: _react2.default.PropTypes.func,
+	    show: _react2.default.PropTypes.func,
+	    ui: _react2.default.PropTypes.object.isRequired,
+	    viewData: _react2.default.PropTypes.object
+	  },
 
-	    mixins: [_BlockMixin2.default],
+	  mixins: [_BlockMixin2.default],
 
-	    valueChange: function valueChange(idx, newVal) {
-	        var newData = this.state.data;
-	        if (idx === null) {
-	            newData.value = newVal;
-	        } else {
-	            newData.value[idx] = newVal;
-	        }
-	        this.setState({ data: newData });
-	        if (this.props.onChange) {
-	            this.props.onChange(newData);
-	        }
-	    },
-	    render: function render() {
-	        var _this = this;
-
-	        var mapper = function mapper() {
-	            if (Array.isArray(_this.props.data.value)) {
-	                var ret = [];
-	                for (var i = 0; i < _this.props.data.value.length; i++) {
-	                    ret.push(_react2.default.createElement(_Checkbox2.default, {
-	                        value: !!_this.props.data.value[i],
-	                        label: _this.props.ui.componentLabels[i],
-	                        key: _this.props.data.id + '_' + i,
-	                        onChange: _this.valueChange }));
-	                }
-	                return ret;
-	            }
-
-	            return _react2.default.createElement(_Checkbox2.default, {
-	                value: !!_this.props.data.value,
-	                label: _this.props.ui.componentLabels[0],
-	                onChange: _this.valueChange });
-	        };
-	        return _react2.default.createElement(
-	            'div',
-	            { className: this.props.show(this.props.viewData) ? _CellProperty2.default.container : _CellProperty2.default.hidden },
-	            _react2.default.createElement(
-	                'div',
-	                { className: _CellProperty2.default.header },
-	                _react2.default.createElement(
-	                    'strong',
-	                    null,
-	                    this.props.ui.label
-	                ),
-	                _react2.default.createElement(
-	                    'span',
-	                    null,
-	                    _react2.default.createElement(_ToggleIconButtonWidget2.default, {
-	                        icon: _CellProperty2.default.helpIcon,
-	                        value: this.state.helpOpen,
-	                        toggle: !!this.props.ui.help,
-	                        onChange: this.helpToggled })
-	                )
-	            ),
-	            _react2.default.createElement(
-	                'div',
-	                { className: _CellProperty2.default.inputBlock },
-	                mapper()
-	            ),
-	            _react2.default.createElement('div', { className: this.state.helpOpen ? _CellProperty2.default.helpBox : _CellProperty2.default.hidden,
-	                dangerouslySetInnerHTML: { __html: this.props.ui.help } })
-	        );
+	  valueChange: function valueChange(idx, newVal) {
+	    var newData = this.state.data;
+	    if (idx === null) {
+	      newData.value = newVal;
+	    } else {
+	      newData.value[idx] = newVal;
 	    }
+	    this.setState({
+	      data: newData
+	    });
+	    if (this.props.onChange) {
+	      this.props.onChange(newData);
+	    }
+	  },
+	  render: function render() {
+	    var _this = this;
+
+	    var mapper = function mapper() {
+	      if (Array.isArray(_this.props.data.value)) {
+	        var ret = [];
+	        for (var i = 0; i < _this.props.data.value.length; i++) {
+	          ret.push(_react2.default.createElement(_Checkbox2.default, {
+	            value: !!_this.props.data.value[i],
+	            label: _this.props.ui.componentLabels[i],
+	            key: _this.props.data.id + '_' + i,
+	            onChange: _this.valueChange
+	          }));
+	        }
+	        return ret;
+	      }
+
+	      return _react2.default.createElement(_Checkbox2.default, {
+	        value: !!_this.props.data.value,
+	        label: _this.props.ui.componentLabels[0],
+	        onChange: _this.valueChange
+	      });
+	    };
+
+	    return _react2.default.createElement(
+	      'div',
+	      { className: this.props.show(this.props.viewData) ? _CellProperty2.default.container : _CellProperty2.default.hidden },
+	      _react2.default.createElement(
+	        'div',
+	        { className: _CellProperty2.default.header },
+	        _react2.default.createElement(
+	          'strong',
+	          null,
+	          this.props.ui.label
+	        ),
+	        _react2.default.createElement(
+	          'span',
+	          null,
+	          _react2.default.createElement(_ToggleIconButtonWidget2.default, {
+	            icon: _CellProperty2.default.helpIcon,
+	            value: this.state.helpOpen,
+	            toggle: !!this.props.ui.help,
+	            onChange: this.helpToggled
+	          })
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: _CellProperty2.default.inputBlock },
+	        mapper()
+	      ),
+	      _react2.default.createElement('div', {
+	        className: this.state.helpOpen ? _CellProperty2.default.helpBox : _CellProperty2.default.hidden,
+	        dangerouslySetInnerHTML: { __html: this.props.ui.help }
+	      })
+	    );
+	  }
 	});
 
 /***/ },
@@ -22404,7 +22445,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _react = __webpack_require__(1);
@@ -22419,43 +22460,47 @@
 
 	exports.default = _react2.default.createClass({
 
-	    displayName: 'Checkbox',
+	  displayName: 'Checkbox',
 
-	    propTypes: {
-	        idx: _react2.default.PropTypes.number,
-	        label: _react2.default.PropTypes.string,
-	        onChange: _react2.default.PropTypes.func,
-	        value: _react2.default.PropTypes.bool
-	    },
+	  propTypes: {
+	    idx: _react2.default.PropTypes.number,
+	    label: _react2.default.PropTypes.string,
+	    onChange: _react2.default.PropTypes.func,
+	    value: _react2.default.PropTypes.bool
+	  },
 
-	    getDefaultProps: function getDefaultProps() {
-	        return { value: false, label: '' };
-	    },
-	    valueChange: function valueChange(e) {
-	        if (this.props.onChange) {
-	            if (this.props.idx >= 0) {
-	                this.props.onChange(this.props.idx, e.target.checked);
-	            } else {
-	                this.props.onChange(null, e.target.checked);
-	            }
-	        }
-	    },
-	    render: function render() {
-	        return _react2.default.createElement(
-	            'div',
-	            null,
-	            _react2.default.createElement(
-	                'label',
-	                { className: _CheckboxProperty2.default.label },
-	                this.props.label
-	            ),
-	            _react2.default.createElement('input', {
-	                className: _CheckboxProperty2.default.input,
-	                type: 'checkbox',
-	                checked: this.props.value,
-	                onChange: this.valueChange })
-	        );
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      value: false,
+	      label: ''
+	    };
+	  },
+	  valueChange: function valueChange(e) {
+	    if (this.props.onChange) {
+	      if (this.props.idx >= 0) {
+	        this.props.onChange(this.props.idx, e.target.checked);
+	      } else {
+	        this.props.onChange(null, e.target.checked);
+	      }
 	    }
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'label',
+	        { className: _CheckboxProperty2.default.label },
+	        this.props.label
+	      ),
+	      _react2.default.createElement('input', {
+	        className: _CheckboxProperty2.default.input,
+	        type: 'checkbox',
+	        checked: this.props.value,
+	        onChange: this.valueChange
+	      })
+	    );
+	  }
 	});
 
 /***/ },
@@ -22508,7 +22553,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _react = __webpack_require__(1);
@@ -22540,102 +22585,110 @@
 	/* eslint-disable react/no-danger */
 	exports.default = _react2.default.createClass({
 
-	    displayName: 'EnumProperty',
+	  displayName: 'EnumProperty',
 
-	    propTypes: {
-	        data: _react2.default.PropTypes.object.isRequired,
-	        help: _react2.default.PropTypes.string,
-	        name: _react2.default.PropTypes.string,
-	        onChange: _react2.default.PropTypes.func,
-	        show: _react2.default.PropTypes.func,
-	        ui: _react2.default.PropTypes.object.isRequired,
-	        viewData: _react2.default.PropTypes.object
-	    },
+	  propTypes: {
+	    data: _react2.default.PropTypes.object.isRequired,
+	    help: _react2.default.PropTypes.string,
+	    name: _react2.default.PropTypes.string,
+	    onChange: _react2.default.PropTypes.func,
+	    show: _react2.default.PropTypes.func,
+	    ui: _react2.default.PropTypes.object.isRequired,
+	    viewData: _react2.default.PropTypes.object
+	  },
 
-	    mixins: [_BlockMixin2.default],
+	  mixins: [_BlockMixin2.default],
 
-	    valueChange: function valueChange(e) {
-	        var newData = this.state.data;
-	        if (Array.isArray(this.state.data.value)) {
-	            var newVals = [];
-	            for (var i = 0; i < e.target.options.length; i++) {
-	                var el = e.target.options.item(i);
-	                if (el.selected) {
-	                    newVals.push(el.value);
-	                }
-	            }
-	            newData.value = newVals.map(_Convert2.default[this.props.ui.type]);
-	        } else if (e.target.value === null) {
-	            newData.value = null;
-	        } else {
-	            newData.value = [_Convert2.default[this.props.ui.type](e.target.value)];
+	  valueChange: function valueChange(e) {
+	    var newData = this.state.data;
+	    if (Array.isArray(this.state.data.value)) {
+	      var newVals = [];
+	      for (var i = 0; i < e.target.options.length; i++) {
+	        var el = e.target.options.item(i);
+	        if (el.selected) {
+	          newVals.push(el.value);
 	        }
-
-	        this.setState({ data: newData });
-	        if (this.props.onChange) {
-	            this.props.onChange(newData);
-	        }
-	    },
-	    render: function render() {
-	        var _this = this;
-
-	        var multiple = this.props.ui.size === -1,
-	            mapper = function mapper() {
-	            var ret = [];
-	            if (!multiple && !_this.props.ui.noEmpty) {
-	                ret.push(_react2.default.createElement('option', { key: 'empty-value', value: null }));
-	            }
-
-	            for (var key in _this.props.ui.domain) {
-	                ret.push(_react2.default.createElement(
-	                    'option',
-	                    { value: _this.props.ui.domain[key],
-	                        key: _this.props.data.id + '_' + key },
-	                    key
-	                ));
-	            }
-	            return ret;
-	        };
-
-	        return _react2.default.createElement(
-	            'div',
-	            { className: this.props.show(this.props.viewData) ? _CellProperty2.default.container : _CellProperty2.default.hidden },
-	            _react2.default.createElement(
-	                'div',
-	                { className: _CellProperty2.default.header },
-	                _react2.default.createElement(
-	                    'strong',
-	                    null,
-	                    this.props.ui.label
-	                ),
-	                _react2.default.createElement(
-	                    'span',
-	                    null,
-	                    _react2.default.createElement(_ToggleIconButtonWidget2.default, {
-	                        icon: _CellProperty2.default.helpIcon,
-	                        value: this.state.helpOpen,
-	                        toggle: !!this.props.ui.help,
-	                        onChange: this.helpToggled })
-	                )
-	            ),
-	            _react2.default.createElement(
-	                'div',
-	                { className: _CellProperty2.default.inputBlock },
-	                _react2.default.createElement(
-	                    'select',
-	                    {
-	                        className: multiple ? _EnumProperty2.default.inputMultiSelect : _EnumProperty2.default.input,
-	                        value: multiple ? this.props.data.value : this.props.data.value[0],
-	                        defaultValue: null,
-	                        onChange: this.valueChange,
-	                        multiple: multiple },
-	                    mapper()
-	                )
-	            ),
-	            _react2.default.createElement('div', { className: this.state.helpOpen ? _CellProperty2.default.helpBox : _CellProperty2.default.hidden,
-	                dangerouslySetInnerHTML: { __html: this.props.ui.help } })
-	        );
+	      }
+	      newData.value = newVals.map(_Convert2.default[this.props.ui.type]);
+	    } else if (e.target.value === null) {
+	      newData.value = null;
+	    } else {
+	      newData.value = [_Convert2.default[this.props.ui.type](e.target.value)];
 	    }
+
+	    this.setState({
+	      data: newData
+	    });
+	    if (this.props.onChange) {
+	      this.props.onChange(newData);
+	    }
+	  },
+	  render: function render() {
+	    var _this = this;
+
+	    var multiple = this.props.ui.size === -1,
+	        mapper = function mapper() {
+	      var ret = [];
+	      if (!multiple && !_this.props.ui.noEmpty) {
+	        ret.push(_react2.default.createElement('option', { key: 'empty-value', value: null }));
+	      }
+
+	      for (var key in _this.props.ui.domain) {
+	        ret.push(_react2.default.createElement(
+	          'option',
+	          {
+	            value: _this.props.ui.domain[key],
+	            key: _this.props.data.id + '_' + key
+	          },
+	          key
+	        ));
+	      }
+	      return ret;
+	    };
+
+	    return _react2.default.createElement(
+	      'div',
+	      { className: this.props.show(this.props.viewData) ? _CellProperty2.default.container : _CellProperty2.default.hidden },
+	      _react2.default.createElement(
+	        'div',
+	        { className: _CellProperty2.default.header },
+	        _react2.default.createElement(
+	          'strong',
+	          null,
+	          this.props.ui.label
+	        ),
+	        _react2.default.createElement(
+	          'span',
+	          null,
+	          _react2.default.createElement(_ToggleIconButtonWidget2.default, {
+	            icon: _CellProperty2.default.helpIcon,
+	            value: this.state.helpOpen,
+	            toggle: !!this.props.ui.help,
+	            onChange: this.helpToggled
+	          })
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: _CellProperty2.default.inputBlock },
+	        _react2.default.createElement(
+	          'select',
+	          {
+	            className: multiple ? _EnumProperty2.default.inputMultiSelect : _EnumProperty2.default.input,
+	            value: multiple ? this.props.data.value : this.props.data.value[0],
+	            defaultValue: null,
+	            onChange: this.valueChange,
+	            multiple: multiple
+	          },
+	          mapper()
+	        )
+	      ),
+	      _react2.default.createElement('div', {
+	        className: this.state.helpOpen ? _CellProperty2.default.helpBox : _CellProperty2.default.hidden,
+	        dangerouslySetInnerHTML: { __html: this.props.ui.help }
+	      })
+	    );
+	  }
 	});
 
 /***/ },
@@ -22688,7 +22741,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _BlockMixin = __webpack_require__(176);
@@ -22716,90 +22769,98 @@
 	/* eslint-disable react/no-danger */
 	exports.default = _react2.default.createClass({
 
-	    displayName: 'SliderProperty',
+	  displayName: 'SliderProperty',
 
-	    propTypes: {
-	        data: _react2.default.PropTypes.object.isRequired,
-	        help: _react2.default.PropTypes.string,
-	        name: _react2.default.PropTypes.string,
-	        onChange: _react2.default.PropTypes.func,
-	        show: _react2.default.PropTypes.func,
-	        ui: _react2.default.PropTypes.object.isRequired,
-	        viewData: _react2.default.PropTypes.object
-	    },
+	  propTypes: {
+	    data: _react2.default.PropTypes.object.isRequired,
+	    help: _react2.default.PropTypes.string,
+	    name: _react2.default.PropTypes.string,
+	    onChange: _react2.default.PropTypes.func,
+	    show: _react2.default.PropTypes.func,
+	    ui: _react2.default.PropTypes.object.isRequired,
+	    viewData: _react2.default.PropTypes.object
+	  },
 
-	    mixins: [_BlockMixin2.default],
+	  mixins: [_BlockMixin2.default],
 
-	    valueChange: function valueChange(idx, newVal) {
-	        var newData = this.state.data;
-	        if (idx === null) {
-	            newData.value = newVal;
-	        } else {
-	            newData.value[idx] = newVal;
-	        }
-	        this.setState({ data: newData });
-	        if (this.props.onChange) {
-	            this.props.onChange(newData);
-	        }
-	    },
-	    render: function render() {
-	        var _this = this;
-
-	        var mapper = function mapper() {
-	            if (Array.isArray(_this.props.data.value)) {
-	                var ret = [];
-	                for (var i = 0; i < _this.props.data.value.length; i++) {
-	                    var _step = _this.props.ui.type && _this.props.ui.type.toLowerCase() === 'double' ? 0.1 : 1;
-	                    ret.push(_react2.default.createElement(_Slider2.default, {
-	                        value: _this.props.data.value[i],
-	                        min: _this.props.ui.domain.min,
-	                        max: _this.props.ui.domain.max,
-	                        step: _step //int 1, double 0.1
-	                        , idx: i,
-	                        onChange: _this.valueChange,
-	                        key: _this.props.data.id + '_' + i }));
-	                }
-	                return ret;
-	            }
-
-	            var step = _this.props.ui.type && _this.props.ui.type.toLowerCase() === 'double' ? 0.1 : 1;
-	            return _react2.default.createElement(_Slider2.default, {
-	                value: _this.props.data.value,
-	                min: _this.props.ui.domain.min,
-	                max: _this.props.ui.domain.max,
-	                step: step,
-	                onChange: _this.valueChange });
-	        };
-	        return _react2.default.createElement(
-	            'div',
-	            { className: this.props.show(this.props.viewData) ? _CellProperty2.default.container : _CellProperty2.default.hidden },
-	            _react2.default.createElement(
-	                'div',
-	                { className: _CellProperty2.default.header },
-	                _react2.default.createElement(
-	                    'strong',
-	                    null,
-	                    this.props.ui.label
-	                ),
-	                _react2.default.createElement(
-	                    'span',
-	                    null,
-	                    _react2.default.createElement(_ToggleIconButtonWidget2.default, {
-	                        icon: _CellProperty2.default.helpIcon,
-	                        value: this.state.helpOpen,
-	                        toggle: !!this.props.ui.help,
-	                        onChange: this.helpToggled })
-	                )
-	            ),
-	            _react2.default.createElement(
-	                'div',
-	                { className: _CellProperty2.default.inputBlock },
-	                mapper()
-	            ),
-	            _react2.default.createElement('div', { className: this.state.helpOpen ? _CellProperty2.default.helpBox : _CellProperty2.default.hidden,
-	                dangerouslySetInnerHTML: { __html: this.props.ui.help } })
-	        );
+	  valueChange: function valueChange(idx, newVal) {
+	    var newData = this.state.data;
+	    if (idx === null) {
+	      newData.value = newVal;
+	    } else {
+	      newData.value[idx] = newVal;
 	    }
+	    this.setState({
+	      data: newData
+	    });
+	    if (this.props.onChange) {
+	      this.props.onChange(newData);
+	    }
+	  },
+	  render: function render() {
+	    var _this = this;
+
+	    var mapper = function mapper() {
+	      if (Array.isArray(_this.props.data.value)) {
+	        var ret = [];
+	        for (var i = 0; i < _this.props.data.value.length; i++) {
+	          var _step = _this.props.ui.type && _this.props.ui.type.toLowerCase() === 'double' ? 0.1 : 1;
+	          ret.push(_react2.default.createElement(_Slider2.default, {
+	            value: _this.props.data.value[i],
+	            min: _this.props.ui.domain.min,
+	            max: _this.props.ui.domain.max,
+	            step: _step // int 1, double 0.1
+	            , idx: i,
+	            onChange: _this.valueChange,
+	            key: _this.props.data.id + '_' + i
+	          }));
+	        }
+	        return ret;
+	      }
+
+	      var step = _this.props.ui.type && _this.props.ui.type.toLowerCase() === 'double' ? 0.1 : 1;
+	      return _react2.default.createElement(_Slider2.default, {
+	        value: _this.props.data.value,
+	        min: _this.props.ui.domain.min,
+	        max: _this.props.ui.domain.max,
+	        step: step,
+	        onChange: _this.valueChange
+	      });
+	    };
+
+	    return _react2.default.createElement(
+	      'div',
+	      { className: this.props.show(this.props.viewData) ? _CellProperty2.default.container : _CellProperty2.default.hidden },
+	      _react2.default.createElement(
+	        'div',
+	        { className: _CellProperty2.default.header },
+	        _react2.default.createElement(
+	          'strong',
+	          null,
+	          this.props.ui.label
+	        ),
+	        _react2.default.createElement(
+	          'span',
+	          null,
+	          _react2.default.createElement(_ToggleIconButtonWidget2.default, {
+	            icon: _CellProperty2.default.helpIcon,
+	            value: this.state.helpOpen,
+	            toggle: !!this.props.ui.help,
+	            onChange: this.helpToggled
+	          })
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: _CellProperty2.default.inputBlock },
+	        mapper()
+	      ),
+	      _react2.default.createElement('div', {
+	        className: this.state.helpOpen ? _CellProperty2.default.helpBox : _CellProperty2.default.hidden,
+	        dangerouslySetInnerHTML: { __html: this.props.ui.help }
+	      })
+	    );
+	  }
 	});
 
 /***/ },
@@ -22809,7 +22870,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -22826,29 +22887,29 @@
 
 	exports.default = _react2.default.createClass({
 
-	    displayName: 'Slider',
+	  displayName: 'Slider',
 
-	    propTypes: {
-	        idx: _react2.default.PropTypes.number,
-	        onChange: _react2.default.PropTypes.func
-	    },
+	  propTypes: {
+	    idx: _react2.default.PropTypes.number,
+	    onChange: _react2.default.PropTypes.func
+	  },
 
-	    valueChange: function valueChange(e) {
-	        if (this.props.onChange) {
-	            if (this.props.idx >= 0) {
-	                this.props.onChange(this.props.idx, e.target.value);
-	            } else {
-	                this.props.onChange(null, e.target.value);
-	            }
-	        }
-	    },
-	    render: function render() {
-	        var propsCopy = Object.assign({}, this.props);
-	        delete propsCopy.onChange;
-	        delete propsCopy.idx;
-
-	        return _react2.default.createElement(_NumberSliderWidget2.default, _extends({}, propsCopy, { onChange: this.valueChange }));
+	  valueChange: function valueChange(e) {
+	    if (this.props.onChange) {
+	      if (this.props.idx >= 0) {
+	        this.props.onChange(this.props.idx, e.target.value);
+	      } else {
+	        this.props.onChange(null, e.target.value);
+	      }
 	    }
+	  },
+	  render: function render() {
+	    var propsCopy = Object.assign({}, this.props);
+	    delete propsCopy.onChange;
+	    delete propsCopy.idx;
+
+	    return _react2.default.createElement(_NumberSliderWidget2.default, _extends({}, propsCopy, { onChange: this.valueChange }));
+	  }
 	});
 
 /***/ },
@@ -22858,7 +22919,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _react = __webpack_require__(1);
@@ -22873,69 +22934,73 @@
 
 	exports.default = _react2.default.createClass({
 
-	    displayName: 'NumberSliderWidget',
+	  displayName: 'NumberSliderWidget',
 
-	    propTypes: {
-	        max: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.string]),
-	        min: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.string]),
-	        name: _react2.default.PropTypes.string,
-	        onChange: _react2.default.PropTypes.func,
-	        step: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.string]),
-	        value: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.string])
-	    },
+	  propTypes: {
+	    max: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.string]),
+	    min: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.string]),
+	    name: _react2.default.PropTypes.string,
+	    onChange: _react2.default.PropTypes.func,
+	    step: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.string]),
+	    value: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.string])
+	  },
 
-	    getDefaultProps: function getDefaultProps() {
-	        return {
-	            max: 100,
-	            min: 0,
-	            step: 1,
-	            value: 50
-	        };
-	    },
-	    getInitialState: function getInitialState() {
-	        return {
-	            max: this.props.max,
-	            min: this.props.min,
-	            step: this.props.step,
-	            value: this.props.value
-	        };
-	    },
-	    valInput: function valInput(e) {
-	        this.setState({ value: e.target.value });
-	        if (this.props.onChange) {
-	            if (this.props.name) {
-	                e.target.name = this.props.name;
-	            }
-	            this.props.onChange(e);
-	        }
-	    },
-	    value: function value(newVal) {
-	        if (arguments.length === 0) {
-	            return this.state.value;
-	        }
-
-	        newVal = Math.max(this.state.min, Math.min(newVal, this.state.max));
-	        this.setState({ value: newVal });
-	    },
-	    render: function render() {
-	        var min = this.props.min;
-	        var max = this.props.max;
-
-	        return _react2.default.createElement(
-	            'div',
-	            { className: _NumberSliderWidget2.default.container },
-	            _react2.default.createElement('input', { type: 'range',
-	                className: _NumberSliderWidget2.default.range,
-	                value: this.props.value,
-	                onChange: this.valInput,
-	                max: max, min: min }),
-	            _react2.default.createElement('input', { type: 'number',
-	                className: _NumberSliderWidget2.default.text,
-	                value: this.props.value,
-	                onChange: this.valInput,
-	                max: max, min: min })
-	        );
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      max: 100,
+	      min: 0,
+	      step: 1,
+	      value: 50
+	    };
+	  },
+	  getInitialState: function getInitialState() {
+	    return {
+	      max: this.props.max,
+	      min: this.props.min,
+	      step: this.props.step,
+	      value: this.props.value
+	    };
+	  },
+	  valInput: function valInput(e) {
+	    this.setState({ value: e.target.value });
+	    if (this.props.onChange) {
+	      if (this.props.name) {
+	        e.target.name = this.props.name;
+	      }
+	      this.props.onChange(e);
 	    }
+	  },
+	  value: function value(newVal) {
+	    if (newVal === null || newVal === undefined) {
+	      return this.state.value;
+	    }
+
+	    newVal = Math.max(this.state.min, Math.min(newVal, this.state.max));
+	    this.setState({ value: newVal });
+	    return newVal;
+	  },
+	  render: function render() {
+	    var min = this.props.min;
+	    var max = this.props.max;
+
+
+	    return _react2.default.createElement(
+	      'div',
+	      { className: _NumberSliderWidget2.default.container },
+	      _react2.default.createElement('input', { type: 'range',
+	        className: _NumberSliderWidget2.default.range,
+	        value: this.props.value,
+	        onChange: this.valInput,
+	        max: max, min: min
+	      }),
+	      _react2.default.createElement('input', { type: 'number',
+	        className: _NumberSliderWidget2.default.text,
+	        value: this.props.value,
+	        onChange: this.valInput,
+	        max: max, min: min
+	      })
+	    );
+	  }
 	});
 
 /***/ },
@@ -23072,7 +23137,6 @@
 	}
 
 	function proxyPropToProp(property, ui) {
-
 	  if (!typeMapping[ui.widget]) {
 	    console.log('No propType for', ui);
 	  }
