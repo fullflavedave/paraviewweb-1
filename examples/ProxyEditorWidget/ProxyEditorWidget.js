@@ -20891,6 +20891,7 @@
 	    domain: _react2.default.PropTypes.object,
 	    idx: _react2.default.PropTypes.number.isRequired,
 	    label: _react2.default.PropTypes.string,
+	    noEmpty: _react2.default.PropTypes.bool,
 	    onChange: _react2.default.PropTypes.func,
 	    type: _react2.default.PropTypes.string,
 	    value: _react2.default.PropTypes.any
