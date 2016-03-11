@@ -20912,12 +20912,15 @@
 	  },
 	  valueChange: function valueChange(e) {
 	    var newVal = e.target.value;
+	    var isValid = _Validate2.default[this.props.type](newVal);
 	    this.setState({
 	      editing: true,
 	      valueRep: newVal
 	    });
 
-	    if (_Validate2.default[this.props.type](newVal)) {
+	    if (!this.props.noEmpty && newVal.length === 0 && !isValid) {
+	      this.props.onChange(this.props.idx, undefined);
+	    } else if (isValid) {
 	      var propVal = _Convert2.default[this.props.type](newVal);
 	      propVal = this.applyDomains(this.props.idx, propVal);
 	      this.props.onChange(this.props.idx, propVal);
