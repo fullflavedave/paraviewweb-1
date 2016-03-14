@@ -58,22 +58,22 @@
 
 	var _2 = _interopRequireDefault(_);
 
-	var _sourceProxy = __webpack_require__(212);
+	var _sourceProxy = __webpack_require__(216);
 
 	var _sourceProxy2 = _interopRequireDefault(_sourceProxy);
 
-	var _representationProxy = __webpack_require__(213);
+	var _representationProxy = __webpack_require__(217);
 
 	var _representationProxy2 = _interopRequireDefault(_representationProxy);
 
-	var _viewProxy = __webpack_require__(214);
+	var _viewProxy = __webpack_require__(218);
 
 	var _viewProxy2 = _interopRequireDefault(_viewProxy);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// Load CSS
-	__webpack_require__(215);
+	__webpack_require__(219);
 
 	var container = document.querySelector('.content'),
 	    sections = [Object.assign({ name: 'source', collapsed: false }, _sourceProxy2.default), Object.assign({ name: 'representation', collapsed: true }, _representationProxy2.default), Object.assign({ name: 'view', collapsed: true }, _viewProxy2.default)];
@@ -19754,7 +19754,7 @@
 
 	var _ProxyPropertyGroupWidget2 = _interopRequireDefault(_ProxyPropertyGroupWidget);
 
-	var _ProxyEditorWidget = __webpack_require__(210);
+	var _ProxyEditorWidget = __webpack_require__(214);
 
 	var _ProxyEditorWidget2 = _interopRequireDefault(_ProxyEditorWidget);
 
@@ -19868,9 +19868,9 @@
 
 	var _PropertyFactory2 = _interopRequireDefault(_PropertyFactory);
 
-	var _ConvertProxyProperty = __webpack_require__(207);
+	var _ConvertProxyProperty = __webpack_require__(211);
 
-	var _ProxyPropertyGroup = __webpack_require__(208);
+	var _ProxyPropertyGroup = __webpack_require__(212);
 
 	var _ProxyPropertyGroup2 = _interopRequireDefault(_ProxyPropertyGroup);
 
@@ -20407,11 +20407,15 @@
 
 	var _EnumProperty2 = _interopRequireDefault(_EnumProperty);
 
+	var _MapProperty = __webpack_require__(202);
+
+	var _MapProperty2 = _interopRequireDefault(_MapProperty);
+
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _SliderProperty = __webpack_require__(202);
+	var _SliderProperty = __webpack_require__(206);
 
 	var _SliderProperty2 = _interopRequireDefault(_SliderProperty);
 
@@ -20432,6 +20436,9 @@
 	  },
 	  Checkbox: function Checkbox(prop, viewData, onChange) {
 	    return _react2.default.createElement(_CheckboxProperty2.default, { key: prop.data.id, data: prop.data, ui: prop.ui, viewData: viewData, show: prop.show, onChange: onChange });
+	  },
+	  Map: function Map(prop, viewData, onChange) {
+	    return _react2.default.createElement(_MapProperty2.default, { key: prop.data.id, data: prop.data, ui: prop.ui, viewData: viewData, show: prop.show, onChange: onChange });
 	  }
 	};
 
@@ -22752,11 +22759,303 @@
 
 	var _BlockMixin2 = _interopRequireDefault(_BlockMixin);
 
+	var _KeyValuePair = __webpack_require__(203);
+
+	var _KeyValuePair2 = _interopRequireDefault(_KeyValuePair);
+
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Slider = __webpack_require__(203);
+	var _ToggleIconButtonWidget = __webpack_require__(192);
+
+	var _ToggleIconButtonWidget2 = _interopRequireDefault(_ToggleIconButtonWidget);
+
+	var _CellProperty = __webpack_require__(181);
+
+	var _CellProperty2 = _interopRequireDefault(_CellProperty);
+
+	var _MapProperty = __webpack_require__(204);
+
+	var _MapProperty2 = _interopRequireDefault(_MapProperty);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/* eslint-disable react/no-danger */
+	exports.default = _react2.default.createClass({
+
+	  displayName: 'MapProperty',
+
+	  propTypes: {
+	    data: _react2.default.PropTypes.object.isRequired,
+	    help: _react2.default.PropTypes.string,
+	    name: _react2.default.PropTypes.string,
+	    onChange: _react2.default.PropTypes.func,
+	    show: _react2.default.PropTypes.func,
+	    ui: _react2.default.PropTypes.object.isRequired,
+	    viewData: _react2.default.PropTypes.object
+	  },
+
+	  mixins: [_BlockMixin2.default],
+
+	  valueChange: function valueChange(idx, key, value) {
+	    var data = this.state.data;
+
+	    if (key === value && key === undefined) {
+	      data.value.splice(idx, 1);
+	    } else {
+	      data.value[idx][key] = value;
+	    }
+	    this.setState({ data: data });
+
+	    if (this.props.onChange) {
+	      this.props.onChange(data);
+	    }
+	  },
+	  addEntry: function addEntry() {
+	    var data = this.state.data;
+
+	    data.value.push({ name: '', value: '' });
+	    this.setState({ data: data });
+	  },
+	  render: function render() {
+	    var _this = this;
+
+	    var mapper = function mapper() {
+	      if (Array.isArray(_this.state.data.value)) {
+	        var ret = [];
+	        for (var i = 0; i < _this.state.data.value.length; i++) {
+	          ret.push(_react2.default.createElement(_KeyValuePair2.default, {
+	            idx: i,
+	            value: _this.state.data.value[i],
+	            key: _this.state.data.id + '_' + i,
+	            onChange: _this.valueChange
+	          }));
+	        }
+	        return ret;
+	      }
+
+	      return null;
+	    };
+
+	    return _react2.default.createElement(
+	      'div',
+	      { className: this.props.show(this.props.viewData) ? _CellProperty2.default.container : _CellProperty2.default.hidden },
+	      _react2.default.createElement(
+	        'div',
+	        { className: _CellProperty2.default.header },
+	        _react2.default.createElement(
+	          'strong',
+	          null,
+	          this.props.ui.label
+	        ),
+	        _react2.default.createElement(
+	          'span',
+	          null,
+	          _react2.default.createElement(_ToggleIconButtonWidget2.default, {
+	            icon: _CellProperty2.default.helpIcon,
+	            value: this.state.helpOpen,
+	            toggle: !!this.props.ui.help,
+	            onChange: this.helpToggled
+	          })
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: _CellProperty2.default.inputBlock },
+	        _react2.default.createElement(
+	          'table',
+	          { className: _MapProperty2.default.table },
+	          _react2.default.createElement(
+	            'tbody',
+	            null,
+	            _react2.default.createElement(
+	              'tr',
+	              null,
+	              _react2.default.createElement(
+	                'th',
+	                { className: _MapProperty2.default.inputColumn },
+	                'Name'
+	              ),
+	              _react2.default.createElement(
+	                'th',
+	                { className: _MapProperty2.default.inputColumn },
+	                'Value'
+	              ),
+	              _react2.default.createElement(
+	                'th',
+	                { className: _MapProperty2.default.actionColumn },
+	                _react2.default.createElement('i', { className: _MapProperty2.default.addButton, onClick: this.addEntry })
+	              )
+	            ),
+	            mapper()
+	          )
+	        )
+	      ),
+	      _react2.default.createElement('div', {
+	        className: this.state.helpOpen ? _CellProperty2.default.helpBox : _CellProperty2.default.hidden,
+	        dangerouslySetInnerHTML: { __html: this.props.ui.help }
+	      })
+	    );
+	  }
+	});
+
+/***/ },
+/* 203 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _MapProperty = __webpack_require__(204);
+
+	var _MapProperty2 = _interopRequireDefault(_MapProperty);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+
+	  displayName: 'KeyValuePair',
+
+	  propTypes: {
+	    idx: _react2.default.PropTypes.number,
+	    label: _react2.default.PropTypes.string,
+	    onChange: _react2.default.PropTypes.func,
+	    value: _react2.default.PropTypes.object
+	  },
+
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      label: ''
+	    };
+	  },
+	  removeItem: function removeItem(e) {
+	    if (this.props.onChange) {
+	      if (this.props.idx >= 0) {
+	        this.props.onChange(this.props.idx);
+	      }
+	    }
+	  },
+	  valueChange: function valueChange(e) {
+	    var value = e.target.value;
+	    var name = e.target.name;
+
+	    if (this.props.onChange) {
+	      if (this.props.idx >= 0) {
+	        this.props.onChange(this.props.idx, name, value);
+	      } else {
+	        this.props.onChange(null, name, value);
+	      }
+	    }
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'tr',
+	      null,
+	      _react2.default.createElement(
+	        'td',
+	        { className: _MapProperty2.default.inputColumn },
+	        _react2.default.createElement('input', {
+	          className: _MapProperty2.default.input,
+	          name: 'name',
+	          type: 'text',
+	          value: this.props.value.name,
+	          onChange: this.valueChange
+	        })
+	      ),
+	      _react2.default.createElement(
+	        'td',
+	        { className: _MapProperty2.default.inputColumn },
+	        _react2.default.createElement('input', {
+	          className: _MapProperty2.default.input,
+	          name: 'value',
+	          type: 'text',
+	          value: this.props.value.value,
+	          onChange: this.valueChange
+	        })
+	      ),
+	      _react2.default.createElement(
+	        'td',
+	        { className: _MapProperty2.default.actionColumn },
+	        _react2.default.createElement('i', { className: _MapProperty2.default.deleteButton, onClick: this.removeItem })
+	      )
+	    );
+	  }
+	});
+
+/***/ },
+/* 204 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(205);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(191)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/kw-web-suite/node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]_[local]_[hash:base64:5]!./../../node_modules/kw-web-suite/node_modules/postcss-loader/index.js!./MapProperty.mcss", function() {
+				var newContent = require("!!./../../node_modules/kw-web-suite/node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]_[local]_[hash:base64:5]!./../../node_modules/kw-web-suite/node_modules/postcss-loader/index.js!./MapProperty.mcss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 205 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(183)();
+	// imports
+	exports.i(__webpack_require__(184), undefined);
+
+	// module
+	exports.push([module.id, ".MapProperty_table_2Bjd9 {\n  width: 100%;\n}\n\n.MapProperty_input_3wud8 {\n  width: 100%;\n}\n\n.MapProperty_addButton_DnRlW {\n  cursor: pointer;\n  padding: 5px;\n}\n\n.MapProperty_inputColumn_3sPBS {\n  padding: 2px 5px;\n}\n\n.MapProperty_actionColumn_aOlL_ {\n  text-align: center;\n  width: 35px;\n}\n\n.MapProperty_deleteButton_2qrRK {\n  cursor: pointer;\n  padding: 5px;\n}\n", ""]);
+
+	// exports
+	exports.locals = {
+		"table": "MapProperty_table_2Bjd9",
+		"input": "MapProperty_input_3wud8",
+		"addButton": "MapProperty_addButton_DnRlW " + __webpack_require__(184).locals["fa"] + " " + __webpack_require__(184).locals["fa-plus"] + "",
+		"inputColumn": "MapProperty_inputColumn_3sPBS",
+		"actionColumn": "MapProperty_actionColumn_aOlL_",
+		"deleteButton": "MapProperty_deleteButton_2qrRK " + __webpack_require__(184).locals["fa"] + " " + __webpack_require__(184).locals["fa-trash-o"] + ""
+	};
+
+/***/ },
+/* 206 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _BlockMixin = __webpack_require__(176);
+
+	var _BlockMixin2 = _interopRequireDefault(_BlockMixin);
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Slider = __webpack_require__(207);
 
 	var _Slider2 = _interopRequireDefault(_Slider);
 
@@ -22868,7 +23167,7 @@
 	});
 
 /***/ },
-/* 203 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22883,7 +23182,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _NumberSliderWidget = __webpack_require__(204);
+	var _NumberSliderWidget = __webpack_require__(208);
 
 	var _NumberSliderWidget2 = _interopRequireDefault(_NumberSliderWidget);
 
@@ -22917,7 +23216,7 @@
 	});
 
 /***/ },
-/* 204 */
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22930,7 +23229,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _NumberSliderWidget = __webpack_require__(205);
+	var _NumberSliderWidget = __webpack_require__(209);
 
 	var _NumberSliderWidget2 = _interopRequireDefault(_NumberSliderWidget);
 
@@ -23008,13 +23307,13 @@
 	});
 
 /***/ },
-/* 205 */
+/* 209 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(206);
+	var content = __webpack_require__(210);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(191)(content, {});
@@ -23034,7 +23333,7 @@
 	}
 
 /***/ },
-/* 206 */
+/* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(183)();
@@ -23052,7 +23351,7 @@
 	};
 
 /***/ },
-/* 207 */
+/* 211 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -23206,13 +23505,13 @@
 	};
 
 /***/ },
-/* 208 */
+/* 212 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(209);
+	var content = __webpack_require__(213);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(191)(content, {});
@@ -23232,7 +23531,7 @@
 	}
 
 /***/ },
-/* 209 */
+/* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(183)();
@@ -23258,13 +23557,13 @@
 	};
 
 /***/ },
-/* 210 */
+/* 214 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(211);
+	var content = __webpack_require__(215);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(191)(content, {});
@@ -23284,7 +23583,7 @@
 	}
 
 /***/ },
-/* 211 */
+/* 215 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(183)();
@@ -23307,7 +23606,7 @@
 	};
 
 /***/ },
-/* 212 */
+/* 216 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -24756,7 +25055,7 @@
 	};
 
 /***/ },
-/* 213 */
+/* 217 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -25517,7 +25816,7 @@
 	};
 
 /***/ },
-/* 214 */
+/* 218 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -26604,13 +26903,13 @@
 	};
 
 /***/ },
-/* 215 */
+/* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(216);
+	var content = __webpack_require__(220);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(191)(content, {});
@@ -26630,7 +26929,7 @@
 	}
 
 /***/ },
-/* 216 */
+/* 220 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(183)();
