@@ -19849,6 +19849,27 @@
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.detachImageBuilderListeners();
 	  },
+	  onProbeVisibilityChange: function onProbeVisibilityChange(isProbeOpen) {
+	    var _this = this;
+
+	    this.setState({
+	      showFieldValue: isProbeOpen
+	    });
+
+	    setImmediate(function () {
+	      if (_this.props.imageBuilders) {
+	        Object.keys(_this.props.imageBuilders).forEach(function (key) {
+	          var builder = _this.props.imageBuilders[key].builder;
+	          builder.setCrossHairEnable(isProbeOpen);
+	          builder.render();
+	        });
+	      }
+	      if (_this.props.imageBuilder) {
+	        _this.props.imageBuilder.setCrossHairEnable(isProbeOpen);
+	        _this.props.imageBuilder.render();
+	      }
+	    });
+	  },
 	  getImageBuilder: function getImageBuilder(props) {
 	    var imageBuilder = props.imageBuilder;
 
@@ -19860,13 +19881,13 @@
 	    return imageBuilder;
 	  },
 	  attachImageBuilderListeners: function attachImageBuilderListeners(imageBuilder) {
-	    var _this = this;
+	    var _this2 = this;
 
 	    this.detachImageBuilderListeners();
 	    this.probeListenerSubscription = imageBuilder.onProbeChange(function (probe, envelope) {
 	      var field = imageBuilder.getFieldValueAtProbeLocation();
-	      if (_this.isMounted()) {
-	        _this.setState({
+	      if (_this2.isMounted()) {
+	        _this2.setState({
 	          probe: probe, field: field
 	        });
 	      }
@@ -19874,8 +19895,8 @@
 
 	    this.probeDataListenerSubscription = imageBuilder.onProbeLineReady(function (data, envelope) {
 	      var field = imageBuilder.getFieldValueAtProbeLocation();
-	      if (_this.isMounted() && field !== _this.state.field) {
-	        _this.setState({
+	      if (_this2.isMounted() && field !== _this2.state.field) {
+	        _this2.setState({
 	          field: field
 	        });
 	      }
@@ -19906,27 +19927,6 @@
 	    probe[idx] = value;
 
 	    this.getImageBuilder(this.props).setProbe(probe[0], probe[1], probe[2]);
-	  },
-	  onProbeVisibilityChange: function onProbeVisibilityChange(isProbeOpen) {
-	    var _this2 = this;
-
-	    this.setState({
-	      showFieldValue: isProbeOpen
-	    });
-
-	    setImmediate(function () {
-	      if (_this2.props.imageBuilders) {
-	        for (var key in _this2.props.imageBuilders) {
-	          var builder = _this2.props.imageBuilders[key].builder;
-	          builder.setCrossHairEnable(isProbeOpen);
-	          builder.render();
-	        }
-	      }
-	      if (_this2.props.imageBuilder) {
-	        _this2.props.imageBuilder.setCrossHairEnable(isProbeOpen);
-	        _this2.props.imageBuilder.render();
-	      }
-	    });
 	  },
 	  render: function render() {
 	    var imageBuilder = this.getImageBuilder(this.props),
@@ -20146,9 +20146,9 @@
 	      return this.state.value;
 	    }
 
-	    newVal = Math.max(this.state.min, Math.min(newVal, this.state.max));
-	    this.setState({ value: newVal });
-	    return newVal;
+	    var value = Math.max(this.state.min, Math.min(newVal, this.state.max));
+	    this.setState({ value: value });
+	    return value;
 	  },
 	  render: function render() {
 	    var min = this.props.min;

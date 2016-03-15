@@ -20194,45 +20194,29 @@
 	      this.props.listener.click(event, envelope);
 	    }
 	  },
-	  renderImage: function renderImage(data) {
-	    this.imageToDraw.drawToCanvas = drawToCanvasAsImage;
-	    this.imageToDraw.src = data.url;
+	  updateMetadata: function updateMetadata() {
+	    this.setState({
+	      dialog: !this.state.dialog
+	    });
+	    this.imageExporter.updateMetadata({
+	      title: this.state.title,
+	      description: this.state.description,
+	      image: _reactDom2.default.findDOMNode(this.refs.thumbnail).src,
+	      path: this.props.imageBuilder.queryDataModel.basepath
+	    });
 	  },
-	  renderCanvas: function renderCanvas(data) {
-	    this.imageToDraw.drawToCanvas = drawToCanvasAsBuffer;
-	    this.imageToDraw.data = data;
-	    this.imageToDraw.width = data.outputSize[0];
-	    this.imageToDraw.height = data.outputSize[1];
-
-	    // Send data to server for export
-	    if (this.sendToServer) {
-	      this.imageExporter.exportImage(data);
-	    }
-
-	    // No need to wait to render it
-	    if (this.imageToDraw.firstRender) {
-	      this.imageToDraw.firstRender = false;
-	      this.resetCamera();
-	    } else {
-	      this.imageToDraw.drawToCanvas();
-	    }
+	  updateTitle: function updateTitle(event) {
+	    var title = event.target.value;
+	    this.setState({ title: title });
 	  },
-	  resetCamera: function resetCamera() {
-	    var w = this.state.width,
-	        h = this.state.height,
-	        image = this.imageToDraw,
-	        iw = image ? image.width : 500,
-	        ih = image ? image.height : 500;
-
-	    this.zoom = Math.min(w / iw, h / ih);
-	    this.baseZoom = Math.min(w / iw, h / ih);
-	    this.baseCenter = [0.5, 0.5];
-	    this.center = [0.5, 0.5];
-
-	    image.drawToCanvas();
+	  updateDescription: function updateDescription(event) {
+	    var description = event.target.value;
+	    this.setState({ description: description });
 	  },
-	  recordImages: function recordImages(record) {
-	    this.sendToServer = record;
+	  toggleDialog: function toggleDialog() {
+	    this.setState({
+	      dialog: !this.state.dialog
+	    });
 	  },
 	  handleKeyDown: function handleKeyDown(event) {
 	    if (event.keyCode === 82) {
@@ -20259,29 +20243,45 @@
 	      });
 	    }
 	  },
-	  updateTitle: function updateTitle(event) {
-	    var title = event.target.value;
-	    this.setState({ title: title });
+	  recordImages: function recordImages(record) {
+	    this.sendToServer = record;
 	  },
-	  updateDescription: function updateDescription(event) {
-	    var description = event.target.value;
-	    this.setState({ description: description });
+	  resetCamera: function resetCamera() {
+	    var w = this.state.width,
+	        h = this.state.height,
+	        image = this.imageToDraw,
+	        iw = image ? image.width : 500,
+	        ih = image ? image.height : 500;
+
+	    this.zoom = Math.min(w / iw, h / ih);
+	    this.baseZoom = Math.min(w / iw, h / ih);
+	    this.baseCenter = [0.5, 0.5];
+	    this.center = [0.5, 0.5];
+
+	    image.drawToCanvas();
 	  },
-	  toggleDialog: function toggleDialog() {
-	    this.setState({
-	      dialog: !this.state.dialog
-	    });
+	  renderImage: function renderImage(data) {
+	    this.imageToDraw.drawToCanvas = drawToCanvasAsImage;
+	    this.imageToDraw.src = data.url;
 	  },
-	  updateMetadata: function updateMetadata() {
-	    this.setState({
-	      dialog: !this.state.dialog
-	    });
-	    this.imageExporter.updateMetadata({
-	      title: this.state.title,
-	      description: this.state.description,
-	      image: _reactDom2.default.findDOMNode(this.refs.thumbnail).src,
-	      path: this.props.imageBuilder.queryDataModel.basepath
-	    });
+	  renderCanvas: function renderCanvas(data) {
+	    this.imageToDraw.drawToCanvas = drawToCanvasAsBuffer;
+	    this.imageToDraw.data = data;
+	    this.imageToDraw.width = data.outputSize[0];
+	    this.imageToDraw.height = data.outputSize[1];
+
+	    // Send data to server for export
+	    if (this.sendToServer) {
+	      this.imageExporter.exportImage(data);
+	    }
+
+	    // No need to wait to render it
+	    if (this.imageToDraw.firstRender) {
+	      this.imageToDraw.firstRender = false;
+	      this.resetCamera();
+	    } else {
+	      this.imageToDraw.drawToCanvas();
+	    }
 	  },
 	  render: function render() {
 	    return _react2.default.createElement(
@@ -32214,7 +32214,7 @@
 	        threshold: 0
 	      }
 	    };
-	    options = (0, _merge2.default)(defaultOptions, options);
+	    var optionsWithDefault = (0, _merge2.default)(defaultOptions, options);
 
 	    this.Modifier = Modifier;
 
@@ -32311,8 +32311,8 @@
 	    };
 
 	    // set hammer options
-	    this.hammer.get('pan').set(options.pan);
-	    this.hammer.get('pinch').set(options.pinch);
+	    this.hammer.get('pan').set(optionsWithDefault.pan);
+	    this.hammer.get('pinch').set(optionsWithDefault.pinch);
 
 	    // Listen to hammer events
 	    this.hammer.on('tap', function (e) {
@@ -32399,10 +32399,12 @@
 	  }, {
 	    key: 'attach',
 	    value: function attach(listeners) {
+	      var _this2 = this;
+
 	      var subscriptions = {};
-	      for (var key in listeners) {
-	        subscriptions[key] = this.on(key, listeners[key]);
-	      }
+	      Object.keys(listeners).forEach(function (key) {
+	        subscriptions[key] = _this2.on(key, listeners[key]);
+	      });
 	      return subscriptions;
 	    }
 	  }, {

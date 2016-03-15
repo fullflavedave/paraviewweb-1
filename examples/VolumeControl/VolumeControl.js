@@ -11641,8 +11641,10 @@
 	  }, {
 	    key: 'addFields',
 	    value: function addFields(fieldsRange, lutConfigs) {
-	      for (var field in fieldsRange) {
-	        var lut = this.addLookupTable(field, fieldsRange[field]);
+	      var _this3 = this;
+
+	      Object.keys(fieldsRange).forEach(function (field) {
+	        var lut = _this3.addLookupTable(field, fieldsRange[field]);
 	        if (lutConfigs && lutConfigs[field]) {
 	          if (lutConfigs[field].discrete !== undefined) {
 	            lut.discrete = lutConfigs[field].discrete;
@@ -11656,7 +11658,7 @@
 	            lut.setScalarRange(lutConfigs[field].range[0], lutConfigs[field].range[1]);
 	          }
 	        }
-	      }
+	      });
 	    }
 	  }, {
 	    key: 'getActiveField',
@@ -12204,6 +12206,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	/* eslint-disable no-multi-spaces */
 	exports.default = {
 	  lookuptables: {
 	    spectralflip: {
@@ -33954,7 +33957,7 @@
 	        threshold: 0
 	      }
 	    };
-	    options = (0, _merge2.default)(defaultOptions, options);
+	    var optionsWithDefault = (0, _merge2.default)(defaultOptions, options);
 
 	    this.Modifier = Modifier;
 
@@ -34051,8 +34054,8 @@
 	    };
 
 	    // set hammer options
-	    this.hammer.get('pan').set(options.pan);
-	    this.hammer.get('pinch').set(options.pinch);
+	    this.hammer.get('pan').set(optionsWithDefault.pan);
+	    this.hammer.get('pinch').set(optionsWithDefault.pinch);
 
 	    // Listen to hammer events
 	    this.hammer.on('tap', function (e) {
@@ -34139,10 +34142,12 @@
 	  }, {
 	    key: 'attach',
 	    value: function attach(listeners) {
+	      var _this2 = this;
+
 	      var subscriptions = {};
-	      for (var key in listeners) {
-	        subscriptions[key] = this.on(key, listeners[key]);
-	      }
+	      Object.keys(listeners).forEach(function (key) {
+	        subscriptions[key] = _this2.on(key, listeners[key]);
+	      });
 	      return subscriptions;
 	    }
 	  }, {
@@ -37405,6 +37410,15 @@
 	    var canvas = _reactDom2.default.findDOMNode(this.refs.canvas);
 	    this.props.lookupTable.drawToCanvas(canvas);
 	  },
+	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    if (nextProps.lookupTable !== this.props.lookupTable) {
+	      this.removeListener();
+	      this.attachListener(nextProps.lookupTable);
+	    }
+	    if (this.props.originalRange[0] !== nextProps.originalRange[0] || this.props.originalRange[1] !== nextProps.originalRange[1]) {
+	      this.setState({ originalRange: nextProps.originalRange });
+	    }
+	  },
 	  componentDidUpdate: function componentDidUpdate(prevProps, prevState) {
 	    if (!this.state.internal_lut) {
 	      var canvas = _reactDom2.default.findDOMNode(this.refs.canvas);
@@ -37425,45 +37439,12 @@
 	      }
 	    }
 	  },
-	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	    if (nextProps.lookupTable !== this.props.lookupTable) {
-	      this.removeListener();
-	      this.attachListener(nextProps.lookupTable);
-	    }
-	    if (this.props.originalRange[0] !== nextProps.originalRange[0] || this.props.originalRange[1] !== nextProps.originalRange[1]) {
-	      this.setState({ originalRange: nextProps.originalRange });
-	    }
-	  },
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.removeListener();
 	  },
-	  attachListener: function attachListener(lut) {
-	    var _this = this;
-
-	    this.subscription = lut.onChange(function (data, envelope) {
-	      _this.forceUpdate();
-	    });
-	  },
-	  removeListener: function removeListener() {
-	    if (this.subscription) {
-	      this.subscription.unsubsribe();
-	      this.subscription = null;
-	    }
-	  },
-	  toggleEditMode: function toggleEditMode() {
-	    if (this.state.mode === 'none' || this.state.mode !== 'edit') {
-	      this.setState({ mode: 'edit', internal_lut: false });
-	    } else {
-	      this.setState({ mode: 'none', internal_lut: false });
-	    }
-	  },
-	  togglePresetMode: function togglePresetMode() {
-	    if (this.state.mode === 'none' || this.state.mode !== 'preset') {
-	      this.deltaPreset(0); // Render preset
-	      this.setState({ mode: 'preset', internal_lut: true });
-	    } else {
-	      this.setState({ mode: 'none', internal_lut: false });
-	    }
+	  setPreset: function setPreset(event) {
+	    this.props.lookupTable.setPreset(event.target.dataset.name);
+	    this.togglePresetMode();
 	  },
 	  updateScalarRange: function updateScalarRange() {
 	    var minValue = _reactDom2.default.findDOMNode(this.refs.min).value,
@@ -37524,9 +37505,33 @@
 	    });
 	    this.setState({ currentControlPointIndex: newIdx });
 	  },
-	  setPreset: function setPreset(event) {
-	    this.props.lookupTable.setPreset(event.target.dataset.name);
-	    this.togglePresetMode();
+	  toggleEditMode: function toggleEditMode() {
+	    if (this.state.mode === 'none' || this.state.mode !== 'edit') {
+	      this.setState({ mode: 'edit', internal_lut: false });
+	    } else {
+	      this.setState({ mode: 'none', internal_lut: false });
+	    }
+	  },
+	  togglePresetMode: function togglePresetMode() {
+	    if (this.state.mode === 'none' || this.state.mode !== 'preset') {
+	      this.deltaPreset(0); // Render preset
+	      this.setState({ mode: 'preset', internal_lut: true });
+	    } else {
+	      this.setState({ mode: 'none', internal_lut: false });
+	    }
+	  },
+	  attachListener: function attachListener(lut) {
+	    var _this = this;
+
+	    this.subscription = lut.onChange(function (data, envelope) {
+	      _this.forceUpdate();
+	    });
+	  },
+	  removeListener: function removeListener() {
+	    if (this.subscription) {
+	      this.subscription.unsubsribe();
+	      this.subscription = null;
+	    }
 	  },
 	  updateOriginalRange: function updateOriginalRange(min, max) {
 	    console.log('Someone asked LookupTableWidget to update original range to [' + min + ', ' + max + ']');
@@ -37745,10 +37750,12 @@
 	  getInitialState: function getInitialState() {
 	    this.image = new Image();
 	    this.image.src = this.props.swatch;
-	    return { swatch: this.props.swatch,
+	    return {
+	      swatch: this.props.swatch,
 	      color: this.props.color,
 	      preview: false,
-	      originalColor: [this.props.color[0], this.props.color[1], this.props.color[2]] };
+	      originalColor: [this.props.color[0], this.props.color[1], this.props.color[2]]
+	    };
 	  },
 	  componentDidMount: function componentDidMount() {
 	    var ctx = _reactDom2.default.findDOMNode(this.refs.canvas).getContext('2d');

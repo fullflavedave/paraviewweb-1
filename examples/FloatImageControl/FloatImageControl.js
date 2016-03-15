@@ -185,6 +185,15 @@
 	      this.setState({ change: !this.state.change });
 	    }
 	  },
+	  onProbeChange: function onProbeChange(e) {
+	    var name = e.target.name,
+	        newVal = Number(e.target.value),
+	        newState = { x: this.state.x, y: this.state.y };
+
+	    newState[name] = newVal;
+	    this.setState(newState);
+	    this.props.model.getTimeChart(newState.x, newState.y);
+	  },
 	  attachListener: function attachListener(model) {
 	    var _this = this;
 
@@ -201,15 +210,6 @@
 	  updateLight: function updateLight(event) {
 	    this.props.model.setLight(255 - event.target.value);
 	    this.setState({ change: !this.state.change });
-	  },
-	  onProbeChange: function onProbeChange(e) {
-	    var name = e.target.name,
-	        newVal = Number(e.target.value),
-	        newState = { x: this.state.x, y: this.state.y };
-
-	    newState[name] = newVal;
-	    this.setState(newState);
-	    this.props.model.getTimeChart(newState.x, newState.y);
 	  },
 	  toggleProbe: function toggleProbe(newVal) {
 	    this.props.model.getTimeProbe().enabled = !!newVal;
@@ -21397,9 +21397,9 @@
 	      return this.state.value;
 	    }
 
-	    newVal = Math.max(this.state.min, Math.min(newVal, this.state.max));
-	    this.setState({ value: newVal });
-	    return newVal;
+	    var value = Math.max(this.state.min, Math.min(newVal, this.state.max));
+	    this.setState({ value: value });
+	    return value;
 	  },
 	  render: function render() {
 	    var min = this.props.min;

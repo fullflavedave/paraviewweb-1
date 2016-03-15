@@ -19971,11 +19971,93 @@
 	    // Save computed structure to state
 	    this.setState({ nodes: nodes, branches: branches, forks: forks, actives: actives, leaves: leaves });
 	  },
-	  renderNodes: function renderNodes() {
+	  toggleActive: function toggleActive(event) {
 	    var _this = this;
 
+	    var _state = this.state;
+	    var actives = _state.actives;
+	    var nodes = _state.nodes;
+
+
+	    if (event.target.nodeName !== 'circle' && !event.target.classList.contains(_GitTreeWidget2.default.iconText)) {
+	      var size = _SizeHelper2.default.getSize(_reactDom2.default.findDOMNode(this));
+	      var deltaY = this.props.deltaY;
+	      // Firefox vs Chrome/Safari// Firefox vs Chrome/Safari
+	      var originTop = size.clientRect.y || size.clientRect.top;
+	      var yVal = Math.floor((event.clientY - originTop) / deltaY);
+	      var index = actives.indexOf(yVal);
+
+	      // command key for osx, control key for windows
+	      if (this.props.multiselect && (event.metaKey || event.ctrlKey)) {
+	        if (index === -1) {
+	          actives.push(yVal);
+	        } else {
+	          actives.splice(index, 1);
+	        }
+	      } else {
+	        actives = [yVal];
+	      }
+	      this.setState({ actives: actives });
+
+	      if (this.props.onChange) {
+	        (function () {
+	          var changeSet = [],
+	              active = true;
+
+	          actives.forEach(function (idx) {
+	            var _nodes$idx = nodes[idx];
+	            var id = _nodes$idx.id;
+	            var parent = _nodes$idx.parent;
+	            var name = _nodes$idx.name;
+	            var visible = _nodes$idx.visible;
+
+	            changeSet.push({ id: id, parent: parent, name: name, visible: visible, active: active });
+	          });
+
+	          _this.props.onChange({ type: 'active', changeSet: changeSet });
+	        })();
+	      }
+	    }
+	  },
+	  toggleVisibility: function toggleVisibility(event) {
+	    var yVal = parseInt(event.currentTarget.attributes['data-id'].value, 10);
+	    var _state2 = this.state;
+	    var actives = _state2.actives;
+	    var nodes = _state2.nodes;
+	    var node = nodes[yVal];
+
+	    node.visible = !node.visible;
+	    this.setState({ nodes: nodes });
+
+	    if (this.props.onChange) {
+	      var id = node.id;
+	      var parent = node.parent;
+	      var name = node.name;
+	      var visible = node.visible;
+	      var active = actives.indexOf(yVal) !== -1;
+	      var changeSet = [{ id: id, parent: parent, name: name, visible: visible, active: active }];
+
+	      this.props.onChange({ type: 'visibility', changeSet: changeSet });
+	    }
+	  },
+	  deleteNode: function deleteNode(event) {
+	    if (this.props.onChange) {
+	      var yVal = parseInt(event.currentTarget.attributes['data-id'].value, 10);
+	      var _state$nodes$yVal = this.state.nodes[yVal];
+	      var id = _state$nodes$yVal.id;
+	      var parent = _state$nodes$yVal.parent;
+	      var name = _state$nodes$yVal.name;
+	      var visible = _state$nodes$yVal.visible;
+	      var changeSet = [{ id: id, parent: parent, name: name, visible: visible }];
+
+	      this.props.onChange({ type: 'delete', changeSet: changeSet });
+	    }
+	  },
+	  renderNodes: function renderNodes() {
+	    var _this2 = this;
+
 	    return this.state.nodes.map(function (el, index) {
-	      var _props = _this.props;
+	      var _props = _this2.props;
 	      var activeCircleStrokeColor = _props.activeCircleStrokeColor;
 	      var deltaX = _props.deltaX;
 	      var deltaY = _props.deltaY;
@@ -19987,15 +20069,15 @@
 	      var stroke = _props.stroke;
 	      var textColor = _props.textColor;
 	      var textWeight = _props.textWeight;
-	      var isActive = _this.state.actives.includes(index);
+	      var isActive = _this2.state.actives.includes(index);
 	      var isVisible = !!el.visible;
 	      var branchColor = palette[el.x % palette.length];
 
 	      // Styles
-	      var currentTextColor = textColor[isActive ? 1 : 0],
-	          weight = textWeight[isActive ? 1 : 0],
-	          strokeColor = isActive ? activeCircleStrokeColor : branchColor || branchColor,
-	          fillColor = isVisible ? branchColor : notVisibleCircleFillColor || branchColor;
+	      var currentTextColor = textColor[isActive ? 1 : 0];
+	      var weight = textWeight[isActive ? 1 : 0];
+	      var strokeColor = isActive ? activeCircleStrokeColor : branchColor || branchColor;
+	      var fillColor = isVisible ? branchColor : notVisibleCircleFillColor || branchColor;
 
 	      // Positions
 	      var cx = deltaX * el.x + offset,
@@ -20013,7 +20095,7 @@
 	          stroke: strokeColor,
 	          strokeWidth: stroke,
 	          fill: fillColor,
-	          onClick: _this.toggleVisibility
+	          onClick: _this2.toggleVisibility
 	        }),
 	        _react2.default.createElement(
 	          'text',
@@ -20082,7 +20164,7 @@
 	    });
 	  },
 	  renderActives: function renderActives() {
-	    var _this2 = this;
+	    var _this3 = this;
 
 	    var _props4 = this.props;
 	    var margin = _props4.margin;
@@ -20092,7 +20174,7 @@
 	    return this.state.actives.map(function (el, index) {
 	      return _react2.default.createElement('rect', {
 	        key: 'active-' + index,
-	        'data-id': _this2.state.nodes[el].y,
+	        'data-id': _this3.state.nodes[el].y,
 	        x: '-50',
 	        width: '1000',
 	        fill: '#999',
@@ -20102,7 +20184,7 @@
 	    });
 	  },
 	  renderDeleteActions: function renderDeleteActions() {
-	    var _this3 = this;
+	    var _this4 = this;
 
 	    if (!this.props.enableDelete) {
 	      return null;
@@ -20117,7 +20199,7 @@
 
 
 	    return this.state.leaves.map(function (node, idx) {
-	      var isActive = _this3.state.actives.includes(node.y),
+	      var isActive = _this4.state.actives.includes(node.y),
 	          currentTextColor = textColor[isActive ? 1 : 0];
 
 	      return _react2.default.createElement(
@@ -20125,7 +20207,7 @@
 	        {
 	          key: 'delete-' + idx,
 	          className: _GitTreeWidget2.default.iconText,
-	          onClick: _this3.deleteNode,
+	          onClick: _this4.deleteNode,
 	          'data-id': node.y,
 	          x: Number(width) - offset - 10,
 	          y: deltaY * node.y + deltaY / 2 + radius - 1,
@@ -20134,88 +20216,6 @@
 	        ''
 	      );
 	    });
-	  },
-	  toggleActive: function toggleActive(event) {
-	    var _this4 = this;
-
-	    var _state = this.state;
-	    var actives = _state.actives;
-	    var nodes = _state.nodes;
-
-
-	    if (event.target.nodeName !== 'circle' && !event.target.classList.contains(_GitTreeWidget2.default.iconText)) {
-	      var size = _SizeHelper2.default.getSize(_reactDom2.default.findDOMNode(this));
-	      var deltaY = this.props.deltaY;
-	      // Firefox vs Chrome/Safari// Firefox vs Chrome/Safari
-	      var originTop = size.clientRect.y || size.clientRect.top;
-	      var yVal = Math.floor((event.clientY - originTop) / deltaY);
-	      var index = actives.indexOf(yVal);
-
-	      // command key for osx, control key for windows
-	      if (this.props.multiselect && (event.metaKey || event.ctrlKey)) {
-	        if (index === -1) {
-	          actives.push(yVal);
-	        } else {
-	          actives.splice(index, 1);
-	        }
-	      } else {
-	        actives = [yVal];
-	      }
-	      this.setState({ actives: actives });
-
-	      if (this.props.onChange) {
-	        (function () {
-	          var changeSet = [],
-	              active = true;
-
-	          actives.forEach(function (idx) {
-	            var _nodes$idx = nodes[idx];
-	            var id = _nodes$idx.id;
-	            var parent = _nodes$idx.parent;
-	            var name = _nodes$idx.name;
-	            var visible = _nodes$idx.visible;
-
-	            changeSet.push({ id: id, parent: parent, name: name, visible: visible, active: active });
-	          });
-
-	          _this4.props.onChange({ type: 'active', changeSet: changeSet });
-	        })();
-	      }
-	    }
-	  },
-	  toggleVisibility: function toggleVisibility(event) {
-	    var yVal = parseInt(event.currentTarget.attributes['data-id'].value, 10);
-	    var _state2 = this.state;
-	    var actives = _state2.actives;
-	    var nodes = _state2.nodes;
-	    var node = nodes[yVal];
-
-	    node.visible = !node.visible;
-	    this.setState({ nodes: nodes });
-
-	    if (this.props.onChange) {
-	      var id = node.id;
-	      var parent = node.parent;
-	      var name = node.name;
-	      var visible = node.visible;
-	      var active = actives.indexOf(yVal) !== -1;
-	      var changeSet = [{ id: id, parent: parent, name: name, visible: visible, active: active }];
-
-	      this.props.onChange({ type: 'visibility', changeSet: changeSet });
-	    }
-	  },
-	  deleteNode: function deleteNode(event) {
-	    if (this.props.onChange) {
-	      var yVal = parseInt(event.currentTarget.attributes['data-id'].value, 10);
-	      var _state$nodes$yVal = this.state.nodes[yVal];
-	      var id = _state$nodes$yVal.id;
-	      var parent = _state$nodes$yVal.parent;
-	      var name = _state$nodes$yVal.name;
-	      var visible = _state$nodes$yVal.visible;
-	      var changeSet = [{ id: id, parent: parent, name: name, visible: visible }];
-
-	      this.props.onChange({ type: 'delete', changeSet: changeSet });
-	    }
 	  },
 	  render: function render() {
 	    return _react2.default.createElement(

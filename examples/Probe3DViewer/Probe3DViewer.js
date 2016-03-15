@@ -420,11 +420,11 @@
 	      };
 	      var canRenderNow = true;
 
-	      for (var key in data) {
+	      Object.keys(data).forEach(function (key) {
 	        var img = data[key].image;
 	        img.addEventListener('load', renderCallback);
 	        canRenderNow = canRenderNow && img.complete;
-	      }
+	      });
 
 	      if (canRenderNow) {
 	        _this.render();
@@ -540,10 +540,11 @@
 	  }, {
 	    key: 'getYOffset',
 	    value: function getYOffset(slice) {
-	      if (slice === undefined) {
-	        slice = this.probeXYZ[2];
+	      var sliceIdx = slice;
+	      if (sliceIdx === undefined) {
+	        sliceIdx = this.probeXYZ[2];
 	      }
-	      return this.metadata.sprite_size - slice % this.metadata.sprite_size - 1;
+	      return this.metadata.sprite_size - sliceIdx % this.metadata.sprite_size - 1;
 	    }
 
 	    // ------------------------------------------------------------------------
@@ -551,14 +552,15 @@
 	  }, {
 	    key: 'getImage',
 	    value: function getImage(slice, callback) {
-	      if (slice === undefined) {
-	        slice = this.probeXYZ[2];
+	      var sliceIdx = slice;
+	      if (sliceIdx === undefined) {
+	        sliceIdx = this.probeXYZ[2];
 	      }
 
 	      // Use the pre-loaded image
 	      var max = this.metadata.slices.length - 1;
 
-	      var idx = Math.floor(slice / this.metadata.sprite_size);
+	      var idx = Math.floor(sliceIdx / this.metadata.sprite_size);
 	      idx = idx < 0 ? 0 : idx > max ? max : idx;
 
 	      var data = this.lastImageStack[this.metadata.slices[idx]],
@@ -580,16 +582,19 @@
 
 	  }, {
 	    key: 'setProbe',
-	    value: function setProbe(x, y, z) {
-	      var fn = dataMapping[this.renderMethod].hasChange,
-	          idx = dataMapping[this.renderMethod].idx,
-	          previousValue = [].concat(this.probeXYZ);
+	    value: function setProbe(i, j, k) {
+	      var fn = dataMapping[this.renderMethod].hasChange;
+	      var idx = dataMapping[this.renderMethod].idx;
+	      var previousValue = [].concat(this.probeXYZ);
+	      var x = i;
+	      var y = j;
+	      var z = k;
 
-	      // Allow x to be [x,y,z]
-	      if (Array.isArray(x)) {
-	        z = x[2];
-	        y = x[1];
-	        x = x[0];
+	      // Allow i to be [x,y,z]
+	      if (Array.isArray(i)) {
+	        z = i[2];
+	        y = i[1];
+	        x = i[0];
 	      }
 
 	      if (fn(this.probeXYZ, x, y, z)) {
@@ -12849,8 +12854,10 @@
 	  }, {
 	    key: 'addFields',
 	    value: function addFields(fieldsRange, lutConfigs) {
-	      for (var field in fieldsRange) {
-	        var lut = this.addLookupTable(field, fieldsRange[field]);
+	      var _this3 = this;
+
+	      Object.keys(fieldsRange).forEach(function (field) {
+	        var lut = _this3.addLookupTable(field, fieldsRange[field]);
 	        if (lutConfigs && lutConfigs[field]) {
 	          if (lutConfigs[field].discrete !== undefined) {
 	            lut.discrete = lutConfigs[field].discrete;
@@ -12864,7 +12871,7 @@
 	            lut.setScalarRange(lutConfigs[field].range[0], lutConfigs[field].range[1]);
 	          }
 	        }
-	      }
+	      });
 	    }
 	  }, {
 	    key: 'getActiveField',
@@ -13226,6 +13233,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	/* eslint-disable no-multi-spaces */
 	exports.default = {
 	  lookuptables: {
 	    spectralflip: {
@@ -13454,6 +13462,12 @@
 	      this.probeListenerSubscription = null;
 	    }
 	  },
+	  onChartVisibilityChange: function onChartVisibilityChange(isOpen) {
+	    if (isOpen) {
+	      this.validateChartAxis();
+	    }
+	    this.setState({ chartVisible: isOpen });
+	  },
 	  validateChartAxis: function validateChartAxis() {
 	    var renderCoords = this.props.imageBuilder.getRenderMethod(),
 	        chartAxis = 'XYZ'[this.liveChartAxis];
@@ -13466,12 +13480,6 @@
 	      this.liveChartAxis = chartAxis;
 	      this.setState({ chartAxis: chartAxis, chartData: chartData });
 	    }
-	  },
-	  onChartVisibilityChange: function onChartVisibilityChange(isOpen) {
-	    if (isOpen) {
-	      this.validateChartAxis();
-	    }
-	    this.setState({ chartVisible: isOpen });
 	  },
 	  updateChart: function updateChart(event) {
 	    var idx = Number(event.target.getAttribute('data-index')),
@@ -33250,6 +33258,9 @@
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.detachListener();
 	  },
+	  getRenderer: function getRenderer() {
+	    return this.refs.imageRenderer;
+	  },
 	  attachListener: function attachListener(dataModel) {
 	    var _this = this;
 
@@ -33299,9 +33310,6 @@
 	    if (queryDataModel.isAnimating()) {
 	      queryDataModel.animate(true, this.state.speeds[newIdx]);
 	    }
-	  },
-	  getRenderer: function getRenderer() {
-	    return this.refs.imageRenderer;
 	  },
 
 
@@ -34088,45 +34096,29 @@
 	      this.props.listener.click(event, envelope);
 	    }
 	  },
-	  renderImage: function renderImage(data) {
-	    this.imageToDraw.drawToCanvas = drawToCanvasAsImage;
-	    this.imageToDraw.src = data.url;
+	  updateMetadata: function updateMetadata() {
+	    this.setState({
+	      dialog: !this.state.dialog
+	    });
+	    this.imageExporter.updateMetadata({
+	      title: this.state.title,
+	      description: this.state.description,
+	      image: _reactDom2.default.findDOMNode(this.refs.thumbnail).src,
+	      path: this.props.imageBuilder.queryDataModel.basepath
+	    });
 	  },
-	  renderCanvas: function renderCanvas(data) {
-	    this.imageToDraw.drawToCanvas = drawToCanvasAsBuffer;
-	    this.imageToDraw.data = data;
-	    this.imageToDraw.width = data.outputSize[0];
-	    this.imageToDraw.height = data.outputSize[1];
-
-	    // Send data to server for export
-	    if (this.sendToServer) {
-	      this.imageExporter.exportImage(data);
-	    }
-
-	    // No need to wait to render it
-	    if (this.imageToDraw.firstRender) {
-	      this.imageToDraw.firstRender = false;
-	      this.resetCamera();
-	    } else {
-	      this.imageToDraw.drawToCanvas();
-	    }
+	  updateTitle: function updateTitle(event) {
+	    var title = event.target.value;
+	    this.setState({ title: title });
 	  },
-	  resetCamera: function resetCamera() {
-	    var w = this.state.width,
-	        h = this.state.height,
-	        image = this.imageToDraw,
-	        iw = image ? image.width : 500,
-	        ih = image ? image.height : 500;
-
-	    this.zoom = Math.min(w / iw, h / ih);
-	    this.baseZoom = Math.min(w / iw, h / ih);
-	    this.baseCenter = [0.5, 0.5];
-	    this.center = [0.5, 0.5];
-
-	    image.drawToCanvas();
+	  updateDescription: function updateDescription(event) {
+	    var description = event.target.value;
+	    this.setState({ description: description });
 	  },
-	  recordImages: function recordImages(record) {
-	    this.sendToServer = record;
+	  toggleDialog: function toggleDialog() {
+	    this.setState({
+	      dialog: !this.state.dialog
+	    });
 	  },
 	  handleKeyDown: function handleKeyDown(event) {
 	    if (event.keyCode === 82) {
@@ -34153,29 +34145,45 @@
 	      });
 	    }
 	  },
-	  updateTitle: function updateTitle(event) {
-	    var title = event.target.value;
-	    this.setState({ title: title });
+	  recordImages: function recordImages(record) {
+	    this.sendToServer = record;
 	  },
-	  updateDescription: function updateDescription(event) {
-	    var description = event.target.value;
-	    this.setState({ description: description });
+	  resetCamera: function resetCamera() {
+	    var w = this.state.width,
+	        h = this.state.height,
+	        image = this.imageToDraw,
+	        iw = image ? image.width : 500,
+	        ih = image ? image.height : 500;
+
+	    this.zoom = Math.min(w / iw, h / ih);
+	    this.baseZoom = Math.min(w / iw, h / ih);
+	    this.baseCenter = [0.5, 0.5];
+	    this.center = [0.5, 0.5];
+
+	    image.drawToCanvas();
 	  },
-	  toggleDialog: function toggleDialog() {
-	    this.setState({
-	      dialog: !this.state.dialog
-	    });
+	  renderImage: function renderImage(data) {
+	    this.imageToDraw.drawToCanvas = drawToCanvasAsImage;
+	    this.imageToDraw.src = data.url;
 	  },
-	  updateMetadata: function updateMetadata() {
-	    this.setState({
-	      dialog: !this.state.dialog
-	    });
-	    this.imageExporter.updateMetadata({
-	      title: this.state.title,
-	      description: this.state.description,
-	      image: _reactDom2.default.findDOMNode(this.refs.thumbnail).src,
-	      path: this.props.imageBuilder.queryDataModel.basepath
-	    });
+	  renderCanvas: function renderCanvas(data) {
+	    this.imageToDraw.drawToCanvas = drawToCanvasAsBuffer;
+	    this.imageToDraw.data = data;
+	    this.imageToDraw.width = data.outputSize[0];
+	    this.imageToDraw.height = data.outputSize[1];
+
+	    // Send data to server for export
+	    if (this.sendToServer) {
+	      this.imageExporter.exportImage(data);
+	    }
+
+	    // No need to wait to render it
+	    if (this.imageToDraw.firstRender) {
+	      this.imageToDraw.firstRender = false;
+	      this.resetCamera();
+	    } else {
+	      this.imageToDraw.drawToCanvas();
+	    }
 	  },
 	  render: function render() {
 	    return _react2.default.createElement(
@@ -34536,7 +34544,7 @@
 	        threshold: 0
 	      }
 	    };
-	    options = (0, _merge2.default)(defaultOptions, options);
+	    var optionsWithDefault = (0, _merge2.default)(defaultOptions, options);
 
 	    this.Modifier = Modifier;
 
@@ -34633,8 +34641,8 @@
 	    };
 
 	    // set hammer options
-	    this.hammer.get('pan').set(options.pan);
-	    this.hammer.get('pinch').set(options.pinch);
+	    this.hammer.get('pan').set(optionsWithDefault.pan);
+	    this.hammer.get('pinch').set(optionsWithDefault.pinch);
 
 	    // Listen to hammer events
 	    this.hammer.on('tap', function (e) {
@@ -34721,10 +34729,12 @@
 	  }, {
 	    key: 'attach',
 	    value: function attach(listeners) {
+	      var _this2 = this;
+
 	      var subscriptions = {};
-	      for (var key in listeners) {
-	        subscriptions[key] = this.on(key, listeners[key]);
-	      }
+	      Object.keys(listeners).forEach(function (key) {
+	        subscriptions[key] = _this2.on(key, listeners[key]);
+	      });
 	      return subscriptions;
 	    }
 	  }, {
@@ -38118,6 +38128,8 @@
 	    };
 	  },
 	  componentWillMount: function componentWillMount() {
+	    var _this = this;
+
 	    var drawViewportByName = this.drawViewportByName;
 
 	    this.dragCenter = false;
@@ -38132,8 +38144,8 @@
 	    }
 
 	    // Init viewports from props
-	    for (var name in this.props.renderers) {
-	      var item = this.props.renderers[name],
+	    Object.keys(this.props.renderers).forEach(function (name) {
+	      var item = _this.props.renderers[name],
 	          imageBuilder = item.builder,
 	          painter = item.painter;
 
@@ -38146,11 +38158,11 @@
 	        painter.onPainterReady(drawCallback).context(item);
 	      }
 
-	      this.viewports.push({
+	      _this.viewports.push({
 	        name: name,
 	        active: false
 	      });
-	    }
+	    });
 
 	    // Listen to window resize
 	    this.sizeSubscription = _SizeHelper2.default.onSizeChange(this.updateDimensions);
@@ -38188,24 +38200,30 @@
 	      this.sizeSubscription = null;
 	    }
 	  },
+	  onActiveViewportChange: function onActiveViewportChange(callback) {
+	    return this.on(ACTIVE_VIEWPORT_CHANGE, callback);
+	  },
+	  onLayoutChange: function onLayoutChange(callback) {
+	    return this.on(LAYOUT_CHANGE, callback);
+	  },
+	  getActiveLayout: function getActiveLayout() {
+	    return this.layout;
+	  },
+	  getLayouts: function getLayouts() {
+	    return layoutNames;
+	  },
 	  setLayout: function setLayout(name) {
 	    this.layout = name;
 	    this.drawLayout();
 	    this.emit(LAYOUT_CHANGE, name);
 	  },
-	  getLayouts: function getLayouts() {
-	    return layoutNames;
-	  },
-	  getActiveLayout: function getActiveLayout() {
-	    return this.layout;
-	  },
 	  setRenderMethod: function setRenderMethod(name) {
-	    var _this = this;
+	    var _this2 = this;
 
 	    this.viewports.forEach(function (viewport) {
 	      if (viewport.active) {
 	        viewport.name = name;
-	        _this.emit(ACTIVE_VIEWPORT_CHANGE, viewport);
+	        _this2.emit(ACTIVE_VIEWPORT_CHANGE, viewport);
 	      }
 	    });
 	    this.drawViewportByName(null);
@@ -38221,6 +38239,19 @@
 	      }
 	    });
 	    return name;
+	  },
+	  getViewPort: function getViewPort(event) {
+	    var count = this.viewports.length,
+	        x = event.relative.x,
+	        y = event.relative.y;
+
+	    while (count--) {
+	      var area = this.viewports[count].activeArea || this.viewports[count].region;
+	      if (x >= area[0] && y >= area[1] && x <= area[0] + area[2] && y <= area[1] + area[3]) {
+	        return this.viewports[count];
+	      }
+	    }
+	    return null;
 	  },
 	  updateDimensions: function updateDimensions() {
 	    var el = _reactDom2.default.findDOMNode(this).parentNode,
@@ -38318,19 +38349,6 @@
 	      }
 	    }
 	  },
-	  getViewPort: function getViewPort(event) {
-	    var count = this.viewports.length,
-	        x = event.relative.x,
-	        y = event.relative.y;
-
-	    while (count--) {
-	      var area = this.viewports[count].activeArea || this.viewports[count].region;
-	      if (x >= area[0] && y >= area[1] && x <= area[0] + area[2] && y <= area[1] + area[3]) {
-	        return this.viewports[count];
-	      }
-	    }
-	    return null;
-	  },
 	  drawViewport: function drawViewport(viewport) {
 	    var renderer = this.props.renderers[viewport.name],
 	        region = viewport.region,
@@ -38394,7 +38412,7 @@
 	    }
 	  },
 	  drawViewportByName: function drawViewportByName(name) {
-	    var _this2 = this;
+	    var _this3 = this;
 
 	    var renderer = name ? this.props.renderers[name] : null;
 
@@ -38406,7 +38424,7 @@
 
 	    this.viewports.forEach(function (viewport) {
 	      if (viewport.name === name || name === null) {
-	        _this2.drawViewport(viewport);
+	        _this3.drawViewport(viewport);
 	      }
 	    });
 	  },
@@ -38445,12 +38463,6 @@
 	    }
 
 	    this.drawViewportByName(null);
-	  },
-	  onActiveViewportChange: function onActiveViewportChange(callback) {
-	    return this.on(ACTIVE_VIEWPORT_CHANGE, callback);
-	  },
-	  onLayoutChange: function onLayoutChange(callback) {
-	    return this.on(LAYOUT_CHANGE, callback);
 	  },
 	  render: function render() {
 	    return _react2.default.createElement('canvas', {
@@ -39442,8 +39454,14 @@
 	      this.sizeSubscription = null;
 	    }
 	  },
-	  toggleLegend: function toggleLegend() {
-	    this.setState({ legend: !this.state.legend });
+	  onMove: function onMove(event) {
+	    this.xPosition = event.clientX - (event.target.getClientRects()[0].x || event.target.getClientRects()[0].left);
+
+	    // Update fields values
+
+	    if (this.isMounted() && this.state.legend) {
+	      this.drawChart();
+	    }
 	  },
 	  updateDimensions: function updateDimensions() {
 	    this.xPosition = 0;
@@ -39460,14 +39478,8 @@
 	    }
 	    return false;
 	  },
-	  onMove: function onMove(event) {
-	    this.xPosition = event.clientX - (event.target.getClientRects()[0].x || event.target.getClientRects()[0].left);
-
-	    // Update fields values
-
-	    if (this.isMounted() && this.state.legend) {
-	      this.drawChart();
-	    }
+	  toggleLegend: function toggleLegend() {
+	    this.setState({ legend: !this.state.legend });
 	  },
 	  drawChart: function drawChart() {
 	    if (!this.props.data) {
@@ -39567,10 +39579,12 @@
 	    return [min, max];
 	  },
 	  render: function render() {
+	    var _this = this;
+
 	    var legend = [];
 
-	    for (var name in this.state.fieldsColors) {
-	      var color = this.state.fieldsColors[name];
+	    Object.keys(this.state.fieldsColors).forEach(function (name) {
+	      var color = _this.state.fieldsColors[name];
 	      legend.push(_react2.default.createElement(
 	        'li',
 	        { className: _LineChartViewer2.default.legendItem, key: name },
@@ -39582,7 +39596,7 @@
 	        ),
 	        _react2.default.createElement('span', { className: _LineChartViewer2.default.legendItemValue, ref: name })
 	      ));
-	    }
+	    });
 
 	    return _react2.default.createElement(
 	      'div',
@@ -40273,6 +40287,15 @@
 	    var canvas = _reactDom2.default.findDOMNode(this.refs.canvas);
 	    this.props.lookupTable.drawToCanvas(canvas);
 	  },
+	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    if (nextProps.lookupTable !== this.props.lookupTable) {
+	      this.removeListener();
+	      this.attachListener(nextProps.lookupTable);
+	    }
+	    if (this.props.originalRange[0] !== nextProps.originalRange[0] || this.props.originalRange[1] !== nextProps.originalRange[1]) {
+	      this.setState({ originalRange: nextProps.originalRange });
+	    }
+	  },
 	  componentDidUpdate: function componentDidUpdate(prevProps, prevState) {
 	    if (!this.state.internal_lut) {
 	      var canvas = _reactDom2.default.findDOMNode(this.refs.canvas);
@@ -40293,45 +40316,12 @@
 	      }
 	    }
 	  },
-	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	    if (nextProps.lookupTable !== this.props.lookupTable) {
-	      this.removeListener();
-	      this.attachListener(nextProps.lookupTable);
-	    }
-	    if (this.props.originalRange[0] !== nextProps.originalRange[0] || this.props.originalRange[1] !== nextProps.originalRange[1]) {
-	      this.setState({ originalRange: nextProps.originalRange });
-	    }
-	  },
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.removeListener();
 	  },
-	  attachListener: function attachListener(lut) {
-	    var _this = this;
-
-	    this.subscription = lut.onChange(function (data, envelope) {
-	      _this.forceUpdate();
-	    });
-	  },
-	  removeListener: function removeListener() {
-	    if (this.subscription) {
-	      this.subscription.unsubsribe();
-	      this.subscription = null;
-	    }
-	  },
-	  toggleEditMode: function toggleEditMode() {
-	    if (this.state.mode === 'none' || this.state.mode !== 'edit') {
-	      this.setState({ mode: 'edit', internal_lut: false });
-	    } else {
-	      this.setState({ mode: 'none', internal_lut: false });
-	    }
-	  },
-	  togglePresetMode: function togglePresetMode() {
-	    if (this.state.mode === 'none' || this.state.mode !== 'preset') {
-	      this.deltaPreset(0); // Render preset
-	      this.setState({ mode: 'preset', internal_lut: true });
-	    } else {
-	      this.setState({ mode: 'none', internal_lut: false });
-	    }
+	  setPreset: function setPreset(event) {
+	    this.props.lookupTable.setPreset(event.target.dataset.name);
+	    this.togglePresetMode();
 	  },
 	  updateScalarRange: function updateScalarRange() {
 	    var minValue = _reactDom2.default.findDOMNode(this.refs.min).value,
@@ -40392,9 +40382,33 @@
 	    });
 	    this.setState({ currentControlPointIndex: newIdx });
 	  },
-	  setPreset: function setPreset(event) {
-	    this.props.lookupTable.setPreset(event.target.dataset.name);
-	    this.togglePresetMode();
+	  toggleEditMode: function toggleEditMode() {
+	    if (this.state.mode === 'none' || this.state.mode !== 'edit') {
+	      this.setState({ mode: 'edit', internal_lut: false });
+	    } else {
+	      this.setState({ mode: 'none', internal_lut: false });
+	    }
+	  },
+	  togglePresetMode: function togglePresetMode() {
+	    if (this.state.mode === 'none' || this.state.mode !== 'preset') {
+	      this.deltaPreset(0); // Render preset
+	      this.setState({ mode: 'preset', internal_lut: true });
+	    } else {
+	      this.setState({ mode: 'none', internal_lut: false });
+	    }
+	  },
+	  attachListener: function attachListener(lut) {
+	    var _this = this;
+
+	    this.subscription = lut.onChange(function (data, envelope) {
+	      _this.forceUpdate();
+	    });
+	  },
+	  removeListener: function removeListener() {
+	    if (this.subscription) {
+	      this.subscription.unsubsribe();
+	      this.subscription = null;
+	    }
 	  },
 	  updateOriginalRange: function updateOriginalRange(min, max) {
 	    console.log('Someone asked LookupTableWidget to update original range to [' + min + ', ' + max + ']');
@@ -40613,10 +40627,12 @@
 	  getInitialState: function getInitialState() {
 	    this.image = new Image();
 	    this.image.src = this.props.swatch;
-	    return { swatch: this.props.swatch,
+	    return {
+	      swatch: this.props.swatch,
 	      color: this.props.color,
 	      preview: false,
-	      originalColor: [this.props.color[0], this.props.color[1], this.props.color[2]] };
+	      originalColor: [this.props.color[0], this.props.color[1], this.props.color[2]]
+	    };
 	  },
 	  componentDidMount: function componentDidMount() {
 	    var ctx = _reactDom2.default.findDOMNode(this.refs.canvas).getContext('2d');
@@ -40981,15 +40997,15 @@
 	      field: this.props.field || this.props.fields[0]
 	    };
 	  },
-	  toggleDropdown: function toggleDropdown() {
-	    this.setState({ open: !this.state.open });
+	  getField: function getField(e) {
+	    return this.state.field;
 	  },
 	  setField: function setField(e) {
 	    this.setState({ field: e.target.innerHTML });
 	    this.props.onChange(e.target.innerHTML);
 	  },
-	  getField: function getField(e) {
-	    return this.state.field;
+	  toggleDropdown: function toggleDropdown() {
+	    this.setState({ open: !this.state.open });
 	  },
 	  render: function render() {
 	    var _this = this;
@@ -41142,6 +41158,27 @@
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.detachImageBuilderListeners();
 	  },
+	  onProbeVisibilityChange: function onProbeVisibilityChange(isProbeOpen) {
+	    var _this = this;
+
+	    this.setState({
+	      showFieldValue: isProbeOpen
+	    });
+
+	    setImmediate(function () {
+	      if (_this.props.imageBuilders) {
+	        Object.keys(_this.props.imageBuilders).forEach(function (key) {
+	          var builder = _this.props.imageBuilders[key].builder;
+	          builder.setCrossHairEnable(isProbeOpen);
+	          builder.render();
+	        });
+	      }
+	      if (_this.props.imageBuilder) {
+	        _this.props.imageBuilder.setCrossHairEnable(isProbeOpen);
+	        _this.props.imageBuilder.render();
+	      }
+	    });
+	  },
 	  getImageBuilder: function getImageBuilder(props) {
 	    var imageBuilder = props.imageBuilder;
 
@@ -41153,13 +41190,13 @@
 	    return imageBuilder;
 	  },
 	  attachImageBuilderListeners: function attachImageBuilderListeners(imageBuilder) {
-	    var _this = this;
+	    var _this2 = this;
 
 	    this.detachImageBuilderListeners();
 	    this.probeListenerSubscription = imageBuilder.onProbeChange(function (probe, envelope) {
 	      var field = imageBuilder.getFieldValueAtProbeLocation();
-	      if (_this.isMounted()) {
-	        _this.setState({
+	      if (_this2.isMounted()) {
+	        _this2.setState({
 	          probe: probe, field: field
 	        });
 	      }
@@ -41167,8 +41204,8 @@
 
 	    this.probeDataListenerSubscription = imageBuilder.onProbeLineReady(function (data, envelope) {
 	      var field = imageBuilder.getFieldValueAtProbeLocation();
-	      if (_this.isMounted() && field !== _this.state.field) {
-	        _this.setState({
+	      if (_this2.isMounted() && field !== _this2.state.field) {
+	        _this2.setState({
 	          field: field
 	        });
 	      }
@@ -41199,27 +41236,6 @@
 	    probe[idx] = value;
 
 	    this.getImageBuilder(this.props).setProbe(probe[0], probe[1], probe[2]);
-	  },
-	  onProbeVisibilityChange: function onProbeVisibilityChange(isProbeOpen) {
-	    var _this2 = this;
-
-	    this.setState({
-	      showFieldValue: isProbeOpen
-	    });
-
-	    setImmediate(function () {
-	      if (_this2.props.imageBuilders) {
-	        for (var key in _this2.props.imageBuilders) {
-	          var builder = _this2.props.imageBuilders[key].builder;
-	          builder.setCrossHairEnable(isProbeOpen);
-	          builder.render();
-	        }
-	      }
-	      if (_this2.props.imageBuilder) {
-	        _this2.props.imageBuilder.setCrossHairEnable(isProbeOpen);
-	        _this2.props.imageBuilder.render();
-	      }
-	    });
 	  },
 	  render: function render() {
 	    var imageBuilder = this.getImageBuilder(this.props),
@@ -41355,9 +41371,9 @@
 	      return this.state.value;
 	    }
 
-	    newVal = Math.max(this.state.min, Math.min(newVal, this.state.max));
-	    this.setState({ value: newVal });
-	    return newVal;
+	    var value = Math.max(this.state.min, Math.min(newVal, this.state.max));
+	    this.setState({ value: value });
+	    return value;
 	  },
 	  render: function render() {
 	    var min = this.props.min;
@@ -41792,6 +41808,11 @@
 	      slider: false
 	    };
 	  },
+	  onIndexChange: function onIndexChange(event) {
+	    if (this.props.model.setIndex(this.props.arg, Number(event.target.value))) {
+	      this.props.model.lazyFetchData();
+	    }
+	  },
 	  previous: function previous() {
 	    if (this.props.model.previous(this.props.arg)) {
 	      this.props.model.lazyFetchData();
@@ -41814,11 +41835,6 @@
 	    if (this.props.model.last(this.props.arg)) {
 	      this.props.model.lazyFetchData();
 	      _reactDom2.default.findDOMNode(this.refs.slider).focus();
-	    }
-	  },
-	  onIndexChange: function onIndexChange(event) {
-	    if (this.props.model.setIndex(this.props.arg, Number(event.target.value))) {
-	      this.props.model.lazyFetchData();
 	    }
 	  },
 	  updateMode: function updateMode(event) {
@@ -42208,9 +42224,9 @@
 	    };
 
 	    // Flatten args
-	    for (var key in jsonData.arguments) {
+	    Object.keys(jsonData.arguments).forEach(function (key) {
 	      var arg = jsonData.arguments[key];
-	      this.args[key] = {
+	      _this.args[key] = {
 	        label: arg.label ? arg.label : key,
 	        idx: arg.default ? arg.default : 0,
 	        direction: 1,
@@ -42219,7 +42235,7 @@
 	        ui: arg.ui ? arg.ui : 'list',
 	        delta: arg.loop ? arg.loop === 'reverse' ? deltaReverse : arg.loop === 'modulo' ? deltaModulo : deltaNone : deltaNone
 	      };
-	    }
+	    });
 
 	    // Register all data urls
 	    jsonData.data.forEach(function (dataEntry) {
@@ -42278,17 +42294,19 @@
 	  }, {
 	    key: 'getQuery',
 	    value: function getQuery() {
+	      var _this2 = this;
+
 	      var query = {};
 
-	      for (var key in this.args) {
-	        var arg = this.args[key];
+	      Object.keys(this.args).forEach(function (key) {
+	        var arg = _this2.args[key];
 	        query[key] = arg.values[arg.idx];
-	      }
+	      });
 
 	      // Add external args to the query too
-	      for (var eKey in this.externalArgs) {
-	        query[eKey] = this.externalArgs[eKey];
-	      }
+	      Object.keys(this.externalArgs).forEach(function (eKey) {
+	        query[eKey] = _this2.externalArgs[eKey];
+	      });
 
 	      return query;
 	    }
@@ -42298,7 +42316,7 @@
 	  }, {
 	    key: 'fetchData',
 	    value: function fetchData() {
-	      var _this2 = this;
+	      var _this3 = this;
 
 	      var category = arguments.length <= 0 || arguments[0] === undefined ? DEFAULT_KEY_NAME : arguments[0];
 
@@ -42312,8 +42330,8 @@
 	      if (category.name) {
 	        request.category = category.name;
 	        category.categories.forEach(function (cat) {
-	          if (_this2.categories[cat]) {
-	            dataToFetch = dataToFetch.concat(_this2.categories[cat]);
+	          if (_this3.categories[cat]) {
+	            dataToFetch = dataToFetch.concat(_this3.categories[cat]);
 	          }
 	        });
 	      } else if (this.categories[category]) {
@@ -42327,9 +42345,9 @@
 	      }
 
 	      dataToFetch.forEach(function (dataId) {
-	        _this2.dataCount[dataId]--;
+	        _this3.dataCount[dataId]--;
 	        request.urls.push({
-	          key: dataId.slice(_this2.id.length),
+	          key: dataId.slice(_this3.id.length),
 	          url: dataManager.fetch(dataId, query)
 	        });
 	      });
@@ -42630,6 +42648,8 @@
 	  }, {
 	    key: 'getMouseListener',
 	    value: function getMouseListener() {
+	      var _this4 = this;
+
 	      if (this.mouseListener) {
 	        return this.mouseListener;
 	      }
@@ -42643,10 +42663,10 @@
 	          actions = {};
 
 	      // Create an action map
-	      for (var key in this.originalData.arguments) {
-	        var value = this.originalData.arguments[key];
+	      Object.keys(this.originalData.arguments).forEach(function (key) {
+	        var value = _this4.originalData.arguments[key];
 	        if (value.bind && value.bind.mouse) {
-	          for (var action in value.bind.mouse) {
+	          Object.keys(value.bind.mouse).forEach(function (action) {
 	            var obj = (0, _omit2.default)(value.bind.mouse[action]);
 	            obj.name = key;
 	            obj.lastCoord = 0;
@@ -42658,9 +42678,9 @@
 	            } else {
 	              actions[action] = [obj];
 	            }
-	          }
+	          });
 	        }
-	      }
+	      });
 
 	      /* eslint-disable complexity */
 	      function processEvent(event, envelope) {
@@ -42706,10 +42726,10 @@
 	      /* eslint-enable complexity */
 
 	      this.mouseListener = {};
-	      for (var actionName in actions) {
-	        this.mouseListener[actionName] = processEvent;
-	        this.lastTime[actionName] = (0, _now2.default)();
-	      }
+	      Object.keys(actions).forEach(function (actionName) {
+	        _this4.mouseListener[actionName] = processEvent;
+	        _this4.lastTime[actionName] = (0, _now2.default)();
+	      });
 
 	      return this.mouseListener;
 	    }
@@ -42750,7 +42770,7 @@
 	    value: function exploreQuery() {
 	      var start = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
 
-	      var _this3 = this;
+	      var _this5 = this;
 
 	      var fromBeguining = arguments.length <= 1 || arguments[1] === undefined ? true : arguments[1];
 	      var onDataReady = arguments.length <= 2 || arguments[2] === undefined ? true : arguments[2];
@@ -42761,7 +42781,7 @@
 	        });
 	      } else {
 	        this.exploreState.idxs = this.exploreState.order.map(function (field) {
-	          return _this3.getIndex(field);
+	          return _this5.getIndex(field);
 	        });
 	      }
 	      this.exploreState.onDataReady = onDataReady;
@@ -42780,12 +42800,12 @@
 	  }, {
 	    key: 'nextExploration',
 	    value: function nextExploration() {
-	      var _this4 = this;
+	      var _this6 = this;
 
 	      if (this.exploreState.animate) {
 	        // Update internal query
 	        this.exploreState.order.forEach(function (f, i) {
-	          _this4.setIndex(f, _this4.exploreState.idxs[i]);
+	          _this6.setIndex(f, _this6.exploreState.idxs[i]);
 	        });
 
 	        // Move to next step
@@ -42840,7 +42860,7 @@
 	  }, {
 	    key: 'link',
 	    value: function link(queryDataModel) {
-	      var _this5 = this;
+	      var _this7 = this;
 
 	      var args = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
 	      var fetch = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
@@ -42848,8 +42868,8 @@
 	      return queryDataModel.onStateChange(function (data, envelope) {
 	        if (data.name !== undefined && data.value !== undefined) {
 	          if (args === null || args.indexOf(data.name) !== -1) {
-	            if (_this5.setValue(data.name, data.value) && fetch) {
-	              _this5.lazyFetchData();
+	            if (_this7.setValue(data.name, data.value) && fetch) {
+	              _this7.lazyFetchData();
 	            }
 	          }
 	        }
@@ -43133,9 +43153,9 @@
 	    key: 'clear',
 	    value: function clear() {
 	      var urlToDelete = [];
-	      for (var url in this.cacheData.cache) {
+	      Object.keys(this.cacheData.cache).forEach(function (url) {
 	        urlToDelete.push(url);
-	      }
+	      });
 
 	      var count = urlToDelete.length;
 	      while (count--) {
@@ -43370,9 +43390,9 @@
 	      var result = this.keyPatternMap[key],
 	          keyPattern = ['{', '}'];
 
-	      for (var opt in options) {
+	      Object.keys(options).forEach(function (opt) {
 	        result = result.replace(keyPattern.join(opt), options[opt]);
-	      }
+	      });
 
 	      return result;
 	    }

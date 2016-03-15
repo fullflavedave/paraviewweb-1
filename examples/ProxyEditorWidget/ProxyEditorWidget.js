@@ -20918,42 +20918,6 @@
 	      valueRep: this.props.value
 	    };
 	  },
-	  valueChange: function valueChange(e) {
-	    var newVal = e.target.value;
-	    var isValid = _Validate2.default[this.props.type](newVal);
-	    this.setState({
-	      editing: true,
-	      valueRep: newVal
-	    });
-
-	    if (!this.props.noEmpty && newVal.length === 0 && !isValid) {
-	      this.props.onChange(this.props.idx, undefined);
-	    } else if (isValid) {
-	      var propVal = _Convert2.default[this.props.type](newVal);
-	      propVal = this.applyDomains(this.props.idx, propVal);
-	      this.props.onChange(this.props.idx, propVal);
-	    }
-	  },
-	  applyDomains: function applyDomains(idx, val) {
-	    if (!this.props.domain) {
-	      return val;
-	    }
-
-	    // Handle range
-	    if (this.props.domain.hasOwnProperty('range') && this.props.domain.range.length) {
-	      var size = this.props.domain.range.length;
-	      var _props$domain$range = this.props.domain.range[idx % size];
-	      var min = _props$domain$range.min;
-	      var max = _props$domain$range.max;
-	      var force = _props$domain$range.force;
-
-	      if (force) {
-	        val = min !== undefined ? Math.max(min, val) : val;
-	        val = max !== undefined ? Math.min(max, val) : val;
-	      }
-	    }
-	    return val;
-	  },
 	  getTooltip: function getTooltip() {
 	    var tooltip = '';
 	    var idx = this.props.idx;
@@ -20977,6 +20941,43 @@
 	    }
 
 	    return tooltip;
+	  },
+	  applyDomains: function applyDomains(idx, val) {
+	    if (!this.props.domain) {
+	      return val;
+	    }
+
+	    // Handle range
+	    var newValue = val;
+	    if (this.props.domain.hasOwnProperty('range') && this.props.domain.range.length) {
+	      var size = this.props.domain.range.length;
+	      var _props$domain$range = this.props.domain.range[idx % size];
+	      var min = _props$domain$range.min;
+	      var max = _props$domain$range.max;
+	      var force = _props$domain$range.force;
+
+	      if (force) {
+	        newValue = min !== undefined ? Math.max(min, newValue) : newValue;
+	        newValue = max !== undefined ? Math.min(max, newValue) : newValue;
+	      }
+	    }
+	    return newValue;
+	  },
+	  valueChange: function valueChange(e) {
+	    var newVal = e.target.value;
+	    var isValid = _Validate2.default[this.props.type](newVal);
+	    this.setState({
+	      editing: true,
+	      valueRep: newVal
+	    });
+
+	    if (!this.props.noEmpty && newVal.length === 0 && !isValid) {
+	      this.props.onChange(this.props.idx, undefined);
+	    } else if (isValid) {
+	      var propVal = _Convert2.default[this.props.type](newVal);
+	      propVal = this.applyDomains(this.props.idx, propVal);
+	      this.props.onChange(this.props.idx, propVal);
+	    }
 	  },
 	  endEditing: function endEditing() {
 	    this.setState({
@@ -22644,7 +22645,7 @@
 	        ret.push(_react2.default.createElement('option', { key: 'empty-value', value: null }));
 	      }
 
-	      for (var key in _this.props.ui.domain) {
+	      Object.keys(_this.props.ui.domain).forEach(function (key) {
 	        ret.push(_react2.default.createElement(
 	          'option',
 	          {
@@ -22653,7 +22654,8 @@
 	          },
 	          key
 	        ));
-	      }
+	      });
+
 	      return ret;
 	    };
 
@@ -23278,9 +23280,9 @@
 	      return this.state.value;
 	    }
 
-	    newVal = Math.max(this.state.min, Math.min(newVal, this.state.max));
-	    this.setState({ value: newVal });
-	    return newVal;
+	    var value = Math.max(this.state.min, Math.min(newVal, this.state.max));
+	    this.setState({ value: value });
+	    return value;
 	  },
 	  render: function render() {
 	    var min = this.props.min;
@@ -23423,11 +23425,17 @@
 	      if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
 	    }
 	    if (ui.type === 'proxy') {
-	      var domain = {};
-	      for (var key in ui.values) {
-	        domain[key] = key;
-	      }
-	      return domain;
+	      var _ret2 = function () {
+	        var domain = {};
+	        Object.keys(ui.values).forEach(function (key) {
+	          domain[key] = key;
+	        });
+	        return {
+	          v: domain
+	        };
+	      }();
+
+	      if ((typeof _ret2 === 'undefined' ? 'undefined' : _typeof(_ret2)) === "object") return _ret2.v;
 	    }
 	    return ui.values;
 	  }
@@ -23456,7 +23464,7 @@
 	        return ctx.properties[depId][0] === depValue ? depStatus : !depStatus;
 	      }
 	      if (ctx.filter && ctx.filter.length) {
-	        var _ret2 = function () {
+	        var _ret3 = function () {
 	          var queries = ctx.filter.toLowerCase().split(' ');
 	          var match = true;
 
@@ -23469,7 +23477,7 @@
 	          };
 	        }();
 
-	        if ((typeof _ret2 === 'undefined' ? 'undefined' : _typeof(_ret2)) === "object") return _ret2.v;
+	        if ((typeof _ret3 === 'undefined' ? 'undefined' : _typeof(_ret3)) === "object") return _ret3.v;
 	      }
 	      return !!ctx.advanced || !ui.advanced;
 	    },

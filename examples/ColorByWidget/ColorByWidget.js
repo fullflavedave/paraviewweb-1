@@ -19817,6 +19817,54 @@
 	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
 	    this.updateState(nextProps);
 	  },
+	  onRepresentationChange: function onRepresentationChange(event) {
+	    var representationValue = event.target.value;
+	    this.setState({ representationValue: representationValue });
+	    if (this.props.onChange) {
+	      this.props.onChange({
+	        type: 'propertyChange',
+	        changeSet: [{
+	          id: this.props.representation.id,
+	          name: 'Representation',
+	          value: representationValue
+	        }]
+	      });
+	    }
+	  },
+	  onColorChange: function onColorChange(event) {
+	    var scalarBarVisible = this.state.scalarBarVisible;
+	    var colorValue = event.target.value;
+
+	    var _colorValue$split = colorValue.split(SEP);
+
+	    var _colorValue$split2 = _slicedToArray(_colorValue$split, 2);
+
+	    var arrayLocation = _colorValue$split2[0];
+	    var arrayName = _colorValue$split2[1];
+
+	    var colorMode = arrayName ? 'array' : 'SOLID';
+	    var vectorMode = 'Magnitude';
+	    var vectorComponent = 0;
+	    var rescale = false;
+
+	    if (colorMode === 'SOLID') {
+	      scalarBarVisible = false;
+	    }
+
+	    this.setState({ colorValue: colorValue, scalarBarVisible: scalarBarVisible, colorMode: colorMode });
+	    if (this.props.onChange) {
+	      this.props.onChange({
+	        type: 'colorBy',
+	        representation: this.props.representation.id,
+	        arrayLocation: arrayLocation,
+	        arrayName: arrayName,
+	        colorMode: colorMode,
+	        vectorMode: vectorMode,
+	        vectorComponent: vectorComponent,
+	        rescale: rescale
+	      });
+	    }
+	  },
 	  updateState: function updateState(props) {
 	    if (!props.source || !props.representation) {
 	      return;
@@ -19869,54 +19917,6 @@
 	  toggleAdvancedView: function toggleAdvancedView() {
 	    var advancedView = !this.state.advancedView;
 	    this.setState({ advancedView: advancedView });
-	  },
-	  onRepresentationChange: function onRepresentationChange(event) {
-	    var representationValue = event.target.value;
-	    this.setState({ representationValue: representationValue });
-	    if (this.props.onChange) {
-	      this.props.onChange({
-	        type: 'propertyChange',
-	        changeSet: [{
-	          id: this.props.representation.id,
-	          name: 'Representation',
-	          value: representationValue
-	        }]
-	      });
-	    }
-	  },
-	  onColorChange: function onColorChange(event) {
-	    var scalarBarVisible = this.state.scalarBarVisible;
-	    var colorValue = event.target.value;
-
-	    var _colorValue$split = colorValue.split(SEP);
-
-	    var _colorValue$split2 = _slicedToArray(_colorValue$split, 2);
-
-	    var arrayLocation = _colorValue$split2[0];
-	    var arrayName = _colorValue$split2[1];
-
-	    var colorMode = arrayName ? 'array' : 'SOLID';
-	    var vectorMode = 'Magnitude';
-	    var vectorComponent = 0;
-	    var rescale = false;
-
-	    if (colorMode === 'SOLID') {
-	      scalarBarVisible = false;
-	    }
-
-	    this.setState({ colorValue: colorValue, scalarBarVisible: scalarBarVisible, colorMode: colorMode });
-	    if (this.props.onChange) {
-	      this.props.onChange({
-	        type: 'colorBy',
-	        representation: this.props.representation.id,
-	        arrayLocation: arrayLocation,
-	        arrayName: arrayName,
-	        colorMode: colorMode,
-	        vectorMode: vectorMode,
-	        vectorComponent: vectorComponent,
-	        rescale: rescale
-	      });
-	    }
 	  },
 	  render: function render() {
 	    if (!this.props.source || !this.props.representation) {

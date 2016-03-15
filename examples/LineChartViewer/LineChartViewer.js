@@ -183,8 +183,14 @@
 	      this.sizeSubscription = null;
 	    }
 	  },
-	  toggleLegend: function toggleLegend() {
-	    this.setState({ legend: !this.state.legend });
+	  onMove: function onMove(event) {
+	    this.xPosition = event.clientX - (event.target.getClientRects()[0].x || event.target.getClientRects()[0].left);
+
+	    // Update fields values
+
+	    if (this.isMounted() && this.state.legend) {
+	      this.drawChart();
+	    }
 	  },
 	  updateDimensions: function updateDimensions() {
 	    this.xPosition = 0;
@@ -201,14 +207,8 @@
 	    }
 	    return false;
 	  },
-	  onMove: function onMove(event) {
-	    this.xPosition = event.clientX - (event.target.getClientRects()[0].x || event.target.getClientRects()[0].left);
-
-	    // Update fields values
-
-	    if (this.isMounted() && this.state.legend) {
-	      this.drawChart();
-	    }
+	  toggleLegend: function toggleLegend() {
+	    this.setState({ legend: !this.state.legend });
 	  },
 	  drawChart: function drawChart() {
 	    if (!this.props.data) {
@@ -308,10 +308,12 @@
 	    return [min, max];
 	  },
 	  render: function render() {
+	    var _this = this;
+
 	    var legend = [];
 
-	    for (var name in this.state.fieldsColors) {
-	      var color = this.state.fieldsColors[name];
+	    Object.keys(this.state.fieldsColors).forEach(function (name) {
+	      var color = _this.state.fieldsColors[name];
 	      legend.push(_react2.default.createElement(
 	        'li',
 	        { className: _LineChartViewer2.default.legendItem, key: name },
@@ -323,7 +325,7 @@
 	        ),
 	        _react2.default.createElement('span', { className: _LineChartViewer2.default.legendItemValue, ref: name })
 	      ));
-	    }
+	    });
 
 	    return _react2.default.createElement(
 	      'div',

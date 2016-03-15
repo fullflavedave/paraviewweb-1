@@ -172,9 +172,9 @@
 	      return this.state.value;
 	    }
 
-	    newVal = Math.max(this.state.min, Math.min(newVal, this.state.max));
-	    this.setState({ value: newVal });
-	    return newVal;
+	    var value = Math.max(this.state.min, Math.min(newVal, this.state.max));
+	    this.setState({ value: value });
+	    return value;
 	  },
 	  render: function render() {
 	    var min = this.props.min;

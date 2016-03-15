@@ -121,24 +121,6 @@
 	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
 	    this.processProps(nextProps);
 	  },
-	  processProps: function processProps(props) {
-	    var list = [];
-	    props.directories.forEach(function (name) {
-	      list.push({ name: name, icon: _FileBrowserWidget2.default.folderIcon, action: 'directory' });
-	    });
-	    props.groups.forEach(function (g) {
-	      list.push({
-	        name: g.label,
-	        icon: _FileBrowserWidget2.default.groupIcon,
-	        action: 'group',
-	        data: btoa(JSON.stringify(g.files))
-	      });
-	    });
-	    props.files.forEach(function (name) {
-	      list.push({ name: name, icon: _FileBrowserWidget2.default.fileIcon, action: 'file' });
-	    });
-	    this.setState({ list: list });
-	  },
 	  onAction: function onAction(name, action, data) {
 	    if (this.props.onAction) {
 	      this.props.onAction(action, name, data.length ? JSON.parse(atob(data)) : null);
@@ -157,6 +139,24 @@
 	      }
 	      this.props.onAction('path', path.join('/'), path);
 	    }
+	  },
+	  processProps: function processProps(props) {
+	    var list = [];
+	    props.directories.forEach(function (name) {
+	      list.push({ name: name, icon: _FileBrowserWidget2.default.folderIcon, action: 'directory' });
+	    });
+	    props.groups.forEach(function (g) {
+	      list.push({
+	        name: g.label,
+	        icon: _FileBrowserWidget2.default.groupIcon,
+	        action: 'group',
+	        data: btoa(JSON.stringify(g.files))
+	      });
+	    });
+	    props.files.forEach(function (name) {
+	      list.push({ name: name, icon: _FileBrowserWidget2.default.fileIcon, action: 'file' });
+	    });
+	    this.setState({ list: list });
 	  },
 	  render: function render() {
 	    var _this = this;

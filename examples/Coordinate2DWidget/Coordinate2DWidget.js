@@ -222,11 +222,12 @@
 	      }
 	    }
 	  },
-	  drawPlus: function drawPlus(color, location) {
-	    var ctx = _reactDom2.default.findDOMNode(this.refs.canvas).getContext('2d'),
-	        height = ctx.canvas.height,
-	        width = ctx.canvas.width,
-	        lineLen = 5;
+	  drawPlus: function drawPlus(color, location_) {
+	    var ctx = _reactDom2.default.findDOMNode(this.refs.canvas).getContext('2d');
+	    var height = ctx.canvas.height;
+	    var width = ctx.canvas.width;
+	    var lineLen = 5;
+	    var location = location_;
 
 	    if (location === undefined) {
 	      location = {
@@ -794,7 +795,7 @@
 	        threshold: 0
 	      }
 	    };
-	    options = (0, _merge2.default)(defaultOptions, options);
+	    var optionsWithDefault = (0, _merge2.default)(defaultOptions, options);
 
 	    this.Modifier = Modifier;
 
@@ -891,8 +892,8 @@
 	    };
 
 	    // set hammer options
-	    this.hammer.get('pan').set(options.pan);
-	    this.hammer.get('pinch').set(options.pinch);
+	    this.hammer.get('pan').set(optionsWithDefault.pan);
+	    this.hammer.get('pinch').set(optionsWithDefault.pinch);
 
 	    // Listen to hammer events
 	    this.hammer.on('tap', function (e) {
@@ -979,10 +980,12 @@
 	  }, {
 	    key: 'attach',
 	    value: function attach(listeners) {
+	      var _this2 = this;
+
 	      var subscriptions = {};
-	      for (var key in listeners) {
-	        subscriptions[key] = this.on(key, listeners[key]);
-	      }
+	      Object.keys(listeners).forEach(function (key) {
+	        subscriptions[key] = _this2.on(key, listeners[key]);
+	      });
 	      return subscriptions;
 	    }
 	  }, {

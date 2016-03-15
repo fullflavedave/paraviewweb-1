@@ -358,9 +358,9 @@
 	    };
 
 	    // Flatten args
-	    for (var key in jsonData.arguments) {
+	    Object.keys(jsonData.arguments).forEach(function (key) {
 	      var arg = jsonData.arguments[key];
-	      this.args[key] = {
+	      _this.args[key] = {
 	        label: arg.label ? arg.label : key,
 	        idx: arg.default ? arg.default : 0,
 	        direction: 1,
@@ -369,7 +369,7 @@
 	        ui: arg.ui ? arg.ui : 'list',
 	        delta: arg.loop ? arg.loop === 'reverse' ? deltaReverse : arg.loop === 'modulo' ? deltaModulo : deltaNone : deltaNone
 	      };
-	    }
+	    });
 
 	    // Register all data urls
 	    jsonData.data.forEach(function (dataEntry) {
@@ -428,17 +428,19 @@
 	  }, {
 	    key: 'getQuery',
 	    value: function getQuery() {
+	      var _this2 = this;
+
 	      var query = {};
 
-	      for (var key in this.args) {
-	        var arg = this.args[key];
+	      Object.keys(this.args).forEach(function (key) {
+	        var arg = _this2.args[key];
 	        query[key] = arg.values[arg.idx];
-	      }
+	      });
 
 	      // Add external args to the query too
-	      for (var eKey in this.externalArgs) {
-	        query[eKey] = this.externalArgs[eKey];
-	      }
+	      Object.keys(this.externalArgs).forEach(function (eKey) {
+	        query[eKey] = _this2.externalArgs[eKey];
+	      });
 
 	      return query;
 	    }
@@ -448,7 +450,7 @@
 	  }, {
 	    key: 'fetchData',
 	    value: function fetchData() {
-	      var _this2 = this;
+	      var _this3 = this;
 
 	      var category = arguments.length <= 0 || arguments[0] === undefined ? DEFAULT_KEY_NAME : arguments[0];
 
@@ -462,8 +464,8 @@
 	      if (category.name) {
 	        request.category = category.name;
 	        category.categories.forEach(function (cat) {
-	          if (_this2.categories[cat]) {
-	            dataToFetch = dataToFetch.concat(_this2.categories[cat]);
+	          if (_this3.categories[cat]) {
+	            dataToFetch = dataToFetch.concat(_this3.categories[cat]);
 	          }
 	        });
 	      } else if (this.categories[category]) {
@@ -477,9 +479,9 @@
 	      }
 
 	      dataToFetch.forEach(function (dataId) {
-	        _this2.dataCount[dataId]--;
+	        _this3.dataCount[dataId]--;
 	        request.urls.push({
-	          key: dataId.slice(_this2.id.length),
+	          key: dataId.slice(_this3.id.length),
 	          url: dataManager.fetch(dataId, query)
 	        });
 	      });
@@ -780,6 +782,8 @@
 	  }, {
 	    key: 'getMouseListener',
 	    value: function getMouseListener() {
+	      var _this4 = this;
+
 	      if (this.mouseListener) {
 	        return this.mouseListener;
 	      }
@@ -793,10 +797,10 @@
 	          actions = {};
 
 	      // Create an action map
-	      for (var key in this.originalData.arguments) {
-	        var value = this.originalData.arguments[key];
+	      Object.keys(this.originalData.arguments).forEach(function (key) {
+	        var value = _this4.originalData.arguments[key];
 	        if (value.bind && value.bind.mouse) {
-	          for (var action in value.bind.mouse) {
+	          Object.keys(value.bind.mouse).forEach(function (action) {
 	            var obj = (0, _omit2.default)(value.bind.mouse[action]);
 	            obj.name = key;
 	            obj.lastCoord = 0;
@@ -808,9 +812,9 @@
 	            } else {
 	              actions[action] = [obj];
 	            }
-	          }
+	          });
 	        }
-	      }
+	      });
 
 	      /* eslint-disable complexity */
 	      function processEvent(event, envelope) {
@@ -856,10 +860,10 @@
 	      /* eslint-enable complexity */
 
 	      this.mouseListener = {};
-	      for (var actionName in actions) {
-	        this.mouseListener[actionName] = processEvent;
-	        this.lastTime[actionName] = (0, _now2.default)();
-	      }
+	      Object.keys(actions).forEach(function (actionName) {
+	        _this4.mouseListener[actionName] = processEvent;
+	        _this4.lastTime[actionName] = (0, _now2.default)();
+	      });
 
 	      return this.mouseListener;
 	    }
@@ -900,7 +904,7 @@
 	    value: function exploreQuery() {
 	      var start = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
 
-	      var _this3 = this;
+	      var _this5 = this;
 
 	      var fromBeguining = arguments.length <= 1 || arguments[1] === undefined ? true : arguments[1];
 	      var onDataReady = arguments.length <= 2 || arguments[2] === undefined ? true : arguments[2];
@@ -911,7 +915,7 @@
 	        });
 	      } else {
 	        this.exploreState.idxs = this.exploreState.order.map(function (field) {
-	          return _this3.getIndex(field);
+	          return _this5.getIndex(field);
 	        });
 	      }
 	      this.exploreState.onDataReady = onDataReady;
@@ -930,12 +934,12 @@
 	  }, {
 	    key: 'nextExploration',
 	    value: function nextExploration() {
-	      var _this4 = this;
+	      var _this6 = this;
 
 	      if (this.exploreState.animate) {
 	        // Update internal query
 	        this.exploreState.order.forEach(function (f, i) {
-	          _this4.setIndex(f, _this4.exploreState.idxs[i]);
+	          _this6.setIndex(f, _this6.exploreState.idxs[i]);
 	        });
 
 	        // Move to next step
@@ -990,7 +994,7 @@
 	  }, {
 	    key: 'link',
 	    value: function link(queryDataModel) {
-	      var _this5 = this;
+	      var _this7 = this;
 
 	      var args = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
 	      var fetch = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
@@ -998,8 +1002,8 @@
 	      return queryDataModel.onStateChange(function (data, envelope) {
 	        if (data.name !== undefined && data.value !== undefined) {
 	          if (args === null || args.indexOf(data.name) !== -1) {
-	            if (_this5.setValue(data.name, data.value) && fetch) {
-	              _this5.lazyFetchData();
+	            if (_this7.setValue(data.name, data.value) && fetch) {
+	              _this7.lazyFetchData();
 	            }
 	          }
 	        }
@@ -1469,9 +1473,9 @@
 	    key: 'clear',
 	    value: function clear() {
 	      var urlToDelete = [];
-	      for (var url in this.cacheData.cache) {
+	      Object.keys(this.cacheData.cache).forEach(function (url) {
 	        urlToDelete.push(url);
-	      }
+	      });
 
 	      var count = urlToDelete.length;
 	      while (count--) {
@@ -1706,9 +1710,9 @@
 	      var result = this.keyPatternMap[key],
 	          keyPattern = ['{', '}'];
 
-	      for (var opt in options) {
+	      Object.keys(options).forEach(function (opt) {
 	        result = result.replace(keyPattern.join(opt), options[opt]);
-	      }
+	      });
 
 	      return result;
 	    }
@@ -34953,6 +34957,11 @@
 	      slider: false
 	    };
 	  },
+	  onIndexChange: function onIndexChange(event) {
+	    if (this.props.model.setIndex(this.props.arg, Number(event.target.value))) {
+	      this.props.model.lazyFetchData();
+	    }
+	  },
 	  previous: function previous() {
 	    if (this.props.model.previous(this.props.arg)) {
 	      this.props.model.lazyFetchData();
@@ -34975,11 +34984,6 @@
 	    if (this.props.model.last(this.props.arg)) {
 	      this.props.model.lazyFetchData();
 	      _reactDom2.default.findDOMNode(this.refs.slider).focus();
-	    }
-	  },
-	  onIndexChange: function onIndexChange(event) {
-	    if (this.props.model.setIndex(this.props.arg, Number(event.target.value))) {
-	      this.props.model.lazyFetchData();
 	    }
 	  },
 	  updateMode: function updateMode(event) {

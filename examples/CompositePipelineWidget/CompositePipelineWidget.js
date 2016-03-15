@@ -21470,9 +21470,11 @@
 	  }, {
 	    key: 'resetOpacity',
 	    value: function resetOpacity(alpha) {
-	      for (var key in this.opacityMap) {
-	        this.opacityMap[key] = alpha;
-	      }
+	      var _this3 = this;
+
+	      Object.keys(this.opacityMap).forEach(function (key) {
+	        _this3.opacityMap[key] = alpha;
+	      });
 
 	      var opacityArray = [];
 	      for (var i = 0; i < this.nbLayers; ++i) {

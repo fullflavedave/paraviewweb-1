@@ -111,15 +111,15 @@
 	      field: this.props.field || this.props.fields[0]
 	    };
 	  },
-	  toggleDropdown: function toggleDropdown() {
-	    this.setState({ open: !this.state.open });
+	  getField: function getField(e) {
+	    return this.state.field;
 	  },
 	  setField: function setField(e) {
 	    this.setState({ field: e.target.innerHTML });
 	    this.props.onChange(e.target.innerHTML);
 	  },
-	  getField: function getField(e) {
-	    return this.state.field;
+	  toggleDropdown: function toggleDropdown() {
+	    this.setState({ open: !this.state.open });
 	  },
 	  render: function render() {
 	    var _this = this;
