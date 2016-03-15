@@ -11902,12 +11902,6 @@
 
 	var CHANGE_TOPIC = 'LookupTable.change';
 
-	// Initialize liste
-	var presetList = [];
-	for (var key in _Presets2.default.lookuptables) {
-	  presetList.push(key);
-	}
-
 	// Global helper methods ------------------------------------------------------
 
 	function applyRatio(a, b, ratio) {
@@ -11958,7 +11952,7 @@
 	  }, {
 	    key: 'getPresets',
 	    value: function getPresets() {
-	      return presetList;
+	      return Object.keys(_Presets2.default.lookuptables);
 	    }
 	  }, {
 	    key: 'setPreset',
@@ -37400,8 +37394,12 @@
 	      mode: 'none',
 	      activePreset: this.props.lookupTable.getPresets()[0],
 	      currentControlPointIndex: 0,
-	      internal_lut: false
+	      internal_lut: false,
+	      originalRange: this.props.originalRange
 	    };
+	  },
+	  componentWillMount: function componentWillMount() {
+	    this.attachListener(this.props.lookupTable);
 	  },
 	  componentDidMount: function componentDidMount() {
 	    var canvas = _reactDom2.default.findDOMNode(this.refs.canvas);
@@ -37425,6 +37423,31 @@
 
 	        ctx.putImageData(imageData, 0, 0);
 	      }
+	    }
+	  },
+	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    if (nextProps.lookupTable !== this.props.lookupTable) {
+	      this.removeListener();
+	      this.attachListener(nextProps.lookupTable);
+	    }
+	    if (this.props.originalRange[0] !== nextProps.originalRange[0] || this.props.originalRange[1] !== nextProps.originalRange[1]) {
+	      this.setState({ originalRange: nextProps.originalRange });
+	    }
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.removeListener();
+	  },
+	  attachListener: function attachListener(lut) {
+	    var _this = this;
+
+	    this.subscription = lut.onChange(function (data, envelope) {
+	      _this.forceUpdate();
+	    });
+	  },
+	  removeListener: function removeListener() {
+	    if (this.subscription) {
+	      this.subscription.unsubsribe();
+	      this.subscription = null;
 	    }
 	  },
 	  toggleEditMode: function toggleEditMode() {
@@ -37505,8 +37528,14 @@
 	    this.props.lookupTable.setPreset(event.target.dataset.name);
 	    this.togglePresetMode();
 	  },
+	  updateOriginalRange: function updateOriginalRange(min, max) {
+	    console.log('Someone asked LookupTableWidget to update original range to [' + min + ', ' + max + ']');
+	    this.setState({ originalRange: [min, max] });
+	  },
 	  resetRange: function resetRange() {
-	    var range = this.props.originalRange;
+	    var range = this.state.originalRange;
+	    var currentRange = this.props.lookupTable.getScalarRange();
+	    console.log('LookupTableWidget current range: [' + currentRange[0] + ', ' + currentRange[1] + '], new range: [' + range[0] + ', ' + range[1] + ']');
 	    this.props.lookupTable.setScalarRange(range[0], range[1]);
 	  },
 	  changePreset: function changePreset(event) {
@@ -37543,7 +37572,7 @@
 	    this.setState({ activePreset: newPreset });
 	  },
 	  render: function render() {
-	    var _this = this;
+	    var _this2 = this;
 
 	    var scalarRange = this.props.lookupTable.getScalarRange(),
 	        controlPoint = this.props.lookupTable.getControlPoint(this.state.currentControlPointIndex),
@@ -37640,10 +37669,10 @@
 	          return _react2.default.createElement(
 	            'div',
 	            {
-	              onClick: _this.setPreset,
-	              onScroll: _this.changePreset,
-	              onWheel: _this.changePreset,
-	              className: _this.state.activePreset === preset ? _LookupTableWidget2.default.preset : _LookupTableWidget2.default.hiddenPreset,
+	              onClick: _this2.setPreset,
+	              onScroll: _this2.changePreset,
+	              onWheel: _this2.changePreset,
+	              className: _this2.state.activePreset === preset ? _LookupTableWidget2.default.preset : _LookupTableWidget2.default.hiddenPreset,
 	              'data-name': preset,
 	              key: preset
 	            },
@@ -37900,7 +37929,7 @@
 
 
 	// module
-	exports.push([module.id, ".ColorPickerWidget_container_35Ipj {\n    min-width: 5em;\n    width: 100%;\n    box-sizing: border-box;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n}\n\n.ColorPickerWidget_activeColor_3fIeN {\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-flex-direction: row;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    margin-bottom: 10px;\n}\n\n.ColorPickerWidget_colorCanvas_bBpW1 {\n    -webkit-flex: none;\n        -ms-flex: none;\n            flex: none;\n    width: 1.5em;\n    height: 1.5em;\n    border: 1px solid #000;\n    margin-right: 5px;\n}\n\n.ColorPickerWidget_colorRGB_1jqQB {\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    min-width: 1em;\n    margin-left: 5px;\n    margin-right: 5px;\n    border: none;\n    text-align: right;\n    padding-right: 10px;\n}\n\n.ColorPickerWidget_swatch_3a2Kl {\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-flex-direction: row;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    margin-left: 2px;\n    margin-right: 2px;\n}\n\n.ColorPickerWidget_swatchImage_3Ol0z {\n    width: 100%;\n}\n", ""]);
+	exports.push([module.id, ".ColorPickerWidget_container_35Ipj {\n    min-width: 5em;\n    width: 100%;\n    box-sizing: border-box;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n}\n\n.ColorPickerWidget_activeColor_3fIeN {\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-flex-direction: row;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    margin-bottom: 10px;\n}\n\n.ColorPickerWidget_colorCanvas_bBpW1 {\n    -webkit-flex: none;\n        -ms-flex: none;\n            flex: none;\n    width: 1.5em;\n    height: 1.5em;\n    border: 1px solid #000;\n    margin-right: 5px;\n}\n\n.ColorPickerWidget_colorRGB_1jqQB {\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    min-width: 1em;\n    margin-left: 5px;\n    margin-right: 5px;\n    border: none;\n    text-align: right;\n    padding-right: 10px;\n}\n\n.ColorPickerWidget_swatch_3a2Kl {\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-flex-direction: row;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    margin-left: 2px;\n    margin-right: 2px;\n}\n\n.ColorPickerWidget_swatchImage_3Ol0z {\n    width: 100%;\n    cursor: crosshair;\n}\n", ""]);
 
 	// exports
 	exports.locals = {

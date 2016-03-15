@@ -35515,12 +35515,6 @@
 
 	var CHANGE_TOPIC = 'LookupTable.change';
 
-	// Initialize liste
-	var presetList = [];
-	for (var key in _Presets2.default.lookuptables) {
-	  presetList.push(key);
-	}
-
 	// Global helper methods ------------------------------------------------------
 
 	function applyRatio(a, b, ratio) {
@@ -35571,7 +35565,7 @@
 	  }, {
 	    key: 'getPresets',
 	    value: function getPresets() {
-	      return presetList;
+	      return Object.keys(_Presets2.default.lookuptables);
 	    }
 	  }, {
 	    key: 'setPreset',
