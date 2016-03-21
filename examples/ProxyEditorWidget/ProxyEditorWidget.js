@@ -21019,18 +21019,38 @@
 	exports.boolean = boolean;
 	exports.proxy = proxy;
 	function integer(val) {
+	  if (Array.isArray(val)) {
+	    return val.map(function (v) {
+	      return parseInt(v, 10);
+	    });
+	  }
 	  return parseInt(val, 10);
 	}
 
 	function double(val) {
+	  if (Array.isArray(val)) {
+	    return val.map(function (v) {
+	      return parseFloat(v);
+	    });
+	  }
 	  return parseFloat(val);
 	}
 
 	function string(val) {
+	  if (Array.isArray(val)) {
+	    return val.map(function (v) {
+	      return String(v);
+	    });
+	  }
 	  return String(val);
 	}
 
 	function boolean(val) {
+	  if (Array.isArray(val)) {
+	    return val.map(function (v) {
+	      return Boolean(v);
+	    });
+	  }
 	  return Boolean(val);
 	}
 
@@ -22594,6 +22614,20 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	function valueToString(obj) {
+	  if (typeof obj === 'string') {
+	    return 'S' + obj;
+	  }
+	  return 'J' + JSON.stringify(obj);
+	}
+
+	function stringToValue(str) {
+	  if (!str || str.length === 0) {
+	    return str;
+	  }
+	  return str[0] === 'S' ? str.substring(1) : JSON.parse(str.substring(1));
+	}
+
 	/* eslint-disable react/no-danger */
 	exports.default = _react2.default.createClass({
 
@@ -22612,20 +22646,26 @@
 	  mixins: [_BlockMixin2.default],
 
 	  valueChange: function valueChange(e) {
+	    var _this = this;
+
 	    var newData = this.state.data;
 	    if (Array.isArray(this.state.data.value)) {
-	      var newVals = [];
-	      for (var i = 0; i < e.target.options.length; i++) {
-	        var el = e.target.options.item(i);
-	        if (el.selected) {
-	          newVals.push(el.value);
+	      (function () {
+	        var newVals = [];
+	        for (var i = 0; i < e.target.options.length; i++) {
+	          var el = e.target.options.item(i);
+	          if (el.selected) {
+	            [].concat(stringToValue(el.value)).forEach(function (v) {
+	              return newVals.push(v);
+	            });
+	          }
 	        }
-	      }
-	      newData.value = newVals.map(_Convert2.default[this.props.ui.type]);
+	        newData.value = newVals.map(_Convert2.default[_this.props.ui.type]);
+	      })();
 	    } else if (e.target.value === null) {
 	      newData.value = null;
 	    } else {
-	      newData.value = [_Convert2.default[this.props.ui.type](e.target.value)];
+	      newData.value = [_Convert2.default[this.props.ui.type](stringToValue(e.target.value))];
 	    }
 
 	    this.setState({
@@ -22636,21 +22676,22 @@
 	    }
 	  },
 	  render: function render() {
-	    var _this = this;
+	    var _this2 = this;
 
+	    var selectedValue = null;
 	    var multiple = this.props.ui.size === -1,
 	        mapper = function mapper() {
 	      var ret = [];
-	      if (!multiple && !_this.props.ui.noEmpty) {
+	      if (!multiple && !_this2.props.ui.noEmpty) {
 	        ret.push(_react2.default.createElement('option', { key: 'empty-value', value: null }));
 	      }
 
-	      Object.keys(_this.props.ui.domain).forEach(function (key) {
+	      Object.keys(_this2.props.ui.domain).forEach(function (key) {
 	        ret.push(_react2.default.createElement(
 	          'option',
 	          {
-	            value: _this.props.ui.domain[key],
-	            key: _this.props.data.id + '_' + key
+	            value: valueToString(_this2.props.ui.domain[key]),
+	            key: _this2.props.data.id + '_' + key
 	          },
 	          key
 	        ));
@@ -22658,6 +22699,14 @@
 
 	      return ret;
 	    };
+
+	    if (multiple) {
+	      selectedValue = this.props.data.value.map(valueToString);
+	    } else if (this.props.ui.size === 1) {
+	      selectedValue = valueToString(this.props.data.value[0]);
+	    } else {
+	      selectedValue = valueToString(this.props.data.value);
+	    }
 
 	    return _react2.default.createElement(
 	      'div',
@@ -22688,7 +22737,7 @@
 	          'select',
 	          {
 	            className: multiple ? _EnumProperty2.default.inputMultiSelect : _EnumProperty2.default.input,
-	            value: multiple ? this.props.data.value : this.props.data.value[0],
+	            value: selectedValue,
 	            defaultValue: null,
 	            onChange: this.valueChange,
 	            multiple: multiple
