@@ -37664,7 +37664,8 @@
 	    open: _react2.default.PropTypes.bool,
 	    subtitle: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.object, _react2.default.PropTypes.string, _react2.default.PropTypes.array]),
 	    title: _react2.default.PropTypes.string,
-	    visible: _react2.default.PropTypes.bool
+	    visible: _react2.default.PropTypes.bool,
+	    activeSubTitle: _react2.default.PropTypes.bool
 	  },
 
 	  getDefaultProps: function getDefaultProps() {
@@ -37672,7 +37673,8 @@
 	      title: '',
 	      subtitle: '',
 	      open: true,
-	      visible: true
+	      visible: true,
+	      activeSubTitle: false
 	    };
 	  },
 	  getInitialState: function getInitialState() {
@@ -37717,7 +37719,7 @@
 	        ),
 	        _react2.default.createElement(
 	          'span',
-	          { className: _CollapsibleWidget2.default.subtitle },
+	          { className: this.props.activeSubTitle ? _CollapsibleWidget2.default.subtitle : _CollapsibleWidget2.default.subtitleAcitve },
 	          this.props.subtitle
 	        )
 	      ),
@@ -37765,7 +37767,7 @@
 	exports.i(__webpack_require__(196), undefined);
 
 	// module
-	exports.push([module.id, ".CollapsibleWidget_container_3hgpH {\n  width: 100%;\n  padding: 0;\n  font-family: sans-serif;\n  padding-top: 5px;\n  padding-bottom: 5px;\n  clear: both;\n}\n\n.CollapsibleWidget_header_DhS09 {\n  position: relative;\n  left: 0;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  display: inline-block;\n  padding: 0;\n  border: none;\n  background-color: rgba(0,0,0,0);\n  width: 100%;\n}\n\n.CollapsibleWidget_caret_2aLSB {\n    transition: -webkit-transform .2s ease;\n    transition: transform .2s ease;\n    transition: transform .2s ease, -webkit-transform .2s ease;\n}\n\n.CollapsibleWidget_caretClosed_dwcrg {\n    -webkit-transform: rotate(-90deg);\n            transform: rotate(-90deg);\n}\n\n.CollapsibleWidget_title_Uz5VE {}\n\n.CollapsibleWidget_subtitle_3BMoP {\n  position: absolute;\n  right: 15px;\n  top: 0;\n  left: 5px;\n  text-align: right;\n  z-index: -1;\n}\n\n.CollapsibleWidget_visibleContent_1CAFm {\n  padding: 5px 15px 0px 15px;\n}\n\n.CollapsibleWidget_hiddenContent_aakZA {\n  display: none;\n}\n\n@media screen and (max-device-width: 400px) {\n    .CollapsibleWidget_caret_2aLSB {\n        font-size: 1.45em;\n    }\n}\n\n.is-ios-device .CollapsibleWidget_caret_2aLSB {\n    font-size: 1.45em;\n}\n", ""]);
+	exports.push([module.id, ".CollapsibleWidget_container_3hgpH {\n  width: 100%;\n  padding: 0;\n  font-family: sans-serif;\n  padding-top: 5px;\n  padding-bottom: 5px;\n  clear: both;\n}\n\n.CollapsibleWidget_header_DhS09 {\n  position: relative;\n  left: 0;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  display: inline-block;\n  padding: 0;\n  border: none;\n  background-color: rgba(0,0,0,0);\n  width: 100%;\n}\n\n.CollapsibleWidget_caret_2aLSB {\n    transition: -webkit-transform .2s ease;\n    transition: transform .2s ease;\n    transition: transform .2s ease, -webkit-transform .2s ease;\n}\n\n.CollapsibleWidget_caretClosed_dwcrg {\n    -webkit-transform: rotate(-90deg);\n            transform: rotate(-90deg);\n}\n\n.CollapsibleWidget_title_Uz5VE {}\n\n.CollapsibleWidget_subtitle_3BMoP {\n  position: absolute;\n  right: 15px;\n  top: 0;\n  left: 5px;\n  text-align: right;\n  z-index: -1;\n}\n\n.CollapsibleWidget_subtitleAcitve_27SRJ {\n  position: absolute;\n  right: 15px;\n  top: 0;\n}\n\n.CollapsibleWidget_visibleContent_1CAFm {\n  padding: 5px 15px 0px 15px;\n}\n\n.CollapsibleWidget_hiddenContent_aakZA {\n  display: none;\n}\n\n@media screen and (max-device-width: 400px) {\n    .CollapsibleWidget_caret_2aLSB {\n        font-size: 1.45em;\n    }\n}\n\n.is-ios-device .CollapsibleWidget_caret_2aLSB {\n    font-size: 1.45em;\n}\n", ""]);
 
 	// exports
 	exports.locals = {
@@ -37775,6 +37777,7 @@
 		"caretClosed": "CollapsibleWidget_caretClosed_dwcrg CollapsibleWidget_caret_2aLSB " + __webpack_require__(196).locals["fa"] + " " + __webpack_require__(196).locals["fa-fw"] + " " + __webpack_require__(196).locals["fa-caret-down"] + "",
 		"title": "CollapsibleWidget_title_Uz5VE",
 		"subtitle": "CollapsibleWidget_subtitle_3BMoP",
+		"subtitleAcitve": "CollapsibleWidget_subtitleAcitve_27SRJ",
 		"visibleContent": "CollapsibleWidget_visibleContent_1CAFm",
 		"hiddenContent": "CollapsibleWidget_hiddenContent_aakZA"
 	};
@@ -39303,6 +39306,7 @@
 	      _CollapsibleWidget2.default,
 	      {
 	        title: 'Lookup Table',
+	        activeSubTitle: true,
 	        subtitle: _react2.default.createElement(_DropDownWidget2.default, {
 	          field: this.state.field,
 	          fields: this.state.fields,
