@@ -22738,7 +22738,6 @@
 	          {
 	            className: multiple ? _EnumProperty2.default.inputMultiSelect : _EnumProperty2.default.input,
 	            value: selectedValue,
-	            defaultValue: null,
 	            onChange: this.valueChange,
 	            multiple: multiple
 	          },
