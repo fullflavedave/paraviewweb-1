@@ -201,6 +201,8 @@
 	        // Clean previous container
 	        this.container.removeChild(this.canvas);
 	        this.mouseHandler.destroy();
+
+	        this.container = null;
 	        this.mouseHandler = null;
 	        this.size = null;
 	      }
@@ -241,6 +243,7 @@
 	        this.options.size[1] = this.size.clientHeight;
 	        this.options.quality = this.quality;
 	        this.options.localTime = +new Date();
+	        this.options.clearCache = !!force;
 	        if (force) {
 	          this.options.mtime = 0;
 	        }

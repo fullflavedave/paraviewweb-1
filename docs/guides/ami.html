@@ -6,11 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://kitware.github.io/paraviewweb/docs/guides/configure_and_build_pvweb.html">
+  <link rel="canonical" href="https://kitware.github.io/paraviewweb/docs/guides/ami.html">
   <!-- Alternative links -->
   
     
-      <link rel="alternative" hreflang="en" href="https://kitware.github.io/paraviewweb/docs/guides/configure_and_build_pvweb.html">
+      <link rel="alternative" hreflang="en" href="https://kitware.github.io/paraviewweb/docs/guides/ami.html">
     
   
   <!-- Icon -->
@@ -39,16 +39,34 @@
   <!-- RSS -->
   <link rel="alternate" href="/paraviewweb/atom.xml" title="ParaViewWeb">
   <!-- Open Graph -->
-  <meta name="description" content="ParaViewWeb Source Configure and BuildIntroductionThis document describes the process of configuring and building ParaView from source.Useful information can always be found on the ParaView homepage.">
+  <meta name="description" content="ParaView 4.4 AMIsHardwareWhen you instantiating an AMI, you should use:
+
+Hardware with GPU: g2.2xlarge
+Security rule: http + ssh (80+22)
+
+SoftwareOS: Ubuntu 14.04 LTSUser: ec2-user
+The machine at star">
 <meta property="og:type" content="website">
 <meta property="og:title" content="ParaViewWeb">
-<meta property="og:url" content="https://kitware.github.io/paraviewweb/docs/guides/configure_and_build_pvweb.html">
+<meta property="og:url" content="https://kitware.github.io/paraviewweb/docs/guides/ami.html">
 <meta property="og:site_name" content="ParaViewWeb">
-<meta property="og:description" content="ParaViewWeb Source Configure and BuildIntroductionThis document describes the process of configuring and building ParaView from source.Useful information can always be found on the ParaView homepage.">
+<meta property="og:description" content="ParaView 4.4 AMIsHardwareWhen you instantiating an AMI, you should use:
+
+Hardware with GPU: g2.2xlarge
+Security rule: http + ssh (80+22)
+
+SoftwareOS: Ubuntu 14.04 LTSUser: ec2-user
+The machine at star">
 <meta property="og:updated_time" content="2016-04-13T22:54:58.261Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ParaViewWeb">
-<meta name="twitter:description" content="ParaViewWeb Source Configure and BuildIntroductionThis document describes the process of configuring and building ParaView from source.Useful information can always be found on the ParaView homepage.">
+<meta name="twitter:description" content="ParaView 4.4 AMIsHardwareWhen you instantiating an AMI, you should use:
+
+Hardware with GPU: g2.2xlarge
+Security rule: http + ssh (80+22)
+
+SoftwareOS: Ubuntu 14.04 LTSUser: ec2-user
+The machine at star">
   <!-- Google Analytics -->
   
 </head>
@@ -89,76 +107,49 @@
                 <h1 class="article-title" itemprop="name"></h1>
               </header>
               <div class="article-content" itemprop="articleBody">
-                <h1 id="ParaViewWeb-Source-Configure-and-Build" class="article-heading"><a href="#ParaViewWeb-Source-Configure-and-Build" class="headerlink" title="ParaViewWeb Source Configure and Build"></a>ParaViewWeb Source Configure and Build<a class="article-anchor" href="#ParaViewWeb-Source-Configure-and-Build" aria-hidden="true"></a></h1><h2 id="Introduction" class="article-heading"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction<a class="article-anchor" href="#Introduction" aria-hidden="true"></a></h2><p>This document describes the process of configuring and building ParaView from source.<br>Useful information can always be found on the <a href="http://www.paraview.org/" target="_blank" rel="external">ParaView homepage</a>.</p>
-<h2 id="Required-Tools" class="article-heading"><a href="#Required-Tools" class="headerlink" title="Required Tools"></a>Required Tools<a class="article-anchor" href="#Required-Tools" aria-hidden="true"></a></h2><h3 id="The-CMake-cross-platform-open-source-build-system" class="article-heading"><a href="#The-CMake-cross-platform-open-source-build-system" class="headerlink" title="The CMake cross-platform, open-source build system."></a>The CMake cross-platform, open-source build system.<a class="article-anchor" href="#The-CMake-cross-platform-open-source-build-system" aria-hidden="true"></a></h3><p>CMake binaries and source code are available here: <a href="http://www.cmake.org/cmake/resources/software.html" target="_blank" rel="external">CMake Releases</a>.<br>Many Linux style distributions include CMake in their package management systems.</p>
-<h3 id="Git" class="article-heading"><a href="#Git" class="headerlink" title="Git"></a>Git<a class="article-anchor" href="#Git" aria-hidden="true"></a></h3><p>The ParaView source code is hosted in a git repository. It can also be obtained in archived format. If you intend to edit the source code and submit patches/features, you will need git.</p>
-<h4 id="Linux" class="article-heading"><a href="#Linux" class="headerlink" title="Linux"></a>Linux<a class="article-anchor" href="#Linux" aria-hidden="true"></a></h4><p>Git is usually available through the package management systems. You can also build from the source code found <a href="http://git-scm.com/downloads" target="_blank" rel="external">Here</a>.</p>
-<h4 id="Windows" class="article-heading"><a href="#Windows" class="headerlink" title="Windows"></a>Windows<a class="article-anchor" href="#Windows" aria-hidden="true"></a></h4><p>Install <a href="http://msysgit.github.io/" target="_blank" rel="external">msysgit</a></p>
-<h2 id="Obtaining-source-code" class="article-heading"><a href="#Obtaining-source-code" class="headerlink" title="Obtaining source code"></a>Obtaining source code<a class="article-anchor" href="#Obtaining-source-code" aria-hidden="true"></a></h2><h3 id="Zip-Tar-file" class="article-heading"><a href="#Zip-Tar-file" class="headerlink" title="Zip/Tar file"></a>Zip/Tar file<a class="article-anchor" href="#Zip-Tar-file" aria-hidden="true"></a></h3><p><a href="http://www.paraview.org/paraview/resources/software.php" target="_blank" rel="external">ParaView Source Code</a></p>
-<h3 id="With-Git" class="article-heading"><a href="#With-Git" class="headerlink" title="With Git"></a>With Git<a class="article-anchor" href="#With-Git" aria-hidden="true"></a></h3><p>Further information is provided at the <a href="http://www.paraview.org/Wiki/ParaView/Git" target="_blank" rel="external">ParaView/Git Wiki</a>.</p>
-<p>##Configure with CMake</p>
-<p>Create a build directory - The preferred structure when building ParaView is to separate your source code from your build directory.</p>
-<p>####Linux users:</p>
-<ol>
-<li>In a terminal cd to your build_dir.</li>
-<li>Run <code>ccmake path/to/source-code</code> that opens a curses dialog</li>
-<li>Press ‘c’ to configure. Configuration needs to occur until issues are resolved and CMake presents the option to generate ‘g’.</li>
-</ol>
-<p>####Windows users:</p>
-<ol>
-<li>Open cmake-gui.</li>
-<li>Select your compiler.</li>
-<li>Fill in the path to your source code and build directories in the appropriate boxes.</li>
-<li>Click the configure button. Configuration needs to occur until issues are resolved and CMake presents the generate button.</li>
-</ol>
-<p>From this point forward, the process between Linux and Windows is basically the same. The following options provide minor deviations from the default configuration and are sufficient to build ParaView for the web.</p>
-<table>
+                <h1 id="ParaView-4-4-AMIs" class="article-heading"><a href="#ParaView-4-4-AMIs" class="headerlink" title="ParaView 4.4 AMIs"></a>ParaView 4.4 AMIs<a class="article-anchor" href="#ParaView-4-4-AMIs" aria-hidden="true"></a></h1><h2 id="Hardware" class="article-heading"><a href="#Hardware" class="headerlink" title="Hardware"></a>Hardware<a class="article-anchor" href="#Hardware" aria-hidden="true"></a></h2><p>When you instantiating an AMI, you should use:</p>
+<ul>
+<li>Hardware with GPU: g2.2xlarge</li>
+<li>Security rule: http + ssh (80+22)</li>
+</ul>
+<h2 id="Software" class="article-heading"><a href="#Software" class="headerlink" title="Software"></a>Software<a class="article-anchor" href="#Software" aria-hidden="true"></a></h2><p><strong>OS:</strong> Ubuntu 14.04 LTS<br><strong>User:</strong> ec2-user</p>
+<p>The machine at startup will:</p>
+<ul>
+<li>Start X for ParaView</li>
+<li>Configure Apache with the current DNS name of the machine</li>
+<li>Configure the launcher with the proper hostname.</li>
+<li>Start ParaViewWeb launcher</li>
+</ul>
+<p>Onced started (~5 minutes), you can access the machine like the following:</p>
+<ul>
+<li><a href="http://ec2-198-51-100-1.compute-1.amazonaws.com/apps/Visualizer" target="_blank" rel="external">http://ec2-198-51-100-1.compute-1.amazonaws.com/apps/Visualizer</a></li>
+</ul>
+<h2 id="AMIs" class="article-heading"><a href="#AMIs" class="headerlink" title="AMIs"></a>AMIs<a class="article-anchor" href="#AMIs" aria-hidden="true"></a></h2><table>
 <thead>
 <tr>
-<th style="text-align:center">CMake option</th>
-<th style="text-align:center">Recommended value</th>
-<th style="text-align:left">Comment</th>
+<th>Region</th>
+<th>Name</th>
+<th>AMI</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center">BUILD_TESTING</td>
-<td style="text-align:center">OFF</td>
-<td style="text-align:left">While the testing code is very useful, it can take a long time to compile. Users looking for a shorter build time can disable the testing code by setting this option to OFF.</td>
+<td>US East (N. Virginia)</td>
+<td>ParaViewWeb-4.4-public</td>
+<td>ami-34f3f65e</td>
 </tr>
 <tr>
-<td style="text-align:center">CMAKE_BUILD_TYPE</td>
-<td style="text-align:center">Release</td>
-<td style="text-align:left">Options include Debug, Release and RelWithDebInfo.</td>
+<td>US West (Oregon)</td>
+<td>ParaViewWeb-4.4-public</td>
+<td>ami-6b739c0b</td>
 </tr>
 <tr>
-<td style="text-align:center">PARAVIEW_BUILD_QT_GUI</td>
-<td style="text-align:center">OFF</td>
-<td style="text-align:left">Used to build the Qt user interface. Web developers can safely set this option to OFF. Setting to ON will require a build of Qt 4.8, which is out of the scope of this document.</td>
-</tr>
-<tr>
-<td style="text-align:center">PARAVIEW_ENABLE_CATALYST</td>
-<td style="text-align:center">OFF</td>
-<td style="text-align:left"></td>
-</tr>
-<tr>
-<td style="text-align:center">PARAVIEW_ENABLE_PYTHON</td>
-<td style="text-align:center">ON</td>
-<td style="text-align:left">Builds ParaView’s python bindings. You will need python 2.7 binaries and header files (devel packages )installed for this option.</td>
-</tr>
-<tr>
-<td style="text-align:center">PARAVIEW_BUILD_WEB_DOCUMENTATION</td>
-<td style="text-align:center">ON (Advanced)</td>
-<td style="text-align:left">To build ParaView’s Web Documentation. Requires <a href="https://github.com/senchalabs/jsduck" target="_blank" rel="external">jsduck</a>.</td>
-</tr>
-<tr>
-<td style="text-align:center">PLUGIN_*</td>
-<td style="text-align:center">OFF</td>
-<td style="text-align:left">Turn off plugins - If not required, it can be helpful to turn off plugins you do not need.</td>
+<td>Asia Pacific (Seoul)</td>
+<td>ParaViewWeb-4.4-public</td>
+<td>ami-5979b737</td>
 </tr>
 </tbody>
 </table>
-<p> CMake Configure<br> Build using your compiler.</p>
 
               </div>
               <footer class="article-footer">
@@ -171,7 +162,7 @@
           <aside id="article-toc" role="navigation">
             <div id="article-toc-inner">
               <strong class="sidebar-title">Contents</strong>
-              <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ParaViewWeb-Source-Configure-and-Build"><span class="toc-text">ParaViewWeb Source Configure and Build</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Required-Tools"><span class="toc-text">Required Tools</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-CMake-cross-platform-open-source-build-system"><span class="toc-text">The CMake cross-platform, open-source build system.</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Git"><span class="toc-text">Git</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux"><span class="toc-text">Linux</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Windows"><span class="toc-text">Windows</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Obtaining-source-code"><span class="toc-text">Obtaining source code</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Zip-Tar-file"><span class="toc-text">Zip/Tar file</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#With-Git"><span class="toc-text">With Git</span></a></li></ol></li></ol></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ParaView-4-4-AMIs"><span class="toc-text">ParaView 4.4 AMIs</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Hardware"><span class="toc-text">Hardware</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Software"><span class="toc-text">Software</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AMIs"><span class="toc-text">AMIs</span></a></li></ol></li></ol>
               <a href="#" id="article-toc-top">Back to Top</a>
             </div>
           </aside>
@@ -211,7 +202,7 @@
   </div>
   <div id="mobile-lang-select-wrap">
     <span id="mobile-lang-select-label"><i class="fa fa-globe"></i><span>English</span></span>
-    <select id="mobile-lang-select" data-canonical="docs/guides/configure_and_build_pvweb.html">
+    <select id="mobile-lang-select" data-canonical="docs/guides/ami.html">
       
         <option value="en" selected>English</option>
       
