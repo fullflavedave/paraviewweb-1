@@ -160,10 +160,12 @@
 	    };
 
 	    this.renderOnIdle = function () {
+	      var force = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
+
 	      if (_this.__timeout === null) {
 	        _this.__timeout = setTimeout(function () {
-	          if (!_this.render()) {
-	            _this.renderOnIdle();
+	          if (!_this.render(force)) {
+	            _this.renderOnIdle(force);
 	          }
 	        }, 250);
 	      }
@@ -172,8 +174,8 @@
 	    this.mouseListener = new _VtkWebMouseListener2.default(pvwClient);
 	    this.mouseListener.setInteractionDoneCallback(function (interact) {
 	      _this.quality = interact ? _this.interactiveQuality : _this.stillQuality;
-	      if (!_this.render()) {
-	        _this.renderOnIdle();
+	      if (!_this.render(!interact)) {
+	        _this.renderOnIdle(!interact);
 	      }
 	    });
 	  }
