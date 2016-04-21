@@ -19833,7 +19833,7 @@
 
 
 	// module
-	exports.push([module.id, ".ActionListWidget_list_1lWZZ {\n    list-style: none;\n    margin: 0;\n    padding: 0;\n    width: 100%;\n}\n\n.ActionListWidget_item_2fjiD {\n    color: #333;\n    padding: 5px;\n    cursor: pointer;\n\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n}\n\n.ActionListWidget_activeItem_3l5DA {\n  background: A3CEFF;\n  color: 4A4A4A;\n}\n\n.ActionListWidget_item_2fjiD:hover {\n    background: #333;\n    color: #eee;\n}\n", ""]);
+	exports.push([module.id, ".ActionListWidget_list_1lWZZ {\n    list-style: none;\n    margin: 0;\n    padding: 0;\n    width: 100%;\n}\n\n.ActionListWidget_item_2fjiD {\n    color: #333;\n    padding: 5px;\n    cursor: pointer;\n\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n}\n\n.ActionListWidget_activeItem_3l5DA {\n  background: #ccc;\n  color: #000;\n  border-bottom: 1px solid #999;\n  border-top: 1px solid #999;\n}\n\n.ActionListWidget_item_2fjiD:hover {\n    background: #333;\n    color: #eee;\n}\n", ""]);
 
 	// exports
 	exports.locals = {
