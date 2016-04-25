@@ -19773,12 +19773,12 @@
 
 	    var list = [];
 
-	    this.props.list.forEach(function (item) {
+	    this.props.list.forEach(function (item, idx) {
 	      list.push(_react2.default.createElement(
 	        'li',
 	        {
 	          className: item.active ? _ActionListWidget2.default.activeItem : _ActionListWidget2.default.item,
-	          key: item.name,
+	          key: idx,
 	          title: item.name,
 	          'data-name': item.name,
 	          'data-action': item.action || 'default',
