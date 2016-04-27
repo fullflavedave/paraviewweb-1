@@ -64,7 +64,7 @@
 	  console.log(controlPoints);
 	});
 
-	editor.render();
+	editor.setControlPoints([{ x: 0.0, y: 0.0 }, { x: 0.25, y: 0.75 }, { x: 0.5, y: 0.25 }, { x: 0.75, y: 0.5 }, { x: 1, y: 1 }]);
 
 /***/ },
 /* 1 */
@@ -221,6 +221,10 @@
 	        var controlPoint = findPoint(click, _this.controlPoints);
 	        if (controlPoint && !controlPoint.fixedX) {
 	          _this.controlPoints.splice(controlPoint.index, 1);
+	          // fix indexes after deletion
+	          for (var i = 0; i < _this.controlPoints.length; ++i) {
+	            _this.controlPoints[i].index = i;
+	          }
 	        }
 	        _this.render();
 	      }
@@ -228,7 +232,8 @@
 
 	    this.onDblClick = function (event) {
 	      var point = getNormalizePosition(event, _this.ctx, _this.radius);
-	      _this.controlPoints.push(point);
+	      var sanitizedPoint = { x: clamp(point.x), y: clamp(point.y) };
+	      _this.controlPoints.push(sanitizedPoint);
 	      sortPoints(_this.controlPoints);
 	      _this.render();
 	    };
@@ -243,6 +248,21 @@
 	    value: function resetControlPoints() {
 	      this.controlPoints = [pointBuilder(0, 0), pointBuilder(1, 1)];
 	      sortPoints(this.controlPoints);
+	    }
+
+	    // Sets the control points to the new list of points.  The input should be a list
+	    // of objects with members x and y (i.e. { x: 0.0, y: 1.0 }).  The valid range for
+	    // x and y is [0,1] with 0 being the left/bottom edge of the canvas and 1 being
+	    // the top/right edge.
+
+	  }, {
+	    key: 'setControlPoints',
+	    value: function setControlPoints(points) {
+	      this.controlPoints = points.map(function (pt) {
+	        return pointBuilder(pt.x, pt.y);
+	      });
+	      sortPoints(this.controlPoints);
+	      this.render();
 	    }
 	  }, {
 	    key: 'setStyle',
