@@ -31626,11 +31626,17 @@
 
 	var _MouseHandler2 = _interopRequireDefault(_MouseHandler);
 
+	var _monologue = __webpack_require__(163);
+
+	var _monologue2 = _interopRequireDefault(_monologue);
+
 	var _ImageRenderer = __webpack_require__(187);
 
 	var _ImageRenderer2 = _interopRequireDefault(_ImageRenderer);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var DRAW_DONE = 'ImageRenderer.draw.done';
 
 	function onImageLoaded() {
 	  var image = this;
@@ -31657,6 +31663,10 @@
 	      zoomLevel = component.zoom,
 	      drawingCenter = component.center;
 
+	  if (!component.enableRendering) {
+	    return;
+	  }
+
 	  ctx.clearRect(0, 0, w, h);
 
 	  var tw = Math.floor(iw * zoomLevel),
@@ -31669,6 +31679,8 @@
 	  try {
 	    ctx.drawImage(image, 0, 0, iw, ih, // Source image   [Location,Size]
 	    tx, ty, tw, th); // Target drawing [Location,Size]
+
+	    component.drawDone();
 	  } catch (err) {
 	    console.log('Error in ImageRenderer::drawToCanvasAsImage', err);
 	  }
@@ -31692,6 +31704,10 @@
 	      ih = data.outputSize[1],
 	      zoomLevel = component.zoom,
 	      drawingCenter = component.center;
+
+	  if (!component.enableRendering) {
+	    return;
+	  }
 
 	  ctx.clearRect(0, 0, w, h);
 
@@ -31722,6 +31738,7 @@
 	      ctx.lineWidth = 1;
 	      ctx.stroke();
 	    }
+	    component.drawDone();
 	  } catch (err) {
 	    console.log('Error in ImageRenderer::drawToCanvasAsBuffer', err);
 	  }
@@ -31741,7 +31758,7 @@
 	 *   - renderCanvas({ outputSize: [width, height], canvas: canvasDomElement, area: [x,y,width,height], crosshair: [x,y]})
 	 *   - resetCamera()
 	 */
-	exports.default = _react2.default.createClass({
+	var ImageRenderer = _react2.default.createClass({
 
 	  displayName: 'ImageRenderer',
 
@@ -31779,6 +31796,7 @@
 	  componentWillMount: function componentWillMount() {
 	    var _this = this;
 
+	    this.enableLocalRendering();
 	    this.imageToDraw = new Image();
 
 	    // Monitor image builder
@@ -31854,6 +31872,11 @@
 	        image.drawToCanvas();
 	      }, 300);
 	    });
+
+	    // Provide canvas to ImageBuilder if possible
+	    if (this.props.imageBuilder && this.props.imageBuilder.setRenderer) {
+	      this.props.imageBuilder.setRenderer(this);
+	    }
 	  },
 	  componentDidUpdate: function componentDidUpdate(nextProps, nextState) {
 	    this.updateDimensions();
@@ -31862,6 +31885,7 @@
 	    }
 	  },
 	  componentWillUnmount: function componentWillUnmount() {
+	    this.off();
 	    // Remove key listener
 	    document.removeEventListener('keydown', this.handleKeyDown);
 
@@ -31887,19 +31911,74 @@
 	      this.sizeSubscription.unsubscribe();
 	      this.sizeSubscription = null;
 	    }
-	  },
-	  updateDimensions: function updateDimensions() {
-	    var el = _reactDom2.default.findDOMNode(this).parentNode,
-	        elSize = _SizeHelper2.default.getSize(el);
 
-	    if (el && (this.state.width !== elSize.clientWidth || this.state.height !== elSize.clientHeight)) {
-	      this.setState({
-	        width: elSize.clientWidth,
-	        height: elSize.clientHeight
-	      });
-	      return true;
+	    // Provide canvas to ImageBuilder if possible
+	    if (this.props.imageBuilder && this.props.imageBuilder.setRenderer) {
+	      this.props.imageBuilder.setRenderer(null);
 	    }
-	    return false;
+	  },
+	  onDrawDone: function onDrawDone(callback) {
+	    return this.on(DRAW_DONE, callback);
+	  },
+	  getRenderingCanvas: function getRenderingCanvas() {
+	    return _reactDom2.default.findDOMNode(this.refs.canvasRenderer);
+	  },
+	  enableLocalRendering: function enableLocalRendering() {
+	    var enable = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
+
+	    this.enableRendering = enable;
+	  },
+	  updateMetadata: function updateMetadata() {
+	    this.setState({
+	      dialog: !this.state.dialog
+	    });
+	    this.imageExporter.updateMetadata({
+	      title: this.state.title,
+	      description: this.state.description,
+	      image: _reactDom2.default.findDOMNode(this.refs.thumbnail).src,
+	      path: this.props.imageBuilder.queryDataModel.basepath
+	    });
+	  },
+	  updateTitle: function updateTitle(event) {
+	    var title = event.target.value;
+	    this.setState({ title: title });
+	  },
+	  updateDescription: function updateDescription(event) {
+	    var description = event.target.value;
+	    this.setState({ description: description });
+	  },
+	  toggleDialog: function toggleDialog() {
+	    this.setState({
+	      dialog: !this.state.dialog
+	    });
+	  },
+	  handleKeyDown: function handleKeyDown(event) {
+	    if (event.keyCode === 82) {
+	      // r => reset camera
+	      this.resetCamera();
+	    } else if (event.keyCode === 85 && !this.state.dialog && (event.altKey || event.ctrlKey || event.metaKey)) {
+	      // u => Update dataset metadata
+	      var thumbnailImage = _reactDom2.default.findDOMNode(this.refs.thumbnail);
+
+	      if (this.imageToDraw.data.canvas.nodeName === 'CANVAS') {
+	        if (this.imageToDraw.data.canvas.width === this.imageToDraw.data.area[2] && this.imageToDraw.data.canvas.height === this.imageToDraw.data.area[3]) {
+	          thumbnailImage.src = this.imageToDraw.data.canvas.toDataURL('image/png');
+	        } else {
+	          // Need to extract region
+	          thumbnailImage.src = this.imageExporter.extractCanvasRegion(this.imageToDraw.data.canvas, this.imageToDraw.data.area, this.imageToDraw.data.outputSize);
+	        }
+	      } else {
+	        // Use image URL
+	        thumbnailImage.src = this.imageToDraw.data.canvas.src;
+	      }
+
+	      this.setState({
+	        dialog: !this.state.dialog
+	      });
+	    }
+	  },
+	  recordImages: function recordImages(record) {
+	    this.sendToServer = record;
 	  },
 	  zoomCallback: function zoomCallback(event, envelope) {
 	    var eventManaged = false;
@@ -31995,57 +32074,18 @@
 	      this.props.listener.click(event, envelope);
 	    }
 	  },
-	  updateMetadata: function updateMetadata() {
-	    this.setState({
-	      dialog: !this.state.dialog
-	    });
-	    this.imageExporter.updateMetadata({
-	      title: this.state.title,
-	      description: this.state.description,
-	      image: _reactDom2.default.findDOMNode(this.refs.thumbnail).src,
-	      path: this.props.imageBuilder.queryDataModel.basepath
-	    });
-	  },
-	  updateTitle: function updateTitle(event) {
-	    var title = event.target.value;
-	    this.setState({ title: title });
-	  },
-	  updateDescription: function updateDescription(event) {
-	    var description = event.target.value;
-	    this.setState({ description: description });
-	  },
-	  toggleDialog: function toggleDialog() {
-	    this.setState({
-	      dialog: !this.state.dialog
-	    });
-	  },
-	  handleKeyDown: function handleKeyDown(event) {
-	    if (event.keyCode === 82) {
-	      // r => reset camera
-	      this.resetCamera();
-	    } else if (event.keyCode === 85 && !this.state.dialog) {
-	      // u => Update dataset metadata
-	      var thumbnailImage = _reactDom2.default.findDOMNode(this.refs.thumbnail);
+	  updateDimensions: function updateDimensions() {
+	    var el = _reactDom2.default.findDOMNode(this).parentNode,
+	        elSize = _SizeHelper2.default.getSize(el);
 
-	      if (this.imageToDraw.data.canvas.nodeName === 'CANVAS') {
-	        if (this.imageToDraw.data.canvas.width === this.imageToDraw.data.area[2] && this.imageToDraw.data.canvas.height === this.imageToDraw.data.area[3]) {
-	          thumbnailImage.src = this.imageToDraw.data.canvas.toDataURL('image/png');
-	        } else {
-	          // Need to extract region
-	          thumbnailImage.src = this.imageExporter.extractCanvasRegion(this.imageToDraw.data.canvas, this.imageToDraw.data.area, this.imageToDraw.data.outputSize);
-	        }
-	      } else {
-	        // Use image URL
-	        thumbnailImage.src = this.imageToDraw.data.canvas.src;
-	      }
-
+	    if (el && (this.state.width !== elSize.clientWidth || this.state.height !== elSize.clientHeight)) {
 	      this.setState({
-	        dialog: !this.state.dialog
+	        width: elSize.clientWidth,
+	        height: elSize.clientHeight
 	      });
+	      return true;
 	    }
-	  },
-	  recordImages: function recordImages(record) {
-	    this.sendToServer = record;
+	    return false;
 	  },
 	  resetCamera: function resetCamera() {
 	    var w = this.state.width,
@@ -32060,6 +32100,9 @@
 	    this.center = [0.5, 0.5];
 
 	    image.drawToCanvas();
+	  },
+	  drawDone: function drawDone() {
+	    this.emit(DRAW_DONE, this);
 	  },
 	  renderImage: function renderImage(data) {
 	    this.imageToDraw.drawToCanvas = drawToCanvasAsImage;
@@ -32134,6 +32177,10 @@
 	    );
 	  }
 	});
+
+	_monologue2.default.mixInto(ImageRenderer);
+
+	exports.default = ImageRenderer;
 
 /***/ },
 /* 171 */

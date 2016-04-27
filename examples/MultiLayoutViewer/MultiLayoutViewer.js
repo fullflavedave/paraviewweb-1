@@ -74,18 +74,18 @@
 
 	var _2 = _interopRequireDefault(_);
 
-	var _QueryDataModel = __webpack_require__(283);
+	var _QueryDataModel = __webpack_require__(287);
 
 	var _QueryDataModel2 = _interopRequireDefault(_QueryDataModel);
 
-	var _index = __webpack_require__(308);
+	var _index = __webpack_require__(312);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// Load CSS
-	__webpack_require__(309);
+	__webpack_require__(313);
 
 	/* global __BASE_PATH__ */
 	var bodyElement = document.querySelector('.content'),
@@ -32764,6 +32764,7 @@
 	    this.markerLocation = -1;
 	    this.showMarker = true;
 	    this.title = title;
+	    this.fillBackground = null;
 	  }
 
 	  // ----------------------------------------------------------------------------
@@ -32794,6 +32795,14 @@
 	      });
 
 	      this.emit(PAINTER_READY, this);
+	    }
+
+	    // ----------------------------------------------------------------------------
+
+	  }, {
+	    key: 'setBackgroundColor',
+	    value: function setBackgroundColor(color) {
+	      this.fillBackground = color;
 	    }
 
 	    // ----------------------------------------------------------------------------
@@ -32848,9 +32857,16 @@
 	      // Empty content
 	      ctx.clearRect(location.x - 1, location.y - 1, location.width + 2, location.height + 2);
 
+	      if (this.fillBackground) {
+	        ctx.fillStyle = this.fillBackground;
+	        ctx.fillRect(location.x, location.y, location.width, location.height);
+	      }
+
 	      // Paint each field
 	      this.data.fields.forEach(function (field) {
-	        paintField(ctx, location, field, field.range);
+	        if (field.active === undefined || field.active) {
+	          paintField(ctx, location, field, field.range);
+	        }
 	      });
 
 	      // Paint marker if any
@@ -34220,11 +34236,17 @@
 
 	var _MouseHandler2 = _interopRequireDefault(_MouseHandler);
 
+	var _monologue = __webpack_require__(174);
+
+	var _monologue2 = _interopRequireDefault(_monologue);
+
 	var _ImageRenderer = __webpack_require__(203);
 
 	var _ImageRenderer2 = _interopRequireDefault(_ImageRenderer);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var DRAW_DONE = 'ImageRenderer.draw.done';
 
 	function onImageLoaded() {
 	  var image = this;
@@ -34251,6 +34273,10 @@
 	      zoomLevel = component.zoom,
 	      drawingCenter = component.center;
 
+	  if (!component.enableRendering) {
+	    return;
+	  }
+
 	  ctx.clearRect(0, 0, w, h);
 
 	  var tw = Math.floor(iw * zoomLevel),
@@ -34263,6 +34289,8 @@
 	  try {
 	    ctx.drawImage(image, 0, 0, iw, ih, // Source image   [Location,Size]
 	    tx, ty, tw, th); // Target drawing [Location,Size]
+
+	    component.drawDone();
 	  } catch (err) {
 	    console.log('Error in ImageRenderer::drawToCanvasAsImage', err);
 	  }
@@ -34286,6 +34314,10 @@
 	      ih = data.outputSize[1],
 	      zoomLevel = component.zoom,
 	      drawingCenter = component.center;
+
+	  if (!component.enableRendering) {
+	    return;
+	  }
 
 	  ctx.clearRect(0, 0, w, h);
 
@@ -34316,6 +34348,7 @@
 	      ctx.lineWidth = 1;
 	      ctx.stroke();
 	    }
+	    component.drawDone();
 	  } catch (err) {
 	    console.log('Error in ImageRenderer::drawToCanvasAsBuffer', err);
 	  }
@@ -34335,7 +34368,7 @@
 	 *   - renderCanvas({ outputSize: [width, height], canvas: canvasDomElement, area: [x,y,width,height], crosshair: [x,y]})
 	 *   - resetCamera()
 	 */
-	exports.default = _react2.default.createClass({
+	var ImageRenderer = _react2.default.createClass({
 
 	  displayName: 'ImageRenderer',
 
@@ -34373,6 +34406,7 @@
 	  componentWillMount: function componentWillMount() {
 	    var _this = this;
 
+	    this.enableLocalRendering();
 	    this.imageToDraw = new Image();
 
 	    // Monitor image builder
@@ -34448,6 +34482,11 @@
 	        image.drawToCanvas();
 	      }, 300);
 	    });
+
+	    // Provide canvas to ImageBuilder if possible
+	    if (this.props.imageBuilder && this.props.imageBuilder.setRenderer) {
+	      this.props.imageBuilder.setRenderer(this);
+	    }
 	  },
 	  componentDidUpdate: function componentDidUpdate(nextProps, nextState) {
 	    this.updateDimensions();
@@ -34456,6 +34495,7 @@
 	    }
 	  },
 	  componentWillUnmount: function componentWillUnmount() {
+	    this.off();
 	    // Remove key listener
 	    document.removeEventListener('keydown', this.handleKeyDown);
 
@@ -34481,19 +34521,74 @@
 	      this.sizeSubscription.unsubscribe();
 	      this.sizeSubscription = null;
 	    }
-	  },
-	  updateDimensions: function updateDimensions() {
-	    var el = _reactDom2.default.findDOMNode(this).parentNode,
-	        elSize = _SizeHelper2.default.getSize(el);
 
-	    if (el && (this.state.width !== elSize.clientWidth || this.state.height !== elSize.clientHeight)) {
-	      this.setState({
-	        width: elSize.clientWidth,
-	        height: elSize.clientHeight
-	      });
-	      return true;
+	    // Provide canvas to ImageBuilder if possible
+	    if (this.props.imageBuilder && this.props.imageBuilder.setRenderer) {
+	      this.props.imageBuilder.setRenderer(null);
 	    }
-	    return false;
+	  },
+	  onDrawDone: function onDrawDone(callback) {
+	    return this.on(DRAW_DONE, callback);
+	  },
+	  getRenderingCanvas: function getRenderingCanvas() {
+	    return _reactDom2.default.findDOMNode(this.refs.canvasRenderer);
+	  },
+	  enableLocalRendering: function enableLocalRendering() {
+	    var enable = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
+
+	    this.enableRendering = enable;
+	  },
+	  updateMetadata: function updateMetadata() {
+	    this.setState({
+	      dialog: !this.state.dialog
+	    });
+	    this.imageExporter.updateMetadata({
+	      title: this.state.title,
+	      description: this.state.description,
+	      image: _reactDom2.default.findDOMNode(this.refs.thumbnail).src,
+	      path: this.props.imageBuilder.queryDataModel.basepath
+	    });
+	  },
+	  updateTitle: function updateTitle(event) {
+	    var title = event.target.value;
+	    this.setState({ title: title });
+	  },
+	  updateDescription: function updateDescription(event) {
+	    var description = event.target.value;
+	    this.setState({ description: description });
+	  },
+	  toggleDialog: function toggleDialog() {
+	    this.setState({
+	      dialog: !this.state.dialog
+	    });
+	  },
+	  handleKeyDown: function handleKeyDown(event) {
+	    if (event.keyCode === 82) {
+	      // r => reset camera
+	      this.resetCamera();
+	    } else if (event.keyCode === 85 && !this.state.dialog && (event.altKey || event.ctrlKey || event.metaKey)) {
+	      // u => Update dataset metadata
+	      var thumbnailImage = _reactDom2.default.findDOMNode(this.refs.thumbnail);
+
+	      if (this.imageToDraw.data.canvas.nodeName === 'CANVAS') {
+	        if (this.imageToDraw.data.canvas.width === this.imageToDraw.data.area[2] && this.imageToDraw.data.canvas.height === this.imageToDraw.data.area[3]) {
+	          thumbnailImage.src = this.imageToDraw.data.canvas.toDataURL('image/png');
+	        } else {
+	          // Need to extract region
+	          thumbnailImage.src = this.imageExporter.extractCanvasRegion(this.imageToDraw.data.canvas, this.imageToDraw.data.area, this.imageToDraw.data.outputSize);
+	        }
+	      } else {
+	        // Use image URL
+	        thumbnailImage.src = this.imageToDraw.data.canvas.src;
+	      }
+
+	      this.setState({
+	        dialog: !this.state.dialog
+	      });
+	    }
+	  },
+	  recordImages: function recordImages(record) {
+	    this.sendToServer = record;
 	  },
 	  zoomCallback: function zoomCallback(event, envelope) {
 	    var eventManaged = false;
@@ -34589,57 +34684,18 @@
 	      this.props.listener.click(event, envelope);
 	    }
 	  },
-	  updateMetadata: function updateMetadata() {
-	    this.setState({
-	      dialog: !this.state.dialog
-	    });
-	    this.imageExporter.updateMetadata({
-	      title: this.state.title,
-	      description: this.state.description,
-	      image: _reactDom2.default.findDOMNode(this.refs.thumbnail).src,
-	      path: this.props.imageBuilder.queryDataModel.basepath
-	    });
-	  },
-	  updateTitle: function updateTitle(event) {
-	    var title = event.target.value;
-	    this.setState({ title: title });
-	  },
-	  updateDescription: function updateDescription(event) {
-	    var description = event.target.value;
-	    this.setState({ description: description });
-	  },
-	  toggleDialog: function toggleDialog() {
-	    this.setState({
-	      dialog: !this.state.dialog
-	    });
-	  },
-	  handleKeyDown: function handleKeyDown(event) {
-	    if (event.keyCode === 82) {
-	      // r => reset camera
-	      this.resetCamera();
-	    } else if (event.keyCode === 85 && !this.state.dialog) {
-	      // u => Update dataset metadata
-	      var thumbnailImage = _reactDom2.default.findDOMNode(this.refs.thumbnail);
+	  updateDimensions: function updateDimensions() {
+	    var el = _reactDom2.default.findDOMNode(this).parentNode,
+	        elSize = _SizeHelper2.default.getSize(el);
 
-	      if (this.imageToDraw.data.canvas.nodeName === 'CANVAS') {
-	        if (this.imageToDraw.data.canvas.width === this.imageToDraw.data.area[2] && this.imageToDraw.data.canvas.height === this.imageToDraw.data.area[3]) {
-	          thumbnailImage.src = this.imageToDraw.data.canvas.toDataURL('image/png');
-	        } else {
-	          // Need to extract region
-	          thumbnailImage.src = this.imageExporter.extractCanvasRegion(this.imageToDraw.data.canvas, this.imageToDraw.data.area, this.imageToDraw.data.outputSize);
-	        }
-	      } else {
-	        // Use image URL
-	        thumbnailImage.src = this.imageToDraw.data.canvas.src;
-	      }
-
+	    if (el && (this.state.width !== elSize.clientWidth || this.state.height !== elSize.clientHeight)) {
 	      this.setState({
-	        dialog: !this.state.dialog
+	        width: elSize.clientWidth,
+	        height: elSize.clientHeight
 	      });
+	      return true;
 	    }
-	  },
-	  recordImages: function recordImages(record) {
-	    this.sendToServer = record;
+	    return false;
 	  },
 	  resetCamera: function resetCamera() {
 	    var w = this.state.width,
@@ -34654,6 +34710,9 @@
 	    this.center = [0.5, 0.5];
 
 	    image.drawToCanvas();
+	  },
+	  drawDone: function drawDone() {
+	    this.emit(DRAW_DONE, this);
 	  },
 	  renderImage: function renderImage(data) {
 	    this.imageToDraw.drawToCanvas = drawToCanvasAsImage;
@@ -34728,6 +34787,10 @@
 	    );
 	  }
 	});
+
+	_monologue2.default.mixInto(ImageRenderer);
+
+	exports.default = ImageRenderer;
 
 /***/ },
 /* 193 */
@@ -40214,39 +40277,43 @@
 
 	var _FloatImageControl3 = _interopRequireDefault(_FloatImageControl2);
 
-	var _LightControl = __webpack_require__(234);
+	var _TimeFloatImageControl2 = __webpack_require__(234);
+
+	var _TimeFloatImageControl3 = _interopRequireDefault(_TimeFloatImageControl2);
+
+	var _LightControl = __webpack_require__(248);
 
 	var _LightControl2 = _interopRequireDefault(_LightControl);
 
-	var _LookupTableManagerControl = __webpack_require__(246);
+	var _LookupTableManagerControl = __webpack_require__(255);
 
 	var _LookupTableManagerControl2 = _interopRequireDefault(_LookupTableManagerControl);
 
-	var _PixelOperatorControl2 = __webpack_require__(257);
+	var _PixelOperatorControl2 = __webpack_require__(266);
 
 	var _PixelOperatorControl3 = _interopRequireDefault(_PixelOperatorControl2);
 
-	var _ProbeControl2 = __webpack_require__(261);
+	var _ProbeControl2 = __webpack_require__(270);
 
 	var _ProbeControl3 = _interopRequireDefault(_ProbeControl2);
 
-	var _QueryDataModelControl = __webpack_require__(262);
+	var _QueryDataModelControl = __webpack_require__(271);
 
 	var _QueryDataModelControl2 = _interopRequireDefault(_QueryDataModelControl);
 
-	var _VolumeControl = __webpack_require__(272);
+	var _VolumeControl = __webpack_require__(276);
 
 	var _VolumeControl2 = _interopRequireDefault(_VolumeControl);
 
-	var _CompositePipelineWidget = __webpack_require__(278);
+	var _CompositePipelineWidget = __webpack_require__(282);
 
 	var _CompositePipelineWidget2 = _interopRequireDefault(_CompositePipelineWidget);
 
-	var _EqualizerWidget2 = __webpack_require__(273);
+	var _EqualizerWidget2 = __webpack_require__(277);
 
 	var _EqualizerWidget3 = _interopRequireDefault(_EqualizerWidget2);
 
-	var _LookupTableWidget2 = __webpack_require__(247);
+	var _LookupTableWidget2 = __webpack_require__(256);
 
 	var _LookupTableWidget3 = _interopRequireDefault(_LookupTableWidget2);
 
@@ -40255,9 +40322,6 @@
 	/* eslint-disable react/display-name */
 	/* eslint-disable react/no-multi-comp */
 	/* eslint-disable react/prop-types */
-
-
-	// Full feature control
 	var WidgetFactoryMapping = {
 	  QueryDataModelWidget: function QueryDataModelWidget(_ref) {
 	    var queryDataModel = _ref.queryDataModel;
@@ -40380,6 +40444,15 @@
 	      ref: 'FloatImageControl',
 	      model: model
 	    });
+	  },
+	  TimeFloatImageControl: function TimeFloatImageControl(_ref11) {
+	    var model = _ref11.model;
+
+	    return _react2.default.createElement(_TimeFloatImageControl3.default, {
+	      key: 'TimeFloatImageControl',
+	      ref: 'TimeFloatImageControl',
+	      model: model
+	    });
 	  }
 	};
 	/* eslint-enable react/display-name */
@@ -40388,6 +40461,9 @@
 
 
 	// Need to be wrapped inside CollapsibleWidget
+
+
+	// Full feature control
 	function createWidget(name, options) {
 	  var fn = WidgetFactoryMapping[name];
 
@@ -40738,13 +40814,14 @@
 	exports.i(__webpack_require__(211), undefined);
 
 	// module
-	exports.push([module.id, ".FloatImageControl_container_9_WoO {\n}\n\n.FloatImageControl_item_lrU2p {\n    width: 100%;\n    -webkit-flex-direction: row;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    box-sizing: border-box;\n    line-height: 2em;\n}\n\n.FloatImageControl_label_3oxqD {\n    font-weight: bold;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    text-align: left;\n    margin-left: 5px;\n    -webkit-align-self: center;\n        -ms-flex-item-align: center;\n            align-self: center;\n}\n\n.FloatImageControl_actions_gLy_R {\n    position: relative;\n    right: 0;\n}\n\n.FloatImageControl_lightSlider_1UYp8 {\n}\n\n/* ----- LayerItem ------- */\n\n.FloatImageControl_hidden_17hKC {\n    display: none;\n}\n\n.FloatImageControl_iconButton_1lGhI {\n    -webkit-flex: none;\n        -ms-flex: none;\n            flex: none;\n    margin-right: 5px;\n    -webkit-align-self: center;\n        -ms-flex-item-align: center;\n            align-self: center;\n    cursor: pointer;\n    font-style: normal;\n    -webkit-user-select: none;\n       -moz-user-select: none;\n        -ms-user-select: none;\n            user-select: none;\n}\n\n.FloatImageControl_fadeButton_2fHzc {\n    color: #aaa;\n}\n\n.FloatImageControl_meshButtonOn_t0HCh {\n}\n\n.FloatImageControl_meshButtonOff_3VL_d {\n}\n\n.FloatImageControl_visibleButtonOn_3E3WL {\n}\n\n.FloatImageControl_visibleButtonOff_1qvFp {\n}\n\n.FloatImageControl_dropDownButtonOn_mMh8M {\n}\n\n.FloatImageControl_dropDownButtonOff_1sPIe {\n}\n\n.FloatImageControl_menu_12j6V {\n    position: absolute;\n    top: 2em;\n    right: 5px;\n    border: solid 1px black;\n    padding: 5px 10px;\n    background: #fff;\n    border-radius: 5px;\n    z-index: 2;\n}\n\n.FloatImageControl_menuItem_nFGUq {\n    cursor: pointer;\n}\n\n.FloatImageControl_selectedMenuItem_CT8Yb {\n    font-weight: bold;\n}\n\n@media screen and (max-device-width: 400px) {\n    .FloatImageControl_iconButton_1lGhI {\n        font-size: 1.45em;\n    }\n}\n\n.is-ios-device.FloatImageControl_iconButton_1lGhI {\n    font-size: 1.45em;\n}\n", ""]);
+	exports.push([module.id, ".FloatImageControl_container_9_WoO {\n}\n\n.FloatImageControl_item_lrU2p {\n    width: 100%;\n    -webkit-flex-direction: row;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    box-sizing: border-box;\n    line-height: 2em;\n}\n\n.FloatImageControl_label_3oxqD {\n    font-weight: bold;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    text-align: left;\n    margin-left: 5px;\n    -webkit-align-self: center;\n        -ms-flex-item-align: center;\n            align-self: center;\n}\n\n.FloatImageControl_smallLabel_kS3Cw {\n  font-weight: bold;\n  -webkit-flex: none;\n      -ms-flex: none;\n          flex: none;\n  text-align: left;\n  margin-left: 5px;\n  -webkit-align-self: center;\n      -ms-flex-item-align: center;\n          align-self: center;\n  max-width: 25%;\n  min-width: 50px;\n}\n\n.FloatImageControl_actions_gLy_R {\n    position: relative;\n    right: 0;\n}\n\n.FloatImageControl_lightSlider_1UYp8 {\n}\n\n/* ----- LayerItem ------- */\n\n.FloatImageControl_hidden_17hKC {\n    display: none;\n}\n\n.FloatImageControl_iconButton_1lGhI {\n    -webkit-flex: none;\n        -ms-flex: none;\n            flex: none;\n    margin-right: 5px;\n    -webkit-align-self: center;\n        -ms-flex-item-align: center;\n            align-self: center;\n    cursor: pointer;\n    font-style: normal;\n    -webkit-user-select: none;\n       -moz-user-select: none;\n        -ms-user-select: none;\n            user-select: none;\n}\n\n.FloatImageControl_fadeButton_2fHzc {\n    color: #aaa;\n}\n\n.FloatImageControl_meshButtonOn_t0HCh {\n}\n\n.FloatImageControl_meshButtonOff_3VL_d {\n}\n\n.FloatImageControl_visibleButtonOn_3E3WL {\n}\n\n.FloatImageControl_visibleButtonOff_1qvFp {\n}\n\n.FloatImageControl_dropDownButtonOn_mMh8M {\n}\n\n.FloatImageControl_dropDownButtonOff_1sPIe {\n}\n\n.FloatImageControl_addProbeIcon_1jjMF {\n}\n\n.FloatImageControl_removeProbeIcon_1qX0E {\n}\n\n.FloatImageControl_menu_12j6V {\n    position: absolute;\n    top: 2em;\n    right: 5px;\n    border: solid 1px black;\n    padding: 5px 10px;\n    background: #fff;\n    border-radius: 5px;\n    z-index: 2;\n}\n\n.FloatImageControl_menuItem_nFGUq {\n    cursor: pointer;\n}\n\n.FloatImageControl_selectedMenuItem_CT8Yb {\n    font-weight: bold;\n}\n\n.FloatImageControl_input_1WjCY {\n  -webkit-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n  box-shadow: none;\n  border: 1px solid #aaa;\n  min-width: 30%;\n  margin: 2px;\n  border-radius: 2px;\n}\n\n.FloatImageControl_dropDown_1WLPY {\n  -webkit-flex: none;\n      -ms-flex: none;\n          flex: none;\n  width: 15px;\n  height: calc(2em - 4px);\n  margin: 2px;\n  border: 1px solid #aaa !important;\n  box-shadow: none !important;\n  padding-left: 8px !important;\n}\n\n.FloatImageControl_dropDown_1WLPY:-moz-focusring {\n  color: transparent;\n  text-shadow: 0 0 0 #000;\n}\n\n.FloatImageControl_imageViewIcon_M5PZ9 {\n  cursor: pointer;\n}\n\n.FloatImageControl_chartViewIcon_gR1Sp {\n  cursor: pointer;\n}\n\n.FloatImageControl_bothViewIcon_3gcNY {\n  cursor: pointer;\n}\n\n.FloatImageControl_enableLegendIcon_3LTZ7 {\n  cursor: pointer;\n}\n\n.FloatImageControl_disableLegendIcon_26mto {\n  cursor: pointer;\n}\n\n.FloatImageControl_sortProbeIcon_16G2p {\n  cursor: pointer;\n}\n\n.FloatImageControl_value_2_Hnc {\n  text-align: right;\n  font-style: italic;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  max-width: 40%;\n  cursor: pointer;\n}\n\n@media screen and (max-device-width: 400px) {\n    .FloatImageControl_iconButton_1lGhI {\n        font-size: 1.45em;\n    }\n}\n\n.is-ios-device.FloatImageControl_iconButton_1lGhI {\n    font-size: 1.45em;\n}\n", ""]);
 
 	// exports
 	exports.locals = {
 		"container": "FloatImageControl_container_9_WoO",
 		"item": "FloatImageControl_item_lrU2p",
 		"label": "FloatImageControl_label_3oxqD",
+		"smallLabel": "FloatImageControl_smallLabel_kS3Cw",
 		"actions": "FloatImageControl_actions_gLy_R",
 		"lightSlider": "FloatImageControl_lightSlider_1UYp8",
 		"hidden": "FloatImageControl_hidden_17hKC",
@@ -40756,9 +40833,20 @@
 		"visibleButtonOff": "FloatImageControl_visibleButtonOff_1qvFp FloatImageControl_iconButton_1lGhI " + __webpack_require__(211).locals["fa"] + " " + __webpack_require__(211).locals["fa-fw"] + " " + __webpack_require__(211).locals["fa-eye-slash"] + "",
 		"dropDownButtonOn": "FloatImageControl_dropDownButtonOn_mMh8M FloatImageControl_iconButton_1lGhI " + __webpack_require__(211).locals["fa"] + " " + __webpack_require__(211).locals["fa-fw"] + " " + __webpack_require__(211).locals["fa-tint"] + "",
 		"dropDownButtonOff": "FloatImageControl_dropDownButtonOff_1sPIe FloatImageControl_dropDownButtonOn_mMh8M FloatImageControl_iconButton_1lGhI " + __webpack_require__(211).locals["fa"] + " " + __webpack_require__(211).locals["fa-fw"] + " " + __webpack_require__(211).locals["fa-tint"] + " FloatImageControl_fadeButton_2fHzc",
+		"addProbeIcon": "FloatImageControl_addProbeIcon_1jjMF FloatImageControl_iconButton_1lGhI " + __webpack_require__(211).locals["fa"] + " " + __webpack_require__(211).locals["fa-fw"] + " " + __webpack_require__(211).locals["fa-plus"] + "",
+		"removeProbeIcon": "FloatImageControl_removeProbeIcon_1qX0E FloatImageControl_iconButton_1lGhI " + __webpack_require__(211).locals["fa"] + " " + __webpack_require__(211).locals["fa-fw"] + " " + __webpack_require__(211).locals["fa-minus"] + "",
 		"menu": "FloatImageControl_menu_12j6V",
 		"menuItem": "FloatImageControl_menuItem_nFGUq",
-		"selectedMenuItem": "FloatImageControl_selectedMenuItem_CT8Yb FloatImageControl_menuItem_nFGUq"
+		"selectedMenuItem": "FloatImageControl_selectedMenuItem_CT8Yb FloatImageControl_menuItem_nFGUq",
+		"input": "FloatImageControl_input_1WjCY",
+		"dropDown": "FloatImageControl_dropDown_1WLPY",
+		"imageViewIcon": "FloatImageControl_imageViewIcon_M5PZ9 " + __webpack_require__(211).locals["fa"] + " " + __webpack_require__(211).locals["fa-fw"] + " " + __webpack_require__(211).locals["fa-picture-o"] + "",
+		"chartViewIcon": "FloatImageControl_chartViewIcon_gR1Sp " + __webpack_require__(211).locals["fa"] + " " + __webpack_require__(211).locals["fa-fw"] + " " + __webpack_require__(211).locals["fa-line-chart"] + "",
+		"bothViewIcon": "FloatImageControl_bothViewIcon_3gcNY " + __webpack_require__(211).locals["fa"] + " " + __webpack_require__(211).locals["fa-fw"] + " " + __webpack_require__(211).locals["fa-th-large"] + "",
+		"enableLegendIcon": "FloatImageControl_enableLegendIcon_3LTZ7 " + __webpack_require__(211).locals["fa"] + " " + __webpack_require__(211).locals["fa-fw"] + " " + __webpack_require__(211).locals["fa-square"] + "",
+		"disableLegendIcon": "FloatImageControl_disableLegendIcon_26mto " + __webpack_require__(211).locals["fa"] + " " + __webpack_require__(211).locals["fa-fw"] + " " + __webpack_require__(211).locals["fa-square-o"] + "",
+		"sortProbeIcon": "FloatImageControl_sortProbeIcon_16G2p " + __webpack_require__(211).locals["fa"] + " " + __webpack_require__(211).locals["fa-fw"] + " " + __webpack_require__(211).locals["fa-sort-alpha-asc"] + "",
+		"value": "FloatImageControl_value_2_Hnc"
 	};
 
 /***/ },
@@ -40900,6 +40988,916 @@
 /* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _CollapsibleWidget = __webpack_require__(220);
+
+	var _CollapsibleWidget2 = _interopRequireDefault(_CollapsibleWidget);
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Number = __webpack_require__(235);
+
+	var _Number2 = _interopRequireDefault(_Number);
+
+	var _InlineToggleButtonWidget = __webpack_require__(240);
+
+	var _InlineToggleButtonWidget2 = _interopRequireDefault(_InlineToggleButtonWidget);
+
+	var _ToggleIconButtonWidget = __webpack_require__(245);
+
+	var _ToggleIconButtonWidget2 = _interopRequireDefault(_ToggleIconButtonWidget);
+
+	var _FloatImageControl = __webpack_require__(229);
+
+	var _FloatImageControl2 = _interopRequireDefault(_FloatImageControl);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+	exports.default = _react2.default.createClass({
+
+	  displayName: 'TimeFloatImageControl',
+
+	  propTypes: {
+	    model: _react2.default.PropTypes.object.isRequired
+	  },
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      change: false
+	    };
+	  },
+	  componentWillMount: function componentWillMount() {
+	    this.attachListener();
+	  },
+	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    var previous = this.props.model,
+	        next = nextProps.model;
+
+	    if (previous !== next) {
+	      // Force redraw
+	      this.attachListener();
+	      this.setState({ change: !this.state.change });
+	    }
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.removeListener();
+	  },
+	  onActiveView: function onActiveView(obj, activeView) {
+	    this.props.model.setActiveView(activeView);
+	    this.forceUpdate();
+	  },
+	  attachListener: function attachListener() {
+	    var _this = this;
+
+	    this.removeListener();
+	    this.subscription = this.props.model.probeManager.onChange(function () {
+	      _this.forceUpdate();
+	    });
+	  },
+	  removeListener: function removeListener() {
+	    if (this.subscription) {
+	      this.subscription.unsubscribe();
+	      this.subscription = null;
+	    }
+	  },
+	  addProbe: function addProbe() {
+	    this.props.model.probeManager.addProbe();
+	    this.props.model.render();
+	    this.forceUpdate();
+	  },
+	  removeProbe: function removeProbe() {
+	    var activeProbe = this.props.model.probeManager.getActiveProbe();
+	    if (activeProbe) {
+	      this.props.model.probeManager.removeProbe(activeProbe.name);
+	      this.props.model.render();
+	      this.forceUpdate();
+	    }
+	  },
+	  updateProbe: function updateProbe(event) {
+	    var name = event.target.name;
+	    var value = event.target.value;
+	    var activeProbe = this.props.model.probeManager.getActiveProbe();
+
+	    if (name === 'name') {
+	      activeProbe.updateName(value);
+	    } else {
+	      var idx = Number(name);
+	      var extent = [].concat(activeProbe.getExtent());
+	      extent[idx] = Number(value);
+	      activeProbe.updateExtent.apply(activeProbe, _toConsumableArray(extent));
+	    }
+	  },
+	  updateActive: function updateActive(e) {
+	    var name = e.target.value;
+	    this.props.model.probeManager.setActiveProbe(name);
+	  },
+	  toggleProbe: function toggleProbe(e) {
+	    var target = e.target;
+	    while (!target.dataset.name) {
+	      target = target.parentNode;
+	    }
+	    var name = target.dataset.name;
+	    var enable = !Number(target.dataset.active);
+	    this.props.model.enableProbe(name, enable);
+	  },
+	  sortProbes: function sortProbes() {
+	    this.props.model.sortProbesByName();
+	  },
+	  render: function render() {
+	    var _this2 = this;
+
+	    var probeManager = this.props.model.probeManager;
+
+	    var _props$model$getContr = this.props.model.getControlModels();
+
+	    var queryDataModel = _props$model$getContr.queryDataModel;
+
+	    var timeIdx = queryDataModel.getIndex('time');
+	    var chartData = this.props.model.chartData;
+	    var activeView = this.props.model.getActiveView();
+	    var buttons = [_react2.default.createElement(_ToggleIconButtonWidget2.default, { key: '0', toggle: false, className: _FloatImageControl2.default.addProbeIcon, icon: '', onChange: this.addProbe })];
+	    var activeProbe = probeManager.getActiveProbe();
+	    if (activeProbe) {
+	      buttons.push(_react2.default.createElement(_ToggleIconButtonWidget2.default, { key: '1', toggle: false, className: _FloatImageControl2.default.removeProbeIcon, icon: '', onChange: this.removeProbe }));
+	    }
+	    var sortProbes = _react2.default.createElement(_ToggleIconButtonWidget2.default, { toggle: false, className: _FloatImageControl2.default.sortProbeIcon, icon: '', onChange: this.sortProbes });
+
+	    // Put minus before
+	    buttons.reverse();
+
+	    return _react2.default.createElement(
+	      'div',
+	      { className: _FloatImageControl2.default.container },
+	      _react2.default.createElement(
+	        'div',
+	        { style: { padding: '10px 5px 5px' } },
+	        _react2.default.createElement(_InlineToggleButtonWidget2.default, {
+	          options: [{ icon: _FloatImageControl2.default.imageViewIcon }, { icon: _FloatImageControl2.default.chartViewIcon }, { icon: _FloatImageControl2.default.bothViewIcon }],
+	          activeColor: '#ccc',
+	          defaultColor: 'rgba(0,0,0,0)',
+	          active: activeView,
+	          onChange: this.onActiveView
+	        })
+	      ),
+	      _react2.default.createElement(
+	        _CollapsibleWidget2.default,
+	        { title: 'Time probes', activeSubTitle: true, subtitle: buttons, visible: activeView !== 1 },
+	        _react2.default.createElement(
+	          'section',
+	          { className: _FloatImageControl2.default.item },
+	          _react2.default.createElement(
+	            'label',
+	            { className: _FloatImageControl2.default.smallLabel },
+	            'Name'
+	          ),
+	          _react2.default.createElement('input', { className: _FloatImageControl2.default.input, type: 'text', name: 'name', value: activeProbe ? activeProbe.name : '', onChange: this.updateProbe }),
+	          _react2.default.createElement(
+	            'select',
+	            { className: _FloatImageControl2.default.dropDown, value: null, onChange: this.updateActive },
+	            probeManager.getProbeNames().map(function (name, index) {
+	              return _react2.default.createElement(
+	                'option',
+	                { key: index, value: name },
+	                name
+	              );
+	            })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'section',
+	          { className: _FloatImageControl2.default.item },
+	          _react2.default.createElement(
+	            'label',
+	            { className: _FloatImageControl2.default.smallLabel },
+	            'X'
+	          ),
+	          _react2.default.createElement('input', { className: _FloatImageControl2.default.input, type: 'number', name: '0', value: activeProbe ? activeProbe.extent[0] : 0, onChange: this.updateProbe }),
+	          _react2.default.createElement('input', { className: _FloatImageControl2.default.input, type: 'number', name: '1', value: activeProbe ? activeProbe.extent[1] : 5, onChange: this.updateProbe })
+	        ),
+	        _react2.default.createElement(
+	          'section',
+	          { className: _FloatImageControl2.default.item },
+	          _react2.default.createElement(
+	            'label',
+	            { className: _FloatImageControl2.default.smallLabel },
+	            'Y'
+	          ),
+	          _react2.default.createElement('input', { className: _FloatImageControl2.default.input, type: 'number', name: '2', value: activeProbe ? activeProbe.extent[2] : 0, onChange: this.updateProbe }),
+	          _react2.default.createElement('input', { className: _FloatImageControl2.default.input, type: 'number', name: '3', value: activeProbe ? activeProbe.extent[3] : 5, onChange: this.updateProbe })
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _CollapsibleWidget2.default,
+	        { title: 'Legend', visible: activeView > 0, activeSubTitle: true, subtitle: sortProbes },
+	        chartData.fields.map(function (field, index) {
+	          return _react2.default.createElement(
+	            'section',
+	            { key: index, className: _FloatImageControl2.default.item, 'data-name': field.name, 'data-active': field.active ? '1' : '0', onClick: _this2.toggleProbe },
+	            _react2.default.createElement(
+	              'label',
+	              { className: _FloatImageControl2.default.label },
+	              _react2.default.createElement('i', { className: field.active ? _FloatImageControl2.default.enableLegendIcon : _FloatImageControl2.default.disableLegendIcon, style: { color: field.color } }),
+	              field.name
+	            ),
+	            _react2.default.createElement(
+	              'span',
+	              { className: _FloatImageControl2.default.value, title: field.data[timeIdx] },
+	              field.data[timeIdx]
+	            )
+	          );
+	        })
+	      ),
+	      activeView === 1 ? _react2.default.createElement(_Number2.default, { model: queryDataModel, arg: 'time' }) : null
+	    );
+	  }
+	});
+
+/***/ },
+/* 235 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _DataListenerMixin = __webpack_require__(236);
+
+	var _DataListenerMixin2 = _interopRequireDefault(_DataListenerMixin);
+
+	var _DataListenerUpdateMixin = __webpack_require__(237);
+
+	var _DataListenerUpdateMixin2 = _interopRequireDefault(_DataListenerUpdateMixin);
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(158);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _QueryDataModelWidget = __webpack_require__(238);
+
+	var _QueryDataModelWidget2 = _interopRequireDefault(_QueryDataModelWidget);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * This React component expect the following input properties:
+	 *   - model:
+	 *       Expect a QueryDataModel instance.
+	 *   - listener:
+	 *       Expect a Boolean based on the automatic data model registration for listening.
+	 *       Default value is true but that should be false is nested.
+	 *   - arg:
+	 *       Expect the name of the argument this Number UI element control within the model.
+	 */
+	exports.default = _react2.default.createClass({
+
+	  displayName: 'Number',
+
+	  propTypes: {
+	    arg: _react2.default.PropTypes.string,
+	    model: _react2.default.PropTypes.object.isRequired
+	  },
+
+	  mixins: [_DataListenerMixin2.default, _DataListenerUpdateMixin2.default],
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      advanced: false,
+	      button: false,
+	      slider: false
+	    };
+	  },
+	  onIndexChange: function onIndexChange(event) {
+	    if (this.props.model.setIndex(this.props.arg, Number(event.target.value))) {
+	      this.props.model.lazyFetchData();
+	    }
+	  },
+	  previous: function previous() {
+	    if (this.props.model.previous(this.props.arg)) {
+	      this.props.model.lazyFetchData();
+	      _reactDom2.default.findDOMNode(this.refs.slider).focus();
+	    }
+	  },
+	  next: function next() {
+	    if (this.props.model.next(this.props.arg)) {
+	      this.props.model.lazyFetchData();
+	      _reactDom2.default.findDOMNode(this.refs.slider).focus();
+	    }
+	  },
+	  first: function first() {
+	    if (this.props.model.first(this.props.arg)) {
+	      this.props.model.lazyFetchData();
+	      _reactDom2.default.findDOMNode(this.refs.slider).focus();
+	    }
+	  },
+	  last: function last() {
+	    if (this.props.model.last(this.props.arg)) {
+	      this.props.model.lazyFetchData();
+	      _reactDom2.default.findDOMNode(this.refs.slider).focus();
+	    }
+	  },
+	  updateMode: function updateMode(event) {
+	    if (this.state.advanced !== event.altKey) {
+	      this.setState({ advanced: event.altKey });
+	    }
+	  },
+	  resetState: function resetState(event) {
+	    this.setState({ advanced: false });
+	  },
+	  enableButtons: function enableButtons(event) {
+	    this.setState({ button: true });
+	    _reactDom2.default.findDOMNode(this.refs.slider).focus();
+	  },
+	  disableButtons: function disableButtons() {
+	    this.setState({ button: false, advanced: false });
+	  },
+	  grabFocus: function grabFocus() {
+	    _reactDom2.default.findDOMNode(this.refs.slider).focus();
+	  },
+	  toggleAnimation: function toggleAnimation() {
+	    this.props.model.toggleAnimationFlag(this.props.arg);
+	    this.setState({});
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      {
+	        className: this.props.model.getAnimationFlag(this.props.arg) ? _QueryDataModelWidget2.default.itemActive : _QueryDataModelWidget2.default.item,
+	        onKeyDown: this.updateMode,
+	        onKeyUp: this.resetState,
+	        onMouseLeave: this.disableButtons
+	      },
+	      _react2.default.createElement(
+	        'div',
+	        { className: _QueryDataModelWidget2.default.row },
+	        _react2.default.createElement(
+	          'div',
+	          { className: _QueryDataModelWidget2.default.label, onClick: this.toggleAnimation },
+	          this.props.model.label(this.props.arg)
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: _QueryDataModelWidget2.default.mobileOnly },
+	          this.props.model.getValue(this.props.arg)
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: [_QueryDataModelWidget2.default.itemControl, _QueryDataModelWidget2.default.noMobile].join(' '),
+	            onMouseEnter: this.enableButtons,
+	            onMouseLeave: this.disableButtons
+	          },
+	          _react2.default.createElement(
+	            'div',
+	            { className: this.state.button ? _QueryDataModelWidget2.default.hidden : _QueryDataModelWidget2.default.itemControlValue },
+	            this.props.model.getValue(this.props.arg)
+	          ),
+	          _react2.default.createElement('i', {
+	            className: this.state.button ? this.state.advanced ? _QueryDataModelWidget2.default.firstButton : _QueryDataModelWidget2.default.previousButton : _QueryDataModelWidget2.default.hidden,
+	            onClick: this.state.advanced ? this.first : this.previous
+	          }),
+	          _react2.default.createElement('i', {
+	            className: this.state.button ? this.state.advanced ? _QueryDataModelWidget2.default.lastButton : _QueryDataModelWidget2.default.nextButton : _QueryDataModelWidget2.default.hidden,
+	            onClick: this.state.advanced ? this.last : this.next
+	          })
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: [_QueryDataModelWidget2.default.row, _QueryDataModelWidget2.default.mobileOnly].join(' ') },
+	        _react2.default.createElement(
+	          'div',
+	          { className: _QueryDataModelWidget2.default.itemControl },
+	          _react2.default.createElement('br', null),
+	          _react2.default.createElement('i', {
+	            className: _QueryDataModelWidget2.default.firstButton,
+	            onClick: this.first
+	          }),
+	          _react2.default.createElement('i', {
+	            className: _QueryDataModelWidget2.default.lastButton,
+	            onClick: this.last
+	          }),
+	          _react2.default.createElement('i', {
+	            className: _QueryDataModelWidget2.default.previousButton,
+	            onClick: this.previous
+	          }),
+	          _react2.default.createElement('i', {
+	            className: _QueryDataModelWidget2.default.nextButton,
+	            onClick: this.next
+	          })
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: _QueryDataModelWidget2.default.row },
+	        _react2.default.createElement(
+	          'div',
+	          { className: _QueryDataModelWidget2.default.slider, onMouseEnter: this.grabFocus },
+	          _react2.default.createElement('input', {
+	            className: _QueryDataModelWidget2.default.input,
+	            ref: 'slider',
+	            type: 'range',
+	            min: '0',
+	            max: this.props.model.getSize(this.props.arg) - 1,
+	            value: this.props.model.getIndex(this.props.arg),
+	            onChange: this.onIndexChange
+	          })
+	        )
+	      )
+	    );
+	  }
+	});
+
+/***/ },
+/* 236 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = {
+	  // Attach listener by default
+
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      listener: true
+	    };
+	  },
+	  attachListener: function attachListener(dataModel) {
+	    this.dataSubscription = dataModel.onStateChange(this.dataListenerCallback);
+	  },
+	  detachListener: function detachListener() {
+	    if (this.dataSubscription) {
+	      this.dataSubscription.unsubscribe();
+	      this.dataSubscription = null;
+	    }
+	  },
+
+
+	  // Auto mount listener unless notified otherwise
+	  componentWillMount: function componentWillMount() {
+	    this.detachListener();
+	    if (this.props.listener) {
+	      this.attachListener(this.props.model);
+	    }
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.detachListener();
+	  },
+	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    var previousDataModel = this.props.model,
+	        nextDataModel = nextProps.model;
+
+	    if (previousDataModel !== nextDataModel) {
+	      this.detachListener();
+	      this.attachListener(nextDataModel);
+	    }
+	  }
+	};
+
+/***/ },
+/* 237 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = {
+	  // Callback for data handler
+
+	  dataListenerCallback: function dataListenerCallback(data, envelope) {
+	    this.forceUpdate();
+	  }
+	};
+
+/***/ },
+/* 238 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(239);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(206)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/kw-web-suite/node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]_[local]_[hash:base64:5]!./../../node_modules/kw-web-suite/node_modules/postcss-loader/index.js!./QueryDataModelWidget.mcss", function() {
+				var newContent = require("!!./../../node_modules/kw-web-suite/node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]_[local]_[hash:base64:5]!./../../node_modules/kw-web-suite/node_modules/postcss-loader/index.js!./QueryDataModelWidget.mcss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 239 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(205)();
+	// imports
+	exports.i(__webpack_require__(211), undefined);
+
+	// module
+	exports.push([module.id, ".QueryDataModelWidget_container_3RiI2 {\n    min-width: 5em;\n    width: 100%;\n    box-sizing: border-box;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n}\n\n.QueryDataModelWidget_item_2Lg9R {\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    box-sizing: border-box;\n    margin-top: 10px;\n    border-left: 1px solid #aaa;\n    margin-left: 2px;\n    padding-left: 10px;\n    padding-right: 10px;\n}\n\n.QueryDataModelWidget_itemActive_22p9f {\n\n    border-left: 3px solid #000;\n    margin-left: 0;\n}\n\n.QueryDataModelWidget_row_2pk7N {\n    position: relative;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    -webkit-flex-direction: row;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    margin-top: 5px;\n}\n\n.QueryDataModelWidget_label_1cxKX {\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n\n    /* bold */\n    font-weight: bold;\n\n    /* can't select text */\n    -webkit-user-select: none;\n       -moz-user-select: none;\n        -ms-user-select: none;\n            user-select: none;\n\n    /* click pointer */\n    cursor: pointer;\n}\n\n.QueryDataModelWidget_label_1cxKX::first-letter {\n    text-transform: uppercase;\n}\n\n.QueryDataModelWidget_mobileOnly_2R9HT {\n    display: none;\n}\n\n.QueryDataModelWidget_hidden_3d7T7 {\n    display: none;\n}\n\n.QueryDataModelWidget_itemControl_2nCKS {\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    width: 4em;\n    -webkit-flex: none;\n        -ms-flex: none;\n            flex: none;\n    -webkit-justify-content: flex-end;\n        -ms-flex-pack: end;\n            justify-content: flex-end;\n}\n\n.QueryDataModelWidget_itemControlValue_pUcp8 {\n    position: absolute;\n    top: 0;\n    right: 0;\n\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n}\n\n.QueryDataModelWidget_controlButton_3mJby {\n    cursor: pointer;\n\n    padding-left: 5px;\n    padding-right: 5px;\n}\n\n.QueryDataModelWidget_nextButton_2fV4i {\n}\n\n.QueryDataModelWidget_previousButton_nMeXB {\n}\n\n.QueryDataModelWidget_firstButton_1KPIZ {\n}\n\n.QueryDataModelWidget_lastButton_1YZUM {\n}\n\n\n.QueryDataModelWidget_slider_hVkqm {\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n}\n\n.QueryDataModelWidget_input_11Zsh {\n    width: 100%;\n}\n\n@media screen and (max-width: 400px),\nscreen and (orientation: landscape) and (max-device-width: 400px) {\n    .QueryDataModelWidget_mobileOnly_2R9HT {\n        display: -webkit-flex;\n        display: -ms-flexbox;\n        display: flex;\n    }\n\n    .QueryDataModelWidget_itemControl_2nCKS {\n        -webkit-flex: 1;\n            -ms-flex: 1;\n                flex: 1;\n        -webkit-justify-content: center;\n            -ms-flex-pack: center;\n                justify-content: center;\n    }\n\n    .QueryDataModelWidget_controlButton_3mJby {\n        font-size: 1.4em;\n        padding: 0;\n        text-align: center;\n        -webkit-flex-grow: 1;\n            -ms-flex-positive: 1;\n                flex-grow: 1;\n        height: 1.5em;\n    }\n\n    .QueryDataModelWidget_noMobile_1ZTqM {\n        display: none;\n    }\n\n    input[type=\"range\"]::-webkit-slider-thumb {\n        -webkit-appearance: none;\n                appearance: none;\n        width: 25px;\n        height: 25px;\n        border: 1px solid gray;\n        background-color: white;\n        border-radius: 50%;\n    }\n\n    /* while the style is the same as above, neither will render if grouped */\n    input[type=\"range\"]::-moz-range-thumb {\n        -moz-appearance: none;\n             appearance: none;\n        width: 25px;\n        height: 25px;\n        border: 1px solid gray;\n        background-color: white;\n        border-radius: 50%;\n    }\n}\n\n.is-ios-device .QueryDataModelWidget_mobileOnly_2R9HT {\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n}\n\n.is-ios-device .QueryDataModelWidget_itemControl_2nCKS {\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n}\n\n.is-ios-device .QueryDataModelWidget_controlButton_3mJby {\n    font-size: 1.4em;\n    padding: 0;\n    text-align: center;\n    -webkit-flex-grow: 1;\n        -ms-flex-positive: 1;\n            flex-grow: 1;\n    height: 1.5em;\n}\n\n.is-ios-device .QueryDataModelWidget_noMobile_1ZTqM {\n    display: none;\n}\n\n.is-ios-device input[type=\"range\"]::-webkit-slider-thumb {\n    -webkit-appearance: none;\n            appearance: none;\n    width: 25px;\n    height: 25px;\n    border: 1px solid gray;\n    background-color: white;\n    border-radius: 50%;\n}\n\n/* while the style is the same as above, neither will render if grouped */\n.is-ios-device input[type=\"range\"]::-moz-range-thumb {\n    -moz-appearance: none;\n         appearance: none;\n    width: 25px;\n    height: 25px;\n    border: 1px solid gray;\n    background-color: white;\n    border-radius: 50%;\n}\n", ""]);
+
+	// exports
+	exports.locals = {
+		"container": "QueryDataModelWidget_container_3RiI2",
+		"item": "QueryDataModelWidget_item_2Lg9R",
+		"itemActive": "QueryDataModelWidget_itemActive_22p9f QueryDataModelWidget_item_2Lg9R",
+		"row": "QueryDataModelWidget_row_2pk7N",
+		"label": "QueryDataModelWidget_label_1cxKX",
+		"mobileOnly": "QueryDataModelWidget_mobileOnly_2R9HT",
+		"hidden": "QueryDataModelWidget_hidden_3d7T7",
+		"itemControl": "QueryDataModelWidget_itemControl_2nCKS",
+		"itemControlValue": "QueryDataModelWidget_itemControlValue_pUcp8",
+		"controlButton": "QueryDataModelWidget_controlButton_3mJby",
+		"nextButton": "QueryDataModelWidget_nextButton_2fV4i " + __webpack_require__(211).locals["fa"] + " " + __webpack_require__(211).locals["fa-plus"] + " QueryDataModelWidget_controlButton_3mJby",
+		"previousButton": "QueryDataModelWidget_previousButton_nMeXB " + __webpack_require__(211).locals["fa"] + " " + __webpack_require__(211).locals["fa-minus"] + " QueryDataModelWidget_controlButton_3mJby",
+		"firstButton": "QueryDataModelWidget_firstButton_1KPIZ " + __webpack_require__(211).locals["fa"] + " " + __webpack_require__(211).locals["fa-step-backward"] + " QueryDataModelWidget_controlButton_3mJby",
+		"lastButton": "QueryDataModelWidget_lastButton_1YZUM " + __webpack_require__(211).locals["fa"] + " " + __webpack_require__(211).locals["fa-step-forward"] + " QueryDataModelWidget_controlButton_3mJby",
+		"slider": "QueryDataModelWidget_slider_hVkqm",
+		"input": "QueryDataModelWidget_input_11Zsh",
+		"noMobile": "QueryDataModelWidget_noMobile_1ZTqM"
+	};
+
+/***/ },
+/* 240 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _equals = __webpack_require__(241);
+
+	var _equals2 = _interopRequireDefault(_equals);
+
+	var _InlineToggleButtonWidget = __webpack_require__(243);
+
+	var _InlineToggleButtonWidget2 = _interopRequireDefault(_InlineToggleButtonWidget);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+
+	  displayName: 'InlineToggleButtonWidget',
+
+	  propTypes: {
+	    active: _react2.default.PropTypes.number,
+	    activeColor: _react2.default.PropTypes.string,
+	    defaultColor: _react2.default.PropTypes.string,
+	    height: _react2.default.PropTypes.string,
+	    onChange: _react2.default.PropTypes.func,
+	    options: _react2.default.PropTypes.array.isRequired
+	  },
+
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      activeColor: '#fff',
+	      defaultColor: '#ccc',
+	      height: '1em'
+	    };
+	  },
+	  getInitialState: function getInitialState() {
+	    return {
+	      activeIdx: this.props.active || 0
+	    };
+	  },
+	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    var previous = this.props,
+	        next = nextProps;
+
+	    if (!(0, _equals2.default)(previous, next)) {
+	      this.setState({
+	        activeIdx: next.active || 0
+	      });
+	    }
+	  },
+	  activateButton: function activateButton(e) {
+	    var activeIdx = Number(e.target.dataset.idx);
+	    this.setState({ activeIdx: activeIdx });
+	    if (this.props.onChange) {
+	      this.props.onChange(this.props.options[activeIdx], activeIdx);
+	    }
+	  },
+	  render: function render() {
+	    var _this = this;
+
+	    var currentActive = this.state.activeIdx,
+	        fontSize = this.props.height,
+	        lineHeight = this.props.height,
+	        height = this.props.height;
+
+	    return _react2.default.createElement(
+	      'div',
+	      { className: _InlineToggleButtonWidget2.default.container },
+	      this.props.options.map(function (obj, idx) {
+	        var isActive = currentActive === idx,
+	            background = isActive ? _this.props.activeColor : _this.props.defaultColor,
+	            className = idx === 0 ? isActive ? 'activeFirst' : 'first' : idx === _this.props.options.length - 1 ? isActive ? 'activeLast' : 'last' : isActive ? 'activeMiddle' : 'middle';
+	        if (obj.label) {
+	          return _react2.default.createElement(
+	            'button',
+	            {
+	              style: { lineHeight: lineHeight, fontSize: fontSize, background: background },
+	              key: idx,
+	              onClick: _this.activateButton,
+	              'data-idx': idx,
+	              className: _InlineToggleButtonWidget2.default[className]
+	            },
+	            obj.label
+	          );
+	        }
+	        if (obj.img) {
+	          return _react2.default.createElement(
+	            'div',
+	            {
+	              style: { lineHeight: lineHeight, height: height, fontSize: fontSize, background: background },
+	              key: idx,
+	              onClick: _this.activateButton,
+	              'data-idx': idx,
+	              className: _InlineToggleButtonWidget2.default[className]
+	            },
+	            _react2.default.createElement('img', { 'data-idx': idx, onClick: _this.activateButton, height: '100%', src: obj.img })
+	          );
+	        }
+	        if (obj.icon) {
+	          return _react2.default.createElement('i', {
+	            key: idx,
+	            style: { lineHeight: lineHeight, fontSize: fontSize, background: background },
+	            onClick: _this.activateButton,
+	            'data-idx': idx,
+	            className: [_InlineToggleButtonWidget2.default[className], obj.icon].join(' ')
+	          });
+	        }
+	        return null;
+	      })
+	    );
+	  }
+	});
+
+/***/ },
+/* 241 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
+
+	!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(170), __webpack_require__(242), __webpack_require__(202), __webpack_require__(160)], __WEBPACK_AMD_DEFINE_RESULT__ = function (hasOwn, every, isObject, is) {
+
+	    // Makes a function to compare the object values from the specified compare
+	    // operation callback.
+	    function makeCompare(callback) {
+	        return function (value, key) {
+	            return hasOwn(this, key) && callback(value, this[key]);
+	        };
+	    }
+
+	    function checkProperties(value, key) {
+	        return hasOwn(this, key);
+	    }
+
+	    /**
+	     * Checks if two objects have the same keys and values.
+	     */
+	    function equals(a, b, callback) {
+	        callback = callback || is;
+
+	        if (!isObject(a) || !isObject(b)) {
+	            return callback(a, b);
+	        }
+
+	        return every(a, makeCompare(callback), b) && every(b, checkProperties, a);
+	    }
+
+	    return equals;
+	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+/***/ },
+/* 242 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
+
+	!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(169), __webpack_require__(165)], __WEBPACK_AMD_DEFINE_RESULT__ = function (forOwn, makeIterator) {
+
+	    /**
+	     * Object every
+	     */
+	    function every(obj, callback, thisObj) {
+	        callback = makeIterator(callback, thisObj);
+	        var result = true;
+	        forOwn(obj, function (val, key) {
+	            // we consider any falsy values as "false" on purpose so shorthand
+	            // syntax can be used to check property existence
+	            if (!callback(val, key, obj)) {
+	                result = false;
+	                return false; // break
+	            }
+	        });
+	        return result;
+	    }
+
+	    return every;
+	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+/***/ },
+/* 243 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(244);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(206)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/kw-web-suite/node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]_[local]_[hash:base64:5]!./../../node_modules/kw-web-suite/node_modules/postcss-loader/index.js!./InlineToggleButtonWidget.mcss", function() {
+				var newContent = require("!!./../../node_modules/kw-web-suite/node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]_[local]_[hash:base64:5]!./../../node_modules/kw-web-suite/node_modules/postcss-loader/index.js!./InlineToggleButtonWidget.mcss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 244 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(205)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".InlineToggleButtonWidget_container_1MUMl {\n  display: -webkit-inline-flex;\n  display: -ms-inline-flexbox;\n  display: inline-flex;\n  -webkit-align-items: stretch;\n      -ms-flex-align: stretch;\n          align-items: stretch;\n}\n\n.InlineToggleButtonWidget_button_2Nqv7 {\n    border: 1px solid black;\n    display: inline-block;\n    margin: 0;\n    padding: 5px 10px;\n}\n\n.InlineToggleButtonWidget_active_2JFqR {\n\n}\n\n.InlineToggleButtonWidget_first_1ztOF {\n    border-radius: 5px 0 0 5px;\n}\n\n.InlineToggleButtonWidget_last_3ZYpG {\n    border-radius: 0 5px 5px 0;\n    border-left: 0;\n}\n\n.InlineToggleButtonWidget_middle_XP3LQ {\n    border-radius: 0;\n    border-left: 0;\n}\n\n.InlineToggleButtonWidget_activeFirst_2HBmT {\n}\n\n.InlineToggleButtonWidget_activeLast_2nxRe {\n}\n\n.InlineToggleButtonWidget_activeMiddle_Ghpas {\n}\n", ""]);
+
+	// exports
+	exports.locals = {
+		"container": "InlineToggleButtonWidget_container_1MUMl",
+		"button": "InlineToggleButtonWidget_button_2Nqv7",
+		"active": "InlineToggleButtonWidget_active_2JFqR",
+		"first": "InlineToggleButtonWidget_first_1ztOF InlineToggleButtonWidget_button_2Nqv7",
+		"last": "InlineToggleButtonWidget_last_3ZYpG InlineToggleButtonWidget_button_2Nqv7",
+		"middle": "InlineToggleButtonWidget_middle_XP3LQ InlineToggleButtonWidget_button_2Nqv7",
+		"activeFirst": "InlineToggleButtonWidget_activeFirst_2HBmT InlineToggleButtonWidget_active_2JFqR InlineToggleButtonWidget_first_1ztOF InlineToggleButtonWidget_button_2Nqv7",
+		"activeLast": "InlineToggleButtonWidget_activeLast_2nxRe InlineToggleButtonWidget_active_2JFqR InlineToggleButtonWidget_last_3ZYpG InlineToggleButtonWidget_button_2Nqv7",
+		"activeMiddle": "InlineToggleButtonWidget_activeMiddle_Ghpas InlineToggleButtonWidget_active_2JFqR InlineToggleButtonWidget_middle_XP3LQ InlineToggleButtonWidget_button_2Nqv7"
+	};
+
+/***/ },
+/* 245 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _ToggleIconButtonWidget = __webpack_require__(246);
+
+	var _ToggleIconButtonWidget2 = _interopRequireDefault(_ToggleIconButtonWidget);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+
+	  displayName: 'ToggleIconButtonWidget',
+
+	  propTypes: {
+	    alwaysOn: _react2.default.PropTypes.bool,
+	    className: _react2.default.PropTypes.string,
+	    icon: _react2.default.PropTypes.string,
+	    name: _react2.default.PropTypes.string,
+	    onChange: _react2.default.PropTypes.func,
+	    toggle: _react2.default.PropTypes.bool,
+	    value: _react2.default.PropTypes.bool
+	  },
+
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      className: '',
+	      value: true,
+	      icon: 'fa-sun-o',
+	      toggle: true,
+	      name: 'toggle-button'
+	    };
+	  },
+	  getInitialState: function getInitialState() {
+	    return {
+	      enabled: this.props.value
+	    };
+	  },
+	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    if (nextProps.value !== this.state.enabled) {
+	      this.setState({ enabled: nextProps.value });
+	    }
+	  },
+	  buttonClicked: function buttonClicked() {
+	    var enabled = this.props.toggle ? !this.state.enabled : this.state.enabled;
+	    if (this.props.onChange) {
+	      this.props.onChange(enabled, this.props.name);
+	    }
+	    if (this.props.toggle) {
+	      this.setState({ enabled: enabled });
+	    }
+	  },
+	  render: function render() {
+	    var classList = [this.props.icon, this.props.className];
+	    classList.push(this.state.enabled || this.props.alwaysOn ? _ToggleIconButtonWidget2.default.enabledButton : _ToggleIconButtonWidget2.default.disabledButton);
+	    return _react2.default.createElement('i', { className: classList.join(' '), onClick: this.buttonClicked });
+	  }
+	});
+
+/***/ },
+/* 246 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(247);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(206)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/kw-web-suite/node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]_[local]_[hash:base64:5]!./../../node_modules/kw-web-suite/node_modules/postcss-loader/index.js!./ToggleIconButtonWidget.mcss", function() {
+				var newContent = require("!!./../../node_modules/kw-web-suite/node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]_[local]_[hash:base64:5]!./../../node_modules/kw-web-suite/node_modules/postcss-loader/index.js!./ToggleIconButtonWidget.mcss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 247 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(205)();
+	// imports
+	exports.i(__webpack_require__(211), undefined);
+
+	// module
+	exports.push([module.id, ".ToggleIconButtonWidget_button_ddSk3 {\n    cursor: pointer;\n}\n\n.ToggleIconButtonWidget_enabledButton_1BFJh {\n    color: black;\n}\n\n.ToggleIconButtonWidget_disabledButton_K7nsj {\n    color: grey;\n}\n\n\n@media screen and (max-width: 400px),\nscreen and (orientation: landscape) and (max-device-width: 400px) {\n\n    .ToggleIconButtonWidget_button_ddSk3 {\n        font-size: 1.4em;\n        height: 1.5em;\n    }\n\n}\n\n.is-ios-device .ToggleIconButtonWidget_button_ddSk3 {\n    font-size: 1.4em;\n    height: 1.5em;\n}\n", ""]);
+
+	// exports
+	exports.locals = {
+		"button": "ToggleIconButtonWidget_button_ddSk3 " + __webpack_require__(211).locals["fa"] + " " + __webpack_require__(211).locals["fa-fw"] + "",
+		"enabledButton": "ToggleIconButtonWidget_enabledButton_1BFJh ToggleIconButtonWidget_button_ddSk3 " + __webpack_require__(211).locals["fa"] + " " + __webpack_require__(211).locals["fa-fw"] + "",
+		"disabledButton": "ToggleIconButtonWidget_disabledButton_K7nsj ToggleIconButtonWidget_button_ddSk3 " + __webpack_require__(211).locals["fa"] + " " + __webpack_require__(211).locals["fa-fw"] + ""
+	};
+
+/***/ },
+/* 248 */
+/***/ function(module, exports, __webpack_require__) {
+
 	/* WEBPACK VAR INJECTION */(function(setImmediate) {'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -40910,15 +41908,15 @@
 
 	var _CollapsibleWidget2 = _interopRequireDefault(_CollapsibleWidget);
 
-	var _Coordinate2DWidget = __webpack_require__(235);
+	var _Coordinate2DWidget = __webpack_require__(249);
 
 	var _Coordinate2DWidget2 = _interopRequireDefault(_Coordinate2DWidget);
 
-	var _ToggleIconButtonWidget = __webpack_require__(240);
+	var _ToggleIconButtonWidget = __webpack_require__(245);
 
 	var _ToggleIconButtonWidget2 = _interopRequireDefault(_ToggleIconButtonWidget);
 
-	var _NumberInputWidget = __webpack_require__(243);
+	var _NumberInputWidget = __webpack_require__(252);
 
 	var _NumberInputWidget2 = _interopRequireDefault(_NumberInputWidget);
 
@@ -40926,7 +41924,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _LightControl = __webpack_require__(244);
+	var _LightControl = __webpack_require__(253);
 
 	var _LightControl2 = _interopRequireDefault(_LightControl);
 
@@ -41035,7 +42033,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(183).setImmediate))
 
 /***/ },
-/* 235 */
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41044,7 +42042,7 @@
 	  value: true
 	});
 
-	var _equals = __webpack_require__(236);
+	var _equals = __webpack_require__(241);
 
 	var _equals2 = _interopRequireDefault(_equals);
 
@@ -41060,7 +42058,7 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _Coordinate2DWidget = __webpack_require__(238);
+	var _Coordinate2DWidget = __webpack_require__(250);
 
 	var _Coordinate2DWidget2 = _interopRequireDefault(_Coordinate2DWidget);
 
@@ -41257,77 +42255,13 @@
 	});
 
 /***/ },
-/* 236 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
-
-	!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(170), __webpack_require__(237), __webpack_require__(202), __webpack_require__(160)], __WEBPACK_AMD_DEFINE_RESULT__ = function (hasOwn, every, isObject, is) {
-
-	    // Makes a function to compare the object values from the specified compare
-	    // operation callback.
-	    function makeCompare(callback) {
-	        return function (value, key) {
-	            return hasOwn(this, key) && callback(value, this[key]);
-	        };
-	    }
-
-	    function checkProperties(value, key) {
-	        return hasOwn(this, key);
-	    }
-
-	    /**
-	     * Checks if two objects have the same keys and values.
-	     */
-	    function equals(a, b, callback) {
-	        callback = callback || is;
-
-	        if (!isObject(a) || !isObject(b)) {
-	            return callback(a, b);
-	        }
-
-	        return every(a, makeCompare(callback), b) && every(b, checkProperties, a);
-	    }
-
-	    return equals;
-	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-
-/***/ },
-/* 237 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
-
-	!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(169), __webpack_require__(165)], __WEBPACK_AMD_DEFINE_RESULT__ = function (forOwn, makeIterator) {
-
-	    /**
-	     * Object every
-	     */
-	    function every(obj, callback, thisObj) {
-	        callback = makeIterator(callback, thisObj);
-	        var result = true;
-	        forOwn(obj, function (val, key) {
-	            // we consider any falsy values as "false" on purpose so shorthand
-	            // syntax can be used to check property existence
-	            if (!callback(val, key, obj)) {
-	                result = false;
-	                return false; // break
-	            }
-	        });
-	        return result;
-	    }
-
-	    return every;
-	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-
-/***/ },
-/* 238 */
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(239);
+	var content = __webpack_require__(251);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(206)(content, {});
@@ -41347,7 +42281,7 @@
 	}
 
 /***/ },
-/* 239 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(205)();
@@ -41369,120 +42303,7 @@
 	};
 
 /***/ },
-/* 240 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _ToggleIconButtonWidget = __webpack_require__(241);
-
-	var _ToggleIconButtonWidget2 = _interopRequireDefault(_ToggleIconButtonWidget);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = _react2.default.createClass({
-
-	  displayName: 'ToggleIconButtonWidget',
-
-	  propTypes: {
-	    alwaysOn: _react2.default.PropTypes.bool,
-	    className: _react2.default.PropTypes.string,
-	    icon: _react2.default.PropTypes.string,
-	    name: _react2.default.PropTypes.string,
-	    onChange: _react2.default.PropTypes.func,
-	    toggle: _react2.default.PropTypes.bool,
-	    value: _react2.default.PropTypes.bool
-	  },
-
-	  getDefaultProps: function getDefaultProps() {
-	    return {
-	      className: '',
-	      value: true,
-	      icon: 'fa-sun-o',
-	      toggle: true,
-	      name: 'toggle-button'
-	    };
-	  },
-	  getInitialState: function getInitialState() {
-	    return {
-	      enabled: this.props.value
-	    };
-	  },
-	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	    if (nextProps.value !== this.state.enabled) {
-	      this.setState({ enabled: nextProps.value });
-	    }
-	  },
-	  buttonClicked: function buttonClicked() {
-	    var enabled = this.props.toggle ? !this.state.enabled : this.state.enabled;
-	    if (this.props.onChange) {
-	      this.props.onChange(enabled, this.props.name);
-	    }
-	    if (this.props.toggle) {
-	      this.setState({ enabled: enabled });
-	    }
-	  },
-	  render: function render() {
-	    var classList = [this.props.icon, this.props.className];
-	    classList.push(this.state.enabled || this.props.alwaysOn ? _ToggleIconButtonWidget2.default.enabledButton : _ToggleIconButtonWidget2.default.disabledButton);
-	    return _react2.default.createElement('i', { className: classList.join(' '), onClick: this.buttonClicked });
-	  }
-	});
-
-/***/ },
-/* 241 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(242);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(206)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/kw-web-suite/node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]_[local]_[hash:base64:5]!./../../node_modules/kw-web-suite/node_modules/postcss-loader/index.js!./ToggleIconButtonWidget.mcss", function() {
-				var newContent = require("!!./../../node_modules/kw-web-suite/node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]_[local]_[hash:base64:5]!./../../node_modules/kw-web-suite/node_modules/postcss-loader/index.js!./ToggleIconButtonWidget.mcss");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 242 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(205)();
-	// imports
-	exports.i(__webpack_require__(211), undefined);
-
-	// module
-	exports.push([module.id, ".ToggleIconButtonWidget_button_ddSk3 {\n    cursor: pointer;\n}\n\n.ToggleIconButtonWidget_enabledButton_1BFJh {\n    color: black;\n}\n\n.ToggleIconButtonWidget_disabledButton_K7nsj {\n    color: grey;\n}\n\n\n@media screen and (max-width: 400px),\nscreen and (orientation: landscape) and (max-device-width: 400px) {\n\n    .ToggleIconButtonWidget_button_ddSk3 {\n        font-size: 1.4em;\n        height: 1.5em;\n    }\n\n}\n\n.is-ios-device .ToggleIconButtonWidget_button_ddSk3 {\n    font-size: 1.4em;\n    height: 1.5em;\n}\n", ""]);
-
-	// exports
-	exports.locals = {
-		"button": "ToggleIconButtonWidget_button_ddSk3 " + __webpack_require__(211).locals["fa"] + " " + __webpack_require__(211).locals["fa-fw"] + "",
-		"enabledButton": "ToggleIconButtonWidget_enabledButton_1BFJh ToggleIconButtonWidget_button_ddSk3 " + __webpack_require__(211).locals["fa"] + " " + __webpack_require__(211).locals["fa-fw"] + "",
-		"disabledButton": "ToggleIconButtonWidget_disabledButton_K7nsj ToggleIconButtonWidget_button_ddSk3 " + __webpack_require__(211).locals["fa"] + " " + __webpack_require__(211).locals["fa-fw"] + ""
-	};
-
-/***/ },
-/* 243 */
+/* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41556,13 +42377,13 @@
 	});
 
 /***/ },
-/* 244 */
+/* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(245);
+	var content = __webpack_require__(254);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(206)(content, {});
@@ -41582,7 +42403,7 @@
 	}
 
 /***/ },
-/* 245 */
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(205)();
@@ -41601,7 +42422,7 @@
 	};
 
 /***/ },
-/* 246 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41614,11 +42435,11 @@
 
 	var _CollapsibleWidget2 = _interopRequireDefault(_CollapsibleWidget);
 
-	var _LookupTableWidget = __webpack_require__(247);
+	var _LookupTableWidget = __webpack_require__(256);
 
 	var _LookupTableWidget2 = _interopRequireDefault(_LookupTableWidget);
 
-	var _DropDownWidget = __webpack_require__(254);
+	var _DropDownWidget = __webpack_require__(263);
 
 	var _DropDownWidget2 = _interopRequireDefault(_DropDownWidget);
 
@@ -41693,7 +42514,7 @@
 	});
 
 /***/ },
-/* 247 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41702,11 +42523,11 @@
 	  value: true
 	});
 
-	var _ColorPickerWidget = __webpack_require__(248);
+	var _ColorPickerWidget = __webpack_require__(257);
 
 	var _ColorPickerWidget2 = _interopRequireDefault(_ColorPickerWidget);
 
-	var _NumberInputWidget = __webpack_require__(243);
+	var _NumberInputWidget = __webpack_require__(252);
 
 	var _NumberInputWidget2 = _interopRequireDefault(_NumberInputWidget);
 
@@ -41718,7 +42539,7 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _LookupTableWidget = __webpack_require__(252);
+	var _LookupTableWidget = __webpack_require__(261);
 
 	var _LookupTableWidget2 = _interopRequireDefault(_LookupTableWidget);
 
@@ -42088,7 +42909,7 @@
 	});
 
 /***/ },
-/* 248 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42105,11 +42926,11 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _defaultSwatches = __webpack_require__(249);
+	var _defaultSwatches = __webpack_require__(258);
 
 	var _defaultSwatches2 = _interopRequireDefault(_defaultSwatches);
 
-	var _ColorPickerWidget = __webpack_require__(250);
+	var _ColorPickerWidget = __webpack_require__(259);
 
 	var _ColorPickerWidget2 = _interopRequireDefault(_ColorPickerWidget);
 
@@ -42290,19 +43111,19 @@
 	});
 
 /***/ },
-/* 249 */
+/* 258 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXQAAABsCAYAAAB6kUkRAAAAAXNSR0IArs4c6QAAAVlpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDUuNC4wIj4KICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1sbnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iPgogICAgICAgICA8dGlmZjpPcmllbnRhdGlvbj4xPC90aWZmOk9yaWVudGF0aW9uPgogICAgICA8L3JkZjpEZXNjcmlwdGlvbj4KICAgPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KTMInWQAABWdJREFUeAHt3EFq40AQBdCZQQcK5P5HEPhGM2ZAO6dCFS26ynnZGNLdcvl9+6OVfv99/v1K/J2Jvf+3pg9k38D+lQKf6YsJOE2280AyYOnuDCv/3n/yR5wgQIAAgY4CCr1jKmYiQIBAQUChF9AcIUCAQEcBhd4xFTMRIECgIKDQC2iOECBAoKOAQu+YipkIECBQEFDoBTRHCBAg0FFAoXdMxUwECBAoCCj0ApojBAgQ6Cig0DumYiYCBAgUBBR6Ac0RAgQIdBQ4zjP3tIbzM/kwiOynzo2TvfqP239zWgVPARfQvj7SLGDpfh1VbSUXsDv0mrJTBAgQaCeg0NtFYiACBAjUBBR6zc0pAgQItBNQ6O0iMRABAgRqAgq95uYUAQIE2gko9HaRGIgAAQI1AYVec3OKAAEC7QQUertIDESAAIGagEKvuTlFgACBdgIKvV0kBiJAgEBNQKHX3JwiQIBAO4EjO1G7ZzW0Gygrmtufe7JD7to9dwu4Zy5rpvph6T7R7v0Fu0Nf8710FQIECGwXUOjbIzAAAQIE1ggo9DWOrkKAAIHtAgp9ewQGIECAwBoBhb7G0VUIECCwXUChb4/AAAQIEFgjoNDXOLoKAQIEtgso9O0RGIAAAQJrBBT6GkdXIUCAwHYBhb49AgMQIEBgjYBCX+PoKgQIENgucJxn7mkK5+e9zyK4XST3cW8fZ7jm7T75NxBw3mzOiWbpPuF6/YLdoc/5LpuUAAECoYBCD3ksEiBAYI6AQp+TlUkJECAQCij0kMciAQIE5ggo9DlZmZQAAQKhgEIPeSwSIEBgjoBCn5OVSQkQIBAKKPSQxyIBAgTmCCj0OVmZlAABAqGAQg95LBIgQGCOgEKfk5VJCRAgEAoc4eqLxceL/731v5If+OOtMd7xwwn4HVO9PlMy3eex2b9gd+hX8l4JECAwXEChDw/Q+AQIELgEFPol4ZUAAQLDBRT68ACNT4AAgUtAoV8SXgkQIDBcQKEPD9D4BAgQuAQU+iXhlQABAsMFFPrwAI1PgACBS0ChXxJeCRAgMFxAoQ8P0PgECBC4BBT6JeGVAAECwwWO8zxzHyG7P3d1uzcLJL8Nm6f19mkBAafJJh1whz4pLbMSIEAgEFDoAY4lAgQITBJQ6JPSMisBAgQCAYUe4FgiQIDAJAGFPiktsxIgQCAQUOgBjiUCBAhMElDok9IyKwECBAIBhR7gWCJAgMAkAYU+KS2zEiBAIBBQ6AGOJQIECEwSUOiT0jIrAQIEAoEjWHu95Fkur12a/tejO5oGs2osAa+SbHqdXMDu0JvGaCwCBAhkBRR6Vsx+AgQINBVQ6E2DMRYBAgSyAgo9K2Y/AQIEmgoo9KbBGIsAAQJZAYWeFbOfAAECTQUUetNgjEWAAIGsgELPitlPgACBpgIKvWkwxiJAgEBWQKFnxewnQIBAUwGF3jQYYxEgQCArcJyezZI127o/92SHraN684qAgCtqg87cG7A79EFfBaMSIEAgElDokY41AgQIDBJQ6IPCMioBAgQiAYUe6VgjQIDAIAGFPigsoxIgQCASUOiRjjUCBAgMElDog8IyKgECBCIBhR7pWCNAgMAgAYU+KCyjEiBAIBJQ6JGONQIECAwSUOiDwjIqAQIEIoHj8XhE69ZuFrj3yQ43D+/y3wsI+HujxI58W30krl7Zem/A2endoVcydIYAAQINBRR6w1CMRIAAgYqAQq+oOUOAAIGGAgq9YShGIkCAQEVAoVfUnCFAgEBDAYXeMBQjESBAoCKg0CtqzhAgQKChgEJvGIqRCBAgUBFQ6BU1ZwgQINBQQKE3DMVIBAgQqAgo9IqaMwQIEGgo8A9bODHAkaf7RwAAAABJRU5ErkJggg=="
 
 /***/ },
-/* 250 */
+/* 259 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(251);
+	var content = __webpack_require__(260);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(206)(content, {});
@@ -42322,7 +43143,7 @@
 	}
 
 /***/ },
-/* 251 */
+/* 260 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(205)();
@@ -42343,13 +43164,13 @@
 	};
 
 /***/ },
-/* 252 */
+/* 261 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(253);
+	var content = __webpack_require__(262);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(206)(content, {});
@@ -42369,7 +43190,7 @@
 	}
 
 /***/ },
-/* 253 */
+/* 262 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(205)();
@@ -42405,7 +43226,7 @@
 	};
 
 /***/ },
-/* 254 */
+/* 263 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42418,7 +43239,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _DropDownWidget = __webpack_require__(255);
+	var _DropDownWidget = __webpack_require__(264);
 
 	var _DropDownWidget2 = _interopRequireDefault(_DropDownWidget);
 
@@ -42486,13 +43307,13 @@
 	});
 
 /***/ },
-/* 255 */
+/* 264 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(256);
+	var content = __webpack_require__(265);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(206)(content, {});
@@ -42512,7 +43333,7 @@
 	}
 
 /***/ },
-/* 256 */
+/* 265 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(205)();
@@ -42532,7 +43353,7 @@
 	};
 
 /***/ },
-/* 257 */
+/* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42549,7 +43370,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _TextInputWidget = __webpack_require__(258);
+	var _TextInputWidget = __webpack_require__(267);
 
 	var _TextInputWidget2 = _interopRequireDefault(_TextInputWidget);
 
@@ -42591,7 +43412,7 @@
 	});
 
 /***/ },
-/* 258 */
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42604,7 +43425,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _TextInputWidget = __webpack_require__(259);
+	var _TextInputWidget = __webpack_require__(268);
 
 	var _TextInputWidget2 = _interopRequireDefault(_TextInputWidget);
 
@@ -42662,13 +43483,13 @@
 	});
 
 /***/ },
-/* 259 */
+/* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(260);
+	var content = __webpack_require__(269);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(206)(content, {});
@@ -42688,7 +43509,7 @@
 	}
 
 /***/ },
-/* 260 */
+/* 269 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(205)();
@@ -42707,7 +43528,7 @@
 	};
 
 /***/ },
-/* 261 */
+/* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(setImmediate) {'use strict';
@@ -42927,7 +43748,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(183).setImmediate))
 
 /***/ },
-/* 262 */
+/* 271 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42940,19 +43761,19 @@
 
 	var _CollapsibleWidget2 = _interopRequireDefault(_CollapsibleWidget);
 
-	var _DataListenerMixin = __webpack_require__(263);
+	var _DataListenerMixin = __webpack_require__(236);
 
 	var _DataListenerMixin2 = _interopRequireDefault(_DataListenerMixin);
 
-	var _DataListenerUpdateMixin = __webpack_require__(264);
+	var _DataListenerUpdateMixin = __webpack_require__(237);
 
 	var _DataListenerUpdateMixin2 = _interopRequireDefault(_DataListenerUpdateMixin);
 
-	var _ToggleIconButtonWidget = __webpack_require__(240);
+	var _ToggleIconButtonWidget = __webpack_require__(245);
 
 	var _ToggleIconButtonWidget2 = _interopRequireDefault(_ToggleIconButtonWidget);
 
-	var _QueryDataModelWidget = __webpack_require__(265);
+	var _QueryDataModelWidget = __webpack_require__(272);
 
 	var _QueryDataModelWidget2 = _interopRequireDefault(_QueryDataModelWidget);
 
@@ -42960,7 +43781,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _QueryDataModelControl = __webpack_require__(270);
+	var _QueryDataModelControl = __webpack_require__(274);
 
 	var _QueryDataModelControl2 = _interopRequireDefault(_QueryDataModelControl);
 
@@ -42999,6 +43820,7 @@
 	        title: 'Parameters',
 	        key: 'QueryDataModelWidget_parent',
 	        visible: this.props.model.originalData.arguments_order.length > 0,
+	        activeSubTitle: true,
 	        subtitle: exploreButton
 	      },
 	      _react2.default.createElement(_QueryDataModelWidget2.default, {
@@ -43011,73 +43833,7 @@
 	});
 
 /***/ },
-/* 263 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = {
-	  // Attach listener by default
-
-	  getDefaultProps: function getDefaultProps() {
-	    return {
-	      listener: true
-	    };
-	  },
-	  attachListener: function attachListener(dataModel) {
-	    this.dataSubscription = dataModel.onStateChange(this.dataListenerCallback);
-	  },
-	  detachListener: function detachListener() {
-	    if (this.dataSubscription) {
-	      this.dataSubscription.unsubscribe();
-	      this.dataSubscription = null;
-	    }
-	  },
-
-
-	  // Auto mount listener unless notified otherwise
-	  componentWillMount: function componentWillMount() {
-	    this.detachListener();
-	    if (this.props.listener) {
-	      this.attachListener(this.props.model);
-	    }
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
-	    this.detachListener();
-	  },
-	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	    var previousDataModel = this.props.model,
-	        nextDataModel = nextProps.model;
-
-	    if (previousDataModel !== nextDataModel) {
-	      this.detachListener();
-	      this.attachListener(nextDataModel);
-	    }
-	  }
-	};
-
-/***/ },
-/* 264 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = {
-	  // Callback for data handler
-
-	  dataListenerCallback: function dataListenerCallback(data, envelope) {
-	    this.forceUpdate();
-	  }
-	};
-
-/***/ },
-/* 265 */
+/* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43086,19 +43842,19 @@
 	  value: true
 	});
 
-	var _String = __webpack_require__(266);
+	var _String = __webpack_require__(273);
 
 	var _String2 = _interopRequireDefault(_String);
 
-	var _Number = __webpack_require__(269);
+	var _Number = __webpack_require__(235);
 
 	var _Number2 = _interopRequireDefault(_Number);
 
-	var _DataListenerMixin = __webpack_require__(263);
+	var _DataListenerMixin = __webpack_require__(236);
 
 	var _DataListenerMixin2 = _interopRequireDefault(_DataListenerMixin);
 
-	var _DataListenerUpdateMixin = __webpack_require__(264);
+	var _DataListenerUpdateMixin = __webpack_require__(237);
 
 	var _DataListenerUpdateMixin2 = _interopRequireDefault(_DataListenerUpdateMixin);
 
@@ -43106,7 +43862,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _QueryDataModelWidget = __webpack_require__(267);
+	var _QueryDataModelWidget = __webpack_require__(238);
 
 	var _QueryDataModelWidget2 = _interopRequireDefault(_QueryDataModelWidget);
 
@@ -43132,7 +43888,10 @@
 
 	  render: function render() {
 	    var model = this.props.model,
-	        orderList = model.originalData.arguments_order;
+	        args = model.originalData.arguments,
+	        orderList = model.originalData.arguments_order.filter(function (name) {
+	      return args[name].values.length > 1;
+	    });
 
 	    return _react2.default.createElement(
 	      'div',
@@ -43160,7 +43919,7 @@
 	});
 
 /***/ },
-/* 266 */
+/* 273 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43169,11 +43928,11 @@
 	  value: true
 	});
 
-	var _DataListenerMixin = __webpack_require__(263);
+	var _DataListenerMixin = __webpack_require__(236);
 
 	var _DataListenerMixin2 = _interopRequireDefault(_DataListenerMixin);
 
-	var _DataListenerUpdateMixin = __webpack_require__(264);
+	var _DataListenerUpdateMixin = __webpack_require__(237);
 
 	var _DataListenerUpdateMixin2 = _interopRequireDefault(_DataListenerUpdateMixin);
 
@@ -43185,7 +43944,7 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _QueryDataModelWidget = __webpack_require__(267);
+	var _QueryDataModelWidget = __webpack_require__(238);
 
 	var _QueryDataModelWidget2 = _interopRequireDefault(_QueryDataModelWidget);
 
@@ -43258,271 +44017,13 @@
 	});
 
 /***/ },
-/* 267 */
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(268);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(206)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/kw-web-suite/node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]_[local]_[hash:base64:5]!./../../node_modules/kw-web-suite/node_modules/postcss-loader/index.js!./QueryDataModelWidget.mcss", function() {
-				var newContent = require("!!./../../node_modules/kw-web-suite/node_modules/css-loader/index.js?modules&importLoaders=1&localIdentName=[name]_[local]_[hash:base64:5]!./../../node_modules/kw-web-suite/node_modules/postcss-loader/index.js!./QueryDataModelWidget.mcss");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 268 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(205)();
-	// imports
-	exports.i(__webpack_require__(211), undefined);
-
-	// module
-	exports.push([module.id, ".QueryDataModelWidget_container_3RiI2 {\n    min-width: 5em;\n    width: 100%;\n    box-sizing: border-box;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n}\n\n.QueryDataModelWidget_item_2Lg9R {\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    box-sizing: border-box;\n    margin-top: 10px;\n    border-left: 1px solid #aaa;\n    margin-left: 2px;\n    padding-left: 10px;\n    padding-right: 10px;\n}\n\n.QueryDataModelWidget_itemActive_22p9f {\n\n    border-left: 3px solid #000;\n    margin-left: 0;\n}\n\n.QueryDataModelWidget_row_2pk7N {\n    position: relative;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    -webkit-flex-direction: row;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    margin-top: 5px;\n}\n\n.QueryDataModelWidget_label_1cxKX {\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n\n    /* bold */\n    font-weight: bold;\n\n    /* can't select text */\n    -webkit-user-select: none;\n       -moz-user-select: none;\n        -ms-user-select: none;\n            user-select: none;\n\n    /* click pointer */\n    cursor: pointer;\n}\n\n.QueryDataModelWidget_label_1cxKX::first-letter {\n    text-transform: uppercase;\n}\n\n.QueryDataModelWidget_mobileOnly_2R9HT {\n    display: none;\n}\n\n.QueryDataModelWidget_hidden_3d7T7 {\n    display: none;\n}\n\n.QueryDataModelWidget_itemControl_2nCKS {\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    width: 4em;\n    -webkit-flex: none;\n        -ms-flex: none;\n            flex: none;\n    -webkit-justify-content: flex-end;\n        -ms-flex-pack: end;\n            justify-content: flex-end;\n}\n\n.QueryDataModelWidget_itemControlValue_pUcp8 {\n    position: absolute;\n    top: 0;\n    right: 0;\n\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n}\n\n.QueryDataModelWidget_controlButton_3mJby {\n    cursor: pointer;\n\n    padding-left: 5px;\n    padding-right: 5px;\n}\n\n.QueryDataModelWidget_nextButton_2fV4i {\n}\n\n.QueryDataModelWidget_previousButton_nMeXB {\n}\n\n.QueryDataModelWidget_firstButton_1KPIZ {\n}\n\n.QueryDataModelWidget_lastButton_1YZUM {\n}\n\n\n.QueryDataModelWidget_slider_hVkqm {\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n}\n\n.QueryDataModelWidget_input_11Zsh {\n    width: 100%;\n}\n\n@media screen and (max-width: 400px),\nscreen and (orientation: landscape) and (max-device-width: 400px) {\n    .QueryDataModelWidget_mobileOnly_2R9HT {\n        display: -webkit-flex;\n        display: -ms-flexbox;\n        display: flex;\n    }\n\n    .QueryDataModelWidget_itemControl_2nCKS {\n        -webkit-flex: 1;\n            -ms-flex: 1;\n                flex: 1;\n        -webkit-justify-content: center;\n            -ms-flex-pack: center;\n                justify-content: center;\n    }\n\n    .QueryDataModelWidget_controlButton_3mJby {\n        font-size: 1.4em;\n        padding: 0;\n        text-align: center;\n        -webkit-flex-grow: 1;\n            -ms-flex-positive: 1;\n                flex-grow: 1;\n        height: 1.5em;\n    }\n\n    .QueryDataModelWidget_noMobile_1ZTqM {\n        display: none;\n    }\n\n    input[type=\"range\"]::-webkit-slider-thumb {\n        -webkit-appearance: none;\n                appearance: none;\n        width: 25px;\n        height: 25px;\n        border: 1px solid gray;\n        background-color: white;\n        border-radius: 50%;\n    }\n\n    /* while the style is the same as above, neither will render if grouped */\n    input[type=\"range\"]::-moz-range-thumb {\n        -moz-appearance: none;\n             appearance: none;\n        width: 25px;\n        height: 25px;\n        border: 1px solid gray;\n        background-color: white;\n        border-radius: 50%;\n    }\n}\n\n.is-ios-device .QueryDataModelWidget_mobileOnly_2R9HT {\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n}\n\n.is-ios-device .QueryDataModelWidget_itemControl_2nCKS {\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n}\n\n.is-ios-device .QueryDataModelWidget_controlButton_3mJby {\n    font-size: 1.4em;\n    padding: 0;\n    text-align: center;\n    -webkit-flex-grow: 1;\n        -ms-flex-positive: 1;\n            flex-grow: 1;\n    height: 1.5em;\n}\n\n.is-ios-device .QueryDataModelWidget_noMobile_1ZTqM {\n    display: none;\n}\n\n.is-ios-device input[type=\"range\"]::-webkit-slider-thumb {\n    -webkit-appearance: none;\n            appearance: none;\n    width: 25px;\n    height: 25px;\n    border: 1px solid gray;\n    background-color: white;\n    border-radius: 50%;\n}\n\n/* while the style is the same as above, neither will render if grouped */\n.is-ios-device input[type=\"range\"]::-moz-range-thumb {\n    -moz-appearance: none;\n         appearance: none;\n    width: 25px;\n    height: 25px;\n    border: 1px solid gray;\n    background-color: white;\n    border-radius: 50%;\n}\n", ""]);
-
-	// exports
-	exports.locals = {
-		"container": "QueryDataModelWidget_container_3RiI2",
-		"item": "QueryDataModelWidget_item_2Lg9R",
-		"itemActive": "QueryDataModelWidget_itemActive_22p9f QueryDataModelWidget_item_2Lg9R",
-		"row": "QueryDataModelWidget_row_2pk7N",
-		"label": "QueryDataModelWidget_label_1cxKX",
-		"mobileOnly": "QueryDataModelWidget_mobileOnly_2R9HT",
-		"hidden": "QueryDataModelWidget_hidden_3d7T7",
-		"itemControl": "QueryDataModelWidget_itemControl_2nCKS",
-		"itemControlValue": "QueryDataModelWidget_itemControlValue_pUcp8",
-		"controlButton": "QueryDataModelWidget_controlButton_3mJby",
-		"nextButton": "QueryDataModelWidget_nextButton_2fV4i " + __webpack_require__(211).locals["fa"] + " " + __webpack_require__(211).locals["fa-plus"] + " QueryDataModelWidget_controlButton_3mJby",
-		"previousButton": "QueryDataModelWidget_previousButton_nMeXB " + __webpack_require__(211).locals["fa"] + " " + __webpack_require__(211).locals["fa-minus"] + " QueryDataModelWidget_controlButton_3mJby",
-		"firstButton": "QueryDataModelWidget_firstButton_1KPIZ " + __webpack_require__(211).locals["fa"] + " " + __webpack_require__(211).locals["fa-step-backward"] + " QueryDataModelWidget_controlButton_3mJby",
-		"lastButton": "QueryDataModelWidget_lastButton_1YZUM " + __webpack_require__(211).locals["fa"] + " " + __webpack_require__(211).locals["fa-step-forward"] + " QueryDataModelWidget_controlButton_3mJby",
-		"slider": "QueryDataModelWidget_slider_hVkqm",
-		"input": "QueryDataModelWidget_input_11Zsh",
-		"noMobile": "QueryDataModelWidget_noMobile_1ZTqM"
-	};
-
-/***/ },
-/* 269 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _DataListenerMixin = __webpack_require__(263);
-
-	var _DataListenerMixin2 = _interopRequireDefault(_DataListenerMixin);
-
-	var _DataListenerUpdateMixin = __webpack_require__(264);
-
-	var _DataListenerUpdateMixin2 = _interopRequireDefault(_DataListenerUpdateMixin);
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(158);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	var _QueryDataModelWidget = __webpack_require__(267);
-
-	var _QueryDataModelWidget2 = _interopRequireDefault(_QueryDataModelWidget);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	/**
-	 * This React component expect the following input properties:
-	 *   - model:
-	 *       Expect a QueryDataModel instance.
-	 *   - listener:
-	 *       Expect a Boolean based on the automatic data model registration for listening.
-	 *       Default value is true but that should be false is nested.
-	 *   - arg:
-	 *       Expect the name of the argument this Number UI element control within the model.
-	 */
-	exports.default = _react2.default.createClass({
-
-	  displayName: 'Number',
-
-	  propTypes: {
-	    arg: _react2.default.PropTypes.string,
-	    model: _react2.default.PropTypes.object.isRequired
-	  },
-
-	  mixins: [_DataListenerMixin2.default, _DataListenerUpdateMixin2.default],
-
-	  getInitialState: function getInitialState() {
-	    return {
-	      advanced: false,
-	      button: false,
-	      slider: false
-	    };
-	  },
-	  onIndexChange: function onIndexChange(event) {
-	    if (this.props.model.setIndex(this.props.arg, Number(event.target.value))) {
-	      this.props.model.lazyFetchData();
-	    }
-	  },
-	  previous: function previous() {
-	    if (this.props.model.previous(this.props.arg)) {
-	      this.props.model.lazyFetchData();
-	      _reactDom2.default.findDOMNode(this.refs.slider).focus();
-	    }
-	  },
-	  next: function next() {
-	    if (this.props.model.next(this.props.arg)) {
-	      this.props.model.lazyFetchData();
-	      _reactDom2.default.findDOMNode(this.refs.slider).focus();
-	    }
-	  },
-	  first: function first() {
-	    if (this.props.model.first(this.props.arg)) {
-	      this.props.model.lazyFetchData();
-	      _reactDom2.default.findDOMNode(this.refs.slider).focus();
-	    }
-	  },
-	  last: function last() {
-	    if (this.props.model.last(this.props.arg)) {
-	      this.props.model.lazyFetchData();
-	      _reactDom2.default.findDOMNode(this.refs.slider).focus();
-	    }
-	  },
-	  updateMode: function updateMode(event) {
-	    if (this.state.advanced !== event.altKey) {
-	      this.setState({ advanced: event.altKey });
-	    }
-	  },
-	  resetState: function resetState(event) {
-	    this.setState({ advanced: false });
-	  },
-	  enableButtons: function enableButtons(event) {
-	    this.setState({ button: true });
-	    _reactDom2.default.findDOMNode(this.refs.slider).focus();
-	  },
-	  disableButtons: function disableButtons() {
-	    this.setState({ button: false, advanced: false });
-	  },
-	  grabFocus: function grabFocus() {
-	    _reactDom2.default.findDOMNode(this.refs.slider).focus();
-	  },
-	  toggleAnimation: function toggleAnimation() {
-	    this.props.model.toggleAnimationFlag(this.props.arg);
-	    this.setState({});
-	  },
-	  render: function render() {
-	    return _react2.default.createElement(
-	      'div',
-	      {
-	        className: this.props.model.getAnimationFlag(this.props.arg) ? _QueryDataModelWidget2.default.itemActive : _QueryDataModelWidget2.default.item,
-	        onKeyDown: this.updateMode,
-	        onKeyUp: this.resetState,
-	        onMouseLeave: this.disableButtons
-	      },
-	      _react2.default.createElement(
-	        'div',
-	        { className: _QueryDataModelWidget2.default.row },
-	        _react2.default.createElement(
-	          'div',
-	          { className: _QueryDataModelWidget2.default.label, onClick: this.toggleAnimation },
-	          this.props.model.label(this.props.arg)
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: _QueryDataModelWidget2.default.mobileOnly },
-	          this.props.model.getValue(this.props.arg)
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: [_QueryDataModelWidget2.default.itemControl, _QueryDataModelWidget2.default.noMobile].join(' '),
-	            onMouseEnter: this.enableButtons,
-	            onMouseLeave: this.disableButtons
-	          },
-	          _react2.default.createElement(
-	            'div',
-	            { className: this.state.button ? _QueryDataModelWidget2.default.hidden : _QueryDataModelWidget2.default.itemControlValue },
-	            this.props.model.getValue(this.props.arg)
-	          ),
-	          _react2.default.createElement('i', {
-	            className: this.state.button ? this.state.advanced ? _QueryDataModelWidget2.default.firstButton : _QueryDataModelWidget2.default.previousButton : _QueryDataModelWidget2.default.hidden,
-	            onClick: this.state.advanced ? this.first : this.previous
-	          }),
-	          _react2.default.createElement('i', {
-	            className: this.state.button ? this.state.advanced ? _QueryDataModelWidget2.default.lastButton : _QueryDataModelWidget2.default.nextButton : _QueryDataModelWidget2.default.hidden,
-	            onClick: this.state.advanced ? this.last : this.next
-	          })
-	        )
-	      ),
-	      _react2.default.createElement(
-	        'div',
-	        { className: [_QueryDataModelWidget2.default.row, _QueryDataModelWidget2.default.mobileOnly].join(' ') },
-	        _react2.default.createElement(
-	          'div',
-	          { className: _QueryDataModelWidget2.default.itemControl },
-	          _react2.default.createElement('br', null),
-	          _react2.default.createElement('i', {
-	            className: _QueryDataModelWidget2.default.firstButton,
-	            onClick: this.first
-	          }),
-	          _react2.default.createElement('i', {
-	            className: _QueryDataModelWidget2.default.lastButton,
-	            onClick: this.last
-	          }),
-	          _react2.default.createElement('i', {
-	            className: _QueryDataModelWidget2.default.previousButton,
-	            onClick: this.previous
-	          }),
-	          _react2.default.createElement('i', {
-	            className: _QueryDataModelWidget2.default.nextButton,
-	            onClick: this.next
-	          })
-	        )
-	      ),
-	      _react2.default.createElement(
-	        'div',
-	        { className: _QueryDataModelWidget2.default.row },
-	        _react2.default.createElement(
-	          'div',
-	          { className: _QueryDataModelWidget2.default.slider, onMouseEnter: this.grabFocus },
-	          _react2.default.createElement('input', {
-	            className: _QueryDataModelWidget2.default.input,
-	            ref: 'slider',
-	            type: 'range',
-	            min: '0',
-	            max: this.props.model.getSize(this.props.arg) - 1,
-	            value: this.props.model.getIndex(this.props.arg),
-	            onChange: this.onIndexChange
-	          })
-	        )
-	      )
-	    );
-	  }
-	});
-
-/***/ },
-/* 270 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(271);
+	var content = __webpack_require__(275);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(206)(content, {});
@@ -43542,7 +44043,7 @@
 	}
 
 /***/ },
-/* 271 */
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(205)();
@@ -43558,7 +44059,7 @@
 	};
 
 /***/ },
-/* 272 */
+/* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43571,15 +44072,15 @@
 
 	var _CollapsibleWidget2 = _interopRequireDefault(_CollapsibleWidget);
 
-	var _EqualizerWidget = __webpack_require__(273);
+	var _EqualizerWidget = __webpack_require__(277);
 
 	var _EqualizerWidget2 = _interopRequireDefault(_EqualizerWidget);
 
-	var _ToggleIconButtonWidget = __webpack_require__(240);
+	var _ToggleIconButtonWidget = __webpack_require__(245);
 
 	var _ToggleIconButtonWidget2 = _interopRequireDefault(_ToggleIconButtonWidget);
 
-	var _LookupTableWidget = __webpack_require__(247);
+	var _LookupTableWidget = __webpack_require__(256);
 
 	var _LookupTableWidget2 = _interopRequireDefault(_LookupTableWidget);
 
@@ -43587,7 +44088,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _VolumeControl = __webpack_require__(276);
+	var _VolumeControl = __webpack_require__(280);
 
 	var _VolumeControl2 = _interopRequireDefault(_VolumeControl);
 
@@ -43688,7 +44189,7 @@
 	});
 
 /***/ },
-/* 273 */
+/* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43715,7 +44216,7 @@
 
 	var _SizeHelper = __webpack_require__(189);
 
-	var _EqualizerWidget = __webpack_require__(274);
+	var _EqualizerWidget = __webpack_require__(278);
 
 	var _EqualizerWidget2 = _interopRequireDefault(_EqualizerWidget);
 
@@ -43865,13 +44366,13 @@
 	});
 
 /***/ },
-/* 274 */
+/* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(275);
+	var content = __webpack_require__(279);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(206)(content, {});
@@ -43891,7 +44392,7 @@
 	}
 
 /***/ },
-/* 275 */
+/* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(205)();
@@ -43908,13 +44409,13 @@
 	};
 
 /***/ },
-/* 276 */
+/* 280 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(277);
+	var content = __webpack_require__(281);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(206)(content, {});
@@ -43934,7 +44435,7 @@
 	}
 
 /***/ },
-/* 277 */
+/* 281 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(205)();
@@ -43951,7 +44452,7 @@
 	};
 
 /***/ },
-/* 278 */
+/* 282 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43964,11 +44465,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _RootItem = __webpack_require__(279);
+	var _RootItem = __webpack_require__(283);
 
 	var _RootItem2 = _interopRequireDefault(_RootItem);
 
-	var _CompositePipelineWidget = __webpack_require__(281);
+	var _CompositePipelineWidget = __webpack_require__(285);
 
 	var _CompositePipelineWidget2 = _interopRequireDefault(_CompositePipelineWidget);
 
@@ -44038,7 +44539,7 @@
 	});
 
 /***/ },
-/* 279 */
+/* 283 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44047,7 +44548,7 @@
 	  value: true
 	});
 
-	var _ChildItem = __webpack_require__(280);
+	var _ChildItem = __webpack_require__(284);
 
 	var _ChildItem2 = _interopRequireDefault(_ChildItem);
 
@@ -44055,7 +44556,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _CompositePipelineWidget = __webpack_require__(281);
+	var _CompositePipelineWidget = __webpack_require__(285);
 
 	var _CompositePipelineWidget2 = _interopRequireDefault(_CompositePipelineWidget);
 
@@ -44177,7 +44678,7 @@
 	});
 
 /***/ },
-/* 280 */
+/* 284 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44190,7 +44691,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _CompositePipelineWidget = __webpack_require__(281);
+	var _CompositePipelineWidget = __webpack_require__(285);
 
 	var _CompositePipelineWidget2 = _interopRequireDefault(_CompositePipelineWidget);
 
@@ -44251,13 +44752,13 @@
 	});
 
 /***/ },
-/* 281 */
+/* 285 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(282);
+	var content = __webpack_require__(286);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(206)(content, {});
@@ -44277,7 +44778,7 @@
 	}
 
 /***/ },
-/* 282 */
+/* 286 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(205)();
@@ -44315,7 +44816,7 @@
 	};
 
 /***/ },
-/* 283 */
+/* 287 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(setImmediate) {'use strict';
@@ -44326,19 +44827,19 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _DataManager = __webpack_require__(284);
+	var _DataManager = __webpack_require__(288);
 
 	var _DataManager2 = _interopRequireDefault(_DataManager);
 
-	var _hasOwn = __webpack_require__(287);
+	var _hasOwn = __webpack_require__(291);
 
 	var _hasOwn2 = _interopRequireDefault(_hasOwn);
 
-	var _max = __webpack_require__(288);
+	var _max = __webpack_require__(292);
 
 	var _max2 = _interopRequireDefault(_max);
 
-	var _min = __webpack_require__(300);
+	var _min = __webpack_require__(304);
 
 	var _min2 = _interopRequireDefault(_min);
 
@@ -44346,15 +44847,15 @@
 
 	var _monologue2 = _interopRequireDefault(_monologue);
 
-	var _now = __webpack_require__(302);
+	var _now = __webpack_require__(306);
 
 	var _now2 = _interopRequireDefault(_now);
 
-	var _omit = __webpack_require__(303);
+	var _omit = __webpack_require__(307);
 
 	var _omit2 = _interopRequireDefault(_omit);
 
-	var _size = __webpack_require__(307);
+	var _size = __webpack_require__(311);
 
 	var _size2 = _interopRequireDefault(_size);
 
@@ -45206,7 +45707,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(183).setImmediate))
 
 /***/ },
-/* 284 */
+/* 288 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -45218,11 +45719,11 @@
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // Module dependencies and constants
 
 
-	var _request = __webpack_require__(285);
+	var _request = __webpack_require__(289);
 
 	var _request2 = _interopRequireDefault(_request);
 
-	var _pattern = __webpack_require__(286);
+	var _pattern = __webpack_require__(290);
 
 	var _pattern2 = _interopRequireDefault(_pattern);
 
@@ -45516,7 +46017,7 @@
 	_monologue2.default.mixInto(DataManager);
 
 /***/ },
-/* 285 */
+/* 289 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -45631,7 +46132,7 @@
 	};
 
 /***/ },
-/* 286 */
+/* 290 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -45723,7 +46224,7 @@
 	exports.default = PatternMap;
 
 /***/ },
-/* 287 */
+/* 291 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -45738,13 +46239,13 @@
 	module.exports = hasOwn;
 
 /***/ },
-/* 288 */
+/* 292 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var arrMax = __webpack_require__(289);
-	var values = __webpack_require__(299);
+	var arrMax = __webpack_require__(293);
+	var values = __webpack_require__(303);
 
 	/**
 	 * Returns maximum value inside object.
@@ -45756,12 +46257,12 @@
 	module.exports = max;
 
 /***/ },
-/* 289 */
+/* 293 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var makeIterator = __webpack_require__(290);
+	var makeIterator = __webpack_require__(294);
 
 	/**
 	 * Return maximum value inside array
@@ -45796,16 +46297,16 @@
 	module.exports = max;
 
 /***/ },
-/* 290 */
+/* 294 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
-	var identity = __webpack_require__(291);
-	var prop = __webpack_require__(292);
-	var deepMatches = __webpack_require__(293);
+	var identity = __webpack_require__(295);
+	var prop = __webpack_require__(296);
+	var deepMatches = __webpack_require__(297);
 
 	/**
 	 * Converts argument into a valid iterator.
@@ -45837,7 +46338,7 @@
 	module.exports = makeIterator;
 
 /***/ },
-/* 291 */
+/* 295 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -45852,7 +46353,7 @@
 	module.exports = identity;
 
 /***/ },
-/* 292 */
+/* 296 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -45869,15 +46370,15 @@
 	module.exports = prop;
 
 /***/ },
-/* 293 */
+/* 297 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
-	var forOwn = __webpack_require__(294);
-	var isArray = __webpack_require__(296);
+	var forOwn = __webpack_require__(298);
+	var isArray = __webpack_require__(300);
 
 	function containsMatch(array, pattern) {
 	    var i = -1,
@@ -45933,13 +46434,13 @@
 	module.exports = deepMatches;
 
 /***/ },
-/* 294 */
+/* 298 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var hasOwn = __webpack_require__(287);
-	var forIn = __webpack_require__(295);
+	var hasOwn = __webpack_require__(291);
+	var forIn = __webpack_require__(299);
 
 	/**
 	 * Similar to Array/forEach but works over object properties and fixes Don't
@@ -45957,12 +46458,12 @@
 	module.exports = forOwn;
 
 /***/ },
-/* 295 */
+/* 299 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var hasOwn = __webpack_require__(287);
+	var hasOwn = __webpack_require__(291);
 
 	var _hasDontEnumBug, _dontEnums;
 
@@ -46025,12 +46526,12 @@
 	module.exports = forIn;
 
 /***/ },
-/* 296 */
+/* 300 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var isKind = __webpack_require__(297);
+	var isKind = __webpack_require__(301);
 	/**
 	 */
 	var isArray = Array.isArray || function (val) {
@@ -46039,12 +46540,12 @@
 	module.exports = isArray;
 
 /***/ },
-/* 297 */
+/* 301 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var kindOf = __webpack_require__(298);
+	var kindOf = __webpack_require__(302);
 	/**
 	 * Check if value is from a specific "kind".
 	 */
@@ -46054,7 +46555,7 @@
 	module.exports = isKind;
 
 /***/ },
-/* 298 */
+/* 302 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -46078,12 +46579,12 @@
 	module.exports = kindOf;
 
 /***/ },
-/* 299 */
+/* 303 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var forOwn = __webpack_require__(294);
+	var forOwn = __webpack_require__(298);
 
 	/**
 	 * Get object values
@@ -46099,13 +46600,13 @@
 	module.exports = values;
 
 /***/ },
-/* 300 */
+/* 304 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var arrMin = __webpack_require__(301);
-	var values = __webpack_require__(299);
+	var arrMin = __webpack_require__(305);
+	var values = __webpack_require__(303);
 
 	/**
 	 * Returns minimum value inside object.
@@ -46117,12 +46618,12 @@
 	module.exports = min;
 
 /***/ },
-/* 301 */
+/* 305 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var makeIterator = __webpack_require__(290);
+	var makeIterator = __webpack_require__(294);
 
 	/**
 	 * Return minimum value inside array
@@ -46157,7 +46658,7 @@
 	module.exports = min;
 
 /***/ },
-/* 302 */
+/* 306 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
@@ -46181,13 +46682,13 @@
 	}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
 /***/ },
-/* 303 */
+/* 307 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var slice = __webpack_require__(304);
-	var contains = __webpack_require__(305);
+	var slice = __webpack_require__(308);
+	var contains = __webpack_require__(309);
 
 	/**
 	 * Return a copy of the object, filtered to only contain properties except the blacklisted keys.
@@ -46207,7 +46708,7 @@
 	module.exports = omit;
 
 /***/ },
-/* 304 */
+/* 308 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -46245,12 +46746,12 @@
 	module.exports = slice;
 
 /***/ },
-/* 305 */
+/* 309 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var indexOf = __webpack_require__(306);
+	var indexOf = __webpack_require__(310);
 
 	/**
 	 * If array contains values.
@@ -46261,7 +46762,7 @@
 	module.exports = contains;
 
 /***/ },
-/* 306 */
+/* 310 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -46293,12 +46794,12 @@
 	module.exports = indexOf;
 
 /***/ },
-/* 307 */
+/* 311 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var forOwn = __webpack_require__(294);
+	var forOwn = __webpack_require__(298);
 
 	/**
 	 * Get object size
@@ -46314,7 +46815,7 @@
 	module.exports = size;
 
 /***/ },
-/* 308 */
+/* 312 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -46401,13 +46902,13 @@
 	};
 
 /***/ },
-/* 309 */
+/* 313 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(310);
+	var content = __webpack_require__(314);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(206)(content, {});
@@ -46427,7 +46928,7 @@
 	}
 
 /***/ },
-/* 310 */
+/* 314 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(205)();

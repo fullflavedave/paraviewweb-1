@@ -5,7 +5,7 @@
   <link href="/paraviewweb/atom.xml" rel="self"/>
   
   <link href="https://kitware.github.io/paraviewweb/"/>
-  <updated>2016-04-27T18:52:45.959Z</updated>
+  <updated>2016-04-27T22:07:05.712Z</updated>
   <id>https://kitware.github.io/paraviewweb/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://kitware.github.io/paraviewweb/news/2016/03/01/paraviewweb-1-2-released/"/>
     <id>https://kitware.github.io/paraviewweb/news/2016/03/01/paraviewweb-1-2-released/</id>
     <published>2016-03-01T00:00:00.000Z</published>
-    <updated>2016-04-27T18:52:45.959Z</updated>
+    <updated>2016-04-27T22:07:05.712Z</updated>
     
     <content type="html">&lt;p&gt;The new version of ParaViewWeb is out…&lt;/p&gt;
 </content>

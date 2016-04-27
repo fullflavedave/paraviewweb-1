@@ -13624,7 +13624,10 @@
 
 	  render: function render() {
 	    var model = this.props.model,
-	        orderList = model.originalData.arguments_order;
+	        args = model.originalData.arguments,
+	        orderList = model.originalData.arguments_order.filter(function (name) {
+	      return args[name].values.length > 1;
+	    });
 
 	    return _react2.default.createElement(
 	      'div',

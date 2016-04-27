@@ -13692,6 +13692,7 @@
 	        title: 'Parameters',
 	        key: 'QueryDataModelWidget_parent',
 	        visible: this.props.model.originalData.arguments_order.length > 0,
+	        activeSubTitle: true,
 	        subtitle: exploreButton
 	      },
 	      _react2.default.createElement(_QueryDataModelWidget2.default, {
@@ -34708,7 +34709,10 @@
 
 	  render: function render() {
 	    var model = this.props.model,
-	        orderList = model.originalData.arguments_order;
+	        args = model.originalData.arguments,
+	        orderList = model.originalData.arguments_order.filter(function (name) {
+	      return args[name].values.length > 1;
+	    });
 
 	    return _react2.default.createElement(
 	      'div',
