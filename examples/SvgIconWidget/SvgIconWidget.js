@@ -19776,23 +19776,25 @@
 	    className: _react2.default.PropTypes.string,
 	    height: _react2.default.PropTypes.string,
 	    icon: _react2.default.PropTypes.string,
-	    width: _react2.default.PropTypes.string
+	    width: _react2.default.PropTypes.string,
+	    style: _react2.default.PropTypes.object
 	  },
 
 	  getDefaultProps: function getDefaultProps() {
 	    return {
 	      className: '',
-	      icon: _kitware2.default
+	      icon: _kitware2.default,
+	      style: {}
 	    };
 	  },
 
 
 	  /* eslint-disable react/no-danger */
 	  render: function render() {
-	    var style = {
+	    var style = Object.assign({}, this.props.style, {
 	      width: this.props.width,
 	      height: this.props.height
-	    };
+	    });
 	    return _react2.default.createElement('svg', {
 	      style: style,
 	      className: this.props.className,
