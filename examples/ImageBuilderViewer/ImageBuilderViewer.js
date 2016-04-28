@@ -38502,10 +38502,10 @@
 	            { className: _FloatImageControl2.default.smallLabel },
 	            'Name'
 	          ),
-	          _react2.default.createElement('input', { className: _FloatImageControl2.default.input, type: 'text', name: 'name', value: activeProbe ? activeProbe.name : '', onChange: this.updateProbe }),
+	          _react2.default.createElement('input', { className: _FloatImageControl2.default.input, type: 'text', name: 'name', value: activeProbe ? activeProbe.name : '' || '', onChange: this.updateProbe }),
 	          _react2.default.createElement(
 	            'select',
-	            { className: _FloatImageControl2.default.dropDown, value: null, onChange: this.updateActive },
+	            { className: _FloatImageControl2.default.dropDown, value: undefined, onChange: this.updateActive },
 	            probeManager.getProbeNames().map(function (name, index) {
 	              return _react2.default.createElement(
 	                'option',
