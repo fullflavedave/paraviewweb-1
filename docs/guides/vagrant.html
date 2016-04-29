@@ -2,15 +2,15 @@
 <html lang="en">
 <head prefix="og: http://ogp.me/ns#">
   <meta charset="utf-8">
-  <title>Contributing | ParaViewWeb</title>
+  <title>ParaViewWeb</title>
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://kitware.github.io/paraviewweb/docs/contributing.html">
+  <link rel="canonical" href="https://kitware.github.io/paraviewweb/docs/guides/vagrant.html">
   <!-- Alternative links -->
   
     
-      <link rel="alternative" hreflang="en" href="https://kitware.github.io/paraviewweb/docs/contributing.html">
+      <link rel="alternative" hreflang="en" href="https://kitware.github.io/paraviewweb/docs/guides/vagrant.html">
     
   
   <!-- Icon -->
@@ -39,25 +39,19 @@
   <!-- RSS -->
   <link rel="alternate" href="/paraviewweb/atom.xml" title="ParaViewWeb">
   <!-- Open Graph -->
-  <meta name="description" content="DevelopmentWe welcome you to join the development of ParaViewWeb. This document will help you through the process.
-Before You StartPlease follow the coding style:
-
-Follow Airbnb JavaScript Style Guide">
+  <meta name="description" content="Vagrant setupAlong with ParaViewWeb, we provide a Vagrant setup which will setupa VM with Apache, ParaView, its launcher and the ParaViewWeb Visualizer application.
+The VM will provide poor rendering">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Contributing">
-<meta property="og:url" content="https://kitware.github.io/paraviewweb/docs/contributing.html">
+<meta property="og:title" content="ParaViewWeb">
+<meta property="og:url" content="https://kitware.github.io/paraviewweb/docs/guides/vagrant.html">
 <meta property="og:site_name" content="ParaViewWeb">
-<meta property="og:description" content="DevelopmentWe welcome you to join the development of ParaViewWeb. This document will help you through the process.
-Before You StartPlease follow the coding style:
-
-Follow Airbnb JavaScript Style Guide">
-<meta property="og:updated_time" content="2016-04-29T17:43:16.650Z">
+<meta property="og:description" content="Vagrant setupAlong with ParaViewWeb, we provide a Vagrant setup which will setupa VM with Apache, ParaView, its launcher and the ParaViewWeb Visualizer application.
+The VM will provide poor rendering">
+<meta property="og:updated_time" content="2016-04-29T17:43:16.654Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Contributing">
-<meta name="twitter:description" content="DevelopmentWe welcome you to join the development of ParaViewWeb. This document will help you through the process.
-Before You StartPlease follow the coding style:
-
-Follow Airbnb JavaScript Style Guide">
+<meta name="twitter:title" content="ParaViewWeb">
+<meta name="twitter:description" content="Vagrant setupAlong with ParaViewWeb, we provide a Vagrant setup which will setupa VM with Apache, ParaView, its launcher and the ParaViewWeb Visualizer application.
+The VM will provide poor rendering">
   <!-- Google Analytics -->
   
 </head>
@@ -95,47 +89,25 @@ Follow Airbnb JavaScript Style Guide">
           <div class="article">
             <div class="inner">
               <header class="article-header">
-                <h1 class="article-title" itemprop="name">Contributing</h1>
+                <h1 class="article-title" itemprop="name"></h1>
               </header>
               <div class="article-content" itemprop="articleBody">
-                <h2 id="Development" class="article-heading"><a href="#Development" class="headerlink" title="Development"></a>Development<a class="article-anchor" href="#Development" aria-hidden="true"></a></h2><p>We welcome you to join the development of ParaViewWeb. This document will help you through the process.</p>
-<h3 id="Before-You-Start" class="article-heading"><a href="#Before-You-Start" class="headerlink" title="Before You Start"></a>Before You Start<a class="article-anchor" href="#Before-You-Start" aria-hidden="true"></a></h3><p>Please follow the coding style:</p>
+                <h1 id="Vagrant-setup" class="article-heading"><a href="#Vagrant-setup" class="headerlink" title="Vagrant setup"></a>Vagrant setup<a class="article-anchor" href="#Vagrant-setup" aria-hidden="true"></a></h1><p>Along with ParaViewWeb, we provide a Vagrant setup which will setup<br>a VM with Apache, ParaView, its launcher and the ParaViewWeb Visualizer application.</p>
+<p>The VM will provide poor rendering performance unless the VM is tuned for<br>using a proper GPU.</p>
+<p>But the goal here was to illustrate how ParaViewWeb can be installed and deployed automatically. Under the hood we rely on an Ansible playbook to<br>provision the Vagrant VM. Therefore that playbook can also be used on actual<br>hardware for better performances.</p>
+<h2 id="Prerequisites" class="article-heading"><a href="#Prerequisites" class="headerlink" title="Prerequisites"></a>Prerequisites<a class="article-anchor" href="#Prerequisites" aria-hidden="true"></a></h2><p>The following set of tools need to be installed:</p>
 <ul>
-<li>Follow <a href="https://github.com/airbnb/javascript" target="_blank" rel="external">Airbnb JavaScript Style Guide</a>.</li>
-<li>Use soft-tabs with a two space indent.</li>
-<li>Don’t put commas first.</li>
+<li><a href="https://www.virtualbox.org/wiki/Downloads" target="_blank" rel="external">VirtualBox</a></li>
+<li><a href="https://www.vagrantup.com/" target="_blank" rel="external">Vagrant</a></li>
+<li><a href="http://www.ansible.com/" target="_blank" rel="external">Ansible</a></li>
 </ul>
-<h3 id="Workflow" class="article-heading"><a href="#Workflow" class="headerlink" title="Workflow"></a>Workflow<a class="article-anchor" href="#Workflow" aria-hidden="true"></a></h3><ol>
-<li>Fork [kitware/paraviewweb].</li>
-<li><p>Clone the repository to your computer and install dependencies.</p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git clone https://github.com/&lt;username&gt;/paraviewweb.git</span><br><span class="line">$ cd paraviewweb</span><br><span class="line">$ npm install</span><br><span class="line">$ npm install -g commitizen</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Create a feature branch.</p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git checkout -b new_feature</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Start hacking.</p>
-</li>
-<li><p>Use Commitizen for commit message</p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git cz</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Push the branch:</p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git push origin new_feature</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Create a pull request and describe the change.</p>
-</li>
-</ol>
-<h3 id="Notice" class="article-heading"><a href="#Notice" class="headerlink" title="Notice"></a>Notice<a class="article-anchor" href="#Notice" aria-hidden="true"></a></h3><ul>
-<li>Don’t modify version number in <code>package.json</code>.</li>
-<li><p>Your pull request will only get merged when tests passed. Don’t forget to run tests before submission.</p>
-  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ npm test</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="Updating-Documentation" class="article-heading"><a href="#Updating-Documentation" class="headerlink" title="Updating Documentation"></a>Updating Documentation<a class="article-anchor" href="#Updating-Documentation" aria-hidden="true"></a></h2><p>The ParaViewWeb documentation is part of the code repository.</p>
-<h2 id="Reporting-Issues" class="article-heading"><a href="#Reporting-Issues" class="headerlink" title="Reporting Issues"></a>Reporting Issues<a class="article-anchor" href="#Reporting-Issues" aria-hidden="true"></a></h2><p>When you encounter some problems when using ParaViewWeb, you can find the solutions in <a href="troubleshooting.html">Troubleshooting</a> or ask me on <a href="https://github.com/kitware/paraviewweb/issues" target="_blank" rel="external">GitHub</a> or <a href="http://www.paraview.org/mailman/listinfo/paraview" target="_blank" rel="external">Mailing list</a>. If you can’t find the answer, please report it on GitHub.</p>
+<h2 id="Running-the-VM" class="article-heading"><a href="#Running-the-VM" class="headerlink" title="Running the VM"></a>Running the VM<a class="article-anchor" href="#Running-the-VM" aria-hidden="true"></a></h2><p>In order to run and setup the vagrant VM you can do that with the following<br>set of commands:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/Kitware/paraviewweb.git</span><br><span class="line">$ <span class="built_in">cd</span> paraviewweb/tools</span><br><span class="line">$ vagrant up</span><br></pre></td></tr></table></figure>
+<h2 id="Testing" class="article-heading"><a href="#Testing" class="headerlink" title="Testing"></a>Testing<a class="article-anchor" href="#Testing" aria-hidden="true"></a></h2><p>Then you should be able to connect to <code>http://localhost:8080/apps/Visualizer</code>.</p>
 
               </div>
               <footer class="article-footer">
-                <time class="article-footer-updated" datetime="2016-04-29T17:43:16.650Z" itemprop="dateModified">Last updated: 2016-04-29</time>
+                <time class="article-footer-updated" datetime="2016-04-29T17:43:16.654Z" itemprop="dateModified">Last updated: 2016-04-29</time>
                 <a href="/paraviewweb/docs/index.html" class="article-footer-next" title="Overview"><span>Next</span><i class="fa fa-chevron-right"></i></a>
               </footer>
               
@@ -144,7 +116,7 @@ Follow Airbnb JavaScript Style Guide">
           <aside id="article-toc" role="navigation">
             <div id="article-toc-inner">
               <strong class="sidebar-title">Contents</strong>
-              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Development"><span class="toc-text">Development</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Before-You-Start"><span class="toc-text">Before You Start</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Workflow"><span class="toc-text">Workflow</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Notice"><span class="toc-text">Notice</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Updating-Documentation"><span class="toc-text">Updating Documentation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reporting-Issues"><span class="toc-text">Reporting Issues</span></a></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Vagrant-setup"><span class="toc-text">Vagrant setup</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Prerequisites"><span class="toc-text">Prerequisites</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Running-the-VM"><span class="toc-text">Running the VM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Testing"><span class="toc-text">Testing</span></a></li></ol></li></ol>
               <a href="#" id="article-toc-top">Back to Top</a>
             </div>
           </aside>
@@ -184,7 +156,7 @@ Follow Airbnb JavaScript Style Guide">
   </div>
   <div id="mobile-lang-select-wrap">
     <span id="mobile-lang-select-label"><i class="fa fa-globe"></i><span>English</span></span>
-    <select id="mobile-lang-select" data-canonical="docs/contributing.html">
+    <select id="mobile-lang-select" data-canonical="docs/guides/vagrant.html">
       
         <option value="en" selected>English</option>
       
