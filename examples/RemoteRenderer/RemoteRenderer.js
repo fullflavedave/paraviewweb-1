@@ -15251,7 +15251,7 @@
 	    DEFAULT_SESSION_URL = (location.protocol === 'https' ? 'wss' : 'ws') + '://' + location.hostname + ':' + location.port + '/ws';
 
 	function autobahnConnect(self) {
-	  var wsConnection = new _AutobahnConnection2.default(self.config.sessionURL, self.config.secret);
+	  var wsConnection = new _AutobahnConnection2.default(self.config.sessionURL, self.config.secret, self.config.retry);
 	  self.subscriptions.push(wsConnection.onConnectionReady(self.readyForwarder));
 	  self.subscriptions.push(wsConnection.onConnectionClose(self.closeForwarder));
 	  wsConnection.connect();
@@ -15565,12 +15565,15 @@
 	var AutobahnConnection = function () {
 	  function AutobahnConnection(urls) {
 	    var secret = arguments.length <= 1 || arguments[1] === undefined ? 'vtkweb-secret' : arguments[1];
+	    var retry = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
 
 	    _classCallCheck(this, AutobahnConnection);
 
 	    this.urls = urls;
 	    this.secret = secret;
 	    this.connection = null;
+	    // Should autobahn try to reconnect on error?
+	    this.retry = retry;
 	  }
 
 	  _createClass(AutobahnConnection, [{
@@ -15616,7 +15619,7 @@
 	      this.connection.onclose = function () {
 	        _this.emit(CONNECTION_CLOSE_TOPIC, _this);
 	        _this.connection = null;
-	        return true; // true => Stop retry
+	        return !_this.retry; // true => Stop retry
 	      };
 
 	      this.connection.open();
