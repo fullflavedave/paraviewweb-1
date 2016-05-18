@@ -1,0 +1,48 @@
+.collapsedIcon {
+  composes: fa             from 'font-awesome/css/font-awesome.css';
+  composes: fa-fw          from 'font-awesome/css/font-awesome.css';
+  composes: fa-caret-right from 'font-awesome/css/font-awesome.css';
+  cursor: pointer;
+}
+
+.openedIcon {
+  composes: fa            from 'font-awesome/css/font-awesome.css';
+  composes: fa-fw         from 'font-awesome/css/font-awesome.css';
+  composes: fa-caret-down from 'font-awesome/css/font-awesome.css';
+  cursor: pointer;
+}
+
+.selectedIcon {
+  composes: fa            from 'font-awesome/css/font-awesome.css';
+  composes: fa-fw         from 'font-awesome/css/font-awesome.css';
+  composes: fa-check-square-o from 'font-awesome/css/font-awesome.css';
+  cursor: pointer;
+}
+
+.selectedChildrenIcon {
+  composes: fa            from 'font-awesome/css/font-awesome.css';
+  composes: fa-fw         from 'font-awesome/css/font-awesome.css';
+  composes: fa-minus-square-o from 'font-awesome/css/font-awesome.css';
+  cursor: pointer;
+}
+.unselectedIcon {
+  composes: fa            from 'font-awesome/css/font-awesome.css';
+  composes: fa-fw         from 'font-awesome/css/font-awesome.css';
+  composes: fa-square-o from 'font-awesome/css/font-awesome.css';
+  cursor: pointer;
+}
+
+.line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.left {
+  flex: 1;
+}
+
+.right {
+  flex: 1;
+  text-align: right;
+}
