@@ -11943,11 +11943,11 @@
 
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
-	/*! Hammer.JS - v2.0.6 - 2015-12-23
+	/*! Hammer.JS - v2.0.7 - 2016-04-22
 	 * http://hammerjs.github.io/
 	 *
-	 * Copyright (c) 2015 Jorik Tangelder;
-	 * Licensed under the  license */
+	 * Copyright (c) 2016 Jorik Tangelder;
+	 * Licensed under the MIT license */
 	(function (window, document, exportName, undefined) {
 	    'use strict';
 
@@ -12073,7 +12073,7 @@
 	     * means that properties in dest will be overwritten by the ones in src.
 	     * @param {Object} dest
 	     * @param {Object} src
-	     * @param {Boolean=false} [merge]
+	     * @param {Boolean} [merge=false]
 	     * @returns {Object} dest
 	     */
 	    var extend = deprecate(function extend(dest, src, merge) {
@@ -12737,7 +12737,6 @@
 	        this.evEl = MOUSE_ELEMENT_EVENTS;
 	        this.evWin = MOUSE_WINDOW_EVENTS;
 
-	        this.allow = true; // used by Input.TouchMouse to disable mouse events
 	        this.pressed = false; // mousedown state
 
 	        Input.apply(this, arguments);
@@ -12760,8 +12759,8 @@
 	                eventType = INPUT_END;
 	            }
 
-	            // mouse must be down, and mouse events are allowed (see the TouchMouse input)
-	            if (!this.pressed || !this.allow) {
+	            // mouse must be down
+	            if (!this.pressed) {
 	                return;
 	            }
 
@@ -13042,12 +13041,19 @@
 	     * @constructor
 	     * @extends Input
 	     */
+
+	    var DEDUP_TIMEOUT = 2500;
+	    var DEDUP_DISTANCE = 25;
+
 	    function TouchMouseInput() {
 	        Input.apply(this, arguments);
 
 	        var handler = bindFn(this.handler, this);
 	        this.touch = new TouchInput(this.manager, handler);
 	        this.mouse = new MouseInput(this.manager, handler);
+
+	        this.primaryTouch = null;
+	        this.lastTouches = [];
 	    }
 
 	    inherit(TouchMouseInput, Input, {
@@ -13061,17 +13067,15 @@
 	            var isTouch = inputData.pointerType == INPUT_TYPE_TOUCH,
 	                isMouse = inputData.pointerType == INPUT_TYPE_MOUSE;
 
-	            // when we're in a touch event, so  block all upcoming mouse events
-	            // most mobile browser also emit mouseevents, right after touchstart
-	            if (isTouch) {
-	                this.mouse.allow = false;
-	            } else if (isMouse && !this.mouse.allow) {
+	            if (isMouse && inputData.sourceCapabilities && inputData.sourceCapabilities.firesTouchEvents) {
 	                return;
 	            }
 
-	            // reset the allowMouse when we're done
-	            if (inputEvent & (INPUT_END | INPUT_CANCEL)) {
-	                this.mouse.allow = true;
+	            // when we're in a touch event, record touches to  de-dupe synthetic mouse event
+	            if (isTouch) {
+	                recordTouches.call(this, inputEvent, inputData);
+	            } else if (isMouse && isSyntheticEvent.call(this, inputData)) {
+	                return;
 	            }
 
 	            this.callback(manager, inputEvent, inputData);
@@ -13086,6 +13090,46 @@
 	        }
 	    });
 
+	    function recordTouches(eventType, eventData) {
+	        if (eventType & INPUT_START) {
+	            this.primaryTouch = eventData.changedPointers[0].identifier;
+	            setLastTouch.call(this, eventData);
+	        } else if (eventType & (INPUT_END | INPUT_CANCEL)) {
+	            setLastTouch.call(this, eventData);
+	        }
+	    }
+
+	    function setLastTouch(eventData) {
+	        var touch = eventData.changedPointers[0];
+
+	        if (touch.identifier === this.primaryTouch) {
+	            var lastTouch = { x: touch.clientX, y: touch.clientY };
+	            this.lastTouches.push(lastTouch);
+	            var lts = this.lastTouches;
+	            var removeLastTouch = function removeLastTouch() {
+	                var i = lts.indexOf(lastTouch);
+	                if (i > -1) {
+	                    lts.splice(i, 1);
+	                }
+	            };
+	            setTimeout(removeLastTouch, DEDUP_TIMEOUT);
+	        }
+	    }
+
+	    function isSyntheticEvent(eventData) {
+	        var x = eventData.srcEvent.clientX,
+	            y = eventData.srcEvent.clientY;
+	        for (var i = 0; i < this.lastTouches.length; i++) {
+	            var t = this.lastTouches[i];
+	            var dx = Math.abs(x - t.x),
+	                dy = Math.abs(y - t.y);
+	            if (dx <= DEDUP_DISTANCE && dy <= DEDUP_DISTANCE) {
+	                return true;
+	            }
+	        }
+	        return false;
+	    }
+
 	    var PREFIXED_TOUCH_ACTION = prefixed(TEST_ELEMENT.style, 'touchAction');
 	    var NATIVE_TOUCH_ACTION = PREFIXED_TOUCH_ACTION !== undefined;
 
@@ -13096,6 +13140,7 @@
 	    var TOUCH_ACTION_NONE = 'none';
 	    var TOUCH_ACTION_PAN_X = 'pan-x';
 	    var TOUCH_ACTION_PAN_Y = 'pan-y';
+	    var TOUCH_ACTION_MAP = getTouchActionProps();
 
 	    /**
 	     * Touch Action
@@ -13120,7 +13165,7 @@
 	                value = this.compute();
 	            }
 
-	            if (NATIVE_TOUCH_ACTION && this.manager.element.style) {
+	            if (NATIVE_TOUCH_ACTION && this.manager.element.style && TOUCH_ACTION_MAP[value]) {
 	                this.manager.element.style[PREFIXED_TOUCH_ACTION] = value;
 	            }
 	            this.actions = value.toLowerCase().trim();
@@ -13152,11 +13197,6 @@
 	         * @param {Object} input
 	         */
 	        preventDefaults: function preventDefaults(input) {
-	            // not needed with native support for the touchAction property
-	            if (NATIVE_TOUCH_ACTION) {
-	                return;
-	            }
-
 	            var srcEvent = input.srcEvent;
 	            var direction = input.offsetDirection;
 
@@ -13167,9 +13207,9 @@
 	            }
 
 	            var actions = this.actions;
-	            var hasNone = inStr(actions, TOUCH_ACTION_NONE);
-	            var hasPanY = inStr(actions, TOUCH_ACTION_PAN_Y);
-	            var hasPanX = inStr(actions, TOUCH_ACTION_PAN_X);
+	            var hasNone = inStr(actions, TOUCH_ACTION_NONE) && !TOUCH_ACTION_MAP[TOUCH_ACTION_NONE];
+	            var hasPanY = inStr(actions, TOUCH_ACTION_PAN_Y) && !TOUCH_ACTION_MAP[TOUCH_ACTION_PAN_Y];
+	            var hasPanX = inStr(actions, TOUCH_ACTION_PAN_X) && !TOUCH_ACTION_MAP[TOUCH_ACTION_PAN_X];
 
 	            if (hasNone) {
 	                //do not prevent defaults if this is a tap gesture
@@ -13236,6 +13276,21 @@
 	        }
 
 	        return TOUCH_ACTION_AUTO;
+	    }
+
+	    function getTouchActionProps() {
+	        if (!NATIVE_TOUCH_ACTION) {
+	            return false;
+	        }
+	        var touchMap = {};
+	        var cssSupports = window.CSS && window.CSS.supports;
+	        ['auto', 'manipulation', 'pan-y', 'pan-x', 'pan-x pan-y', 'none'].forEach(function (val) {
+
+	            // If css.supports is not supported but there is native touch-action assume it supports
+	            // all values. This is the case for IE 10 and 11.
+	            touchMap[val] = cssSupports ? window.CSS.supports('touch-action', val) : true;
+	        });
+	        return touchMap;
 	    }
 
 	    /**
@@ -14028,7 +14083,7 @@
 	    /**
 	     * @const {string}
 	     */
-	    Hammer.VERSION = '2.0.6';
+	    Hammer.VERSION = '2.0.7';
 
 	    /**
 	     * default settings
@@ -14152,6 +14207,7 @@
 	        this.handlers = {};
 	        this.session = {};
 	        this.recognizers = [];
+	        this.oldCssProps = {};
 
 	        this.element = element;
 	        this.input = createInputInstance(this);
@@ -14331,6 +14387,13 @@
 	         * @returns {EventEmitter} this
 	         */
 	        on: function on(events, handler) {
+	            if (events === undefined) {
+	                return;
+	            }
+	            if (handler === undefined) {
+	                return;
+	            }
+
 	            var handlers = this.handlers;
 	            each(splitStr(events), function (event) {
 	                handlers[event] = handlers[event] || [];
@@ -14346,6 +14409,10 @@
 	         * @returns {EventEmitter} this
 	         */
 	        off: function off(events, handler) {
+	            if (events === undefined) {
+	                return;
+	            }
+
 	            var handlers = this.handlers;
 	            each(splitStr(events), function (event) {
 	                if (!handler) {
@@ -14410,9 +14477,19 @@
 	        if (!element.style) {
 	            return;
 	        }
+	        var prop;
 	        each(manager.options.cssProps, function (value, name) {
-	            element.style[prefixed(element.style, name)] = add ? value : '';
+	            prop = prefixed(element.style, name);
+	            if (add) {
+	                manager.oldCssProps[prop] = element.style[prop];
+	                element.style[prop] = value;
+	            } else {
+	                element.style[prop] = manager.oldCssProps[prop] || '';
+	            }
 	        });
+	        if (!add) {
+	            manager.oldCssProps = {};
+	        }
 	    }
 
 	    /**
@@ -17733,7 +17810,7 @@
 		"_id": "autobahn@0.9.6",
 		"dist": {
 			"shasum": "51efec0cdb056872a1c698275260f67d7a3d32e3",
-			"tarball": "http://registry.npmjs.org/autobahn/-/autobahn-0.9.6.tgz"
+			"tarball": "https://registry.npmjs.org/autobahn/-/autobahn-0.9.6.tgz"
 		},
 		"_from": "autobahn@0.9.6",
 		"_npmVersion": "1.3.21",
@@ -18181,6 +18258,9 @@
 	var queueIndex = -1;
 
 	function cleanUpNextTick() {
+	    if (!draining || !currentQueue) {
+	        return;
+	    }
 	    draining = false;
 	    if (currentQueue.length) {
 	        queue = currentQueue.concat(queue);
