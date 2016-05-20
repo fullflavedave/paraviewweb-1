@@ -66,34 +66,53 @@
 
 	var container = document.querySelector('.content');
 
-	function somethingChanged(name, x) {
-	  console.log(name);
-	  if (x) {
-	    console.log(x);
+	var ColorMapEditorTestWidget = _react2.default.createClass({
+	  displayName: 'ColorMapEditorTestWidget',
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      currentPreset: 'Cool to Warm',
+	      rangeMin: 0,
+	      rangeMax: 200,
+	      points: [{ x: 0, y: 0 }, { x: 200, y: 1 }]
+	    };
+	  },
+	  updatePreset: function updatePreset(name) {
+	    this.setState({ currentPreset: name });
+	  },
+	  updateOpacityPoints: function updateOpacityPoints(points) {
+	    this.setState({ points: points });
+	  },
+	  updateRange: function updateRange(range) {
+	    this.setState({ rangeMin: range[0], rangeMax: range[1] });
+	  },
+	  rangeToCurrent: function rangeToCurrent() {
+	    this.setState({ rangeMin: 0, rangeMax: 150 });
+	  },
+	  rangeToTime: function rangeToTime() {
+	    this.setState({ rangeMin: 0, rangeMax: 200 });
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(_2.default, {
+	      currentPreset: this.state.currentPreset,
+	      currentOpacityPoints: this.state.points,
+	      presets: _presets2.default,
+	      dataRangeMin: 0,
+	      dataRangeMax: 200,
+	      rangeMin: this.state.rangeMin,
+	      rangeMax: this.state.rangeMax,
+	      onOpacityTransferFunctionChanged: this.updateOpacityPoints,
+	      onPresetChanged: this.updatePreset,
+	      onRangeEdited: this.updateRange,
+	      onScaleRangeToCurrent: this.rangeToCurrent,
+	      onScaleRangeOverTime: this.rangeToTime
+	    });
 	  }
-	}
-
-	var onOpacityTransferFunctionChanged = somethingChanged.bind(undefined, 'OTF');
-	var onPresetChanged = somethingChanged.bind(undefined, 'Preset');
-	var onRangeEdited = somethingChanged.bind(undefined, 'Range');
-	var onScaleRangeToCurrent = somethingChanged.bind(undefined, 'RangeToCurrent');
-	var onScaleRangeOverTime = somethingChanged.bind(undefined, 'RangeOverTime');
-
+	});
 	container.style.height = "50%";
 	container.style.width = "50%";
 
-	_reactDom2.default.render(_react2.default.createElement(_2.default, {
-	  initialPreset: 'Cool to Warm',
-	  initialRange: [0, 100],
-	  presets: _presets2.default,
-	  dataRangeMin: 0,
-	  dataRangeMax: 100,
-	  onOpacityTransferFunctionChanged: onOpacityTransferFunctionChanged,
-	  onPresetChanged: onPresetChanged,
-	  onRangeEdited: onRangeEdited,
-	  onScaleRangeToCurrent: onScaleRangeToCurrent,
-	  onScaleRangeOverTime: onScaleRangeOverTime
-	}), container);
+	_reactDom2.default.render(_react2.default.createElement(ColorMapEditorTestWidget, {}), container);
 
 	document.body.style.margin = '10px';
 
@@ -20279,12 +20298,13 @@
 	  displayName: 'ColorMapEditorWidget',
 
 	  propTypes: {
-	    initialOpacityMap: _react2.default.PropTypes.string,
-	    initialPreset: _react2.default.PropTypes.string,
-	    initialRange: _react2.default.PropTypes.array,
+	    currentOpacityPoints: _react2.default.PropTypes.array,
+	    currentPreset: _react2.default.PropTypes.string,
 	    dataRangeMin: _react2.default.PropTypes.number,
 	    dataRangeMax: _react2.default.PropTypes.number,
 	    presets: _react2.default.PropTypes.object,
+	    rangeMin: _react2.default.PropTypes.number,
+	    rangeMax: _react2.default.PropTypes.number,
 	    onOpacityTransferFunctionChanged: _react2.default.PropTypes.func,
 	    onPresetChanged: _react2.default.PropTypes.func,
 	    onRangeEdited: _react2.default.PropTypes.func,
@@ -20294,21 +20314,14 @@
 
 	  getInitialState: function getInitialState() {
 	    return {
-	      currentPreset: this.props.initialPreset,
-	      range: this.props.initialRange,
-	      currentOpacityPoints: this.props.initialOpacityMap,
 	      showOpacityControls: false,
 	      showPresetSelection: false
 	    };
 	  },
-	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
-	    if (newProps.initialRange[0] !== this.props.initialRange[0] || newProps.initialRange[1] !== this.props.initialRange[1]) {
-	      this.setState({ range: newProps.initialRange });
-	    }
-	  },
 	  onOpacityTransferFunctionChanged: function onOpacityTransferFunctionChanged(newPoints) {
-	    this.setState({ currentOpacityPoints: newPoints });
-	    this.props.onOpacityTransferFunctionChanged(newPoints);
+	    if (this.props.onOpacityTransferFunctionChanged) {
+	      this.props.onOpacityTransferFunctionChanged(newPoints);
+	    }
 	  },
 	  toggleShowOpacityControls: function toggleShowOpacityControls() {
 	    var newState = { showOpacityControls: !this.state.showOpacityControls };
@@ -20326,34 +20339,24 @@
 	  },
 	  rangeMinChanged: function rangeMinChanged(e) {
 	    var newMin = parseFloat(e.target.value);
-	    this.setState({ range: [newMin, this.state.range[1]] });
 	    if (this.props.onRangeEdited) {
-	      this.props.onRangeEdited([newMin, this.state.range[1]]);
+	      this.props.onRangeEdited([newMin, this.props.rangeMax]);
 	    }
 	  },
 	  rangeMaxChanged: function rangeMaxChanged(e) {
 	    var newMax = parseFloat(e.target.value);
-	    this.setState({ range: [this.state.range[0], newMax] });
 	    if (this.props.onRangeEdited) {
-	      this.props.onRangeEdited([this.state.range[0], newMax]);
+	      this.props.onRangeEdited([this.props.rangeMin, newMax]);
 	    }
 	  },
 	  presetChanged: function presetChanged(name) {
-	    this.setState({ currentPreset: name });
 	    if (this.props.onPresetChanged) {
 	      this.props.onPresetChanged(name);
 	    }
 	  },
 	  render: function render() {
-	    var opacityControls = _react2.default.createElement(_PieceWiseFunctionEditorWidget2.default, {
-	      initialPoints: this.state.currentOpacityPoints,
-	      ref: 'pieceWiseEditor',
-	      rangeMin: this.state.range[0],
-	      rangeMax: this.state.range[1],
-	      onChange: this.onOpacityTransferFunctionChanged
-	    });
 	    var presets = this.props.presets;
-	    var name = this.state.currentPreset;
+	    var name = this.props.currentPreset;
 	    return _react2.default.createElement(
 	      'div',
 	      { className: _ColorMapEditorWidget2.default.colormapeditor },
@@ -20368,7 +20371,7 @@
 	        _react2.default.createElement('img', {
 	          className: _ColorMapEditorWidget2.default.presetImage,
 	          src: 'data:image/png;base64,' + presets[name],
-	          alt: this.state.currentPreset
+	          alt: this.props.currentPreset
 	        }),
 	        _react2.default.createElement(_SvgIconWidget2.default, {
 	          className: _ColorMapEditorWidget2.default.svgIcon,
@@ -20385,7 +20388,7 @@
 	          step: 'any',
 	          min: this.props.dataRangeMin,
 	          max: this.props.dataRangeMax,
-	          value: this.state.range[0],
+	          value: this.props.rangeMin,
 	          onChange: this.rangeMinChanged
 	        }),
 	        _react2.default.createElement(
@@ -20408,11 +20411,18 @@
 	          step: 'any',
 	          min: this.props.dataRangeMin,
 	          max: this.props.dataRangeMax,
-	          value: this.state.range[1],
+	          value: this.props.rangeMax,
 	          onChange: this.rangeMaxChanged
 	        })
 	      ),
-	      this.state.showOpacityControls ? opacityControls : null,
+	      _react2.default.createElement(_PieceWiseFunctionEditorWidget2.default, {
+	        initialPoints: this.props.currentOpacityPoints,
+	        ref: 'pieceWiseEditor',
+	        rangeMin: this.props.rangeMin,
+	        rangeMax: this.props.rangeMax,
+	        onChange: this.onOpacityTransferFunctionChanged,
+	        visible: this.state.showOpacityControls
+	      }),
 	      _react2.default.createElement(
 	        'div',
 	        { className: _ColorMapEditorWidget2.default.presetList },
@@ -20904,7 +20914,8 @@
 	    initialPoints: _react2.default.PropTypes.array,
 	    rangeMin: _react2.default.PropTypes.number,
 	    rangeMax: _react2.default.PropTypes.number,
-	    onChange: _react2.default.PropTypes.func
+	    onChange: _react2.default.PropTypes.func,
+	    visible: _react2.default.PropTypes.bool
 	  },
 
 	  getInitialState: function getInitialState() {
@@ -20927,8 +20938,10 @@
 	    };
 	  },
 	  componentWillMount: function componentWillMount() {
-	    this.sizeSubscription = _SizeHelper2.default.onSizeChange(this.updateDimensions);
-	    _SizeHelper2.default.startListening();
+	    if (this.props.visible) {
+	      this.sizeSubscription = _SizeHelper2.default.onSizeChange(this.updateDimensions);
+	      _SizeHelper2.default.startListening();
+	    }
 	  },
 	  componentDidMount: function componentDidMount() {
 	    var canvas = this.refs.canvas;
@@ -20938,12 +20951,19 @@
 	    this.editor.render();
 	    this.editor.onChange(this.updatePoints);
 
-	    _SizeHelper2.default.triggerChange();
+	    if (this.sizeHelper) {
+	      _SizeHelper2.default.triggerChange();
+	    }
 	  },
 	  componentDidUpdate: function componentDidUpdate(prevProps, prevState) {
 	    var _this2 = this;
 
-	    if (this.state.width !== prevState.width) {
+	    if (this.props.visible && !prevProps.visible && this.state.width === -1) {
+	      this.sizeSubscription = _SizeHelper2.default.onSizeChange(this.updateDimensions);
+	      _SizeHelper2.default.startListening();
+	      _SizeHelper2.default.triggerChange();
+	    }
+	    if (this.state.width !== prevState.width || this.props.visible && !prevProps.visible) {
 	      this.editor.render();
 	    }
 	    // We get some duplicate events from the editor, filter them out
@@ -20963,6 +20983,7 @@
 	    if (this.sizeSubscription) {
 	      this.sizeSubscription.unsubscribe();
 	      this.sizeSubscription = null;
+	      this.editor = null;
 	    }
 	  },
 	  updateDimensions: function updateDimensions() {
@@ -21021,7 +21042,7 @@
 	    var activePointOpacity = this.state.activePoint !== -1 ? this.state.points[this.state.activePoint].y : 0.5;
 	    return _react2.default.createElement(
 	      'div',
-	      { className: _PieceWiseFunctionEditorWidget2.default.pieceWiseFunctionEditorWidget },
+	      { className: this.props.visible ? _PieceWiseFunctionEditorWidget2.default.pieceWiseFunctionEditorWidget : _PieceWiseFunctionEditorWidget2.default.hidden },
 	      _react2.default.createElement('canvas', {
 	        className: _PieceWiseFunctionEditorWidget2.default.canvas,
 	        width: this.state.width,
@@ -33442,7 +33463,7 @@
 
 
 	// module
-	exports.push([module.id, ".PieceWiseFunctionEditorWidget_pieceWiseFunctionEditorWidget_2MPoe {\n}\n\n.PieceWiseFunctionEditorWidget_canvas_3AVI0 {\n  width: 100%;\n  height: 300px;\n}\n\n.PieceWiseFunctionEditorWidget_line_1pXgv {\n  -ms-flex: 1;\n      flex: 1;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-align: center;\n      align-items: center;\n  -ms-flex-pack: justify;\n      justify-content: space-between\n}\n\n.PieceWiseFunctionEditorWidget_input_VWQJc {\n  -ms-flex: 1;\n      flex: 1;\n}\n\n.PieceWiseFunctionEditorWidget_svgIcon_2_CKM {\n  width: 1.5em;\n  height: 1.5em;\n  padding: 0 3px;\n  cursor: pointer;\n}\n\n.PieceWiseFunctionEditorWidget_pointControls_1mEfU {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-align: center;\n      align-items: center;\n  -ms-flex-pack: start;\n      justify-content: flex-start;\n}\n\n.PieceWiseFunctionEditorWidget_pointInfo_1g7XA {\n  -ms-flex: 1;\n      flex: 1;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: column;\n      flex-direction: column;\n  -ms-flex-align: stretch;\n      align-items: stretch;\n}\n\n.PieceWiseFunctionEditorWidget_line_1pXgv > label {\n  -ms-flex: none;\n      flex: none;\n  width: 75px;\n  font-weight: bold;\n  text-align: right;\n  padding-right: 5px;\n}\n", ""]);
+	exports.push([module.id, ".PieceWiseFunctionEditorWidget_pieceWiseFunctionEditorWidget_2MPoe {\n}\n\n.PieceWiseFunctionEditorWidget_canvas_3AVI0 {\n  width: 100%;\n  height: 300px;\n}\n\n.PieceWiseFunctionEditorWidget_line_1pXgv {\n  -ms-flex: 1;\n      flex: 1;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-align: center;\n      align-items: center;\n  -ms-flex-pack: justify;\n      justify-content: space-between\n}\n\n.PieceWiseFunctionEditorWidget_input_VWQJc {\n  -ms-flex: 1;\n      flex: 1;\n  min-width: 40%;\n}\n\n.PieceWiseFunctionEditorWidget_svgIcon_2_CKM {\n  width: 1.5em;\n  height: 1.5em;\n  padding: 0 3px;\n  cursor: pointer;\n}\n\n.PieceWiseFunctionEditorWidget_pointControls_1mEfU {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-align: center;\n      align-items: center;\n  -ms-flex-pack: start;\n      justify-content: flex-start;\n}\n\n.PieceWiseFunctionEditorWidget_pointInfo_1g7XA {\n  -ms-flex: 1;\n      flex: 1;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: column;\n      flex-direction: column;\n  -ms-flex-align: stretch;\n      align-items: stretch;\n}\n\n.PieceWiseFunctionEditorWidget_line_1pXgv > label {\n  -ms-flex: none;\n      flex: none;\n  width: 75px;\n  font-weight: bold;\n  text-align: right;\n  padding-right: 5px;\n}\n\n.PieceWiseFunctionEditorWidget_hidden_WYYbC {\n  display: none;\n}\n", ""]);
 
 	// exports
 	exports.locals = {
@@ -33452,7 +33473,8 @@
 		"input": "PieceWiseFunctionEditorWidget_input_VWQJc",
 		"svgIcon": "PieceWiseFunctionEditorWidget_svgIcon_2_CKM",
 		"pointControls": "PieceWiseFunctionEditorWidget_pointControls_1mEfU",
-		"pointInfo": "PieceWiseFunctionEditorWidget_pointInfo_1g7XA"
+		"pointInfo": "PieceWiseFunctionEditorWidget_pointInfo_1g7XA",
+		"hidden": "PieceWiseFunctionEditorWidget_hidden_WYYbC"
 	};
 
 /***/ },
@@ -34131,7 +34153,7 @@
 
 
 	// module
-	exports.push([module.id, ".ColorMapEditorWidget_colormapeditor_2JzCK {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: column;\n      flex-direction: column;\n  -ms-flex-align: stretch;\n      align-items: stretch;\n  -ms-flex-pack: start;\n      justify-content: flex-start;\n}\n.ColorMapEditorWidget_mainControls_fn7Kp {\n  -ms-flex: 1;\n      flex: 1;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-pack: start;\n      justify-content: flex-start;\n  -ms-flex-align: center;\n      align-items: center;\n}\n\n.ColorMapEditorWidget_presetImage_1uLtq {\n  -ms-flex: 1;\n      flex: 1;\n  height: 1.5em;\n  min-width: 50%;\n  padding: 0 5px;\n}\n\n.ColorMapEditorWidget_svgIcon_g1jXJ {\n  -ms-flex: none;\n      flex: none;\n  height: 1em;\n  width: 1em;\n  cursor: pointer;\n}\n\n.ColorMapEditorWidget_rangeControls_2InCn {\n  -ms-flex: 1;\n      flex: 1;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-align: center;\n      align-items: center;\n}\n\n.ColorMapEditorWidget_rangeResetButtons_2ZtRD {\n  -ms-flex: 1;\n      flex: 1;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-align: center;\n      align-items: center;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n}\n.ColorMapEditorWidget_minRangeInput_2Rs1i {\n  -ms-flex: 1;\n      flex: 1;\n  text-align: left;\n}\n\n.ColorMapEditorWidget_maxRangeInput_2CIAQ {\n  -ms-flex: 1;\n      flex: 1;\n  text-align: right;\n}\n\n.ColorMapEditorWidget_presetList_3Ja7x {\n  max-height: 400px;\n}\n", ""]);
+	exports.push([module.id, ".ColorMapEditorWidget_colormapeditor_2JzCK {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: column;\n      flex-direction: column;\n  -ms-flex-align: stretch;\n      align-items: stretch;\n  -ms-flex-pack: start;\n      justify-content: flex-start;\n}\n.ColorMapEditorWidget_mainControls_fn7Kp {\n  -ms-flex: 1;\n      flex: 1;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-pack: start;\n      justify-content: flex-start;\n  -ms-flex-align: center;\n      align-items: center;\n}\n\n.ColorMapEditorWidget_presetImage_1uLtq {\n  -ms-flex: 1;\n      flex: 1;\n  height: 1.5em;\n  min-width: 50%;\n  padding: 0 5px;\n}\n\n.ColorMapEditorWidget_svgIcon_g1jXJ {\n  -ms-flex: none;\n      flex: none;\n  height: 1em;\n  width: 1em;\n  cursor: pointer;\n}\n\n.ColorMapEditorWidget_rangeControls_2InCn {\n  -ms-flex: 1;\n      flex: 1;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-align: center;\n      align-items: center;\n}\n\n.ColorMapEditorWidget_rangeResetButtons_2ZtRD {\n  -ms-flex: 1;\n      flex: 1;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-align: center;\n      align-items: center;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n}\n.ColorMapEditorWidget_minRangeInput_2Rs1i {\n  -ms-flex: 1;\n      flex: 1;\n  text-align: left;\n  min-width: 20%;\n}\n\n.ColorMapEditorWidget_maxRangeInput_2CIAQ {\n  -ms-flex: 1;\n      flex: 1;\n  text-align: right;\n  min-width: 20%;\n}\n\n.ColorMapEditorWidget_presetList_3Ja7x {\n  max-height: 400px;\n}\n", ""]);
 
 	// exports
 	exports.locals = {

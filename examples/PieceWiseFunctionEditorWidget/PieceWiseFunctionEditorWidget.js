@@ -20271,7 +20271,8 @@
 	    initialPoints: _react2.default.PropTypes.array,
 	    rangeMin: _react2.default.PropTypes.number,
 	    rangeMax: _react2.default.PropTypes.number,
-	    onChange: _react2.default.PropTypes.func
+	    onChange: _react2.default.PropTypes.func,
+	    visible: _react2.default.PropTypes.bool
 	  },
 
 	  getInitialState: function getInitialState() {
@@ -20294,8 +20295,10 @@
 	    };
 	  },
 	  componentWillMount: function componentWillMount() {
-	    this.sizeSubscription = _SizeHelper2.default.onSizeChange(this.updateDimensions);
-	    _SizeHelper2.default.startListening();
+	    if (this.props.visible) {
+	      this.sizeSubscription = _SizeHelper2.default.onSizeChange(this.updateDimensions);
+	      _SizeHelper2.default.startListening();
+	    }
 	  },
 	  componentDidMount: function componentDidMount() {
 	    var canvas = this.refs.canvas;
@@ -20305,12 +20308,19 @@
 	    this.editor.render();
 	    this.editor.onChange(this.updatePoints);
 
-	    _SizeHelper2.default.triggerChange();
+	    if (this.sizeHelper) {
+	      _SizeHelper2.default.triggerChange();
+	    }
 	  },
 	  componentDidUpdate: function componentDidUpdate(prevProps, prevState) {
 	    var _this2 = this;
 
-	    if (this.state.width !== prevState.width) {
+	    if (this.props.visible && !prevProps.visible && this.state.width === -1) {
+	      this.sizeSubscription = _SizeHelper2.default.onSizeChange(this.updateDimensions);
+	      _SizeHelper2.default.startListening();
+	      _SizeHelper2.default.triggerChange();
+	    }
+	    if (this.state.width !== prevState.width || this.props.visible && !prevProps.visible) {
 	      this.editor.render();
 	    }
 	    // We get some duplicate events from the editor, filter them out
@@ -20330,6 +20340,7 @@
 	    if (this.sizeSubscription) {
 	      this.sizeSubscription.unsubscribe();
 	      this.sizeSubscription = null;
+	      this.editor = null;
 	    }
 	  },
 	  updateDimensions: function updateDimensions() {
@@ -20388,7 +20399,7 @@
 	    var activePointOpacity = this.state.activePoint !== -1 ? this.state.points[this.state.activePoint].y : 0.5;
 	    return _react2.default.createElement(
 	      'div',
-	      { className: _PieceWiseFunctionEditorWidget2.default.pieceWiseFunctionEditorWidget },
+	      { className: this.props.visible ? _PieceWiseFunctionEditorWidget2.default.pieceWiseFunctionEditorWidget : _PieceWiseFunctionEditorWidget2.default.hidden },
 	      _react2.default.createElement('canvas', {
 	        className: _PieceWiseFunctionEditorWidget2.default.canvas,
 	        width: this.state.width,
@@ -33216,7 +33227,7 @@
 
 
 	// module
-	exports.push([module.id, ".PieceWiseFunctionEditorWidget_pieceWiseFunctionEditorWidget_2MPoe {\n}\n\n.PieceWiseFunctionEditorWidget_canvas_3AVI0 {\n  width: 100%;\n  height: 300px;\n}\n\n.PieceWiseFunctionEditorWidget_line_1pXgv {\n  -ms-flex: 1;\n      flex: 1;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-align: center;\n      align-items: center;\n  -ms-flex-pack: justify;\n      justify-content: space-between\n}\n\n.PieceWiseFunctionEditorWidget_input_VWQJc {\n  -ms-flex: 1;\n      flex: 1;\n}\n\n.PieceWiseFunctionEditorWidget_svgIcon_2_CKM {\n  width: 1.5em;\n  height: 1.5em;\n  padding: 0 3px;\n  cursor: pointer;\n}\n\n.PieceWiseFunctionEditorWidget_pointControls_1mEfU {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-align: center;\n      align-items: center;\n  -ms-flex-pack: start;\n      justify-content: flex-start;\n}\n\n.PieceWiseFunctionEditorWidget_pointInfo_1g7XA {\n  -ms-flex: 1;\n      flex: 1;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: column;\n      flex-direction: column;\n  -ms-flex-align: stretch;\n      align-items: stretch;\n}\n\n.PieceWiseFunctionEditorWidget_line_1pXgv > label {\n  -ms-flex: none;\n      flex: none;\n  width: 75px;\n  font-weight: bold;\n  text-align: right;\n  padding-right: 5px;\n}\n", ""]);
+	exports.push([module.id, ".PieceWiseFunctionEditorWidget_pieceWiseFunctionEditorWidget_2MPoe {\n}\n\n.PieceWiseFunctionEditorWidget_canvas_3AVI0 {\n  width: 100%;\n  height: 300px;\n}\n\n.PieceWiseFunctionEditorWidget_line_1pXgv {\n  -ms-flex: 1;\n      flex: 1;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-align: center;\n      align-items: center;\n  -ms-flex-pack: justify;\n      justify-content: space-between\n}\n\n.PieceWiseFunctionEditorWidget_input_VWQJc {\n  -ms-flex: 1;\n      flex: 1;\n  min-width: 40%;\n}\n\n.PieceWiseFunctionEditorWidget_svgIcon_2_CKM {\n  width: 1.5em;\n  height: 1.5em;\n  padding: 0 3px;\n  cursor: pointer;\n}\n\n.PieceWiseFunctionEditorWidget_pointControls_1mEfU {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-align: center;\n      align-items: center;\n  -ms-flex-pack: start;\n      justify-content: flex-start;\n}\n\n.PieceWiseFunctionEditorWidget_pointInfo_1g7XA {\n  -ms-flex: 1;\n      flex: 1;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: column;\n      flex-direction: column;\n  -ms-flex-align: stretch;\n      align-items: stretch;\n}\n\n.PieceWiseFunctionEditorWidget_line_1pXgv > label {\n  -ms-flex: none;\n      flex: none;\n  width: 75px;\n  font-weight: bold;\n  text-align: right;\n  padding-right: 5px;\n}\n\n.PieceWiseFunctionEditorWidget_hidden_WYYbC {\n  display: none;\n}\n", ""]);
 
 	// exports
 	exports.locals = {
@@ -33226,7 +33237,8 @@
 		"input": "PieceWiseFunctionEditorWidget_input_VWQJc",
 		"svgIcon": "PieceWiseFunctionEditorWidget_svgIcon_2_CKM",
 		"pointControls": "PieceWiseFunctionEditorWidget_pointControls_1mEfU",
-		"pointInfo": "PieceWiseFunctionEditorWidget_pointInfo_1g7XA"
+		"pointInfo": "PieceWiseFunctionEditorWidget_pointInfo_1g7XA",
+		"hidden": "PieceWiseFunctionEditorWidget_hidden_WYYbC"
 	};
 
 /***/ },
