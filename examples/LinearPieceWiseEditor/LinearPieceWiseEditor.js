@@ -190,6 +190,13 @@
 	      var click = getNormalizePosition(event, _this.ctx, _this.radius);
 	      var controlPoint = findPoint(click, _this.controlPoints);
 	      _this.activeControlPoint = controlPoint;
+	      if (_this.activeControlPoint) {
+	        _this.activeIndex = controlPoint.index;
+	        _this.render();
+	      } else {
+	        _this.activeIndex = -1;
+	        _this.render();
+	      }
 	      _this.canvas.addEventListener('mousemove', _this.onMouseMove);
 	    };
 
@@ -201,6 +208,7 @@
 	        }
 	        _this.activeControlPoint.y = clamp(newPosition.y);
 	        sortPoints(_this.controlPoints);
+	        _this.activeIndex = _this.activeControlPoint.index;
 	        _this.render();
 	      }
 	    };
@@ -225,6 +233,7 @@
 	          for (var i = 0; i < _this.controlPoints.length; ++i) {
 	            _this.controlPoints[i].index = i;
 	          }
+	          _this.activeIndex = -1;
 	        }
 	        _this.render();
 	      }
@@ -235,12 +244,14 @@
 	      var sanitizedPoint = { x: clamp(point.x), y: clamp(point.y) };
 	      _this.controlPoints.push(sanitizedPoint);
 	      sortPoints(_this.controlPoints);
+	      _this.activeIndex = sanitizedPoint.index;
 	      _this.render();
 	    };
 
 	    this.resetControlPoints();
 	    this.setStyle(style);
 	    this.setContainer(canvas);
+	    this.activeIndex = -1;
 	  }
 
 	  _createClass(LinearPieceWiseEditor, [{
@@ -254,14 +265,31 @@
 	    // of objects with members x and y (i.e. { x: 0.0, y: 1.0 }).  The valid range for
 	    // x and y is [0,1] with 0 being the left/bottom edge of the canvas and 1 being
 	    // the top/right edge.
+	    // The second parameter specifies (in the list passed in) which point should be
+	    // active after setting the control points.  Pass -1 for no point should be active
 
 	  }, {
 	    key: 'setControlPoints',
 	    value: function setControlPoints(points) {
+	      var activeIndex = arguments.length <= 1 || arguments[1] === undefined ? -1 : arguments[1];
+
 	      this.controlPoints = points.map(function (pt) {
 	        return pointBuilder(pt.x, pt.y);
 	      });
+	      var activePoint = null;
+	      if (activeIndex !== -1) {
+	        activePoint = this.controlPoints[activeIndex];
+	      }
 	      sortPoints(this.controlPoints);
+	      if (activeIndex !== -1) {
+	        for (var i = 0; i < this.controlPoints.length; ++i) {
+	          if (activePoint === this.controlPoints[i]) {
+	            this.activeIndex = i;
+	          }
+	        }
+	      } else {
+	        this.activeIndex = -1;
+	      }
 	      this.render();
 	    }
 	  }, {
@@ -275,12 +303,15 @@
 	      var stroke = _ref$stroke === undefined ? 2 : _ref$stroke;
 	      var _ref$color = _ref.color;
 	      var color = _ref$color === undefined ? '#000000' : _ref$color;
+	      var _ref$activePointColor = _ref.activePointColor;
+	      var activePointColor = _ref$activePointColor === undefined ? '#EE3333' : _ref$activePointColor;
 	      var _ref$fillColor = _ref.fillColor;
 	      var fillColor = _ref$fillColor === undefined ? '#ccc' : _ref$fillColor;
 
 	      this.radius = radius;
 	      this.stroke = stroke;
 	      this.color = color;
+	      this.activePointColor = activePointColor;
 	      this.fillColor = fillColor;
 	    }
 	  }, {
@@ -307,6 +338,17 @@
 	        this.canvas.addEventListener('mouseleave', this.onMouseLeave);
 	        this.canvas.addEventListener('mouseup', this.onMouseUp);
 	      }
+	    }
+	  }, {
+	    key: 'setActivePoint',
+	    value: function setActivePoint(index) {
+	      this.activeIndex = index;
+	      this.render();
+	    }
+	  }, {
+	    key: 'clearActivePoint',
+	    value: function clearActivePoint() {
+	      this.setActivePoint(-1);
 	    }
 	  }, {
 	    key: 'render',
@@ -341,8 +383,8 @@
 	      this.ctx.stroke();
 
 	      // Draw control points
-	      linearPath.forEach(function (point) {
-	        drawControlPoint(_this2.ctx, point, _this2.radius, _this2.color);
+	      linearPath.forEach(function (point, index) {
+	        drawControlPoint(_this2.ctx, point, _this2.radius, _this2.activeIndex === index ? _this2.activePointColor : _this2.color);
 	      });
 
 	      // Notify control points

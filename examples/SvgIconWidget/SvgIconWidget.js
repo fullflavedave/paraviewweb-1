@@ -20252,7 +20252,8 @@
 	    height: _react2.default.PropTypes.string,
 	    icon: _react2.default.PropTypes.string,
 	    width: _react2.default.PropTypes.string,
-	    style: _react2.default.PropTypes.object
+	    style: _react2.default.PropTypes.object,
+	    onClick: _react2.default.PropTypes.func
 	  },
 
 	  getDefaultProps: function getDefaultProps() {
@@ -20275,7 +20276,8 @@
 	      className: this.props.className,
 	      dangerouslySetInnerHTML: {
 	        __html: '<use xlink:href="' + this.props.icon + '"></use>'
-	      }
+	      },
+	      onClick: this.props.onClick
 	    });
 	  }
 	});
