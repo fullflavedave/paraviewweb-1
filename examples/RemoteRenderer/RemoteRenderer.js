@@ -150,7 +150,6 @@
 	    });
 
 	    this.container = null;
-	    this.setContainer(container);
 	    this.options = {
 	      view: id,
 	      size: [400, 400],
@@ -178,6 +177,8 @@
 	        _this.renderOnIdle(!interact);
 	      }
 	    });
+
+	    this.setContainer(container);
 	  }
 
 	  _createClass(RemoteRenderer, [{
@@ -226,7 +227,7 @@
 	      var force = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
 
 	      if (this.renderPending) {
-	        this.renderOnIdle();
+	        this.renderOnIdle(force);
 	        return false;
 	      }
 
@@ -275,7 +276,7 @@
 
 	          // final image
 	          if (resp.stale) {
-	            _this2.renderOnIdle();
+	            _this2.renderOnIdle(force);
 	          } else {
 	            _this2.emit(IMAGE_READY_TOPIC, _this2);
 	          }
