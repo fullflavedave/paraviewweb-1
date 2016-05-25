@@ -1,79 +1,75 @@
 {
-    "name": "paraviewweb",
-    "version": "0.0.0-semantically-release",
-    "description": "Web framework for building interactive visualization relying on VTK or ParaView to produce visualization data",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/kitware/paraviewweb.git"
-    },
-    "license": "BSD-3-Clause",
-    "bugs": { "url": "https://github.com/kitware/paraviewweb/issues" },
-    "homepage": "https://github.com/kitware/paraviewweb#readme",
-    "main": "./dist/ParaViewWeb.js",
-    "dependencies": {
-        "autobahn": "0.9.6",
-        "when": "3.7.7",
-        "ws": "0.8.1",
-
-        "commander": "2.9.0",
-        "shelljs": "0.5.3",
-        "gh-pages": "0.10.0"
-    },
-    "devDependencies": {
-        "axios": "0.9.0",
-        "font-awesome": "4.5.0",
-        "gl-matrix": "2.3.1",
-        "hammerjs": "2.0.8",
-        "monologue.js": "0.3.4",
-        "mout": "1.0.0",
-        "normalize.css": "4.1.1",
-        "react": "15.0.2",
-        "react-dom": "15.0.2",
-
-        "tonic-arctic-sample-data": "http://www.kitware.com/in-situ-data/npm/tonic-arctic-sample-data-1.2.2.tgz",
-
-        "kw-web-suite": "2.0.1",
-        "expect"                    : "1.18.0",
-        "jasmine-core"              : "2.4.1",
-        "jest-cli"                  : "12.0.2",
-        "karma"                     : "0.13.22",
-        "karma-chrome-launcher"     : "0.2.3",
-        "karma-coverage"            : "0.5.5",
-        "karma-firefox-launcher"    : "0.1.7",
-        "karma-jasmine"             : "0.3.8",
-        "karma-phantomjs-launcher"  : "1.0.0",
-        "karma-safari-launcher"     : "0.1.1",
-        "karma-sourcemap-loader"    : "0.3.7",
-        "karma-webpack"             : "1.7.0",
-        "phantomjs-prebuilt"        : "2.1.7"
-    },
-    "scripts": {
-        "postinstall": "fix-kw-web-suite || true",
-        "install:global": "npm install -g commitizen@2.5.0",
-
-        "bin:pvw-doc"      : "node ./tools/doc-generator/doc-generator-cli.js",
-        "bin:fix-autobahn" : "node ./tools/fix-autobahn/patch-autobahn-0.9.6-cli.js",
-
-        "doc"           : "npm run bin:pvw-doc -- -e",
-        "doc:www"       : "npm run bin:pvw-doc -- -aest",
-        "doc:publish"   : "npm run bin:pvw-doc -- -p",
-
-        "build"         : "npm run bin:fix-autobahn && webpack --progress --colors",
-        "build:release" : "npm run bin:fix-autobahn && export NODE_ENV=production && npm run build -- -p",
-
-        "test"          : "karma start ./config/karma.conf.js",
-        "test:travis"   : "karma start ./config/karma.conf.js --browsers PhantomJS --single-run",
-
-        "commit"        : "git cz",
-        "semantic-release": "semantic-release pre && npm publish && semantic-release post"
-    },
-    "config": {
-        "commitizen": {
-            "path": "node_modules/cz-conventional-changelog"
-        }
-    },
-    "bin": {
-        "pvw-doc": "./tools/doc-generator/doc-generator-cli.js",
-        "fix-autobahn": "./tools/fix-autobahn/patch-autobahn-0.9.6-cli.js"
+  "name": "paraviewweb",
+  "version": "0.0.0-semantically-release",
+  "description": "Web framework for building interactive visualization relying on VTK or ParaView to produce visualization data",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kitware/paraviewweb.git"
+  },
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/kitware/paraviewweb/issues"
+  },
+  "homepage": "https://github.com/kitware/paraviewweb#readme",
+  "main": "./dist/ParaViewWeb.js",
+  "dependencies": {
+    "autobahn": "0.9.6",
+    "when": "3.7.7",
+    "ws": "0.8.1",
+    "commander": "2.9.0",
+    "shelljs": "0.5.3",
+    "gh-pages": "0.10.0"
+  },
+  "devDependencies": {
+    "axios": "0.9.0",
+    "babel-cli": "^6.9.0",
+    "babel-preset-es2015": "^6.9.0",
+    "expect": "1.18.0",
+    "font-awesome": "4.5.0",
+    "gl-matrix": "2.3.1",
+    "hammerjs": "2.0.8",
+    "jasmine-core": "2.4.1",
+    "jest-cli": "12.0.2",
+    "karma": "0.13.22",
+    "karma-chrome-launcher": "0.2.3",
+    "karma-coverage": "0.5.5",
+    "karma-firefox-launcher": "0.1.7",
+    "karma-jasmine": "0.3.8",
+    "karma-phantomjs-launcher": "1.0.0",
+    "karma-safari-launcher": "0.1.1",
+    "karma-sourcemap-loader": "0.3.7",
+    "karma-webpack": "1.7.0",
+    "kw-web-suite": "2.0.1",
+    "monologue.js": "0.3.4",
+    "mout": "1.0.0",
+    "normalize.css": "4.1.1",
+    "phantomjs-prebuilt": "2.1.7",
+    "react": "15.0.2",
+    "react-dom": "15.0.2",
+    "tonic-arctic-sample-data": "http://www.kitware.com/in-situ-data/npm/tonic-arctic-sample-data-1.2.2.tgz"
+  },
+  "scripts": {
+    "postinstall": "fix-kw-web-suite || true",
+    "install:global": "npm install -g commitizen@2.5.0",
+    "bin:pvw-doc": "node ./tools/doc-generator/doc-generator-cli.js",
+    "bin:fix-autobahn": "node ./tools/fix-autobahn/patch-autobahn-0.9.6-cli.js",
+    "doc": "npm run bin:pvw-doc -- -e",
+    "doc:www": "npm run bin:pvw-doc -- -aest",
+    "doc:publish": "npm run bin:pvw-doc -- -p",
+    "build": "npm run bin:fix-autobahn && webpack --progress --colors",
+    "build:release": "npm run bin:fix-autobahn && export NODE_ENV=production && npm run build -- -p",
+    "test": "karma start ./config/karma.conf.js",
+    "test:travis": "karma start ./config/karma.conf.js --browsers PhantomJS --single-run",
+    "commit": "git cz",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
     }
+  },
+  "bin": {
+    "pvw-doc": "./tools/doc-generator/doc-generator-cli.js",
+    "fix-autobahn": "./tools/fix-autobahn/patch-autobahn-0.9.6-cli.js"
+  }
 }
