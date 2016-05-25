@@ -61,7 +61,8 @@
     "test": "karma start ./config/karma.conf.js",
     "test:travis": "karma start ./config/karma.conf.js --browsers PhantomJS --single-run",
     "commit": "git cz",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
+    "build:es5": "babel --presets=es2015 src -d lib"
   },
   "config": {
     "commitizen": {
