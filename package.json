@@ -1,6 +1,6 @@
 {
-    "name": "paraviewweb",
-    "version": "0.0.0-semantically-release",
+    "name": "paraviewweb-es5",
+    "version": "0.0.1",
     "description": "Web framework for building interactive visualization relying on VTK or ParaView to produce visualization data",
     "repository": {
         "type": "git",
