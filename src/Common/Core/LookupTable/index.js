@@ -1,5 +1,5 @@
-import Presets   from './Presets.js';
 import Monologue from 'monologue.js';
+import Presets   from './Presets';
 
 const
     CHANGE_TOPIC = 'LookupTable.change';
@@ -57,6 +57,7 @@ export default class LookupTable {
     return this.name;
   }
 
+  /* eslint-disable class-methods-use-this */
   getPresets() {
     return Object.keys(Presets.lookuptables);
   }
@@ -251,7 +252,7 @@ export default class LookupTable {
     if (isNaN(scalar)) {
       return this.colorNaN;
     }
-    const idxValue = Math.floor(this.colorTableSize * (scalar - this.scalarRange[0]) / this.delta);
+    const idxValue = Math.floor((this.colorTableSize * (scalar - this.scalarRange[0])) / this.delta);
     if (idxValue < 0) {
       return this.colorTable[0];
     }

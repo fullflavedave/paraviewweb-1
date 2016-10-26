@@ -1,3 +1,5 @@
+/* global XMLHttpRequest Image */
+
 import CanvasOffscreenBuffer from '../CanvasOffscreenBuffer';
 
 export default class ImageExporter {
@@ -12,7 +14,8 @@ export default class ImageExporter {
   exportImage(data) {
     var xhr = new XMLHttpRequest();
     var dataToSend = {};
-    var ts = Number(this.counter++).toString();
+    var ts = Number(this.counter).toString();
+    this.counter += 1;
 
     if (!data.canvas || !data.arguments) {
       return;

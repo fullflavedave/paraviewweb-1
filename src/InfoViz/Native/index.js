@@ -1,7 +1,11 @@
-import ParallelCoordinateProvider from './ParallelCoordinateProvider';
-import ParallelCoordinates        from './ParallelCoordinates';
+import FieldSelector        from './FieldSelector';
+import HistogramSelector    from './HistogramSelector';
+import MutualInformationDiagram  from './MutualInformationDiagram';
+import ParallelCoordinates  from './ParallelCoordinates';
 
 export default {
-  ParallelCoordinateProvider,
+  FieldSelector,
+  HistogramSelector,
+  MutualInformationDiagram,
   ParallelCoordinates,
 };

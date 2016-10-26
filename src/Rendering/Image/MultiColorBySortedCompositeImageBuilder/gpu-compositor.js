@@ -1,7 +1,8 @@
+import merge from 'mout/src/object/merge';
+import vec4 from 'gl-matrix/src/gl-matrix/vec4';
+
 import CanvasOffscreenBuffer from '../../../Common/Misc/CanvasOffscreenBuffer';
 import { loop } from '../../../Common/Misc/Loop';
-import merge from 'mout/src/object/merge';
-import vec4 from 'gl-matrix/src/gl-matrix/vec4.js';
 import WebGlUtil from '../../../Common/Misc/WebGl';
 import PingPong from '../../../Common/Misc/PingPong';
 
@@ -314,7 +315,8 @@ export default class GPUCompositor {
 
       alphas.push(this.colorHelper.getLayerAlpha(activeLayerIdx));
 
-      this.sampleLookupTable(lut, colorByName, range, currentLutIndex++);
+      this.sampleLookupTable(lut, colorByName, range, currentLutIndex);
+      currentLutIndex += 1;
 
       // Set up array of texture units to use for layer color textures
       layerColorUnits.push(texCount);
@@ -373,7 +375,7 @@ export default class GPUCompositor {
     this.pingPong.clearFbo();
 
     // Just iterate through all the layers in the data for now
-    loop(!this.reverseCompositePass, this.numLayers, layerIdx => {
+    loop(!this.reverseCompositePass, this.numLayers, (layerIdx) => {
       var orderLayerArray = this.extractLayerData(this.orderData, layerIdx, 1),
         lightingLayerArray = this.extractLayerData(this.intensityData, layerIdx, 1);
 

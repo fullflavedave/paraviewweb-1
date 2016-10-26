@@ -1,7 +1,10 @@
 import React              from 'react';
+
+import style              from 'PVWStyle/ReactWidgets/ColorByWidget.mcss';
+
 import PresetListWidget   from '../PresetListWidget';
 import ScalarRangeWidget  from '../ScalarRangeWidget';
-import style              from 'PVWStyle/ReactWidgets/ColorByWidget.mcss';
+import PieceWiseFunctionEditorWidget from '../PieceWiseFunctionEditorWidget';
 
 export default React.createClass({
 
@@ -17,6 +20,11 @@ export default React.createClass({
     scalarBar: React.PropTypes.string,
     source: React.PropTypes.object,
     visible: React.PropTypes.bool,
+    hidePointControl: React.PropTypes.bool,
+    opacityPoints: React.PropTypes.array,
+    onOpacityPointsChange: React.PropTypes.func,
+    onOpacityEditModeChange: React.PropTypes.func,
+    opacityEditorSize: React.PropTypes.array,
   },
 
   getInitialState() {
@@ -58,22 +66,17 @@ export default React.createClass({
             data-idx="0"
             onClick={this.updateActiveView}
             className={this.state.activeAdvanceView === '0' ? style.activePresetIcon : style.presetIcon}
-          ></i>
+          />
           <i
             data-idx="1"
             onClick={this.updateActiveView}
             className={this.state.activeAdvanceView === '1' ? style.activeRangeIcon : style.rangeIcon}
-          ></i>
+          />
           <i
             data-idx="2"
             onClick={this.updateActiveView}
             className={this.state.activeAdvanceView === '2' ? style.activeOpacityIcon : style.opacityIcon}
-          ></i>
-          <i
-            data-idx="3"
-            onClick={this.updateActiveView}
-            className={this.state.activeAdvanceView === '3' ? style.activeColorEditIcon : style.colorEditIcon}
-          ></i>
+          />
         </div>
         <div className={style.advancedViewContent}>
           <PresetListWidget
@@ -87,7 +90,25 @@ export default React.createClass({
             max={this.props.max}
             onApply={this.updateRange}
           />
+          {this.state.activeAdvanceView === '2' ?
+            <PieceWiseFunctionEditorWidget
+              points={this.props.opacityPoints}
+              rangeMin={this.props.min}
+              rangeMax={this.props.max}
+              onChange={this.props.onOpacityPointsChange}
+              onEditModeChange={this.props.onOpacityEditModeChange}
+              height={this.props.opacityEditorSize[1]}
+              width={this.props.opacityEditorSize[0]}
+              hidePointControl={this.props.hidePointControl}
+            /> : null
+          }
         </div>
       </div>);
   },
 });
+
+// <i
+//   data-idx="3"
+//   onClick={this.updateActiveView}
+//   className={this.state.activeAdvanceView === '3' ? style.activeColorEditIcon : style.colorEditIcon}
+// ></i>

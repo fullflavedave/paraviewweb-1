@@ -1,9 +1,10 @@
-import CollapsibleWidget        from '../../Widgets/CollapsibleWidget';
 import React                    from 'react';
-import TimeSlider               from '../../Widgets/QueryDataModelWidget/Number';
+
+import style                    from 'PVWStyle/ReactCollapsibleControls/FloatImageControl.mcss';
+
+import CollapsibleWidget        from '../../Widgets/CollapsibleWidget';
 import InlineToggleButtonWidget from '../../Widgets/InlineToggleButtonWidget';
 import ToggleIconButtonWidget   from '../../Widgets/ToggleIconButtonWidget';
-import style                    from 'PVWStyle/ReactCollapsibleControls/FloatImageControl.mcss';
 
 export default React.createClass({
 
@@ -127,14 +128,14 @@ export default React.createClass({
       <div className={style.container}>
         <div style={{ padding: '10px 5px 5px' }}>
           <InlineToggleButtonWidget
-            options={[{ icon: style.imageViewIcon }, { icon: style.chartViewIcon }, { icon: style.bothViewIcon }]}
+            options={[{ icon: style.imageViewIcon }, { icon: style.bothViewIcon }]}
             activeColor="#ccc"
             defaultColor="rgba(0,0,0,0)"
             active={activeView}
             onChange={this.onActiveView}
           />
         </div>
-        <CollapsibleWidget title="Time probes" activeSubTitle subtitle={buttons} visible={activeView !== 1}>
+        <CollapsibleWidget title="Time probes" activeSubTitle subtitle={buttons} visible>
           <section className={style.item}>
             <label className={style.smallLabel}>Name</label>
             <input className={style.input} type="text" name="name" value={activeProbe ? activeProbe.name : '' || ''} onChange={this.updateProbe} />
@@ -157,16 +158,15 @@ export default React.createClass({
         </CollapsibleWidget>
         <CollapsibleWidget title="Legend" visible={activeView > 0} activeSubTitle subtitle={sortProbes}>
           {chartData.fields.map((field, index) =>
-            <section key={index} className={style.item} data-name={field.name} data-active={field.active ? '1' : '0'} onClick={this.toggleProbe}>
+            <section key={index} className={style.item} data-name={field.name} data-active={field.active ? '1' : '0'}>
               <label className={style.label}>
-                <i className={field.active ? style.enableLegendIcon : style.disableLegendIcon} style={{ color: field.color }}></i>
+                <i className={field.active ? style.enableLegendIcon : style.disableLegendIcon} style={{ color: field.color }} />
                 {field.name}
               </label>
               <span className={style.value} title={field.data[timeIdx]}>{field.data[timeIdx]}</span>
             </section>
           )}
         </CollapsibleWidget>
-        {activeView === 1 ? <TimeSlider model={queryDataModel} arg="time" /> : null}
       </div>);
   },
 });

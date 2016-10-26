@@ -1,3 +1,5 @@
+/* global XMLHttpRequest Blob */
+
 // Generic request handler
 function makeRequest(url, handler) {
   var xhr = new XMLHttpRequest();
@@ -6,7 +8,7 @@ function makeRequest(url, handler) {
   xhr.responseType = handler.type;
 
   xhr.onload = function onLoad(e) {
-    if (this.status === 200) {
+    if (this.status === 200 || this.status === 0) {
       handler.fn(null, xhr);
       return;
     }

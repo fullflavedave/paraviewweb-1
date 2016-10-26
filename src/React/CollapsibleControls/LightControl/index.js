@@ -1,9 +1,11 @@
+import React                from 'react';
+
+import style                from 'PVWStyle/ReactCollapsibleControls/LightControl.mcss';
+
 import CollapsibleWidget    from '../../Widgets/CollapsibleWidget';
 import Coordinate2DWidget   from '../../Widgets/Coordinate2DWidget';
 import LightButton          from '../../Widgets/ToggleIconButtonWidget';
 import NumberInputWidget    from '../../Widgets/NumberInputWidget';
-import React                from 'react';
-import style                from 'PVWStyle/ReactCollapsibleControls/LightControl.mcss';
 
 export default React.createClass({
 
@@ -41,7 +43,7 @@ export default React.createClass({
   render() {
     var lightButton = <LightButton key="enable-light-button" onChange={this.toggleLight} value={this.props.light.getLightingEnabled()} />;
     return (
-      <CollapsibleWidget title="Light Properties" subtitle={lightButton}>
+      <CollapsibleWidget title="Light Properties" subtitle={lightButton} activeSubTitle>
         <section className={style.container}>
           <Coordinate2DWidget onChange={this.onLightPositionChange} width={114} height={114} hideXY />
           <section className={style.controls}>

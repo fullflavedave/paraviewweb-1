@@ -1,5 +1,4 @@
 import React                from 'react';
-import ReactDOM             from 'react-dom';
 
 import BinaryImageStream    from '../../../IO/WebSocket/BinaryImageStream';
 import NativeImageRenderer  from '../../../NativeUI/Renderers/NativeImageRenderer';
@@ -13,6 +12,8 @@ export default React.createClass({
   propTypes: {
     className: React.PropTypes.string,
     client: React.PropTypes.object,
+    viewId: React.PropTypes.number,
+    interactionTimout: React.PropTypes.number,
     connection: React.PropTypes.object,
     showFPS: React.PropTypes.bool,
     style: React.PropTypes.object,
@@ -23,6 +24,8 @@ export default React.createClass({
       className: '',
       showFPS: false,
       style: {},
+      viewId: -1,
+      interactionTimout: 500,
     };
   },
 
@@ -32,7 +35,7 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    const container = ReactDOM.findDOMNode(this);
+    const container = this.rootContainer;
 
     const wsbUrl = `${this.props.connection.urls}b`;
     this.binaryImageStream = new BinaryImageStream(wsbUrl);
@@ -44,6 +47,7 @@ export default React.createClass({
         this.binaryImageStream.startInteractiveQuality();
       } else {
         this.binaryImageStream.stopInteractiveQuality();
+        setTimeout(() => this.binaryImageStream.invalidateCache(), this.props.interactionTimout);
       }
     });
 
@@ -61,11 +65,13 @@ export default React.createClass({
 
     // Establish image stream connection
     this.binaryImageStream.connect({
-      view_id: -1,
-    });
-
-    // Update size
-    sizeHelper.triggerChange();
+      view_id: this.props.viewId,
+    }).then(
+      () => {
+        // Update size and do a force push
+        this.binaryImageStream.invalidateCache();
+        sizeHelper.triggerChange();
+      });
   },
 
   componentWillUnmount() {
@@ -91,7 +97,7 @@ export default React.createClass({
   },
 
   render() {
-    return <div className={this.props.className} style={this.props.style} ></div>;
+    return <div className={this.props.className} style={this.props.style} ref={c => (this.rootContainer = c)} />;
   },
 });
 

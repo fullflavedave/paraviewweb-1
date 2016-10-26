@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ColorMapEditorWidget from '..';
@@ -8,13 +9,13 @@ import presets from './presets.json';
 
 const ColorMapEditorTestWidget = React.createClass({
   displayName: 'ColorMapEditorTestWidget',
-  
+
   getInitialState() {
     return {
       currentPreset: 'Cool to Warm',
       rangeMin: 0,
       rangeMax: 200,
-      points: [{ x: 0, y: 0 }, { x: 200, y: 1 }],
+      points: [{ x: 0, y: 0 }, { x: 1, y: 1 }],
     };
   },
 

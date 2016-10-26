@@ -1,96 +1,87 @@
-import LinearPieceWiseEditor from '../../../NativeUI/Canvas/LinearPieceWiseEditor';
-import SvgIconWidget from '../SvgIconWidget';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import equals from 'mout/src/lang/deepEquals';
-import clone from 'mout/src/lang/deepClone';
 
 import style from 'PVWStyle/ReactWidgets/PieceWiseFunctionEditorWidget.mcss';
+
+import LinearPieceWiseEditor from '../../../NativeUI/Canvas/LinearPieceWiseEditor';
+import SvgIconWidget from '../SvgIconWidget';
 
 import sizeHelper from '../../../Common/Misc/SizeHelper';
 
 import plusIcon from '../../../../svg/colors/Plus.svg';
 import trashIcon from '../../../../svg/colors/Trash.svg';
-// In javascript, you can't return an object from an => function like this:
-// x => { property: x }.  But ESLint doesn't allow this:
-// x => { return { property: x }; } since it says all one line returning =>
-// functions should not include the outer {} or return keyword.  This is
-// a function to allow this syntax: x => makeESLintHappy({ property: x })
-function makeESLintHappy(x) {
-  return x;
-}
 
 export default React.createClass({
 
   displayName: 'PieceWiseFunctionEditorWidget',
 
   propTypes: {
-    initialPoints: React.PropTypes.array,
+    points: React.PropTypes.array,
     rangeMin: React.PropTypes.number,
     rangeMax: React.PropTypes.number,
     onChange: React.PropTypes.func,
-    visible: React.PropTypes.bool,
+    onEditModeChange: React.PropTypes.func,
+    height: React.PropTypes.number,
+    width: React.PropTypes.number,
+    hidePointControl: React.PropTypes.bool,
   },
 
-  getInitialState() {
-    let controlPoints = [{ x: 0, y: 0 }, { x: 1, y: 1 }];
-    if (this.props.initialPoints) {
-      controlPoints = this.props.initialPoints.map(pt =>
-        makeESLintHappy({
-          x: (pt.x - this.props.rangeMin) / (this.props.rangeMax - this.props.rangeMin),
-          y: pt.y,
-        })
-      );
-    }
+  getDefaultProps() {
     return {
-      activePoint: 0,
+      height: 200,
       width: -1,
-      height: 300,
-      points: controlPoints,
+      points: [{ x: 0, y: 0 }, { x: 1, y: 1 }],
     };
   },
 
-  componentWillMount() {
-    if (this.props.visible) {
-      this.sizeSubscription = sizeHelper.onSizeChange(this.updateDimensions);
-      sizeHelper.startListening();
-    }
+  getInitialState() {
+    return {
+      height: this.props.height,
+      width: this.props.width,
+      activePoint: -1,
+    };
   },
 
   componentDidMount() {
-    const canvas = this.refs.canvas;
+    const canvas = this.canvas;
     this.editor = new LinearPieceWiseEditor(canvas);
 
-    this.editor.setControlPoints(this.state.points);
+    this.editor.setControlPoints(this.props.points);
     this.editor.render();
     this.editor.onChange(this.updatePoints);
+    this.editor.onEditModeChange(this.props.onEditModeChange);
 
-    if (this.sizeHelper) {
-      sizeHelper.triggerChange();
+    if (this.props.width === -1 || this.props.height === -1) {
+      this.sizeSubscription = sizeHelper.onSizeChange(this.updateDimensions);
+      sizeHelper.startListening();
+      this.updateDimensions();
     }
   },
 
-  componentDidUpdate(prevProps, prevState) {
-    if (this.props.visible && !prevProps.visible && this.state.width === -1) {
-      this.sizeSubscription = sizeHelper.onSizeChange(this.updateDimensions);
-      sizeHelper.startListening();
-      sizeHelper.triggerChange();
-    }
-    if (this.state.width !== prevState.width ||
-        (this.props.visible && !prevProps.visible)) {
-      this.editor.render();
-    }
-    // We get some duplicate events from the editor, filter them out
-    if (!equals(this.state.points, prevState.points) ||
-        this.props.rangeMin !== prevProps.rangeMin ||
-        this.props.rangeMax !== prevProps.rangeMax) {
-      const dataPoints = this.state.points.map(pt => makeESLintHappy({
-        x: pt.x * (this.props.rangeMax - this.props.rangeMin) + this.props.rangeMin,
-        y: pt.y,
-      }));
-      if (this.props.onChange) {
-        this.props.onChange(dataPoints);
+  componentWillReceiveProps(newProps) {
+    const newState = {};
+    if (!equals(newProps.points, this.props.points)) {
+      this.editor.setControlPoints(newProps.points, this.editor.activeIndex);
+      if (this.state.activePoint >= newProps.points.length) {
+        newState.activePoint = -1;
       }
+    }
+    if (newProps.width !== this.props.width) {
+      newState.width = newProps.width;
+    }
+    if (newProps.height !== this.props.height) {
+      newState.height = newProps.height;
+    }
+    if (this.props.width === -1 || this.props.height === -1) {
+      this.updateDimensions();
+    }
+    this.setState(newState);
+  },
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.width !== prevState.width ||
+        this.state.height !== prevState.height) {
+      this.editor.render();
     }
   },
 
@@ -98,19 +89,41 @@ export default React.createClass({
     if (this.sizeSubscription) {
       this.sizeSubscription.unsubscribe();
       this.sizeSubscription = null;
+      this.editor.destroy(); // Remove subscriptions
       this.editor = null;
     }
   },
 
   updateDimensions() {
-    const { clientWidth } =
-      sizeHelper.getSize(ReactDOM.findDOMNode(this));
-    this.setState({ width: clientWidth });
+    const { clientWidth, clientHeight } =
+      sizeHelper.getSize(this.rootContainer, true);
+    if (this.props.width === -1) {
+      this.setState({ width: clientWidth });
+    }
+    if (this.props.height === -1) {
+      this.setState({ height: clientHeight });
+    }
   },
 
   updatePoints(newPoints, envelope) {
     const activePoint = this.editor.activeIndex;
-    this.setState({ points: clone(newPoints), activePoint });
+    this.setState({ activePoint });
+    const dataPoints = this.props.points.map(pt => ({
+      x: pt.x,
+      y: pt.y,
+      x2: pt.x2 || 0.5,
+      y2: pt.y2 || 0.5,
+    }));
+    const newDataPoints = newPoints.map(pt => ({
+      x: pt.x,
+      y: pt.y,
+      x2: pt.x2 || 0.5,
+      y2: pt.y2 || 0.5,
+    }));
+    this.oldPoints = dataPoints;
+    if (this.props.onChange) {
+      this.props.onChange(newDataPoints);
+    }
   },
 
   updateActivePointDataValue(e) {
@@ -118,7 +131,12 @@ export default React.createClass({
       return;
     }
     const value = parseFloat(e.target.value);
-    const points = this.state.points.map(pt => makeESLintHappy({ x: pt.x, y: pt.y }));
+    const points = this.props.points.map(pt => ({
+      x: pt.x,
+      y: pt.y,
+      x2: pt.x2 || 0.5,
+      y2: pt.y2 || 0.5,
+    }));
     points[this.state.activePoint].x =
       (value - this.props.rangeMin) / (this.props.rangeMax - this.props.rangeMin);
     this.editor.setControlPoints(points, this.state.activePoint);
@@ -129,14 +147,29 @@ export default React.createClass({
       return;
     }
     const value = parseFloat(e.target.value);
-    const points = this.state.points.map(pt => makeESLintHappy({ x: pt.x, y: pt.y }));
+    const points = this.props.points.map(pt => ({
+      x: pt.x,
+      y: pt.y,
+      x2: pt.x2 || 0.5,
+      y2: pt.y2 || 0.5,
+    }));
     points[this.state.activePoint].y = value;
     this.editor.setControlPoints(points, this.state.activePoint);
   },
 
   addPoint(e) {
-    const points = this.state.points.map(pt => makeESLintHappy({ x: pt.x, y: pt.y }));
-    points.push({ x: 0.5, y: 0.5 });
+    const points = this.props.points.map(pt => ({
+      x: pt.x,
+      y: pt.y,
+      x2: pt.x2 || 0.5,
+      y2: pt.y2 || 0.5,
+    }));
+    points.push({
+      x: 0.5,
+      y: 0.5,
+      x2: 0.5,
+      y2: 0.5,
+    });
     this.editor.setControlPoints(points, points.length - 1);
   },
 
@@ -144,56 +177,63 @@ export default React.createClass({
     if (this.state.activePoint === -1) {
       return;
     }
-    const points = this.state.points.map(pt => makeESLintHappy({ x: pt.x, y: pt.y }));
+    const points = this.props.points.map(pt => ({
+      x: pt.x,
+      y: pt.y,
+      x2: pt.x2 || 0.5,
+      y2: pt.y2 || 0.5,
+    }));
     points.splice(this.state.activePoint, 1);
     this.editor.setActivePoint(-1);
     this.editor.setControlPoints(points);
   },
 
   render() {
-    const activePointDataValue = (this.state.activePoint !== -1 ?
-      this.state.points[this.state.activePoint].x : 0.5) *
-      (this.props.rangeMax - this.props.rangeMin) + this.props.rangeMin;
+    const activePointDataValue = ((this.state.activePoint !== -1 ?
+          this.props.points[this.state.activePoint].x : 0.5) *
+          (this.props.rangeMax - this.props.rangeMin)) + this.props.rangeMin;
     const activePointOpacity = this.state.activePoint !== -1 ?
-      this.state.points[this.state.activePoint].y : 0.5;
+      this.props.points[this.state.activePoint].y : 0.5;
     return (
-      <div className={this.props.visible ? style.pieceWiseFunctionEditorWidget : style.hidden}>
+      <div className={style.pieceWiseFunctionEditorWidget} ref={c => (this.rootContainer = c)}>
         <canvas
           className={style.canvas}
           width={this.state.width}
           height={this.state.height}
-          ref="canvas"
+          ref={(c) => { this.canvas = c; }}
         />
-        <div className={style.pointControls}>
-          <div className={style.pointInfo}>
-            <div className={style.line}>
-              <label>Data</label>
-              <input
-                className={style.input}
-                type="number"
-                step="any"
-                min={this.props.rangeMin}
-                max={this.props.rangeMax}
-                value={activePointDataValue}
-                onChange={this.updateActivePointDataValue}
-              />
+        {this.props.hidePointControl ? null :
+          <div className={style.pointControls}>
+            <div className={style.pointInfo}>
+              <div className={style.line}>
+                <label>Data</label>
+                <input
+                  className={style.input}
+                  type="number"
+                  step="any"
+                  min={this.props.rangeMin}
+                  max={this.props.rangeMax}
+                  value={activePointDataValue}
+                  onChange={this.updateActivePointDataValue}
+                />
+              </div>
+              <div className={style.line}>
+                <label>Opacity</label>
+                <input
+                  className={style.input}
+                  type="number"
+                  step={0.01}
+                  min={0}
+                  max={1}
+                  value={Math.floor(100 * activePointOpacity) / 100}
+                  onChange={this.updateActivePointOpacity}
+                />
+              </div>
             </div>
-            <div className={style.line}>
-              <label>Opacity</label>
-              <input
-                className={style.input}
-                type="number"
-                step={0.01}
-                min={0}
-                max={1}
-                value={Math.floor(100 * activePointOpacity) / 100}
-                onChange={this.updateActivePointOpacity}
-              />
-            </div>
+            <SvgIconWidget className={style.svgIcon} icon={plusIcon} onClick={this.addPoint} />
+            <SvgIconWidget className={style.svgIcon} icon={trashIcon} onClick={this.removePoint} />
           </div>
-          <SvgIconWidget className={style.svgIcon} icon={plusIcon} onClick={this.addPoint} />
-          <SvgIconWidget className={style.svgIcon} icon={trashIcon} onClick={this.removePoint} />
-        </div>
+        }
       </div>
     );
   },

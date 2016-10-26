@@ -1,9 +1,10 @@
 import React            from 'react';
 import equals           from 'mout/src/array/equals';
-import factory          from '../../Properties/PropertyFactory';
-import { proxyToProps } from '../../../Common/Misc/ConvertProxyProperty';
 
 import style from 'PVWStyle/ReactWidgets/ProxyPropertyGroup.mcss';
+
+import factory          from '../../Properties/PropertyFactory';
+import { proxyToProps } from '../../../Common/Misc/ConvertProxyProperty';
 
 export default React.createClass({
 
@@ -14,6 +15,7 @@ export default React.createClass({
     collapsed: React.PropTypes.bool,
     filter: React.PropTypes.string,
     onChange: React.PropTypes.func,
+    onCollapseChange: React.PropTypes.func,
     proxy: React.PropTypes.object,
   },
 
@@ -46,6 +48,9 @@ export default React.createClass({
 
   toggleCollapsedMode() {
     const collapsed = !this.state.collapsed;
+    if (this.props.onCollapseChange) {
+      this.props.onCollapseChange(this.props.proxy.name, collapsed);
+    }
     this.setState({ collapsed });
   },
 
@@ -62,17 +67,17 @@ export default React.createClass({
     const properties = {};
     const ctx = { advanced: this.props.advanced, filter: this.props.filter, properties };
     const changeSetCount = Object.keys(this.state.changeSet).length;
-    this.state.properties.forEach(p => {
+    this.state.properties.forEach((p) => {
       properties[p.data.id] = p.data.value;
     });
 
     return (
       <div className={style.container}>
         <div className={style.toolbar} onClick={this.toggleCollapsedMode}>
-          <i className={this.state.collapsed ? style.collapedIcon : style.expandedIcon}></i>
+          <i className={this.state.collapsed ? style.collapedIcon : style.expandedIcon} />
           <span className={style.title}>{this.props.proxy.name}</span>
           <span className={changeSetCount ? style.tag : style.emptyTag}>
-            <i className={style.tagBackground}></i>
+            <i className={style.tagBackground} />
             <strong className={style.tagCount}>{changeSetCount}</strong>
           </span>
         </div>

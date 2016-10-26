@@ -1,5 +1,4 @@
 import React            from 'react';
-import ReactDOM         from 'react-dom';
 import Monologue        from 'monologue.js';
 
 import layoutFunctions  from './Layouts';
@@ -58,7 +57,7 @@ const MultiViewRenderer = React.createClass({
     }
 
     // Init viewports from props
-    Object.keys(this.props.renderers).forEach(name => {
+    Object.keys(this.props.renderers).forEach((name) => {
       const item = this.props.renderers[name],
         imageBuilder = item.builder,
         painter = item.painter;
@@ -89,7 +88,7 @@ const MultiViewRenderer = React.createClass({
     this.updateDimensions();
 
     // Attach mouse listener
-    this.mouseHandler = new MouseHandler(ReactDOM.findDOMNode(this.refs.canvasRenderer));
+    this.mouseHandler = new MouseHandler(this.canvasRenderer);
 
     this.mouseHandler.attach({
       drag: this.dragCallback,
@@ -156,7 +155,7 @@ const MultiViewRenderer = React.createClass({
 
   getActiveRenderMethod() {
     var name = 'No render method';
-    this.viewports.forEach(viewport => {
+    this.viewports.forEach((viewport) => {
       if (viewport.active) {
         name = viewport.name;
       }
@@ -169,17 +168,19 @@ const MultiViewRenderer = React.createClass({
       x = event.relative.x,
       y = event.relative.y;
 
-    while (count--) {
+    while (count) {
+      count -= 1;
       const area = this.viewports[count].activeArea || this.viewports[count].region;
       if (x >= area[0] && y >= area[1] && x <= (area[0] + area[2]) && y <= (area[1] + area[3])) {
         return this.viewports[count];
       }
     }
+
     return null;
   },
 
   updateDimensions() {
-    var el = ReactDOM.findDOMNode(this).parentNode,
+    var el = this.canvasRenderer.parentNode,
       elSize = sizeHelper.getSize(el);
 
     if (el && (this.state.width !== elSize.clientWidth || this.state.height !== elSize.clientHeight)) {
@@ -233,7 +234,7 @@ const MultiViewRenderer = React.createClass({
     const viewport = this.getViewPort(event);
 
     if (viewport) {
-      this.viewports.forEach(item => {
+      this.viewports.forEach((item) => {
         item.active = false;
       });
       viewport.active = true;
@@ -281,7 +282,7 @@ const MultiViewRenderer = React.createClass({
   drawViewport(viewport) {
     var renderer = this.props.renderers[viewport.name],
       region = viewport.region,
-      ctx = ReactDOM.findDOMNode(this.refs.canvasRenderer).getContext('2d');
+      ctx = this.canvasRenderer.getContext('2d');
 
     if (!renderer || (renderer.builder && !renderer.dataToDraw) || (renderer.painter && !renderer.painter.isReady())) {
       return;
@@ -309,8 +310,8 @@ const MultiViewRenderer = React.createClass({
 
       const tw = Math.floor(iw * zoomLevel) - 2,
         th = Math.floor(ih * zoomLevel) - 2,
-        tx = 1 + region[0] + (w * 0.5) - (tw / 2),
-        ty = 1 + region[1] + (h * 0.5) - (th / 2);
+        tx = 1 + region[0] + ((w * 0.5) - (tw / 2)),
+        ty = 1 + region[1] + ((h * 0.5) - (th / 2));
 
       try {
         ctx.drawImage(
@@ -325,11 +326,11 @@ const MultiViewRenderer = React.createClass({
 
           ctx.beginPath();
 
-          ctx.moveTo(translate[0] + scale[0] * dataToDraw.crosshair[0], ty);
-          ctx.lineTo(translate[0] + scale[0] * dataToDraw.crosshair[0], ty + th);
+          ctx.moveTo(translate[0] + (scale[0] * dataToDraw.crosshair[0]), ty);
+          ctx.lineTo(translate[0] + (scale[0] * dataToDraw.crosshair[0]), ty + th);
 
-          ctx.moveTo(tx, translate[1] + scale[1] * dataToDraw.crosshair[1]);
-          ctx.lineTo(tx + tw, translate[1] + scale[1] * dataToDraw.crosshair[1]);
+          ctx.moveTo(tx, translate[1] + (scale[1] * dataToDraw.crosshair[1]));
+          ctx.lineTo(tx + tw, translate[1] + (scale[1] * dataToDraw.crosshair[1]));
 
           ctx.strokeStyle = this.props.crosshairColor;
           ctx.lineWidth = 1;
@@ -360,7 +361,7 @@ const MultiViewRenderer = React.createClass({
   },
 
   drawLayout() {
-    var ctx = ReactDOM.findDOMNode(this.refs.canvasRenderer).getContext('2d'),
+    var ctx = this.canvasRenderer.getContext('2d'),
       width = (ctx.canvas.width = this.state.width),
       height = (ctx.canvas.height = this.state.height),
       centerPx = [this.center[0] * width, this.center[1] * height],
@@ -385,7 +386,7 @@ const MultiViewRenderer = React.createClass({
       }
       ctx.beginPath();
       ctx.strokeStyle = viewports[i].active ? this.props.activeColor : this.props.borderColor;
-      ctx.rect.apply(ctx, region);
+      ctx.rect(...region);
       ctx.stroke();
     }
 
@@ -401,11 +402,10 @@ const MultiViewRenderer = React.createClass({
     return (
       <canvas
         className="CanvasMultiImageRenderer"
-        ref="canvasRenderer"
+        ref={(c) => { this.canvasRenderer = c; }}
         width={this.state.width}
         height={this.state.height}
-      >
-      </canvas>
+      />
     );
   },
 });

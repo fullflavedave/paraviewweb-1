@@ -1,6 +1,6 @@
 import React            from 'react';
-import PropertyGroup    from '../ProxyPropertyGroupWidget';
 import style            from 'PVWStyle/ReactWidgets/ProxyEditorWidget.mcss';
+import PropertyGroup    from '../ProxyPropertyGroupWidget';
 
 export default React.createClass({
 
@@ -11,6 +11,7 @@ export default React.createClass({
     children: React.PropTypes.oneOfType([React.PropTypes.object, React.PropTypes.array]),
     onApply: React.PropTypes.func,
     sections: React.PropTypes.array.isRequired,
+    onCollapseChange: React.PropTypes.func,
   },
 
   getDefaultProps() {
@@ -58,7 +59,7 @@ export default React.createClass({
           <i
             className={this.state.advanced ? style.activeAdvancedButton : style.advancedButton}
             onClick={this.toggleAdvanced}
-          ></i>
+          />
           <input
             type="text"
             placeholder="filter properties..."
@@ -68,7 +69,7 @@ export default React.createClass({
           <i
             className={changeCount ? style.validateButtonOn : style.validateButton}
             onClick={this.applyChanges}
-          ></i>
+          />
         </div>
         <div className={style.contentContainer}>
           {this.props.children}
@@ -80,6 +81,7 @@ export default React.createClass({
               collapsed={section.collapsed}
               advanced={this.state.advanced}
               onChange={this.updateChangeSet}
+              onCollapseChange={this.props.onCollapseChange}
             />
           )}
         </div>

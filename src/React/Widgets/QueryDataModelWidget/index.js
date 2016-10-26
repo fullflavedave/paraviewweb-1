@@ -1,9 +1,10 @@
+import React                    from 'react';
+import style                    from 'PVWStyle/ReactWidgets/QueryDataModelWidget.mcss';
+
 import ListWidget               from './String';
 import NumberWidget             from './Number';
 import DataListenerMixin        from './DataListenerMixin';
 import DataListenerUpdateMixin  from './DataListenerUpdateMixin';
-import React                    from 'react';
-import style                    from 'PVWStyle/ReactWidgets/QueryDataModelWidget.mcss';
 
 /**
  * This React component expect the following input properties:
@@ -30,7 +31,7 @@ export default React.createClass({
 
     return (
       <div className={style.container}>
-        {orderList.map(name => {
+        {orderList.map((name) => {
           if (model.getUiType(name) === 'list') {
             return (
               <ListWidget

@@ -1,10 +1,13 @@
-import BlockMixin       from '../PropertyFactory/BlockMixin';
-import Checkbox         from './Checkbox';
 import React            from 'react';
-import ToggleIconButton from '../../Widgets/ToggleIconButtonWidget';
 import style            from 'PVWStyle/ReactProperties/CellProperty.mcss';
 
+import BlockMixin       from '../PropertyFactory/BlockMixin';
+import Checkbox         from './Checkbox';
+import ToggleIconButton from '../../Widgets/ToggleIconButtonWidget';
+
 /* eslint-disable react/no-danger */
+/* eslint-disable react/no-unused-prop-types */
+
 export default React.createClass({
 
   displayName: 'CheckboxProperty',

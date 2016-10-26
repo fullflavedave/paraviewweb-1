@@ -1,6 +1,8 @@
+/* global atob btoa */
+
 import React      from 'react';
-import ActionList from '../ActionListWidget';
 import style      from 'PVWStyle/ReactWidgets/FileBrowserWidget.mcss';
+import ActionList from '../ActionListWidget';
 
 export default React.createClass({
 
@@ -51,10 +53,10 @@ export default React.createClass({
 
   processProps(props) {
     const list = [];
-    props.directories.forEach(name => {
+    props.directories.forEach((name) => {
       list.push({ name, icon: style.folderIcon, action: 'directory' });
     });
-    props.groups.forEach(g => {
+    props.groups.forEach((g) => {
       list.push({
         name: g.label,
         icon: style.groupIcon,
@@ -62,7 +64,7 @@ export default React.createClass({
         data: btoa(JSON.stringify(g.files)),
       });
     });
-    props.files.forEach(name => {
+    props.files.forEach((name) => {
       list.push({ name, icon: style.fileIcon, action: 'file' });
     });
     this.setState({ list });
@@ -73,8 +75,8 @@ export default React.createClass({
       <div className={style.container}>
         <ul className={style.breadcrumb}>
           {this.props.path.map((name, idx) =>
-            <li className={style.breadcrumbItem} key={name} data-idx={idx} title={name} onClick={this.onPathChange}>
-              <i className={style.breadcrumbFolderIcon}></i>
+            <li className={style.breadcrumbItem} key={idx} data-idx={idx} title={name} onClick={this.onPathChange}>
+              <i className={style.breadcrumbFolderIcon} />
               <span className={style.breadcrumbLabel}>{name}</span>
             </li>
           )}

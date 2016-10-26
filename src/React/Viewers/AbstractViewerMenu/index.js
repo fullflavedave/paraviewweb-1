@@ -1,9 +1,11 @@
 import React             from 'react';
+
+import style             from 'PVWStyle/ReactViewers/AbstractViewerMenu.mcss';
+
 import GeometryRenderer  from '../../Renderers/GeometryRenderer';
 import ImageRenderer     from '../../Renderers/ImageRenderer';
 import MultiViewRenderer from '../../Renderers/MultiLayoutRenderer';
-
-import style             from 'PVWStyle/ReactViewers/AbstractViewerMenu.mcss';
+import PlotlyRenderer    from '../../Renderers/PlotlyRenderer';
 
 export default React.createClass({
 
@@ -14,6 +16,7 @@ export default React.createClass({
     config: React.PropTypes.object,
     geometryBuilder: React.PropTypes.object,
     imageBuilder: React.PropTypes.object,
+    chartBuilder: React.PropTypes.object,
     layout: React.PropTypes.string,
     magicLensController: React.PropTypes.object,
     mouseListener: React.PropTypes.object,
@@ -59,7 +62,7 @@ export default React.createClass({
   },
 
   getRenderer() {
-    return this.refs.imageRenderer;
+    return this.renderer;
   },
 
   attachListener(dataModel) {
@@ -97,7 +100,7 @@ export default React.createClass({
 
   resetCamera() {
     if (this.isMounted() && (this.props.renderer === 'ImageRenderer' || this.props.renderer === 'GeometryRenderer')) {
-      this.refs.imageRenderer.resetCamera();
+      this.renderer.resetCamera();
     }
   },
 
@@ -128,12 +131,13 @@ export default React.createClass({
       serverRecording = !!this.props.config.Recording,
       isImageRenderer = (this.props.renderer === 'ImageRenderer'),
       isMultiViewer = (this.props.renderer === 'MultiViewRenderer'),
+      isChartViewer = (this.props.renderer === 'PlotlyRenderer'),
       isGeometryViewer = (this.props.renderer === 'GeometryRenderer');
 
     if (isImageRenderer) {
       renderer = (
         <ImageRenderer
-          ref="imageRenderer"
+          ref={(c) => { this.renderer = c; }}
           className={style.renderer}
           imageBuilder={rootImageBuilder}
           listener={this.props.mouseListener || rootImageBuilder.getListeners()}
@@ -143,7 +147,7 @@ export default React.createClass({
     if (isMultiViewer) {
       renderer = (
         <MultiViewRenderer
-          ref="imageRenderer"
+          ref={(c) => { this.renderer = c; }}
           className={style.renderer}
           renderers={this.props.renderers}
           layout={this.props.layout}
@@ -153,9 +157,18 @@ export default React.createClass({
     if (isGeometryViewer) {
       renderer = (
         <GeometryRenderer
-          ref="imageRenderer"
+          ref={(c) => { this.renderer = c; }}
           className={style.renderer}
           geometryBuilder={this.props.geometryBuilder}
+        />);
+    }
+
+    if (isChartViewer) {
+      renderer = (
+        <PlotlyRenderer
+          ref={(c) => { this.renderer = c; }}
+          className={style.renderer}
+          chartBuilder={this.props.chartBuilder}
         />);
     }
 
@@ -170,34 +183,28 @@ export default React.createClass({
                 (magicLensController.isFront() ? style.magicLensButtonIn : style.magicLensButtonOut)
                 : style.hidden}
               onClick={this.toggleLens}
-            >
-            </i>
+            />
             <i
               className={(serverRecording && isImageRenderer && this.props.imageBuilder.handleRecord)
                 ? (this.state.record ? style.recordButtonOn : style.recordButtonOff) : style.hidden}
               onClick={this.toggleRecord}
-            >
-            </i>
+            />
             <i
               className={(isImageRenderer || isGeometryViewer) ? style.resetCameraButton : style.hidden}
               onClick={this.resetCamera}
-            >
-            </i>
+            />
             <i
               className={(queryDataModel.hasAnimationFlag() && !queryDataModel.isAnimating() ? style.playButton : style.hidden)}
               onClick={this.play}
-            >
-            </i>
+            />
             <i
               className={(queryDataModel.isAnimating() ? style.stopButton : style.hidden)}
               onClick={this.stop}
-            >
-            </i>
+            />
             <i
               className={(queryDataModel.hasAnimationFlag() ? style.speedButton : style.hidden)}
               onClick={this.updateSpeed}
-            >
-            </i>
+            />
             <i
               className={(queryDataModel.hasAnimationFlag() ? style.animationSpeed : style.hidden)}
               onClick={this.updateSpeed}
@@ -207,8 +214,7 @@ export default React.createClass({
             <i
               className={this.state.collapsed ? style.collapsedMenuButton : style.menuButton}
               onClick={this.togglePanel}
-            >
-            </i>
+            />
           </div>
           <div className={style.controlContent}>
             {this.props.children}

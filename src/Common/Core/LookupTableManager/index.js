@@ -1,5 +1,5 @@
-import LookupTable  from '../LookupTable';
 import Monologue    from 'monologue.js';
+import LookupTable  from '../LookupTable';
 
 const TOPIC = {
   CHANGE: 'LookupTable.change',
@@ -63,7 +63,7 @@ export default class LookupTableManager {
   }
 
   addFields(fieldsRange, lutConfigs) {
-    Object.keys(fieldsRange).forEach(field => {
+    Object.keys(fieldsRange).forEach((field) => {
       const lut = this.addLookupTable(field, fieldsRange[field]);
       if (lutConfigs && lutConfigs[field]) {
         if (lutConfigs[field].discrete !== undefined) {

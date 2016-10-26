@@ -1,11 +1,11 @@
 import React            from 'react';
 
+import style            from 'PVWStyle/ReactProperties/CellProperty.mcss';
+import enumStyle        from 'PVWStyle/ReactProperties/EnumProperty.mcss';
+
 import convert          from '../../../Common/Misc/Convert';
 import BlockMixin       from '../PropertyFactory/BlockMixin';
 import ToggleIconButton from '../../Widgets/ToggleIconButtonWidget';
-
-import style            from 'PVWStyle/ReactProperties/CellProperty.mcss';
-import enumStyle        from 'PVWStyle/ReactProperties/EnumProperty.mcss';
 
 function valueToString(obj) {
   if (typeof obj === 'string') {
@@ -22,6 +22,8 @@ function stringToValue(str) {
 }
 
 /* eslint-disable react/no-danger */
+/* eslint-disable react/no-unused-prop-types */
+
 export default React.createClass({
 
   displayName: 'EnumProperty',
@@ -69,10 +71,10 @@ export default React.createClass({
       mapper = () => {
         var ret = [];
         if (!multiple && !this.props.ui.noEmpty) {
-          ret.push(<option key="empty-value" value={null}></option>);
+          ret.push(<option key="empty-value" value={null} />);
         }
 
-        Object.keys(this.props.ui.domain).forEach(key => {
+        Object.keys(this.props.ui.domain).forEach((key) => {
           ret.push(
             <option
               value={valueToString(this.props.ui.domain[key])}

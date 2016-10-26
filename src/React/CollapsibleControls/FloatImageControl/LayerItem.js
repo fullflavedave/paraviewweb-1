@@ -49,17 +49,22 @@ export default React.createClass({
 
     return (
       <div className={style.item}>
-        <div className={style.label}>
-            {layer.name}
+        <div className={style.sceneLabel}>
+          {layer.name}
         </div>
-        <div className={style.actions}>
+        <div className={style.sceneActions}>
           <i
             className={(meshAvailable ? (meshVisible ? style.meshButtonOn : style.meshButtonOff) : style.hidden)}
             onClick={this.toggleMesh}
-          >
-          </i>
-          <i className={visible ? style.visibleButtonOn : style.visibleButtonOff} onClick={this.toggleVisibility}></i>
-          <i className={hasDropDown ? style.dropDownButtonOn : style.dropDownButtonOff} onClick={this.toggleDropDown}></i>
+          />
+          <i
+            className={visible ? style.visibleButtonOn : style.visibleButtonOff}
+            onClick={this.toggleVisibility}
+          />
+          <i
+            className={hasDropDown ? style.dropDownButtonOn : style.dropDownButtonOff}
+            onClick={this.toggleDropDown}
+          />
           <div
             onClick={this.updateColorBy}
             className={this.state.dropDown ? style.menu : style.hidden}

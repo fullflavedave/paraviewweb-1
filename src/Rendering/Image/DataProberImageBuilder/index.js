@@ -1,3 +1,5 @@
+/* global Image */
+
 import AbstractImageBuilder from '../AbstractImageBuilder';
 import CanvasOffscreenBuffer from '../../../Common/Misc/CanvasOffscreenBuffer';
 
@@ -12,7 +14,7 @@ const
       hasChange: (probe, x, y, z) => (probe[2] !== z),
       updateProbeValue: (self, x, y, z) => {
         var width = self.metadata.dimensions[0],
-          idx = x + y * width,
+          idx = x + (y * width),
           array = self.scalars[self.getField()];
 
         if (array) {
@@ -25,7 +27,7 @@ const
       hasChange: (probe, x, y, z) => (probe[1] !== y),
       updateProbeValue: (self, x, y, z) => {
         var width = self.metadata.dimensions[0],
-          idx = x + z * width,
+          idx = x + (z * width),
           array = self.scalars[self.getField()];
 
         if (array) {
@@ -38,7 +40,7 @@ const
       hasChange: (probe, x, y, z) => (probe[0] !== x),
       updateProbeValue: (self, x, y, z) => {
         var width = self.metadata.dimensions[2],
-          idx = z + y * width,
+          idx = z + (y * width),
           array = self.scalars[self.getField()];
 
         if (array) {
@@ -104,7 +106,7 @@ export default class DataProberImageBuilder extends AbstractImageBuilder {
       };
       let canRenderNow = true;
 
-      Object.keys(data).forEach(key => {
+      Object.keys(data).forEach((key) => {
         const img = data[key].image;
         img.addEventListener('load', renderCallback);
         canRenderNow = canRenderNow && img.complete;
@@ -223,7 +225,7 @@ export default class DataProberImageBuilder extends AbstractImageBuilder {
     if (sliceIdx === undefined) {
       sliceIdx = this.probeXYZ[2];
     }
-    return this.metadata.sprite_size - sliceIdx % this.metadata.sprite_size - 1;
+    return this.metadata.sprite_size - (sliceIdx % this.metadata.sprite_size) - 1;
   }
 
   // ------------------------------------------------------------------------
@@ -335,7 +337,7 @@ export default class DataProberImageBuilder extends AbstractImageBuilder {
 
       if (this.metadata.origin && this.metadata.spacing) {
         probeData.xRange[0] = this.metadata.origin[axisIdx];
-        probeData.xRange[1] = this.metadata.origin[axisIdx] + this.metadata.spacing[axisIdx] * dimensions[axisIdx];
+        probeData.xRange[1] = this.metadata.origin[axisIdx] + (this.metadata.spacing[axisIdx] * dimensions[axisIdx]);
       }
 
       if (scalarPlan) {
@@ -446,14 +448,16 @@ export default class DataProberImageBuilder extends AbstractImageBuilder {
       dimensions = this.metadata.dimensions,
       spacing = this.metadata.spacing;
 
-    this.getImage(this.probeXYZ[2], () => {
+    function drawThisImage() {
       var image = this;
       ctx.drawImage(image, 0, dimensions[1] * offset, dimensions[0], dimensions[1], 0, 0, dimensions[0], dimensions[1]);
 
       self.extractNumericalValues(dimensions[0], dimensions[1]);
       self.applyLookupTable(dimensions[0], dimensions[1]);
       self.pushToFront(dimensions[0], dimensions[1], spacing[0], spacing[1], xyz[0], xyz[1]);
-    });
+    }
+
+    this.getImage(this.probeXYZ[2], drawThisImage);
   }
 
   // ------------------------------------------------------------------------
@@ -475,7 +479,8 @@ export default class DataProberImageBuilder extends AbstractImageBuilder {
         1, dimensions[1],
         activeColumn, 0, 1, dimensions[1]);
 
-      if (activeColumn--) {
+      if (activeColumn) {
+        activeColumn -= 1;
         self.getImage(activeColumn, processLine);
       } else {
         // Rendering is done
@@ -485,7 +490,8 @@ export default class DataProberImageBuilder extends AbstractImageBuilder {
       }
     }
 
-    if (activeColumn--) {
+    if (activeColumn) {
+      activeColumn -= 1;
       self.getImage(activeColumn, processLine);
     }
   }
@@ -505,11 +511,12 @@ export default class DataProberImageBuilder extends AbstractImageBuilder {
         image = this;
 
       ctx.drawImage(image,
-        0, dimensions[1] * offset + xyz[1],
+        0, (dimensions[1] * offset) + xyz[1],
         dimensions[0], 1,
         0, activeLine, dimensions[0], 1);
 
-      if (activeLine--) {
+      if (activeLine) {
+        activeLine -= 1;
         self.getImage(activeLine, processLine);
       } else {
         // Rendering is done
@@ -519,7 +526,8 @@ export default class DataProberImageBuilder extends AbstractImageBuilder {
       }
     }
 
-    if (activeLine--) {
+    if (activeLine) {
+      activeLine -= 1;
       self.getImage(activeLine, processLine);
     }
   }
@@ -555,8 +563,9 @@ export default class DataProberImageBuilder extends AbstractImageBuilder {
       array = new Float32Array(width * height);
 
     while (idx < size) {
-      const value = ((pixBuffer[idx] + (256 * pixBuffer[idx + 1]) + (65536 * pixBuffer[idx + 2])) / 16777216) * delta + fieldRange[0];
-      array[arrayIdx++] = value;
+      const value = (((pixBuffer[idx] + (256 * pixBuffer[idx + 1]) + (65536 * pixBuffer[idx + 2])) / 16777216) * delta) + fieldRange[0];
+      array[arrayIdx] = value;
+      arrayIdx += 1;
 
       // Move to next pixel
       idx += 4;
@@ -579,7 +588,8 @@ export default class DataProberImageBuilder extends AbstractImageBuilder {
 
     if (lut) {
       while (idx < size) {
-        const color = lut.getColor(array[arrayIdx++]);
+        const color = lut.getColor(array[arrayIdx]);
+        arrayIdx += 1;
 
         pixBuffer[idx] = Math.floor(255 * color[0]);
         pixBuffer[idx + 1] = Math.floor(255 * color[1]);
@@ -628,6 +638,7 @@ export default class DataProberImageBuilder extends AbstractImageBuilder {
 
   // ------------------------------------------------------------------------
 
+  /* eslint-disable class-methods-use-this */
   getRenderMethods() {
     return ['XY', 'ZY', 'XZ'];
   }

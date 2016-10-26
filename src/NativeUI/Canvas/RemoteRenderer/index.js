@@ -1,7 +1,10 @@
+/* global document Image */
+/* eslint-disable no-underscore-dangle */
+
 import Monologue            from 'monologue.js';
 import MouseHandler         from '../../../Interaction/Core/MouseHandler';
 import VtkWebMouseListener  from '../../../Interaction/Core/VtkWebMouseListener';
-import { getSize }          from '../../../Common/Misc/SizeHelper';
+import SizeHelper           from '../../../Common/Misc/SizeHelper';
 
 const IMAGE_READY_TOPIC = 'image-ready';
 
@@ -81,12 +84,18 @@ export default class RemoteRenderer {
       this.mouseHandler = new MouseHandler(container);
       this.mouseHandler.attach(this.mouseListener.getListeners());
       this.container.appendChild(this.canvas);
-      this.size = getSize(container);
+      this.size = SizeHelper.getSize(container);
       this.render(true);
     }
   }
 
   render(force = false) {
+    // Skip rendering if we are not visible
+    if (this.size && this.size.clientWidth === 0) {
+      // pretend success rendering
+      return true;
+    }
+
     if (this.renderPending) {
       this.renderOnIdle(force);
       return false;
@@ -116,11 +125,11 @@ export default class RemoteRenderer {
       // Trigger remote call
       this.client.ViewPortImageDelivery.stillRender(this.options)
         .then(
-          resp => {
+          (resp) => {
             this.renderPending = false;
 
             // stats
-            const localTime = + new Date();
+            const localTime = +new Date();
             this.stats.workTime = resp.workTime;
             this.stats.roundTrip = (localTime - resp.localTime) - resp.workTime;
             this.stats.deltaT.push(localTime - resp.localTime);
@@ -139,12 +148,14 @@ export default class RemoteRenderer {
 
             // final image
             if (resp.stale) {
-              this.renderOnIdle(force);
+              // No force render when we are stale otherwise
+              // we will get in an infinite rendering loop
+              this.renderOnIdle(false);
             } else {
               this.emit(IMAGE_READY_TOPIC, this);
             }
           },
-          err => {
+          (err) => {
             this.renderPending = false;
             this.lastError = err;
           });
@@ -155,7 +166,7 @@ export default class RemoteRenderer {
 
   resize() {
     if (this.container) {
-      this.size = getSize(this.container);
+      this.size = SizeHelper.getSize(this.container);
       this.render(true);
     }
   }

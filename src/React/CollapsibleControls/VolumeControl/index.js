@@ -1,9 +1,11 @@
+import React                from 'react';
+
+import style                from 'PVWStyle/ReactCollapsibleControls/VolumeControl.mcss';
+
 import CollapsibleWidget    from '../../Widgets/CollapsibleWidget';
 import EqualizerWidget      from '../../Widgets/EqualizerWidget';
 import LightButton          from '../../Widgets/ToggleIconButtonWidget';
 import LookupTableWidget    from '../../Widgets/LookupTableWidget';
-import React                from 'react';
-import style                from 'PVWStyle/ReactCollapsibleControls/VolumeControl.mcss';
 
 export default React.createClass({
 
@@ -74,18 +76,17 @@ export default React.createClass({
           title="LookupTable"
           key="LookupTableWidget_parent"
           subtitle={intensityButton}
+          activeSubTitle
         >
           <LookupTableWidget
             key="LookupTableWidget"
-            ref="LookupTableWidget"
             originalRange={lut.originalRange}
             lookupTable={lut.lookupTable}
             lookupTableManager={lut.lookupTableManager}
           />
         </CollapsibleWidget>
-        <CollapsibleWidget title="Opacity Control" subtitle={[cpuGpuButton, resetOpacityButton]}>
+        <CollapsibleWidget title="Opacity Control" subtitle={[cpuGpuButton, resetOpacityButton]} activeSubTitle>
           <EqualizerWidget
-            ref="EqualizerWidget"
             key="Equalizer"
             layers={equalizer.getOpacities()}
             onChange={equalizer.updateOpacities}

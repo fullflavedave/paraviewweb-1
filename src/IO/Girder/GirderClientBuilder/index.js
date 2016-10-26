@@ -1,3 +1,5 @@
+/* global window EventSource document */
+
 import axios from 'axios';
 import Monologue from 'monologue.js';
 
@@ -27,7 +29,7 @@ function encodeQueryAsString(query = {}) {
 
 function filterQuery(query = {}, ...keys) {
   const out = {};
-  keys.forEach(key => {
+  keys.forEach((key) => {
     if (query[key] !== undefined && query[key] !== null) {
       out[key] = query[key];
     }
@@ -40,7 +42,7 @@ function filterQuery(query = {}, ...keys) {
 function mustContain(object = {}, ...keys) {
   var missingKeys = [],
     promise;
-  keys.forEach(key => {
+  keys.forEach((key) => {
     if (object[key] === undefined) {
       missingKeys.push(key);
     }
@@ -59,7 +61,7 @@ function mustContain(object = {}, ...keys) {
 
 // ----------------------------------------------------------------------------
 
-export function build(config = location, ...extensions) {
+export function build(config = window.location, ...extensions) {
   var userData,
     token,
     loginPromise,
@@ -71,10 +73,12 @@ export function build(config = location, ...extensions) {
     client = {}, // Must be const otherwise the created closure will fail
     notification = new Observable(),
     idle = () => {
-      notification.emit(BUSY_TOPIC, --busyCounter);
+      busyCounter -= 1;
+      notification.emit(BUSY_TOPIC, busyCounter);
     },
     busy = (promise) => {
-      notification.emit(BUSY_TOPIC, ++busyCounter);
+      busyCounter += 1;
+      notification.emit(BUSY_TOPIC, busyCounter);
       promise.then(idle, idle);
       return promise;
     },
@@ -167,7 +171,7 @@ export function build(config = location, ...extensions) {
         .get('/user/authentication', {
           auth,
         })
-        .then(resp => {
+        .then((resp) => {
           token = resp.data.authToken.token;
           userData = resp.data.user;
 
@@ -182,13 +186,13 @@ export function build(config = location, ...extensions) {
     logout() {
       return busy(client._.delete('/user/authentication')
         .then(
-          ok => {
+          (ok) => {
             updateAuthenticationState(false);
             if (document && document.cookie) {
               document.cookie = 'Girder-Token=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
             }
           },
-          ko => {
+          (ko) => {
             console.log('loggout error', ko);
           })
       );
@@ -234,7 +238,7 @@ export function build(config = location, ...extensions) {
     if (token) {
       publicObject.me()
         .then(
-          resp => {
+          (resp) => {
             userData = resp.data;
 
             // Update userData for external modules
@@ -243,7 +247,7 @@ export function build(config = location, ...extensions) {
             updateAuthenticationState(true);
             accept();
           },
-          errResp => {
+          (errResp) => {
             updateAuthenticationState(false);
             reject();
           });
@@ -271,7 +275,7 @@ export function build(config = location, ...extensions) {
       ext.forEach(processExtension);
     } else {
       const obj = ext(spec);
-      Object.keys(obj).forEach(key => {
+      Object.keys(obj).forEach((key) => {
         publicObject[key] = obj[key];
       });
     }

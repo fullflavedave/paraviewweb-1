@@ -1,7 +1,10 @@
-import AbstractImageBuilder  from '../AbstractImageBuilder';
-import CanvasOffscreenBuffer from '../../../Common/Misc/CanvasOffscreenBuffer';
+/* global window */
+
 import contains              from 'mout/src/array/contains';
 import equals                from 'mout/src/object/equals';
+
+import AbstractImageBuilder  from '../AbstractImageBuilder';
+import CanvasOffscreenBuffer from '../../../Common/Misc/CanvasOffscreenBuffer';
 
 const
   PROBE_CHANGE_TOPIC = 'probe-change',
@@ -154,7 +157,7 @@ export default class FloatDataImageBuilder extends AbstractImageBuilder {
     this.timeProbe.query = query;
 
     // Synch the time query data model
-    Object.keys(query).forEach(key => {
+    Object.keys(query).forEach((key) => {
       this.timeDataQueryDataModel.setValue(key, query[key]);
     });
 
@@ -197,7 +200,7 @@ export default class FloatDataImageBuilder extends AbstractImageBuilder {
     // Find the layer under (x,y)
     const width = this.dimensions[0],
       height = this.dimensions[1],
-      idx = (height - y - 1) * width + x;
+      idx = ((height - y - 1) * width) + x;
 
     let arrayType = '',
       field = null,
@@ -274,7 +277,7 @@ export default class FloatDataImageBuilder extends AbstractImageBuilder {
       var x = idx % width,
         y = Math.floor(idx / width);
 
-      return (height - y - 1) * width + x;
+      return ((height - y - 1) * width) + x;
     }
 
     ctx.clearRect(0, 0, width, height);
@@ -287,15 +290,15 @@ export default class FloatDataImageBuilder extends AbstractImageBuilder {
             light = layer.light ? (layer.light[flipedY] ? layer.light[flipedY] - this.light : 0) : 0;
 
           if (color[3]) {
-            pixels[i * 4] = color[0] * 255 + light;
-            pixels[i * 4 + 1] = color[1] * 255 + light;
-            pixels[i * 4 + 2] = color[2] * 255 + light;
-            pixels[i * 4 + 3] = color[3] * 255;
+            pixels[(i * 4) + 0] = (color[0] * 255) + light;
+            pixels[(i * 4) + 1] = (color[1] * 255) + light;
+            pixels[(i * 4) + 2] = (color[2] * 255) + light;
+            pixels[(i * 4) + 3] = (color[3] * 255);
 
             if (layer.hasMesh && layer.meshActive && layer.mesh && layer.mesh[flipedY]) {
-              pixels[i * 4] = this.meshColor[0];
-              pixels[i * 4 + 1] = this.meshColor[1];
-              pixels[i * 4 + 2] = this.meshColor[2];
+              pixels[(i * 4) + 0] = this.meshColor[0];
+              pixels[(i * 4) + 1] = this.meshColor[1];
+              pixels[(i * 4) + 2] = this.meshColor[2];
             }
           }
         }
@@ -457,7 +460,8 @@ export default class FloatDataImageBuilder extends AbstractImageBuilder {
     var array = this.layers,
       count = array.length;
 
-    while (count--) {
+    while (count) {
+      count -= 1;
       if (array[count].name === name) {
         array[count].active = visible;
         this.update();
@@ -476,7 +480,8 @@ export default class FloatDataImageBuilder extends AbstractImageBuilder {
     var array = this.layers,
       count = array.length;
 
-    while (count--) {
+    while (count) {
+      count -= 1;
       if (array[count].name === name) {
         array[count].meshActive = visible;
         this.update();
@@ -491,7 +496,8 @@ export default class FloatDataImageBuilder extends AbstractImageBuilder {
     var array = this.layers,
       count = array.length;
 
-    while (count--) {
+    while (count) {
+      count -= 1;
       if (array[count].name === name) {
         array[count].array = arrayName;
         this.update();

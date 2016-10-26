@@ -52,14 +52,14 @@ function extractDomain(ui) {
   if (ui.values) {
     if (Array.isArray(ui.values)) {
       const domain = {};
-      ui.values.forEach(txt => {
+      ui.values.forEach((txt) => {
         domain[txt] = txt;
       });
       return domain;
     }
     if (ui.type === 'proxy') {
       const domain = {};
-      Object.keys(ui.values).forEach(key => {
+      Object.keys(ui.values).forEach((key) => {
         domain[key] = key;
       });
       return domain;
@@ -83,7 +83,7 @@ export function proxyPropToProp(property, ui) {
   const depStatus = depList ? Boolean(Number(depList.pop())) : true;
   const depValue = depList ? depList.pop() : null;
   const depId = depList ? depList.join(':') : null;
-  const searchString = [ui.name, ui.doc].concat(property.value).join(' ').toLowerCase();
+  const searchString = [ui.name].concat(property.value).join(' ').toLowerCase();
 
   return {
     show(ctx) {
@@ -94,7 +94,7 @@ export function proxyPropToProp(property, ui) {
         const queries = ctx.filter.toLowerCase().split(' ');
         let match = true;
 
-        queries.forEach(q => {
+        queries.forEach((q) => {
           match = match && searchString.indexOf(q) !== -1;
         });
 

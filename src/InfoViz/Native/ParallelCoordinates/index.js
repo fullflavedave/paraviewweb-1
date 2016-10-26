@@ -1,394 +1,507 @@
-function affine(inMin, val, inMax, outMin, outMax) {
+/* global document */
+
+import d3 from 'd3';
+import style from 'PVWStyle/InfoVizNative/ParallelCoordinates.mcss';
+
+import AnnotationBuilder from '../../../Common/Misc/AnnotationBuilder';
+import AxesManager from './AxesManager';
+// import axisControlSvg from './AxisControl-svg.html';
+import CompositeClosureHelper from '../../../Common/Core/CompositeClosureHelper';
+import htmlContent from './body.html';
+import iconImage from './ParallelCoordsIconSmall.png';
+
+// ----------------------------------------------------------------------------
+// Global
+// ----------------------------------------------------------------------------
+
+export function affine(inMin, val, inMax, outMin, outMax) {
   return (((val - inMin) / (inMax - inMin)) * (outMax - outMin)) + outMin;
 }
 
-export function createParallelCoordinates(canvasElement, fetchHistogramFunction, selectionQueryFunction, selectionClearedCallback) {
-  var canvas = canvasElement,
-    ctx = canvasElement.getContext('2d'),
+export function perfRound(val) {
+  /* eslint-disable no-bitwise */
+  return (0.5 + val) | 0;
+  /* eslint-enable no-bitwise */
+}
 
-    fgCanvas = document.createElement('canvas'),
-    fgCtx = fgCanvas.getContext('2d'),
-    bgCanvas = document.createElement('canvas'),
-    bgCtx = bgCanvas.getContext('2d'),
+export function dataToScreen(model, dataY, axis) {
+  return perfRound(!axis.isUpsideDown()
+    ? affine(
+        axis.range[0],
+        dataY,
+        axis.range[1],
+        model.canvasArea.height - model.borderOffsetBottom,
+        model.borderOffsetTop)
+    : affine(
+        axis.range[0],
+        dataY,
+        axis.range[1],
+        model.borderOffsetTop,
+        model.canvasArea.height - model.borderOffsetBottom));
+}
 
-    fetchHistogram = fetchHistogramFunction,
-    querySelection = selectionQueryFunction,
-    clearCallback = selectionClearedCallback,
+export function screenToData(model, screenY, axis) {
+  return !axis.isUpsideDown()
+    ? affine(
+        model.canvasArea.height - model.borderOffsetBottom,
+        screenY,
+        model.borderOffsetTop,
+        axis.range[0],
+        axis.range[1])
+    : affine(
+        model.borderOffsetTop,
+        screenY,
+        model.canvasArea.height - model.borderOffsetBottom,
+        axis.range[0],
+        axis.range[1]);
+}
 
-    axisList = [],
-    orientationList = [],
+export function toColorArray(colorString) {
+  return [
+    Number.parseInt(colorString.slice(1, 3), 16),
+    Number.parseInt(colorString.slice(3, 5), 16),
+    Number.parseInt(colorString.slice(5, 7), 16),
+  ];
+}
 
-    axesCenters = [],
-    axesAnnotations = [],
-    axesDataRanges = [],
-    axisSpacing = 0,
+// ----------------------------------------------------------------------------
+// Parallel Coordinate
+// ----------------------------------------------------------------------------
 
-    histogramList = [],
-    histogramCount = 0,
+function parallelCoordinate(publicAPI, model) {
+  // Private internal
+  const scoreToColor = [];
+  let lastAnnotationPushed = null;
 
-    selectionResult = null,
-
-    borderOffset = {
-      top: 72, // 47,
-      right: 10,
-      bottom: 20,
-      left: 10,
-    },
-    axisWidth = 3,
-    canvasArea = {
-      width: canvas.width,
-      height: canvas.height,
-    },
-    drawableArea = {
-      width: canvasArea.width - (borderOffset.left + borderOffset.right),
-      height: canvasArea.height - (borderOffset.top + borderOffset.bottom),
-    },
-    controlBoxSize = {
-      width: 66,
-      height: 13,
-    },
-
-    // Black on white color scheme
-    axisStyle = 'rgba(128,128,128,1)',
-    selectedAxisStyle = 'rgba(105, 195, 255, 1)',
-    labelStyle = 'rgba(0,0,0,1)',
-    controlStyle = 'rgba(128,128,128,1)',
-    polygonColors = [0, 0, 0],
-    selectionColors = [70, 130, 180],
-
-    maxBinCountOverAllHistograms = 0,
-    maxBinCountOverAllSelections = 0,
-    maxBinCountForOpacityCalculation = 0,
-
-    selectionOpacityAdjustment = 1,
-    polygonOpacityAdjustment = 1,
-
-    dragging = false,
-    mouseDownCoords = {
-      x: -1,
-      y: -1,
-    },
-    clickThreshold = 1,
-    axisSelectThreshold = 10,
-    selectedAxisIndex = -1,
-
-    doSanityTesting = false;
-
-
-  function updateAxisList(newAxes) {
-    var i;
-    axisList = newAxes.slice();
-    orientationList = [];
-    axesAnnotations = [];
-    axesDataRanges = [];
-    histogramList = [];
-    histogramCount = 0;
-    selectionResult = null;
-    for (i = 0; i < axisList.length; ++i) {
-      orientationList.push(true);
-      // axesAnnotations.push([{}]);
-      axesAnnotations.push([]);
+  function updateSizeInformation() {
+    if (!model.canvas) {
+      return;
     }
-  }
-
-  function sumCheckHistograms(hLeft, hRight) {
-    var leftBinMap = {},
-      rightBinMap = {},
-      bin = null,
-      i;
-
-    for (i = 0; i < hLeft.bins.length; ++i) {
-      bin = hLeft.bins[i];
-      if (!leftBinMap.hasOwnProperty(bin.x)) {
-        leftBinMap[bin.x] = 0;
-      }
-      leftBinMap[bin.x] += bin.count;
-    }
-
-    for (i = 0; i < hRight.bins.length; ++i) {
-      bin = hRight.bins[i];
-      if (!rightBinMap.hasOwnProperty(bin.y)) {
-        rightBinMap[bin.y] = 0;
-      }
-      rightBinMap[bin.y] += bin.count;
-    }
-
-    Object.keys(leftBinMap).forEach(leftKey => {
-      if (leftBinMap[leftKey] !== rightBinMap[leftKey]) {
-        console.error('Sanity check failed for bin:', leftKey);
-      }
-    });
-
-    Object.keys(rightBinMap).forEach(rightKey => {
-      if (rightBinMap[rightKey] !== leftBinMap[rightKey]) {
-        console.error('Sanity check failed for bin:', rightKey);
-      }
-    });
-
-    // console.log('Sanity check results:');
-    // console.log(leftBinMap);
-    // console.log(rightBinMap);
-  }
-
-  function getMaxHistogramBinCount(histoList) {
-    var maxCount = 0,
-      i,
-      histogram,
-      result;
-
-    for (i = 0; i < histoList.length; ++i) {
-      histogram = histoList[i];
-      result = {
-        max: 0,
-      };
-
-      histogram.bins.map((currentValue, index, array) => {
-        if (currentValue.count > this.max) {
-          this.max = currentValue.count;
-          return true;
-        }
-        return false;
-      }, result);
-
-      if (result.max > maxCount) {
-        maxCount = result.max;
-      }
-    }
-
-    if (doSanityTesting) {
-      for (i = 0; i < histoList.length - 1; ++i) {
-        sumCheckHistograms(histoList[i], histoList[i + 1]);
-      }
-    }
-
-    return maxCount;
-  }
-
-  function perfRound(val) {
-    return (0.5 + val) | 0;
-  }
-
-  function screenToData(screenY, dataRange, rightSideUp) {
-    var dataY = affine(canvasArea.height - borderOffset.bottom, screenY, borderOffset.top, dataRange[0], dataRange[1]);
-    if (rightSideUp === false) {
-      dataY = affine(borderOffset.top, screenY, canvasArea.height - borderOffset.bottom, dataRange[0], dataRange[1]);
-    }
-    return dataY;
-  }
-
-  function dataToScreen(dataY, dataRange, rightSideUp) {
-    var screenY = affine(dataRange[0], dataY, dataRange[1], canvasArea.height - borderOffset.bottom, borderOffset.top);
-    if (rightSideUp === false) {
-      screenY = affine(dataRange[0], dataY, dataRange[1], borderOffset.top, canvasArea.height - borderOffset.bottom);
-    }
-    return perfRound(screenY);
-  }
-
-  function isAxisAnnotated(idx) {
-    // return axesAnnotations[idx][0].hasOwnProperty('dataRange');
-    return axesAnnotations[idx].length > 0 && axesAnnotations[idx][0].hasOwnProperty('dataRange');
-  }
-
-  function updateAxisAnnotation(idx, startY, endY) {
-    var annList = axesAnnotations[idx],
-      yRange = axesDataRanges[idx],
-      y1 = screenToData(startY, yRange, orientationList[idx]),
-      y2 = screenToData(endY, yRange, orientationList[idx]),
-      tmp;
-
-    var ymin = y1,
-      ymax = y2;
-
-    if (ymin > ymax) {
-      tmp = ymin;
-      ymin = ymax;
-      ymax = tmp;
-    }
-
-    annList[annList.length - 1] = {
-      dataRange: [ymin, ymax],
+    model.canvasArea = {
+      width: model.canvas.width,
+      height: model.canvas.height,
+    };
+    model.drawableArea = {
+      width: model.canvasArea.width - (model.borderOffsetLeft + model.borderOffsetRight),
+      height: model.canvasArea.height - (model.borderOffsetTop + model.borderOffsetBottom),
     };
   }
 
-  function drawControlBox(top, right, bottom, left, orientUp, axisPos) {
-    var controlSpacing = 1,
-      vertMid = top + ((bottom - top) / 2),
-      horizMid = left + ((right - left) / 2),
-      boxWidth = right - left,
-      boxHeight = bottom - top,
-      controlWidth = (boxWidth - (controlSpacing * 4)) / 3,
-      controlHeight = boxHeight - (controlSpacing * 2);
+  // -======================================================
+  model.canvas = document.createElement('canvas');
+  model.canvas.style.position = 'absolute';
+  model.canvas.style.top = 0;
+  model.canvas.style.right = 0;
+  model.canvas.style.bottom = 0;
+  model.canvas.style.left = 0;
+  model.ctx = model.canvas.getContext('2d');
 
-    ctx.fillStyle = controlStyle;
+  model.fgCanvas = document.createElement('canvas');
+  model.fgCtx = model.fgCanvas.getContext('2d');
+  model.bgCanvas = document.createElement('canvas');
+  model.bgCtx = model.bgCanvas.getContext('2d');
 
-    // Draw left triangle
-    if (axisPos >= 0) {
-      ctx.beginPath();
-      ctx.moveTo(left + controlSpacing, vertMid);
-      ctx.lineTo(left + controlSpacing + controlWidth, top + controlSpacing);
-      ctx.lineTo(left + controlSpacing + controlWidth, top + controlSpacing + controlHeight);
-      ctx.closePath();
-      ctx.fill();
+  model.axes = new AxesManager();
+
+  // Local cache of the selection data
+  model.selectionData = null;
+  model.visibleScores = [0, 1, 2];
+
+  function drawSelectionData(score) {
+    if (model.axes.selection && model.visibleScores) {
+      return model.visibleScores.indexOf(score) !== -1;
     }
-
-    // Draw center triangle
-    ctx.beginPath();
-    ctx.moveTo(left + controlWidth + (2 * controlSpacing), vertMid);
-    if (orientUp) {
-      ctx.lineTo(horizMid, top + controlSpacing);
-    } else {
-      ctx.lineTo(horizMid, bottom - controlSpacing);
-    }
-    ctx.lineTo(left + (2 * controlWidth) + (2 * controlSpacing), vertMid);
-    ctx.closePath();
-    ctx.fill();
-
-    // Draw right triangle
-    if (axisPos <= 0) {
-      ctx.beginPath();
-      ctx.moveTo(right - controlSpacing, vertMid);
-      ctx.lineTo(right - controlSpacing - controlWidth, top + controlSpacing + controlHeight);
-      ctx.lineTo(right - controlSpacing - controlWidth, top + controlSpacing);
-      ctx.closePath();
-      ctx.fill();
-    }
+    return true;
   }
 
-  function drawAnnotationIndicators() {
-    var i;
-    for (i = 0; i < axesCenters.length; ++i) {
-      ctx.beginPath();
-      if (isAxisAnnotated(i)) {
-        ctx.arc(axesCenters[i], 10, 8, 0, 2 * Math.PI);
-        ctx.fillStyle = selectedAxisStyle;
-        ctx.fill();
-      } else {
-        ctx.arc(axesCenters[i], 10, 6, 0, 2 * Math.PI);
-        ctx.strokeStyle = controlStyle;
-        ctx.stroke();
-      }
-    }
-  }
+  function drawSelectionBars(selectionBarModel) {
+    const svg = d3.select(model.container).select('svg');
+    const selBarGroup = svg.select('g.selection-bars');
 
-  function drawAxisControls() {
-    var pos = 0,
-      j;
-    for (j = 0; j < axesCenters.length; ++j) {
-      pos = 0;
-      if (j === 0) {
-        pos = -1;
-      } else if (j === axesCenters.length - 1) {
-        pos = 1;
-      }
-      drawControlBox(25, // top
-        axesCenters[j] + (controlBoxSize.width / 2), // right
-        25 + controlBoxSize.height, // bottom
-        axesCenters[j] - (controlBoxSize.width / 2), // left
-        orientationList[j], // orientation (up or down)
-        pos); // which (if either) edge is this axis
-    }
-  }
+    // Make the selection bars
+    const selectionBarNodes = selBarGroup
+      .selectAll('rect.selection-bars')
+      .data(selectionBarModel);
 
-  function drawAxisTicks(axisCenter, paramRange, orientUp) {
-    ctx.font = '9px sans-serif';
-    if (orientUp) {
-      ctx.fillText(paramRange[0], axisCenter, borderOffset.top + drawableArea.height + 13);
-      ctx.fillText(paramRange[1], axisCenter, borderOffset.top - 5);
-    } else {
-      ctx.fillText(paramRange[1], axisCenter, borderOffset.top + drawableArea.height + 13);
-      ctx.fillText(paramRange[0], axisCenter, borderOffset.top - 5);
-    }
-  }
+    selectionBarNodes
+      .enter()
+      .append('rect')
+      .classed('selection-bars', true)
+      .classed(style.selectionBars, true);
 
-  function drawAxisLabels() {
-    var ypos = 51,
-      idxOfLast = axesCenters.length - 1,
-      i;
+    selectionBarNodes.exit().remove();
 
-    ctx.font = '12px sans-serif';
-    ctx.fillStyle = labelStyle;
-    ctx.textAlign = 'start';
-    ctx.fillText(axisList[0], axesCenters[0], ypos);
-    drawAxisTicks(axesCenters[0], axesDataRanges[0], orientationList[0]);
-
-    for (i = 1; i < axisList.length - 1; ++i) {
-      ctx.font = '12px sans-serif';
-      ctx.fillStyle = labelStyle;
-      ctx.textAlign = 'center';
-      ctx.fillText(axisList[i], axesCenters[i], ypos);
-      drawAxisTicks(axesCenters[i], axesDataRanges[i], orientationList[i]);
-    }
-
-    ctx.font = '12px sans-serif';
-    ctx.fillStyle = labelStyle;
-    ctx.textAlign = 'end';
-    ctx.fillText(axisList[idxOfLast], axesCenters[idxOfLast], ypos);
-    drawAxisTicks(axesCenters[idxOfLast], axesDataRanges[idxOfLast], orientationList[idxOfLast]);
-  }
-
-  function drawAxes() {
-    var i,
-      j,
-      annList,
-      dataRange,
-      axisRightSideUp,
-      ann;
-
-    // Draw the axes themselves
-    for (j = 0; j < axesCenters.length; ++j) {
-      ctx.strokeStyle = axisStyle;
-      ctx.lineWidth = 3;
-      ctx.beginPath();
-      ctx.moveTo(axesCenters[j], borderOffset.top);
-      ctx.lineTo(axesCenters[j], canvasArea.height - borderOffset.bottom);
-      ctx.stroke();
-
-      // Now draw any annotation regions on top of this axis
-      annList = axesAnnotations[j];
-      dataRange = axesDataRanges[j];
-      axisRightSideUp = orientationList[j];
-
-      ctx.strokeStyle = selectedAxisStyle;
-      ctx.lineWidth = 5;
-
-      for (i = 0; i < annList.length; ++i) {
-        ann = annList[i];
-        if (ann.dataRange) {
-          ctx.beginPath();
-          ctx.moveTo(axesCenters[j], dataToScreen(ann.dataRange[0], dataRange, axisRightSideUp));
-          ctx.lineTo(axesCenters[j], dataToScreen(ann.dataRange[1], dataRange, axisRightSideUp));
-          ctx.stroke();
+    selBarGroup
+      .selectAll('rect.selection-bars')
+      .classed(style.controlItem, true)
+      .style('fill', (d, i) => d.color)
+      .attr('width', model.selectionBarWidth)
+      .attr('height', (d, i) => {
+        let barHeight = d.screenRangeY[1] - d.screenRangeY[0];
+        if (barHeight < 0) {
+          barHeight = d.screenRangeY[0] - d.screenRangeY[1];
         }
+        return barHeight;
+      })
+      .attr('transform', (d, i) => {
+        const startPoint = d.screenRangeY[0] > d.screenRangeY[1] ? d.screenRangeY[1] : d.screenRangeY[0];
+        return `translate(${d.screenX - (model.selectionBarWidth / 2)}, ${startPoint})`;
+      })
+      .on('mousedown', function inner(d, i) {
+        d3.event.preventDefault();
+        const downCoords = d3.mouse(model.container);
+
+        svg.on('mousemove', (md, mi) => {
+          const moveCoords = d3.mouse(model.container);
+          const deltaYScreen = moveCoords[1] - downCoords[1];
+          const startPoint = d.screenRangeY[0] > d.screenRangeY[1] ? d.screenRangeY[1] : d.screenRangeY[0];
+          d3.select(this).attr('transform', `translate(${d.screenX - (model.selectionBarWidth / 2)}, ${startPoint + deltaYScreen})`);
+        });
+
+        svg.on('mouseup', (md, mi) => {
+          const upCoords = d3.mouse(model.container);
+          const deltaYScreen = upCoords[1] - downCoords[1];
+          const startPoint = d.screenRangeY[0] > d.screenRangeY[1] ? d.screenRangeY[1] : d.screenRangeY[0];
+          let barHeight = d.screenRangeY[1] - d.screenRangeY[0];
+          if (barHeight < 0) {
+            barHeight = d.screenRangeY[0] - d.screenRangeY[1];
+          }
+          const newStart = startPoint + deltaYScreen;
+          const newEnd = newStart + barHeight;
+          svg.on('mousemove', null);
+          svg.on('mouseup', null);
+
+          const axis = model.axes.getAxis(d.index);
+          model.axes.updateSelection(d.index, d.selectionIndex, screenToData(model, newStart, axis), screenToData(model, newEnd, axis));
+        });
+      });
+  }
+
+  function drawAxisControls(controlsDataModel) {
+    // Manipulate the control widgets svg DOM
+    const svgGr = d3
+      .select(model.container)
+      .select('svg')
+      .select('g.axis-control-elements');
+
+    const axisControlNodes = svgGr
+      .selectAll('g.axis-control-element')
+      .data(controlsDataModel);
+
+    const axisControls = axisControlNodes.enter()
+      .append('g')
+      .classed('axis-control-element', true)
+      .classed(style.axisControlElements, true)
+      // Can't use .html on svg without polyfill: https://github.com/d3/d3-3.x-api-reference/blob/master/Selections.md#html
+      // fails in IE11. Replace by explicit DOM manipulation.
+      // .html(axisControlSvg);
+      .append('g')
+        .classed('axis-controls-group-container', true)
+        .attr('width', 108)
+        .attr('height', 50)
+        .attr('viewBox', '0 0 108 50')
+      .append('g')
+        .classed('axis-controls-group', true);
+
+    axisControls
+      .append('rect')
+        .classed('center-rect', true)
+        .attr('x', 28)
+        .attr('y', 1)
+        .attr('width', 52)
+        .attr('height', 48);
+    axisControls
+      .append('rect')
+        .classed('right-rect', true)
+        .attr('x', 82)
+        .attr('y', 1)
+        .attr('width', 25)
+        .attr('height', 48);
+    axisControls
+      .append('rect')
+        .classed('left-rect', true)
+        .attr('x', 1)
+        .attr('y', 1)
+        .attr('width', 25)
+        .attr('height', 48);
+    axisControls
+      .append('polygon')
+        .classed('top', true)
+        .attr('points', '54 1 78 23 30 23 ');
+    axisControls
+      .append('polygon')
+        .classed('right', true)
+        .attr('points', '94 14 118 36 70 36 ')
+        .attr('transform', 'translate(94.0, 25.0) rotate(-270.0) translate(-94.0, -25.0) ');
+    axisControls
+      .append('polygon')
+        .classed('left', true)
+        .attr('points', '14 14 38 36 -10 36 ')
+        .attr('transform', 'translate(14.0, 25.0) scale(-1, 1) rotate(-270.0) translate(-14.0, -25.0) ');
+    axisControls
+      .append('polygon')
+        .classed('bottom', true)
+        .attr('points', '54 27 78 49 30 49 ')
+        .attr('transform', 'translate(54.0, 38.0) scale(1, -1) translate(-54.0, -38.0) ');
+
+    axisControlNodes.exit().remove();
+
+    const scale = 0.5;
+    axisControlNodes
+      .classed(style.upsideDown, (d, i) => !d.orient)
+      .classed(style.rightsideUp, (d, i) => d.orient)
+      .attr('transform', function inner(d, i) {
+        const elt = d3.select(this).select('g.axis-controls-group-container');
+        const tx = d.centerX - ((elt.attr('width') * scale) / 2);
+        const ty = d.centerY - ((elt.attr('height') * scale) / 2);
+        return `translate(${tx}, ${ty}) scale(${scale})`;
+      })
+      .on('click', function inner(d, i) {
+        const cc = d3.mouse(this);
+        const elt = d3.select(this).select('g.axis-controls-group-container');
+        const ratio = cc[0] / elt.attr('width');
+        if (ratio < 0.28) {
+          // left arrow click
+          model.axes.swapAxes(i - 1, i);
+        } else if (ratio < 0.73) {
+          // up/down click
+          model.axes.toggleOrientation(i);
+          publicAPI.render();
+        } else {
+          // right arrow click
+          model.axes.swapAxes(i, i + 1);
+        }
+      })
+      .selectAll('.axis-controls-group-container')
+      .classed(style.axisControlsGroupContainer, true);
+  }
+
+  function drawAxisLabels(labelDataModel) {
+    const ypos = 15;
+    const glyphRegion = 22;
+    const glyphPadding = 3;
+    const svg = d3.select(model.container).select('svg');
+
+    if (model.provider && model.provider.isA('LegendProvider')) {
+      // Add legend key
+      labelDataModel.forEach((entry) => {
+        entry.legend = model.provider.getLegend(entry.name);
+      });
+      let glyphSize = glyphRegion - glyphPadding - glyphPadding;
+      if (glyphSize % 2 !== 0) {
+        glyphSize += 1;
+      }
+
+      const glyphGroup = svg
+        .selectAll('g.glyphs')
+        .data(labelDataModel);
+
+      glyphGroup.exit().remove();
+
+      glyphGroup
+        .enter()
+        .append('g')
+        .classed('glyphs', true);
+
+      // Create nested structure
+      const svgGroup = glyphGroup.selectAll('svg').data([0]);
+      svgGroup.enter().append('svg');
+      const useGroup = svgGroup.selectAll('use').data([0]);
+      useGroup.enter().append('use');
+
+      glyphGroup
+        .attr('transform', (d, i) => `translate(${d.centerX - (glyphSize * 0.5)}, ${glyphPadding})`)
+        .on('click', (d, i) => {
+          if (d.annotated) {
+            model.axes.clearSelection(i);
+          }
+        });
+
+      glyphGroup.each(function applyLegendStyle(d, i) {
+        d3.select(this)
+          .select('svg')
+          .attr('fill', d.legend.color)
+          .attr('stroke', 'black')
+          .attr('width', glyphSize)
+          .attr('height', glyphSize)
+          .style('color', d.legend.color) // Firefox SVG use color bug workaround fix
+          .classed(style.clickable, d.annotated)
+          .select('use')
+          .classed(style.colorToFill, true) // Firefox SVG use color bug workaround fix
+          .classed(style.blackStroke, true)
+          .attr('xlink:href', d.legend.shape);
+      });
+
+      // Augment the legend glyphs with extra DOM for annotated axes
+      const indicatorGroup = svg.select('g.axis-annotation-indicators');
+      const indicatorNodes = indicatorGroup
+        .selectAll('rect.axis-annotation-indicators')
+        .data(labelDataModel);
+
+      indicatorNodes
+        .enter()
+        .append('rect')
+        .classed('axis-annotation-indicators', true)
+        .classed(style.axisAnnotationIndicators, true);
+
+      indicatorNodes.exit().remove();
+
+      indicatorGroup
+        .selectAll('rect.axis-annotation-indicators')
+        .attr('width', glyphSize + 3)
+        .attr('height', glyphSize + 3)
+        .attr('transform', (d, i) => `translate(${d.centerX - ((glyphSize * 0.5) + 1)}, ${glyphPadding - 1.5})`)
+        .classed(style.axisAnnotated, (d, i) => d.annotated);
+    } else {
+      // Now manage the svg dom for the axis labels
+      const axisLabelNodes = svg
+        .selectAll('text.axis-labels')
+        .data(labelDataModel);
+
+      axisLabelNodes
+        .enter()
+        .append('text')
+        .classed('axis-labels', true)
+        .classed(style.axisLabels, true);
+
+      axisLabelNodes
+        .exit()
+        .remove();
+
+      svg
+        .selectAll('text.axis-labels')
+        .text((d, i) => d.name)
+        .classed(style.annotatedAxisText, (d, i) => d.annotated)
+        .on('click', (d, i) => {
+          model.axes.clearSelection(i);
+        })
+        .attr('text-anchor', (d, i) => d.align)
+        .attr('transform', (d, i) => `translate(${d.centerX}, ${ypos})`);
+    }
+  }
+
+  function drawAxisTicks(tickDataModel) {
+    // Manage the svg dom for the axis ticks
+    const svg = d3.select(model.container).select('svg');
+    const ticksGroup = svg.select('g.axis-ticks');
+    const axisTickNodes = ticksGroup.selectAll('text.axis-ticks')
+      .data(tickDataModel);
+
+    axisTickNodes.enter().append('text')
+      .classed('axis-ticks', true)
+      .classed(style.axisTicks, true);
+
+    axisTickNodes.exit().remove();
+
+    const formatter = d3.format('.3s');
+    ticksGroup.selectAll('text.axis-ticks')
+      .text((d, i) => formatter(d.value))
+      .attr('text-anchor', (d, i) => d.align)
+      .attr('transform', (d, i) => `translate(${d.xpos}, ${d.ypos})`);
+  }
+
+  function axisMouseDragHandler(data, index) {
+    const svg = d3.select(model.container).select('svg');
+    const coords = d3.mouse(model.container);
+    const pendingSelection = svg.select('rect.axis-selection-pending');
+    if (pendingSelection) {
+      const rectHeight = coords[1] - pendingSelection.attr('data-initial-y');
+      if (rectHeight >= 0) {
+        pendingSelection.attr('height', rectHeight);
+      } else {
+        pendingSelection
+          .attr('transform', `translate(${pendingSelection.attr('data-initial-x')}, ${coords[1]})`)
+          .attr('height', -rectHeight);
       }
     }
   }
 
-  function drawPolygons(gCtx, idxOne, idxTwo, histogram, colors) {
-    var rangeOne = histogram.y.extent,
-      rangeTwo = histogram.x.extent,
-      deltaOne = histogram.y.delta,
-      deltaTwo = histogram.x.delta,
-      xleft = axesCenters[idxOne],
-      xright = axesCenters[idxTwo],
-      bin = null,
-      opacity = 0.0,
-      yleft1 = 0.0,
-      yleft2 = 0.0,
-      yright1 = 0.0,
-      yright2 = 0.0,
-      yLeftMin = 0,
-      yLeftMax = 0,
-      yRightMin = 0,
-      yRightMax = 0,
-      i;
+  function drawAxes(axesCenters) {
+    if (axesCenters.length <= 1) {
+      // let's not do anything if we don't have enough axes for rendering.
+      return;
+    }
 
-    for (i = 0; i < histogram.bins.length; ++i) {
+    const svg = d3.select(model.container).select('svg');
+    const axisLineGroup = svg.select('g.axis-lines');
+
+    // Now manage the svg dom
+    const axisLineNodes = axisLineGroup.selectAll('rect.axis-lines')
+      .data(axesCenters);
+
+    axisLineNodes
+      .enter()
+      .append('rect')
+      .classed('axis-lines', true)
+      .classed(style.axisLines, true);
+
+    axisLineNodes.exit().remove();
+
+    axisLineGroup
+      .selectAll('rect.axis-lines')
+      .classed(style.controlItem, true)
+      .attr('height', (model.canvasArea.height - model.borderOffsetBottom) - model.borderOffsetTop)
+      .attr('width', model.axisWidth)
+      .attr('transform', (d, i) => `translate(${d - (model.axisWidth / 2)}, ${model.borderOffsetTop})`)
+      .on('mousedown', (d, i) => {
+        d3.event.preventDefault();
+        const coords = d3.mouse(model.container);
+        const initialY = coords[1];
+        const initialX = d - (model.selectionBarWidth / 2);
+        const prect = svg.append('rect');
+        prect
+          .classed('axis-selection-pending', true)
+          .classed(style.selectionBars, true)
+          .attr('height', 0.5)
+          .attr('width', model.selectionBarWidth)
+          .attr('transform', `translate(${initialX}, ${initialY})`)
+          .attr('data-initial-x', initialX)
+          .attr('data-initial-y', initialY)
+          .attr('data-index', i);
+
+        svg.on('mousemove', axisMouseDragHandler);
+        svg.on('mouseup', (data, index) => {
+          const finalY = d3.mouse(model.container)[1];
+          svg.select('rect.axis-selection-pending').remove();
+          svg.on('mousemove', null);
+          svg.on('mouseup', null);
+
+          const axis = model.axes.getAxis(i);
+          model.axes.addSelection(i, screenToData(model, initialY, axis), screenToData(model, finalY, axis));
+        });
+      });
+  }
+
+  function drawPolygons(axesCenters, gCtx, idxOne, idxTwo, histogram, colors) {
+    if (!histogram) {
+      return;
+    }
+    const axisOne = model.axes.getAxis(idxOne);
+    const axisTwo = model.axes.getAxis(idxTwo);
+    const xleft = axesCenters[idxOne];
+    const xright = axesCenters[idxTwo];
+    let bin = null;
+    let opacity = 0.0;
+    let yleft1 = 0.0;
+    let yleft2 = 0.0;
+    let yright1 = 0.0;
+    let yright2 = 0.0;
+    let yLeftMin = 0;
+    let yLeftMax = 0;
+    let yRightMin = 0;
+    let yRightMax = 0;
+
+    // Ensure proper range for X
+    const deltaOne = (axisOne.range[1] - axisOne.range[0]) / (histogram.numberOfBins || model.numberOfBins);
+    const deltaTwo = (axisTwo.range[1] - axisTwo.range[0]) / (histogram.numberOfBins || model.numberOfBins);
+
+    for (let i = 0; i < histogram.bins.length; ++i) {
       bin = histogram.bins[i];
-      opacity = affine(0, bin.count, maxBinCountForOpacityCalculation, 0.0, 1.0);
-      yleft1 = dataToScreen(bin.y, rangeOne, orientationList[idxOne]);
-      yleft2 = dataToScreen(bin.y + deltaOne, rangeOne, orientationList[idxOne]);
-      yright1 = dataToScreen(bin.x, rangeTwo, orientationList[idxTwo]);
-      yright2 = dataToScreen(bin.x + deltaTwo, rangeTwo, orientationList[idxTwo]);
+      opacity = affine(0, bin.count, model.maxBinCountForOpacityCalculation, 0.0, 1.0);
+      yleft1 = dataToScreen(model, bin.x, axisOne);
+      yleft2 = dataToScreen(model, bin.x + deltaOne, axisOne);
+      yright1 = dataToScreen(model, bin.y, axisTwo);
+      yright2 = dataToScreen(model, bin.y + deltaTwo, axisTwo);
       yLeftMin = 0;
       yLeftMax = 0;
       yRightMin = 0;
@@ -416,328 +529,517 @@ export function createParallelCoordinates(canvasElement, fetchHistogramFunction,
       gCtx.lineTo(xright, yRightMax);
       gCtx.lineTo(xright, yRightMin);
       gCtx.closePath();
-      gCtx.fillStyle = `rgba( ${colors.slice(0, 2).join(', ')}, ${opacity} )`;
+      gCtx.fillStyle = `rgba(${colors[0]},${colors[1]},${colors[2]},${opacity})`;
       gCtx.fill();
     }
   }
 
-  function render() {
-    var i,
-      j,
-      k,
-      selectionList;
-
-    /* eslint-disable no-use-before-define */
-    if (axisList === null || axisList.length <= 1) {
-      console.error('Parallel coordinates cannot be rendered without at least two parameters selected.');
-      return;
-    } else if (!histogramList || histogramList.length !== axisList.length - 1) {
-      fetchHistograms();
+  publicAPI.render = () => {
+    if (!model.allBgHistogram2dData || !model.axes.canRender() || !model.container || model.containerHidden === true) {
+      d3.select(model.container).select('svg.parallel-coords-overlay').classed(style.hidden, true);
+      d3.select(model.container).select('canvas').classed(style.hidden, true);
+      d3.select(model.container).select('div.parallel-coords-placeholder').classed(style.hidden, false);
       return;
     }
-    /* eslint-enable no-use-before-define */
 
-    ctx.globalAlpha = 1.0;
+    d3.select(model.container).select('svg.parallel-coords-overlay').classed(style.hidden, false);
+    d3.select(model.container).select('canvas').classed(style.hidden, false);
+    d3.select(model.container).select('div.parallel-coords-placeholder').classed(style.hidden, true);
 
-    canvasArea.width = canvas.width;
-    canvasArea.height = canvas.height;
+    model.ctx.globalAlpha = 1.0;
 
-    fgCanvas.width = canvas.width;
-    fgCanvas.height = canvas.height;
-    bgCanvas.width = canvas.width;
-    bgCanvas.height = canvas.height;
+    // Update canvas area and drawable info
+    updateSizeInformation();
 
-    drawableArea.width = canvasArea.width - (borderOffset.left + borderOffset.right);
-    drawableArea.height = canvasArea.height - (borderOffset.top + borderOffset.bottom);
+    model.hoverIndicatorHeight = model.drawableArea.height / model.numberOfBins;
 
-    axisSpacing = (drawableArea.width - axisWidth) / (axisList.length - 1);
+    model.fgCanvas.width = model.canvas.width;
+    model.fgCanvas.height = model.canvas.height;
+    model.bgCanvas.width = model.canvas.width;
+    model.bgCanvas.height = model.canvas.height;
 
-    axesCenters = [];
-    axesCenters.push(borderOffset.left + (axisWidth / 2));
+    const svg = d3.select(model.container).select('svg');
+    svg
+      .attr('width', model.canvas.width)
+      .attr('height', model.canvas.height)
+      .classed('parallel-coords-overlay', true)
+      .classed(style.parallelCoordsOverlay, true);
 
-    for (i = 1; i < axisList.length; ++i) {
-      // axesCenters.push(axesCenters[i-1] + axisSpacing);
-      axesCenters.push(perfRound(axesCenters[i - 1] + axisSpacing));
+    if (d3.select(model.container).selectAll('g').empty()) {
+      // Have not added groups yet, do so now.  Order matters.
+      svg.append('g').classed('axis-lines', true);
+      svg.append('g').classed('selection-bars', true);
+      svg.append('g').classed('hover-bins', true);
+      svg.append('g').classed('axis-annotation-indicators', true);
+      svg.append('g').classed('axis-control-elements', true);
+      svg.append('g').classed('axis-ticks', true);
+      svg.append('g').classed('glyphs', true);
     }
 
-    ctx.clearRect(0, 0, canvasArea.width, canvasArea.height);
-    fgCtx.clearRect(0, 0, canvasArea.width, canvasArea.height);
-    bgCtx.clearRect(0, 0, canvasArea.width, canvasArea.height);
+    model.ctx.clearRect(0, 0, model.canvasArea.width, model.canvasArea.height);
+    model.fgCtx.clearRect(0, 0, model.canvasArea.width, model.canvasArea.height);
+    model.bgCtx.clearRect(0, 0, model.canvasArea.width, model.canvasArea.height);
 
-    // First lay down the 'context' polygons
-    maxBinCountForOpacityCalculation = maxBinCountOverAllHistograms;
-    for (j = 0; j < histogramList.length; ++j) {
-      drawPolygons(bgCtx, j, j + 1, histogramList[j], polygonColors);
-    }
+    // First lay down the "context" polygons
+    model.maxBinCountForOpacityCalculation = model.allBgHistogram2dData.maxCount;
 
-    ctx.globalAlpha = polygonOpacityAdjustment;
-    ctx.drawImage(bgCanvas, 0, 0, canvasArea.width, canvasArea.height, 0, 0, canvasArea.width, canvasArea.height);
-
-    // If there is a selection, draw that (the 'focus') on top of the polygons
-    if (selectionResult) {
-      selectionList = selectionResult.counts[0];
-      maxBinCountForOpacityCalculation = maxBinCountOverAllSelections;
-      for (k = 0; k < selectionList.length; ++k) {
-        drawPolygons(fgCtx, k, k + 1, selectionList[k], selectionColors);
+    const nbPolyDraw = model.axes.getNumberOf2DHistogram();
+    const axesCenters = model.axes.extractAxesCenters(model);
+    if (!model.showOnlySelection) {
+      for (let j = 0; j < nbPolyDraw; ++j) {
+        const axisOne = model.axes.getAxis(j);
+        const axisTwo = model.axes.getAxis(j + 1);
+        const histo2D = model.allBgHistogram2dData[axisOne.name] ? model.allBgHistogram2dData[axisOne.name][axisTwo.name] : null;
+        drawPolygons(
+          axesCenters,
+          model.bgCtx,
+          j, j + 1,
+          histo2D,
+          model.polygonColors);
       }
 
-      ctx.globalAlpha = selectionOpacityAdjustment;
-      ctx.drawImage(fgCanvas, 0, 0, canvasArea.width, canvasArea.height, 0, 0, canvasArea.width, canvasArea.height);
+      model.ctx.globalAlpha = model.polygonOpacityAdjustment;
+      model.ctx.drawImage(model.bgCanvas,
+        0, 0, model.canvasArea.width, model.canvasArea.height,
+        0, 0, model.canvasArea.width, model.canvasArea.height);
     }
 
-    ctx.globalAlpha = 1.0;
+    // If there is a selection, draw that (the "focus") on top of the polygons
+    if (model.selectionData) {
+      // Extract selection histogram2d
+      const polygonsQueue = [];
+      let maxCount = 0;
+      let missingData = false;
+
+      const processHistogram = (h, k) => {
+        if (drawSelectionData(h.role.score)) {
+          maxCount = maxCount > h.maxCount ? maxCount : h.maxCount;
+          // Add in queue
+          polygonsQueue.push([
+            axesCenters,
+            model.fgCtx,
+            k, k + 1,
+            h,
+            scoreToColor[h.role.score] || model.selectionColors,
+          ]);
+        }
+      };
+
+      for (let k = 0; k < nbPolyDraw && !missingData; ++k) {
+        const histo = model.selectionData && model.selectionData[model.axes.getAxis(k).name]
+          ? model.selectionData[model.axes.getAxis(k).name][model.axes.getAxis(k + 1).name]
+          : null;
+        missingData = !histo;
+
+        if (histo) {
+          histo.forEach(h => processHistogram(h, k));
+        }
+      }
+
+      if (!missingData) {
+        model.maxBinCountForOpacityCalculation = maxCount;
+        polygonsQueue.forEach(req => drawPolygons(...req));
+        model.ctx.globalAlpha = model.selectionOpacityAdjustment;
+        model.ctx.drawImage(model.fgCanvas,
+          0, 0, model.canvasArea.width, model.canvasArea.height,
+          0, 0, model.canvasArea.width, model.canvasArea.height);
+      }
+    }
+
+    model.ctx.globalAlpha = 1.0;
 
     // Now draw all the decorations and controls
-    drawAxes();
-    drawAxisLabels();
-    drawAxisControls();
-    drawAnnotationIndicators();
-  }
-
-  function fastRender() {
-    ctx.clearRect(0, 0, canvasArea.width, canvasArea.height);
-
-    ctx.globalAlpha = polygonOpacityAdjustment;
-    ctx.drawImage(bgCanvas, 0, 0, canvasArea.width, canvasArea.height, 0, 0, canvasArea.width, canvasArea.height);
-
-    ctx.globalAlpha = selectionOpacityAdjustment;
-    ctx.drawImage(fgCanvas, 0, 0, canvasArea.width, canvasArea.height, 0, 0, canvasArea.width, canvasArea.height);
-
-    ctx.globalAlpha = 1.0;
-    drawAxes();
-    drawAxisLabels();
-    drawAxisControls();
-    drawAnnotationIndicators();
-  }
-
-  function receivedHistogram(histIdx, histogram) {
-    histogramCount += 1;
-    histogramList[histIdx] = histogram;
-
-    if (histogram.y.delta === 0) {
-      histogram.y.delta = 1;
-      histogram.y.extent[1] = histogram.y.extent[0] + 1;
-    }
-
-    if (histogram.x.delta === 0) {
-      histogram.x.delta = 1;
-      histogram.x.extent[1] = histogram.x.extent[0] + 1;
-    }
-
-    axesDataRanges[histIdx] = histogram.y.extent.slice();
-
-    if (histIdx === axisList.length - 2) {
-      axesDataRanges[histIdx + 1] = histogram.x.extent.slice();
-    }
-
-    if (histogramCount === axisList.length - 1) { // We have received all histograms
-      maxBinCountOverAllHistograms = getMaxHistogramBinCount(histogramList);
-      render();
-    }
-  }
-
-  function retrieve2DHistogram(idx1, idx2) {
-    fetchHistogram(axisList[idx2], axisList[idx1], (hist) => {
-      receivedHistogram(idx1, hist);
-    });
-  }
-
-  function fetchHistograms() {
-    var k;
-
-    histogramList = [];
-    axesDataRanges = [];
-    histogramCount = 0;
-    maxBinCountOverAllHistograms = 0;
-
-    // Now fetch all the histograms
-    for (k = 0; k < axisList.length - 1; ++k) {
-      retrieve2DHistogram(k, k + 1);
-    }
-  }
-
-  function fetchSelection() {
-    var doQuery = false,
-      query = {},
-      ranges = {},
-      histograms = [],
-      i,
-      j,
-      paramName,
-      annList,
-      ann,
-      rangeList;
-
-
-    if (querySelection) {
-      selectionResult = null;
-      maxBinCountOverAllSelections = 0;
-
-
-      for (i = 0; i < axesAnnotations.length; ++i) {
-        annList = axesAnnotations[i];
-        paramName = axisList[i];
-        rangeList = [];
-        for (j = 0; j < annList.length; ++j) {
-          ann = annList[j];
-          if (ann.dataRange) {
-            rangeList.push(ann.dataRange);
-          }
-        }
-        if (rangeList.length > 0) {
-          ranges[paramName] = rangeList;
-          doQuery = true;
-        }
-      }
-      if (doQuery === true) {
-        for (j = 0; j < axisList.length - 1; ++j) {
-          histograms.push([axisList[j + 1], axisList[j]]);
-        }
-        query = {
-          ranges,
-          histograms,
-        };
-        querySelection(query, (queryResult) => {
-          maxBinCountOverAllSelections = getMaxHistogramBinCount(queryResult.counts[0]);
-          selectionResult = queryResult;
-          render();
-        });
-      } else {
-        maxBinCountOverAllSelections = 0;
-        selectionResult = null;
-        clearCallback();
-        render();
-      }
-    }
-  }
-
-  function fetchData() {
-    fetchHistograms();
-    fetchSelection();
-  }
-
-  function clearSelection() {
-    var i;
-
-    selectionResult = null;
-    maxBinCountOverAllSelections = 0;
-
-    for (i = 0; i < axesAnnotations.length; ++i) {
-      axesAnnotations[i] = [];
-    }
-
-    render();
-  }
-
-  function updateOpacityAdjustments(adjustments) {
-    if (adjustments.hasOwnProperty('background')) {
-      polygonOpacityAdjustment = adjustments.background;
-    }
-    if (adjustments.hasOwnProperty('selection')) {
-      selectionOpacityAdjustment = adjustments.selection;
-    }
-    fastRender();
-  }
-
-  function swapParameters(idx1, idx2) {
-    var tmpName = axisList[idx2],
-      tmpOrient = orientationList[idx2],
-      tmpAnn = axesAnnotations[idx2],
-      tmpRange = axesDataRanges[idx2];
-
-    axisList[idx2] = axisList[idx1];
-    orientationList[idx2] = orientationList[idx1];
-    axesAnnotations[idx2] = axesAnnotations[idx1];
-    axesDataRanges[idx2] = axesDataRanges[idx1];
-
-    axisList[idx1] = tmpName;
-    orientationList[idx1] = tmpOrient;
-    axesAnnotations[idx1] = tmpAnn;
-    axesDataRanges[idx1] = tmpRange;
-  }
-
-  /* eslint-disable complexity */
-  function mouseHandler(mouseEvent) {
-    var x = mouseEvent.x,
-      y = mouseEvent.y,
-      action = mouseEvent.action,
-      delX,
-      delY,
-      i,
-      distToAxis,
-      absDistToAxis;
-
-    if (action === 'mouseup') {
-      delX = Math.abs(x - mouseDownCoords.x);
-      delY = Math.abs(y - mouseDownCoords.y);
-      if (y <= controlBoxSize.height + 25 && delX <= clickThreshold && delY <= clickThreshold) {
-        for (i = 0; i < axesCenters.length; ++i) {
-          distToAxis = x - axesCenters[i];
-          absDistToAxis = Math.abs(distToAxis);
-          if (absDistToAxis <= (controlBoxSize.width / 2)) {
-            if (y <= 25) {
-              if (isAxisAnnotated(i)) {
-                // axesAnnotations[i] = [{}];
-                axesAnnotations[i] = [];
-                fetchSelection();
-              }
-            } else {
-              if (absDistToAxis < (controlBoxSize.width / 3 / 2)) {
-                orientationList[i] = !orientationList[i];
-                render();
-              } else if (distToAxis > 0) {
-                if (i < (axesCenters.length - 1)) {
-                  swapParameters(i, i + 1);
-                  fetchData();
-                }
-              } else {
-                if (i > 0) {
-                  swapParameters(i - 1, i);
-                  fetchData();
-                }
-              }
-            }
-          }
-        }
-      } else if (dragging) {
-        fetchSelection();
-      }
-      dragging = false;
-      mouseDownCoords.x = -1;
-      mouseDownCoords.y = -1;
-    } else if (action === 'mousedown') {
-      mouseDownCoords.x = x;
-      mouseDownCoords.y = y;
-      if (querySelection && y > borderOffset.top && y < (canvasArea.height - borderOffset.bottom)) {
-        selectedAxisIndex = -1;
-        for (i = 0; i < axesCenters.length; ++i) {
-          absDistToAxis = Math.abs(x - axesCenters[i]);
-          if (absDistToAxis <= axisSelectThreshold) {
-            dragging = true;
-            selectedAxisIndex = i;
-            axesAnnotations[i].push({
-              dataRange: [0, 0],
-            });
-            break;
-          }
-        }
-      }
-    } else { // must be a move event, ignore if not dragging...
-      if (dragging) {
-        updateAxisAnnotation(selectedAxisIndex, mouseDownCoords.y, y);
-        drawAxes();
-      }
-    }
-  }
-  /* eslint-enable complexity */
-
-  const externalAPI = {
-    mouseHandler,
-    render,
-    updateAxisList,
-    clearSelection,
-    updateOpacityAdjustments,
+    drawAxisLabels(model.axes.extractLabels(model));
+    drawAxisTicks(model.axes.extractAxisTicks(model));
+    drawAxes(axesCenters);
+    drawSelectionBars(model.axes.extractSelections(model, drawSelectionData));
+    drawAxisControls(model.axes.extractAxesControl(model));
   };
 
-  return Object.freeze(externalAPI);
+  // -------------- Used to speed up action of opacity sliders ----------------
+  // function fastRender() {
+  //   model.ctx.clearRect(0, 0, model.canvasArea.width, model.canvasArea.height);
+
+  //   model.ctx.globalAlpha = model.polygonOpacityAdjustment;
+  //   model.ctx.drawImage(model.bgCanvas,
+  //     0, 0, model.canvasArea.width, model.canvasArea.height,
+  //     0, 0, model.canvasArea.width, model.canvasArea.height);
+
+  //   model.ctx.globalAlpha = model.selectionOpacityAdjustment;
+  //   model.ctx.drawImage(model.fgCanvas,
+  //     0, 0, model.canvasArea.width, model.canvasArea.height,
+  //     0, 0, model.canvasArea.width, model.canvasArea.height);
+
+  //   model.ctx.globalAlpha = 1.0;
+
+  //   const axesCenters = model.axes.extractAxesCenters(model);
+
+  //   drawAxes(axesCenters);
+  //   drawSelectionBars(model.axes.extractSelections(model));
+  //   drawAxisLabels(model.axes.extractLabels(model));
+  //   drawAxisControls(model.axes.extractAxesControl(model));
+  // }
+
+  publicAPI.propagateAnnotationInsteadOfSelection = (useAnnotation = true, defaultScore = 0, defaultWeight = 0) => {
+    model.useAnnotation = useAnnotation;
+    model.defaultScore = defaultScore;
+    model.defaultWeight = defaultWeight;
+  };
+
+  publicAPI.setVisibleScoresForSelection = (scoreList) => {
+    model.visibleScores = scoreList;
+    if (model.selectionDataSubscription && model.visibleScores && model.propagatePartitionScores) {
+      model.selectionDataSubscription.update(model.axes.getAxesPairs(), model.visibleScores);
+    }
+  };
+
+  publicAPI.setScores = (scores) => {
+    model.scores = scores;
+    if (!model.visibleScores && scores) {
+      publicAPI.setVisibleScoresForSelection(scores.map((score, idx) => idx));
+    }
+    if (model.scores) {
+      model.scores.forEach((score, idx) => {
+        scoreToColor[idx] = toColorArray(score.color);
+      });
+    }
+  };
+
+  if (model.provider && model.provider.isA('ScoresProvider')) {
+    publicAPI.setScores(model.provider.getScores());
+    model.subscriptions.push(model.provider.onScoresChange(publicAPI.setScores));
+  }
+
+  publicAPI.resize = () => {
+    if (!model.container) {
+      return;
+    }
+    const clientRect = model.canvas.parentElement.getBoundingClientRect();
+    model.canvas.setAttribute('width', clientRect.width);
+    model.canvas.setAttribute('height', clientRect.height);
+    d3.select(model.container)
+      .select('svg')
+      .selectAll('rect.hover-bin-indicator')
+      .remove();
+    if (clientRect.width !== 0 && clientRect.height !== 0) {
+      model.containerHidden = false;
+      publicAPI.render();
+    } else {
+      model.containerHidden = true;
+    }
+  };
+
+  publicAPI.setContainer = (element) => {
+    if (model.container) {
+      while (model.container.firstChild) {
+        model.container.removeChild(model.container.firstChild);
+      }
+      model.container = null;
+    }
+
+    model.container = element;
+
+    if (model.container) {
+      model.container.innerHTML = htmlContent;
+      d3.select(model.container)
+        .select('div.parallel-coords-placeholder')
+        .select('img')
+        .attr('src', iconImage);
+      model.container.appendChild(model.canvas);
+      d3.select(model.container).append('svg');
+      publicAPI.resize();
+    }
+  };
+
+  function binNumberToScreenOffset(binNumber, rightSideUp) {
+    let screenY = affine(0, binNumber, model.numberOfBins, model.canvasArea.height - model.borderOffsetBottom, model.borderOffsetTop);
+    screenY -= model.hoverIndicatorHeight;
+
+    if (rightSideUp === false) {
+      screenY = affine(0, binNumber, model.numberOfBins, model.borderOffsetTop, model.canvasArea.height - model.borderOffsetBottom);
+    }
+
+    return perfRound(screenY);
+  }
+
+  function handleHoverBinUpdate(data) {
+    if (!model.axes.canRender() || model.containerHidden === true) {
+      // let's not do anything if we don't have enough axes for rendering.
+      return;
+    }
+
+    // First update our internal data model
+    model.hoverBinData = [];
+    Object.keys(data.state).forEach((pName) => {
+      const binList = data.state[pName];
+      if (model.axes.getAxisByName(pName) && binList.indexOf(-1) === -1) {
+        for (let i = 0; i < binList.length; ++i) {
+          model.hoverBinData.push({
+            name: pName,
+            bin: binList[i],
+          });
+        }
+      }
+    });
+
+    // Now manage the svg dom
+    const hoverBinNodes = d3
+      .select(model.container)
+      .select('svg')
+      .select('g.hover-bins')
+      .selectAll('rect.hover-bin-indicator')
+      .data(model.hoverBinData);
+
+    hoverBinNodes
+      .enter()
+      .append('rect')
+      .classed(style.hoverBinIndicator, true)
+      .classed('hover-bin-indicator', true);
+
+    hoverBinNodes.exit().remove();
+
+    const axesCenters = model.axes.extractAxesCenters(model);
+    d3.select(model.container)
+      .select('svg')
+      .select('g.hover-bins')
+      .selectAll('rect.hover-bin-indicator')
+      .attr('height', model.hoverIndicatorHeight)
+      .attr('width', model.hoverIndicatorWidth)
+      .attr('transform', (d, i) => {
+        const axis = model.axes.getAxisByName(d.name);
+        const screenOffset = binNumberToScreenOffset(d.bin, !axis.isUpsideDown());
+        return `translate(${axesCenters[axis.idx] - (model.hoverIndicatorWidth / 2)}, ${screenOffset})`;
+      });
+  }
+
+  // Attach listener to provider
+  model.subscriptions.push({ unsubscribe: publicAPI.setContainer });
+
+  // Handle active field change, update axes
+  if (model.provider.isA('FieldProvider')) {
+    // Monitor any change
+    model.subscriptions.push(model.provider.onFieldChange(() => {
+      model.axes.updateAxes(model.provider.getActiveFieldNames().map(name =>
+        ({ name, range: model.provider.getField(name).range })
+      ));
+    }));
+    // Use initial state
+    model.axes.updateAxes(model.provider.getActiveFieldNames().map(name =>
+      ({ name, range: model.provider.getField(name).range })
+    ));
+  }
+
+  // Handle bin hovering
+  if (model.provider.onHoverBinChange) {
+    model.subscriptions.push(model.provider.onHoverBinChange(handleHoverBinUpdate));
+  }
+
+  if (model.provider.isA('Histogram2DProvider')) {
+    model.histogram2DDataSubscription = model.provider.subscribeToHistogram2D(
+      (allBgHistogram2d) => {
+        // Update axis range
+        model.axes.getAxesPairs().forEach((pair, idx) => {
+          const hist2d = allBgHistogram2d[pair[0]][pair[1]];
+          if (hist2d) {
+            model.axes.getAxis(idx).updateRange(hist2d.x.extent);
+            model.axes.getAxis(idx + 1).updateRange(hist2d.y.extent);
+          }
+        });
+
+        const topLevelList = Object.keys(allBgHistogram2d);
+        // We always get a maxCount, anything additional must be histogram2d
+        if (topLevelList.length > 1) {
+          model.allBgHistogram2dData = allBgHistogram2d;
+          publicAPI.render();
+        } else {
+          model.allBgHistogram2dData = null;
+          publicAPI.render();
+        }
+      },
+      model.axes.getAxesPairs(),
+      {
+        numberOfBins: model.numberOfBins,
+        partial: false,
+      }
+    );
+
+    model.subscriptions.push(model.axes.onAxisListChange((axisPairs) => {
+      model.histogram2DDataSubscription.update(axisPairs);
+    }));
+
+    model.subscriptions.push(model.histogram2DDataSubscription);
+  }
+
+  if (model.provider.isA('SelectionProvider')) {
+    model.selectionDataSubscription = model.provider.subscribeToDataSelection(
+      'histogram2d',
+      (data) => {
+        model.selectionData = data;
+        if (model.provider.getAnnotation()) {
+          model.axes.resetSelections(model.provider.getAnnotation().selection, false, model.provider.getAnnotation().score, scoreToColor);
+          if (data['##annotationGeneration##'] !== undefined) {
+            if (model.provider.getAnnotation().generation === data['##annotationGeneration##']) {
+              // render from selection data change (same generation)
+              publicAPI.render();
+            }
+          } else {
+            // render from selection data change (no generation)
+            publicAPI.render();
+          }
+        } else {
+          // render from selection data change (no annotation)
+          publicAPI.render();
+        }
+      },
+      model.axes.getAxesPairs(),
+      {
+        partitionScores: model.visibleScores,
+        numberOfBins: model.numberOfBins,
+      });
+
+    model.subscriptions.push(model.selectionDataSubscription);
+
+    model.subscriptions.push(model.provider.onSelectionChange((sel) => {
+      if (!model.useAnnotation) {
+        if (sel && sel.type === 'empty') {
+          model.selectionData = null;
+        }
+        model.axes.resetSelections(sel, false);
+        publicAPI.render();
+      }
+    }));
+    model.subscriptions.push(model.provider.onAnnotationChange((annotation) => {
+      if (annotation && annotation.selection.type === 'empty') {
+        model.selectionData = null;
+      }
+
+      if (lastAnnotationPushed
+        && annotation.selection.type === 'range'
+        && annotation.id === lastAnnotationPushed.id
+        && annotation.generation === lastAnnotationPushed.generation + 1) {
+        // Assume that it is still ours but edited by someone else
+        lastAnnotationPushed = annotation;
+
+        // Capture the score and update our default
+        model.defaultScore = lastAnnotationPushed.score[0];
+      }
+      model.axes.resetSelections(annotation.selection, false, annotation.score, scoreToColor);
+    }));
+    model.subscriptions.push(model.axes.onSelectionChange(() => {
+      if (model.useAnnotation) {
+        lastAnnotationPushed = model.provider.getAnnotation();
+
+        // If parttion annotation special handle
+        if (lastAnnotationPushed && lastAnnotationPushed.selection.type === 'partition') {
+          const axisIdxToClear = model.axes.getAxesNames().indexOf(lastAnnotationPushed.selection.partition.variable);
+          if (axisIdxToClear !== -1) {
+            model.axes.getAxis(axisIdxToClear).clearSelection();
+            model.axes.selection = null;
+          }
+        }
+
+        const selection = model.axes.getSelection();
+        if (selection.type === 'empty') {
+          lastAnnotationPushed = AnnotationBuilder.EMPTY_ANNOTATION;
+        } else if (!lastAnnotationPushed || model.provider.shouldCreateNewAnnotation() || lastAnnotationPushed.selection.type !== 'range') {
+          lastAnnotationPushed = AnnotationBuilder.annotation(selection, [model.defaultScore], model.defaultWeight);
+        } else {
+          lastAnnotationPushed = AnnotationBuilder.update(lastAnnotationPushed, {
+            selection,
+            score: [model.defaultScore],
+            weight: model.defaultWeight,
+          });
+        }
+        AnnotationBuilder.updateReadOnlyFlag(lastAnnotationPushed, model.readOnlyFields);
+        model.provider.setAnnotation(lastAnnotationPushed);
+      } else {
+        model.provider.setSelection(model.axes.getSelection());
+      }
+    }));
+    model.subscriptions.push(model.axes.onAxisListChange((axisPairs) => {
+      model.selectionDataSubscription.update(axisPairs);
+    }));
+  } else {
+    model.subscriptions.push(model.axes.onSelectionChange(() => {
+      publicAPI.render();
+    }));
+  }
+
+  publicAPI.setContainer(model.container);
+  updateSizeInformation();
+
+  publicAPI.setNumberOfBins = (numberOfBins) => {
+    model.numberOfBins = numberOfBins;
+    if (model.selectionDataSubscription) {
+      model.selectionDataSubscription.update(model.axes.getAxesPairs(), { numberOfBins });
+    }
+    if (model.histogram2DDataSubscription) {
+      model.histogram2DDataSubscription.update(model.axes.getAxesPairs(), { numberOfBins });
+    }
+  };
 }
+
+// ----------------------------------------------------------------------------
+// Object factory
+// ----------------------------------------------------------------------------
+
+const DEFAULT_VALUES = {
+  container: null,
+  provider: null,
+  needData: true,
+
+  containerHidden: false,
+
+  borderOffsetTop: 35,
+  borderOffsetRight: 12,
+  borderOffsetBottom: 45,
+  borderOffsetLeft: 12,
+
+  axisWidth: 6,
+  selectionBarWidth: 8,
+
+  polygonColors: [0, 0, 0],
+  selectionColors: [70, 130, 180],
+
+  maxBinCountForOpacityCalculation: 0,
+
+  selectionOpacityAdjustment: 1,
+  polygonOpacityAdjustment: 1,
+
+  hoverIndicatorHeight: 10,
+  hoverIndicatorWidth: 7,
+
+  numberOfBins: 32,
+
+  useAnnotation: false,
+  defaultScore: 0,
+  defaultWeight: 1,
+
+  showOnlySelection: false,
+
+  visibleScores: [],
+  propagatePartitionScores: false,
+  // scores: [{ name: 'Yes', color: '#00C900', value: 1 }, ...]
+};
+
+// ----------------------------------------------------------------------------
+
+export function extend(publicAPI, model, initialValues = {}) {
+  Object.assign(model, DEFAULT_VALUES, initialValues);
+
+  CompositeClosureHelper.destroy(publicAPI, model);
+  CompositeClosureHelper.isA(publicAPI, model, 'VizComponent');
+  CompositeClosureHelper.get(publicAPI, model, ['provider', 'container', 'showOnlySelection', 'visibleScores', 'propagatePartitionScores', 'numberOfBins']);
+  CompositeClosureHelper.set(publicAPI, model, ['showOnlySelection', 'propagatePartitionScores']);
+  CompositeClosureHelper.dynamicArray(publicAPI, model, 'readOnlyFields');
+
+  parallelCoordinate(publicAPI, model);
+}
+
+// ----------------------------------------------------------------------------
+
+export const newInstance = CompositeClosureHelper.newInstance(extend);
+
+// ----------------------------------------------------------------------------
+
+export default { newInstance, extend };

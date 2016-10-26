@@ -36,7 +36,7 @@ export default React.createClass({
   /* eslint-disable react/no-did-mount-set-state */
   componentDidMount() {
     this.setState({
-      showFieldValue: this.refs.ProbeInput.isExpanded(),
+      showFieldValue: this.probeInput.isExpanded(),
     });
   },
   /* eslint-enable react/no-did-mount-set-state */
@@ -61,7 +61,7 @@ export default React.createClass({
 
     setImmediate(() => {
       if (this.props.imageBuilders) {
-        Object.keys(this.props.imageBuilders).forEach(key => {
+        Object.keys(this.props.imageBuilders).forEach((key) => {
           const builder = this.props.imageBuilders[key].builder;
           builder.setCrossHairEnable(isProbeOpen);
           builder.render();
@@ -165,7 +165,7 @@ export default React.createClass({
         <CollapsibleWidget
           title="Probe"
           subtitle={this.state.showFieldValue ? valueStr : ''}
-          ref="ProbeInput"
+          ref={(c) => { this.probeInput = c; }}
           onChange={this.onProbeVisibilityChange}
           open={imageBuilder.isCrossHairEnabled()}
         >

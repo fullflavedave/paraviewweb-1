@@ -32,8 +32,8 @@ export function getCanvasSize(ctx, margin = 0) {
 function getCanvasCoordinates(ctx, point, margin) {
   const { width, height } = getCanvasSize(ctx, margin);
   let { x, y } = point;
-  x = Math.floor(x * width + margin + 0.5);
-  y = Math.floor((1 - y) * height + margin + 0.5);
+  x = Math.floor((x * width) + margin + 0.5);
+  y = Math.floor(((1 - y) * height) + margin + 0.5);
   return { x, y };
 }
 
@@ -51,10 +51,10 @@ function getNormalizePosition(event, ctx, margin) {
 
   return {
     x: (event.clientX - rect.left - margin) / width,
-    y: 1 - (event.clientY - rect.top - margin) / height,
+    y: 1 - ((event.clientY - rect.top - margin) / height),
     epsilon: {
-      x: 2 * margin / width,
-      y: 2 * margin / height,
+      x: (2 * margin) / width,
+      y: (2 * margin) / height,
     },
   };
 }
@@ -74,6 +74,7 @@ function findPoint(position, pointList) {
 // ----------------------------------------------------------------------------
 
 const CHANGE_TOPIC = 'LinearPieceWiseEditor.change';
+const EDIT_MODE_TOPIC = 'LinearPieceWiseEditor.edit.mode';
 
 export default class LinearPieceWiseEditor {
 
@@ -90,6 +91,7 @@ export default class LinearPieceWiseEditor {
         this.render();
       }
       this.canvas.addEventListener('mousemove', this.onMouseMove);
+      this.emit(EDIT_MODE_TOPIC, true);
     };
 
     this.onMouseMove = (event) => {
@@ -110,6 +112,7 @@ export default class LinearPieceWiseEditor {
       if (this.canvas) {
         this.canvas.removeEventListener('mousemove', this.onMouseMove);
       }
+      this.emit(EDIT_MODE_TOPIC, false);
     };
 
     this.onMouseLeave = this.onMouseUp;
@@ -173,6 +176,13 @@ export default class LinearPieceWiseEditor {
     } else {
       this.activeIndex = -1;
     }
+    if (this.activeControlPoint) {
+      this.controlPoints.forEach((pt, index) => {
+        if (pt.x === this.activeControlPoint.x && pt.y === this.activeControlPoint.y && index === this.activeIndex) {
+          this.activeControlPoint = pt;
+        }
+      });
+    }
     this.render();
   }
 
@@ -224,7 +234,7 @@ export default class LinearPieceWiseEditor {
     this.ctx.fillRect(margin, margin, width, height);
 
     const linearPath = [];
-    this.controlPoints.forEach(point => {
+    this.controlPoints.forEach((point) => {
       linearPath.push(getCanvasCoordinates(this.ctx, point, this.radius));
     });
 
@@ -250,7 +260,11 @@ export default class LinearPieceWiseEditor {
   }
 
   onChange(callback) {
-    return this.on(CHANGE_TOPIC, callback);
+    return callback ? this.on(CHANGE_TOPIC, callback) : null;
+  }
+
+  onEditModeChange(callback) {
+    return callback ? this.on(EDIT_MODE_TOPIC, callback) : null;
   }
 
   destroy() {

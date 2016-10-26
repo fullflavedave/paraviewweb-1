@@ -1,9 +1,10 @@
 import React from 'react';
+
+import style from 'PVWStyle/ReactWidgets/ColorMapEditorWidget.mcss';
+
 import SvgIconWidget from '../SvgIconWidget';
 import PieceWiseFunctionEditorWidget from '../PieceWiseFunctionEditorWidget';
 import PresetListWidget from '../PresetListWidget';
-
-import style from 'PVWStyle/ReactWidgets/ColorMapEditorWidget.mcss';
 
 import paletteIcon from '../../../../svg/colors/Palette.svg';
 import opacityIcon from '../../../../svg/colors/Opacity.svg';
@@ -27,6 +28,15 @@ export default React.createClass({
     onRangeEdited: React.PropTypes.func,
     onScaleRangeToCurrent: React.PropTypes.func,
     onScaleRangeOverTime: React.PropTypes.func,
+    pieceWiseHeight: React.PropTypes.number,
+    pieceWiseWidth: React.PropTypes.number,
+  },
+
+  getDefaultProps() {
+    return {
+      pieceWiseHeight: 200,
+      pieceWiseWidth: -1,
+    };
   },
 
   getInitialState() {
@@ -132,14 +142,16 @@ export default React.createClass({
             onChange={this.rangeMaxChanged}
           />
         </div>
-        <PieceWiseFunctionEditorWidget
-          initialPoints={this.props.currentOpacityPoints}
-          ref="pieceWiseEditor"
-          rangeMin={this.props.rangeMin}
-          rangeMax={this.props.rangeMax}
-          onChange={this.onOpacityTransferFunctionChanged}
-          visible={this.state.showOpacityControls}
-        />
+        <div className={this.state.showOpacityControls ? style.pieceWiseEditor : style.hidden}>
+          <PieceWiseFunctionEditorWidget
+            points={this.props.currentOpacityPoints}
+            rangeMin={this.state.showOpacityControls ? this.props.rangeMin : 1}
+            rangeMax={this.state.showOpacityControls ? this.props.rangeMax : 0}
+            onChange={this.onOpacityTransferFunctionChanged}
+            height={this.props.pieceWiseHeight}
+            width={this.props.pieceWiseWidth}
+          />
+        </div>
         <div className={style.presetList}>
           <PresetListWidget
             presets={presets}

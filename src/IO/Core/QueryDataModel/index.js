@@ -1,4 +1,5 @@
-import DataManager from '../DataManager';
+/* global Image */
+
 import hasOwn from 'mout/object/hasOwn';
 import max from 'mout/object/max';
 import min from 'mout/object/min';
@@ -6,6 +7,8 @@ import Monologue from 'monologue.js';
 import now from 'mout/src/time/now';
 import omit from 'mout/object/omit';
 import size from 'mout/object/size';
+
+import DataManager from '../DataManager';
 
 // ============================================================================
 const
@@ -68,7 +71,8 @@ export default class QueryDataModel {
   constructor(jsonData, basepath) {
     this.originalData = jsonData;
     this.basepath = basepath; // Needed for cloning
-    this.id = `QueryDataModel_${++queryDataModelCounter} :`;
+    queryDataModelCounter += 1;
+    this.id = `QueryDataModel_${queryDataModelCounter} :`;
     this.args = {};
     this.externalArgs = {};
     this.dataCount = {};
@@ -86,7 +90,7 @@ export default class QueryDataModel {
         this.lastPlay = +(new Date());
 
         // Move all flagged arg to next()
-        Object.keys(this.args).forEach(argName => {
+        Object.keys(this.args).forEach((argName) => {
           if (this.args[argName].anime) {
             changeDetected = this.next(argName) || changeDetected;
           }
@@ -110,7 +114,7 @@ export default class QueryDataModel {
       }
     };
 
-    const processRequest = request => {
+    const processRequest = (request) => {
       var dataToBroadcast = {},
         count = request.urls.length,
         hasPending = false,
@@ -121,7 +125,8 @@ export default class QueryDataModel {
         this.animationTimerId = 0;
       }
 
-      while (count--) {
+      while (count) {
+        count -= 1;
         const item = request.urls[count];
         dataToBroadcast[item.key] = dataManager.get(item.url);
         if (dataToBroadcast[item.key]) {
@@ -156,7 +161,7 @@ export default class QueryDataModel {
     };
 
     const dataHandler = (data, envelope) => {
-      this.dataCount[envelope.topic]++;
+      this.dataCount[envelope.topic] += 1;
 
       // Pre-decode image urls
       if (data.url && data.type === 'blob' && data.data.type.indexOf('image') !== -1 && data.image === undefined) {
@@ -186,7 +191,7 @@ export default class QueryDataModel {
     };
 
     // Flatten args
-    Object.keys(jsonData.arguments).forEach(key => {
+    Object.keys(jsonData.arguments).forEach((key) => {
       const arg = jsonData.arguments[key];
       this.args[key] = {
         label: arg.label ? arg.label : key,
@@ -202,14 +207,14 @@ export default class QueryDataModel {
     });
 
     // Register all data urls
-    jsonData.data.forEach(dataEntry => {
+    jsonData.data.forEach((dataEntry) => {
       var dataId = this.id + dataEntry.name;
 
       // Register data metadata if any
       this.dataMetadata[dataEntry.name] = dataEntry.metadata || {};
 
       // Fill categories with dataIds
-      (dataEntry.categories || [DEFAULT_KEY_NAME]).forEach(category => {
+      (dataEntry.categories || [DEFAULT_KEY_NAME]).forEach((category) => {
         if (hasOwn(this.categories, category)) {
           this.categories[category].push(dataId);
         } else {
@@ -247,13 +252,13 @@ export default class QueryDataModel {
   getQuery() {
     var query = {};
 
-    Object.keys(this.args).forEach(key => {
+    Object.keys(this.args).forEach((key) => {
       const arg = this.args[key];
       query[key] = arg.values[arg.idx];
     });
 
     // Add external args to the query too
-    Object.keys(this.externalArgs).forEach(eKey => {
+    Object.keys(this.externalArgs).forEach((eKey) => {
       query[eKey] = this.externalArgs[eKey];
     });
 
@@ -271,7 +276,7 @@ export default class QueryDataModel {
     // fill the data to fetch
     if (category.name) {
       request.category = category.name;
-      category.categories.forEach(cat => {
+      category.categories.forEach((cat) => {
         if (this.categories[cat]) {
           dataToFetch = dataToFetch.concat(this.categories[cat]);
         }
@@ -286,8 +291,8 @@ export default class QueryDataModel {
       this.requests.push(request);
     }
 
-    dataToFetch.forEach(dataId => {
-      this.dataCount[dataId]--;
+    dataToFetch.forEach((dataId) => {
+      this.dataCount[dataId] -= 1;
       request.urls.push({
         key: dataId.slice(this.id.length),
         url: dataManager.fetch(dataId, query),
@@ -504,7 +509,7 @@ export default class QueryDataModel {
   // Check if one of the argument is currently active for the animation
   hasAnimationFlag() {
     let flag = false;
-    Object.keys(this.args).forEach(key => {
+    Object.keys(this.args).forEach((key) => {
       if (this.args[key].anime) {
         flag = true;
       }
@@ -543,10 +548,10 @@ export default class QueryDataModel {
       actions = {};
 
     // Create an action map
-    Object.keys(this.originalData.arguments).forEach(key => {
+    Object.keys(this.originalData.arguments).forEach((key) => {
       const value = this.originalData.arguments[key];
       if (value.bind && value.bind.mouse) {
-        Object.keys(value.bind.mouse).forEach(action => {
+        Object.keys(value.bind.mouse).forEach((action) => {
           const obj = omit(value.bind.mouse[action]);
           obj.name = key;
           obj.lastCoord = 0;
@@ -572,7 +577,8 @@ export default class QueryDataModel {
         eventHandled = false;
 
       // Check all associated actions
-      while (count--) {
+      while (count) {
+        count -= 1;
         const item = array[count],
           deltaName = (item.coordinate === 0) ? 'deltaX' : 'deltaY';
 
@@ -580,6 +586,7 @@ export default class QueryDataModel {
           item.lastCoord = 0;
         }
 
+        /* eslint-disable no-bitwise */
         if (item.modifier & event.modifier || item.modifier === event.modifier) {
           eventHandled = true;
           const delta = event[deltaName] - item.lastCoord;
@@ -606,7 +613,7 @@ export default class QueryDataModel {
     /* eslint-enable complexity */
 
     this.mouseListener = {};
-    Object.keys(actions).forEach(actionName => {
+    Object.keys(actions).forEach((actionName) => {
       this.mouseListener[actionName] = processEvent;
       this.lastTime[actionName] = now();
     });
@@ -670,26 +677,27 @@ export default class QueryDataModel {
       let count = idxs.length;
 
       // May overshoot
-      idxs[count - 1]++;
+      idxs[count - 1] += 1;
 
       // Handle overshoot
-      while (count--) {
+      while (count) {
+        count -= 1;
         if (idxs[count] < sizes[count]) {
           // We are good
+          /* eslint-disable no-continue */
           continue;
-        } else {
+          /* eslint-enable no-continue */
+        } else if (count > 0) {
           // We need to move the index back up
-          if (count > 0) {
-            idxs[count] = 0;
-            idxs[count - 1]++;
-          } else {
-            this.exploreState.animate = false;
-            this.emit('state.change.exploration', {
-              exploration: this.exploreState,
-              instance: this,
-            });
-            return this.exploreState.animate; // We are done
-          }
+          idxs[count] = 0;
+          idxs[count - 1] += 1;
+        } else {
+          this.exploreState.animate = false;
+          this.emit('state.change.exploration', {
+            exploration: this.exploreState,
+            instance: this,
+          });
+          return this.exploreState.animate; // We are done
         }
       }
 
@@ -699,6 +707,7 @@ export default class QueryDataModel {
     return this.exploreState.animate;
   }
 
+  /* eslint-disable class-methods-use-this */
   setCacheSize(sizeBeforeGC) {
     dataManager.cacheSize = sizeBeforeGC;
   }
